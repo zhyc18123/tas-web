@@ -1,0 +1,113 @@
+<template>
+  <div >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+    <div class="widget am-cf">
+      <div class="widget-head am-cf">
+        <div class="widget-title  am-cf">区域组列表</div>
+      </div>
+      <div class="widget-body  am-fr">
+
+        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+          <div class="am-form-group">
+            <div class="am-btn-toolbar">
+              <div class="am-btn-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/sys/areateam/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="am-u-sm-12 am-scrollable-horizontal">
+          <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+            <thead>
+            <tr>
+              <th>区域组名</th>
+              <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr v-for="item in tableData" :key="item.areaTeamId">
+              <td>{{item.name}}</td>
+              <td>
+                <div class="tpl-table-black-operation">
+                  <a href="javascript:;" @click="$router.push('/main/sys/areateam/edit/'+item.areaTeamId)" v-if="hasPermission('edit')">
+                    <i class="am-icon-edit"></i> 编辑
+                  </a>
+                  <a  href="javascript:;" class="tpl-table-black-operation-danger" @click="del(item.areaTeamId ,0)" v-if="hasPermission('del')">
+                    <i class="am-icon-trash"></i>删除
+                  </a>
+
+                </div>
+              </td>
+            </tr>
+            <!-- more data -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div>
+</template>
+
+<script>
+
+import Pagination from '../base/Pagination'
+
+import io from '../../lib/io'
+
+    export default{
+        data:function(){
+          return {
+            tableData:[],
+            total:0,
+            pageSize:5,
+            pageNo:1,
+            query:{},
+            searchConfig:{}
+          }
+        },
+        components: {
+          Pagination
+        },
+        mounted:function(){
+          $(window).smoothScroll()
+        },
+        created:function(){
+          this.loadTableData(this.pageNo);
+        },
+        methods:{
+          del:function(areaTeamId){
+            const _this = this ;
+            _this.$confirm('你确定要删除？' ,
+            function(){
+              io.post(io.apiAdminDelAreaTeam,{areaTeamId},function(ret){
+                if(ret.success){
+                  _this.$toast('删除成功')
+                  _this.loadTableData()
+                }else{
+                  _this.$alert(ret.desc)
+                }
+              })
+            });
+          },
+          loadTableData:function(pageNo){
+            var _this = this
+            _this.pageNo = pageNo || _this.pageNo || 1
+            io.post(io.apiAdminAreaTeamList,$.extend({
+              pageNo:_this.pageNo,
+              pageSize:_this.pageSize
+            },_this.query),function(ret){
+              if(ret.success){
+                _this.total = ret.data.total
+                _this.tableData = ret.data.list
+              }else{
+                _this.$alert(ret.desc)
+              }
+            })
+          }
+        }
+    }
+</script>
