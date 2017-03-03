@@ -166,7 +166,7 @@ import util from '../../lib/util'
          var courseTemplateId  = this.$params('courseId')
          if(courseTemplateId){
           var _this = this
-          io.post(io.apiAdminTemplateDetailDetail,{ courseTemplateId : courseTemplateId },
+          io.post(io.apiAdminCourseClassDetail,{ courseTemplateId : courseTemplateId },
             function(ret){
               if(ret.success){
                 _this.formData = ret.data
@@ -254,7 +254,7 @@ import util from '../../lib/util'
           save:function(complete){
             var _this = this
             var data = _this.formData
-            io.post(io.apiAdminSaveOrUpdateTemplateDetail,data,
+            io.post(io.apiAdminSaveOrUpdateClass,data,
             function(ret){
               complete.call()
               if(ret.success){

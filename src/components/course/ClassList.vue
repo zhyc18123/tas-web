@@ -3,7 +3,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title  am-cf">课程列表</div>
+        <div class="widget-title  am-cf">班级列表</div>
       </div>
       <div class="widget-body  am-fr">
 
@@ -11,7 +11,7 @@
           <div class="am-form-group">
             <div class="am-btn-toolbar">
               <div class="am-btn-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/course/course/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
               </div>
             </div>
           </div>
@@ -59,8 +59,8 @@
             <tbody>
 
             <tr v-for="item in tableData" :key="item.userId">
-              <td>{{item.courseName}}</td>
-              <td>{{item.courseTypeName }}</td>
+              <td>{{item.className}}</td>
+              <!--<td>{{item.courseTypeName }}</td>
               <td>{{item.gradeName}}</td>
               <td>{{item.subjectName}}</td>
               <td>{{item.lectureAmount}}</td>
@@ -75,7 +75,7 @@
 
 
                 </div>
-              </td>
+              </td>-->
             </tr>
 
 
@@ -135,7 +135,7 @@ import Pagination from '../base/Pagination'
           loadTableData:function(pageNo){
             var _this = this
             _this.pageNo = pageNo || _this.pageNo || 1
-            io.post(io.apiAdminCourseTemplateList,$.extend({
+            io.post(io.apiAdminCourseClassList,$.extend({
               pageNo:_this.pageNo,
               pageSize:_this.pageSize
             },_this.query),function(ret){
