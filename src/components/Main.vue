@@ -59,7 +59,7 @@ export default {
           for(var i = 0 ; i < resourceList.length ; i++ ){
             var resource = resourceList[i]
             if(resource.resourceType != 1 ){
-              return ;
+              continue ;
             }
             var menu = {
               name:resource.resourceName ,

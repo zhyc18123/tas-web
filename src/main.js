@@ -27,6 +27,12 @@ import BusTeamForm from './components/sysmanager/BusTeamForm'
 import TeacherList from './components/sysmanager/TeacherList'
 import TeacherForm from './components/sysmanager/TeacherForm'
 
+import CampusList from './components/sysmanager/CampusList'
+import CampusForm from './components/sysmanager/CampusForm'
+
+import RoomList from './components/sysmanager/RoomList'
+import RoomForm from './components/sysmanager/RoomForm'
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -69,6 +75,12 @@ const router = new VueRouter({
       {path: 'sys/teacher/list' , component: TeacherList },
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
+      {path: 'sys/campus/list' , component: CampusList },
+      {path: 'sys/campus/add' , component: CampusForm },
+      {path: 'sys/campus/edit/:campusId' , component: CampusForm },
+      {path: 'sys/room/list' , component: RoomList },
+      {path: 'sys/room/add' , component: RoomForm },
+      {path: 'sys/room/edit/:roomId' , component: RoomForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
