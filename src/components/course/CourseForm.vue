@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">老师信息</div>
+        <div class="widget-title am-fl">课程信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -12,66 +12,44 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>姓名
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入用姓名" required v-model="formData.teacherName">
+                <input type="text"  class="am-form-field" placeholder="输入课程名" required v-model="formData.courseName" >
               </div>
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>性别
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程类型
               </label>
-              <div class="am-u-sm-9 input-field">
-                <label class="am-radio-inline">
-                  <input type="radio"  value="1" name="sex" required v-model="formData.sex" >  男
-                </label>
-                <label class="am-radio-inline">
-                  <input type="radio" value="2" name="sex" v-model="formData.sex"> 女
-                </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.courseTypeId" :options="courseTypeData" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>身份证号码
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>年级
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入身份证号码" required pattern="^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$" v-model="formData.idNo">
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.gradeId" :options="grades" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
+
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>科目
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入手机号"  data-validation-message="输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.subjectId" :options="subjects" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>任教年级
-              </label>
-              <div class="am-u-sm-9 am-margin-top-xs input-field">
-                <label v-for="item in $root.config.grades" :key="item.gradeId" class="am-checkbox-inline">
-                  <input type="checkbox" :value="item.gradeId" name="gradeIds" required v-model="formData.gradeIds">{{item.gradeName}}
-                </label>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>任教科目
-              </label>
-              <div class="am-u-sm-9 am-margin-top-xs input-field">
-                <label v-for="item in $root.config.subjects" :key="item.subjectId" class="am-checkbox-inline">
-                  <input type="checkbox" :value="item.subjectId" name="subjectIds" required v-model="formData.subjectIds">{{item.subjectName}}
-                </label>
-              </div>
-            </div>
-
-
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -87,10 +65,10 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在业务组
+                所在业务组
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.busTeamId" :options="busTeams" >
+                <select2  v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -98,44 +76,57 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>入职日期
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>讲数
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <date-picker v-model="formData.joinTime" >
-                  <input type="text" placeholder="入职日期" data-am-datepicker readonly  required >
-                </date-picker>
+                <input type="number" placeholder="输入讲数"  required min="1" step="1"  v-model="formData.lectureAmount" >
               </div>
             </div>
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>在职状态
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每一讲时长(分钟)
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.status">
-                  <option value="1">在职</option>
-                  <option value="0">离职</option>
-                </select2>
+                <input type="number" placeholder="输入时长"  required min="1" step="1"  v-model="formData.lectureDuration" >
               </div>
             </div>
 
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                头像
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
               </label>
-              <div class="am-u-sm-9 am-form-file input-field">
-                <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
-                  <img class="am-margin-top am-radius" :src="formData.avatarUrl" style="width:168px;height:168px">
-                </file-upload>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <input type="number" placeholder="输入学位数"  required min="1" step="1"  v-model="formData.quota" >
               </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                介绍
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <input type="number" placeholder="输入学学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
+              </div>
+            </div>
+
+
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                课程介绍
               </label>
               <div class="am-u-sm-9 input-field">
-                <editor v-model="formData.simpleIntro"></editor>
+                <editor v-model="formData.courseDescription"></editor>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                课程大纲
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <editor v-model="formData.courseOutline"></editor>
               </div>
             </div>
 
@@ -157,28 +148,26 @@
 import io from '../../lib/io'
 import util from '../../lib/util'
     export default{
-        name:'teacher-form',
         data(){
             return{
+                courseTypeData:[],
                 formData:{
                   areaTeamId:'',
                   busTeamId:'',
-                  gradeIds:[],
-                  subjectIds:[],
-                  status:2
+                  lectureAmount : 15,
+                  lectureDuration : 45,
+                  quota:0,
+                  studyingFee : 0
                 }
             }
         },
         created:function(){
-         var teacherId  = this.$params('teacherId')
-         if(teacherId){
+         var courseTemplateId  = this.$params('courseId')
+         if(courseTemplateId){
           var _this = this
-          io.post(io.apiAdminTeacherDetail,{ teacherId : teacherId },
+          io.post(io.apiAdminTemplateDetailDetail,{ courseTemplateId : courseTemplateId },
             function(ret){
               if(ret.success){
-                ret.data.gradeIds = ret.data.teachGradeIds ? ret.data.teachGradeIds.split(',') : []
-                ret.data.subjectIds = ret.data.teachSubjectIds ? ret.data.teachSubjectIds.split(','):[]
-                ret.data.joinTime = util.formatDate ( ret.data.joinTime )
                 _this.formData = ret.data
               }
             },
@@ -186,6 +175,9 @@ import util from '../../lib/util'
               _this.$alert('请求服务器失败')
           })
          }
+
+
+          this.loadCourseTypeData()
 
 
         },
@@ -203,6 +195,16 @@ import util from '../../lib/util'
               return {value:item.busTeamId,text:item.name}
             })
             return options
+          },
+          grades:function(){
+            return this.$root.config.grades.map(function(item){
+              return {value:item.gradeId,text:item.gradeName}
+            })
+          },
+          subjects:function(){
+            return this.$root.config.subjects.map(function(item){
+              return {value:item.subjectId,text:item.subjectName}
+            })
           }
         },
         mounted:function(){
@@ -251,14 +253,12 @@ import util from '../../lib/util'
           save:function(complete){
             var _this = this
             var data = _this.formData
-            data.teachGradeIds = data.gradeIds.join(',')
-            data.teachSubjectIds = data.subjectIds.join(',')
-            io.post(io.apiAdminSaveOrUpdateTeacher,data,
+            io.post(io.apiAdminSaveOrUpdateTemplateDetail,data,
             function(ret){
               complete.call()
               if(ret.success){
                 _this.$toast('OK')
-                _this.$router.push('/main/sys/teacher/list')
+                _this.$router.push('/main/course/course/list')
               }else{
                 _this.$alert(ret.desc)
               }
@@ -269,8 +269,22 @@ import util from '../../lib/util'
               _this.$alert('请求服务器失败')
             })
           },
-          uploadAvatar:function(info){
-            this.formData.avatarUrl = info.url
+          loadCourseTypeData:function(){
+            var _this = this
+            io.post(io.apiAdminChangeCourseTypeList,{},
+              function(ret){
+                if(ret.success){
+                  _this.courseTypeData = ret.data.map(function(item){
+                    return {value:item.courseTypeId,text:item.name }
+                  })
+                }else{
+                  _this.$alert(ret.desc)
+                }
+
+              },
+              function(){
+                _this.$alert('请求服务器失败')
+              })
           }
         }
     }

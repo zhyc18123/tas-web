@@ -48,7 +48,6 @@ import io from '../../lib/io'
     export default{
         data(){
             return{
-                id:'form-'+(new Date().getTime()),
                 formData:{
                   areaTeamId:''
                 }

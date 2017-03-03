@@ -15,11 +15,6 @@
 
     export default {
       name: 'loading',
-      data: function(){
-        return {
-          id: 'loading-' + (new Date().getTime())
-        }
-      },
       mounted:function(){
       },
       methods: {

@@ -21,7 +21,6 @@
       name: 'confirm',
       data: function(){
         return {
-          id: 'confirm-' + (new Date().getTime()),
           title:'提示',
           msg : ''
         }

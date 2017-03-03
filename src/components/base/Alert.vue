@@ -20,7 +20,6 @@
       name: 'alert',
       data: function(){
         return {
-          id: 'alert-' + (new Date().getTime()),
           title:'提示',
           msg : ''
         }

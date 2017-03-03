@@ -145,7 +145,6 @@ import io from '../../lib/io'
         name:'user-form',
         data(){
             return{
-                id:'form-'+(new Date().getTime()),
                 formData:{
                   name : '攻城狮',
                   location:'佛山',

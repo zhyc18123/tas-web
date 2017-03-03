@@ -39,7 +39,6 @@ import io from '../../lib/io'
     export default{
         data(){
             return{
-                id:'form-'+(new Date().getTime()),
                 roles:[],
                 formData:{
                   userId : this.$params('userId'),

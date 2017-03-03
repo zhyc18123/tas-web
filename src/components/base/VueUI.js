@@ -82,6 +82,11 @@ VueUI.install = function (Vue){
   Vue.filter('formatTime' , util.formatTime )
 
   Vue.mixin({
+    computed:{
+      id:function(){
+        return 'id-' + (parseInt(Math.random() * 1000 ))  +'-'+(new Date().getTime())
+      }
+    },
     methods: {
       hasPermission: function (permission) {
         return true

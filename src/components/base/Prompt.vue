@@ -22,7 +22,6 @@
       name: 'prompt',
       data: function(){
         return {
-          id: 'prompt-' + (new Date().getTime()),
           title:'提示',
           msg : ''
         }

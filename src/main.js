@@ -34,6 +34,11 @@ import RoomList from './components/sysmanager/RoomList'
 import RoomForm from './components/sysmanager/RoomForm'
 
 
+import CourseList from './components/course/CourseList'
+import CourseForm from './components/course/CourseForm'
+
+
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 
@@ -81,6 +86,9 @@ const router = new VueRouter({
       {path: 'sys/room/list' , component: RoomList },
       {path: 'sys/room/add' , component: RoomForm },
       {path: 'sys/room/edit/:roomId' , component: RoomForm },
+      {path: 'course/course/list' , component: CourseList },
+      {path: 'course/course/add' , component: CourseForm },
+      {path: 'course/course/edit/:courseId' , component: CourseForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

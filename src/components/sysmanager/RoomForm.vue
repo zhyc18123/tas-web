@@ -67,7 +67,6 @@ import io from '../../lib/io'
         data(){
             var campusId  = this.$route.query.campusId
             return{
-                id:'form-'+(new Date().getTime()),
                 formData:{
                   status : '1',
                   campusId : campusId
