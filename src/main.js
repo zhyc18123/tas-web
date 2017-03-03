@@ -28,6 +28,11 @@ import TeacherList from './components/sysmanager/TeacherList'
 import TeacherForm from './components/sysmanager/TeacherForm'
 
 
+import CourseList from './components/course/CourseList'
+import CourseForm from './components/course/CourseForm'
+
+
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 
@@ -69,6 +74,10 @@ const router = new VueRouter({
       {path: 'sys/teacher/list' , component: TeacherList },
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
+
+      {path: 'course/course/list' , component: CourseList },
+      {path: 'course/course/add' , component: CourseForm },
+      {path: 'course/course/edit/:courseId' , component: CourseForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

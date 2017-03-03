@@ -63,6 +63,12 @@ const io = {
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/saveOrUpdateTeacher'
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/delTeacher'
 
+    this.apiAdminCourseTemplateList = conf.baseApiPath + '/api/admin/courseTemplateList'
+    this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
+    this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
+    this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
+    this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
+
 
 
   },

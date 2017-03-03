@@ -6,7 +6,7 @@
         </div>
         <form class="am-form tpl-form-line-form">
           <div class="am-form-group">
-            <input type="text" class="tpl-form-input"  placeholder="请输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
+            <input type="text" class="tpl-form-input"  placeholder="请222输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
           </div>
           <div class="am-form-group">
             <input type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
