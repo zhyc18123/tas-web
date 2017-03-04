@@ -76,7 +76,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教师
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班主任
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required v-model="formData.subjectId" :options="subjects" >
@@ -86,12 +86,12 @@
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班主任
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教师
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.subjectId" :options="subjects" >
+                <!--<select2 required v-model="formData.subjectId" :options="subjects" >
                   <option value="">请选择</option>
-                </select2>
+                </select2>-->
               </div>
             </div>
             <div class="am-form-group">
