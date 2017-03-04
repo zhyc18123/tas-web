@@ -114,7 +114,8 @@ export default {
         groupBusTeams:toGroupBusTeams(ret.data.busTeamList),
         areaTeams:ret.data.areaTeamList || [],
         grades:ret.data.gradeList,
-        subjects:ret.data.subjectList
+        subjects:ret.data.subjectList,
+        courseTemplates:ret.data.courseTemplateList
         }
 
 

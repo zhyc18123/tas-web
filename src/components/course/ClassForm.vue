@@ -20,10 +20,12 @@
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程名
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入班级名" required v-model="formData.className" >
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.courseTemplateId" :options="courseTemplates" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
             <div class="am-form-group">
@@ -178,6 +180,11 @@ import util from '../../lib/util'
           subjects:function(){
             return this.$root.config.subjects.map(function(item){
               return {value:item.subjectId,text:item.subjectName}
+            })
+          },
+          courseTemplates:function(){
+            return this.$root.config.courseTemplates.map(function(item){
+              return {value:item.courseTemplateId,text:item.courseName}
             })
           }
         },
