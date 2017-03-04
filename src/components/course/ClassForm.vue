@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">课程信息</div>
+        <div class="widget-title am-fl">班级信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -12,20 +12,18 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程名
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入课程名" required v-model="formData.courseName" >
+                <input type="text"  class="am-form-field" placeholder="输入班级名" required v-model="formData.className" >
               </div>
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程类型
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.courseTypeId" :options="courseTypeData" >
-                  <option value="">请选择</option>
-                </select2>
+              <div class="am-u-sm-9 input-field">
+                <input type="text"  class="am-form-field" placeholder="输入班级名" required v-model="formData.className" >
               </div>
             </div>
             <div class="am-form-group">
@@ -76,60 +74,44 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>讲数
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教师
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入讲数"  required min="1" step="1"  v-model="formData.lectureAmount" >
+                <select2 required v-model="formData.subjectId" :options="subjects" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每一讲时长(分钟)
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班主任
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入时长"  required min="1" step="1"  v-model="formData.lectureDuration" >
+                <select2 required v-model="formData.subjectId" :options="subjects" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教室
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学位数"  required min="1" step="1"  v-model="formData.quota" >
+                <select2 required v-model="formData.subjectId" :options="subjects" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期名
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
+                <select2 required v-model="formData.subjectId" :options="subjects" >
+                  <option value="">请选择</option>
+                </select2>
               </div>
             </div>
-
-
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                课程介绍
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <editor v-model="formData.courseDescription"></editor>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                课程大纲
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <editor v-model="formData.courseOutline"></editor>
-              </div>
-            </div>
-
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
@@ -151,22 +133,17 @@ import util from '../../lib/util'
         data(){
             return{
                 id:'form-'+(new Date().getTime()),
-                courseTypeData:[],
                 formData:{
                   areaTeamId:'',
                   busTeamId:'',
-                  lectureAmount : 15,
-                  lectureDuration : 45,
-                  quota:0,
-                  studyingFee : 0
                 }
             }
         },
         created:function(){
-         var courseTemplateId  = this.$params('courseId')
-         if(courseTemplateId){
+         var courseClassId  = this.$params('classId')
+         if(courseClassId){
           var _this = this
-          io.post(io.apiAdminCourseClassDetail,{ courseTemplateId : courseTemplateId },
+          io.post(io.apiAdminCourseClassDetail,{ courseClassId : courseClassId },
             function(ret){
               if(ret.success){
                 _this.formData = ret.data
@@ -176,10 +153,6 @@ import util from '../../lib/util'
               _this.$alert('请求服务器失败')
           })
          }
-
-
-          this.loadCourseTypeData()
-
 
         },
         computed:{
@@ -269,23 +242,6 @@ import util from '../../lib/util'
               complete.call()
               _this.$alert('请求服务器失败')
             })
-          },
-          loadCourseTypeData:function(){
-            var _this = this
-            io.post(io.apiAdminChangeCourseTypeList,{},
-              function(ret){
-                if(ret.success){
-                  _this.courseTypeData = ret.data.map(function(item){
-                    return {value:item.courseTypeId,text:item.name }
-                  })
-                }else{
-                  _this.$alert(ret.desc)
-                }
-
-              },
-              function(){
-                _this.$alert('请求服务器失败')
-              })
           }
         }
     }
