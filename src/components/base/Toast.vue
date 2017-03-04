@@ -124,7 +124,6 @@
 </style>
 <script>
   const DEFAULT_OPT = {
-    id: 'easy-toast-default',
     className: '',
     horizontalPosition: 'right',
     verticalPosition: 'top',

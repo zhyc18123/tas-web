@@ -160,7 +160,6 @@ import util from '../../lib/util'
         name:'teacher-form',
         data(){
             return{
-                id:'form-'+(new Date().getTime()),
                 formData:{
                   areaTeamId:'',
                   busTeamId:'',

@@ -24,7 +24,6 @@ export default{
         name:'file-upload',
         data(){
             return{
-                id : 'upload-' + (new Date().getTime()),
                 pgId : 'upload-pg-' + (new Date().getTime()),
                 btnId : 'upload-btn-' + (new Date().getTime()),
             }

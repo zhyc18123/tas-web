@@ -150,7 +150,6 @@ import util from '../../lib/util'
     export default{
         data(){
             return{
-                id:'form-'+(new Date().getTime()),
                 courseTypeData:[],
                 formData:{
                   areaTeamId:'',
@@ -259,7 +258,7 @@ import util from '../../lib/util'
               complete.call()
               if(ret.success){
                 _this.$toast('OK')
-                _this.$router.back()
+                _this.$router.push('/main/course/course/list')
               }else{
                 _this.$alert(ret.desc)
               }

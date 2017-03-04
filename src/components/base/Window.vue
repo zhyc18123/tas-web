@@ -24,11 +24,6 @@
     export default {
       name: 'window',
       props:['title'],
-      data: function(){
-        return {
-          id: 'window-' + (new Date().getTime())
-        }
-      },
       mounted:function(){
         const $modal = $("#"+ this.id ) ;
         $modal.on('opened.modal.amui',function(){

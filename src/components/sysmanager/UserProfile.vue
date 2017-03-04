@@ -109,7 +109,6 @@ import io from '../../lib/io'
         data(){
             var userInfo  = storage.getCurrentUserInfo()
             return{
-                id:'form-'+(new Date().getTime()),
                 formData:userInfo
             }
         },
