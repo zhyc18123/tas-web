@@ -115,7 +115,11 @@ export default {
         areaTeams:ret.data.areaTeamList || [],
         grades:ret.data.gradeList,
         subjects:ret.data.subjectList,
-        courseTemplates:ret.data.courseTemplateList
+        courseTemplates:ret.data.courseTemplateList,
+        teachers:ret.data.teacherList,
+        rooms:ret.data.roomList,
+        periods:ret.data.periodList
+
         }
 
 

@@ -79,7 +79,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班主任
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.subjectId" :options="subjects" >
+                <select2 required v-model="formData.teacherId" :options="teachers" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -89,9 +89,9 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教师
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <!--<select2 required v-model="formData.subjectId" :options="subjects" >
-                  <option value="">请选择</option>
-                </select2>-->
+                <label v-for="item in $root.config.teachers" :key="item.teacherId" class="am-checkbox-inline">
+                  <input type="checkbox" :value="item.teacherId" name="teacherIds" required v-model="formData.teacherIds">{{item.teacherName}}
+                </label>
               </div>
             </div>
             <div class="am-form-group">
@@ -99,7 +99,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教室
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.subjectId" :options="subjects" >
+                <select2 required v-model="formData.roomId" :options="rooms" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -109,7 +109,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期名
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.subjectId" :options="subjects" >
+                <select2 required v-model="formData.periodId" :options="periods" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -138,6 +138,7 @@ import util from '../../lib/util'
                 formData:{
                   areaTeamId:'',
                   busTeamId:'',
+                  teacherIds:[]
                 }
             }
         },
@@ -145,9 +146,10 @@ import util from '../../lib/util'
          var courseClassId  = this.$params('classId')
          if(courseClassId){
           var _this = this
-          io.post(io.apiAdminCourseClassDetail,{ courseClassId : courseClassId },
+          io.post(io.apiAdminSaveOrUpdateClass,{ courseClassId : courseClassId },
             function(ret){
               if(ret.success){
+                ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
                 _this.formData = ret.data
               }
             },
@@ -182,11 +184,26 @@ import util from '../../lib/util'
               return {value:item.subjectId,text:item.subjectName}
             })
           },
+          teachers:function(){
+            return this.$root.config.teachers.map(function(item){
+              return {value:item.teacherId,text:item.teacherName}
+            })
+          },
           courseTemplates:function(){
             return this.$root.config.courseTemplates.map(function(item){
               return {value:item.courseTemplateId,text:item.courseName}
             })
-          }
+          },
+          rooms:function(){
+            return this.$root.config.rooms.map(function(item){
+              return {value:item.roomId,text:item.roomName}
+            })
+          },
+          periods:function(){
+            return this.$root.config.periods.map(function(item){
+              return {value:item.periodId,text:item.periodNo}
+            })
+          },
         },
         mounted:function(){
           var _this = this ;
@@ -234,6 +251,7 @@ import util from '../../lib/util'
           save:function(complete){
             var _this = this
             var data = _this.formData
+            data.teacherIds = data.teacherIds.join(',')
             io.post(io.apiAdminSaveOrUpdateClass,data,
             function(ret){
               complete.call()

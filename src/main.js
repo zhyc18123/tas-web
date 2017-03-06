@@ -125,7 +125,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],courseTemplates:[]} },
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],courseTemplates:[],teachers:[],rooms:[],periods:[]} },
   created:function(){
     this.refreshUserInfo()
   },
