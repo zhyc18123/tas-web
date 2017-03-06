@@ -439,7 +439,6 @@
 
         var configPath = document.getElementsByTagName('script');
 
-      console.log(configPath)
 
         return configPath[ configPath.length - 1 ].src;
 

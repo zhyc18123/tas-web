@@ -36,6 +36,11 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index_test.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      filename: 'pay_test.html',
+      template: 'pay_test.html',
+      inject: false
+    }),
     new FriendlyErrors()
   ]
 })
