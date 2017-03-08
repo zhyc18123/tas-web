@@ -79,7 +79,7 @@
               <td>{{item.busTeamName}}</td>
               <td>
                 <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="$router.push('/main/course/course/edit/'+item.classId)" v-if="hasPermission('edit')">
+                  <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)" v-if="hasPermission('edit')">
                     <i class="am-icon-edit"></i> 编辑
                   </a>
 
