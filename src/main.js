@@ -42,6 +42,7 @@ import ClassForm from './components/course/ClassForm'
 
 
 
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 
@@ -96,6 +97,7 @@ const router = new VueRouter({
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
+
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
