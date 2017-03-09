@@ -41,6 +41,10 @@ import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
 
 
+import StudentList from  './components/enroll/StudentList'
+import StudentForm from  './components/enroll/StudenForm'
+import StudentOne from  './components/enroll/StudentOne'
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -96,6 +100,11 @@ const router = new VueRouter({
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
+
+      {path: 'enroll/student/list' , component: StudentList },
+      {path: 'enroll/student/one' , component: StudentOne },
+      {path: 'enroll/student/add' , component: StudentForm }
+      // {path: 'enroll/student/edit/:classId' , component: ClassForm }
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

@@ -83,6 +83,9 @@ const io = {
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
 
+    this.studentList = conf.baseApiPath + '/api/admin/studentIfExist'
+    this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
+
 
   },
   getHeaders : function(){
