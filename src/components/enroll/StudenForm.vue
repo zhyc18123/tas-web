@@ -65,7 +65,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入就读学校"  required min="1" step="1"  v-model="formData.address" >
+                <input type="text" placeholder="输入就读学校"  required min="1" step="1"  v-model="formData.address" >
               </div>
             </div>
 
@@ -113,7 +113,7 @@
           sex:''
         }
       }
-    },  
+    },
     mounted:function(){
       var _this = this ;
       $('#' + this.id ).validator({

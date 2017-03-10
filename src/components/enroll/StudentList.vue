@@ -69,7 +69,7 @@
                 <td>{{item.gradId }}</td>
                 <td>{{item.createTime}}</td>
                 <td>{{item.location}}</td>
-                <td>{{item.address}}</td>
+                <td>{{item.school}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>{{item.status == 0 ? '未启用':'已启用'}}</td>
@@ -141,6 +141,7 @@
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
+              alert(JSON.stringify(ret.data));
             _this.tableData = ret.data;
           }else{
             _this.$alert(ret.desc)
