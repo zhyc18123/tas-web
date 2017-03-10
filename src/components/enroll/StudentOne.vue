@@ -15,7 +15,7 @@
                 </div>
               </div>
             </div>
-          </div>Ser
+          </div>
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
