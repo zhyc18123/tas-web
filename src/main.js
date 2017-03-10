@@ -42,6 +42,7 @@ import ClassForm from './components/course/ClassForm'
 
 
 import StudentList from  './components/enroll/StudentList'
+// import StudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
 import StudentOne from  './components/enroll/StudentOne'
 

@@ -150,7 +150,6 @@ import Pagination from '../base/Pagination'
               pageSize:_this.pageSize
             },_this.query),function(ret){
               if(ret.success){
-                alert("list is :"+ret.data.list);
                 _this.total = ret.data.total
                 _this.tableData = ret.data.list
               }else{
