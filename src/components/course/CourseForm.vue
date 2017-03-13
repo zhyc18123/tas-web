@@ -162,7 +162,7 @@ import util from '../../lib/util'
             }
         },
         created:function(){
-         var courseTemplateId  = this.$params('courseId')
+         var courseTemplateId  = this.$params('courseId');
          if(courseTemplateId){
           var _this = this
           io.post(io.apiAdminTemplateDetailDetail,{ courseTemplateId : courseTemplateId },

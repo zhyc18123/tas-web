@@ -193,7 +193,8 @@
           function(){
             _this.$alert('请求服务器失败')
           })
-      }
+      },
+
     }
   }
 </script>
