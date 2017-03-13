@@ -118,7 +118,8 @@ export default {
         courseTemplates:ret.data.courseTemplateList,
         teachers:ret.data.teacherList,
         rooms:ret.data.roomList,
-        periods:ret.data.periodList
+        periods:ret.data.periodList,
+        campuses:ret.data.campusList
 
         }
 

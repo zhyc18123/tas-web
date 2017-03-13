@@ -114,6 +114,16 @@
                 </select2>
               </div>
             </div>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>校区
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.campusId" :options="campuses" >
+                  <option value="">请选择</option>
+                </select2>
+              </div>
+            </div>
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
@@ -146,7 +156,7 @@ import util from '../../lib/util'
          var courseClassId  = this.$params('classId');
          if(courseClassId){
           var _this = this
-          io.post(io.apiAdminSaveOrUpdateClass,{ courseClassId : courseClassId },
+          io.post(io.apiAdminCourseClassDetail,{ courseClassId : courseClassId },
             function(ret){
               if(ret.success){
                 ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
@@ -206,6 +216,11 @@ import util from '../../lib/util'
               return {value:item.periodId,text:item.periodNo}
             })
           },
+          campuses:function(){
+            return this.$root.config.campuses.map(function(item){
+              return {value:item.campusId,text:item.campusName}
+            })
+          }
         },
         mounted:function(){
           var _this = this ;
@@ -259,7 +274,7 @@ import util from '../../lib/util'
               complete.call()
               if(ret.success){
                 _this.$toast('OK')
-                _this.$router.back()
+                _this.$router.push('/main/course/class/list')
               }else{
                 _this.$alert(ret.desc)
               }
@@ -269,7 +284,8 @@ import util from '../../lib/util'
               complete.call()
               _this.$alert('请求服务器失败')
             })
-          }
+          },
+          //TODO:获取课程等数据，
         }
     }
 </script>
