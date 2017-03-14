@@ -11,7 +11,7 @@
           <div class="am-form-group">
             <input type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
           </div>
-          <div class="am-form-group am-g-collapse"><!-- v-if="showCaptchaCode" -->
+          <div class="am-form-group am-g-collapse" v-if="showCaptchaCode">
             <div class="am-u-sm-8">
               <input type="text" class="tpl-form-input"  placeholder="请输入验证码" v-model="formData.captchaCode" >
             </div>
@@ -55,7 +55,7 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
             formData:{},
             rememberMe : true,
             captchaCodeUrl : io.apiCaptcha,
-            showCaptchaCode : true            //表示显示
+            showCaptchaCode : false
           }
         },
         created:function(){
