@@ -6,7 +6,7 @@
         </div>
         <form class="am-form tpl-form-line-form">
           <div class="am-form-group">
-            <input type="text" class="tpl-form-input"  placeholder="请222输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
+            <input type="text" class="tpl-form-input"  placeholder="请输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
           </div>
           <div class="am-form-group">
             <input type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
@@ -66,6 +66,7 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
               this.formData.username = loginInfo.username
               this.formData.password = PASSWORD_PLACEHOLDER
               this.localPassword = loginInfo.password
+              this.formData.captchaCode = loginInfo.captchaCode
             }
           }
         },
@@ -100,7 +101,8 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
 
             io.post(io.apiAdminLogin,{
               username : this.formData.username,
-              password : password
+              password : password,
+              captchaCode :this.formData.captchaCode                     //添加验证码
             },function(ret){
               $submitBtn.removeAttr("disabled")
               if(ret.success){
@@ -141,8 +143,6 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
           refreshCaptchaCode:function(){
             this.captchaCodeUrl = io.apiCaptcha + '?t=' + (new Date().getTime())
           }
-
-
           }
     }
 </script>

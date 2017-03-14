@@ -40,6 +40,44 @@
       }
     },
     methods:{
+      save:function(complete){
+        var _this = this
+        var data = _this.formData
+        io.post(io.studentSaveOrUpdate,data,
+          function(ret){
+            complete.call()
+            if(ret.success){
+              _this.$toast('OK')
+              _this.$router.push('/main/enroll/student/list')
+            }else{
+              _this.$alert(ret.desc)
+            }
+
+          },
+          function(){
+            complete.call()
+            _this.$alert('请求服务器失败')
+          })
+      },
+      loadCourseTypeData:function(){
+        var _this = this
+        io.post(io.studentSaveOrUpdate,{},
+          function(ret){
+            if(ret.success){
+                alert(123);
+              _this.courseTypeData = ret.data.map(function(item){
+                return {value:item.courseTypeId,text:item.name }
+              })
+            }else{
+              _this.$alert(ret.desc)
+            }
+
+          },
+          function(){
+            _this.$alert('请求服务器失败')
+          })
+      },
+
       saveCompleted : function(){
         this.$router.push('/main/enroll/student/list')
       }

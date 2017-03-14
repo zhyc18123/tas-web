@@ -153,13 +153,14 @@ import util from '../../lib/util'
             }
         },
         created:function(){
-         var courseClassId  = this.$params('classId')
+         var courseClassId  = this.$params('classId');
          if(courseClassId){
           var _this = this
           io.post(io.apiAdminCourseClassDetail,{ courseClassId : courseClassId },
             function(ret){
               if(ret.success){
                 ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
+                console.log(ret.data.teacherIds);
                 _this.formData = ret.data
               }
             },
@@ -173,6 +174,7 @@ import util from '../../lib/util'
           areaTeams : function(){
             var options =  ( this.$root.config.areaTeams || [] )
             .map(function(item){
+              alert(item.areaTeamId);
               return {value:item.areaTeamId,text:item.name}
             })
             return options
