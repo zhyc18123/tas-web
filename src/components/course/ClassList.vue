@@ -6,7 +6,7 @@
           <div class="widget-title  am-cf">班级列表</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-u-sm-12 am-form">
+          <div class="am-u-sm-12 am-form ">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.areaTeamId" :options="areaTeams">
@@ -106,13 +106,13 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" placeholder="班级名称"/>
+                <input type="text" name="className" v-model="query.className" placeholder="班级名称"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" placeholder="教师姓名"/>
+                <input type="text" name="teacherNames" v-model="query.teacherNames" placeholder="教师姓名"/>
               </div>
             </div>
 
@@ -147,10 +147,6 @@
             </div>
 
           </div>
-
-
-
-
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
@@ -290,7 +286,7 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.subjectId, text: item.subjectName}
+          return {value: item.periodId, text: item.periodNo}
         })
       }
 

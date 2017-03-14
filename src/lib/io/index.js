@@ -87,7 +87,6 @@ const io = {
 
     this.studentList = conf.baseApiPath + '/api/admin/studentIfExist'
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
-    this.studentSearch = conf.baseApiPath + '/api/admin/studentSearch'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 

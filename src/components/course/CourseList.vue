@@ -7,7 +7,34 @@
       </div>
       <div class="widget-body  am-fr">
 
-        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+        <!--searching condition-->
+        <div class="am-u-sm-12 am-form ">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.areaTeamId" :options="areaTeams">
+                <option value="">区域组</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.busTeamId" :options="busTeams">
+                <option value="">业务组</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.productId" :options="products">
+                <option value="">产品</option>
+              </select2>
+            </div>
+          </div>
+
+        </div>
+
+<!--        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
           <div class="am-form-group">
             <div class="am-btn-toolbar">
               <div class="am-btn-group am-btn-group-xs">
@@ -15,8 +42,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
+<!--
         <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
           <div class="am-form-group tpl-table-list-select">
             <selected v-model="searchConfig.searchItem">
@@ -40,6 +68,7 @@
             </span>
           </div>
         </div>
+-->
 
         <div class="am-u-sm-12 am-scrollable-horizontal">
           <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
