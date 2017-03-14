@@ -7,7 +7,7 @@
         <div class="tpl-page-state-content tpl-error-content">
 
           <p>对不起,没有找到您所需要的页面,可能是URL不确定,或者页面已被移除。</p>
-          <button type="button" class="am-btn am-btn-secondary am-radius tpl-error-btn">Back Home</button></div>
+          <button type="button" class="am-btn am-btn-secondary am-radius tpl-error-btn" @click="toBack">Back Home</button></div>
 
       </div>
     </div>
@@ -19,6 +19,11 @@
 <script>
 
     export default{
-        name:'not-found'
+        name:'not-found',
+        methods:{
+            toBack:function () {
+                this.$router.push({path:'/main/index'})
+            }
+        }
     }
 </script>

@@ -78,8 +78,11 @@ const io = {
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
+    this.apiAdminCourseProductTemplateList  = conf.baseApiPath + '/api/admin/courseProductList'
+    this.productSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
     this.apiAdminBaseProductList = conf.baseApiPath + '/api/admin/baseProductList'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
+    // this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/productDetail'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
@@ -87,6 +90,8 @@ const io = {
 
     this.studentList = conf.baseApiPath + '/api/admin/studentIfExist'
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
+    this.studentSearch = conf.baseApiPath + '/api/admin/studentSearch'
+    this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 

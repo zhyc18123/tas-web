@@ -3,30 +3,24 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">学生列表</div>
+          <div class="widget-title  am-cf">产品列表</div>
         </div>
         <div class="widget-body  am-fr">
-
-
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+                  <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
-                <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
-                  <option>请选择</option>
-                  <option value="studentId">学生编号</option>
-                  <option value="name">学生姓名</option>
-                  <option value="phoneNo">学生手机</option>
+                <select data-am-selected="{btnSize: 'sm'}" placeholder="区域" >
+                  <option></option>
                 </select>
               </selected>
             </div>
@@ -45,36 +39,26 @@
               <thead>
               <tr>
                 <th>操作</th>
-                <th>姓名</th>
-                <th>学号</th>
-                <th>出生日期</th>
-                <th>年级</th>
-                <th>就读学校</th>
-                <th>短信号码</th>
-                <th>城市</th>
-                <th>校区</th>
-                <th>状态</th>
+                <th>产品</th>
+                <th>区域</th>
+                <th>操作人</th>
+                <th>操作时间</th>
               </tr>
               </thead>
               <tbody>
-              <input type="hidden"  id="terry" value="123"/>
-              <tr v-for="item in tableData" :key="item.userId">
+
+              <tr v-for="item in tableData" :key="item.productId">
                 <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 确认
-                    </a>
-                  </div>
-                </td>
+                <div class="tpl-table-black-operation">
+                  <a href="javascript:;" @click="$router.push('/main/product/product/edit/'+item.productId)" v-if="hasPermission('edit')">
+                    <i class="am-icon-edit"></i> 编辑
+                  </a>
+                </div>
+              </td>
                 <td>{{item.name}}</td>
-                <td>{{item.studentNo }}</td>
-                <td>{{item.birthday | formatDate }}</td>
-                <td>{{item.gradeName}}</td>
-                <td>{{item.school}}</td>
-                <td>{{item.phoneNo}}</td>
-                <td>{{item.location}}</td>
+                <td>{{item.areaTeamName }}</td>
                 <td></td>
-                <td>{{item.status == 0 ? '未启用':'已启用'}}</td>
+                <td>{{item.updateTime}}</td>
               </tr>
 
 
@@ -82,19 +66,14 @@
               </tbody>
             </table>
           </div>
-
-
-
-
           <div class="am-u-lg-12 am-cf">
 
             <div class="am-fr">
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
-
         </div>
-      </div>
+        </div>
     </div>
 
   </div>
@@ -105,12 +84,13 @@
 
   import Pagination from '../base/Pagination'
 
-
   export default{
     data:function(){
       return {
         tableData:[],
-        tableJson:[],
+        total:0,
+        pageSize:5,
+        pageNo:1,
         query:{},
         searchConfig:{}
       }
@@ -135,24 +115,20 @@
         this.loadTableData()
       },
       loadTableData:function(pageNo){
-
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.studentList,$.extend({
+        io.post(io.apiAdminCourseProductTemplateList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
-              //alert(JSON.stringify(ret.data));
-            _this.tableData = ret.data;
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
           }else{
             _this.$alert(ret.desc)
           }
         })
       }
-
     }
   }
-
-
 </script>
