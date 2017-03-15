@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">新建产品</div>
+        <div class="widget-title am-fl">产品信息</div>
       </div>
       <div class="widget-body am-fr">
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
@@ -12,7 +12,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>产品名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入产品名称" v-model="formData.name" >
+                <input type="text"  class="am-form-field" placeholder="请输入产品名称" v-model="formData.name" required>
               </div>
             </div>
 
@@ -21,8 +21,8 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2  required v-model="formData.gradeName">
-                  <option value="0">请选择所属区域</option>
+                <select2 required v-model="formData.areaTeamId" :options="areaTeams" >
+                  <option value="">请选择</option>
                 </select2>
               </div>
             </div>
@@ -46,9 +46,9 @@
   export default{
     data(){
       return{
-        courseTypeData:[],
+        productTypeData:[],
         formData:{
-          sex:''
+          areaTeamId:'',
         }
       }
     },
@@ -93,12 +93,36 @@
         }
       });
     },
-
+    created:function(){
+      var productId  = this.$params('productId');
+      if(productId){
+        var _this = this
+        io.post(io.apiAdminTemplateDetail,{ productId : productId },
+          function(ret){
+            if(ret.success){
+              _this.formData = ret.data
+            }
+          },
+          function(){
+            _this.$alert('请求服务器失败')
+          })
+      }
+      this.loadProductTypeData()
+    },
+    computed:{
+      areaTeams: function () {
+        var options = ( this.$root.config.areaTeams || [] )
+          .map(function (item) {
+            return {value: item.areaTeamId, text: item.name}
+          })
+        return options
+      },
+    },
     methods:{
       save:function(complete){
         var _this = this
         var data = _this.formData
-        io.post(io.productSaveOrUpdate,data,
+        io.post(io.apiAdminProductSaveOrUpdate,data,
           function(ret){
             complete.call()
             if(ret.success){
@@ -114,14 +138,13 @@
             _this.$alert('请求服务器失败')
           })
       },
-      loadCourseTypeData:function(){
+      loadProductTypeData:function(){
         var _this = this
-        io.post(io.studentSaveOrUpdate,{},
+        io.post(io.apiAdminProductSaveOrUpdate,{},
           function(ret){
             if(ret.success){
-              alert(123);
-              _this.courseTypeData = ret.data.map(function(item){
-                return {value:item.courseTypeId,text:item.name }
+              _this.productTypeData = ret.data.map(function(item){
+                return {value:item.productId,text:item.name }
               })
             }else{
               _this.$alert(ret.desc)

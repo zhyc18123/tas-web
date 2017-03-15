@@ -106,20 +106,20 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" name="className" v-model="query.className" placeholder="班级名称"/>
+                <input type="text" name="className" v-model="query.className" placeholder="请输入班级名称"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" name="teacherNames" v-model="query.teacherNames" placeholder="教师姓名"/>
+                <input type="text" name="teacherNames" v-model="query.teacherNames" placeholder="请输入教师姓名"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.startCourseTime" >
-                  <input type="text" placeholder="开课日期" data-am-datepicker readonly  required >
+                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
                 </date-picker>
               </div>
             </div>

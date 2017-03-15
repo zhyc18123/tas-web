@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>校区名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入校区名" required v-model="formData.campusName">
+                <input type="text"  class="am-form-field" placeholder="请输入校区名" required v-model="formData.campusName">
               </div>
             </div>
             <div class="am-form-group">
@@ -23,7 +23,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>详细地址
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入详细地址" required v-model="formData.address">
+                <input type="text"  class="am-form-field" placeholder="请输入详细地址" required v-model="formData.address">
               </div>
             </div>
 
@@ -32,7 +32,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入手机号"  data-validation-message="输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
               </div>
             </div>
 

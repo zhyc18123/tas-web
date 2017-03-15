@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>角色名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入角色名" required v-model="formData.roleName">
+                <input type="text" class="am-form-field" placeholder="请输入角色名" required v-model="formData.roleName">
               </div>
             </div>
 
