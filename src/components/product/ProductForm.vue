@@ -127,7 +127,7 @@
             complete.call()
             if(ret.success){
               _this.$toast('OK')
-              _this.$router.push('/main/product/product/list')
+              _this.$router.push('/main/course/product/list')
             }else{
               _this.$alert(ret.desc)
             }

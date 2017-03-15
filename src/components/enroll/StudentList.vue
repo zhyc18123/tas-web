@@ -6,9 +6,6 @@
           <div class="widget-title  am-cf">学生列表</div>
         </div>
         <div class="widget-body  am-fr">
-
-
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
@@ -18,7 +15,6 @@
               </div>
             </div>
           </div>
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
@@ -73,27 +69,17 @@
                 <td>{{item.location}}</td>
                 <td></td>
               </tr>
-
-
-              <!-- more data -->
               </tbody>
             </table>
           </div>
-
-
-
-
           <div class="am-u-lg-12 am-cf">
-
             <div class="am-fr">
               <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -101,7 +87,6 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-
 
   export default{
     data:function(){
