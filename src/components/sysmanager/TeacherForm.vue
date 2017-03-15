@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>姓名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入用姓名" required v-model="formData.teacherName">
+                <input type="text"  class="am-form-field" placeholder="请输入姓名" required v-model="formData.teacherName">
               </div>
             </div>
             <div class="am-form-group">
@@ -36,7 +36,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>身份证号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入身份证号码" required pattern="^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$" v-model="formData.idNo">
+                <input type="text"  class="am-form-field" placeholder="请输入身份证号码" required pattern="^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$" v-model="formData.idNo">
               </div>
             </div>
 
@@ -45,7 +45,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入手机号"  data-validation-message="输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
               </div>
             </div>
 
@@ -102,7 +102,7 @@
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <date-picker v-model="formData.joinTime" >
-                  <input type="text" placeholder="入职日期" data-am-datepicker readonly  required >
+                  <input type="text" placeholder="请选择入职日期" data-am-datepicker  required >
                 </date-picker>
               </div>
             </div>
