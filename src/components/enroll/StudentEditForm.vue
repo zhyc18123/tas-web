@@ -225,7 +225,7 @@
         this.guardianList.push({})
       },
       delGuardian : function(index){
-        if(this.guardianList.length == 1
+        if(this.guardianList.length <= 1
         ){
           return
         }

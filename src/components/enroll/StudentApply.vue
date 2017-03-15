@@ -1,3 +1,5 @@
+
+
 <template>
   <div >
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
@@ -109,7 +111,7 @@
         tableData:[],
         tableJson:[],
         query:{},
-        searchConfig:{}
+        name:''
       }
     },
     components: {
@@ -140,7 +142,7 @@
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
-              //alert(JSON.stringify(ret.data));
+            //alert(JSON.stringify(ret.data));
             _this.tableData = ret.data;
           }else{
             _this.$alert(ret.desc)
