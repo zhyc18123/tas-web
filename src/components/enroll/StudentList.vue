@@ -24,7 +24,7 @@
               <selected v-model="searchConfig.searchItem">
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
                   <option>请选择</option>
-                  <option value="studentId">学生编号</option>
+                  <option value="studentNo">学生编号</option>
                   <option value="name">学生姓名</option>
                   <option value="phoneNo">学生手机</option>
                 </select>
@@ -86,7 +86,8 @@
           <div class="am-u-lg-12 am-cf">
 
             <div class="am-fr">
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
             </div>
           </div>
 
@@ -107,7 +108,9 @@
     data:function(){
       return {
         tableData:[],
-        tableJson:[],
+        total: 0,
+        pageSize: 5,
+        pageNo: 1,
         query:{},
         searchConfig:{}
       }

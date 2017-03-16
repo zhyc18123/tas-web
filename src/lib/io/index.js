@@ -92,6 +92,7 @@ const io = {
     this.studentSearch = conf.baseApiPath + '/api/admin/studentSearch'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
     this.apiAdminStudentList = conf.baseApiPath + '/api/admin/studentList'
+    this.apiAdminSaveOrUpdateStudentReg = conf.baseApiPath + '/api/admin/saveOrUpdateStudentReg'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
