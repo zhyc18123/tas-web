@@ -36,6 +36,8 @@ import RoomForm from './components/sysmanager/RoomForm'
 
 import CourseList from './components/course/CourseList'
 import CourseForm from './components/course/CourseForm'
+import ProductList from './components/product/ProductList'
+import ProductForm from './components/product/ProductForm'
 
 import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
@@ -44,7 +46,9 @@ import ClassForm from './components/course/ClassForm'
 import StudentList from  './components/enroll/StudentList'
 // import StudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
-import StudentOne from  './components/enroll/StudentOne'
+//import StudentOne from  './components/enroll/StudentOne'
+import StudentReg from  './components/enroll/StudentReg'
+import StudentApply from  './components/enroll/StudentApply'
 
 import FutureReport from './components/settlement/FutureReport'
 import FutureReportDetail from './components/settlement/FutureReportDetail'
@@ -100,15 +104,21 @@ const router = new VueRouter({
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
       {path: 'course/course/edit/:courseId' , component: CourseForm },
+      {path: 'course/product/list',  component:  ProductList},
+      {path: 'product/product/add' , component: ProductForm },
+      {path: 'product/product/edit/:productId' , component: ProductForm },
+
 
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
 
       {path: 'enroll/student/list' , component: StudentList },
-      {path: 'enroll/student/one' , component: StudentOne },
+      {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
-      {path: 'enroll/student/edit/:studentId' , component: StudentOne },
+      {path: 'enroll/student/edit/:studentId' , component: StudentForm },
+      {path: 'enroll/student/reg/:studentId' , component: StudentReg },
+      {path: 'enroll/student/apply/:studentId' , component: StudentReg },
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
 
 
@@ -143,7 +153,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],courseTemplates:[],teachers:[],rooms:[],periods:[],campuses:[]} },
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} },
   created:function(){
     this.refreshUserInfo()
   },

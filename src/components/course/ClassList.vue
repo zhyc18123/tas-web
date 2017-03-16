@@ -6,127 +6,145 @@
           <div class="widget-title  am-cf">班级列表</div>
         </div>
         <div class="widget-body  am-fr">
-
-          <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
-            <fieldset>
+          <div class="am-u-sm-12 am-form ">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                  <div class="am-form-group">
-                    <div class="am-u-sm-3 input-field">
-                      <select2 required name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">
-                        <option value="">城市</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">区域</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">校区</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">年份</option>
-                      </select2>
-                    </div>
-                  </div>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                  <div class="am-form-group">
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">季节</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">产品</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="grade" v-model="formData.gradeId" :options="grades">
-                        <option value="">年级</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams">
-                        <option value="">学科</option>
-                      </select2>
-                    </div>
-                  </div>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                  <div class="am-form-group">
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="openStatus" v-model="formData.openStatus" >
-                        <option value="">班级状态</option>
-                        <option value="0">未开班</option>
-                        <option value="1">已开班</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <input type="text" class="am-form-field" placeholder="班级名称" required v-model="formData.className">
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <input type="text" class="am-form-field" placeholder="开课日期" required v-model="formData.className">
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <input type="text" class="am-form-field" placeholder="教师姓名" required v-model="formData.className">
-                    </div>
-                  </div>
-                </div>
-                <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-                  <div class="am-form-group">
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <input type="text" class="am-form-field" placeholder="教室" required v-model="formData.className">
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="isArrangeTime" v-model="formData.isArrangeTime" >
-                        <option value="">是否排时间</option>
-                        <option value="0">是</option>
-                        <option value="1">否</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="isArrangeRoom" v-model="formData.isArrangeRoom" >
-                        <option value="">是否排教室</option>
-                        <option value="0">是</option>
-                        <option value="1">否</option>
-                      </select2>
-                    </div>
-                    <div class="am-u-sm-3 am-u-end input-field">
-                      <select2 name="isArrangeTeacher" v-model="formData.isArrangeTeacher" >
-                        <option value="">是否排老师</option>
-                        <option value="0">是</option>
-                        <option value="1">否</option>
-                      </select2>
-                    </div>
-                  </div>
-                </div>
-
+                <select2  v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">区域组</option>
+                </select2>
               </div>
-            </fieldset>
-          </form>
-
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-3 am-u-lg-offset-6">
-            <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
-                class="am-icon-plus"></span>新增
-              </button>
             </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-3 am-u-sm-3">
-            <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="$router.push('')" ><span
-                class="am-icon-search"></span>查询
-              </button>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.busTeamId" :options="busTeams">
+                  <option value="">业务组</option>
+                </select2>
+              </div>
             </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.productId" :options="products">
+                  <option value="">产品</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.courseTemplateId" :options="courses">
+                  <option value="">课程</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.periodId" :options="periods">
+                  <option value="">期数</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.gradeId" :options="grades">
+                  <option value="">年级</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.subjectId" :options="subjects">
+                  <option value="">科目</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.status">
+                  <option value="">班级状态</option>
+                  <option value="0">未开班</option>
+                  <option value="1">已开班</option>
+                  <option value="2">已作废</option>
+                  <option value="3">已结课</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.isArrangeTime">
+                  <option value="">是否排时间</option>
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.isArrangeRoom">
+                  <option value="">是否教室</option>
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.isArrangeTeacher">
+                  <option value="">是否老师</option>
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" name="className" v-model="query.className" placeholder="请输入班级名称"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" name="teacherNames" v-model="query.teacherNames" placeholder="请输入教师姓名"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <date-picker v-model="query.startCourseTime" >
+                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
+                </date-picker>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="search" ><span class="am-icon-search"></span>查询
+                </button>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
+                  class="am-icon-plus"></span>新建班级
+                </button>
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
+                  class="am-icon-plus"></span>快速排班
+                </button>
+              </div>
+            </div>
+
           </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
@@ -157,7 +175,7 @@
               </thead>
               <tbody>
 
-              <tr v-for="item in tableData" :key="item.userId">
+              <tr v-for="item in tableData" :key="item.classId">
                 <td>
                   排时间 排教室 排老师
                   <div class="tpl-table-black-operation">
@@ -217,12 +235,14 @@
         total: 0,
         pageSize: 5,
         pageNo: 1,
-        query: {},
+        query: {
+          areaTeamId : '',
+          busTeamId : '',
+          productId : '',
+        },
         searchConfig: {},
-        formData: {
-          areaTeamId: '',
-          busTeamId: '',
-        }
+        products:[],
+        courses:[]
       }
     },
     components: {
@@ -232,7 +252,9 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo);
+      this.loadTableData(this.pageNo)
+      this.loadProductData()
+      this.loadCourseData()
     },
     computed: {
       areaTeams: function () {
@@ -243,39 +265,32 @@
         return options
       },
       busTeams: function () {
-        var options = ( ( this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] ) : [] )
+        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
           .map(function (item) {
             return {value: item.busTeamId, text: item.name}
           })
+        this.query.busTeamId = ''
         return options
       },
       grades: function () {
-        var _this = this
-        io.post(io.apiAdminLoadGradesByAreaTeamIdAndBusTeamId, $.extend({
-          areaTeamId: _this.formData.areaTeamId ,
-          busTeamId: _this.formData.busTeamId
-        }, _this.query), function (ret) {
-          if (ret.success) {
-            var results = ret.data.list;
-            results.map(function (item) {
-              return {value: item.gradeId,text:item.gradeName}
-            })
-          } else {
-            return [];
-            _this.$alert(ret.desc)
-          }
+        return this.$root.config.grades.map(function(item){
+          return {value: item.gradeId, text: item.gradeName}
+        })
+      },
+      subjects: function () {
+        return this.$root.config.subjects.map(function(item){
+          return {value: item.subjectId, text: item.subjectName}
+        })
+      },
+      periods:function(){
+        return this.$root.config.periods.map(function(item){
+          return {value: item.periodId, text: item.periodNo}
         })
       }
 
     },
     methods: {
       search: function () {
-        this.query = {}
-        if (!this.searchConfig.searchItem) {
-          this.$alert('请选择搜索选项')
-          return
-        }
-        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
         this.loadTableData()
       },
       loadTableData: function (pageNo) {
@@ -288,6 +303,30 @@
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadProductData: function () {
+        var _this = this
+        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+          if (ret.success) {
+            _this.products = ret.data.map(function (item) {
+              return {value: item.productId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadCourseData: function () {
+        var _this = this
+        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
+          if (ret.success) {
+            _this.courses = ret.data.map(function (item) {
+              return {value: item.courseTemplateId, text: item.courseName}
+            })
           } else {
             _this.$alert(ret.desc)
           }

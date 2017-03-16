@@ -1,0 +1,117 @@
+<template>
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+    <div class="widget am-cf">
+      <div class="widget-head am-cf">
+        <div class="widget-title am-fl">学生报名</div>
+        <div class="widget-function am-fr">
+          <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+        </div>
+      </div>
+      <div class="box">
+      <table class="am-u-sm-12 ">
+        <tr>
+          <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
+          <td>学号：{{formData.studentNo}}</td>
+          <td>余额：</td>
+          <td>年级：{{formData.gradeName}}</td>
+        </tr>
+        <tr>
+          <td>首报校区：</td>
+          <td>电话：{{formData.phoneNo}}</td>
+          <td>就读小学：{{formData.school}}</td>
+        </tr>
+      </table>
+      </div>
+      <div class="widget-body am-fr">
+
+        <div class="am-tabs" data-am-tabs="{noSwipe: 1}" >
+          <ul class="am-tabs-nav am-nav am-nav-tabs">
+            <li class="am-active"><a href="javascript: void(0)">班级报名</a></li>
+            <li><a href="javascript: void(0)">代缴费</a></li>
+            <li><a href="javascript: void(0)">订单信息</a></li>
+            <li><a href="javascript: void(0)">在读班级</a></li>
+            <li><a href="javascript: void(0)">班级历史</a></li>
+            <li><a href="javascript: void(0)">学生明细</a></li>
+          </ul>
+
+          <div class="am-tabs-bd">
+            <div class="am-tab-panel am-active">
+              <student-apply :studentId="studentId" ></student-apply>
+            </div>
+            <div class="am-tab-panel">
+              代缴费
+            </div>
+            <div class="am-tab-panel">
+              订单信息
+            </div>
+            <div class="am-tab-panel">
+              在读班级
+            </div>
+            <div class="am-tab-panel">
+              班级历史
+            </div>
+            <div class="am-tab-panel">
+              <student-edit-from :studentId="studentId" ></student-edit-from>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</template>
+<style>
+
+  .widget table{
+    background: #eee;
+  }
+  .am-u-sm-12 tr{
+    text-align: left;
+  }
+  .am-text-middle{
+    font-size: 36px;
+    text-align: center !important;
+  }
+</style>
+
+<script>
+  import io from '../../lib/io'
+  import util from '../../lib/util'
+  import StudentEditForm from './StudentEditForm'
+  import StudentApply from './StudentApply'
+  export default{
+    data(){
+      return {
+        studentId : '',
+        formData:[]
+      }
+    },
+    components:{
+      'student-edit-from': StudentEditForm,
+      'student-apply': StudentApply
+    },
+    created: function () {
+      var studentId = this.$params('studentId')
+      if (studentId) {
+        this.studentId = studentId
+        var _this = this
+        io.get(io.apiAdminStudentDetail, {studentId: studentId},
+          function (ret) {
+            if (ret.success) {
+              ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
+              _this.formData = ret.data.student
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      }
+    },
+    mounted: function () {
+
+    },
+    methods: {
+
+    }
+  }
+</script>

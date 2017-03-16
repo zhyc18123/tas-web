@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>业务组名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入业务名" required v-model="formData.name">
+                <input type="text" class="am-form-field" placeholder="请输入业务名" required v-model="formData.name">
               </div>
             </div>
             <div class="am-form-group">

@@ -37,7 +37,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入手机号"  data-validation-message="输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
               </div>
             </div>
 
@@ -77,13 +77,13 @@
         <div class="am-form-group">
           <label class="am-u-sm-2 am-form-label">原密码</label>
           <div class="am-u-sm-10">
-            <input id="oldPasswordInput" type="password" placeholder="输入你的原密码" required>
+            <input id="oldPasswordInput" type="password" placeholder="请输入您原来的密码" required>
           </div>
         </div>
         <div class="am-form-group">
           <label class="am-u-sm-2 am-form-label">新密码</label>
           <div class="am-u-sm-10">
-            <input id="newPasswordInput" type="password" placeholder="输入你的新密码(6-16位)" required>
+            <input id="newPasswordInput" type="password" placeholder="请输入您的新密码(6-16位)" required>
           </div>
         </div>
 

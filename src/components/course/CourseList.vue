@@ -5,40 +5,97 @@
       <div class="widget-head am-cf">
         <div class="widget-title  am-cf">课程列表</div>
       </div>
-      <div class="widget-body  am-fr">
+      <div class="widget-body am-fr">
 
-        <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-          <div class="am-form-group">
-            <div class="am-btn-toolbar">
-              <div class="am-btn-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/course/course/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+        <!--searching condition-->
+        <div class="am-u-sm-12 am-form ">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.areaTeamId" :options="areaTeams">
+                <option value="">区域组</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.busTeamId" :options="busTeams">
+                <option value="">业务组</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.productId" :options="products">
+                <option value="">产品</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.gradeId" :options="grades">
+                <option value="">年级</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.subjectId" :options="subjects">
+                <option value="">学科</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+            <div class="am-form-group">
+              <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                      @click="search" ><span class="am-icon-search"></span>查询
+              </button>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <div class="am-btn-toolbar">
+                <div class="am-btn-group ">
+                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="$router.push('/main/course/course/add')"
+                          v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增课程</button>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
-          <div class="am-form-group tpl-table-list-select">
-            <selected v-model="searchConfig.searchItem">
-              <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
-                <option></option>
-                <option value="courseName">课程名</option>
-                <option value="courseTypeName">课程类型</option>
-                <option value="gradeName">年级</option>
-                <option value="subjectName">科目</option>
-                <option value="areaTeamName">区域组</option>
-                <option value="busTeamName">业务组</option>
-              </select>
-            </selected>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <div class="am-form-group am-form-file">
+                <div>
+                  <button type="button" class="am-btn am-btn-default am-btn-sm">
+                    <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
+                </div>
+                <input type="file" id="doc-ipt-file2" @change>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-            <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
-            <span class="am-input-group-btn">
-              <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" @click="search"></button>
-            </span>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <div class="am-btn-toolbar">
+                <div class="am-btn-group ">
+                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click=""
+                          v-if="hasPermission('add')"><span class="am-icon-download"></span>下载模板</button>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
 
         <div class="am-u-sm-12 am-scrollable-horizontal">
@@ -58,7 +115,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="item in tableData" :key="item.userId">
+            <tr v-for="item in tableData" :key="item.courseTemplateId">
               <td>{{item.courseName}}</td>
               <td>{{item.courseTypeName }}</td>
               <td>{{item.gradeName}}</td>
@@ -107,10 +164,14 @@ import Pagination from '../base/Pagination'
           return {
             tableData:[],
             total:0,
-            pageSize:5,
+            pageSize:10,
             pageNo:1,
-            query:{},
-            searchConfig:{}
+            query:{
+              areaTeamId : '',
+              busTeamId : '',
+              productId : ''
+            },
+            products:[],
           }
         },
         components: {
@@ -120,16 +181,40 @@ import Pagination from '../base/Pagination'
           $(window).smoothScroll()
         },
         created:function(){
-          this.loadTableData(this.pageNo);
+          this.loadTableData(this.pageNo)
+          this.loadProductData()
+        },
+        computed:{
+          areaTeams: function () {
+            var options = ( this.$root.config.areaTeams || [] )
+              .map(function (item) {
+                return {value: item.areaTeamId, text: item.name}
+              })
+            return options
+          },
+          //响应式，（this.query.areaTeamId ）相关依赖改变重新求值，
+          busTeams: function () {
+            var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
+              .map(function (item) {
+                return {value: item.busTeamId, text: item.name}
+              })
+            this.query.busTeamId = ''
+            return options
+          },
+          //计算缓存，性能开销比较大的的计算属性
+          grades: function () {
+            return this.$root.config.grades.map(function(item){
+              return {value: item.gradeId, text: item.gradeName}
+            })
+          },
+          subjects: function () {
+            return this.$root.config.subjects.map(function(item){
+              return {value: item.subjectId, text: item.subjectName}
+            })
+          }
         },
         methods:{
           search:function(){
-            this.query={}
-            if(!this.searchConfig.searchItem){
-              this.$alert('请选择搜索选项')
-              return
-            }
-            this.query[this.searchConfig.searchItem] =  this.searchConfig.searchValue
             this.loadTableData()
           },
           loadTableData:function(pageNo){
@@ -146,7 +231,19 @@ import Pagination from '../base/Pagination'
                 _this.$alert(ret.desc)
               }
             })
-          }
+          },
+          loadProductData: function () {
+            var _this = this
+            io.post(io.apiAdminBaseProductList, {}, function (ret) {
+              if (ret.success) {
+                _this.products = ret.data.map(function (item) {
+                  return {value: item.productId, text: item.name}
+                })
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          },
         }
     }
 </script>

@@ -6,25 +6,21 @@
           <div class="widget-title  am-cf">学生列表</div>
         </div>
         <div class="widget-body  am-fr">
-
-
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+                  <button type="button" class="am-btn am-radius am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增学员</button>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
                   <option>请选择</option>
-                  <option value="studentId">学生编号</option>
+                  <option value="studentNo">学生编号</option>
                   <option value="name">学生姓名</option>
                   <option value="phoneNo">学生手机</option>
                 </select>
@@ -52,47 +48,39 @@
                 <th>就读学校</th>
                 <th>短信号码</th>
                 <th>城市</th>
+                <th>校区</th>
               </tr>
               </thead>
               <tbody>
-              <input type="hidden"  id="terry" value="123"/>
-              <tr v-for="item in tableData" :key="item.userId">
+              <tr v-for="item in tableData" :key="item.studentId">
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/enroll/student/edit/'+item.studentId)" v-if="hasPermission('edit')">
+                    <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 确认
                     </a>
                   </div>
                 </td>
                 <td>{{item.name}}</td>
-                <td>{{item.studentNo}}</td>
-                <td>{{item.birthDate}}</td>
-                <td>{{item.location}}</td>
+                <td>{{item.studentNo }}</td>
+                <td>{{item.birthday | formatDate }}</td>
+                <td>{{item.gradeName}}</td>
                 <td>{{item.school}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>{{item.location}}</td>
+                <td></td>
               </tr>
-
-
-              <!-- more data -->
               </tbody>
             </table>
           </div>
-
-
-
-
           <div class="am-u-lg-12 am-cf">
-
             <div class="am-fr">
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -101,12 +89,13 @@
 
   import Pagination from '../base/Pagination'
 
-
   export default{
     data:function(){
       return {
         tableData:[],
-        tableJson:[],
+        total: 0,
+        pageSize: 10,
+        pageNo: 1,
         query:{},
         searchConfig:{}
       }
@@ -134,12 +123,13 @@
 
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.studentList,$.extend({
+        io.post(io.apiAdminStudentList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
-            _this.tableData = ret.data;
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list;
           }else{
             _this.$alert(ret.desc)
           }

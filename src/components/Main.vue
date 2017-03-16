@@ -116,11 +116,7 @@ export default {
         busTeams:ret.data.busTeamList || [],
         grades:ret.data.gradeList,
         subjects:ret.data.subjectList,
-        courseTemplates:ret.data.courseTemplateList,
-        teachers:ret.data.teacherList,
-        rooms:ret.data.roomList,
-        periods:ret.data.periodList,
-        campuses:ret.data.campusList
+        periods:ret.data.periodList
 
         }
 
