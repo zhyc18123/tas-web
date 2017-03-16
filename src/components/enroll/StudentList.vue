@@ -52,7 +52,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="item in tableData" :key="item.userId">
+              <tr v-for="item in tableData" :key="item.studentId">
                 <td>
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
@@ -129,7 +129,8 @@
         },_this.query),function(ret){
           if(ret.success){
               //alert(JSON.stringify(ret.data));
-            _this.tableData = ret.data;
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list;
           }else{
             _this.$alert(ret.desc)
           }

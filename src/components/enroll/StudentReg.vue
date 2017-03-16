@@ -69,7 +69,7 @@
     text-align: left;
   }
   .am-text-middle{
-    font-size: 36px;
+    font-size: 45px;
     text-align: center !important;
   }
 </style>

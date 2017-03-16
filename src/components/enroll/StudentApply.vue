@@ -95,7 +95,7 @@
           </thead>
           <tbody>
 
-          <tr v-for="item in tableData" :key="item.userId">
+          <tr v-for="item in tableData" :key="item.classId">
             <td>
               <div class="tpl-table-black-operation">
                 <a href="javascript:;" @click="studentReg(item.classId)">
@@ -107,17 +107,17 @@
               </div>
             </td>
             <td>{{item.className}}</td>
-            <td></td>
-            <td></td>
+            <td><input type="text" v-model="reg.startAmount"/></td>
+            <td><input type="text" v-model="reg.endAmount"/></td>
             <td>{{item.lectureAmount}}</td>
-            <td></td>
+            <td>{{item.periodName}}</td>
             <td>{{item.gradeName}}</td>
             <td>{{item.studyingFee}}</td>
             <td>0/{{item.lectureAmount}}</td>
             <td>{{item.teacherNames}}</td>
             <td>{{item.roomName}}</td>
-            <td>{{item.quota}}</td>
-            <td>{{new Date(item.startCourseTime).toLocaleDateString() }}</td>
+            <td>{{item.startCourseTime | formatDate }}</td>
+            <td>{{0}}-{{0}}</td>
             <td>{{item.campusName}}</td>
 
             <!--<td>{{item.progressStatus == 0 ? '未开课' : item.progressStatus == 1 ?  '已开课' : '已结课' }}</td>
@@ -137,7 +137,7 @@
       <div class="am-u-lg-12 am-cf">
 
         <div class="am-fr">
-          <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
+          <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
         </div>
       </div>
 
@@ -157,15 +157,25 @@
   export default{
     data: function () {
       return {
+        studentId:'',
         tableData: [],
         tableJson: [],
+        total: 0,
+        pageSize: 5,
+        pageNo: 1,
         query: {
           areaTeamId : '',
           busTeamId : '',
-          productId : ''
+          productId : '',
 
         },
-        //searchConfig: {}
+        products:[],
+        courses:[],
+        searchConfig: {},
+        reg:{
+          startAmount:'',
+          endAmount:''
+        }
       }
     },
     components: {
@@ -220,30 +230,59 @@
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
         this.loadTableData()
       },
+      search: function () {
+        this.loadTableData()
+      },
       loadTableData: function (pageNo) {
-
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminStudentList, $.extend({
+        io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
           if (ret.success) {
-            //alert(JSON.stringify(ret.data));
-            _this.tableData = ret.data;
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadProductData: function () {
+        var _this = this
+        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+          if (ret.success) {
+            _this.products = ret.data.map(function (item) {
+              return {value: item.productId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadCourseData: function () {
+        var _this = this
+        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
+          if (ret.success) {
+            _this.courses = ret.data.map(function (item) {
+              return {value: item.courseTemplateId, text: item.courseName}
+            })
           } else {
             _this.$alert(ret.desc)
           }
         })
       },
       studentReg:function (classId) {
+        var studentId = this.$params('studentId')
+        var _this = this
         io.post(io.apiAdminSaveOrUpdateStudentReg, $.extend({
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+          classId:classId,
+          studentId:studentId,
+          startAmount:_this.startAmount,
+          endAmount:_this.endAmount
+        },_this.reg), function(ret) {
           if (ret.success) {
-            //alert(JSON.stringify(ret.data));
-            _this.tableData = ret.data;
+            _this.$alert(ret.desc)
           } else {
             _this.$alert(ret.desc)
           }

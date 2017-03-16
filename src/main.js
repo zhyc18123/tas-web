@@ -115,7 +115,7 @@ const router = new VueRouter({
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
       {path: 'enroll/student/reg/:studentId' , component: StudentReg },
-      {path: 'enroll/student/apply/:studentId' , component: StudentReg }
+      {path: 'enroll/student/apply/:studentId' , component: StudentApply }
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
     ],
     beforeEnter:function(to, from, next){
