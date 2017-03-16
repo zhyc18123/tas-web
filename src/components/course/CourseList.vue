@@ -114,7 +114,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="item in tableData" :key="item.userId">
+            <tr v-for="item in tableData" :key="item.courseTemplateId">
               <td>{{item.courseName}}</td>
               <td>{{item.courseTypeName }}</td>
               <td>{{item.gradeName}}</td>
