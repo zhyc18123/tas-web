@@ -175,7 +175,7 @@
               </thead>
               <tbody>
 
-              <tr v-for="item in tableData" :key="item.userId">
+              <tr v-for="item in tableData" :key="item.classId">
                 <td>
                   排时间 排教室 排老师
                   <div class="tpl-table-black-operation">

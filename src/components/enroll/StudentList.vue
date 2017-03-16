@@ -20,7 +20,7 @@
               <selected v-model="searchConfig.searchItem">
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
                   <option>请选择</option>
-                  <option value="studentId">学生编号</option>
+                  <option value="studentNo">学生编号</option>
                   <option value="name">学生姓名</option>
                   <option value="phoneNo">学生手机</option>
                 </select>
@@ -52,7 +52,7 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="item in tableData" :key="item.userId">
+              <tr v-for="item in tableData" :key="item.studentId">
                 <td>
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
@@ -74,7 +74,8 @@
           </div>
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
             </div>
           </div>
         </div>
@@ -92,7 +93,9 @@
     data:function(){
       return {
         tableData:[],
-        tableJson:[],
+        total: 0,
+        pageSize: 5,
+        pageNo: 1,
         query:{},
         searchConfig:{}
       }
@@ -126,7 +129,7 @@
         },_this.query),function(ret){
           if(ret.success){
               //alert(JSON.stringify(ret.data));
-            _this.tableData = ret.data;
+            _this.tableData = ret.data.list;
           }else{
             _this.$alert(ret.desc)
           }

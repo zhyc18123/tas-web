@@ -115,7 +115,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="item in tableData" :key="item.userId">
+            <tr v-for="item in tableData" :key="item.courseTemplateId">
               <td>{{item.courseName}}</td>
               <td>{{item.courseTypeName }}</td>
               <td>{{item.gradeName}}</td>
@@ -172,7 +172,6 @@ import Pagination from '../base/Pagination'
               productId : ''
             },
             products:[],
-            searchConfig:{}
           }
         },
         components: {
@@ -216,12 +215,6 @@ import Pagination from '../base/Pagination'
         },
         methods:{
           search:function(){
-            this.query={}
-            if(!this.searchConfig.searchItem){
-              this.$alert('请选择搜索选项')
-              return
-            }
-            this.query[this.searchConfig.searchItem] =  this.searchConfig.searchValue
             this.loadTableData()
           },
           loadTableData:function(pageNo){
