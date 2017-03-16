@@ -12,7 +12,7 @@
         <div></div>
 
 
-        <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
+        <form class="am-form tpl-form-border-form tpl-form-border-br am-align-left" data-am-validator :id="id" >
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">

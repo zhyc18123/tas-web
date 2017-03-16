@@ -239,7 +239,6 @@
           areaTeamId : '',
           busTeamId : '',
           productId : ''
-
         },
         searchConfig: {},
         products:[],

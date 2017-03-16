@@ -20,9 +20,9 @@
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
-              <div class="am-form-group"  v-model="searchConfig.searchItem">
+              <div class="am-form-group">
                 <select2  required v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
+                  <option value="">区域组</option>
                 </select2>
               </div>
             </div>
@@ -30,7 +30,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-              <input type="text" class="am-form-field " v-model="searchConfig.searchValue" placeholder="请输入产品名称">
+              <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
               <span class="am-input-group-btn">
               <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" @click="search"></button>
             </span>
@@ -123,7 +123,7 @@
     methods:{
       search:function(){
         this.query={}
-        if(!this.searchConfig.searchValue){
+        if(!this.searchConfig.searchItem){
           this.$alert('请选择搜索选项')
           return
         }
