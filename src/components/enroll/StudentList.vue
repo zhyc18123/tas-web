@@ -6,19 +6,15 @@
           <div class="widget-title  am-cf">学生列表</div>
         </div>
         <div class="widget-body  am-fr">
-
-
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
+                  <button type="button" class="am-btn am-radius am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增学员</button>
                 </div>
               </div>
             </div>
           </div>
-
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
@@ -53,11 +49,9 @@
                 <th>短信号码</th>
                 <th>城市</th>
                 <th>校区</th>
-                <th>状态</th>
               </tr>
               </thead>
               <tbody>
-              <input type="hidden"  id="terry" value="123"/>
               <tr v-for="item in tableData" :key="item.userId">
                 <td>
                   <div class="tpl-table-black-operation">
@@ -74,29 +68,18 @@
                 <td>{{item.phoneNo}}</td>
                 <td>{{item.location}}</td>
                 <td></td>
-                <td>{{item.status == 0 ? '未启用':'已启用'}}</td>
               </tr>
-
-
-              <!-- more data -->
               </tbody>
             </table>
           </div>
-
-
-
-
           <div class="am-u-lg-12 am-cf">
-
             <div class="am-fr">
               <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />-->
             </div>
           </div>
-
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -104,7 +87,6 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-
 
   export default{
     data:function(){
@@ -138,7 +120,7 @@
 
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.studentList,$.extend({
+        io.post(io.apiAdminStudentList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){

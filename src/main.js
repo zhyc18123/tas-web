@@ -37,7 +37,7 @@ import RoomForm from './components/sysmanager/RoomForm'
 import CourseList from './components/course/CourseList'
 import CourseForm from './components/course/CourseForm'
 import ProductList from './components/product/ProductList'
-import AddProduct from './components/product/AddProduct'
+import ProductForm from './components/product/ProductForm'
 
 import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
@@ -46,7 +46,7 @@ import ClassForm from './components/course/ClassForm'
 import StudentList from  './components/enroll/StudentList'
 // import StudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
-import StudentOne from  './components/enroll/StudentOne'
+//import StudentOne from  './components/enroll/StudentOne'
 import StudentReg from  './components/enroll/StudentReg'
 
 
@@ -101,8 +101,8 @@ const router = new VueRouter({
       {path: 'course/course/add' , component: CourseForm },
       {path: 'course/course/edit/:courseId' , component: CourseForm },
       {path: 'course/product/list',  component:  ProductList},
-      {path: 'product/product/add' , component: AddProduct },
-      {path: 'product/product/edit/:productId' , component: AddProduct },
+      {path: 'product/product/add' , component: ProductForm },
+      {path: 'product/product/edit/:productId' , component: ProductForm },
 
 
       {path: 'course/class/list' , component: ClassList },
@@ -110,7 +110,7 @@ const router = new VueRouter({
       {path: 'course/class/edit/:classId' , component: ClassForm },
 
       {path: 'enroll/student/list' , component: StudentList },
-      {path: 'enroll/student/one' , component: StudentOne },
+      {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
       {path: 'enroll/student/reg/:studentId' , component: StudentReg }

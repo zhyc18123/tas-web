@@ -7,6 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
 
+          <div class="am-u-sm-12 am-form ">
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
@@ -16,15 +17,17 @@
               </div>
             </div>
           </div>
+
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
-              <selected v-model="searchConfig.searchItem">
-                <select data-am-selected="{btnSize: 'sm'}" placeholder="区域" >
-                  <option></option>
-                </select>
-              </selected>
+              <div class="am-form-group">
+                <select2  required v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">区域组</option>
+                </select2>
+              </div>
             </div>
           </div>
+
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
@@ -33,6 +36,8 @@
             </span>
             </div>
           </div>
+
+
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
@@ -75,7 +80,7 @@
         </div>
         </div>
     </div>
-
+    </div>
   </div>
 </template>
 
@@ -89,9 +94,11 @@
       return {
         tableData:[],
         total:0,
-        pageSize:5,
+        pageSize:10,
         pageNo:1,
-        query:{},
+        query:{
+          areaTeamId : '',
+        },
         searchConfig:{}
       }
     },
@@ -104,6 +111,15 @@
     created:function(){
       this.loadTableData(this.pageNo);
     },
+    computed:{
+      areaTeams: function () {
+        var options = ( this.$root.config.areaTeams || [] )
+          .map(function (item) {
+            return {value: item.areaTeamId, text: item.name}
+          })
+        return options
+      },
+      },
     methods:{
       search:function(){
         this.query={}

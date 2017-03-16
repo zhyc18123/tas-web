@@ -50,7 +50,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
             <div class="am-form-group">
-              <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="课程名称"/>
+              <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
             </div>
           </div>
 

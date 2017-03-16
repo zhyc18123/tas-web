@@ -6,7 +6,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生姓名
         </label>
         <div class="am-u-sm-2 am-u-end input-field">
-          <input type="text"  class="am-form-field" placeholder="输入学生名" required v-model="formData.name" >
+          <input type="text"  class="am-form-field" placeholder="请输入学生姓名" required v-model="formData.name" >
         </div>
       </div>
 
@@ -29,7 +29,7 @@
         </label>
         <div class="am-u-sm-2 am-u-end  input-field">
           <date-picker v-model="formData.birthday" >
-            <input type="text" class="am-form-field" placeholder="出生日期" data-am-datepicker  required >
+            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  required >
           </date-picker>
         </div>
       </div>
@@ -40,7 +40,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生手机
         </label>
         <div class="am-u-sm-2 am-u-end input-field">
-          <input type="text" placeholder="输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
         </div>
       </div>
 
@@ -50,7 +50,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
         </label>
         <div class="am-u-sm-3 am-u-end input-field">
-          <input type="text" placeholder="输入就读学校"  required  v-model="formData.school" >
+          <input type="text" placeholder="请输入就读学校"  required  v-model="formData.school" >
         </div>
       </div>
 
@@ -94,7 +94,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>监护人姓名
         </label>
         <div class="am-u-sm-1 am-u-end input-field">
-          <input type="text" class="am-form-field" required placeholder="输入姓名" v-model="guardianList[index].name" >
+          <input type="text" class="am-form-field" required placeholder="请输入姓名" v-model="guardianList[index].name" >
         </div>
 
 
@@ -102,7 +102,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系电话
         </label>
         <div class="am-u-sm-2 am-u-end input-field">
-          <input type="text" class="am-form-field" required placeholder="输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
         </div>
         <div class="am-u-sm-2 am-u-end input-field">
           <button type="button" class="am-btn am-btn-success am-radius" @click="addGuardian">增加</button>
@@ -225,7 +225,7 @@
         this.guardianList.push({})
       },
       delGuardian : function(index){
-        if(this.guardianList.length == 1
+        if(this.guardianList.length <= 1
         ){
           return
         }
