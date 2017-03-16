@@ -36,7 +36,7 @@
 
           <div class="am-tabs-bd">
             <div class="am-tab-panel am-active">
-              班级报名
+              <student-apply :studentId="studentId" ></student-apply>
             </div>
             <div class="am-tab-panel">
               代缴费
@@ -78,6 +78,7 @@
   import io from '../../lib/io'
   import util from '../../lib/util'
   import StudentEditForm from './StudentEditForm'
+  import StudentApply from './StudentApply'
   export default{
     data(){
       return {
@@ -86,7 +87,8 @@
       }
     },
     components:{
-      'student-edit-from': StudentEditForm
+      'student-edit-from': StudentEditForm,
+      'student-apply': StudentApply
     },
     created: function () {
       var studentId = this.$params('studentId')

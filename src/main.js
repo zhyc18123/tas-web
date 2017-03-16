@@ -48,6 +48,7 @@ import StudentList from  './components/enroll/StudentList'
 import StudentForm from  './components/enroll/StudenForm'
 //import StudentOne from  './components/enroll/StudentOne'
 import StudentReg from  './components/enroll/StudentReg'
+import StudentApply from  './components/enroll/StudentApply'
 
 
 Vue.use(VueRouter)
@@ -113,7 +114,8 @@ const router = new VueRouter({
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
-      {path: 'enroll/student/reg/:studentId' , component: StudentReg }
+      {path: 'enroll/student/reg/:studentId' , component: StudentReg },
+      {path: 'enroll/student/apply/:studentId' , component: StudentReg }
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
     ],
     beforeEnter:function(to, from, next){
