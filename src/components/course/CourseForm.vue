@@ -12,10 +12,10 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程名
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="输入课程名" required v-model="formData.courseName" >
+                <input type="text"  class="am-form-field" placeholder="请输入课程名称" required v-model="formData.courseName" >
               </div>
             </div>
             <div class="am-form-group">
@@ -59,7 +59,6 @@
                 <select2 required v-model="formData.areaTeamId" :options="areaTeams" >
                   <option value="">请选择</option>
                 </select2>
-
               </div>
             </div>
 
@@ -74,6 +73,17 @@
               </div>
             </div>
 
+            <!--<div class="am-form-group">-->
+              <!--<label class="am-u-sm-3 am-form-label">-->
+                <!--产品-->
+              <!--</label>-->
+              <!--<div class="am-u-sm-3 am-u-end input-field">-->
+                <!--<select2  v-model="formData.productId" :options="products" >-->
+                  <!--<option value="">请选择</option>-->
+                <!--</select2>-->
+              <!--</div>-->
+            <!--</div>-->
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>讲数
@@ -83,14 +93,14 @@
               </div>
             </div>
 
-            <div class="am-form-group">
+<!--            <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每一讲时长(分钟)
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <input type="number" placeholder="输入时长"  required min="1" step="1"  v-model="formData.lectureDuration" >
               </div>
-            </div>
+            </div>-->
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -100,7 +110,7 @@
                 <input type="number" placeholder="输入学位数"  required min="1" step="1"  v-model="formData.quota" >
               </div>
             </div>
-
+<!--
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
@@ -108,25 +118,22 @@
               <div class="am-u-sm-3 am-u-end input-field">
                 <input type="number" placeholder="输入学学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
               </div>
-            </div>
+            </div>-->
 
-
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                课程介绍
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <editor v-model="formData.courseDescription"></editor>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                课程大纲
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <editor v-model="formData.courseOutline"></editor>
+            <div class="am-form-group am-u-sm-9 am-u-sm-offset-3 am-u-end">
+              <div class="am-tabs" data-am-tabs>
+                <ul class="am-tabs-nav am-nav am-nav-tabs">
+                  <li class="am-active"><a href="#tab1">课程简介</a></li>
+                  <li><a href="#tab2">课程大纲</a></li>
+                </ul>
+                <div class="am-tabs-bd">
+                  <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                    <editor v-model="formData.courseDescription"></editor>
+                  </div>
+                  <div class="am-tab-panel am-fade" id="tab2">
+                    <editor v-model="formData.courseOutline"></editor>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -153,6 +160,7 @@ import util from '../../lib/util'
                 courseTypeData:[],
                 formData:{
                   areaTeamId:'',
+                  productId:'',
                   busTeamId:'',
                   lectureAmount : 15,
                   lectureDuration : 45,

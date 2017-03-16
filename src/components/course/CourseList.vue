@@ -75,11 +75,12 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group ">
-                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click=""
-                          v-if="hasPermission('add')"><span class="am-icon-upload"></span>导入</button>
+              <div class="am-form-group am-form-file">
+                <div>
+                  <button type="button" class="am-btn am-btn-default am-btn-sm">
+                    <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
                 </div>
+                <input type="file" id="doc-ipt-file2" @change>
               </div>
             </div>
           </div>
@@ -163,7 +164,7 @@ import Pagination from '../base/Pagination'
           return {
             tableData:[],
             total:0,
-            pageSize:5,
+            pageSize:10,
             pageNo:1,
             query:{
               areaTeamId : '',
