@@ -73,6 +73,17 @@
               </div>
             </div>
 
+            <!--<div class="am-form-group">-->
+              <!--<label class="am-u-sm-3 am-form-label">-->
+                <!--产品-->
+              <!--</label>-->
+              <!--<div class="am-u-sm-3 am-u-end input-field">-->
+                <!--<select2  v-model="formData.productId" :options="products" >-->
+                  <!--<option value="">请选择</option>-->
+                <!--</select2>-->
+              <!--</div>-->
+            <!--</div>-->
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>讲数
@@ -159,7 +170,7 @@ import util from '../../lib/util'
             }
         },
         created:function(){
-         var courseTemplateId  = this.$params('courseId');
+         var courseTemplateId  = this.$params('courseTemplateId');
          if(courseTemplateId){
           var _this = this
           io.post(io.apiAdminTemplateDetailDetail,{ courseTemplateId : courseTemplateId },
