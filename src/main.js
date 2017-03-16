@@ -46,6 +46,9 @@ import StudentList from  './components/enroll/StudentList'
 import StudentForm from  './components/enroll/StudenForm'
 import StudentOne from  './components/enroll/StudentOne'
 
+import FutureReport from './components/settlement/FutureReport'
+import FutureReportDetail from './components/settlement/FutureReportDetail'
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -105,8 +108,12 @@ const router = new VueRouter({
       {path: 'enroll/student/list' , component: StudentList },
       {path: 'enroll/student/one' , component: StudentOne },
       {path: 'enroll/student/add' , component: StudentForm },
-      {path: 'enroll/student/edit/:studentId' , component: StudentOne }
+      {path: 'enroll/student/edit/:studentId' , component: StudentOne },
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
+
+
+      {path: 'settlement/future/report' , component: FutureReport },
+      {path: 'settlement/future/report/detail/:accountId' , component: FutureReportDetail },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

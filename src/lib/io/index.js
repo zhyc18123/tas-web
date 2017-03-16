@@ -89,6 +89,11 @@ const io = {
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
+    this.apiAdminSettlementAccountMainBodyList = conf.baseApiPath + '/api/admin/settlement/accountMainBodyList'
+    this.apiAdminSettlementFutureReportDetailList = conf.baseApiPath + '/api/admin/settlement/futureReportDetailList'
+
+
+
 
 
   },
