@@ -94,7 +94,7 @@
       return {
         tableData:[],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query:{},
         searchConfig:{}
@@ -128,7 +128,7 @@
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
-              //alert(JSON.stringify(ret.data));
+            _this.total = ret.data.total
             _this.tableData = ret.data.list;
           }else{
             _this.$alert(ret.desc)
