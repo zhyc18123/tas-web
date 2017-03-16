@@ -238,7 +238,7 @@
         query: {
           areaTeamId : '',
           busTeamId : '',
-          productId : ''
+          productId : '',
         },
         searchConfig: {},
         products:[],
