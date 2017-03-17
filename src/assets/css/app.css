@@ -775,69 +775,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
 .theme-white .tpl-form-border-form {
   padding-top: 20px;
 }
-.theme-white .tpl-form-border-form input[type=number]:focus,
-.theme-white .tpl-form-border-form input[type=search]:focus,
-.theme-white .tpl-form-border-form input[type=text]:focus,
-.theme-white .tpl-form-border-form input[type=password]:focus,
-.theme-white .tpl-form-border-form input[type=datetime]:focus,
-.theme-white .tpl-form-border-form input[type=datetime-local]:focus,
-.theme-white .tpl-form-border-form input[type=date]:focus,
-.theme-white .tpl-form-border-form input[type=month]:focus,
-.theme-white .tpl-form-border-form input[type=time]:focus,
-.theme-white .tpl-form-border-form input[type=week]:focus,
-.theme-white .tpl-form-border-form input[type=email]:focus,
-.theme-white .tpl-form-border-form input[type=url]:focus,
-.theme-white .tpl-form-border-form input[type=tel]:focus,
-.theme-white .tpl-form-border-form input[type=color]:focus,
-.theme-white .tpl-form-border-form select:focus,
-.theme-white .tpl-form-border-form textarea:focus,
-.theme-white .am-form-field:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.theme-white .tpl-form-border-form input[type=number],
-.theme-white .tpl-form-border-form input[type=search],
-.theme-white .tpl-form-border-form input[type=text],
-.theme-white .tpl-form-border-form input[type=password],
-.theme-white .tpl-form-border-form input[type=datetime],
-.theme-white .tpl-form-border-form input[type=datetime-local],
-.theme-white .tpl-form-border-form input[type=date],
-.theme-white .tpl-form-border-form input[type=month],
-.theme-white .tpl-form-border-form input[type=time],
-.theme-white .tpl-form-border-form input[type=week],
-.theme-white .tpl-form-border-form input[type=email],
-.theme-white .tpl-form-border-form input[type=url],
-.theme-white .tpl-form-border-form input[type=tel],
-.theme-white .tpl-form-border-form input[type=color],
-.theme-white .tpl-form-border-form select,
-.theme-white .tpl-form-border-form textarea,
-.theme-white .am-form-field {
-  display: block;
-  width: 100%;
-  padding: 6px 12px;
-  line-height: 1.42857;
-  color: #4d6b8a;
-  background-color: #fff;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  border: 0;
-  border: 1px solid #c2cad8;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  text-indent: .5em;
-  -o-border-radius: 0;
-  border-radius: 0;
-  color: #555;
-  box-shadow: none;
-  padding-left: 0;
-  padding-right: 0;
-  font-size: 14px;
-}
+
 .theme-white .tpl-form-border-form .am-checkbox,
 .theme-white .tpl-form-border-form .am-checkbox-inline,
 .theme-white .tpl-form-border-form .am-form-label,
@@ -868,69 +806,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   color: #999;
   font-size: 12px;
 }
-.theme-white .tpl-form-line-form input[type=number]:focus,
-.theme-white .tpl-form-line-form input[type=search]:focus,
-.theme-white .tpl-form-line-form input[type=text]:focus,
-.theme-white .tpl-form-line-form input[type=password]:focus,
-.theme-white .tpl-form-line-form input[type=datetime]:focus,
-.theme-white .tpl-form-line-form input[type=datetime-local]:focus,
-.theme-white .tpl-form-line-form input[type=date]:focus,
-.theme-white .tpl-form-line-form input[type=month]:focus,
-.theme-white .tpl-form-line-form input[type=time]:focus,
-.theme-white .tpl-form-line-form input[type=week]:focus,
-.theme-white .tpl-form-line-form input[type=email]:focus,
-.theme-white .tpl-form-line-form input[type=url]:focus,
-.theme-white .tpl-form-line-form input[type=tel]:focus,
-.theme-white .tpl-form-line-form input[type=color]:focus,
-.theme-white .tpl-form-line-form select:focus,
-.theme-white .tpl-form-line-form textarea:focus,
-.theme-white .am-form-field:focus {
-  -webkit-box-shadow: none;
-  box-shadow: none;
-}
-.theme-white .tpl-form-line-form input[type=number],
-.theme-white .tpl-form-line-form input[type=search],
-.theme-white .tpl-form-line-form input[type=text],
-.theme-white .tpl-form-line-form input[type=password],
-.theme-white .tpl-form-line-form input[type=datetime],
-.theme-white .tpl-form-line-form input[type=datetime-local],
-.theme-white .tpl-form-line-form input[type=date],
-.theme-white .tpl-form-line-form input[type=month],
-.theme-white .tpl-form-line-form input[type=time],
-.theme-white .tpl-form-line-form input[type=week],
-.theme-white .tpl-form-line-form input[type=email],
-.theme-white .tpl-form-line-form input[type=url],
-.theme-white .tpl-form-line-form input[type=tel],
-.theme-white .tpl-form-line-form input[type=color],
-.theme-white .tpl-form-line-form select,
-.theme-white .tpl-form-line-form textarea,
-.theme-white .am-form-field {
-  display: block;
-  width: 100%;
-  padding: 6px 12px;
-  line-height: 1.42857;
-  color: #4d6b8a;
-  background-color: #fff;
-  border: 1px solid #c2cad8;
-  border-radius: 4px;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-  -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
-  border: 0;
-  border-bottom: 1px solid #c2cad8;
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
-  border-radius: 0;
-  color: #555;
-  box-shadow: none;
-  padding-left: 0;
-  padding-right: 0;
-  font-size: 14px;
-}
+
 .theme-white .tpl-form-line-form .am-checkbox,
 .theme-white .tpl-form-line-form .am-checkbox-inline,
 .theme-white .tpl-form-line-form .am-form-label,

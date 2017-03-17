@@ -1,5 +1,5 @@
 <template>
-    <select >
+    <select :class="">
       <slot></slot>
       <option v-for="item in options"  :value="item.value">{{item.text}}</option>
     </select>
@@ -8,7 +8,7 @@
 <script>
     export default{
         name: 'select2',
-        props:['value','options','required' ],
+        props:['value','options','required','class' ],
         watch:{
           value:function(){
              this.setSelect(this.value)
