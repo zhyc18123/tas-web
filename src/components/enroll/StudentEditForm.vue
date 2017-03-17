@@ -5,7 +5,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生姓名
         </label>
-        <div class="am-u-sm-2 am-u-end input-field">
+        <div class="am-u-sm-3 am-u-end input-field">
           <input type="text"  class="am-form-field" placeholder="请输入学生姓名" required v-model="formData.name" >
         </div>
       </div>
@@ -14,7 +14,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>性别
         </label>
-        <div class="am-u-sm-2 am-u-end input-field">
+        <div class="am-u-sm-3 am-u-end input-field">
           <select2 required   v-model="formData.sex">
             <option value="0">请选择</option>
             <option value="1">男</option>
@@ -27,7 +27,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>出生日期
         </label>
-        <div class="am-u-sm-2 am-u-end  input-field">
+        <div class="am-u-sm-3 am-u-end  input-field">
           <date-picker v-model="formData.birthday" >
             <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  required >
           </date-picker>
@@ -39,7 +39,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生手机
         </label>
-        <div class="am-u-sm-2 am-u-end input-field">
+        <div class="am-u-sm-3 am-u-end input-field">
           <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
         </div>
       </div>
@@ -59,7 +59,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读年级
         </label>
-        <div class="am-u-sm-2 am-u-end tpl-table-list-select">
+        <div class="am-u-sm-3 am-u-end tpl-table-list-select">
           <select2 required v-model="formData.gradeId"  :options="grades">
             <option value="">请选择</option>
           </select2>

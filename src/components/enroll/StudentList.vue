@@ -6,16 +6,8 @@
           <div class="widget-title  am-cf">学生列表</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-            <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-radius am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增学员</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-8">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
@@ -35,12 +27,20 @@
             </span>
             </div>
           </div>
+          <div class="am-u-sm-1 am-u-md-6 am-u-lg-1">
+            <div class="am-form-group">
+              <div class="am-btn-toolbar">
+                <div class="am-btn-group am-btn-group-xs">
+                  <button type="button" class="am-btn am-radius am-btn-success" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增学员</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th>操作</th>
                 <th>姓名</th>
                 <th>学号</th>
                 <th>出生日期</th>
@@ -49,17 +49,11 @@
                 <th>短信号码</th>
                 <th>城市</th>
                 <th>校区</th>
+                <th>操作</th>
               </tr>
               </thead>
               <tbody>
               <tr v-for="item in tableData" :key="item.studentId">
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 确认
-                    </a>
-                  </div>
-                </td>
                 <td>{{item.name}}</td>
                 <td>{{item.studentNo }}</td>
                 <td>{{item.birthday | formatDate }}</td>
@@ -68,6 +62,13 @@
                 <td>{{item.phoneNo}}</td>
                 <td>{{item.location}}</td>
                 <td></td>
+                <td>
+                  <div class="tpl-table-black-operation">
+                    <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
+                      <i class="am-icon-edit"></i> 确认
+                    </a>
+                  </div>
+                </td>
               </tr>
               </tbody>
             </table>
@@ -106,9 +107,9 @@
     mounted:function(){
       $(window).smoothScroll()
     },
-    created:function(){
+    /*created:function(){
       this.loadTableData(this.pageNo);
-    },
+    },*/
     methods:{
       search:function(){
         this.query={}
@@ -117,7 +118,7 @@
           return
         }
         this.query[this.searchConfig.searchItem] =  this.searchConfig.searchValue
-        this.loadTableData()
+        this.loadTableData(this.pageNo)
       },
       loadTableData:function(pageNo){
 

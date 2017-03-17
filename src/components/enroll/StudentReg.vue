@@ -39,13 +39,13 @@
               <student-apply :studentId="studentId" ></student-apply>
             </div>
             <div class="am-tab-panel">
-              代缴费
+              <student-regList :studentId="studentId" ></student-regList>
             </div>
             <div class="am-tab-panel">
-              订单信息
+              <student-order-list :studentId="studentId" ></student-order-list>
             </div>
             <div class="am-tab-panel">
-              在读班级
+              <student-class-list :studentId="studentId" ></student-class-list>
             </div>
             <div class="am-tab-panel">
               班级历史
@@ -79,6 +79,9 @@
   import util from '../../lib/util'
   import StudentEditForm from './StudentEditForm'
   import StudentApply from './StudentApply'
+  import StudentRegList from './StudentRegList'
+  import StudentOrderList from './StudentOrderList'
+  import StudentClassList from './StudentClassList'
   export default{
     data(){
       return {
@@ -88,7 +91,10 @@
     },
     components:{
       'student-edit-from': StudentEditForm,
-      'student-apply': StudentApply
+      'student-apply': StudentApply,
+      'student-regList': StudentRegList,
+      'student-order-list': StudentOrderList,
+      'student-class-list': StudentClassList
     },
     created: function () {
       var studentId = this.$params('studentId')

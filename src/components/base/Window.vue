@@ -38,7 +38,8 @@
           option = option || {}
           option.closeViaDimmer = false
           option.closeOnConfirm = false
-          $('#'+this.id).modal(option);
+          option.dimmer = false
+          $('#'+this.id).modal(option)
         },
         close: function(){
            $('#'+this.id).modal('close')

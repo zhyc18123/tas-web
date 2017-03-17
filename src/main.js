@@ -49,7 +49,9 @@ import StudentForm from  './components/enroll/StudenForm'
 //import StudentOne from  './components/enroll/StudentOne'
 import StudentReg from  './components/enroll/StudentReg'
 import StudentApply from  './components/enroll/StudentApply'
-
+import StudentRegList from  './components/enroll/StudentRegList'
+import StudentOrderList from  './components/enroll/StudentOrderList'
+import StudentClassList from  './components/enroll/StudentClassList'
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -115,7 +117,10 @@ const router = new VueRouter({
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
       {path: 'enroll/student/reg/:studentId' , component: StudentReg },
-      {path: 'enroll/student/apply/:studentId' , component: StudentApply }
+      {path: 'enroll/student/apply/:studentId' , component: StudentApply },
+      {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
+      {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
+      {path: 'enroll/student/classList/:studentId' , component: StudentClassList }
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
     ],
     beforeEnter:function(to, from, next){
@@ -146,7 +151,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} },
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[]},
   created:function(){
     this.refreshUserInfo()
   },
