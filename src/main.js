@@ -53,6 +53,10 @@ import StudentRegList from  './components/enroll/StudentRegList'
 import StudentOrderList from  './components/enroll/StudentOrderList'
 import StudentClassList from  './components/enroll/StudentClassList'
 
+import FutureReport from './components/settlement/FutureReport'
+import FutureReportDetail from './components/settlement/FutureReportDetail'
+
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 

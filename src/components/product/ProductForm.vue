@@ -1,5 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">产品信息</div>
@@ -12,7 +12,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>产品名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入产品名称" v-model="formData.name" required>
+                <input type="text" class="am-form-field" placeholder="请输入产品名称" v-model="formData.name" required>
               </div>
             </div>
 
@@ -21,7 +21,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.areaTeamId" :options="areaTeams" >
+                <select2 required v-model="formData.areaTeamId" :options="areaTeams">
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -45,71 +45,30 @@
   import util from '../../lib/util'
   export default{
     data(){
-      return{
-        productTypeData:[],
-        formData:{
-          areaTeamId:'',
+      return {
+        productTypeData: [],
+        formData: {
+          areaTeamId: ''
         }
       }
     },
-    mounted:function(){
-      var _this = this ;
-      $('#' + this.id ).validator({
-        validate:function(validity){
 
-        },
-        onValid: function(validity) {
-          $(validity.field).closest('.input-field').find('.am-alert').hide();
-        },
-        onInValid: function(validity) {
-          var $field = $(validity.field);
-          var $group = $field.closest('.input-field');
-          var $alert = $group.find('.am-alert');
-          // 使用自定义的提示信息 或 插件内置的提示信息
-          var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
-
-          if (!$alert.length) {
-            $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
-            appendTo($group);
-          }
-
-          $alert.html(msg).show();
-        },
-        submit:function(e){
-          e.preventDefault();
-          var $submitBtn = $('button[type=submit]',e.target);
-          $submitBtn.attr("disabled" ,"disabled" )
-          _this.$showLoading()
-          var formValidity = this.isFormValid();
-          var complete = function(){
-            _this.$hiddenLoading()
-            $submitBtn.removeAttr("disabled" ,"disabled" )
-          }
-          if(formValidity){
-            _this.save(complete);
-          }else{
-            complete.call()
-          }
-        }
-      });
-    },
-    created:function(){
-      var productId  = this.$params('productId');
-      if(productId){
+    created: function () {
+      var productId = this.$params('productId');
+      if (productId) {
         var _this = this
-        io.post(io.apiAdminTemplateDetail,{ productId : productId },
-          function(ret){
-            if(ret.success){
+        io.post(io.apiAdminProductDetail, {productId: productId},
+          function (ret) {
+            if (ret.success) {
               _this.formData = ret.data
             }
           },
-          function(){
+          function () {
             _this.$alert('请求服务器失败')
           })
       }
-      this.loadProductTypeData()
     },
-    computed:{
+    computed: {
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
@@ -118,44 +77,66 @@
         return options
       },
     },
-    methods:{
-      save:function(complete){
+    mounted: function () {
+      var _this = this;
+      $('#' + this.id).validator({
+        validate: function (validity) {
+
+        },
+        onValid: function (validity) {
+          $(validity.field).closest('.input-field').find('.am-alert').hide();
+        },
+        onInValid: function (validity) {
+          var $field = $(validity.field);
+          var $group = $field.closest('.input-field');
+          var $alert = $group.find('.am-alert');
+          // 使用自定义的提示信息 或 插件内置的提示信息
+          var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+          if (!$alert.length) {
+            $alert = $('<div class="am-alert am-alert-danger"></div>').hide().appendTo($group);
+          }
+
+          $alert.html(msg).show();
+        },
+        submit: function (e) {
+          e.preventDefault();
+          var $submitBtn = $('button[type=submit]', e.target);
+          $submitBtn.attr("disabled", "disabled")
+          _this.$showLoading()
+          var formValidity = this.isFormValid();
+          var complete = function () {
+            _this.$hiddenLoading()
+            $submitBtn.removeAttr("disabled", "disabled")
+          }
+          if (formValidity) {
+            _this.save(complete);
+          } else {
+            complete.call()
+          }
+        }
+      });
+    },
+    methods: {
+      save: function (complete) {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminProductSaveOrUpdate,data,
-          function(ret){
+        io.post(io.apiAdminProductSaveOrUpdate, data,
+          function (ret) {
             complete.call()
-            if(ret.success){
+            if (ret.success) {
               _this.$toast('OK')
               _this.$router.push('/main/course/product/list')
-            }else{
+            } else {
               _this.$alert(ret.desc)
             }
 
           },
-          function(){
+          function () {
             complete.call()
             _this.$alert('请求服务器失败')
           })
-      },
-      loadProductTypeData:function(){
-        var _this = this
-        io.post(io.apiAdminProductSaveOrUpdate,{},
-          function(ret){
-            if(ret.success){
-              _this.productTypeData = ret.data.map(function(item){
-                return {value:item.productId,text:item.name }
-              })
-            }else{
-              _this.$alert(ret.desc)
-            }
-
-          },
-          function(){
-            _this.$alert('请求服务器失败')
-          })
-      },
-
+      }
     }
   }
 </script>

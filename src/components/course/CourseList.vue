@@ -27,7 +27,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <select2  v-model="query.productId" :options="products">
-                <option value="">产品</option>
+                <option value="请选择产品">请选择产品</option>
               </select2>
             </div>
           </div>
@@ -75,11 +75,12 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group ">
-                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click=""
-                          v-if="hasPermission('add')"><span class="am-icon-upload"></span>导入</button>
+              <div class="am-form-group am-form-file">
+                <div>
+                  <button type="button" class="am-btn am-btn-default am-btn-sm">
+                    <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
                 </div>
+                <input type="file" id="doc-ipt-file2" @change>
               </div>
             </div>
           </div>
@@ -114,7 +115,7 @@
             </thead>
             <tbody>
 
-            <tr v-for="item in tableData" :key="item.userId">
+            <tr v-for="item in tableData" :key="item.courseTemplateId">
               <td>{{item.courseName}}</td>
               <td>{{item.courseTypeName }}</td>
               <td>{{item.gradeName}}</td>
@@ -163,7 +164,7 @@ import Pagination from '../base/Pagination'
           return {
             tableData:[],
             total:0,
-            pageSize:5,
+            pageSize:10,
             pageNo:1,
             query:{
               areaTeamId : '',
@@ -171,7 +172,6 @@ import Pagination from '../base/Pagination'
               productId : ''
             },
             products:[],
-            searchConfig:{}
           }
         },
         components: {
@@ -215,12 +215,6 @@ import Pagination from '../base/Pagination'
         },
         methods:{
           search:function(){
-            this.query={}
-            if(!this.searchConfig.searchItem){
-              this.$alert('请选择搜索选项')
-              return
-            }
-            this.query[this.searchConfig.searchItem] =  this.searchConfig.searchValue
             this.loadTableData()
           },
           loadTableData:function(pageNo){

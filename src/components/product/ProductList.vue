@@ -8,17 +8,8 @@
         <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form ">
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-            <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增</button>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
               <div class="am-form-group">
                 <select2  required v-model="query.areaTeamId" :options="areaTeams">
@@ -29,15 +20,26 @@
           </div>
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
-              <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
-              <span class="am-input-group-btn">
-              <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button" @click="search"></button>
-            </span>
+            <div class="am-form-group">
+              <input type="text" class="am-input-lg" name="name" v-model="query.name" placeholder="请输入产品名称"/>
             </div>
           </div>
 
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                      @click="search" ><span class="am-icon-search"></span>查询
+              </button>
+            </div>
+          </div>
 
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增产品</button>
+              </div>
+            </div>
+
+          </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
@@ -98,6 +100,7 @@
         pageNo:1,
         query:{
           areaTeamId : '',
+          name:'',
         },
         searchConfig:{}
       }
@@ -122,12 +125,6 @@
       },
     methods:{
       search:function(){
-        this.query={}
-        if(!this.searchConfig.searchItem){
-          this.$alert('请选择搜索选项')
-          return
-        }
-        this.query[this.searchConfig.searchItem] =  this.searchConfig.searchValue
         this.loadTableData()
       },
       loadTableData:function(pageNo){

@@ -7,92 +7,199 @@
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
       </div>
-      <div class="widget-body am-fr">
-        <!--课程查询TODO:-->
-        <div></div>
 
 
-        <form class="am-form tpl-form-border-form tpl-form-border-br am-align-left" data-am-validator :id="id" >
-          <fieldset>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.areaTeamId" :options="areaTeams">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                所在业务组
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 v-model="formData.busTeamId" :options="busTeams">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入班级名" required v-model="formData.className">
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>序号
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入序号" required v-model="formData.no">
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入学位数" required v-model="formData.quota">
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入学费" required v-model="formData.studyingFee">
-              </div>
-            </div>
+      <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" >
+        <fieldset>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <select2  v-model="formData.areaTeamId" :options="areaTeams">
+              <option value="">区域组</option>
+            </select2>
+          </div>
+          </div>
 
-            <div class="am-form-group am-u-sm-9 am-u-sm-offset-3 am-u-end">
-              <div class="am-tabs" data-am-tabs>
-                <ul class="am-tabs-nav am-nav am-nav-tabs">
-                  <li class="am-active"><a href="#tab1">课程简介</a></li>
-                  <li><a href="#tab2">课程大纲</a></li>
-                </ul>
-                <div class="am-tabs-bd">
-                  <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                    <editor v-model="formData.courseDescription"></editor>
-                  </div>
-                  <div class="am-tab-panel am-fade" id="tab2">
-                    <editor v-model="formData.courseOutline"></editor>
-                  </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <select2  v-model="formData.busTeamId" :options="busTeams">
+              <option value="">业务组</option>
+            </select2>
+          </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <select2  v-model="formData.productId" :options="products">
+              <option value="请选择产品">请选择产品</option>
+            </select2>
+          </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <select2  v-model="formData.gradeId" :options="grades">
+              <option value="">年级</option>
+            </select2>
+          </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="formData.subjectId" :options="subjects">
+                <option value="">科目</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <select2  v-model="formData.periodId" :options="periodName">
+              <option value="">期数</option>
+            </select2>
+          </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <input type="text" class="am-input-lg" name="courseName" v-model="formData.courseName" placeholder="请输入课程名称"/>
+          </div>
+          </div>
+
+          <div class="am-form-group">
+            <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                    @click="search" ><span class="am-icon-search"></span>查询
+            </button>
+          </div>
+
+          <div class="am-u-sm-12 am-scrollable-horizontal">
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+              <thead>
+              <tr>
+                <th>选择</th>
+                <th>课程名称</th>
+                <th>期数</th>
+                <th>产品</th>
+                <th>年级</th>
+                <th>学科</th>
+                <th>学位</th>
+                <th>讲数</th>
+                <th>学费</th>
+              </tr>
+              </thead>
+              <tbody>
+
+              <tr v-for="item in tableData" :key="item.courseTemplateId">
+                <td>
+                  <div class="am-radio">
+                  <label>
+                    <input type="radio" name="doc-radio-1" value="option1">
+                  </label>
+                </div>
+                </td>
+                <td>{{item.courseName }}</td>
+                <td>{{item.periodNo}}</td>
+                <td>{{item.productName}}</td>
+                <td>{{item.gradeName}}</td>
+                <td>{{item.subjectName}}</td>
+                <td>{{item.quota}}</td>
+                <td>{{item.lectureAmount}}</td>
+                <td>{{item.studyingFee}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
+            </label>
+            <div class="am-u-sm-3 am-u-end input-field">
+              <select2 required v-model="formData.areaTeamId" :options="areaTeams">
+                <option value="">请选择</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              所在业务组
+            </label>
+            <div class="am-u-sm-3 am-u-end input-field">
+              <select2 v-model="formData.busTeamId" :options="busTeams">
+                <option value="">请选择</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
+            </label>
+            <div class="am-u-sm-9 input-field">
+              <input type="text" class="am-form-field" placeholder="输入班级名" required v-model="formData.className">
+            </div>
+          </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>序号
+            </label>
+            <div class="am-u-sm-9 input-field">
+              <input type="text" class="am-form-field" placeholder="输入序号" required v-model="formData.no">
+            </div>
+          </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
+            </label>
+            <div class="am-u-sm-9 input-field">
+              <input type="text" class="am-form-field" placeholder="输入学位数" required v-model="formData.quota">
+            </div>
+          </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
+            </label>
+            <div class="am-u-sm-9 input-field">
+              <input type="text" class="am-form-field" placeholder="输入学费" required v-model="formData.studyingFee">
+            </div>
+          </div>
+
+          <div class="am-form-group am-u-sm-9 am-u-sm-offset-3 am-u-end">
+            <div class="am-tabs" data-am-tabs>
+              <ul class="am-tabs-nav am-nav am-nav-tabs">
+                <li class="am-active"><a href="#tab1">课程简介</a></li>
+                <li><a href="#tab2">课程大纲</a></li>
+              </ul>
+              <div class="am-tabs-bd">
+                <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                  <editor v-model="formData.courseDescription"></editor>
+                </div>
+                <div class="am-tab-panel am-fade" id="tab2">
+                  <editor v-model="formData.courseOutline"></editor>
                 </div>
               </div>
             </div>
+          </div>
 
 
-            <div class="am-form-group">
-              <div class="am-u-sm-9 am-u-sm-push-3">
+          <div class="am-form-group">
+            <div class="am-u-sm-9 am-u-sm-push-3">
 
-                <button type="submit" class="am-btn am-btn-primary">提交</button>
-              </div>
+              <button type="submit" class="am-btn am-btn-primary">提交</button>
             </div>
-          </fieldset>
-        </form>
+          </div>
+        </fieldset>
+      </form>
+
+
+      </div>
+
+
+
       </div>
     </div>
   </div>
@@ -101,18 +208,31 @@
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
+  import Pagination from '../base/Pagination'
+
   export default{
     data(){
       return {
+        tableData:[],
+        total:0,
+        pageSize:5,
+        pageNo:1,
         id: 'form-' + (new Date().getTime()),
         formData: {
           areaTeamId: '',
           busTeamId: '',
-          teacherIds: []
-        }
+          teacherIds: [],
+          productId : ''
+        },
+        products:[],
       }
     },
+    components: {
+      Pagination
+    },
     created: function () {
+      this.loadTableData(this.pageNo);
+      this.loadProductData();
       var courseClassId = this.$params('classId');
       if (courseClassId) {
         var _this = this
@@ -128,7 +248,6 @@
             _this.$alert('请求服务器失败')
           })
       }
-
     },
     computed: {
       areaTeams: function () {
@@ -162,6 +281,7 @@
       }
     },
     mounted: function () {
+      $(window).smoothScroll();
       var _this = this;
       $('#' + this.id).validator({
         validate: function (validity) {
@@ -203,6 +323,18 @@
     },
 
     methods: {
+      loadProductData: function () {
+        var _this = this
+        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+          if (ret.success) {
+            _this.products = ret.data.map(function (item) {
+              return {value: item.productId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       save: function (complete) {
         var _this = this
         var data = _this.formData
@@ -223,7 +355,25 @@
             _this.$alert('请求服务器失败')
           })
       },
-      //TODO:获取课程等数据，
-    }
+      search:function(){
+        this.loadTableData()
+      },
+      loadTableData:function(pageNo){
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        io.post(io.apiAdminCourseTemplateList,$.extend({
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize
+        },_this.query),function(ret){
+          if(ret.success){
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+    },
   }
 </script>
+

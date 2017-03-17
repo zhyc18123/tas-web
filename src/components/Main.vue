@@ -113,6 +113,7 @@ export default {
         permission:toPermission(ret.data.resourceList),
         groupBusTeams:toGroupBusTeams(ret.data.busTeamList),
         areaTeams:ret.data.areaTeamList || [],
+        busTeams:ret.data.busTeamList || [],
         grades:ret.data.gradeList,
         subjects:ret.data.subjectList,
         periods:ret.data.periodList
