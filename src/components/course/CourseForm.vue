@@ -73,16 +73,17 @@
               </div>
             </div>
 
-            <!--<div class="am-form-group">-->
-              <!--<label class="am-u-sm-3 am-form-label">-->
-                <!--产品-->
-              <!--</label>-->
-              <!--<div class="am-u-sm-3 am-u-end input-field">-->
-                <!--<select2  v-model="formData.productId" :options="products" >-->
-                  <!--<option value="">请选择</option>-->
-                <!--</select2>-->
-              <!--</div>-->
-            <!--</div>-->
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                产品
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2  v-model="formData.productId" :options="products" >
+                  <option value="请选择">请选择</option>
+                </select2>
+              </div>
+            </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -160,13 +161,14 @@ import util from '../../lib/util'
                 courseTypeData:[],
                 formData:{
                   areaTeamId:'',
-                  productId:'',
+//                  productId:'',
                   busTeamId:'',
                   lectureAmount : 15,
                   lectureDuration : 45,
                   quota:0,
                   studyingFee : 0
-                }
+                },
+              products:[]
             }
         },
         created:function(){
@@ -184,7 +186,7 @@ import util from '../../lib/util'
           })
          }
 
-
+          this.loadProductData()
           this.loadCourseTypeData()
 
 
@@ -202,6 +204,13 @@ import util from '../../lib/util'
             .map(function(item){
               return {value:item.busTeamId,text:item.name}
             })
+            return options
+          },
+          products : function(){
+            var options =  (  this.formData.productId  || []  )
+              .map(function(item){
+                return {value:item.productId,text:item.name}
+              })
             return options
           },
           grades:function(){
@@ -293,7 +302,19 @@ import util from '../../lib/util'
               function(){
                 _this.$alert('请求服务器失败')
               })
-          }
+          },
+          loadProductData: function () {
+            var _this = this
+            io.post(io.apiAdminBaseProductList, {}, function (ret) {
+              if (ret.success) {
+                _this.products = ret.data.map(function (item) {
+                  return {value: item.productId, text: item.name}
+                })
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          },
         }
     }
 </script>
