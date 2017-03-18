@@ -22,8 +22,9 @@
       </thead>
       <tbody>
 
-      <tr v-for="item in $root.courseShoppingCart" :key="">
-        <th><input type="checkbox" name="selectItem" :data-class-id="item.classId"></th>
+      <tr v-for="(item, index) in $root.courseShoppingCart" :key="">
+        <th><input type="checkbox" name="selectItem" :data-class-id="item.classId" :data-index="index"
+                   :data-start-amount="item.startAmount" :data-end-amount="item.endAmount"></th>
         <td>{{item.className}}</td>
         <td>{{item.startAmount}}</td>
         <td>{{item.endAmount}}</td>
@@ -39,10 +40,10 @@
         <td>{{item.campusName}}</td>
         <td>
           <div class="tpl-table-black-operation">
-            <a href="javascript:;" @click="">
+            <a href="javascript:;" @click="cancel(index)">
               <i class="am-icon-edit"></i> 撤销
             </a>
-            <a href="javascript:;" @click="pay(item.classId)">
+            <a href="javascript:;" @click="pay(item.classId,index)">
               <i class="am-icon-edit"></i> 缴费
             </a>
           </div>
@@ -51,7 +52,7 @@
       </tbody>
     </table>
 
-    <window ref="order" >
+    <window ref="order">
       <course-order :courseOrderId="courseOrderId"></course-order>
     </window>
 
@@ -69,56 +70,79 @@
   import CourseOrder from './CourseOrder'
 
   export default{
-    data:function(){
+    data: function () {
       return {
-        courseOrderId : ''
+        courseOrderId: '',
+        studentId: ''
       }
     },
-    components:{
-      'course-order' : CourseOrder
+    components: {
+      'course-order': CourseOrder
     },
-    mounted:function(){
-      $(this.$el).on("change" , 'input[name=selectAll]',function(){
-        var $selectItem = $('input[name=selectItem]',this.$el)
-        var  isSelect = $(this).prop('checked') == true
-        $selectItem.each(function(){
-          $(this).prop('checked' , isSelect  )
+    mounted: function () {
+      $(this.$el).on("change", 'input[name=selectAll]', function () {
+        var $selectItem = $('input[name=selectItem]', this.$el)
+        var isSelect = $(this).prop('checked') == true
+        $selectItem.each(function () {
+          $(this).prop('checked', isSelect)
         })
       })
 
     },
-    destroyed:function(){
+    destroyed: function () {
       this.$root.courseShoppingCart = []
 
     },
-    methods:{
+    methods: {
 
-      batchPay : function(){
+      batchPay: function () {
 
-        var $selectItem = $('input[name=selectItem]',this.$el)
+        var $selectItem = $('input[name=selectItem]', this.$el)
         var classIds = []
-        $selectItem.each(function(){
-          if( $(this).prop('checked') ){
+        var indexs = []
+        var startAmounts = []
+        var endAoumnts = []
+        $selectItem.each(function () {
+          if ($(this).prop('checked')) {
             classIds.push($(this).data('class-id'))
+            indexs.push($(this).data('index'))
+            startAmounts.push($(this).data('start-amount'))
+            endAoumnts.push($(this).data('end-amount'))
           }
         })
-        if(classIds.length == 0 ){
+        if (classIds.length == 0) {
           this.$alert('至少选择一个班')
+        } else {
+          this.createOrder(classIds, indexs, startAmounts, endAoumnts)
         }
-        this.createOrder(classIds)
       },
-      createOrder:function(classIds){
-        //
-        
-
-        this.$refs.order.show()
-
+      createOrder: function (classIds, indexs, startAmounts, endAmounts) {
+        var studentId = this.$params('studentId')
+        //创建信息
+        io.get(io.apiAdminSaveOrUpdateStudentReg, {
+            studentId: studentId,
+            classIds: classIds,
+            startAmounts: startAmounts,
+            endAmounts: endAmounts
+          },
+          function (ret) {
+            if (ret.success) {
+              $refs.order.show()
+              //如果缴费成功，移除代缴费里面的相应课程
+              if (false) {
+                for (var i = 0; i <= indexs.length; i++) {
+                  this.cancel(indexs[i]);
+                }
+              }
+            }
+          })
       },
-      pay:function (classId) {
-        this.createOrder([classId])
+      pay: function (classId, index, startAmount, endAmount) {
+        this.createOrder([classId], [index], [startAmount], [endAmount])
+      },
+      cancel: function (index) {
+        this.$root.courseShoppingCart.splice(index, 1)
       }
-
-
     }
   }
 
