@@ -80,7 +80,7 @@
                   <button type="button" class="am-btn am-btn-default am-btn-sm">
                     <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
                 </div>
-                <input type="file" id="doc-ipt-file2" @change>
+                  <input id="courseTemplateFile" type="file"  @change="uploadExcel" />
               </div>
             </div>
           </div>
@@ -90,7 +90,7 @@
               <div class="am-btn-toolbar">
                 <div class="am-btn-group ">
                   <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click=""
-                          v-if="hasPermission('add')"><span class="am-icon-download"></span>下载模板</button>
+                          ><span class="am-icon-download"></span>下载模板</button>
                 </div>
               </div>
             </div>
@@ -244,6 +244,19 @@ import Pagination from '../base/Pagination'
               }
             })
           },
+          uploadExcel:function() {
+            var _this = this
+            console.log(",,,,," );
+            var formData = new FormData();
+            formData.append("file",document.getElementById('courseTemplateFile').files[0]);
+            this.$http.post(io.importCourseExcel+"?accessToken="+io.getHeaders().accessToken,formData).then(response =>{
+                var ret = response.body;
+                console.log(ret.success);
+            },response => {
+
+            })
+          }
+
         }
     }
 </script>
