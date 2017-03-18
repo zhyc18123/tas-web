@@ -17,16 +17,19 @@
       </thead>
       <tbody>
 
-      <tr v-for="" :key="">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr v-for="(item,index) in tableData" :key="item.courseOrderId">
+        <td>{{index+1}}</td>
+        <td>{{item.courseOrderId}}</td>
+        <td>{{item.updateTime}}</td>
+        <td>{{item.totalAmount}}</td>
+        <td>{{item.payableAmount}}</td>
+        <td>{{item.paidAmount}}</td>
+        <td>{{item.payableAmount-item.paidAmount}}</td>
+        <td>
+          <span v-if="item.payableAmount-item.paidAmount==0">已缴费</span>
+          <span v-else>欠费&nbsp;&nbsp;&nbsp;<a>缴费</a></span>
+        </td>
+        <td>{{item.operator}}</td>
         <td>
           <div class="tpl-table-black-operation">
             <a href="javascript:;" @click="">
@@ -46,6 +49,48 @@
   import Pagination from '../base/Pagination'
 
   export default{
+    data : function () {
+      return{
+        tableData:[],
+        total: 0,
+        pageSize: 10,
+        pageNo: 1,
+        studentId:''
+      }
+
+    },
+    components: {
+      Pagination
+    },
+    mounted:function(){
+      $(window).smoothScroll()
+    },
+    created:function () {
+      this.loadTableData(this.pageNo)
+
+    },
+    methods:{
+      loadTableData:function(pageNo){
+
+        var studentId = this.$params('studentId')
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        io.post(io.apiAdminCourseOrderList,$.extend({
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize,
+          studentId:studentId
+        },_this.query),function(ret){
+          if(ret.success){
+//            alert(JSON.stringify(ret.data));
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list;
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      }
+
     }
+  }
 
 </script>
