@@ -137,11 +137,14 @@
                 height: 800
               })
 
+              //通过实践通知订单组件重新加载数据
+              _this.$root.$emit('order:new')
+
               if (false) {
                 for (var i = 0; i <= indexs.length; i++) {
-                  this.cancel(indexs[i]);
+                  _this.cancel(indexs[i]);
                 }
-              }
+            }
             }else{
               //失败也要通知
               _this.$alert(ret.desc  || '处理失败')

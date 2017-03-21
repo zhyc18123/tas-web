@@ -13,7 +13,7 @@
         <fieldset>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
-            <select2  v-model="formData.areaTeamId" :options="areaTeams">
+            <select2  v-model="query.areaTeamId" :options="areaTeams">
               <option value="">区域组</option>
             </select2>
           </div>
@@ -21,7 +21,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
-            <select2  v-model="formData.busTeamId" :options="busTeams">
+            <select2  v-model="query.busTeamId" :options="busTeams">
               <option value="">业务组</option>
             </select2>
           </div>
@@ -29,7 +29,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
-            <select2  v-model="formData.productId" :options="products">
+            <select2  v-model="query.productId" :options="products">
               <option value="请选择产品">请选择产品</option>
             </select2>
           </div>
@@ -37,7 +37,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
-            <select2  v-model="formData.gradeId" :options="grades">
+            <select2  v-model="query.gradeId" :options="grades">
               <option value="">年级</option>
             </select2>
           </div>
@@ -45,23 +45,23 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <select2  v-model="formData.subjectId" :options="subjects">
+              <select2  v-model="query.subjectId" :options="subjects">
                 <option value="">科目</option>
               </select2>
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <select2  v-model="formData.periodId" :options="periodName">
-              <option value="">期数</option>
-            </select2>
-          </div>
-          </div>
+          <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">-->
+          <!--<div class="am-form-group">-->
+            <!--<select2  v-model="formData.periodId" :options="periodName">-->
+              <!--<option value="">期数</option>-->
+            <!--</select2>-->
+          <!--</div>-->
+          <!--</div>-->
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
-            <input type="text" class="am-input-lg" name="courseName" v-model="formData.courseName" placeholder="请输入课程名称"/>
+            <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
           </div>
           </div>
 
@@ -77,7 +77,7 @@
               <tr>
                 <th>选择</th>
                 <th>课程名称</th>
-                <th>期数</th>
+                <!--<th>期数</th>-->
                 <th>产品</th>
                 <th>年级</th>
                 <th>学科</th>
@@ -97,7 +97,7 @@
                 </div>
                 </td>
                 <td>{{item.courseName }}</td>
-                <td>{{item.periodNo}}</td>
+                <!--<td>{{item.periodNo}}</td>-->
                 <td>{{item.productName}}</td>
                 <td>{{item.gradeName}}</td>
                 <td>{{item.subjectName}}</td>
@@ -120,7 +120,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required v-model="formData.areaTeamId" :options="areaTeams">
+              <select2 required v-model="formData.areaTeamId" :options="areaTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -130,11 +130,22 @@
               所在业务组
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 v-model="formData.busTeamId" :options="busTeams">
+              <select2 v-model="formData.busTeamId" :options="busTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>
           </div>
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              期数
+            </label>
+            <div class="am-u-sm-3 am-u-end input-field">
+              <select2 v-model="formData.periodId" :options="periods">
+                <option value="">请选择</option>
+              </select2>
+            </div>
+          </div>
+
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
@@ -218,11 +229,26 @@
         pageSize:5,
         pageNo:1,
         id: 'form-' + (new Date().getTime()),
-        formData: {
+        query: {
           areaTeamId: '',
           busTeamId: '',
-          teacherIds: [],
+          gradeId:'',
+          subjectId:'',
+          courseName:'',
           productId : ''
+        },
+        formData:{
+          areaTeamId: '',
+          busTeamId: '',
+          productId : '',
+          periodId:'',
+          className:'',
+          no:'',
+          quota:'',
+          studyingFee:'',
+          courseDescription:'',
+          courseOutline:'',
+          teacherIds:'',
         },
         products:[],
       }
@@ -258,6 +284,20 @@
         return options
       },
       busTeams: function () {
+        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
+          .map(function (item) {
+            return {value: item.busTeamId, text: item.name}
+          })
+        return options
+      },
+      areaTeamsData: function () {
+        var options = ( this.$root.config.areaTeams || [] )
+          .map(function (item) {
+            return {value: item.areaTeamId, text: item.name}
+          })
+        return options
+      },
+      busTeamsData: function () {
         var options = ( ( this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] ) : [] )
           .map(function (item) {
             return {value: item.busTeamId, text: item.name}
