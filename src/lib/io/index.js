@@ -78,6 +78,7 @@ const io = {
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
+    this.apiAdminDownloadCourseExcel = conf.baseApiPath+ '/api/admin/downloadCourseTemplate'
 
     this.apiAdminCourseProductTemplateList  = conf.baseApiPath + '/api/admin/courseProductList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
