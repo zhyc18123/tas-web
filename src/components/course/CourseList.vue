@@ -89,8 +89,6 @@
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group ">
-                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download">
-                    <span class="am-icon-download"></span>下载模板</button>
                   <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</button>
                 </div>
               </div>
@@ -220,10 +218,11 @@ import Pagination from '../base/Pagination'
           },
           download:function() {
             var _this = this
-            io.post(io.apiAdminDownloadCourseExcel, {}, function (ret) {
+            io.post(io.apiAdminDownloadCourseExcel, function (ret) {
               if (ret.success) {
                   alert(123456);
               } else {
+                  alert("计算机");
               }
             })
           },
@@ -254,27 +253,14 @@ import Pagination from '../base/Pagination'
               }
             })
           },
-          //TODO:todel
           uploadExcel:function() {
-            var _this = this
-            console.log(",,,,," );
-            var formData = new FormData();
-            formData.append("file",document.getElementById('courseTemplateFile').files[0]);
-            this.$http.post(io.importCourseExcel+"?accessToken="+io.getHeaders().accessToken,formData).then(response=>{
-                var ret = response.body;
-                console.log(ret.success);
-              $("#courseTemplateFile").val("");
-              _this.loadTableData()
-            },response => {
-
-            })
-          },
-          uploadExcel2:function() {
             var _this = this;
             var formData = new FormData();
             formData.append("file",document.getElementById('courseTemplateFile').files[0]);
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
               if (ret.ok){
+                $("#courseTemplateFile").val("");
+                _this.loadTableData()
                   _this.$alert("上传成功")
               } else {
                   _this.$alert("上传失败")
