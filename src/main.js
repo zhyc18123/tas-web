@@ -61,8 +61,7 @@ import FutureReportDetail from './components/settlement/FutureReportDetail'
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
-Vue.use((VueResource))
-
+Vue.use(VueResource)
 
 const Index = { template: '<div>Index</div>' }
 const Refresh = {

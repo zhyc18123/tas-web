@@ -244,16 +244,29 @@ import Pagination from '../base/Pagination'
               }
             })
           },
+          //TODO:todel
           uploadExcel:function() {
             var _this = this
             console.log(",,,,," );
             var formData = new FormData();
             formData.append("file",document.getElementById('courseTemplateFile').files[0]);
-            this.$http.post(io.importCourseExcel+"?accessToken="+io.getHeaders().accessToken,formData).then(response =>{
+            this.$http.post(io.importCourseExcel+"?accessToken="+io.getHeaders().accessToken,formData).then(response=>{
                 var ret = response.body;
                 console.log(ret.success);
             },response => {
 
+            })
+          },
+          uploadExcel2:function() {
+            var _this = this;
+            var formData = new FormData();
+            formData.append("file",document.getElementById('courseTemplateFile').files[0]);
+            io.postMitiFile(io.importCourseExcel,formData,function (ret) {
+              if (ret.ok){
+                  _this.$alert("上传成功")
+              } else {
+                  _this.$alert("上传失败")
+              }
             })
           }
 
