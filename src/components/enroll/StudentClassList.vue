@@ -66,6 +66,10 @@
     },
     created:function () {
       this.loadDataTable();
+      var _this = this
+      this.$root.$on('order:new',function(){
+        _this.loadTableData()
+      })
     },
     methods: {
       loadDataTable: function () {
