@@ -101,6 +101,7 @@ const io = {
     this.apiAdminSettlementAccountMainBodyList = conf.baseApiPath + '/api/admin/settlement/accountMainBodyList'
     this.apiAdminSettlementFutureReportDetailList = conf.baseApiPath + '/api/admin/settlement/futureReportDetailList'
 
+    this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
 
 

@@ -1,6 +1,7 @@
 require('./assets/css/app.css')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import VueResource from 'vue-resource'
 
 import io from './lib/io'
 import storage from './lib/storage'
@@ -60,7 +61,7 @@ import FutureReportDetail from './components/settlement/FutureReportDetail'
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
-
+Vue.use((VueResource))
 
 
 const Index = { template: '<div>Index</div>' }
