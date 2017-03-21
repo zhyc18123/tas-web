@@ -175,9 +175,13 @@
               </thead>
               <tbody>
 
-              <tr v-for="item in tableData" :key="item.classId">
+              <tr v-for="item in tableData" :key="item.courseTemplateId">
                 <td>
-                  排时间 排教室 排老师
+
+                  <a href="javascript:;" @click="arrangeTime(item.courseTemplateId)">排时间</a>
+                  <a href="javascript:;" @click="arrangeRoom(item.courseTemplateId)">排教室</a>
+                  <a href="javascript:;" @click="arrangeTeacher(item.courseTemplateId)">排老师</a>
+
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
                        v-if="hasPermission('edit')">
@@ -336,7 +340,18 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      arrangeTime:function (courseTemplateId) {
+        alert('coming soon');
+      },
+      arrangeRoom:function (courseTemplateId) {
+          //弹窗
+        alert('coming soon');
+      },
+      arrangeTeacher:function (courseTemplateId) {
+        alert('coming soon');
+      },
+
     }
   }
 </script>
