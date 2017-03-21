@@ -3,6 +3,7 @@ import conf from '../conf'
 
 import Storage from '../storage'
 
+import Vue from 'vue'
 
 jQuery.cachedScript = function( url, options ) {
   options = $.extend( options || {}, {
@@ -206,6 +207,11 @@ const io = {
         }
       }
     });
+  },
+  postMitiFile:function (url,data,success) {
+    Vue.http.post(io.importCourseExcel+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+      if (success) success(data);
+    })
   },
   getScripts:function(urls,done){
     var $scripts = $.map( urls , function(url) {

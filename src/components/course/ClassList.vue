@@ -220,13 +220,16 @@
       </div>
     </div>
 
+    <window ref="room-arrangement">
+      <room-arrangement :courseClassId="courseClassId"></room-arrangement>
+    </window>
   </div>
 </template>
-
 <script>
   import io from '../../lib/io'
-
   import Pagination from '../base/Pagination'
+  import RoomArrangement from '../enroll/RoomArrangement'
+
 
   export default{
     data: function () {
@@ -242,11 +245,13 @@
         },
         searchConfig: {},
         products:[],
-        courses:[]
+        courses:[],
+        courseClassId:''
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'room-arrangement':RoomArrangement
     },
     mounted: function () {
       $(window).smoothScroll()
