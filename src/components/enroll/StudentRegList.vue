@@ -43,7 +43,7 @@
             <a href="javascript:;" @click="cancel(index)">
               <i class="am-icon-edit"></i> 撤销
             </a>
-            <a href="javascript:;" @click="pay(item.classId,index)">
+            <a href="javascript:;" @click="pay(item.classId,index,item.startAmount,item.endAmount)">
               <i class="am-icon-edit"></i> 缴费
             </a>
           </div>
@@ -118,22 +118,33 @@
       },
       createOrder: function (classIds, indexs, startAmounts, endAmounts) {
         var studentId = this.$params('studentId')
-        //创建信息
+        var _this = this
+        //创建订单和注册信息
         io.get(io.apiAdminSaveOrUpdateStudentReg, {
             studentId: studentId,
             classIds: classIds,
             startAmounts: startAmounts,
             endAmounts: endAmounts
-          },
-          function (ret) {
+          }, function (ret) {
             if (ret.success) {
-              $refs.order.show()
-              //如果缴费成功，移除代缴费里面的相应课程
+
+              //无法识别 _this 指的是vue实例
+              //这里 this 指的是jquery 实例啊
+              //你 console.log(this)就清楚了
+              //窗口是可以调整大小的
+              _this.$refs.order.show({
+                width : 1000 ,
+                height: 800
+              })
+
               if (false) {
                 for (var i = 0; i <= indexs.length; i++) {
                   this.cancel(indexs[i]);
                 }
               }
+            }else{
+              //失败也要通知
+              _this.$alert(ret.desc  || '处理失败')
             }
           })
       },

@@ -20,19 +20,19 @@
       </thead>
       <tbody>
 
-      <tr v-for="" :key="">
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
+      <tr v-for="(item,index) in tableData" :key="item.studentReg">
+        <td>{{index+1}}</td>
+        <td>{{item.courseClass.periodName}}</td>
+        <td>{{item.courseClass.campusName}}</td>
+        <td>{{item.courseClass.gradeName}}</td>
+        <td>{{item.courseClass.className}}</td>
+        <td>{{item.courseClass.studyingFee}}</td>
+        <td>/{{item.courseClass.lectureAmount}}</td>
+        <td>{{item.studentReg.startAmount}}</td>
+        <td>{{item.studentReg.endAmount}}</td>
+        <td>{{item.studentReg.endAmount-item.studentReg.startAmount+1}}</td>
+        <td>{{item.courseClass.startCourseTime}}</td>
+        <td>{{0}}-{{0}}</td>
         <td>
           <div class="tpl-table-black-operation">
             <a href="javascript:;" @click="">
@@ -58,6 +58,30 @@
   import Pagination from '../base/Pagination'
 
   export default{
+    data: function () {
+      return{
+        studentId:'',
+        tableData:[{}]
+      }
+    },
+    created:function () {
+      this.loadDataTable();
+    },
+    methods: {
+      loadDataTable: function () {
+        var _this = this
+        var studentId = this.$params('studentId')
+        //创建订单和注册信息
+        io.get(io.apiAdminStudentReadClassList, {
+          studentId: studentId,
+        }, function (ret) {
+          if (ret.success) {
+            _this.tableData = ret.data
+
+          }
+        })
+      }
+    }
   }
 
 </script>

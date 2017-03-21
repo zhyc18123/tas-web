@@ -215,7 +215,7 @@
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
         this.loadTableData()
       },
-      search: function () {
+      created: function () {
         this.loadTableData()
       },
       loadTableData: function (pageNo) {
