@@ -31,7 +31,7 @@
         <td>{{item.studentReg.startAmount}}</td>
         <td>{{item.studentReg.endAmount}}</td>
         <td>{{item.studentReg.endAmount-item.studentReg.startAmount+1}}</td>
-        <td>{{item.courseClass.startCourseTime}}</td>
+        <td>{{item.courseClass.startCourseTime | formatDate }}</td>
         <td>{{0}}-{{0}}</td>
         <td>
           <div class="tpl-table-black-operation">
@@ -61,7 +61,7 @@
     data: function () {
       return{
         studentId:'',
-        tableData:[{}]
+        tableData:[] //空{}肯定有问题，要多看下例子,还有其他问题么
       }
     },
     created:function () {

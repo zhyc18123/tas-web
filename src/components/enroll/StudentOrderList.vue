@@ -73,6 +73,11 @@
     },
     created:function () {
       this.loadTableData(this.pageNo)
+      var _this = this
+      this.$root.$on('order:new',function(){
+        _this.pageNo = 1
+        _this.loadTableData(_this.pageNo)
+      })
     },
     methods:{
       loadTableData:function(pageNo){
