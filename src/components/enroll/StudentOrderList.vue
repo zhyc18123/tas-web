@@ -40,6 +40,12 @@
       </tr>
       </tbody>
     </table>
+    <div class="am-u-lg-12 am-cf">
+      <div class="am-fr">
+        <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                    @paging="loadTableData"/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -67,7 +73,6 @@
     },
     created:function () {
       this.loadTableData(this.pageNo)
-
     },
     methods:{
       loadTableData:function(pageNo){

@@ -48,7 +48,7 @@
               <student-class-list :studentId="studentId" ></student-class-list>
             </div>
             <div class="am-tab-panel">
-              班级历史
+              <student-class-history-list :studentId="studentId"></student-class-history-list>
             </div>
             <div class="am-tab-panel">
               <student-edit-from :studentId="studentId" ></student-edit-from>
@@ -82,6 +82,7 @@
   import StudentRegList from './StudentRegList'
   import StudentOrderList from './StudentOrderList'
   import StudentClassList from './StudentClassList'
+  import ClassHistoryList from './ClassHistoryList'
   export default{
     data(){
       return {
@@ -94,7 +95,8 @@
       'student-apply': StudentApply,
       'student-regList': StudentRegList,
       'student-order-list': StudentOrderList,
-      'student-class-list': StudentClassList
+      'student-class-list': StudentClassList,
+      'student-class-history-list': ClassHistoryList
     },
     created: function () {
       var studentId = this.$params('studentId')

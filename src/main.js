@@ -52,6 +52,7 @@ import StudentApply from  './components/enroll/StudentApply'
 import StudentRegList from  './components/enroll/StudentRegList'
 import StudentOrderList from  './components/enroll/StudentOrderList'
 import StudentClassList from  './components/enroll/StudentClassList'
+import ClassHistoryList from  './components/enroll/ClassHistoryList'
 
 import FutureReport from './components/settlement/FutureReport'
 import FutureReportDetail from './components/settlement/FutureReportDetail'
@@ -124,7 +125,8 @@ const router = new VueRouter({
       {path: 'enroll/student/apply/:studentId' , component: StudentApply },
       {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
       {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
-      {path: 'enroll/student/classList/:studentId' , component: StudentClassList }
+      {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
+      {path: 'enroll/student/historyList/:studentId' , component: ClassHistoryList }
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
     ],
     beforeEnter:function(to, from, next){
