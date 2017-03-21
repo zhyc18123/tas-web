@@ -218,10 +218,11 @@ import Pagination from '../base/Pagination'
           },
           download:function() {
             var _this = this
-            io.post(io.apiAdminDownloadCourseExcel, {}, function (ret) {
+            io.post(io.apiAdminDownloadCourseExcel, function (ret) {
               if (ret.success) {
                   alert(123456);
               } else {
+                  alert("计算机");
               }
             })
           },
@@ -253,19 +254,19 @@ import Pagination from '../base/Pagination'
             })
           },
           uploadExcel:function() {
-            var _this = this
-            console.log(",,,,," );
+            var _this = this;
             var formData = new FormData();
             formData.append("file",document.getElementById('courseTemplateFile').files[0]);
-            this.$http.post(io.importCourseExcel+"?accessToken="+io.getHeaders().accessToken,formData).then(response =>{
-                var ret = response.body;
-                console.log(ret.success);
-              $("#courseTemplateFile").val("");
-              _this.loadTableData()
-            },response => {
-
+            io.postMitiFile(io.importCourseExcel,formData,function (ret) {
+              if (ret.ok){
+                $("#courseTemplateFile").val("");
+                _this.loadTableData()
+                  _this.$alert("上传成功")
+              } else {
+                  _this.$alert("上传失败")
+              }
             })
-          },
+          }
         }
     }
 </script>
