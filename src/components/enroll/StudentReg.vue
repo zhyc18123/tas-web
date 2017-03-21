@@ -34,7 +34,7 @@
             <li><a href="javascript: void(0)">学生明细</a></li>
           </ul>
 
-          <div class="am-tabs-bd">
+          <div class="am-tabs-bd am-tabs-bd-ofv">
             <div class="am-tab-panel am-active">
               <student-apply :studentId="studentId" ></student-apply>
             </div>
