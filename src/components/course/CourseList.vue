@@ -218,10 +218,11 @@ import Pagination from '../base/Pagination'
           },
           download:function() {
             var _this = this
-            io.post(io.apiAdminDownloadCourseExcel, {}, function (ret) {
+            io.post(io.apiAdminDownloadCourseExcel, function (ret) {
               if (ret.success) {
                   alert(123456);
               } else {
+                  alert("计算机");
               }
             })
           },
