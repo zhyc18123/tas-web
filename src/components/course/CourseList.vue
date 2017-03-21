@@ -89,12 +89,9 @@
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group ">
-<<<<<<< Updated upstream
                   <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download">
                     <span class="am-icon-download"></span>下载模板</button>
-=======
                   <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</button>
->>>>>>> Stashed changes
                 </div>
               </div>
             </div>
