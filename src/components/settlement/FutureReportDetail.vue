@@ -93,6 +93,7 @@ import Pagination from '../base/Pagination'
           $(window).smoothScroll()
         },
         created:function(){
+          this.query.accountId = this.$params('accountId')
           this.loadTableData(this.pageNo);
         },
         methods:{
