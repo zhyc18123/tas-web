@@ -65,10 +65,10 @@
       }
     },
     created:function () {
-      this.loadDataTable();
+      this.loadDataTable()
       var _this = this
-      this.$root.$on('order:new',function(){
-        _this.loadTableData()
+      this.$root.$on('class:new',function(){
+        _this.loadDataTable()
       })
     },
     methods: {
@@ -82,6 +82,8 @@
           if (ret.success) {
             _this.tableData = ret.data
 
+          }else {
+            _this.$alert(ret.desc  || '处理失败')
           }
         })
       }

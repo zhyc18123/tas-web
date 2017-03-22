@@ -128,17 +128,20 @@
           }, function (ret) {
             if (ret.success) {
 
-              //无法识别 _this 指的是vue实例
-              //这里 this 指的是jquery 实例啊
-              //你 console.log(this)就清楚了
-              //窗口是可以调整大小的
+              //获取订单id
+              var courseOrderId = ret.data.courseOrderId
+              _this.courseOrderId = courseOrderId
+              //_this 指的是vue实例
+              //this 指的是jquery 实例
+              //窗口调整大小
               _this.$refs.order.show({
                 width : 1000 ,
-                height: 800
+                height: 500,
               })
 
               //通过实践通知订单组件重新加载数据
               _this.$root.$emit('order:new')
+              _this.$root.$emit('class:new')
 
               if (false) {
                 for (var i = 0; i <= indexs.length; i++) {

@@ -20,7 +20,7 @@
       <tr v-for="(item,index) in tableData" :key="item.courseOrderId">
         <td>{{index+1}}</td>
         <td>{{item.courseOrderId}}</td>
-        <td>{{item.createTime | formatDate}}</td>
+        <td>{{item.createTime | formatTime}}</td>
         <td>{{item.totalAmount}}</td>
         <td>{{item.payableAmount}}</td>
         <td>{{item.paidAmount}}</td>
