@@ -31,6 +31,7 @@
             e.preventDefault();
             $modal.modal('close')
           })
+          $modal.appendTo('body')
         })
       },
       methods: {
