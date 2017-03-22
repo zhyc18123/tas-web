@@ -98,15 +98,6 @@
     created:function(){
       this.loadTableData(this.pageNo);
     },
-    computed:{
-      areaTeams: function () {
-        var options = ( this.$root.config.areaTeams || [] )
-          .map(function (item) {
-            return {value: item.areaTeamId, text: item.name}
-          })
-        return options
-      },
-    },
     methods:{
       search:function(){
         this.loadTableData()
@@ -114,7 +105,7 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseProductTemplateList,$.extend({
+        io.post(io.apiAdminRoomListForClassArrangement,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
