@@ -248,7 +248,6 @@
           studyingFee:'',
           courseDescription:'',
           courseOutline:'',
-          teacherIds:'',
         },
         products:[],
       }
@@ -265,8 +264,8 @@
         io.post(io.apiAdminCourseClassDetail, {courseClassId: courseClassId},
           function (ret) {
             if (ret.success) {
-              ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
-              console.log(ret.data.teacherIds);
+//              ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
+//              console.log(ret.data.teacherIds);
               _this.formData = ret.data
             }
           },
@@ -377,9 +376,12 @@
       },
       save: function (complete) {
         var _this = this
-        var data = _this.formData
-        data.teacherIds = data.teacherIds.join(',')
-        io.post(io.apiAdminSaveOrUpdateClass, data,
+        var dataQuery = _this.query;
+        var data = _this.formData;
+//        data.teacherIds = data.teacherIds.join(',')
+        alert(dataQuery);
+        alert(data);
+        io.post(io.apiAdminSaveOrUpdateClass, data,dataQuery,
           function (ret) {
             complete.call()
             if (ret.success) {

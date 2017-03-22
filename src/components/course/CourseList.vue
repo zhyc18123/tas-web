@@ -89,7 +89,8 @@
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group ">
-                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</button>
+                  <!--<button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</button>-->
+                  <a type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</a>
                 </div>
               </div>
             </div>
@@ -216,16 +217,6 @@ import Pagination from '../base/Pagination'
           search:function(){
             this.loadTableData()
           },
-          download:function() {
-            var _this = this
-            io.post(io.apiAdminDownloadCourseExcel, function (ret) {
-              if (ret.success) {
-                  alert(123456);
-              } else {
-                  alert("计算机");
-              }
-            })
-          },
           loadTableData:function(pageNo){
             var _this = this
             _this.pageNo = pageNo || _this.pageNo || 1
@@ -253,6 +244,9 @@ import Pagination from '../base/Pagination'
               }
             })
           },
+          download:function() {
+
+          },
           uploadExcel:function() {
             var _this = this;
             var formData = new FormData();
@@ -260,10 +254,10 @@ import Pagination from '../base/Pagination'
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
               if (ret.ok){
                 $("#courseTemplateFile").val("");
-                _this.loadTableData()
-                  _this.$alert("上传成功")
+                _this.loadTableData();
+                _this.$alert("上传成功");
               } else {
-                  _this.$alert("上传失败")
+                _this.$alert("上传失败");
               }
             })
           }
