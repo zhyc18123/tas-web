@@ -55,8 +55,8 @@ import StudentOrderList from  './components/enroll/StudentOrderList'
 import StudentClassList from  './components/enroll/StudentClassList'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 
-import FutureReport from './components/settlement/FutureReport'
-import FutureReportDetail from './components/settlement/FutureReportDetail'
+import AccountReport from './components/settlement/AccountReport'
+import AccountReportDetail from './components/settlement/AccountReportDetail'
 
 
 Vue.use(VueRouter)
@@ -130,8 +130,8 @@ const router = new VueRouter({
 
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
 
-      {path: 'settlement/future/report' , component: FutureReport },
-      {path: 'settlement/future/report/detail/:accountId' , component: FutureReportDetail },
+      {path: 'settlement/account/report' , component: AccountReport },
+      {path: 'settlement/account/report/detail/:accountId' , component: AccountReportDetail },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
