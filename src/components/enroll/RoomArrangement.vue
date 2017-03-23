@@ -36,6 +36,7 @@
                 <th>教室名称</th>
                 <th>座位数</th>
                 <th>备注</th>
+                <th>操作</th>
               </tr>
               </thead>
               <tbody>
