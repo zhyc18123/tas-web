@@ -282,7 +282,6 @@
       pay:function (classId) {
         var studentId = this.$params('studentId')
         var _this = this
-        console.log(classId+"---"+studentId)
       }
     }
   }

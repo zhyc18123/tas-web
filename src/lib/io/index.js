@@ -98,6 +98,7 @@ const io = {
     this.apiAdminSaveOrUpdateStudentReg = conf.baseApiPath + '/api/admin/saveOrUpdateStudentReg'
     this.apiAdminCourseOrderList = conf.baseApiPath + '/api/admin/courseOrderList'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
+    this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
@@ -105,6 +106,8 @@ const io = {
     this.apiAdminSettlementFutureReportDetailList = conf.baseApiPath + '/api/admin/settlement/futureReportDetailList'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
+
+    this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistroyList'
 
 
 

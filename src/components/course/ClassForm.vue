@@ -378,10 +378,10 @@
         var _this = this
         var dataQuery = _this.query;
         var data = _this.formData;
-//        data.teacherIds = data.teacherIds.join(',')
+
         alert(dataQuery);
         alert(data);
-        io.post(io.apiAdminSaveOrUpdateClass, data,dataQuery,
+        io.post(io.apiAdminSaveOrUpdateClass, data,
           function (ret) {
             complete.call()
             if (ret.success) {
