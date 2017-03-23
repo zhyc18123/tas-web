@@ -110,7 +110,7 @@
                   <a href="javascript:;" @click="studentReg(item)">
                     <i class="am-icon-edit"></i> 报名
                   </a>
-                  <a href="javascript:;"  @click="pay(item.classId)">
+                  <a href="javascript:;" @click="pay(item.classId,item.startAmount,item.endAmount)">
                     <i class="am-icon-edit"></i> 缴费
                   </a>
                 </div>
@@ -118,6 +118,9 @@
             </tr>
             </tbody>
           </table>
+          <window ref="order">
+            <course-order :courseOrderId="courseOrderId"></course-order>
+          </window>
         </div>
       </div>
 
@@ -132,14 +135,13 @@
     </div>
 
 
-
   </div>
 
 </template>
 
 <script>
   import io from '../../lib/io'
-
+  import CourseOrder from './CourseOrder'
   import Pagination from '../base/Pagination'
 
 
@@ -161,10 +163,12 @@
         products: [],
         courses: [],
         searchConfig: {},
+        courseOrderId: ''
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'course-order': CourseOrder
     },
     computed: {
 
@@ -227,9 +231,9 @@
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
-            for(var i = 0 ; i < ret.data.list.length ; i++ ){
-              ret.data.list[i].startAmount = 1 ;
-              ret.data.list[i].endAmount = ret.data.list[i].lectureAmount ;
+            for (var i = 0; i < ret.data.list.length; i++) {
+              ret.data.list[i].startAmount = 1;
+              ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
 
             }
             _this.tableData = ret.data.list
@@ -263,25 +267,56 @@
         })
       },
       studentReg: function (classInfo) {
-        var isHad = false ;
-        for( var i = 0 ; i < this.$root.courseShoppingCart.length ;i++){
-          if(this.$root.courseShoppingCart[i].classId == classInfo.classId ){
+        var isHad = false;
+        for (var i = 0; i < this.$root.courseShoppingCart.length; i++) {
+          if (this.$root.courseShoppingCart[i].classId == classInfo.classId) {
             isHad = true
             this.$alert('已报名，请查看代缴费页')
             break
           }
         }
 
-        if(!isHad){
+        if (!isHad) {
           this.$root.courseShoppingCart.push(classInfo)
         }
 
 
-
       },
-      pay:function (classId) {
+      createOrder: function (classIds, startAmounts, endAmounts) {
         var studentId = this.$params('studentId')
         var _this = this
+        //创建订单和注册信息
+        io.get(io.apiAdminSaveOrUpdateStudentReg, {
+          studentId: studentId,
+          classIds: classIds,
+          startAmounts: startAmounts,
+          endAmounts: endAmounts
+        }, function (ret) {
+          if (ret.success) {
+
+            //获取订单id
+            var courseOrderId = ret.data.courseOrderId
+            _this.courseOrderId = courseOrderId
+            //_this 指的是vue实例
+            //this 指的是jquery 实例
+            //窗口调整大小
+            _this.$refs.order.show({
+              width: 1000,
+              height: 600,
+            })
+
+            //通过实践通知订单组件重新加载数据
+            _this.$root.$emit('order:new')
+            _this.$root.$emit('class:new')
+
+          } else {
+            //失败也要通知
+            _this.$alert(ret.desc || '处理失败')
+          }
+        })
+      },
+      pay: function (classId, startAmount, endAmount) {
+        this.createOrder([classId], [startAmount], [endAmount])
       }
     }
   }

@@ -107,7 +107,7 @@ const io = {
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
-    this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistroyList'
+    // this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistroyList'
 
 
 

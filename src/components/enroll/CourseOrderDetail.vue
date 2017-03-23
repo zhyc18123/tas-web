@@ -2,7 +2,7 @@
   <div class="father">
     <div>
       <div class="ds-comment-header">
-        <span class="ds-highlight">操作</span>
+        <span class="ds-highlight">订单详情</span>
       </div>
 
       <div class="am-u-sm-12 am-scrollable-horizontal">
@@ -30,7 +30,7 @@
             <td>{{item.studentReg.startAmount}}</td>
             <td>{{item.studentReg.endAmount}}</td>
             <td>{{item.courseClass.studyingFee}}</td>
-            <td>{{0}}</td>
+            <td></td>
           </tr>
           </tbody>
         </table>
@@ -43,11 +43,7 @@
               选择优惠 ：
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2>
-                <option value="">请选择</option>
-                <option value="1">新生优惠98折</option>
-                <option value="2">旧生立减90</option>
-              </select2>
+              <span></span>
             </div>
           </div>
         </div>
@@ -57,12 +53,7 @@
               优惠原因 ：
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2>
-                <option value="">请选择</option>
-                <option value="1">新生优惠</option>
-                <option value="2">旧生优惠</option>
-                <option value="3">无原因</option>
-              </select2>
+              <span></span>
             </div>
           </div>
         </div>
@@ -70,78 +61,51 @@
       <div class="am-u-sm-12">
         <div class="am-form-group">
           <div class="am-form-group font-class">
-                        <span class="am-form-label">
-                            原价总计 ： <span v-if="courseOrder.totalAmount != null">{{courseOrder.totalAmount}}</span>元
-                        </span>
             <span class="am-form-label">
-                            优惠总计 ：{{0}}元
-                        </span>
+                原价总计 ： <span v-if="courseOrder.totalAmount != null" class="red">{{courseOrder.totalAmount}}</span>元
+            </span>
             <span class="am-form-label">
-                            应缴金额 ：<span v-if="courseOrder.payableAmount != null">{{courseOrder.payableAmount-courseOrder.paidAmount}}</span>元
-                        </span>
+                优惠总计 ：<!--<span class="red">{{courseOrder.totalAmount-courseOrder.payableAmount}}-->0</span>元
+            </span>
+            <span class="am-form-label">
+                应缴金额 ：<span v-if="courseOrder.payableAmount != null" class="red">{{courseOrder.payableAmount}}</span>元
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="am-g doc-am-g">
-        <div class="am-u-sm-6 am-u-md-5 am-u-lg-4">
-          <div class="am-form-group">
-            <label class="am-form-label">
-              实缴金额 ：
-            </label>
-            <label class="input-field">
-              <input type="text" v-model="courseOrder.payableAmount"/>
-            </label>
+      <div class="am-u-sm-12">
+        <div class="am-form-group">
+          <div class="am-form-group font-class">
+            <span class="am-form-label">
+              实缴金额 ：<span class="red">{{courseOrder.payableAmount}}</span>元
+            </span>
+            <span class="am-form-label">
+              欠费金额 ：<span class="red">{{courseOrder.payableAmount-courseOrder.paidAmount}}</span>元
+            </span>
           </div>
-        </div>
-        <div class="am-u-sm-6 am-u-md-7 am-u-lg-8 text-left">
-          <label class="am-form-label">
-            如分多次缴费，请修改实缴金额；
-          </label>
         </div>
       </div>
 
       <div class="am-g  text-left">
         <div class="am-u-sm-2">
           支付方式 ：
-        </div>
-        <div class="am-u-sm-10 am-margin-top-xs input-field" v-model="courseOrder.payWay">
-          <label class="am-radio-inline">
-            <input type="radio" value="0" name="payWay" checked="checked" @click="cashPay()"> 现金
-          </label>
-          <label class="am-checkbox-inline">
-            <input type="radio" value="1" name="payWay"> 刷卡
-          </label>
-          <label class="am-checkbox-inline">
-            <input type="radio" value="2" name="payWay"> 转账
-          </label>
-          <label class="am-checkbox-inline">
-            <input type="radio" value="3" name="payWay"> 账户
-          </label>
+          <span class="red" v-if="courseOrder.payWay==0">现金</span>
+          <span class="red" v-if="courseOrder.payWay==1">刷卡</span>
+          <span class="red" v-if="courseOrder.payWay==2">转账</span>
+          <span class="red" v-if="courseOrder.payWay==3">账户</span>
         </div>
       </div>
 
-      <div class="am-g text-left" id="isShow">
-        <div class="am-u-sm-2">现金缴费 ：</div>
-        <div class="am-u-sm-3 am-u-end">
-          <label class="am-radio-inline">
-            <input type="text" v-model="formData.paidAmount">
-          </label>
-        </div>
-      </div>
-
-      <div class="am-g button-line button-margin">
-        <div class="am-u-sm-3 am-u-sm-centered">
-          <button type="submit" class="am-btn am-btn-primary am-radius" @click = confirmPay(courseOrder.courseOrderId)>确定</button>
-          <a href="javascript: void(0)" data-am-modal-close>
-            <button type="submit" class="am-btn am-btn-primary am-radius">取消</button>
-          </a>
-
-        </div>
-      </div>
 
     </div>
-
+    <div class="am-g button-margin">
+      <div class="am-u-sm-3 am-u-sm-centered">
+        <a href="javascript: void(0)" data-am-modal-close>
+          <button type="submit" class="am-btn am-btn-primary am-radius">关闭</button>
+        </a>
+      </div>
+    </div>
 
   </div>
 
@@ -172,8 +136,12 @@
     background-color: #eee;
   }
 
-  .button-margin{
-    margin: 5% 5%;
+  .button-margin {
+    margin-top: 5%;
+  }
+
+  .red {
+    color: red;
   }
 
 </style>
@@ -187,8 +155,8 @@
     data: function () {
       return {
         tableData: [],
-        formData:[],
-        courseOrder:[]
+        formData: [],
+        courseOrder: []
       }
     },
 
@@ -221,13 +189,6 @@
               }
             })
         }
-      },
-      cashPay: function () {
-          $('#isShow').hide()
-
-      },
-      confirmPay:function (courseOrderId) {
-
       }
     }
   }

@@ -54,11 +54,11 @@
         </tbody>
       </table>
     </div>
-    <div class="am-u-lg-12 am-cf">
+    <!--<div class="am-u-lg-12 am-cf">
       <div class="am-fr">
         <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
@@ -82,19 +82,19 @@
       Pagination
     },
     created:function () {
-      var regStatus = 4;
-      this.loadDataTable(this.pageNo, regStatus);
+     /* var regStatus = 4;
+      this.loadDataTable(this.pageNo, regStatus);*/
     },
     mounted:function () {
-      $(window).smoothScroll()
+      /*$(window).smoothScroll()
       var _this = this;
       $(".who").unbind("click").click(function () {
         var regStatus = $(this).val();
         _this.loadDataTable(this.pageNo,regStatus);
-      })
+      })*/
     },
     methods: {
-      loadDataTable: function (pageNo,regStatus) {
+     /* loadDataTable: function (pageNo,regStatus) {
         var _this = this
         var studentId = this.$params('studentId');
         _this.pageNo = pageNo || _this.pageNo || 1
@@ -111,7 +111,7 @@
             _this.$alert(ret.desc)
           }
         })
-      },
+      },*/
 
     }
   }

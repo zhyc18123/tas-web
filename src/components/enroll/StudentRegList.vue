@@ -121,38 +121,38 @@
         var _this = this
         //创建订单和注册信息
         io.get(io.apiAdminSaveOrUpdateStudentReg, {
-            studentId: studentId,
-            classIds: classIds,
-            startAmounts: startAmounts,
-            endAmounts: endAmounts
-          }, function (ret) {
-            if (ret.success) {
+          studentId: studentId,
+          classIds: classIds,
+          startAmounts: startAmounts,
+          endAmounts: endAmounts
+        }, function (ret) {
+          if (ret.success) {
 
-              //获取订单id
-              var courseOrderId = ret.data.courseOrderId
-              _this.courseOrderId = courseOrderId
-              //_this 指的是vue实例
-              //this 指的是jquery 实例
-              //窗口调整大小
-              _this.$refs.order.show({
-                width : 1000 ,
-                height: 500,
-              })
+            //获取订单id
+            var courseOrderId = ret.data.courseOrderId
+            _this.courseOrderId = courseOrderId
+            //_this 指的是vue实例
+            //this 指的是jquery 实例
+            //窗口调整大小
+            _this.$refs.order.show({
+              width: 1000,
+              height: 600,
+            })
 
-              //通过实践通知订单组件重新加载数据
-              _this.$root.$emit('order:new')
-              _this.$root.$emit('class:new')
+            //通过实践通知订单组件重新加载数据
+            _this.$root.$emit('order:new')
+            _this.$root.$emit('class:new')
 
-              if (false) {
-                for (var i = 0; i <= indexs.length; i++) {
-                  _this.cancel(indexs[i]);
-                }
+            if (true) {
+              for (var i = 0; i <= indexs.length; i++) {
+                _this.cancel(indexs[i]);
+              }
             }
-            }else{
-              //失败也要通知
-              _this.$alert(ret.desc  || '处理失败')
-            }
-          })
+          } else {
+            //失败也要通知
+            _this.$alert(ret.desc || '处理失败')
+          }
+        })
       },
       pay: function (classId, index, startAmount, endAmount) {
         this.createOrder([classId], [index], [startAmount], [endAmount])
