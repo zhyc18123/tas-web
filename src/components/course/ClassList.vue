@@ -225,7 +225,7 @@
     </div>
 
     <window ref="room_arrangement">
-      <room-arrangement :roomId="roomId"></room-arrangement>
+      <room-arrangement :classId="classId"></room-arrangement>
     </window>
   </div>
 </template>
@@ -250,7 +250,8 @@
         searchConfig: {},
         products:[],
         courses:[],
-        courseClassId:''
+        courseClassId:'',
+        classId:''
       }
     },
     components: {
@@ -348,12 +349,11 @@
       arrangeRoom:function (classId) {
           //弹窗
         var _this = this;
+        _this.classId = classId;
         _this.$refs.room_arrangement.show({
             width : 1000,
-            height:500,
-        })
-
-//        alert('coming soon');
+            height: 500
+        });
       },
       arrangeTeacher:function (classId) {
         alert('coming soon');
