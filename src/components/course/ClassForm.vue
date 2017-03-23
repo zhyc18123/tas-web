@@ -92,7 +92,7 @@
                 <td>
                   <div class="am-radio">
                   <label>
-                    <input type="radio" name="doc-radio-1" v-model="item.courseTemplateId">
+                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId" :value="item.courseTemplateId">
                   </label>
                 </div>
                 </td>
@@ -114,8 +114,6 @@
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
-
-          <input type="hidden" required v-model="formData.couseId">
 
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
@@ -250,7 +248,6 @@
           studyingFee:'',
           courseDescription:'',
           courseOutline:'',
-          courseId:"",
         },
         products:[],
       }

@@ -36,6 +36,7 @@
                 <th>教室名称</th>
                 <th>座位数</th>
                 <th>备注</th>
+                <th>操作</th>
               </tr>
               </thead>
               <tbody>
@@ -87,8 +88,10 @@
         pageSize:10,
         pageNo:1,
         query:{},
+        classId:''
       }
     },
+    props: ['classId'],
     components: {
       Pagination
     },
@@ -96,16 +99,17 @@
       $(window).smoothScroll()
     },
     created:function(){
-      this.loadTableData(this.pageNo);
+      if (this.classId) this.loadTableData(this.classId,this.pageNo);
     },
     methods:{
       search:function(){
-        this.loadTableData()
+        this.loadTableData(this.classId,this.pageNo)
       },
-      loadTableData:function(pageNo){
+      loadTableData:function(classId,pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminRoomListForClassArrangement,$.extend({
+          classId:classId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){

@@ -111,7 +111,6 @@
         text-align: left;
         padding-left: 10px;
         margin: 10px 0px;
-        font-weight: bold;
     }
 
 </style>
