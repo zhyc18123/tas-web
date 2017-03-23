@@ -92,7 +92,7 @@
                 <td>
                   <div class="am-radio">
                   <label>
-                    <input type="radio" name="doc-radio-1" value="option1">
+                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId" :value="item.courseTemplateId">
                   </label>
                 </div>
                 </td>
