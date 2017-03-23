@@ -175,12 +175,12 @@
               </thead>
               <tbody>
 
-              <tr v-for="item in tableData" :key="item.courseTemplateId">
+              <tr v-for="item in tableData" :key="item.classId">
                 <td>
 
-                  <a href="javascript:;" @click="arrangeTime(item.courseTemplateId)">排时间</a>
-                  <a href="javascript:;" @click="arrangeRoom(item.courseTemplateId)">排教室</a>
-                  <a href="javascript:;" @click="arrangeTeacher(item.courseTemplateId)">排老师</a>
+                  <a href="javascript:;" @click="arrangeTime(item.classId)">排时间</a>
+                  <a href="javascript:;" @click="arrangeRoom(item.classId)">排教室</a>
+                  <a href="javascript:;" @click="arrangeTeacher(item.classId)">排老师</a>
 
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
@@ -224,8 +224,8 @@
       </div>
     </div>
 
-    <window ref="room-arrangement">
-      <room-arrangement :courseClassId="courseClassId"></room-arrangement>
+    <window ref="room_arrangement">
+      <room-arrangement :classId="classId"></room-arrangement>
     </window>
   </div>
 </template>
@@ -250,7 +250,8 @@
         searchConfig: {},
         products:[],
         courses:[],
-        courseClassId:''
+        courseClassId:'',
+        classId:''
       }
     },
     components: {
@@ -341,14 +342,20 @@
           }
         })
       },
-      arrangeTime:function (courseTemplateId) {
+      //排课
+      arrangeTime:function (classId) {
         alert('coming soon');
       },
-      arrangeRoom:function (courseTemplateId) {
+      arrangeRoom:function (classId) {
           //弹窗
-        alert('coming soon');
+        var _this = this;
+        _this.classId = classId;
+        _this.$refs.room_arrangement.show({
+            width : 1000,
+            height: 500
+        });
       },
-      arrangeTeacher:function (courseTemplateId) {
+      arrangeTeacher:function (classId) {
         alert('coming soon');
       },
 
