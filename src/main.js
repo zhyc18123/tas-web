@@ -126,9 +126,6 @@ const router = new VueRouter({
       {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
       {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
       {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
-      {path: 'enroll/student/historyList/:studentId,regStatus' , component: ClassHistoryList },
-
-      // {path: 'enroll/student/edit/:classId' , component: ClassForm }
 
       {path: 'settlement/future/report' , component: FutureReport },
       {path: 'settlement/future/report/detail/:accountId' , component: FutureReportDetail },
