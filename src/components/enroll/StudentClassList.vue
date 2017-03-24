@@ -41,7 +41,7 @@
             <a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
             </a>
-            <a href="javascript:;" @click="">
+            <a href="javascript:;" @click="$router.push('/main/enroll/student/studentRefundForm')">
               <i class="am-icon-edit"></i> 退费申请
             </a>
           </div>
