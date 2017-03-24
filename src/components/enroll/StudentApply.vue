@@ -286,7 +286,7 @@
         var studentId = this.$params('studentId')
         var _this = this
         //创建订单和注册信息
-        io.get(io.apiAdminSaveOrUpdateStudentReg, {
+        io.post(io.apiAdminSaveOrUpdateStudentReg, {
           studentId: studentId,
           classIds: classIds,
           startAmounts: startAmounts,

@@ -42,14 +42,14 @@
           <td>{{item.teacherNames}}</td>
           <td>{{item.roomName}}</td>
           <td>{{item.totalAmount}}</td>
-          <td>{{优惠金额}}</td>
+          <td></td>
           <td>{{item.paidAmount}}</td>
-          <td>{{欠款金额}}</td>
+          <td></td>
           <td>{{item.amount}}</td>
           <td>{{item.startAmount}} / {{item.endAmount}}</td>
           <td>{{item.courseProgress}}</td>
           <td>{{item.startCourseTime}}</td>
-          <td>{{上课时间}}</td>
+          <td></td>
         </tr>
         </tbody>
       </table>

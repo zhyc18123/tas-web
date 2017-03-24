@@ -24,19 +24,19 @@
           <tr v-for="item in tableData.regDetailVos" :key="">
             <td>{{item.courseClass.className}}</td>
             <td>{{item.courseClass.gradeName}}</td>
-            <td>{{item.courseClass.startCourseTime}}</td>
-            <td>{{item.courseClass.lectureAmount}}</td>
+            <td>{{item.courseClass.startCourseTime | formatDate}}</td>
+            <td></td>
             <td>{{item.courseClass.lectureAmount}}</td>
             <td>{{item.studentReg.startAmount}}</td>
             <td>{{item.studentReg.endAmount}}</td>
-            <td>{{item.courseClass.studyingFee}}</td>
+            <td>{{item.studentReg.coursePay}}</td>
             <td></td>
           </tr>
           </tbody>
         </table>
 
       </div>
-      <div class="am-g am-g-fixed">
+      <!--<div class="am-g am-g-fixed">
         <div class="am-u-sm-6">
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
@@ -57,12 +57,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="am-u-sm-12">
         <div class="am-form-group">
           <div class="am-form-group font-class">
             <span class="am-form-label">
-                原价总计 ： <span v-if="courseOrder.totalAmount != null" class="red">{{courseOrder.totalAmount}}</span>元
+                原价总计 ： <span v-if="courseOrder.totalAmount != null" class="red">{{courseOrder.payableAmount}}</span>元
             </span>
             <span class="am-form-label">
                 优惠总计 ：<!--<span class="red">{{courseOrder.totalAmount-courseOrder.payableAmount}}-->0</span>元
@@ -78,7 +78,7 @@
         <div class="am-form-group">
           <div class="am-form-group font-class">
             <span class="am-form-label">
-              实缴金额 ：<span class="red">{{courseOrder.payableAmount}}</span>元
+              实缴金额 ：<span class="red">{{courseOrder.paidAmount}}</span>元
             </span>
             <span class="am-form-label">
               欠费金额 ：<span class="red">{{courseOrder.payableAmount-courseOrder.paidAmount}}</span>元
@@ -109,9 +109,7 @@
 
   </div>
 
-  </div>
 
-  </div>
 </template>
 
 <style>
