@@ -73,6 +73,7 @@ const io = {
     this.apiAdminRoomDetail = conf.baseApiPath + '/api/admin/roomDetail'
     this.apiAdminSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/saveOrUpdateRoom'
     this.apiAdminDelRoom = conf.baseApiPath + '/api/admin/delRoom'
+    this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/roomListForClassArrangement'
 
     this.apiAdminCourseTemplateList = conf.baseApiPath + '/api/admin/courseTemplateList'
     this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
@@ -97,6 +98,9 @@ const io = {
     this.apiAdminSaveOrUpdateStudentReg = conf.baseApiPath + '/api/admin/saveOrUpdateStudentReg'
     this.apiAdminCourseOrderList = conf.baseApiPath + '/api/admin/courseOrderList'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
+    this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
+    this.apiAdminChangeCourseOrder = conf.baseApiPath + '/api/admin/changeCourseOrder'
+    this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
@@ -108,6 +112,8 @@ const io = {
     this.apiAdminSettlementExpensesTypeList = conf.baseApiPath + '/api/admin/settlement/expensesTypeList'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
+
+    this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
 
 

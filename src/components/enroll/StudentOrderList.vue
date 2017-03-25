@@ -20,7 +20,7 @@
       <tr v-for="(item,index) in tableData" :key="item.courseOrderId">
         <td>{{index+1}}</td>
         <td>{{item.courseOrderId}}</td>
-        <td>{{item.updateTime}}</td>
+        <td>{{item.createTime | formatTime}}</td>
         <td>{{item.totalAmount}}</td>
         <td>{{item.payableAmount}}</td>
         <td>{{item.paidAmount}}</td>
@@ -32,14 +32,15 @@
         <td>{{item.operator}}</td>
         <td>
           <div class="tpl-table-black-operation">
-            <a href="javascript:;" @click="">
-              <i class="am-icon-edit"></i> 订单详情
-            </a>
+              <a  @click = showDetail(item.courseOrderId)><i class="am-icon-edit"></i>订单详情</a>
           </div>
         </td>
       </tr>
       </tbody>
     </table>
+    <window ref="order">
+      <course-order-detail :courseOrderId="courseOrderId"></course-order-detail>
+    </window>
     <div class="am-u-lg-12 am-cf">
       <div class="am-fr">
         <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -53,6 +54,7 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
+  import CourseOrderDetail from './CourseOrderDetail'
 
   export default{
     data : function () {
@@ -61,12 +63,14 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        studentId:''
+        studentId:'',
+        courseOrderId: '',
       }
 
     },
     components: {
-      Pagination
+      Pagination,
+      'course-order-detail' : CourseOrderDetail
     },
     mounted:function(){
       $(window).smoothScroll()
@@ -97,6 +101,14 @@
           }else{
             _this.$alert(ret.desc)
           }
+        })
+      },
+      showDetail(courseOrderId){
+        var _this = this
+        _this.courseOrderId = courseOrderId
+        _this.$refs.order.show({
+          width:1000,
+          height:600
         })
       }
 

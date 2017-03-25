@@ -47,12 +47,12 @@ import ClassForm from './components/course/ClassForm'
 import StudentList from  './components/enroll/StudentList'
 // import StudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
-//import StudentOne from  './components/enroll/StudentOne'
 import StudentReg from  './components/enroll/StudentReg'
 import StudentApply from  './components/enroll/StudentApply'
 import StudentRegList from  './components/enroll/StudentRegList'
 import StudentOrderList from  './components/enroll/StudentOrderList'
 import StudentClassList from  './components/enroll/StudentClassList'
+import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 
 import AccountReport from './components/settlement/AccountReport'
@@ -115,7 +115,6 @@ const router = new VueRouter({
       {path: 'product/product/add' , component: ProductForm },
       {path: 'product/product/edit/:productId' , component: ProductForm },
 
-
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
@@ -129,9 +128,7 @@ const router = new VueRouter({
       {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
       {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
       {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
-      {path: 'enroll/student/historyList/:studentId' , component: ClassHistoryList },
-
-      // {path: 'enroll/student/edit/:classId' , component: ClassForm }
+      {path: 'enroll/student/studentRefundForm', component:StudentRefundForm},
 
       {path: 'settlement/account/report' , component: AccountReport },
       {path: 'settlement/account/report/detail/:accountType/:accountId' , component: AccountReportDetail },

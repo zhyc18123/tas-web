@@ -92,7 +92,7 @@
                 <td>
                   <div class="am-radio">
                   <label>
-                    <input type="radio" name="doc-radio-1" value="option1">
+                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId" :value="item.courseTemplateId">
                   </label>
                 </div>
                 </td>
@@ -248,7 +248,6 @@
           studyingFee:'',
           courseDescription:'',
           courseOutline:'',
-          teacherIds:'',
         },
         products:[],
       }
@@ -265,8 +264,8 @@
         io.post(io.apiAdminCourseClassDetail, {courseClassId: courseClassId},
           function (ret) {
             if (ret.success) {
-              ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
-              console.log(ret.data.teacherIds);
+//              ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
+//              console.log(ret.data.teacherIds);
               _this.formData = ret.data
             }
           },
@@ -377,8 +376,11 @@
       },
       save: function (complete) {
         var _this = this
-        var data = _this.formData
-        data.teacherIds = data.teacherIds.join(',')
+        var dataQuery = _this.query;
+        var data = _this.formData;
+
+        alert(dataQuery);
+        alert(data);
         io.post(io.apiAdminSaveOrUpdateClass, data,
           function (ret) {
             complete.call()

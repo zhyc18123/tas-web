@@ -177,7 +177,11 @@
 
               <tr v-for="item in tableData" :key="item.classId">
                 <td>
-                  排时间 排教室 排老师
+
+                  <a href="javascript:;" @click="arrangeTime(item.classId)">排时间</a>
+                  <a href="javascript:;" @click="arrangeRoom(item.classId)">排教室</a>
+                  <a href="javascript:;" @click="arrangeTeacher(item.classId)">排老师</a>
+
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
                        v-if="hasPermission('edit')">
@@ -220,8 +224,8 @@
       </div>
     </div>
 
-    <window ref="room-arrangement">
-      <room-arrangement :courseClassId="courseClassId"></room-arrangement>
+    <window ref="room_arrangement">
+      <room-arrangement :classId="classId"></room-arrangement>
     </window>
   </div>
 </template>
@@ -246,7 +250,8 @@
         searchConfig: {},
         products:[],
         courses:[],
-        courseClassId:''
+        courseClassId:'',
+        classId:''
       }
     },
     components: {
@@ -336,7 +341,24 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      //排课
+      arrangeTime:function (classId) {
+        alert('coming soon');
+      },
+      arrangeRoom:function (classId) {
+          //弹窗
+        var _this = this;
+        _this.classId = classId;
+        _this.$refs.room_arrangement.show({
+            width : 1000,
+            height: 500
+        });
+      },
+      arrangeTeacher:function (classId) {
+        alert('coming soon');
+      },
+
     }
   }
 </script>

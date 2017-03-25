@@ -27,7 +27,7 @@
         <td>{{item.courseClass.gradeName}}</td>
         <td>{{item.courseClass.className}}</td>
         <td>{{item.courseClass.studyingFee}}</td>
-        <td>/{{item.courseClass.lectureAmount}}</td>
+        <td>{{item.courseClass.lectureAmount}}</td>
         <td>{{item.studentReg.startAmount}}</td>
         <td>{{item.studentReg.endAmount}}</td>
         <td>{{item.studentReg.endAmount-item.studentReg.startAmount+1}}</td>
@@ -41,7 +41,7 @@
             <a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
             </a>
-            <a href="javascript:;" @click="">
+            <a href="javascript:;" @click="$router.push('/main/enroll/student/studentRefundForm')">
               <i class="am-icon-edit"></i> 退费申请
             </a>
           </div>
@@ -65,7 +65,11 @@
       }
     },
     created:function () {
-      this.loadDataTable();
+      this.loadDataTable()
+      var _this = this
+      this.$root.$on('class:new',function(){
+        _this.loadDataTable()
+      })
     },
     methods: {
       loadDataTable: function () {
@@ -78,6 +82,8 @@
           if (ret.success) {
             _this.tableData = ret.data
 
+          }else {
+            _this.$alert(ret.desc  || '处理失败')
           }
         })
       }
