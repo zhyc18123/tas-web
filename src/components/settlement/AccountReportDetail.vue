@@ -3,7 +3,10 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">预收报表明细</div>
+          <div class="widget-title  am-cf">{{title}}明细</div>
+          <div class="widget-function am-fr">
+            <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+          </div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -73,6 +76,7 @@
 <script>
 import io from '../../lib/io'
 
+
 import Pagination from '../base/Pagination'
 
     export default{
@@ -83,7 +87,8 @@ import Pagination from '../base/Pagination'
             pageSize:10,
             pageNo:1,
             query:{},
-            searchConfig:{}
+            searchConfig:{},
+            title : ''
           }
         },
         components: {
@@ -93,6 +98,7 @@ import Pagination from '../base/Pagination'
           $(window).smoothScroll()
         },
         created:function(){
+          this.title = ['预收','收入','成本','利润','余额'][this.$params('accountType')]
           this.query.accountId = this.$params('accountId')
           this.loadTableData(this.pageNo);
         },
@@ -103,7 +109,7 @@ import Pagination from '../base/Pagination'
           loadTableData:function(pageNo){
             var _this = this
             _this.pageNo = pageNo || _this.pageNo || 1
-            io.post(io.apiAdminSettlementFutureReportDetailList,$.extend({
+            io.post(io.apiAdminSettlementAccountReportDetailList,$.extend({
               pageNo:_this.pageNo,
               pageSize:_this.pageSize
             },_this.query),function(ret){

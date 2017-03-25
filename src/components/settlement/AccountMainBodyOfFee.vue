@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">财务报表</div>
+          <div class="widget-title  am-cf">成本录入</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -22,24 +22,8 @@
                 <td>{{item.name}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/0/'+item.futureIncomeAccountId)" v-if="hasPermission('feture')">
-                      <i class="am-icon-edit"></i> 预收明细
-                    </a>
-
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/1/'+item.realIncomeAccountId)" v-if="hasPermission('real')">
-                      <i class="am-icon-edit"></i> 收入明细
-                    </a>
-
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/2/'+item.feeAccountId)" v-if="hasPermission('fee')">
-                      <i class="am-icon-edit"></i> 成本明细
-                    </a>
-
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/3/'+item.profitAccountId)" v-if="hasPermission('profit')">
-                      <i class="am-icon-edit"></i> 利润明细
-                    </a>
-
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/4/'+item.balanceAccountId)" v-if="hasPermission('bablance')">
-                      <i class="am-icon-edit"></i> 余额明细
+                    <a href="javascript:;" @click="$router.push('/main/settlement/fee/list/'+item.ownerId)" v-if="hasPermission('feture')">
+                      <i class="am-icon-edit"></i> 录入&查看
                     </a>
                   </div>
                 </td>

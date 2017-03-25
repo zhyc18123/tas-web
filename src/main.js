@@ -57,6 +57,9 @@ import ClassHistoryList from  './components/enroll/ClassHistoryList'
 
 import AccountReport from './components/settlement/AccountReport'
 import AccountReportDetail from './components/settlement/AccountReportDetail'
+import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
+import FeeList from './components/settlement/FeeList'
+import FeeForm from './components/settlement/FeeForm'
 
 
 Vue.use(VueRouter)
@@ -131,7 +134,10 @@ const router = new VueRouter({
       // {path: 'enroll/student/edit/:classId' , component: ClassForm }
 
       {path: 'settlement/account/report' , component: AccountReport },
-      {path: 'settlement/account/report/detail/:accountId' , component: AccountReportDetail },
+      {path: 'settlement/account/report/detail/:accountType/:accountId' , component: AccountReportDetail },
+      {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
+      {path: 'settlement/fee/list/:accountMainBodyId' , component: FeeList },
+      {path: 'settlement/fee/add/:accountMainBodyId' , component: FeeForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

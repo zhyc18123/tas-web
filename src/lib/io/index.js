@@ -102,6 +102,10 @@ const io = {
 
     this.apiAdminSettlementAccountMainBodyList = conf.baseApiPath + '/api/admin/settlement/accountMainBodyList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
+    this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
+    this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
+    this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
+    this.apiAdminSettlementExpensesTypeList = conf.baseApiPath + '/api/admin/settlement/expensesTypeList'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
