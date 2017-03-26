@@ -4,11 +4,11 @@
       <div class="am-modal-hd">{{title}}
         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
       </div>
-      <div class="am-modal-bd" >
+      <div class="am-modal-bd am-cf" >
         <slot></slot>
         <slot name="body"></slot>
       </div>
-      <div class="am-modal-footer" v-if="$slots.footer" >
+      <div class="am-modal-footer am-cf" v-if="$slots.footer" >
         <slot name="footer">
 
         </slot>
@@ -39,7 +39,7 @@
           option = option || {}
           option.closeViaDimmer = false
           option.closeOnConfirm = false
-          option.dimmer = false
+          //option.dimmer = false
           $('#'+this.id).modal(option)
         },
         close: function(){

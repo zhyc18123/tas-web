@@ -94,12 +94,12 @@ const io = {
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
-    this.apiAdminStudentList = conf.baseApiPath + '/api/admin/studentList'
-    this.apiAdminSaveOrUpdateStudentReg = conf.baseApiPath + '/api/admin/saveOrUpdateStudentReg'
+    this.apiAdminSearchStudent = conf.baseApiPath + '/api/admin/searchStudent'
+    this.apiAdminCreateOfflineOrder = conf.baseApiPath + '/api/admin/createOfflineOrder'
     this.apiAdminCourseOrderList = conf.baseApiPath + '/api/admin/courseOrderList'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
-    this.apiAdminChangeCourseOrder = conf.baseApiPath + '/api/admin/changeCourseOrder'
+    this.apiAdminPayCourseOrder= conf.baseApiPath + '/api/admin/payCourseOrder'
     this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'

@@ -44,8 +44,8 @@ import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
 
 
-import StudentList from  './components/enroll/StudentList'
-// import StudentList from  './components/enroll/StuRegSearchList'
+import SearchStudentList from  './components/enroll/SearchStudentList'
+// import SearchStudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
 import StudentReg from  './components/enroll/StudentReg'
 import StudentApply from  './components/enroll/StudentApply'
@@ -119,7 +119,7 @@ const router = new VueRouter({
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
 
-      {path: 'enroll/student/list' , component: StudentList },
+      {path: 'enroll/student/search' , component: SearchStudentList },
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },

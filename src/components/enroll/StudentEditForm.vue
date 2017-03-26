@@ -5,7 +5,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生姓名
         </label>
-        <div class="am-u-sm-3 am-u-end input-field">
+        <div class="am-u-sm-9 input-field">
           <input type="text"  class="am-form-field" placeholder="请输入学生姓名" required v-model="formData.name" >
         </div>
       </div>
@@ -39,7 +39,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生手机
         </label>
-        <div class="am-u-sm-3 am-u-end input-field">
+        <div class="am-u-sm-9 input-field">
           <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
         </div>
       </div>
@@ -49,7 +49,7 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
         </label>
-        <div class="am-u-sm-3 am-u-end input-field">
+        <div class="am-u-sm-9 input-field">
           <input type="text" placeholder="请输入就读学校"  required  v-model="formData.school" >
         </div>
       </div>
@@ -75,10 +75,10 @@
 
 
       <div class="am-form-group" v-for="(item, index) in guardianList">
-        <label class="am-u-sm-3 am-form-label">
+        <label class="am-u-sm-1 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>关系
         </label>
-        <div class="am-u-sm-1 am-u-end input-field">
+        <div class="am-u-sm-2 input-field">
           <select2 required v-model="guardianList[index].relationship" >
             <option value="0">请选择</option>
             <option value="父亲">父亲</option>
@@ -90,23 +90,21 @@
         </div>
 
 
-        <label class="am-u-sm-1 am-form-label">
+        <label class="am-u-sm-2 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>监护人姓名
         </label>
-        <div class="am-u-sm-1 am-u-end input-field">
+        <div class="am-u-sm-2 input-field">
           <input type="text" class="am-form-field" required placeholder="请输入姓名" v-model="guardianList[index].name" >
         </div>
-
-
-        <label class="am-u-sm-1 am-form-label">
+        <label class="am-u-sm-2 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系电话
         </label>
-        <div class="am-u-sm-2 am-u-end input-field">
+        <div class="am-u-sm-2  input-field">
           <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" >
         </div>
-        <div class="am-u-sm-2 am-u-end input-field">
-          <button type="button" class="am-btn am-btn-success am-radius" @click="addGuardian">增加</button>
-          <button type="button" class="am-btn am-btn-warning am-radius" @click="delGuardian(index)">删除</button>
+        <div class="am-u-sm-1 input-field">
+          <a href="javascript:;" @click="addGuardian"> <i class="am-icon-plus"></i></a>
+          <a href="javascript:;" @click="delGuardian(index)"> <i class="am-icon-remove"></i></a>
         </div>
       </div>
 

@@ -23,7 +23,7 @@
       <tbody>
 
       <tr v-for="(item, index) in $root.courseShoppingCart" :key="">
-        <th><input type="checkbox" name="selectItem" :data-class-id="item.classId" :data-index="index"
+        <th><input type="checkbox" name="selectItem" :data-class-id="item.classId"
                    :data-start-amount="item.startAmount" :data-end-amount="item.endAmount"></th>
         <td>{{item.className}}</td>
         <td>{{item.startAmount}}</td>
@@ -40,10 +40,10 @@
         <td>{{item.campusName}}</td>
         <td>
           <div class="tpl-table-black-operation">
-            <a href="javascript:;" @click="cancel(index)">
+            <a href="javascript:;" @click="cancel(item.classId)">
               <i class="am-icon-edit"></i> 撤销
             </a>
-            <a href="javascript:;" @click="pay(item.classId,index,item.startAmount,item.endAmount)">
+            <a href="javascript:;" @click="pay(item.classId ,item.startAmount,item.endAmount)">
               <i class="am-icon-edit"></i> 缴费
             </a>
           </div>
@@ -52,8 +52,8 @@
       </tbody>
     </table>
 
-    <window ref="order">
-      <course-order :courseOrderId="courseOrderId"></course-order>
+    <window ref="order" title="缴费">
+      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()"></course-order>
     </window>
 
     <button type="button" class="am-btn am-btn-success am-radius" @click="batchPay">批量缴费</button>
@@ -98,34 +98,31 @@
       batchPay: function () {
 
         var $selectItem = $('input[name=selectItem]', this.$el)
-        var classIds = []
-        var indexs = []
-        var startAmounts = []
-        var endAoumnts = []
+        var regClassInfoList = []
+
         $selectItem.each(function () {
           if ($(this).prop('checked')) {
-            classIds.push($(this).data('class-id'))
-            indexs.push($(this).data('index'))
-            startAmounts.push($(this).data('start-amount'))
-            endAoumnts.push($(this).data('end-amount'))
+            regClassInfoList.push({
+              classId : $(this).data('class-id'),
+              startAmount : $(this).data('start-amount'),
+              endAmount : $(this).data('end-amount') ,
+            })
           }
         })
-        if (classIds.length == 0) {
+        if (regClassInfoList.length == 0) {
           this.$alert('至少选择一个班')
         } else {
-          this.createOrder(classIds, indexs, startAmounts, endAoumnts)
+          this.createOrder(regClassInfoList)
         }
       },
-      createOrder: function (classIds, indexs, startAmounts, endAmounts) {
+      createOrder: function (regClassInfoList ) {
         var studentId = this.$params('studentId')
         var _this = this
         //创建订单和注册信息
-        io.get(io.apiAdminSaveOrUpdateStudentReg, {
-          studentId: studentId,
-          classIds: classIds,
-          startAmounts: startAmounts,
-          endAmounts: endAmounts
-        }, function (ret) {
+        io.post(io.apiAdminCreateOfflineOrder, { studentRegInfoJsonStr : JSON.stringify( {
+          studentId : studentId ,
+          regClassInfoList : regClassInfoList
+        }) } , function (ret) {
           if (ret.success) {
 
             //获取订单id
@@ -143,22 +140,30 @@
             _this.$root.$emit('order:new')
             _this.$root.$emit('class:new')
 
-            if (true) {
-              for (var i = 0; i <= indexs.length; i++) {
-                _this.cancel(indexs[i]);
-              }
+            var classIds  = regClassInfoList.map(function(item){
+              return item.classId
+            })
+
+            for(var i = 0 ; i < classIds.length;i++ ){
+              _this.cancel(classIds[i])
             }
+
           } else {
             //失败也要通知
             _this.$alert(ret.desc || '处理失败')
           }
         })
       },
-      pay: function (classId, index, startAmount, endAmount) {
-        this.createOrder([classId], [index], [startAmount], [endAmount])
+      pay: function (classId,startAmount, endAmount) {
+        this.createOrder([{classId,startAmount,endAmount}])
       },
-      cancel: function (index) {
-        this.$root.courseShoppingCart.splice(index, 1)
+      cancel: function (classId) {
+        for(var i = 0 ; i < this.$root.courseShoppingCart.length ; i++ ){
+          if(this.$root.courseShoppingCart[i].classId  == classId ){
+            this.$root.courseShoppingCart.splice(i , 1 )
+          }
+
+        }
       }
     }
   }

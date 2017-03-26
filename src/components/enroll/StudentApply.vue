@@ -61,15 +61,21 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <input type="text" class="am-form-field" placeholder="班级名"  v-model="query.className">
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+            <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="search"><span class="am-icon-search"></span>查询
+                      @click="search"><span class="am-icon-search"></span>查询班级
               </button>
             </div>
           </div>
 
         </div>
 
-        <div class="am-u-sm-12 am-scrollable-horizontal">
+        <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
           <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
             <thead>
             <tr>
@@ -93,8 +99,8 @@
 
             <tr v-for="item in tableData" :key="item.classId">
               <td>{{item.className}}</td>
-              <td><input type="text" v-model="item.startAmount"/></td>
-              <td><input type="text" v-model="item.endAmount"/></td>
+              <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount" @change="check(item)"/></td>
+              <td><input type="number" class="am-form-field am-input-sm" v-model="item.endAmount" @change="check(item)"/></td>
               <td>{{item.lectureAmount}}</td>
               <td>{{item.periodName}}</td>
               <td>{{item.gradeName}}</td>
@@ -118,8 +124,8 @@
             </tr>
             </tbody>
           </table>
-          <window ref="order">
-            <course-order :courseOrderId="courseOrderId"></course-order>
+          <window ref="order" title="缴费">
+            <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()"></course-order>
           </window>
         </div>
       </div>
@@ -150,7 +156,6 @@
       return {
         studentId: '',
         tableData: [],
-        tableJson: [],
         total: 0,
         pageSize: 5,
         pageNo: 1,
@@ -207,19 +212,22 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo);
+      //this.loadTableData()
+      this.loadProductData()
+      this.loadCourseData()
     },
     methods: {
-      search: function () {
-        this.query = {}
-        if (!this.searchConfig.searchItem) {
-          this.$alert('--请选择--搜索选项')
-          return
+      check:function(item){
+        if(item.startAmount <= 0 || item.startAmount > item.lectureAmount ){
+          item.startAmount = 1
         }
-        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
-        this.loadTableData()
+
+        if( item.endAmount < 0 || item.endAmount > item.lectureAmount ){
+          item.endAmount = item.lectureAmount
+        }
+
       },
-      created: function () {
+      search: function () {
         this.loadTableData()
       },
       loadTableData: function (pageNo) {
@@ -227,7 +235,8 @@
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
-          pageSize: _this.pageSize
+          pageSize: _this.pageSize,
+          status : 1
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
@@ -282,16 +291,14 @@
 
 
       },
-      createOrder: function (classIds, startAmounts, endAmounts) {
+      createOrder: function (regClassInfoList) {
         var studentId = this.$params('studentId')
         var _this = this
         //创建订单和注册信息
-        io.post(io.apiAdminSaveOrUpdateStudentReg, {
-          studentId: studentId,
-          classIds: classIds,
-          startAmounts: startAmounts,
-          endAmounts: endAmounts
-        }, function (ret) {
+        io.post(io.apiAdminCreateOfflineOrder, { studentRegInfoJsonStr : JSON.stringify( {
+          studentId : studentId ,
+          regClassInfoList : regClassInfoList
+        }) }, function (ret) {
           if (ret.success) {
 
             //获取订单id
@@ -316,7 +323,7 @@
         })
       },
       pay: function (classId, startAmount, endAmount) {
-        this.createOrder([classId], [startAmount], [endAmount])
+        this.createOrder([{classId,startAmount,endAmount}])
       }
     }
   }
