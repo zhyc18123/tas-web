@@ -141,7 +141,6 @@ const io = {
         }
       },
       error: function (xhr, status, error) {
-
         if (fail) {
           fail(xhr, status, error);
         } else {

@@ -44,7 +44,7 @@
           <td>{{item.totalAmount}}</td>
           <td></td>
           <td>{{item.paidAmount}}</td>
-          <td>{{item.debtAmount}}</td>
+          <td>{{item.totalAmount - item.paidAmount}}</td>
           <td>{{item.amount}}</td>
           <td>{{item.startAmount}} / {{item.endAmount}}</td>
           <td>{{item.courseProgress}}</td>
@@ -94,7 +94,6 @@
           }
         })
       },
-
     }
   }
 
