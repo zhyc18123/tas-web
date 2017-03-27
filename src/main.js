@@ -131,6 +131,7 @@ const router = new VueRouter({
       {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
       {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
       {path: 'enroll/student/studentRefundForm', component:StudentRefundForm},
+      {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
       {path: 'enroll/student/turnClass', component:TurnClass},
 

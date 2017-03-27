@@ -11,6 +11,7 @@
 
       <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" >
         <fieldset>
+          <div v-if="willShow">
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group">
             <select2  v-model="query.areaTeamId" :options="areaTeams">
@@ -70,14 +71,48 @@
                     @click="search" ><span class="am-icon-search"></span>查询
             </button>
           </div>
-
+          </div>
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap" v-if="addShow">
+            <thead>
+            <tr>
+              <th v-if="willShow">选择</th>
+              <th>课程名称</th>
+              <th>产品</th>
+              <th>年级</th>
+              <th>学科</th>
+              <th>学位</th>
+              <th>讲数</th>
+              <th>学费</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr v-for="item in tableData" :key="item.courseTemplateId">
+              <td v-if="willShow">
+                <div class="am-radio">
+                  <label>
+                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
+                           :value="item.courseTemplateId" @click="fillData2Class(item)">
+                  </label>
+                </div>
+              </td>
+              <td>{{item.courseName }}</td>
+              <td>{{item.productName}}</td>
+              <td>{{item.gradeName}}</td>
+              <td>{{item.subjectName}}</td>
+              <td>{{item.quota}}</td>
+              <td>{{item.lectureAmount}}</td>
+              <td>{{item.studyingFee}}</td>
+            </tr>
+            </tbody>
+          </table>
+
+
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap" v-if="editShow">
               <thead>
               <tr>
-                <th>选择</th>
                 <th>课程名称</th>
-                <!--<th>期数</th>-->
                 <th>产品</th>
                 <th>年级</th>
                 <th>学科</th>
@@ -88,23 +123,14 @@
               </thead>
               <tbody>
 
-              <tr v-for="item in tableData" :key="item.courseTemplateId">
-                <td>
-                  <div class="am-radio">
-                  <label>
-                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
-                           :value="item.courseTemplateId" @click="fillData2Class(item)">
-                  </label>
-                </div>
-                </td>
-                <td>{{item.courseName }}</td>
-                <!--<td>{{item.periodNo}}</td>-->
-                <td>{{item.productName}}</td>
-                <td>{{item.gradeName}}</td>
-                <td>{{item.subjectName}}</td>
-                <td>{{item.quota}}</td>
-                <td>{{item.lectureAmount}}</td>
-                <td>{{item.studyingFee}}</td>
+              <tr>
+                <td>{{courseTemplateData.courseName }}</td>
+                <td>{{courseTemplateData.productName}}</td>
+                <td>{{courseTemplateData.gradeName}}</td>
+                <td>{{courseTemplateData.subjectName}}</td>
+                <td>{{courseTemplateData.quota}}</td>
+                <td>{{courseTemplateData.lectureAmount}}</td>
+                <td>{{courseTemplateData.studyingFee}}</td>
               </tr>
               </tbody>
             </table>
@@ -242,6 +268,15 @@
           courseDescription:'',
           courseOutline:'',
         },
+        courseTemplateData:{
+          courseName:'',
+          productName:'',
+          gradeName:'',
+          subjectName:'',
+          quota:'',
+          lectureAmount:'',
+          studyingFee:'',
+        },
         products:[],
         classDescription:'',
         classOutline:''
@@ -251,17 +286,21 @@
       Pagination
     },
     created: function () {
-      this.loadTableData(this.pageNo);
       this.loadProductData();
       var courseClassId = this.$params('classId');
+      this.willShow = true;
+      this.addShow = true;
+      this.editShow = false;
       if (courseClassId) {
-        var _this = this
+        var _this = this;
+        _this.willShow = false;
+        _this.addShow = false;
+        _this.editShow = true;
         io.post(io.apiAdminCourseClassDetail, {courseClassId: courseClassId},
           function (ret) {
             if (ret.success) {
-//              ret.data.teacherIds = ret.data.teacherIds ? ret.data.teacherIds.split(',') : []
-//              console.log(ret.data.teacherIds);
-              _this.formData = ret.data
+              _this.formData = ret.data.courseClass;
+              _this.courseTemplateData = ret.data.courseTemplate;
             }
           },
           function () {
@@ -371,9 +410,8 @@
       },
       save: function (complete) {
         var _this = this
-        var dataQuery = _this.query;
+//        var dataQuery = _this.query;
         var data = _this.formData;
-
         io.post(io.apiAdminSaveOrUpdateClass, data,
           function (ret) {
             complete.call()
@@ -411,6 +449,10 @@
       fillData2Class: function (item) {
         this.formData.courseDescription = item.courseDescription;
         this.formData.courseOutline = item.courseOutline;
+        this.formData.studyingFee = item.studyingFee;
+        this.formData.areaTeamId = item.areaTeamId;
+        this.formData.busTeamId = item.busTeamId;
+        this.formData.quota = item.quota;
       }
     },
   }
