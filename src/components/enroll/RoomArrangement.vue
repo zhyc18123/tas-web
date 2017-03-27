@@ -2,9 +2,6 @@
   <div >
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
-        <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">教室列表</div>
-        </div>
         <div class="widget-body  am-fr">
 
           <!--search-->
@@ -41,7 +38,7 @@
               </thead>
               <tbody>
 
-              <tr v-for="(item, index) in tableData" :key="item.productId">
+              <tr v-for="(item, index) in tableData" :key="item.roomId">
                 <td>{{index}}</td>
                 <td>{{item.campusName }}</td>
                 <td>{{item.roomName}}</td>
@@ -49,10 +46,10 @@
                 <td>{{item.memo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('')" >
+                    <a href="javascript:;" @click="confirmArrangeRoom(item.roomId)" >
                       <i class="am-icon-edit"></i> 确定
                     </a>
-                    <a href="javascript:;" @click="$router.push('')" >
+                    <a href="javascript:;" @click="roomUsingSituation" >
                       <i class="am-icon-edit"></i> 查看占用情况
                     </a>
                   </div>
@@ -120,6 +117,24 @@
             _this.$alert(ret.desc)
           }
         })
+      },
+      confirmArrangeRoom:function (roomId) {
+        var _this = this;
+        console.log(roomId)
+        io.post(io.apiAdminArrangeRoom, {classId: this.classId, roomId: roomId},
+          function (ret) {
+          if (ret.success) {
+            _this.$toast('OK');
+            _this.$emit('arrangementSuccess');
+            _this.$emit('courseClass:new');
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      roomUsingSituation:function (roomId) {
+        var _this = this;
+        alert("coming soon");
       }
     }
   }

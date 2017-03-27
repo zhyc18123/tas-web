@@ -224,8 +224,8 @@
       </div>
     </div>
 
-    <window ref="room_arrangement">
-      <room-arrangement :classId="classId"></room-arrangement>
+    <window ref="room_arrangement" title="排课室">
+      <room-arrangement :classId="classId" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
     </window>
   </div>
 </template>
@@ -265,6 +265,11 @@
       this.loadTableData(this.pageNo)
       this.loadProductData()
       this.loadCourseData()
+      var _this = this
+      this.$root.$on('courseClass:new',function(){
+        _this.pageNo = 1
+        _this.loadTableData(_this.pageNo)
+      })
     },
     computed: {
       areaTeams: function () {
