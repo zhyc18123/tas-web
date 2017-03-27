@@ -27,12 +27,12 @@
         <td>{{item.courseClass.gradeName}}</td>
         <td>{{item.courseClass.className}}</td>
         <td>{{item.courseClass.studyingFee}}</td>
-        <td>{{item.courseClass.lectureAmount}}</td>
+        <td>/{{item.courseClass.lectureAmount}}</td>
         <td>{{item.studentReg.startAmount}}</td>
         <td>{{item.studentReg.endAmount}}</td>
         <td>{{item.studentReg.endAmount-item.studentReg.startAmount+1}}</td>
         <td>{{item.courseClass.startCourseTime | formatDate }}</td>
-        <td>{{0}}-{{0}}</td>
+        <td></td>
         <td>
           <div class="tpl-table-black-operation">
             <a href="javascript:;" @click="">
