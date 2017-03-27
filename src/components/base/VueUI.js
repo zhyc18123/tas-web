@@ -12,6 +12,7 @@ import FileUpload from './FileUpload'
 import Editor from './Editor'
 import Window from './Window'
 import Select2 from './Select2'
+import Dropdown from './Dropdown'
 
 
 var VueUI = function(){
@@ -76,6 +77,7 @@ VueUI.install = function (Vue){
   Vue.component('editor',Editor)
   Vue.component('window',Window)
   Vue.component('select2',Select2)
+  Vue.component('dropdown',Dropdown)
 
   Vue.filter('formatDate' ,util.formatDate )
 

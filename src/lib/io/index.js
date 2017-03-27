@@ -94,16 +94,22 @@ const io = {
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
-    this.apiAdminStudentList = conf.baseApiPath + '/api/admin/studentList'
-    this.apiAdminSaveOrUpdateStudentReg = conf.baseApiPath + '/api/admin/saveOrUpdateStudentReg'
+    this.apiAdminSearchStudent = conf.baseApiPath + '/api/admin/searchStudent'
+    this.apiAdminCreateOfflineOrder = conf.baseApiPath + '/api/admin/createOfflineOrder'
     this.apiAdminCourseOrderList = conf.baseApiPath + '/api/admin/courseOrderList'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
+    this.apiAdminPayCourseOrder= conf.baseApiPath + '/api/admin/payCourseOrder'
+    this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
     this.apiAdminSettlementAccountMainBodyList = conf.baseApiPath + '/api/admin/settlement/accountMainBodyList'
-    this.apiAdminSettlementFutureReportDetailList = conf.baseApiPath + '/api/admin/settlement/futureReportDetailList'
+    this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
+    this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
+    this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
+    this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
+    this.apiAdminSettlementExpensesTypeList = conf.baseApiPath + '/api/admin/settlement/expensesTypeList'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 

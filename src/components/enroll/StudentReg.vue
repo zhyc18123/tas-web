@@ -24,34 +24,34 @@
       </div>
       <div class="widget-body am-fr">
 
-        <div class="am-tabs" data-am-tabs="{noSwipe: 1}" >
+        <div id="tabs"  class="am-tabs" data-am-tabs="{noSwipe: 1}" >
           <ul class="am-tabs-nav am-nav am-nav-tabs">
             <li class="am-active"><a href="javascript: void(0)">班级报名</a></li>
-            <li><a href="javascript: void(0)">代缴费</a></li>
-            <li><a href="javascript: void(0)">订单信息</a></li>
-            <li><a href="javascript: void(0)">在读班级</a></li>
-            <li><a href="javascript: void(0)">班级历史</a></li>
-            <li><a href="javascript: void(0)">学生明细</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 1">代缴费</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 2">订单信息</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 3">在读班级</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 4">班级历史</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 5">学生明细</a></li>
           </ul>
 
           <div class="am-tabs-bd am-tabs-bd-ofv">
             <div class="am-tab-panel am-active">
-              <student-apply :studentId="studentId" ></student-apply>
+              <student-apply :studentId="studentId"  ></student-apply>
             </div>
             <div class="am-tab-panel">
               <student-regList :studentId="studentId" ></student-regList>
             </div>
             <div class="am-tab-panel">
-              <student-order-list :studentId="studentId" ></student-order-list>
+              <student-order-list :studentId="studentId" v-if="tabIndex == 2"></student-order-list>
             </div>
             <div class="am-tab-panel">
-              <student-class-list :studentId="studentId" ></student-class-list>
+              <student-class-list :studentId="studentId" v-if="tabIndex == 3"></student-class-list>
             </div>
             <div class="am-tab-panel">
-              <student-class-history-list :studentId="studentId"></student-class-history-list>
+              <student-class-history-list :studentId="studentId" v-if="tabIndex == 4"></student-class-history-list>
             </div>
             <div class="am-tab-panel">
-              <student-edit-from :studentId="studentId" ></student-edit-from>
+              <student-edit-from :studentId="studentId" v-if="tabIndex == 5"></student-edit-from>
             </div>
           </div>
         </div>
@@ -87,6 +87,7 @@
     data(){
       return {
         studentId : '',
+        tabIndex : 0 ,
         formData:[]
       }
     },

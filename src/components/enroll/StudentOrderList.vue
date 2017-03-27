@@ -10,8 +10,7 @@
         <th>应缴金额</th>
         <th>已缴金额</th>
         <th>欠费金额</th>
-        <th>状态</th>
-        <th>操作人</th>
+        <th>缴费状态</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -26,20 +25,19 @@
         <td>{{item.paidAmount}}</td>
         <td>{{item.payableAmount-item.paidAmount}}</td>
         <td>
-          <span v-if="item.payableAmount-item.paidAmount==0">已缴费</span>
-          <span v-else>欠费&nbsp;&nbsp;&nbsp;<a>缴费</a></span>
+          {{item.chargingStatus == 0 ? '未缴费' : (item.chargingStatus ==  1  ? '欠费' : '已缴费') }}
         </td>
-        <td>{{item.operator}}</td>
         <td>
           <div class="tpl-table-black-operation">
-              <a  @click = showDetail(item.courseOrderId)><i class="am-icon-edit"></i>订单详情</a>
+              <a  href="javascript:;" @click = showDetail(item.courseOrderId) v-if="item.chargingStatus != 2 "><i class="am-icon-edit"></i>缴费</a>
+              <a  href="javascript:;" @click = showDetail(item.courseOrderId)><i class="am-icon-edit"></i>订单详情</a>
           </div>
         </td>
       </tr>
       </tbody>
     </table>
-    <window ref="order">
-      <course-order-detail :courseOrderId="courseOrderId"></course-order-detail>
+    <window ref="order" title="订单详情">
+      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()" ></course-order>
     </window>
     <div class="am-u-lg-12 am-cf">
       <div class="am-fr">
@@ -54,7 +52,7 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import CourseOrderDetail from './CourseOrderDetail'
+  import CourseOrder from './CourseOrder'
 
   export default{
     data : function () {
@@ -70,7 +68,7 @@
     },
     components: {
       Pagination,
-      'course-order-detail' : CourseOrderDetail
+      'course-order' : CourseOrder
     },
     mounted:function(){
       $(window).smoothScroll()

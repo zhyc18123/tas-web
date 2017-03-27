@@ -44,19 +44,22 @@ import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
 
 
-import StudentList from  './components/enroll/StudentList'
-// import StudentList from  './components/enroll/StuRegSearchList'
+import SearchStudentList from  './components/enroll/SearchStudentList'
+// import SearchStudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
-//import StudentOne from  './components/enroll/StudentOne'
 import StudentReg from  './components/enroll/StudentReg'
 import StudentApply from  './components/enroll/StudentApply'
 import StudentRegList from  './components/enroll/StudentRegList'
 import StudentOrderList from  './components/enroll/StudentOrderList'
 import StudentClassList from  './components/enroll/StudentClassList'
+import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 
-import FutureReport from './components/settlement/FutureReport'
-import FutureReportDetail from './components/settlement/FutureReportDetail'
+import AccountReport from './components/settlement/AccountReport'
+import AccountReportDetail from './components/settlement/AccountReportDetail'
+import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
+import FeeList from './components/settlement/FeeList'
+import FeeForm from './components/settlement/FeeForm'
 
 
 Vue.use(VueRouter)
@@ -112,12 +115,11 @@ const router = new VueRouter({
       {path: 'product/product/add' , component: ProductForm },
       {path: 'product/product/edit/:productId' , component: ProductForm },
 
-
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
 
-      {path: 'enroll/student/list' , component: StudentList },
+      {path: 'enroll/student/search' , component: SearchStudentList },
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
@@ -126,9 +128,13 @@ const router = new VueRouter({
       {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
       {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
       {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
+      {path: 'enroll/student/studentRefundForm', component:StudentRefundForm},
 
-      {path: 'settlement/future/report' , component: FutureReport },
-      {path: 'settlement/future/report/detail/:accountId' , component: FutureReportDetail },
+      {path: 'settlement/account/report' , component: AccountReport },
+      {path: 'settlement/account/report/detail/:accountType/:accountId' , component: AccountReportDetail },
+      {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
+      {path: 'settlement/fee/list/:accountMainBodyId' , component: FeeList },
+      {path: 'settlement/fee/add/:accountMainBodyId' , component: FeeForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
