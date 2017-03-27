@@ -92,7 +92,8 @@
                 <td>
                   <div class="am-radio">
                   <label>
-                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId" :value="item.courseTemplateId">
+                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
+                           :value="item.courseTemplateId" @click="fillData2Class(item)">
                   </label>
                 </div>
                 </td>
@@ -187,30 +188,22 @@
               </ul>
               <div class="am-tabs-bd">
                 <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                  <editor v-model="formData.courseDescription"></editor>
+                  <editor v-model="formData.courseDescription" ></editor>
                 </div>
                 <div class="am-tab-panel am-fade" id="tab2">
-                  <editor v-model="formData.courseOutline"></editor>
+                  <editor v-model="formData.courseOutline" ></editor>
                 </div>
               </div>
             </div>
           </div>
-
-
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
-
               <button type="submit" class="am-btn am-btn-primary">提交</button>
             </div>
           </div>
         </fieldset>
       </form>
-
-
       </div>
-
-
-
       </div>
     </div>
   </div>
@@ -250,6 +243,8 @@
           courseOutline:'',
         },
         products:[],
+        classDescription:'',
+        classOutline:''
       }
     },
     components: {
@@ -379,8 +374,6 @@
         var dataQuery = _this.query;
         var data = _this.formData;
 
-        alert(dataQuery);
-        alert(data);
         io.post(io.apiAdminSaveOrUpdateClass, data,
           function (ret) {
             complete.call()
@@ -415,6 +408,10 @@
           }
         })
       },
+      fillData2Class: function (item) {
+        this.formData.courseDescription = item.courseDescription;
+        this.formData.courseOutline = item.courseOutline;
+      }
     },
   }
 </script>

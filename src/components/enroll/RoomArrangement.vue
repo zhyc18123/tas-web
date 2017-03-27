@@ -103,13 +103,13 @@
     },
     methods:{
       search:function(){
-        this.loadTableData(this.classId,this.pageNo)
+        this.loadTableData(this.pageNo)
       },
-      loadTableData:function(classId,pageNo){
+      loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminRoomListForClassArrangement,$.extend({
-          classId:classId,
+          classId:this.classId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
