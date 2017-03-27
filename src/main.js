@@ -55,6 +55,7 @@ import StudentClassList from  './components/enroll/StudentClassList'
 import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 import StudentRefundList from  './components/enroll/StudentRefundList'
+import TurnClass from  './components/enroll/TurnClass'
 
 import AccountReport from './components/settlement/AccountReport'
 import AccountReportDetail from './components/settlement/AccountReportDetail'
@@ -131,6 +132,7 @@ const router = new VueRouter({
       {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
       {path: 'enroll/student/studentRefundForm', component:StudentRefundForm},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
+      {path: 'enroll/student/turnClass', component:TurnClass},
 
       {path: 'settlement/account/report' , component: AccountReport },
       {path: 'settlement/account/report/detail/:accountType/:accountId' , component: AccountReportDetail },

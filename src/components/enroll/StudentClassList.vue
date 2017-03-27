@@ -35,7 +35,7 @@
         <td></td>
         <td>
           <div class="tpl-table-black-operation">
-            <a href="javascript:;" @click="">
+            <a @click="turnClass()">
               <i class="am-icon-edit"></i> 转班
             </a>
             <a href="javascript:;" @click="">
@@ -49,6 +49,10 @@
       </tr>
       </tbody>
     </table>
+
+    <window ref="order" title="转班-第一步">
+      <turn-class  @paySuccess="$refs.order.close()"></turn-class>
+    </window>
   </div>
 </template>
 
@@ -56,13 +60,17 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
+  import TurnClass from './TurnClass'
 
   export default{
     data: function () {
       return{
         studentId:'',
-        tableData:[] //空{}肯定有问题，要多看下例子,还有其他问题么
+        tableData:[]
       }
+    },
+    components:{
+      'turn-class':TurnClass
     },
     created:function () {
       this.loadDataTable()
@@ -85,6 +93,14 @@
           }else {
             _this.$alert(ret.desc  || '处理失败')
           }
+        })
+      },
+      turnClass:function () {
+        var _this = this
+//        _this.regId = regId
+        _this.$refs.order.show({
+          width: 1000,
+          height: 600,
         })
       }
     }
