@@ -35,7 +35,7 @@
         <td></td>
         <td>
           <div class="tpl-table-black-operation">
-            <a @click="turnClass()">
+            <a @click="turnClass(item.studentReg.regId)">
               <i class="am-icon-edit"></i> 转班
             </a>
             <a href="javascript:;" @click="">
@@ -51,8 +51,9 @@
     </table>
 
     <window ref="order" title="转班-第一步">
-      <turn-class  @paySuccess="$refs.order.close()"></turn-class>
+      <turn-class :regId = "regId" @paySuccess="$refs.order.close()"></turn-class>
     </window>
+
 
     <window ref="studentRefund" title="退费申请">
       <student-refund @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
@@ -72,7 +73,8 @@
     data: function () {
       return{
         studentId:'',
-        tableData:[]
+        tableData:[],
+        regId:''
       }
     },
     components:{
@@ -102,9 +104,10 @@
           }
         })
       },
-      turnClass:function () {
+      turnClass:function (regId) {
         var _this = this
-//        _this.regId = regId
+        _this.regId = regId
+//        console.log( _this.regId)
         _this.$refs.order.show({
           width: 1000,
           height: 600,
