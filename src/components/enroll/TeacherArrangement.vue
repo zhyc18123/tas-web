@@ -47,27 +47,27 @@
               <tr v-for="(item, index) in tableData" :key="item.teacherId">
                 <td>{{index+1}}</td>
                 <td>{{item.teacherName }}</td>
-                <td>{{}}</td>
+                <td>{{item.jobNature}}</td>
                 <td>{{item.teachSubjectNames}}</td>
-                <td>{{item.joinTime}}</td>
+                <td>{{item.joinTime | formatDate}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeRoom(item.roomId)" >
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item.teacherId)" >
                       <i class="am-icon-edit"></i> 确定
                     </a>
-                    <a href="javascript:;" @click="roomUsingSituation" >
+                    <a href="javascript:;" @click="" >
                       <i class="am-icon-edit"></i> 查看占用情况
                     </a>
                   </div>
                 </td>
               </tr>
-
               </tbody>
             </table>
           </div>
-          <div class="am-u-lg-12 am-cf">
+          <label class="am-u-lg-3">已选教师：{{teacherName}}</label>
 
+          <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
@@ -92,10 +92,11 @@
         pageSize:10,
         pageNo:1,
         query:{},
-        classId:''
+        classId:'',
+        teacherName:''
       }
     },
-    props: ['classId'],
+    props: ['classId', 'teacherName'],
     components: {
       Pagination
     },
@@ -112,7 +113,7 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminRoomListForClassArrangement,$.extend({
+        io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
           classId:this.classId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
@@ -120,29 +121,25 @@
           if(ret.success){
             _this.total = ret.data.total
             _this.tableData = ret.data.list
+            alert(teacherName);
           }else{
             _this.$alert(ret.desc)
           }
         })
       },
-      confirmArrangeRoom:function (roomId) {
+      confirmArrangeTeacher:function (teacherId) {
         var _this = this;
-        console.log(roomId)
-        io.post(io.apiAdminArrangeRoom, {classId: this.classId, roomId: roomId},
+        io.post(io.apiAdminArrangeTeacher, {classId: this.classId, teacherId: teacherId},
           function (ret) {
             if (ret.success) {
               _this.$toast('OK');
               _this.$emit('arrangementSuccess');
               _this.$emit('courseClass:new');
             } else {
-              _this.$alert(ret.desc)
+              _this.$alert(ret.desc);
             }
           })
       },
-      roomUsingSituation:function (roomId) {
-        var _this = this;
-        alert("coming soon");
-      }
     }
   }
 </script>

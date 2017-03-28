@@ -180,7 +180,7 @@
 
                   <a href="javascript:;" @click="arrangeTime(item.classId)">排时间</a>
                   <a href="javascript:;" @click="arrangeRoom(item.classId)">排教室</a>
-                  <a href="javascript:;" @click="arrangeTeacher(item.classId)">排老师</a>
+                  <a href="javascript:;" @click="arrangeTeacher(item.classId,item.teacherName)">排老师</a>
 
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
@@ -255,7 +255,8 @@
         products:[],
         courses:[],
         courseClassId:'',
-        classId:''
+        classId:'',
+        teacherName:''
       }
     },
     components: {
@@ -365,10 +366,11 @@
             height: 500
         });
       },
-      arrangeTeacher:function (classId) {
+      arrangeTeacher:function (classId, teacherName) {
         //弹窗
         var _this = this;
         _this.classId = classId;
+        _this.teacherName = teacherName;
         _this.$refs.teacher_arrangement.show({
           width : 1000,
           height: 500

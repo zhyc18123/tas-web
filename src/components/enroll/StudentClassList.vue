@@ -38,9 +38,9 @@
             <a @click="turnClass(item.studentReg.regId)">
               <i class="am-icon-edit"></i> 转班
             </a>
-            <a href="javascript:;" @click="">
-              <i class="am-icon-edit"></i> 班级退账户
-            </a>
+            <!--<a href="javascript:;" @click="">-->
+              <!--<i class="am-icon-edit"></i> 班级退账户-->
+            <!--</a>-->
             <a href="javascript:;" @click="studentRefund">
               <i class="am-icon-edit"></i> 退费申请
             </a>

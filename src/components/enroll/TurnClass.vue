@@ -149,11 +149,11 @@
       confirmPay: function () {
 
         var _this = this
-        _this.$emit('paySuccess')
-        _this.$refs.order.show({
-          width:1000,
-          height:600
-        })
+//        _this.$emit('paySuccess')
+//        _this.$refs.order.show({
+//          width:1000,
+//          height:600
+//        })
         /* io.post(io.apiAdminPayCourseOrder, $.extend({}, _this.formData), function (ret) {
          if (ret.success) {
          //关闭当前弹窗页面

@@ -89,14 +89,11 @@
     </div>
 
 
-    <window ref="order" title="转班-第二步">
-      <choose-class  @paySuccess="$refs.order.close()"></choose-class>
-    </window>
 
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" >确定</button>
-      <button type="submit" class="am-btn am-btn-primary" >取消</button>
+      <button type="submit" class="am-btn am-btn-primary" @click="confirmPass">确定</button>
+      <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
     </div>
 
 
@@ -143,9 +140,9 @@
       loadTableData: function () {
         var _this = this;
       },
-      confirmPay: function () {
+      confirmPass: function () {
         var _this = this;
-        _this.$emit('paySuccess')
+        _this.$emit('arrangementSuccess');
         _this.$refs.order.show({
           width:1000,
           height:600,
@@ -153,10 +150,8 @@
       },
       cancel:function () {
         var _this = this;
-        _this.$emit('paySuccess')
+        _this.$emit('arrangementSuccess');
       }
     }
   }
-
-
 </script>
