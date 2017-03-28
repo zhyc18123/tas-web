@@ -124,7 +124,7 @@
       confirm: function () {
 
         var _this = this
-        _this.$emit('turnClass')
+        _this.$emit('sure')
       }
     }
   }

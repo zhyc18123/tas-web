@@ -96,7 +96,7 @@
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="submit" class="am-btn am-btn-primary" >确定</button>
-      <button type="submit" class="am-btn am-btn-primary" >取消</button>
+      <button type="submit" class="am-btn am-btn-primary"  >取消</button>
     </div>
 
 
@@ -153,7 +153,7 @@
       },
       cancel:function () {
         var _this = this;
-        _this.$emit('paySuccess')
+        _this.$emit('arrangementSuccess')
       }
     }
   }

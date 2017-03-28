@@ -6,27 +6,27 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td></td>
+          <td>{{tableData.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td></td>
+          <td>{{tableData.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td></td>
+          <td>{{tableData.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">班级编号：</td>
-          <td></td>
+          <td>{{tableData.classId}}</td>
           <td class="bgColor">任课老师：</td>
-          <td></td>
+          <td>{{tableData.teacherNames}}</td>
           <td class="bgColor">教室：</td>
-          <td></td>
+          <td>{{tableData.roomName}}</td>
         </tr>
         <tr>
           <td class="bgColor">开课日期：</td>
-          <td></td>
+          <td>{{tableData.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td></td>
+          <td>{{tableData.lectureAmount}}</td>
           <td class="bgColor">已交金额：</td>
-          <td></td>
+          <td>{{tableData.payAmount}}</td>
         </tr>
         </tbody>
       </table>
@@ -36,13 +36,13 @@
           以上讲次:
         </label>
         <label class="am-radio-inline">
-          <input type="text"/>
+          <input type="text"  v-model="formData.studyAmount" value="0"/>
         </label>
         <label class="bold-font">
           剩余金额：
         </label>
         <label class="am-radio-inline">
-          111
+          <span v-model="formData.remainingAmount">22</span>
         </label>
       </div>
 
@@ -52,29 +52,29 @@
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="am-radio-inline">
-          <input type="radio" value="0" name="reason"> 不开班
+          <input type="radio" value="不开班" name="reason"  v-model="formData.reason"> 不开班
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="1" name="reason"> 搬家或家庭原因
+          <input type="radio" value="搬家或家庭原因" name="reason"  v-model="formData.reason"> 搬家或家庭原因
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="2" name="reason"> 与原校时间冲突
+          <input type="radio" value="与原校时间冲突" name="reason"  v-model="formData.reason"> 与原校时间冲突
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="3" name="reason"> 学生不愿上
+          <input type="radio" value="学生不愿上" name="reason"  v-model="formData.reason"> 学生不愿上
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="4" name="reason"> 其他
+          <input type="radio" value="其他" name="reason"  v-model="formData.reason"> 其他
         </label>
       </div>
     </div>
 
-    <window ref="order" title="转班-第二步">
-      <choose-class  @paySuccess="$refs.order.close()"></choose-class>
+    <window ref="second" title="转班-第二步">
+      <choose-class  @second="$refs.second.close()"></choose-class>
     </window>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" @click="confirmPay">下一步</button>
+      <button type="submit" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
       <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
     </div>
 
@@ -104,6 +104,8 @@
     data: function () {
       return {
         tableData: [],
+        formData:{
+        }
       }
     },
     components:{
@@ -138,37 +140,26 @@
           io.post(io.apiAdminShowOldClassDetail, {regId: regId},
             function (ret) {
               if (ret.success) {
-                _this.tableData = ret.data;
-                _this.$alert(ret.data)
+                _this.tableData = ret.data,
+                _this.formData.regId = ret.data.regId
+                _this.formData.classId = ret.data.classId
               } else {
                 _this.$alert(ret.desc)
               }
             })
         }
       },
-      confirmPay: function () {
-
+      nextStep: function () {
         var _this = this
-        _this.$emit('paySuccess')
-        _this.$refs.order.show({
+        _this.$refs.second.show({
           width:1000,
           height:600
         })
-        /* io.post(io.apiAdminPayCourseOrder, $.extend({}, _this.formData), function (ret) {
-         if (ret.success) {
-         //关闭当前弹窗页面
-         _this.$alert("缴费成功")
-         _this.$emit('paySuccess')
-         } else {
-         _this.$alert("缴费失败")
-         }
-
-         })
-         }*/
+        _this.$emit('first')
       },
       cancel:function () {
         var _this = this
-        _this.$emit('paySuccess')
+        _this.$emit('first')
       }
     }
   }
