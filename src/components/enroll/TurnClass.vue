@@ -110,13 +110,16 @@
       'choose-class':ChooseClass
     },
 
-    props: [''],
+    props: ['regId'],
     created: function () {
+      if (this.regId) {
+        this.loadTableData(this.regId)
+      }
     },
     watch: {
-      /*courseOrderId: function (val) {
+      regId: function (val) {
        this.loadTableData(val)
-       }*/
+       }
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -129,8 +132,19 @@
        }*/
 
 
-      loadTableData: function () {
+      loadTableData: function (regId) {
         var _this = this
+        if (regId != null) {
+          io.post(io.apiAdminShowOldClassDetail, {regId: regId},
+            function (ret) {
+              if (ret.success) {
+                _this.tableData = ret.data;
+                _this.$alert(ret.data)
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+        }
       },
       confirmPay: function () {
 

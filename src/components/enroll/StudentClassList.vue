@@ -35,13 +35,16 @@
         <td></td>
         <td>
           <div class="tpl-table-black-operation">
-            <a @click="turnClass()">
+            <a @click="turnClass(item.studentReg.regId)">
               <i class="am-icon-edit"></i> 转班
             </a>
-            <a href="javascript:;" @click="">
+            <!--<a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
-            </a>
-            <a href="javascript:;" @click="$router.push('/main/enroll/student/studentRefundForm')">
+            </a>-->
+            <!--<a href="javascript:;" @click="$router.push('/main/enroll/student/studentRefundForm')">
+              <i class="am-icon-edit"></i> 退费申请
+            </a>-->
+            <a href="javascript:;" @click="refund()">
               <i class="am-icon-edit"></i> 退费申请
             </a>
           </div>
@@ -51,7 +54,11 @@
     </table>
 
     <window ref="order" title="转班-第一步">
-      <turn-class  @paySuccess="$refs.order.close()"></turn-class>
+      <turn-class :regId = "regId" @paySuccess="$refs.order.close()"></turn-class>
+    </window>
+
+    <window ref="refund" title="班级退费申请">
+      <student-refund :regId = "regId" @cancel="$refs.order.close()"></student-refund>
     </window>
   </div>
 </template>
@@ -61,16 +68,19 @@
 
   import Pagination from '../base/Pagination'
   import TurnClass from './TurnClass'
+  import StudentRefundForm from './StudentRefundForm'
 
   export default{
     data: function () {
       return{
         studentId:'',
-        tableData:[]
+        tableData:[],
+        regId:''
       }
     },
     components:{
-      'turn-class':TurnClass
+      'turn-class':TurnClass,
+      'student-refund':StudentRefundForm
     },
     created:function () {
       this.loadDataTable()
@@ -95,12 +105,22 @@
           }
         })
       },
-      turnClass:function () {
+      turnClass:function (regId) {
         var _this = this
-//        _this.regId = regId
+        _this.regId = regId
+//        console.log( _this.regId)
         _this.$refs.order.show({
           width: 1000,
           height: 600,
+        })
+      },
+      refund: function (regId) {
+        var _this = this
+        _this.regId = regId
+//        console.log( _this.regId)
+        _this.$refs.refund.show({
+          width: 1400,
+          height: 800,
         })
       }
     }

@@ -102,6 +102,8 @@ const io = {
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
     this.apiAdminPayCourseOrder= conf.baseApiPath + '/api/admin/payCourseOrder'
     this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
+    this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
+
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
