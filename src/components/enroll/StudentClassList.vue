@@ -41,7 +41,7 @@
             <a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
             </a>
-            <a href="javascript:;" @click="$router.push('/main/enroll/student/studentRefundForm')">
+            <a href="javascript:;" @click="studentRefund">
               <i class="am-icon-edit"></i> 退费申请
             </a>
           </div>
@@ -53,6 +53,11 @@
     <window ref="order" title="转班-第一步">
       <turn-class  @paySuccess="$refs.order.close()"></turn-class>
     </window>
+
+    <window ref="studentRefund" title="退费申请">
+      <student-refund @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
+    </window>
+
   </div>
 </template>
 
@@ -61,6 +66,7 @@
 
   import Pagination from '../base/Pagination'
   import TurnClass from './TurnClass'
+  import StudentRefundForm from './StudentRefundForm'
 
   export default{
     data: function () {
@@ -70,7 +76,8 @@
       }
     },
     components:{
-      'turn-class':TurnClass
+      'turn-class':TurnClass,
+      'student-refund':StudentRefundForm,
     },
     created:function () {
       this.loadDataTable()
@@ -102,7 +109,14 @@
           width: 1000,
           height: 600,
         })
-      }
+      },
+      studentRefund:function() {
+        var _this = this;
+        _this.$refs.studentRefund.show({
+            width:1000,
+            height:700,
+        })
+      },
     }
   }
 

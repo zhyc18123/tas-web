@@ -227,13 +227,17 @@
     <window ref="room_arrangement" title="排课室">
       <room-arrangement :classId="classId" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
     </window>
+
+    <window ref="teacher_arrangement" title="排老师">
+      <teacher-arrangement :classId="classId" @arrangementSuccess="$refs.teacher_arrangement.close()"></teacher-arrangement>
+    </window>
   </div>
 </template>
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
   import RoomArrangement from '../enroll/RoomArrangement'
-
+  import TeacherArrangement from '../enroll/TeacherArrangement'
 
   export default{
     data: function () {
@@ -256,7 +260,8 @@
     },
     components: {
       Pagination,
-      'room-arrangement':RoomArrangement
+      'room-arrangement':RoomArrangement,
+      'teacher-arrangement':TeacherArrangement,
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -361,7 +366,13 @@
         });
       },
       arrangeTeacher:function (classId) {
-        alert('coming soon');
+        //弹窗
+        var _this = this;
+        _this.classId = classId;
+        _this.$refs.teacher_arrangement.show({
+          width : 1000,
+          height: 500
+        });
       },
 
     }
