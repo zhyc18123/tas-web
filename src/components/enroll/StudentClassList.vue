@@ -38,9 +38,9 @@
             <a @click="turnClass(item.studentReg.regId)">
               <i class="am-icon-edit"></i> 转班
             </a>
-            <!--<a href="javascript:;" @click="">-->
-              <!--<i class="am-icon-edit"></i> 班级退账户-->
-            <!--</a>-->
+            <!--<a href="javascript:;" @click="">
+              <i class="am-icon-edit"></i> 班级退账户
+            </a>-->
             <a href="javascript:;" @click="studentRefund">
               <i class="am-icon-edit"></i> 退费申请
             </a>
@@ -50,8 +50,8 @@
       </tbody>
     </table>
 
-    <window ref="order" title="转班-第一步">
-      <turn-class :regId = "regId" @paySuccess="$refs.order.close()"></turn-class>
+    <window ref="first" title="转班-第一步">
+      <turn-class :regId = "regId" @first="$refs.first.close()"></turn-class>
     </window>
 
 
@@ -107,8 +107,7 @@
       turnClass:function (regId) {
         var _this = this
         _this.regId = regId
-//        console.log( _this.regId)
-        _this.$refs.order.show({
+        _this.$refs.first.show({
           width: 1000,
           height: 600,
         })

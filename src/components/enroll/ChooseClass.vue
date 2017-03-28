@@ -117,8 +117,12 @@
             </tr>
             </tbody>
           </table>
-          <window ref="order" title="转班第三步">
-            <confirm-class  @turnClass="$refs.order.close()"></confirm-class>
+          <window ref="sure" title="转班第三步">
+            <confirm-class  @sure="$refs.sure.close()"></confirm-class>
+          </window>
+
+          <window ref="order" title="转班-第一步">
+            <turn-class :regId = "regId" @paySuccess="$refs.order.close()"></turn-class>
           </window>
         </div>
       </div>
@@ -132,7 +136,7 @@
       </div>
 
       <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-        <button type="submit" class="am-btn am-btn-primary" @click="$router.push('')">上一步</button>
+        <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
       </div>
 
     </div>
@@ -146,6 +150,7 @@
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
   import ConfirmClass from './ConfirmClass'
+  import TurnClass from './TurnClass'
 
   export default{
     data: function () {
@@ -164,12 +169,14 @@
         products: [],
         courses: [],
         searchConfig: {},
-        courseOrderId: ''
+        courseOrderId: '',
+        regId:''
       }
     },
     components: {
       Pagination,
-      'confirm-class':ConfirmClass
+      'confirm-class':ConfirmClass,
+      'turn-class':TurnClass,
     },
     computed: {
 
@@ -271,16 +278,26 @@
           }
         })
       },
-      pay: function (classId, startAmount, endAmount) {
+      /*pay: function (classId, startAmount, endAmount) {
         this.createOrder([{classId,startAmount,endAmount}])
-      },
+      },*/
       confirm: function () {
         var _this = this
-        _this.$emit("paySuccess")
-        _this.$refs.order.show({
+
+        _this.$refs.sure.show({
           width:1000,
           height:600
         })
+        _this.$emit("second")
+      },
+      back: function (regId) {
+        /*var _this = this
+        _this.regId = regId
+//        console.log( _this.regId)
+        _this.$refs.order.show({
+          width: 1000,
+          height: 600,
+        })*/
       }
     }
   }
