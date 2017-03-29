@@ -53,10 +53,10 @@
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item.teacherId)" >
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item.teacherName)" >
                       <i class="am-icon-edit"></i> 确定
                     </a>
-                    <a href="javascript:;" @click="" >
+                    <a href="javascript:;" @click="">
                       <i class="am-icon-edit"></i> 查看占用情况
                     </a>
                   </div>
@@ -65,13 +65,28 @@
               </tbody>
             </table>
           </div>
-          <label class="am-u-lg-3">已选教师：{{teacherName}}</label>
+
+          <div class="am-align-left" id="teacher">
+            <label>已选老师：</label>
+          </div>
+
 
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
+
+
+          <div class="am-u-sm-12 am-text-center am-margin-top-lg">
+            <button type="submit" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
+            <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
+          </div>
+
+          <window ref="teacher_arrangement_nextStep" title="排老师">
+            <teacher-arrangement-nextStep @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
+          </window>
+
         </div>
       </div>
     </div>
@@ -81,7 +96,7 @@
 
 <script>
   import io from '../../lib/io'
-
+  import TeacherArrangementNextStep from '../enroll/TeacherArrangementNextStep'
   import Pagination from '../base/Pagination'
 
   export default{
@@ -89,22 +104,24 @@
       return {
         tableData:[],
         total:0,
-        pageSize:10,
+        pageSize:5,
         pageNo:1,
         query:{},
-        classId:'',
-        teacherName:''
       }
     },
-    props: ['classId', 'teacherName'],
+    props: ['classId', 'teacherNames'],
     components: {
-      Pagination
+      Pagination,
+      'teacher-arrangement-nextStep':TeacherArrangementNextStep
     },
     mounted:function(){
-      $(window).smoothScroll()
+      $(window).smoothScroll();
     },
     created:function(){
-      if (this.classId) this.loadTableData(this.classId,this.pageNo);
+        $('#teacher').append('<label>'+this.teacherNames+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
+        if (this.classId) {
+            this.loadTableData(this.classId,this.pageNo);
+        }
     },
     methods:{
       search:function(){
@@ -114,31 +131,35 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
-          classId:this.classId,
+          classId:_this.classId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
             _this.tableData = ret.data.list
-            alert(teacherName);
           }else{
             _this.$alert(ret.desc)
           }
         })
       },
-      confirmArrangeTeacher:function (teacherId) {
+      confirmArrangeTeacher:function (teacherName) {
+        $('#teacher').append('<label>'+teacherName+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
+      },
+      delTeacher : function(){
+
+      },
+      cancel:function () {
+        this.$emit("arrangementSuccess");
+      },
+      nextStep:function () {
+        //弹窗
         var _this = this;
-        io.post(io.apiAdminArrangeTeacher, {classId: this.classId, teacherId: teacherId},
-          function (ret) {
-            if (ret.success) {
-              _this.$toast('OK');
-              _this.$emit('arrangementSuccess');
-              _this.$emit('courseClass:new');
-            } else {
-              _this.$alert(ret.desc);
-            }
-          })
+        _this.$emit("arrangementSuccess"),
+        _this.$refs.teacher_arrangement_nextStep.show({
+          width : 1000,
+          height: 500
+        });
       },
     }
   }

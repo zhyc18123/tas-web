@@ -85,7 +85,6 @@
         pageSize:10,
         pageNo:1,
         query:{},
-        classId:''
       }
     },
     props: ['classId'],
