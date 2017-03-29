@@ -111,7 +111,7 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ChooseClass from  './ChooseClass'
+  import ChooseClass from  './TurnClassStepTwo'
 
   export default{
     data: function () {
