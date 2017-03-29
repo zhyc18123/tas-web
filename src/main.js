@@ -55,7 +55,7 @@ import StudentClassList from  './components/enroll/StudentClassList'
 import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 import StudentRefundList from  './components/enroll/StudentRefundList'
-import TurnClass from  './components/enroll/TurnClass'
+import TurnClass from  './components/enroll/TurnClassStepOne'
 
 import AccountReport from './components/settlement/AccountReport'
 import AccountReportDetail from './components/settlement/AccountReportDetail'
