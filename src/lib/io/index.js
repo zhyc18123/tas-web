@@ -109,6 +109,7 @@ const io = {
     this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
     this.apiAdminShowNewClassDetail = conf.baseApiPath + '/api/admin/showNewClass'
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
+    this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
 
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'

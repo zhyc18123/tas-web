@@ -100,8 +100,8 @@
               <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount" @change="check(item)"/></td>
               <td><input type="number" class="am-form-field am-input-sm" v-model="item.endAmount" @change="check(item)"/></td>
               <td>{{item.gradeName}}</td>
-              <td></td>
-              <td></td>
+              <td>{{item.quota-item.regAmount}}</td>
+              <td>{{item.quota}}</td>
               <td>{{item.teacherNames}}</td>
               <td>/{{item.lectureAmount}}</td>
               <td></td>
@@ -284,10 +284,8 @@
 
         var regId = this.args.regId
         var formData = this.args.formData
-        var _this = this
-        console.log("regId::"+regId)
-        _this.regId = regId
-        this.$emit('goStep' ,'step-one',{regId:regId,formData:formData})
+
+        this.$emit('goStep' ,'step-one',{regId2:regId})
       }
     }
   }

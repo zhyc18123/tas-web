@@ -26,7 +26,7 @@
           <td class="bgColor">开课日期：</td>
           <td>{{tableData.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td>{{tableData.lectureAmount}}</td>
+          <td>{{tableData.sum}}</td>
           <td class="bgColor">已交金额：</td>
           <td>{{tableData.payAmount}}</td>
         </tr>
@@ -38,13 +38,13 @@
           以上讲次:
         </label>
         <label class="am-radio-inline">
-          <input type="text"  v-model="formData.studyAmount"/>
+          <input type="text" v-model="formData.studyAmount"/>
         </label>
         <label class="bold-font">
           剩余金额：
         </label>
         <label class="am-radio-inline">
-          <span v-model="formData.remainingAmount"></span>
+          <span v-model="formData.remainingAmount">{{tableData.remainingAmount==NaN?tableData.payAmount:tableData.remainingAmount}}</span>
         </label>
       </div>
 
@@ -54,26 +54,28 @@
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="am-radio-inline">
-          <input type="radio" value="不开班" name="reason"  v-model="formData.reason"> 不开班
+          <input type="radio" value="不开班" name="reason" v-model="formData.reason"> 不开班
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="搬家或家庭原因" name="reason"  v-model="formData.reason"> 搬家或家庭原因
+          <input type="radio" value="搬家或家庭原因" name="reason" v-model="formData.reason"> 搬家或家庭原因
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="与原校时间冲突" name="reason"  v-model="formData.reason"> 与原校时间冲突
+          <input type="radio" value="与原校时间冲突" name="reason" v-model="formData.reason"> 与原校时间冲突
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="学生不愿上" name="reason"  v-model="formData.reason"> 学生不愿上
+          <input type="radio" value="学生不愿上" name="reason" v-model="formData.reason"> 学生不愿上
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="其他" name="reason"  v-model="formData.reason"> 其他
+          <input type="radio" value="其他" name="reason" v-model="formData.reason"> 其他
         </label>
       </div>
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="submit" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
-      <a href="javascript: void(0)" data-am-modal-close><button type="submit" class="am-btn am-btn-primary">取消</button></a>
+      <a href="javascript: void(0)" data-am-modal-close>
+        <button type="submit" class="am-btn am-btn-primary">取消</button>
+      </a>
     </div>
 
 
@@ -100,11 +102,26 @@
     data: function () {
       return {
         tableData: [],
-        formData:{}
+        formData: {
+          studyAmount: 1
+        }
       }
     },
 
-    props: ['regId','args'],
+    props: ['regId', 'args'],
+
+    watch: {
+      studyAmount: function (val) {
+        this.loadTableData(this.regId, val)
+      }
+    },
+    created: function () {
+      if (!this.regId) {
+        this.loadTableData(this.args.regId2, this.formData.studyAmount)
+      } else {
+        this.loadTableData(this.regId, this.formData.studyAmount)
+      }
+    },
     mounted: function () {
       $(window).smoothScroll()
     },
@@ -115,14 +132,18 @@
     },
     methods: {
 
-      loadTableData: function (regId) {
+      loadTableData: function (regId, studyAmount) {
         if (regId != null) {
           var _this = this
           io.post(io.apiAdminShowOldClassDetail, {regId: regId},
             function (ret) {
               if (ret.success) {
-                _this.tableData = ret.data,
-                  _this.formData.regId = ret.data.regId
+                _this.tableData = ret.data
+                _this.tableData.sum = (ret.data.endAmount - ret.data.startAmount) + 1
+                _this.tableData.per = (ret.data.totalAmount / _this.tableData.sum)
+
+                _this.tableData.remainingAmount = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
+                _this.formData.regId = ret.data.regId
                 _this.formData.classId = ret.data.classId
               } else {
                 _this.$alert(ret.desc)
@@ -131,7 +152,7 @@
         }
       },
       nextStep: function () {
-        this.$emit('goStep','step-two' , {regId:this.regId, formData:this.formData})
+        this.$emit('goStep', 'step-two', {regId: this.regId, formData: this.formData})
       }
     }
   }

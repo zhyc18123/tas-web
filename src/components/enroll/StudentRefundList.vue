@@ -1,1 +1,97 @@
+<template>
+  <div>
+    <div class="am-u-sm-12 am-scrollable-horizontal">
+      <div class="widget-head am-cf">
+        <div class="widget-title  am-cf">学生退费管理</div>
+      </div>
+      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+        <thead>
+        <tr>
+          <th>序号</th>
+          <th>学生姓名</th>
+          <th>班级名称</th>
+          <th>退讲数</th>
+          <th>退费金额</th>
+          <th>退费原因</th>
+          <th>退费方式</th>
+          <th>审批意见</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
 
+        <tr v-for="(item,index) in tableData" :key="item.studentRefundId">
+          <td>{{index+1}}</td>
+          <td>{{item.studentName}}</td>
+          <td>{{item.className}}</td>
+          <td>{{item.refundLecture}}</td>
+          <td>{{item.amount}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.refundWay}}</td>
+          <td>{{item.returnResult}}</td>
+          <td>{{item.status}}</td>
+          <td>
+            <div class="tpl-table-black-operation">
+              <a @click="editRefund()">
+                <i class="am-icon-edit"></i> 修改
+              </a>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="am-u-lg-12 am-cf">
+        <div class="am-fr">
+          <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                      @paging="loadTableData"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import io from '../../lib/io'
+  import Pagination from '../base/Pagination'
+  export default{
+    data: function () {
+      return {
+        tableData: [],
+        total: 0,
+        pageSize: 10,
+        pageNo: 1,
+      }
+    },
+    components: {
+      Pagination
+    },
+    mounted: function () {
+      $(window).smoothScroll()
+    },
+    created: function () {
+      this.loadTableData(this.pageNo)
+    },
+    methods: {
+      loadTableData: function (pageNo) {
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        io.post(io.apiAdminStudentRefundList, {
+          pageNo: _this.pageNo,
+          pageSize: _this.pageSize
+        }, function (ret) {
+          if (ret.success){
+          _this.total = ret.data.total
+          _this.tableData = ret.data.list
+          }else {
+            _this.$alert(ret.desc)
+          }
+        })
+      }
+    }
+
+
+  }
+
+</script>
