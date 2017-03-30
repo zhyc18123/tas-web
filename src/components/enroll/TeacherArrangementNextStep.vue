@@ -1,13 +1,13 @@
 <template>
-
-
+  <div >
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+      <div class="widget am-cf">
+  <div class="widget-body  am-fr">
   <div align="left">
-    <div class="am-u-lg-3">
-    <label>已选老师：</label>
-    </div>
-    <div class="am-u-lg-3">
-      <a href="javascript:;" @click=""><button class="am-radius">单讲交替</button></a>
-      <a href="javascript:;" @click=""><button class="am-radius">双讲交替</button></a>
+    <div class="am-u-sm-12 am-text-center am-margin-top-lg">
+      已选老师：<span v-for="item in teacherData">{{item}}<a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a></span>
+        <button type="submit" class="am-btn am-btn-primary" @click="">单讲交替</button>
+        <button type="submit" class="am-btn am-btn-primary" @click="">双讲交替</button>
     </div>
 
     <div class="am-u-sm-12 am-scrollable-horizontal">
@@ -25,34 +25,39 @@
         </thead>
         <tbody>
 
-        <tr v-for="(item, index) in tableData" :key="item.classId">
-          <td>{{}}</td>
-          <td>{{}}</td>
-          <td>{{}}</td>
-          <td>{{}}</td>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
           <td>
-              <select>
-                <option>老师A</option>
-                <option>老师B</option>
-              </select>
+              <select2>
+                <option v-for="item in teacherData">{{item}}</option>
+              </select2>
           </td>
-          <td>{{}}</td>
-          <td>{{}}</td>
+          <td></td>
+          <td></td>
         </tr>
 
         </tbody>
       </table>
     </div>
 
+    <div class="am-u-lg-12 am-cf">
+      <div class="am-fr">
+        <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
+      </div>
+    </div>
+
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button>
       <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
     </div>
-
-
-
   </div>
-
+  </div>
+  </div>
+  </div>
+  </div>
 </template>
 
 <script>
@@ -63,9 +68,12 @@
   export default{
     data:function(){
       return {
-          tableData:[],
+        total:0,
+        pageSize:5,
+        pageNo:1,
       }
     },
+    props:["teacherData", "classId"],
     components: {
       Pagination,
     },
@@ -73,12 +81,26 @@
     },
     created:function(){
     },
+    watch:{
+      classId:function () {
+      this.loadTableData(this.classId);
+      }
+    },
     methods:{
+      loadTableData:function (classId) {
+        io.post(io.apiAdminGetClassMessage, {classId:classId},
+          function (ret) {
+            if (ret.success) {
+
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+      },
         confirm:function () {
           this.$emit("arrangementSuccessNextStep");
         },
         back:function () {
-          alert(123546);
 
         },
     }

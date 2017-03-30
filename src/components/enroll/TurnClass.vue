@@ -3,8 +3,6 @@
   </component>
 </template>
 
-
-
 <script>
   import io from '../../lib/io'
 
@@ -41,8 +39,6 @@
           this.args = data || {}
       }
     }
-
   }
-
 
 </script>

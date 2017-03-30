@@ -25,7 +25,6 @@
                 </button>
               </div>
             </div>
-
           </div>
 
           <!--table-->
@@ -53,7 +52,7 @@
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item.teacherName)" >
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item)" >
                       <i class="am-icon-edit"></i> 确定
                     </a>
                     <a href="javascript:;" @click="">
@@ -66,25 +65,24 @@
             </table>
           </div>
 
-          <div class="am-align-left" id="teacher">
-            <label>已选老师：</label>
-          </div>
-
-
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
 
+          <div class="am-align-left" id="teacher">
+            <label>已选老师：</label>
+          </div>
+
 
           <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-            <button type="submit" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
+            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()">下一步</button>
             <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
           </div>
 
           <window ref="teacher_arrangement_nextStep" title="排老师">
-            <teacher-arrangement-nextStep @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
+            <teacher-arrangement-nextStep :teacherData="teacherData" :classId="classId" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
           </window>
 
         </div>
@@ -103,6 +101,7 @@
     data:function(){
       return {
         tableData:[],
+        teacherData:[],
         total:0,
         pageSize:5,
         pageNo:1,
@@ -110,6 +109,12 @@
       }
     },
     props: ['classId', 'teacherNames'],
+    watch:{
+      classId : function () {
+        $("#teacher .teacherName").remove();
+        this.loadNullData();
+      }
+    },
     components: {
       Pagination,
       'teacher-arrangement-nextStep':TeacherArrangementNextStep
@@ -118,14 +123,13 @@
       $(window).smoothScroll();
     },
     created:function(){
-        $('#teacher').append('<label>'+this.teacherNames+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
-        if (this.classId) {
-            this.loadTableData(this.classId,this.pageNo);
-        }
     },
     methods:{
       search:function(){
         this.loadTableData(this.pageNo)
+      },
+      loadNullData:function () {
+        this.tableData = null;
       },
       loadTableData:function(pageNo){
         var _this = this
@@ -143,18 +147,21 @@
           }
         })
       },
-      confirmArrangeTeacher:function (teacherName) {
-        $('#teacher').append('<label>'+teacherName+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
+      confirmArrangeTeacher:function (item) {
+        this.teacherData.push(item.teacherName);
+        $('#teacher').append('<label class="teacherName">'+item.teacherName+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
       },
       delTeacher : function(){
 
       },
       cancel:function () {
-        this.$emit("arrangementSuccess");
+          this.teacherData.pop();
+          this.$emit("arrangementSuccess");
       },
       nextStep:function () {
         //弹窗
         var _this = this;
+        _this.tableData = _this.teacherData;
         _this.$emit("arrangementSuccess"),
         _this.$refs.teacher_arrangement_nextStep.show({
           width : 1000,
