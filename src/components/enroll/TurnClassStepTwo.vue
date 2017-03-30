@@ -281,7 +281,6 @@
         this.$emit('goStep','step-three' , {item : item})
       },
       back: function () {
-
         var regId = this.args.regId
         var formData = this.args.formData
 

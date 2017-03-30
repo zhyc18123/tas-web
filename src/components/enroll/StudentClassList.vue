@@ -41,7 +41,7 @@
             <!--<a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
             </a>-->
-            <a href="javascript:;" @click="studentRefund">
+            <a href="javascript:;" @click="studentRefund(item.studentReg.regId)">
               <i class="am-icon-edit"></i> 退费申请
             </a>
           </div>
@@ -56,7 +56,7 @@
 
 
     <window ref="studentRefund" title="退费申请">
-      <student-refund @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
+      <student-refund  :regId = "regId" @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
     </window>
 
   </div>
@@ -74,7 +74,8 @@
       return{
         studentId:'',
         tableData:[],
-        regId:''
+        regId:'',
+        classId:''
       }
     },
     components:{
@@ -112,8 +113,9 @@
           height: 600,
         })
       },
-      studentRefund:function() {
+      studentRefund:function(regId) {
         var _this = this;
+        _this.regId = regId;
         _this.$refs.studentRefund.show({
             width:1000,
             height:700,

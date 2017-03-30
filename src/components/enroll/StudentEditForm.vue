@@ -223,8 +223,7 @@
         this.guardianList.push({})
       },
       delGuardian : function(index){
-        if(this.guardianList.length <= 1
-        ){
+        if(this.guardianList.length <= 1){
           return
         }
         this.guardianList.splice(index,1)
