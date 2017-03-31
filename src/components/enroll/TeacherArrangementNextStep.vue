@@ -5,7 +5,7 @@
   <div class="widget-body  am-fr">
   <div align="left">
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      已选老师：<span v-for="item in teacherData">{{item}}<a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a></span>
+      已选老师：<span v-for="(item, index) in $root.teacherName "><a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a></span>
         <button type="submit" class="am-btn am-btn-primary" @click="">单讲交替</button>
         <button type="submit" class="am-btn am-btn-primary" @click="">双讲交替</button>
     </div>
@@ -15,7 +15,6 @@
         <thead>
         <tr>
           <th>讲次</th>
-          <th>周次</th>
           <th>上课日期</th>
           <th>上课时间</th>
           <th>教师</th>
@@ -25,14 +24,13 @@
         </thead>
         <tbody>
 
-        <tr>
-          <td></td>
+        <tr v-for="">
           <td></td>
           <td></td>
           <td></td>
           <td>
               <select2>
-                <option v-for="item in teacherData">{{item}}</option>
+                <option v-for="item in $root.teacherName">{{item.teacherName}}</option>
               </select2>
           </td>
           <td></td>
@@ -73,9 +71,10 @@
         pageNo:1,
       }
     },
-    props:["teacherData", "classId"],
+    props:["classId"],
     components: {
       Pagination,
+      "teacher-arrangement" : TeacherArrangement,
     },
     mounted:function(){
     },
@@ -85,6 +84,9 @@
       classId:function () {
       this.loadTableData(this.classId);
       }
+    },
+    destroyed: function () {
+      this.$root.teacherName=[];
     },
     methods:{
       loadTableData:function (classId) {
@@ -97,11 +99,20 @@
             }
           })
       },
+      delTeacher:function (index) {
+        this.$root.teacherName.splice(index,1);
+      },
         confirm:function () {
+          io.post(io.apiAdminArrangeTeacher,{},function(ret){
+            if(ret.success){
+                alert(success);
+            }else{
+            }
+          })
+          this.$root.teacherName=[];
           this.$emit("arrangementSuccessNextStep");
         },
-        back:function () {
-
+        back:function (classId) {
         },
     }
   }

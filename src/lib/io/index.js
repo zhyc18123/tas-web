@@ -1,4 +1,3 @@
-
 import conf from '../conf'
 
 import Storage from '../storage'
@@ -76,7 +75,7 @@ const io = {
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
-    this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangementTeacher'
+    this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
     this.apiAdminGetClassMessage = conf.baseApiPath + '/api/admin/arrangement/getClassMessage'
 
 

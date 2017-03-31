@@ -169,7 +169,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[]},
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[], teacherName:[]},
   created:function(){
     this.refreshUserInfo()
   },

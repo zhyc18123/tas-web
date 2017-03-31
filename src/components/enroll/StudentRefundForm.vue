@@ -89,8 +89,9 @@
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button>
-      <a href="javascript:void(0)" data-am-modal-close><button class="am-btn am-btn-primary">取消</button></a>
+      <!-- submit 类型自动提交表单啊，会刷新页面啊 这样就可以了-->
+      <button type="button" class="am-btn am-btn-primary" @click="confirm">确定</button>
+      <a href="javascript:void(0)" data-am-modal-close @click="cancel"><button class="am-btn am-btn-primary">取消</button></a>
     </div>
 
   </form>
@@ -125,18 +126,18 @@
       'choose-class':ChooseClass
     },
     props: ['regId'],
-    created: function () {
+    created:function(){
         if(this.regId) {
             alert(this.regId);
             this.loadClassMessageData(this.regId);
         }
     },
     watch: {
-      regId:function (val) {
+      regId:function(val){
         this.loadClassMessageData(val);
       }
     },
-    mounted: function () {
+    mounted:function(){
       $(window).smoothScroll();
     },
     methods: {
@@ -155,11 +156,10 @@
             })
         }
       },
-      confirm: function () {
-
-          var _this = this;
-        _this.$emit('arrangementSuccess')
-      }
+      confirm: function(){
+        var _this = this;
+        _this.$emit('arrangementSuccess');
+      },
     }
   }
 
