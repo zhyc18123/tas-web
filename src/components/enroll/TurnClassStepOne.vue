@@ -38,13 +38,17 @@
           以上讲次:
         </label>
         <label class="am-radio-inline">
-          <input type="text" v-model="formData.studyAmount"/>
+          <!--<input type="text" v-model="formData.studyAmount"/>-->
+          <select v-model="formData.studyAmount">
+            <option>0</option>
+            <option v-for="n in tableData.sum">{{n}}</option>
+          </select>
         </label>
         <label class="bold-font">
-          剩余金额：
+          剩余金额：￥
         </label>
-        <label class="am-radio-inline">
-          <span v-model="formData.remainingAmount">{{tableData.remainingAmount==NaN?tableData.payAmount:tableData.remainingAmount}}</span>
+        <label class="am-radio-inline font-color bold-font">
+          <span v-model="formData.remainingAmount">{{remaining>=0?remaining:tableData.payAmount}}</span>
         </label>
       </div>
 
@@ -91,6 +95,9 @@
     background-color: #eee;
     text-align: center;
   }
+  .font-color{
+    color: red;
+  }
 </style>
 
 <script>
@@ -103,23 +110,18 @@
       return {
         tableData: [],
         formData: {
-          studyAmount: 1
-        }
+          studyAmount: 0
+        },
       }
     },
 
     props: ['regId', 'args'],
 
-    watch: {
-      studyAmount: function (val) {
-        this.loadTableData(this.regId, val)
-      }
-    },
     created: function () {
       if (!this.regId) {
-        this.loadTableData(this.args.regId2, this.formData.studyAmount)
+        this.loadTableData(this.args.regId2)
       } else {
-        this.loadTableData(this.regId, this.formData.studyAmount)
+        this.loadTableData(this.regId)
       }
     },
     mounted: function () {
@@ -130,9 +132,15 @@
         this.loadTableData(val)
       }
     },
+    computed:{
+      remaining:function () {
+        this.formData.remainingAmount = (this.tableData.payAmount) - (this.formData.studyAmount * this.tableData.per)
+        return (this.tableData.payAmount) - (this.formData.studyAmount * this.tableData.per)
+      }
+    },
     methods: {
 
-      loadTableData: function (regId, studyAmount) {
+      loadTableData: function (regId) {
         if (regId != null) {
           var _this = this
           io.post(io.apiAdminShowOldClassDetail, {regId: regId},
@@ -141,8 +149,9 @@
                 _this.tableData = ret.data
                 _this.tableData.sum = (ret.data.endAmount - ret.data.startAmount) + 1
                 _this.tableData.per = (ret.data.totalAmount / _this.tableData.sum)
-
-                _this.tableData.remainingAmount = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
+                _this.remaining = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
+                //_this.tableData.remainingAmount = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
+                _this.formData.reason = '与原校时间冲突'
                 _this.formData.regId = ret.data.regId
                 _this.formData.classId = ret.data.classId
               } else {

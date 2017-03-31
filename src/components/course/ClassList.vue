@@ -191,7 +191,7 @@
                 </td>
                 <td>{{item.className}}</td>
                 <td>{{item.campusName}}</td>
-                <td>{{new Date(item.startCourseTime).toLocaleDateString() }}</td>
+                <td>{{item.startCourseTime | formatDate}}</td>
                 <td></td>
                 <td>0/{{item.lectureAmount}}</td>
                 <td>{{item.regAmount}}</td>

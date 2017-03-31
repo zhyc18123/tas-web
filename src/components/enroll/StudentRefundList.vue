@@ -30,7 +30,7 @@
           <td>{{item.description}}</td>
           <td>{{item.refundWay}}</td>
           <td>{{item.returnResult}}</td>
-          <td>{{item.status}}</td>
+          <td>{{item.status==0?'处理中':(item.status==1?'已处理':'已拒绝')}}</td>
           <td>
             <div class="tpl-table-black-operation">
               <a @click="editRefund()">
