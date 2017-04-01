@@ -4,7 +4,7 @@
       <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="4" class="who" checked>全部班级</span>
       <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="0" class="who">在读班级</span>
       <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="1" class="who">转出班级</span>
-      <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="2" class="who">退账户班级</span>
+      <!--<span class="am-u-lg-1"><input  type="radio" name="classStatus" value="2" class="who">退账户班级</span>-->
       <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="3" class="who">退费班级</span>
       <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
         <thead>

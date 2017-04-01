@@ -65,7 +65,7 @@
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg" v-if="courseOrder.chargingStatus != 2 ">
-      <button type="submit" class="am-btn am-btn-primary" @click="confirmToPay">确定</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmToPay">确定</button>
     </div>
 
   </form>

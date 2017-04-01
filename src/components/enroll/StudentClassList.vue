@@ -20,7 +20,7 @@
       </thead>
       <tbody>
 
-      <tr v-for="(item,index) in tableData" :key="item.studentReg">
+      <tr v-for="(item,index) in tableData" :key="item.studentReg" v-if="item.studentReg.regStatus==0">
         <td>{{index+1}}</td>
         <td>{{item.courseClass.periodName}}</td>
         <td>{{item.courseClass.campusName}}</td>
