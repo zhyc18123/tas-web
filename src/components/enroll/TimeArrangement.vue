@@ -73,43 +73,43 @@
           <div>
             <div align="left">
               <input type="checkbox" name="1">周一
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="2">周二
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="3">周三
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="4">周四
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="5">周五
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="6">周六
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>
             <div align="left">
               <input type="checkbox" name="0">周日
-              <span><input type="text"> - <input type="text"></span>
+              <span><input type="text"></span>
               <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
               <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
             </div>

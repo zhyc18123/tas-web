@@ -377,7 +377,7 @@
           $alert.html(msg).show();
         },
         submit: function (e) {
-          e.preventDefault();
+          e.preventDefault();//因为点击事件往上冒泡到form e.preventDefault可以改变这种行为 或者button类型不要submit类型 ，OK懂了么en
           var $submitBtn = $('button[type=submit]', e.target);
           $submitBtn.attr("disabled", "disabled")
           _this.$showLoading()
@@ -410,7 +410,6 @@
       },
       save: function (complete) {
         var _this = this
-//        var dataQuery = _this.query;
         var data = _this.formData;
         io.post(io.apiAdminSaveOrUpdateClass, data,
           function (ret) {

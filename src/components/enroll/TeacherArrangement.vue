@@ -20,8 +20,8 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search" ><span class="am-icon-search"></span>查询
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
+                  <span class="am-icon-search"></span>查询
                 </button>
               </div>
             </div>
@@ -42,21 +42,20 @@
               </tr>
               </thead>
               <tbody>
-
               <tr v-for="(item, index) in tableData" :key="item.teacherId">
                 <td>{{index+1}}</td>
-                <td>{{item.teacherName }}</td>
+                <td>{{item.teacherName}}</td>
                 <td>{{item.jobNature}}</td>
                 <td>{{item.teachSubjectNames}}</td>
                 <td>{{item.joinTime | formatDate}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item)" >
-                      <i class="am-icon-edit"></i> 确定
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item)">
+                      <i class="am-icon-edit"></i>确定
                     </a>
                     <a href="javascript:;" @click="">
-                      <i class="am-icon-edit"></i> 查看占用情况
+                      <i class="am-icon-edit"></i>查看占用情况
                     </a>
                   </div>
                 </td>
@@ -71,8 +70,9 @@
             </div>
           </div>
 
-          <div class="am-align-left" id="teacher">
+          <div class="am-align-left">
             <label>已选老师：</label>
+            <span v-for="(item, index) in $root.teacherName "><a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a></span>
           </div>
 
 
@@ -82,7 +82,7 @@
           </div>
 
           <window ref="teacher_arrangement_nextStep" title="排老师">
-            <teacher-arrangement-nextStep :teacherData="teacherData" :classId="classId" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
+            <teacher-arrangement-nextStep :classId="classId" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
           </window>
 
         </div>
@@ -108,10 +108,9 @@
         query:{},
       }
     },
-    props: ['classId', 'teacherNames'],
+    props: ['classId'],
     watch:{
       classId : function () {
-        $("#teacher .teacherName").remove();
         this.loadNullData();
       }
     },
@@ -123,6 +122,9 @@
       $(window).smoothScroll();
     },
     created:function(){
+    },
+    destroyed:function () {
+      this.$root.teacherName=[];
     },
     methods:{
       search:function(){
@@ -147,21 +149,33 @@
           }
         })
       },
-      confirmArrangeTeacher:function (item) {
-        this.teacherData.push(item.teacherName);
-        $('#teacher').append('<label class="teacherName">'+item.teacherName+'<a href="javascript:;" @click="delTeacher()"> <i class="am-icon-remove"></i></a></label>');
+      confirmArrangeTeacher:function(item){
+        //将老师放进全局数组中
+        var isHad = false;
+        for (var i = 0; i < this.$root.teacherName.length; i++) {
+          if (this.$root.teacherName[i].teacherId == item.teacherId) {
+            isHad = true
+            this.$alert("老师已经被选了")
+            break
+          }
+        }
+        //判断是否存在，如果不存在，则添加
+        if(!isHad){
+          this.$root.teacherName.push(item)
+        }
       },
-      delTeacher : function(){
-
+      delTeacher:function(index){
+          //点击删除老师，从数组中移除
+        this.$root.teacherName.splice(index,1)
       },
-      cancel:function () {
-          this.teacherData.pop();
-          this.$emit("arrangementSuccess");
+      cancel:function(){
+          //关闭，置空数组
+         this.$root.teacherName=[];
+         this.$emit("arrangementSuccess");
       },
-      nextStep:function () {
+      nextStep:function(){
         //弹窗
         var _this = this;
-        _this.tableData = _this.teacherData;
         _this.$emit("arrangementSuccess"),
         _this.$refs.teacher_arrangement_nextStep.show({
           width : 1000,
