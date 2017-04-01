@@ -30,7 +30,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
               <button class="am-btn  am-btn-default am-btn-success am-btn-sm am-icon-search " type="button" @click="search">查询</button>
-              <button class="am-btn  am-btn-default am-btn-success am-btn-sm" type="button" @click="$router.push('/main/settlement/fee/add/'+query.accountMainBodyId )">录入</button>
+              <button class="am-btn  am-btn-default am-btn-success am-btn-sm" type="button" @click="$router.push('/main/settlement/fee/add/'+query.mainAccountId )">录入</button>
             </div>
           </div>
 
@@ -101,7 +101,7 @@ import Pagination from '../base/Pagination'
             total:0,
             pageSize:10,
             pageNo:1,
-            query:{ accountMainBodyId : this.$params('accountMainBodyId') },
+            query:{ mainAccountId : this.$params('mainAccountId') },
             searchConfig:{}
           }
         },

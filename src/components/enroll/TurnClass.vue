@@ -36,7 +36,7 @@
           以上讲次:
         </label>
         <label class="am-radio-inline">
-          <input type="text"  v-model="formData.studyAmount" value="0"/>
+          <input type="text"  v-model="formData.studyAmount" />
         </label>
         <label class="bold-font">
           剩余金额：

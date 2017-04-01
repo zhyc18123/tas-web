@@ -13,6 +13,7 @@
               <thead>
               <tr>
                 <th>主体</th>
+                <th>账户余额</th>
                 <th>操作</th>
               </tr>
               </thead>
@@ -20,27 +21,25 @@
 
               <tr v-for="item in tableData" :key="item.ownerId">
                 <td>{{item.name}}</td>
+                <td>{{item.balanceAmount}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/0/'+item.futureIncomeAccountId)" v-if="hasPermission('feture')">
+                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/future_income/'+item.mainAccountId)" v-if="hasPermission('feture')">
                       <i class="am-icon-edit"></i> 预收明细
                     </a>
 
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/1/'+item.realIncomeAccountId)" v-if="hasPermission('real')">
+                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/real_income/'+item.mainAccountId)" v-if="hasPermission('real')">
                       <i class="am-icon-edit"></i> 收入明细
                     </a>
 
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/2/'+item.feeAccountId)" v-if="hasPermission('fee')">
+                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/cost/'+item.mainAccountId)" v-if="hasPermission('fee')">
                       <i class="am-icon-edit"></i> 成本明细
                     </a>
 
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/3/'+item.profitAccountId)" v-if="hasPermission('profit')">
-                      <i class="am-icon-edit"></i> 利润明细
+                    <a href="javascript:;"  v-if="hasPermission('profit')">
+                      <i class="am-icon-edit"></i> 利润
                     </a>
 
-                    <a href="javascript:;" @click="$router.push('/main/settlement/account/report/detail/4/'+item.balanceAccountId)" v-if="hasPermission('bablance')">
-                      <i class="am-icon-edit"></i> 余额明细
-                    </a>
                   </div>
                 </td>
               </tr>
@@ -73,7 +72,7 @@ import io from '../../lib/io'
         methods:{
           loadTableData:function(){
             var _this = this
-            io.post(io.apiAdminSettlementAccountMainBodyList,{},function(ret){
+            io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
               if(ret.success){
                 _this.tableData = ret.data
               }else{

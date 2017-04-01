@@ -28,18 +28,6 @@
             </div>
 
             <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>费用类型
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.expensesTypeId" :options="expensesTypes">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-            </div>
-
-
-            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
 
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
@@ -59,12 +47,9 @@ import io from '../../lib/io'
             return{
                 expensesTypes:[],
                 formData:{
-                  accountMainBodyId : this.$params('accountMainBodyId')
+                  mainAccountId : this.$params('mainAccountId')
                 }
             }
-        },
-        created:function(){
-          this.loadExpensesTypes()
         },
         mounted:function(){
           var _this = this ;
@@ -115,7 +100,7 @@ import io from '../../lib/io'
               complete.call()
               if(ret.success){
                 _this.$toast('OK')
-                _this.$router.push('/main/settlement/fee/list/' + _this.formData.accountMainBodyId)
+                _this.$router.push('/main/settlement/fee/list/' + _this.formData.mainAccountId)
               }else{
                 _this.$alert(ret.desc)
               }
@@ -124,20 +109,6 @@ import io from '../../lib/io'
             function(){
               complete.call()
               _this.$alert('请求服务器失败')
-            })
-          },
-          loadExpensesTypes:function(){
-            var _this = this
-            io.post(io.apiAdminSettlementExpensesTypeList,{},
-            function(ret){
-              if(ret.success){
-                _this.expensesTypes = ret.data.map(function(item){
-                  return {value:item.expensesTypeId,text:item.name}
-                })
-              }else{
-                _this.$alert(ret.desc)
-              }
-
             })
           }
         }

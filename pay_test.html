@@ -85,10 +85,14 @@
           var channel  = $('#channel').val()
           if(channel == 'alipay_wap'){
             extra = {
-              success_url : 'http://example.com/success',
-              cancel_url : 'http://example.com/cancel'
+              success_url : 'http://demo.cc.zy.com/yyfn/web/pay_result.html?success',
+              cancel_url : 'http://demo.cc.zy.com/yyfn/web/pay_result.html?cancel'
             }
           }else if(channel == 'wx_pub' ){
+
+            extra = {
+              open_id : 'oYjLEwjCKZeZKMzgKKzkfmQC3YVY'
+            }
 
           }else if(channel == 'wx_pub_qr' ){
             extra = {
@@ -96,17 +100,18 @@
             }
           }else if(channel == 'alipay_pc_direct' ){
             extra = {
-              success_url : 'http://example.com/success'
+              success_url : 'http://demo.cc.zy.com/yyfn/web/pay_result.html?success'
             }
           }
 
-          $.post('http://localhost:8080/api/pay/preparePay',{
+          $.post('http://demo.cc.zy.com/yyfn/api/pay/preparePay',{
             busId : 1 ,
             channel : $('#channel').val(),
             amount : $('#amount').val(),
             subject : $('#subject').val(),
             body : '誉优测试',
-            extra : extra ? JSON.stringify(extra) : ''
+            extra : extra ? JSON.stringify(extra) : '',
+            busType : 'test'
           },function(ret){
 
             if(ret.success){

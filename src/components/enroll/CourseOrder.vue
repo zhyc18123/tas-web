@@ -64,8 +64,12 @@
       </label>
     </div>
 
+    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="formData.payWay == 4 " >
+      <img :src="payQRCodeUrl" />
+    </div>
+
     <div class="am-u-sm-12 am-text-center am-margin-top-lg" v-if="courseOrder.chargingStatus != 2 ">
-      <button type="submit" class="am-btn am-btn-primary" @click="confirmPay">确定</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmPay">确定</button>
     </div>
 
   </form>
@@ -75,6 +79,7 @@
 
 <script>
   import io from '../../lib/io'
+  import conf from '../../lib/conf'
 
   import Pagination from '../base/Pagination'
 
@@ -87,19 +92,20 @@
           payAmount: '',
           courseOrderId: ''
         },
-        courseOrder: { }
+        courseOrder: { },
+        payQRCodeUrl : ''
       }
     },
 
     props: ['courseOrderId'],
     created: function () {
       if (this.courseOrderId) {
-        this.loadTableData(this.courseOrderId)
+        this.loadCourseOrderDetail(this.courseOrderId)
       }
     },
     watch: {
       courseOrderId: function (val) {
-        this.loadTableData(val)
+        this.loadCourseOrderDetail(val)
       }
     },
     mounted: function () {
@@ -113,7 +119,7 @@
         }
 
       },
-      loadTableData: function (courseOrderId) {
+      loadCourseOrderDetail: function (courseOrderId) {
         var _this = this
         if (courseOrderId != null) {
           io.post(io.apiAdminCourseOrderDetail, {courseOrderId: courseOrderId},
@@ -124,6 +130,7 @@
                 _this.formData.payWay = 0
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
+                _this.payQRCodeUrl = io.apiQrcodeEncode + "?content=" + conf.basePath + '/m/index.html#/pay/course/order/' +ret.data.courseOrder.courseOrderId
               } else {
                 _this.$alert(ret.desc)
               }
@@ -131,6 +138,10 @@
         }
       },
       confirmPay: function () {
+        if(this.formData.payWay == 4 ){
+            this.$emit('paySuccess')
+            return ;
+        }
         var _this = this
         io.post(io.apiAdminPayCourseOrder, $.extend({}, _this.formData), function (ret) {
           if (ret.success) {

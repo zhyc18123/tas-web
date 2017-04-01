@@ -29,7 +29,14 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      chunks : ['app']
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'm/index.html',
+      template: 'm/index.html',
+      inject: true,
+      chunks : ['m']
     }),
     new HtmlWebpackPlugin({
       filename: 'index_test.html',
@@ -39,6 +46,11 @@ module.exports = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'pay_test.html',
       template: 'pay_test.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      filename: 'pay_result.html',
+      template: 'pay_result.html',
       inject: false
     }),
     new FriendlyErrors()

@@ -22,7 +22,7 @@
                 <td>{{item.name}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/settlement/fee/list/'+item.ownerId)" v-if="hasPermission('feture')">
+                    <a href="javascript:;" @click="$router.push('/main/settlement/fee/list/'+item.mainAccountId)" v-if="hasPermission('feture')">
                       <i class="am-icon-edit"></i> 录入&查看
                     </a>
                   </div>
@@ -57,7 +57,7 @@ import io from '../../lib/io'
         methods:{
           loadTableData:function(){
             var _this = this
-            io.post(io.apiAdminSettlementAccountMainBodyList,{},function(ret){
+            io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
               if(ret.success){
                 _this.tableData = ret.data
               }else{

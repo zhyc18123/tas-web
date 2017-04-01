@@ -4,15 +4,15 @@
       <div class="am-modal-hd">{{title}}
         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
       </div>
-      <div class="am-modal-bd am-cf" >
+      <div class="am-modal-bd am-cf am-scrollable-vertical" style="border-bottom-width: 0 ;">
         <slot></slot>
         <slot name="body"></slot>
       </div>
-      <div class="am-modal-footer am-cf" v-if="$slots.footer" >
+      <!--<div class="am-modal-footer am-cf" v-if="$slots.footer">
         <slot name="footer">
 
         </slot>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
@@ -31,7 +31,8 @@
             e.preventDefault();
             $modal.modal('close')
           })
-          $modal.appendTo('body')
+          $modal.appendTo('#_windowSlot')
+          $('.am-modal-bd',$modal).height( ($('.am-modal-dialog',$modal).height() - 68  ) )
         })
       },
       methods: {

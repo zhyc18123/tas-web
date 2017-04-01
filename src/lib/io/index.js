@@ -22,6 +22,9 @@ const io = {
     this.getUser = conf.baseApiPath + '/api?method=getUser'
     this.userList = conf.baseApiPath + '/api?method=userList'
 
+    this.apiQrcodeEncode = conf.baseApiPath + '/api/qrcode/encode'
+    this.apiPayPreparePay = conf.baseApiPath + '/api/pay/preparePay'
+
     this.apiAdminLogin = conf.baseApiPath + '/api/admin/login'
     this.apiAdminCheckNeedCaptcha = conf.baseApiPath + '/api/admin/checkNeedCaptcha'
     this.apiCaptcha = conf.baseApiPath + '/api/captcha'
@@ -111,16 +114,17 @@ const io = {
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
-    this.apiAdminSettlementAccountMainBodyList = conf.baseApiPath + '/api/admin/settlement/accountMainBodyList'
+    this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
-    this.apiAdminSettlementExpensesTypeList = conf.baseApiPath + '/api/admin/settlement/expensesTypeList'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
+
+
 
 
 

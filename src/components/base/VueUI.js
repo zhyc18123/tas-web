@@ -29,11 +29,13 @@ VueUI.install = function (Vue){
   const Prompt = Vue.extend(AMPrompt)
   const Toast = Vue.extend(AMToast)
 
+  $('body').append('<div id="_windowSlot"></div>')
+  $('body').append('<div id="_componentSlot"></div>')
   const caches = {}
   function getInstance(Component,name){
     var o  =  caches[name] || ( caches[name] = new Component );
     if(!o.$el){
-      $('body').append(o.$mount().$el)
+      $('#_componentSlot').append(o.$mount().$el)
     }
     return o ;
   }

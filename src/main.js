@@ -68,7 +68,7 @@ Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
 
-const Index = { template: '<div>Index</div>' }
+const Index = { template: '<div>Index YYYY</div>' }
 const Refresh = {
   beforeCreate:function(){
     this.$router.back()
@@ -136,10 +136,10 @@ const router = new VueRouter({
       {path: 'enroll/student/turnClass', component:TurnClass},
 
       {path: 'settlement/account/report' , component: AccountReport },
-      {path: 'settlement/account/report/detail/:accountType/:accountId' , component: AccountReportDetail },
+      {path: 'settlement/account/report/detail/:subject/:mainAccountId' , component: AccountReportDetail },
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
-      {path: 'settlement/fee/list/:accountMainBodyId' , component: FeeList },
-      {path: 'settlement/fee/add/:accountMainBodyId' , component: FeeForm },
+      {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
+      {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
