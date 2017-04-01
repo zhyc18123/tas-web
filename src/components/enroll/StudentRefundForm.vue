@@ -6,59 +6,79 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td></td>
+          <td>{{tableData.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td></td>
+          <td>{{tableData.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td></td>
+          <td>{{tableData.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">班级编号：</td>
-          <td></td>
+          <td>{{tableData.classId}}</td>
           <td class="bgColor">任课老师：</td>
-          <td></td>
+          <td>{{tableData.teacherNames}}</td>
           <td class="bgColor">教室：</td>
-          <td></td>
+          <td>{{tableData.roomName}}</td>
         </tr>
         <tr>
           <td class="bgColor">开课日期：</td>
-          <td></td>
+          <td>{{tableData.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td></td>
+          <td>{{tableData.lectureAmount}}</td>
           <td class="bgColor">已交金额：</td>
-          <td></td>
+          <td>{{tableData.payAmount}}</td>
         </tr>
         </tbody>
       </table>
 
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">考勤情况</div>
+      <!--<div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">考勤情况</div>
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      </div>
+      </div>-->
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="bold-font">
-          当前剩余讲次：第<span>{{}}</span>讲次~第<span>{{}}</span>讲次，申请讲次：第<label class="am-radio-inline"><input type="text"></label>讲~第<label class="am-radio-inline"><input type="text"></label>讲
+          当前剩余讲次：第
+          <label>
+            <select2>
+              <option v-for="n in tableData.sum">{{n}}</option>
+            </select2>
+          </label>
+          讲次~第
+          <span>{{tableData.endAmount}}</span>
+          讲次
         </label>
-        <label class="bold-font red">应退学费金额：</label>
-        <label class="am-radio-inline red">{{}}</label>
+        <div class="bold-font am-text-left am-margin-top-sm ">
+          申请讲次：第
+          <label>
+            <select2 v-model="formData.startAmount">
+              <option v-for="a in tableData.sum">{{a}}</option>
+            </select2>
+        </label>
+          讲~第
+          <span>{{tableData.endAmount}}</span>
+          讲
+          <label class="bold-font red">应退学费金额：￥
+            <span v-model="formData.amount">{{remaining>=0?remaining:tableData.payAmount}}</span>
+          </label>
+        </div>
       </div>
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">转班原因</div>
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="am-radio-inline">
-          <input type="radio" value="0" name="reason"> 不开班
+          <input type="radio" value="不开班" name="reason" v-model="formData.description"> 不开班
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="1" name="reason"> 搬家或家庭原因
+          <input type="radio" value="搬家或家庭原因" name="reason" v-model="formData.description"> 搬家或家庭原因
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="2" name="reason"> 与原校时间冲突
+          <input type="radio" value="与原校时间冲突" name="reason" v-model="formData.description"> 与原校时间冲突
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="3" name="reason"> 学生不愿上
+          <input type="radio" value="学生不愿上" name="reason" v-model="formData.description"> 学生不愿上
         </label>
         <label class="am-checkbox-inline">
-          <input type="radio" value="4" name="reason"> 其他
+          <input type="radio" value="其他" name="reason" v-model="formData.description"> 其他
         </label>
       </div>
     </div>
@@ -66,37 +86,41 @@
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">退费方式</div>
     <div class="am-u-sm-12 am-text-left am-margin-top-sm">
       <label class="am-radio-inline">
-        <input type="radio" value="0" name="reason"> 转账
+        <input type="radio" value="0" name="refundWay" v-model="formData.refundWay" > 支付宝
       </label>
       <label class="am-checkbox-inline">
-        <input type="radio" value="1" name="reason"> 现金
+        <input type="radio" value="1" name="refundWay" v-model="formData.refundWay"> 微信
+      </label>
+      <label class="am-checkbox-inline">
+        <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
+      </label>
+      <label class="am-checkbox-inline">
+        <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
+      </label>
+      <label class="am-checkbox-inline">
+        <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
       </label>
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm">
       <label class="am-radio-inline">
-        转账银行<input type="text" name="bank">
+        转账银行<input type="text" v-model="formData.bankName">
       </label>
       <label class="am-checkbox-inline">
-        银行开户城市<input type="text" name="city">
+        银行开户城市<input type="text" v-model="formData.bankCity">
       </label>
       <label class="am-checkbox-inline">
-        姓名<input type="text" name="name">
+        姓名<input type="text" v-model="formData.cardUser">
       </label>
       <label class="am-checkbox-inline">
-        转账账号<input type="text" name="cardNo">
+        转账账号<input type="text" v-model="formData.cardNo">
       </label>
     </div>
-
-
-
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" >确定</button>
-      <button type="submit" class="am-btn am-btn-primary" >取消</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
+      <a href="javascript:void(0)" data-am-modal-close><button class="am-btn am-btn-primary">取消</button></a>
     </div>
-
-
 
   </form>
 
@@ -116,41 +140,93 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ChooseClass from  './ChooseClass'
+  import ChooseClass from  './TurnClassStepTwo'
 
   export default{
     data: function () {
       return {
         tableData: [],
+        formData:{
+          refundWay:2,
+          bankName:'',
+          bankCity:'',
+          cardUser:'',
+          cardNo:'',
+          startAmount:1
+        },
       }
     },
     components:{
       'choose-class':ChooseClass
     },
-
-    props: [''],
+    props: ['regId'],
     created: function () {
+        if(this.regId) {
+            this.loadClassMessageData(this.regId)
+        }
     },
     watch: {
+      regId:function (val) {
+        this.loadClassMessageData(val)
+      },
+      bankCity:function (city) {
+        this.formData.bankCity = city
+      },
+      bankName:function (name) {
+        this.formData.bankName = name
+      },
+      cardUser:function (use) {
+        this.formData.cardUser = use
+      },
+      cardNo:function (cardNo) {
+        this.formData.cardNo = cardNo
+      }
     },
     mounted: function () {
-      $(window).smoothScroll();
+      $(window).smoothScroll()
+    },
+    computed:{
+      remaining:function () {
+        this.formData.amount = (this.tableData.endAmount-this.formData.startAmount+1) * this.tableData.per
+        return (this.tableData.endAmount-this.formData.startAmount+1) * this.tableData.per
+      }
     },
     methods: {
-      loadTableData: function () {
-        var _this = this;
+      loadClassMessageData: function (regId) {
+        var _this = this
+        if (regId != null) {
+          io.post(io.apiAdminShowClassMessage, {regId: regId},
+            function (ret) {
+              if (ret.success) {
+                _this.tableData = ret.data
+                _this.formData.regId = regId
+                _this.formData.description = '与原校时间冲突'
+                _this.formData.classId = ret.data.classId
+                _this.tableData.sum = parseInt(ret.data.endAmount)
+                _this.tableData.counts = (ret.data.endAmount - ret.data.startAmount) + 1
+                _this.tableData.per = (ret.data.totalAmount / _this.tableData.counts)
+                _this.remaining = (_this.tableData.endAmount-_this.formData.startAmount+1) * _this.tableData.per
+                _this.formData.endAmount = ret.data.endAmount
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+        }
       },
-      confirmPay: function () {
-        var _this = this;
-        _this.$emit('paySuccess')
-        _this.$refs.order.show({
-          width:1000,
-          height:600,
+      confirmToRefund: function () {
+        var _this = this
+        console.log(_this.formData)
+        io.post(io.apiAdminSaveOrupdateStudentRefund,$.extend({
+
+          },_this.formData),
+          function (ret) {
+            if (ret.success){
+              _this.$alert('已接受退款申请')
+            }else {
+              _this.$alert('申请失败')
+            }
         })
-      },
-      cancel:function () {
-        var _this = this;
-        _this.$emit('paySuccess')
+        _this.$emit('arrangementSuccess')
       }
     }
   }

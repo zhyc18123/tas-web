@@ -94,6 +94,7 @@
         },
         courseOrder: { },
         payQRCodeUrl : ''
+
       }
     },
 

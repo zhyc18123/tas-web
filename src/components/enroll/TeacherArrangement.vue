@@ -20,12 +20,11 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search" ><span class="am-icon-search"></span>查询
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
+                  <span class="am-icon-search"></span>查询
                 </button>
               </div>
             </div>
-
           </div>
 
           <!--table-->
@@ -43,21 +42,20 @@
               </tr>
               </thead>
               <tbody>
-
               <tr v-for="(item, index) in tableData" :key="item.teacherId">
                 <td>{{index+1}}</td>
-                <td>{{item.teacherName }}</td>
+                <td>{{item.teacherName}}</td>
                 <td>{{item.jobNature}}</td>
                 <td>{{item.teachSubjectNames}}</td>
                 <td>{{item.joinTime | formatDate}}</td>
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item.teacherId)" >
-                      <i class="am-icon-edit"></i> 确定
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item)">
+                      <i class="am-icon-edit"></i>确定
                     </a>
-                    <a href="javascript:;" @click="" >
-                      <i class="am-icon-edit"></i> 查看占用情况
+                    <a href="javascript:;" @click="">
+                      <i class="am-icon-edit"></i>查看占用情况
                     </a>
                   </div>
                 </td>
@@ -65,13 +63,28 @@
               </tbody>
             </table>
           </div>
-          <label class="am-u-lg-3">已选教师：{{teacherName}}</label>
 
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
+
+          <div class="am-align-left">
+            <label>已选老师：</label>
+            <span v-for="(item, index) in $root.teacherName "><a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a></span>
+          </div>
+
+
+          <div class="am-u-sm-12 am-text-center am-margin-top-lg">
+            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()">下一步</button>
+            <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
+          </div>
+
+          <window ref="teacher_arrangement_nextStep" title="排老师">
+            <teacher-arrangement-nextStep :classId="classId" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
+          </window>
+
         </div>
       </div>
     </div>
@@ -81,64 +94,93 @@
 
 <script>
   import io from '../../lib/io'
-
+  import TeacherArrangementNextStep from '../enroll/TeacherArrangementNextStep'
   import Pagination from '../base/Pagination'
 
   export default{
     data:function(){
       return {
         tableData:[],
+        teacherData:[],
         total:0,
-        pageSize:10,
+        pageSize:5,
         pageNo:1,
         query:{},
-        classId:'',
-        teacherName:''
       }
     },
-    props: ['classId', 'teacherName'],
+    props: ['classId'],
+    watch:{
+      classId : function () {
+        this.loadNullData();
+      }
+    },
     components: {
-      Pagination
+      Pagination,
+      'teacher-arrangement-nextStep':TeacherArrangementNextStep
     },
     mounted:function(){
-      $(window).smoothScroll()
+      $(window).smoothScroll();
     },
     created:function(){
-      if (this.classId) this.loadTableData(this.classId,this.pageNo);
+    },
+    destroyed:function () {
+      this.$root.teacherName=[];
     },
     methods:{
       search:function(){
         this.loadTableData(this.pageNo)
       },
+      loadNullData:function () {
+        this.tableData = null;
+      },
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
-          classId:this.classId,
+          classId:_this.classId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
             _this.tableData = ret.data.list
-            alert(teacherName);
           }else{
             _this.$alert(ret.desc)
           }
         })
       },
-      confirmArrangeTeacher:function (teacherId) {
+      confirmArrangeTeacher:function(item){
+        //将老师放进全局数组中
+        var isHad = false;
+        for (var i = 0; i < this.$root.teacherName.length; i++) {
+          if (this.$root.teacherName[i].teacherId == item.teacherId) {
+            isHad = true
+            this.$alert("老师已经被选了")
+            break
+          }
+        }
+        //判断是否存在，如果不存在，则添加
+        if(!isHad){
+          this.$root.teacherName.push(item)
+        }
+      },
+      delTeacher:function(index){
+          //点击删除老师，从数组中移除
+        this.$root.teacherName.splice(index,1)
+      },
+      cancel:function(){
+          //关闭，置空数组
+         this.$root.teacherName=[];
+         this.$emit("arrangementSuccess");
+      },
+      nextStep:function(){
+        //弹窗
         var _this = this;
-        io.post(io.apiAdminArrangeTeacher, {classId: this.classId, teacherId: teacherId},
-          function (ret) {
-            if (ret.success) {
-              _this.$toast('OK');
-              _this.$emit('arrangementSuccess');
-              _this.$emit('courseClass:new');
-            } else {
-              _this.$alert(ret.desc);
-            }
-          })
+        _this.$emit("arrangementSuccess"),
+        _this.$refs.teacher_arrangement_nextStep.show({
+          width : 1000,
+          height: 500
+        });
       },
     }
   }

@@ -6,27 +6,27 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td></td>
+          <td>{{tableData.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td></td>
+          <td>{{tableData.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td></td>
+          <td>{{tableData.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">学科：</td>
-          <td></td>
+          <td>{{tableData.subjectName}}</td>
           <td class="bgColor">教室：</td>
-          <td></td>
+          <td>{{tableData.roomName}}</td>
           <td class="bgColor">教师：</td>
-          <td></td>
+          <td>{{tableData.teacherNames}}</td>
         </tr>
         <tr>
           <td class="bgColor">以上讲次：</td>
-          <td></td>
+          <td>/</td>
           <td class="bgColor">启报讲次：</td>
-          <td></td>
+          <td>{{tableData.startAmount}}</td>
           <td class="bgColor">截止讲次：</td>
-          <td></td>
+          <td>{{tableData.endAmount}}</td>
         </tr>
         </tbody>
       </table>
@@ -36,14 +36,14 @@
           转班差额:
         </label>
         <label class="am-radio-inline">
-          111
+          <span v-model="tableData.balanceAmount"></span>
         </label>
         </label>
       </div>
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button>
+      <a href="javascript:void(0)" data-am-modal-close><button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button></a>
     </div>
 
 
@@ -70,7 +70,7 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ChooseClass from  './ChooseClass'
+  import ChooseClass from  './TurnClassStepTwo'
 
   export default{
     data: function () {
@@ -78,16 +78,23 @@
         tableData: [],
       }
     },
-    components:{
-      'choose-class':ChooseClass
+    props: ['args'],
+    created:function () {
+      var _this = this
+      var item = _this.args.item
+      io.post(io.apiAdminShowNewClassDetail, {classId:item.classId},
+        function (ret) {
+          if (ret.success) {
+            _this.tableData = ret.data
+            _this.tableData.startAmount = item.startAmount
+            _this.tableData.endAmount = item.endAmount
+            _this.tableData.balanceAmount = 0
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
     },
 
-    props: [''],
-    created: function () {
-      /* if (this.courseOrderId) {
-       this.loadTableData(this.courseOrderId)
-       }*/
-    },
     watch: {
       /*courseOrderId: function (val) {
        this.loadTableData(val)
@@ -97,34 +104,23 @@
       $(window).smoothScroll()
     },
     methods: {
-      /*check:function(){
-
-       if(this.formData.payAmount <= 0 || this.formData.payAmount > ( this.courseOrder.payableAmount - this.courseOrder.paidAmount )){
-       this.formData.payAmount = this.courseOrder.payableAmount - this.courseOrder.paidAmount
-       }*/
-
 
       loadTableData: function () {
         var _this = this
-        /*if (courseOrderId != null) {
-         io.post(io.apiAdminCourseOrderDetail, {courseOrderId: courseOrderId},
-         function (ret) {
-         if (ret.success) {
-         _this.tableData = ret.data;
-         _this.formData.payAmount = (ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount)
-         _this.formData.payWay = 0
-         _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
-         _this.courseOrder = ret.data.courseOrder
-         } else {
-         _this.$alert(ret.desc)
-         }
-         })
-         }*/
       },
       confirm: function () {
-
+        var formData = this.args.formData
         var _this = this
-        _this.$emit('sure')
+        io.post(io.apiAdminTurnClass, {formData:formData,classId:_this.args.item.classId},
+          function (ret) {
+            if (ret.success) {
+              _this.tableData = ret.data
+              _this.tableData.startAmount = item.startAmount
+              _this.tableData.endAmount = item.endAmount
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
       }
     }
   }

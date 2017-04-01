@@ -41,7 +41,7 @@
     },
     methods:{
       saveCompleted : function(){
-        this.$router.push('/main/enroll/student/list')
+        this.$router.push('/main/enroll/student/search')
       }
     }
   }

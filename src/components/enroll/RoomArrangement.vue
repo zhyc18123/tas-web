@@ -85,12 +85,16 @@
         pageSize:10,
         pageNo:1,
         query:{},
-        classId:''
       }
     },
     props: ['classId'],
     components: {
       Pagination
+    },
+    watch:{
+      classId:function () {
+        this.loadNullData();
+      }
     },
     mounted:function(){
       $(window).smoothScroll()
@@ -99,6 +103,9 @@
       if (this.classId) this.loadTableData(this.classId,this.pageNo);
     },
     methods:{
+      loadNullData:function () {
+        this.tableData = null;
+      },
       search:function(){
         this.loadTableData(this.pageNo)
       },

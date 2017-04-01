@@ -104,7 +104,7 @@
         </div>
         <div class="am-u-sm-1 input-field">
           <a href="javascript:;" @click="addGuardian"> <i class="am-icon-plus"></i></a>
-          <a href="javascript:;" @click="delGuardian(index)"> <i class="am-icon-remove"></i></a>
+          <a href="javascript:;" @click="delGuardian(index)"><i class="am-icon-remove"></i></a>
         </div>
       </div>
 
@@ -223,8 +223,7 @@
         this.guardianList.push({})
       },
       delGuardian : function(index){
-        if(this.guardianList.length <= 1
-        ){
+        if(this.guardianList.length <= 1){
           return
         }
         this.guardianList.splice(index,1)

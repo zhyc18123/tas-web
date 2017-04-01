@@ -55,7 +55,7 @@ import StudentClassList from  './components/enroll/StudentClassList'
 import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 import StudentRefundList from  './components/enroll/StudentRefundList'
-import TurnClass from  './components/enroll/TurnClass'
+import TurnClass from  './components/enroll/TurnClassStepOne'
 
 import AccountReport from './components/settlement/AccountReport'
 import AccountReportDetail from './components/settlement/AccountReportDetail'
@@ -169,7 +169,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[]},
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[], teacherName:[]},
   created:function(){
     this.refreshUserInfo()
   },

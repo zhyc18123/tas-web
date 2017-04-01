@@ -1,4 +1,3 @@
-
 import conf from '../conf'
 
 import Storage from '../storage'
@@ -79,7 +78,8 @@ const io = {
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
-    this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangementTeacher'
+    this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
+    this.apiAdminGetClassMessage = conf.baseApiPath + '/api/admin/arrangement/getClassMessage'
 
 
 
@@ -108,9 +108,13 @@ const io = {
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
     this.apiAdminPayCourseOrder= conf.baseApiPath + '/api/admin/payCourseOrder'
-    this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
+    // this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
     this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
-
+    this.apiAdminShowNewClassDetail = conf.baseApiPath + '/api/admin/showNewClass'
+    this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
+    this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
+    this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
+    this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 

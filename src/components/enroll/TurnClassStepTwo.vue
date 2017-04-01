@@ -100,8 +100,8 @@
               <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount" @change="check(item)"/></td>
               <td><input type="number" class="am-form-field am-input-sm" v-model="item.endAmount" @change="check(item)"/></td>
               <td>{{item.gradeName}}</td>
-              <td></td>
-              <td></td>
+              <td>{{item.quota-item.regAmount}}</td>
+              <td>{{item.quota}}</td>
               <td>{{item.teacherNames}}</td>
               <td>/{{item.lectureAmount}}</td>
               <td></td>
@@ -109,7 +109,7 @@
               <td></td>
               <td>
                 <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="confirm()">
+                  <a href="javascript:;" @click="confirm(item)">
                     <i class="am-icon-edit"></i> 确定
                   </a>
                 </div>
@@ -117,13 +117,9 @@
             </tr>
             </tbody>
           </table>
-          <window ref="sure" title="转班第三步">
+          <!--<window ref="sure" title="转班第三步">
             <confirm-class  @sure="$refs.sure.close()"></confirm-class>
-          </window>
-
-          <window ref="order" title="转班-第一步">
-            <turn-class :regId = "regId" @paySuccess="$refs.order.close()"></turn-class>
-          </window>
+          </window>-->
         </div>
       </div>
 
@@ -149,8 +145,6 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import ConfirmClass from './ConfirmClass'
-  import TurnClass from './TurnClass'
 
   export default{
     data: function () {
@@ -170,13 +164,15 @@
         courses: [],
         searchConfig: {},
         courseOrderId: '',
-        regId:''
       }
     },
+    props:['args','regId'],
     components: {
       Pagination,
-      'confirm-class':ConfirmClass,
-      'turn-class':TurnClass,
+    },
+    watch:{
+      args:function () {
+      }
     },
     computed: {
 
@@ -246,7 +242,7 @@
             for (var i = 0; i < ret.data.list.length; i++) {
               ret.data.list[i].startAmount = 1;
               ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
-
+              ret.data.list[i].regId = _this.regId
             }
             _this.tableData = ret.data.list
           } else {
@@ -281,23 +277,14 @@
       /*pay: function (classId, startAmount, endAmount) {
         this.createOrder([{classId,startAmount,endAmount}])
       },*/
-      confirm: function () {
-        var _this = this
-
-        _this.$refs.sure.show({
-          width:1000,
-          height:600
-        })
-        _this.$emit("second")
+      confirm: function (item) {
+        this.$emit('goStep','step-three' , {item : item})
       },
-      back: function (regId) {
-        /*var _this = this
-        _this.regId = regId
-//        console.log( _this.regId)
-        _this.$refs.order.show({
-          width: 1000,
-          height: 600,
-        })*/
+      back: function () {
+        var regId = this.args.regId
+        var formData = this.args.formData
+
+        this.$emit('goStep' ,'step-one',{regId2:regId})
       }
     }
   }
