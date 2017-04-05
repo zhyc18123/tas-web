@@ -63,6 +63,13 @@ import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
 import FeeList from './components/settlement/FeeList'
 import FeeForm from './components/settlement/FeeForm'
 
+import CategoryList from './components/tradingService/CategoryList'
+import CategoryForm from './components/tradingService/CategoryForm'
+import OrderList from './components/tradingService/OrderList'
+import OrderForm from './components/tradingService/OrderForm'
+import ProductTradingList from './components/tradingService/ProductTradingList'
+import ProductTradingForm from './components/tradingService/ProductTradingForm'
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -140,6 +147,16 @@ const router = new VueRouter({
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
+
+      {path: 'tradingService/category/list' , component: CategoryList },
+      {path: 'tradingService/category/add' , component: CategoryForm},
+      {path: 'tradingService/category/edit/:categoryId' , component: CategoryForm },
+      {path: 'tradingService/order/list' , component: OrderList },
+      {path: 'tradingService/order/add' , component: OrderForm},
+      {path: 'tradingService/order/edit/:orderId' , component: OrderForm },
+      {path: 'tradingService/product/list' , component: ProductTradingList },
+      {path: 'tradingService/product/add' , component: ProductTradingForm},
+      {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
