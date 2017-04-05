@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <td class="bgColor">以上讲次：</td>
-          <td>/</td>
+          <td>/{{tableData.lectureAmount}}<!--{{tableData.endAmount-tableData.startAmount+1}}--></td>
           <td class="bgColor">启报讲次：</td>
           <td>{{tableData.startAmount}}</td>
           <td class="bgColor">截止讲次：</td>
@@ -36,16 +36,17 @@
           转班差额:
         </label>
         <label class="am-radio-inline">
-          <span v-model="tableData.balanceAmount"></span>
+          <span>{{tableData.balanceAmount}}</span>
         </label>
         </label>
       </div>
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <a href="javascript:void(0)" data-am-modal-close><button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button></a>
+      <a href="javascript:void(0)" data-am-modal-close>
+        <button type="submit" class="am-btn am-btn-primary" @click="confirm(tableData)">确定</button>
+      </a>
     </div>
-
 
 
   </form>
@@ -61,7 +62,7 @@
     text-align: center;
   }
 
-  .red{
+  .red {
     color: red;
   }
 </style>
@@ -76,42 +77,41 @@
     data: function () {
       return {
         tableData: [],
+        formData: []
       }
     },
     props: ['args'],
-    created:function () {
+    created: function () {
       var _this = this
       var item = _this.args.item
-      io.post(io.apiAdminShowNewClassDetail, {classId:item.classId},
+      var formData = _this.args.formData
+      io.post(io.apiAdminShowNewClassDetail, {classId: item.classId},
         function (ret) {
           if (ret.success) {
             _this.tableData = ret.data
             _this.tableData.startAmount = item.startAmount
             _this.tableData.endAmount = item.endAmount
-            _this.tableData.balanceAmount = 0
+            _this.tableData.balanceAmount = formData.remainingAmount-(item.endAmount - item.startAmount + 1) * (ret.data.studyingFee / ret.data.lectureAmount)
+            _this.formData = formData
+            _this.tableData.oldClassId = _this.formData.classId
           } else {
             _this.$alert(ret.desc)
           }
         })
     },
 
-    watch: {
-      /*courseOrderId: function (val) {
-       this.loadTableData(val)
-       }*/
-    },
+    watch: {},
     mounted: function () {
       $(window).smoothScroll()
     },
     methods: {
-
       loadTableData: function () {
         var _this = this
       },
-      confirm: function () {
+      confirm: function (tableData) {
         var formData = this.args.formData
         var _this = this
-        io.post(io.apiAdminTurnClass, {formData:formData,classId:_this.args.item.classId},
+        io.post(io.apiAdminTurnClass, {formData: formData, classId: _this.args.item.classId},
           function (ret) {
             if (ret.success) {
               _this.tableData = ret.data
@@ -121,6 +121,7 @@
               _this.$alert(ret.desc)
             }
           })
+//        console.log(tableData)
       }
     }
   }

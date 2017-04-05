@@ -28,12 +28,18 @@
           <td>{{item.refundLecture}}</td>
           <td>{{item.amount}}</td>
           <td>{{item.description}}</td>
-          <td>{{item.refundWay}}</td>
+          <td>
+            <span v-if="item.refundWay==0">支付宝</span>
+            <span v-if="item.refundWay==1">微信</span>
+            <span v-if="item.refundWay==2">现金</span>
+            <span v-if="item.refundWay==3">余额账户</span>
+            <span v-if="item.refundWay==4">银行卡转账</span>
+          </td>
           <td>{{item.returnResult}}</td>
           <td>{{item.status==0?'处理中':(item.status==1?'已处理':'已拒绝')}}</td>
           <td>
             <div class="tpl-table-black-operation">
-              <a @click="editRefund()">
+              <a @click="editRefund(item.studentRefundId)">
                 <i class="am-icon-edit"></i> 修改
               </a>
             </div>
@@ -41,6 +47,9 @@
         </tr>
         </tbody>
       </table>
+      <window ref="studentRefund" title="退费审批">
+        <change-student-refund :studentRefundId="studentRefundId" @changeStudentRefund="$refs.studentRefund.close()" ></change-student-refund>
+      </window>
 
       <div class="am-u-lg-12 am-cf">
         <div class="am-fr">
@@ -55,6 +64,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
+  import ChangeStudentRefund from './ChangeStudentRefund'
   export default{
     data: function () {
       return {
@@ -62,16 +72,21 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
+        studentRefundId:''
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'change-student-refund': ChangeStudentRefund
     },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
       this.loadTableData(this.pageNo)
+      this.$on('studentRefundList:new',function(){
+        this.loadDataTable(this.pageNo)
+      })
     },
     methods: {
       loadTableData: function (pageNo) {
@@ -81,17 +96,25 @@
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, function (ret) {
-          if (ret.success){
-          _this.total = ret.data.total
-          _this.tableData = ret.data.list
-          }else {
+          if (ret.success) {
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
+          } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      editRefund: function (studentRefundId) {
+        var _this = this
+        _this.studentRefundId = studentRefundId
+//        alert(studentRefundId)
+        _this.$refs.studentRefund.show({
+          width: 1000,
+          height: 600
+        })
       }
+
     }
-
-
   }
 
 </script>

@@ -41,9 +41,11 @@
             <!--<a href="javascript:;" @click="">
               <i class="am-icon-edit"></i> 班级退账户
             </a>-->
-            <a href="javascript:;" @click="studentRefund(item.studentReg.regId)">
+            <a href="javascript:;" @click="studentRefund(item.studentReg.regId)"
+               v-if="item.studentReg.chargingStatus==2">
               <i class="am-icon-edit"></i> 退费申请
             </a>
+            <span v-else="item.studentReg.chargingStatus!=2">欠费</span>
           </div>
         </td>
       </tr>
@@ -51,12 +53,12 @@
     </table>
 
     <window ref="first" title="转班">
-      <turn-class :regId = "regId" @first="$refs.first.close()"></turn-class>
+      <turn-class :regId="regId" @first="$refs.first.close()"></turn-class>
     </window>
 
 
     <window ref="studentRefund" title="退费申请">
-      <student-refund  :regId = "regId" @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
+      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
     </window>
 
   </div>
@@ -71,21 +73,22 @@
 
   export default{
     data: function () {
-      return{
-        studentId:'',
-        tableData:[],
-        regId:'',
-        classId:''
+      return {
+        refund: '',
+        studentId: '',
+        tableData: [],
+        regId: '',
+        classId: ''
       }
     },
-    components:{
-      'turn-class':TurnClass,
-      'student-refund':StudentRefundForm,
+    components: {
+      'turn-class': TurnClass,
+      'student-refund': StudentRefundForm,
     },
-    created:function () {
+    created: function () {
       this.loadDataTable()
       var _this = this
-      this.$root.$on('class:new',function(){
+      this.$root.$on('class:new', function () {
         _this.loadDataTable()
       })
     },
@@ -100,12 +103,12 @@
           if (ret.success) {
             _this.tableData = ret.data
 
-          }else {
-            _this.$alert(ret.desc  || '处理失败')
+          } else {
+            _this.$alert(ret.desc || '处理失败')
           }
         })
       },
-      turnClass:function (regId) {
+      turnClass: function (regId) {
         var _this = this
         _this.regId = regId
         _this.$refs.first.show({
@@ -113,14 +116,14 @@
           height: 600,
         })
       },
-      studentRefund:function(regId) {
+      studentRefund: function (regId) {
         var _this = this;
         _this.regId = regId;
         _this.$refs.studentRefund.show({
-            width:1000,
-            height:700,
+          width: 1000,
+          height: 700,
         })
-      },
+      }
     }
   }
 
