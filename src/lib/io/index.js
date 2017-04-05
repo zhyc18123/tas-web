@@ -130,7 +130,13 @@ const io = {
 
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
-
+    this.apiAdminSaveCategory = conf.baseApiPath + '/api/admin/trading/saveCategory'
+    this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
+    this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
+    this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
+    this.apiAdminSaveOrder = conf.baseApiPath + '/api/admin/trading/saveOrder'
+    this.apiAdminOrderDetail = conf.baseApiPath + '/api/admin/trading/getOrder'
+    this.apiAdminOrderList = conf.baseApiPath + '/api/admin/trading/showOrder'
 
 
 
