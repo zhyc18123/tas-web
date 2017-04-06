@@ -179,7 +179,7 @@
                 <td>
 
                   <a href="javascript:;" @click="arrangeTime(item.classId)">排时间</a>
-                  <a href="javascript:;" @click="arrangeRoom(item.classId)">排教室</a>
+                  <a href="javascript:;" @click="arrangeRoom(item.classId,item.roomId)">排教室</a>
                   <a href="javascript:;" @click="arrangeTeacher(item.classId)">排老师</a>
 
                   <div class="tpl-table-black-operation">
@@ -369,7 +369,11 @@
           height:500
         })
       },
-      arrangeRoom:function (classId) {
+      arrangeRoom:function (classId,roomId) {
+        /*if (roomId) {
+            alert("已排课室");
+            return;
+        }*/
         //弹窗
         var _this = this;
         _this.classId = classId;
