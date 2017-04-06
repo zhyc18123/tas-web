@@ -67,8 +67,8 @@
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
         <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>审批详情
     </div>
-    <textarea required v-model="formData.returnResult"></textarea>
-
+    <textarea required v-model="formData.returnResult" v-if="tableData.returnResult==null"></textarea>
+    <textarea v-else="tableData.returnResult==null">{{tableData.returnResult}}</textarea>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
@@ -129,7 +129,11 @@
           io.post(io.apiAdminStudentRefundDetail, {studentRefundId: studentRefundId},
             function (ret) {
               if (ret.success) {
-                _this.formData.status=0
+                if (ret.data.status == null) {
+                  _this.formData.status = 0
+                }else {
+                  _this.formData.status = ret.data.status
+                }
                 _this.formData.studentRefundId = ret.data.studentRefundId
                 _this.formData.studentName = ret.data.studentName
                 _this.formData.classId = ret.data.classId
