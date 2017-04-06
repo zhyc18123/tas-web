@@ -67,8 +67,7 @@
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
         <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>审批详情
     </div>
-    <textarea required v-model="formData.returnResult" v-if="tableData.returnResult==null"></textarea>
-    <textarea v-else="tableData.returnResult==null">{{tableData.returnResult}}</textarea>
+    <textarea required v-model="formData.returnResult"></textarea>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
@@ -139,6 +138,7 @@
                 _this.formData.classId = ret.data.classId
                 _this.formData.className = ret.data.className
                 _this.formData.studentId = ret.data.studentId
+                _this.formData.returnResult = ret.data.returnResult
                 _this.tableData = ret.data
               } else {
                 _this.$alert(ret.desc)
@@ -152,12 +152,13 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('审批成功')
+              _this.$root.$emit('studentRefundList:new')
             } else {
               _this.$alert('审批失败')
             }
           })
         _this.$emit('changeStudentRefund')
-        _this.$emit('studentRefundList:new')
+
       }
     }
   }

@@ -84,8 +84,10 @@
     },
     created: function () {
       this.loadTableData(this.pageNo)
-      this.$on('studentRefundList:new',function(){
-        this.loadDataTable(this.pageNo)
+      var _this = this
+      this.$root.$on('studentRefundList:new',function(){
+        _this.pageNo = 1
+        _this.loadTableData(_this.pageNo)
       })
     },
     methods: {
