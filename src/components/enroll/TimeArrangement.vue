@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
 
-  <div  class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="am-tabs" data-am-tabs>
         <ul class="am-tabs-nav am-nav am-nav-tabs">
@@ -10,16 +10,29 @@
         <div class="am-tabs-bd">
           <!--模板排课时间-->
           <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-
-            <div>
-              模板名称：<input type="text">
-              总讲数：<input type="text">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="" ><span class="am-icon-search"></span>查询
-              </button>
+            <!--search-->
+            <div class="am-u-sm-12 am-form ">
+              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                <div class="am-form-group">
+                  <input type="text" class="am-input-lg" name="name" v-model="query.name"
+                         placeholder="模板名称"/>
+                </div>
+              </div>
+              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                <div class="am-form-group">
+                  <input type="text" class="am-input-lg" name="lectureAmount" v-model="query.lectureAmount"
+                         placeholder="总讲数"/>
+                </div>
+              </div>
+              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+                <div class="am-form-group">
+                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                          @click="search"><span class="am-icon-search"></span>查询
+                  </button>
+                </div>
+              </div>
             </div>
 
-            <div class="widget am-cf">
             <div class="am-u-sm-12 am-scrollable-horizontal">
               <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
                 <thead>
@@ -39,14 +52,15 @@
                 <tr>
                   <td>
                     <div class="tpl-table-black-operation">
-                      <a href="javascript:;" @click="" >
+                      <a href="javascript:;" @click="">
                         使用
                       </a>
                       <a href="javascript:;" @click="">
-                         查看
+                        查看
                       </a>
                     </div>
                   </td>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td></td>
@@ -57,67 +71,37 @@
                 </tbody>
               </table>
             </div>
-            </div>
 
           </div>
           <!--手工排课时间-->
           <div class="am-tab-panel am-fade" id="tab2">
-            <div align="left">
-              <label>首次上课时间：</label><input type="text">
-              <select>
-                <option>排课方式</option>
-                <option>按周排</option>
-                <option>按天排</option>
-              </select>
-            </div>
-            <div>
-              <div align="left">
-                <input type="checkbox" name="1">周一
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
+            <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
+
+              <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label">
+                  <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>首次上课时间：
+                </label>
+                <div class="am-u-sm-3 am-u-end input-field">
+                  <date-picker v-model="formData.joinTime">
+                    <input type="text" placeholder="请选择首次上课时间" data-am-datepicker required>
+                  </date-picker>
+                </div>
               </div>
-              <div align="left">
-                <input type="checkbox" name="2">周二
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
+
+              <div class="am-form-group">
+                <label class="am-u-sm-3 am-form-label" for="arrange_way">排课方式</label>
+                <select class="am-u-sm-3 am-u-end input-field" id="arrange_way">
+                  <option value="arrangeByWeek">按周排</option>
+                  <option value="arrangeByDay">按天排</option>
+                </select>
+                <span class="am-form-caret"></span>
               </div>
-              <div align="left">
-                <input type="checkbox" name="3">周三
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
-              </div>
-              <div align="left">
-                <input type="checkbox" name="4">周四
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
-              </div>
-              <div align="left">
-                <input type="checkbox" name="5">周五
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
-              </div>
-              <div align="left">
-                <input type="checkbox" name="6">周六
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
-              </div>
-              <div align="left">
-                <input type="checkbox" name="0">周日
-                <span><input type="text"></span>
-                <a href="javascript:;" @click=""> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click=""> <i class="am-icon-remove"></i></a>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -126,22 +110,22 @@
   import util from '../../lib/util'
   export default{
     data(){
-      return{
+      return {
+        query: {},
+        formData: {}
       }
     },
-    props: ['classId','isArrangeTime'],
-    mounted:function () {
+    props: ['classId', 'isArrangeTime'],
+    mounted: function () {
       $(window).smoothScroll();
     },
-    created:function(){
+    created: function () {
 
     },
-    computed:{
-    },
-    mounted:function(){
+    computed: {},
+    mounted: function () {
     },
 
-    methods:{
-    }
+    methods: {}
   }
 </script>
