@@ -178,9 +178,9 @@
               <tr v-for="item in tableData" :key="item.classId">
                 <td>
 
-                  <a href="javascript:;" @click="arrangeTime(item.classId)">排时间</a>
+                  <a href="javascript:;" @click="arrangeTime(item.classId,item.isArrangeTime)">排时间</a>
                   <a href="javascript:;" @click="arrangeRoom(item.classId,item.isArrangeRoom)">排教室</a>
-                  <a href="javascript:;" @click="arrangeTeacher(item.classId)">排老师</a>
+                  <a href="javascript:;" @click="arrangeTeacher(item.classId,item.isArrangeTeacher,item.isArrangeTime)">排老师</a>
 
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
@@ -225,7 +225,7 @@
     </div>
 
     <window ref="time_arrangement" title="排时间">
-      <time-arragngement :classId="classId" @arrangementTime="$refs.time_arrangement.close()"></time-arragngement>
+      <time-arragngement :classId="classId" :isArrangeTime="isArrangeTime" @arrangementTime="$refs.time_arrangement.close()"></time-arragngement>
     </window>
 
     <window ref="room_arrangement" title="排课室">
@@ -233,7 +233,7 @@
     </window>
 
     <window ref="teacher_arrangement" title="排老师">
-      <teacher-arrangement :classId="classId" @arrangementSuccess="$refs.teacher_arrangement.close()"></teacher-arrangement>
+      <teacher-arrangement :classId="classId" :isArrangeTeacher="isArrangeTeacher" @arrangementSuccess="$refs.teacher_arrangement.close()"></teacher-arrangement>
     </window>
   </div>
 </template>
@@ -262,6 +262,8 @@
         courseClassId:'',
         classId:'',
         isArrangeRoom:'',
+        isArrangeTeacher:'',
+        isArrangeTime:'',
         teacherNames:''
       }
     },
@@ -361,10 +363,11 @@
         })
       },
       //排课
-      arrangeTime:function (classId) {
+      arrangeTime:function (classId,isArrangeTime) {
         //弹窗
         var _this = this;
         _this.classId = classId;
+        _this.isArrangeTime = isArrangeTime;
         _this.$refs.time_arrangement.show({
           width:1000,
           height:500
@@ -380,10 +383,15 @@
           height: 500
         });
       },
-      arrangeTeacher:function (classId) {
+      arrangeTeacher:function (classId,isArrangeTeacher,isArrangeTime) {
         //弹窗
         var _this = this;
         _this.classId = classId;
+        _this.isArrangeTeacher = isArrangeTeacher;
+        if (isArrangeTime!='1'){
+            _this.$alert("请先排时间");
+            return;
+        }
         this.$root.teacherName = [];
         _this.$refs.teacher_arrangement.show({
           width : 1000,
