@@ -5,7 +5,7 @@
         <div class="widget-body  am-fr">
 
           <!--search-->
-          <div class="am-u-sm-12 am-form ">
+          <div class="am-u-sm-12 am-form " v-show="isShow()">
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -46,7 +46,7 @@
                 <td>{{item.memo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeRoom(item.roomId)" >
+                    <a href="javascript:;" v-show="isShow()" @click="confirmArrangeRoom(item.roomId)" >
                       <i class="am-icon-edit"></i> 确定
                     </a>
                     <a href="javascript:;" @click="roomUsingSituation" >
@@ -87,20 +87,20 @@
         query:{},
       }
     },
-    props: ['classId'],
+    props: ['classId','isArrangeRoom'],
     components: {
       Pagination
     },
     watch:{
       classId:function () {
-        this.loadNullData();
+        this.loadTableData(this.pageNo);
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
-      if (this.classId) this.loadTableData(this.classId,this.pageNo);
+      if (this.classId) this.loadTableData(this.pageNo);
     },
     methods:{
       loadNullData:function () {
@@ -127,7 +127,6 @@
       },
       confirmArrangeRoom:function (roomId) {
         var _this = this;
-        console.log(roomId)
         io.post(io.apiAdminArrangeRoom, {classId: this.classId, roomId: roomId},
           function (ret) {
           if (ret.success) {
@@ -142,6 +141,10 @@
       roomUsingSituation:function (roomId) {
         var _this = this;
         alert("coming soon");
+      },
+      //已安排不显示安排按钮
+      isShow:function () {
+        return this.isArrangeRoom!='1';
       }
     }
   }
