@@ -222,6 +222,7 @@
           function (ret) {
             if (ret.success){
               _this.$alert('已接受退款申请')
+              _this.$root.$emit('class:new')
             }else {
               _this.$alert('申请失败')
             }

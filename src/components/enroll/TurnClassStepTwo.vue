@@ -61,7 +61,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <input type="text" class="am-form-field" placeholder="班级名"  v-model="query.className">
+              <input type="text" class="am-form-field" placeholder="班级名" v-model="query.className">
             </div>
           </div>
 
@@ -97,21 +97,23 @@
 
             <tr v-for="item in tableData" :key="item.classId">
               <td>{{item.className}}</td>
-              <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount" @change="check(item)"/></td>
-              <td><input type="number" class="am-form-field am-input-sm" v-model="item.endAmount" @change="check(item)"/></td>
+              <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount"
+                         @change="check(item)"/></td>
+              <td><span v-model="item.endAmount" @change="check(item)">{{item.lectureAmount}}</span></td>
               <td>{{item.gradeName}}</td>
               <td>{{item.quota-item.regAmount}}</td>
               <td>{{item.quota}}</td>
               <td>{{item.teacherNames}}</td>
-              <td>/{{item.lectureAmount}}</td>
+              <td>{{item.studyAmount}}/{{item.lectureAmount}}</td>
               <td></td>
               <td>{{item.startCourseTime | formatDate }}</td>
               <td></td>
               <td>
                 <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="confirm(item)">
+                  <a href="javascript:;" @click="confirm(item)" v-if="item.allow">
                     <i class="am-icon-edit"></i> 确定
                   </a>
+                  <a v-else="item.allow">不符合</a>
                 </div>
               </td>
             </tr>
@@ -166,12 +168,12 @@
         courseOrderId: '',
       }
     },
-    props:['args','regId'],
+    props: ['args', 'regId'],
     components: {
       Pagination,
     },
-    watch:{
-      args:function () {
+    watch: {
+      args: function () {
       }
     },
     computed: {
@@ -216,12 +218,12 @@
       this.loadCourseData()
     },
     methods: {
-      check:function(item){
-        if(item.startAmount <= 0 || item.startAmount > item.lectureAmount ){
+      check: function (item) {
+        if (item.startAmount <= 0 || item.startAmount > item.lectureAmount) {
           item.startAmount = 1
         }
 
-        if( item.endAmount < 0 || item.endAmount > item.lectureAmount ){
+        if (item.endAmount < 0 || item.endAmount > item.lectureAmount) {
           item.endAmount = item.lectureAmount
         }
 
@@ -235,14 +237,25 @@
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          status : 1
+          status: 1
         }, _this.query), function (ret) {
+
           if (ret.success) {
             _this.total = ret.data.total
             for (var i = 0; i < ret.data.list.length; i++) {
-              ret.data.list[i].startAmount = 1;
-              ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
+
+              ret.data.list[i].startAmount = parseInt(_this.args.formData.studyAmount) + 1
+              ret.data.list[i].endAmount = _this.args.formData.endAmount
               ret.data.list[i].regId = _this.regId
+              ret.data.list[i].cost = _this.args.formData.studyingFee
+              ret.data.list[i].studyAmount = _this.args.formData.studyAmount
+              ret.data.list[i].counts = _this.args.formData.counts
+
+              if ((ret.data.list[i].cost == ret.data.list[i].studyingFee) && (ret.data.list[i].counts == ret.data.list[i].lectureAmount)) {
+                ret.data.list[i].allow = true
+              } else {
+                ret.data.list[i].allow = false
+              }
             }
             _this.tableData = ret.data.list
           } else {
@@ -275,13 +288,13 @@
         })
       },
       confirm: function (item) {
-        this.$emit('goStep','step-three' , {item : item, formData : this.args.formData})
+        this.$emit('goStep', 'step-three', {item: item, formData: this.args.formData})
       },
       back: function () {
         var regId = this.args.regId
         var formData = this.args.formData
 
-        this.$emit('goStep' ,'step-one',{regId2:regId})
+        this.$emit('goStep', 'step-one', {regId2: regId})
       }
     }
   }

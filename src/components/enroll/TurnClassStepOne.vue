@@ -154,6 +154,9 @@
                 _this.formData.reason = '与原校时间冲突'
                 _this.formData.regId = ret.data.regId
                 _this.formData.classId = ret.data.classId
+                _this.formData.studyingFee = ret.data.studyingFee
+                _this.formData.endAmount = ret.data.endAmount
+                _this.formData.counts = ret.data.lectureAmount
               } else {
                 _this.$alert(ret.desc)
               }
