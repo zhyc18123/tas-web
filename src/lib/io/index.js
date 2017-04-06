@@ -115,6 +115,8 @@ const io = {
     this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
     this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
+    this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
+    this.apiAdminChangeStudentRefund = conf.baseApiPath + '/api/admin/changeStudentRefund'
 
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
@@ -128,7 +130,13 @@ const io = {
 
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
-
+    this.apiAdminSaveCategory = conf.baseApiPath + '/api/admin/trading/saveCategory'
+    this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
+    this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
+    this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
+    this.apiAdminSaveOrder = conf.baseApiPath + '/api/admin/trading/saveOrder'
+    this.apiAdminOrderDetail = conf.baseApiPath + '/api/admin/trading/getOrder'
+    this.apiAdminOrderList = conf.baseApiPath + '/api/admin/trading/showOrder'
 
 
 

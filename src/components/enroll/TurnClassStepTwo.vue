@@ -274,11 +274,8 @@
           }
         })
       },
-      /*pay: function (classId, startAmount, endAmount) {
-        this.createOrder([{classId,startAmount,endAmount}])
-      },*/
       confirm: function (item) {
-        this.$emit('goStep','step-three' , {item : item})
+        this.$emit('goStep','step-three' , {item : item, formData : this.args.formData})
       },
       back: function () {
         var regId = this.args.regId
