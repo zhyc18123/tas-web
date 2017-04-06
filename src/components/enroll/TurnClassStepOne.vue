@@ -48,7 +48,7 @@
           剩余金额：￥
         </label>
         <label class="am-radio-inline font-color bold-font">
-          <span v-model="formData.remainingAmount">{{remaining>=0?remaining:tableData.payAmount}}</span>
+          <span>{{remaining>=0?remaining:tableData.payAmount}}</span>
         </label>
       </div>
 
@@ -76,9 +76,9 @@
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="submit" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
+      <button type="button" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
       <a href="javascript: void(0)" data-am-modal-close>
-        <button type="submit" class="am-btn am-btn-primary">取消</button>
+        <button type="button" class="am-btn am-btn-primary">取消</button>
       </a>
     </div>
 
@@ -129,7 +129,9 @@
     },
     watch: {
       regId: function (val) {
-        this.loadTableData(val)
+        if(val){
+          this.loadTableData(val)
+        }
       }
     },
     computed:{

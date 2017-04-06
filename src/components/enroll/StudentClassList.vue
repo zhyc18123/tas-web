@@ -54,7 +54,7 @@
       </tbody>
     </table>
 
-    <window ref="first" title="转班">
+    <window ref="first" title="转班" @close="regId=''">
       <turn-class :regId="regId" @first="$refs.first.close()"></turn-class>
     </window>
 

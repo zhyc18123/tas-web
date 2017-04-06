@@ -58,7 +58,7 @@
           <span>{{tableData.endAmount}}</span>
           讲
           <label class="bold-font red">应退学费金额：￥
-            <span v-model="formData.amount">{{remaining>=0?remaining:tableData.payAmount}}</span>
+            <span>{{remaining>=0?remaining:tableData.payAmount}}</span>
           </label>
         </div>
       </div>
@@ -194,7 +194,7 @@
     methods: {
       loadClassMessageData: function (regId) {
         var _this = this
-        if (regId != null) {
+        if (regId ) {
           io.post(io.apiAdminShowClassMessage, {regId: regId},
             function (ret) {
               if (ret.success) {
