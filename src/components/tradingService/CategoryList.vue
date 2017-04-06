@@ -25,7 +25,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/category/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增产品</button>
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/category/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增分类</button>
               </div>
             </div>
 
@@ -49,7 +49,7 @@
                     <a href="javascript:;" @click="$router.push('/main/tradingService/category/edit/'+item.categoryId)" v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
                     </a>
-                    <a href="javascript:;" @click="deleteCategory(item, index)" v-if="hasPermission('delete')">
+                    <a href="javascript:;" @click="deleteCategory(item)" v-if="hasPermission('delete')">
                       <i class="am-icon-remove"></i>删除
                     </a>
                   </div>
@@ -87,7 +87,7 @@
       return {
         tableData:[],
         total:0,
-        pageSize:7,
+        pageSize:10,
         pageNo:1,
         query:{
           name:'',
@@ -108,7 +108,7 @@
       search:function(){
         this.loadTableData()
       },
-      deleteCategory:function (item, index) {
+      deleteCategory:function (item) {
         const _this = this ;
         _this.$confirm('你确定要删除？' ,
           function(){
@@ -121,12 +121,6 @@
               }
             })
           });
-        /*io.post(io.apiAdminDeleteCategory,{categoryId:item.categoryId},function(ret){
-          if(ret.success){
-          }else{
-          }
-        })
-        this.tableData.splice(index,1);*/
       },
       loadTableData:function(pageNo){
         var _this = this

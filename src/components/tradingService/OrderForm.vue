@@ -3,6 +3,9 @@
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">订单信息</div>
+        <div class="widget-function am-fr">
+          <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+        </div>
       </div>
       <div class="widget-body am-fr">
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">

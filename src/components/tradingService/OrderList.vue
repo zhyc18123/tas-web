@@ -11,7 +11,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="name" v-model="query.name" placeholder="请输入订单编号"/>
+                <input type="text" class="am-input-lg" name="orderId" v-model="query.orderId" placeholder="请输入订单编号"/>
               </div>
             </div>
 
@@ -23,11 +23,11 @@
               </div>
             </div>
 
-            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/order/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增订单</button>
               </div>
-            </div>-->
+            </div>
 
           </div>
 
@@ -49,6 +49,9 @@
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/tradingService/order/edit/'+item.categoryId)" v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
+                    </a>
+                    <a href="javascript:;" @click="deleteOrder(item)" v-if="hasPermission('delete')">
+                      <i class="am-icon-remove"></i>删除
                     </a>
                   </div>
                 </td>
@@ -89,7 +92,7 @@
         pageSize:10,
         pageNo:1,
         query:{
-          name:'',
+          orderId:'',
         },
         searchConfig:{}
       }
@@ -104,6 +107,20 @@
       this.loadTableData(this.pageNo);
     },
     methods:{
+      deleteCategory:function (item) {
+        const _this = this ;
+        _this.$confirm('你确定要删除？' ,
+          function(){
+            io.post(io.apiAdminDeleteOrder,{orderId:item.orderId},function(ret){
+              if(ret.success){
+                _this.$toast('OK')
+                _this.loadTableData()
+              }else{
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
       search:function(){
         this.loadTableData()
       },
