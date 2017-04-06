@@ -1,5 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-body am-fr">
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
@@ -10,7 +10,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品分类
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.categoryId" :options="category" >
+                <select2 required v-model="formData.categoryId" :options="category">
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -21,7 +21,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入商品名称" required v-model="formData.productName" >
+                <input type="text" class="am-form-field" placeholder="请输入商品名称" required v-model="formData.productName">
               </div>
             </div>
 
@@ -30,7 +30,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品价格
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price" >元
+                <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">元
               </div>
             </div>
 
@@ -39,7 +39,18 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>单位
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入商品单位" required v-model="formData.unit" >
+                <input type="text" class="am-form-field" placeholder="请输入商品单位" required v-model="formData.unit">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                头像
+              </label>
+              <div class="am-u-sm-9 am-form-file input-field">
+                <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
+                  <img class="am-margin-top" :src="formData.avatarUrl">
+                </file-upload>
               </div>
             </div>
 
@@ -57,8 +68,12 @@
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-                <button type="submit" class="am-btn am-btn-primary">保存</button>
-                <a href="javascript:void(0)" data-am-modal-close><button class="am-btn am-btn-primary">取消</button></a>
+                <a href="javascript:void(0)" @click="saveServiceProduct">
+                  <button class="am-btn am-btn-primary">保存</button>
+                </a>
+                <a href="javascript:void(0)" data-am-modal-close>
+                  <button class="am-btn am-btn-primary">取消</button>
+                </a>
               </div>
             </div>
           </fieldset>
@@ -73,86 +88,42 @@
   import util from '../../lib/util'
   export default{
     data(){
-      return{
-        formData:{
-          productName:'',
-          content:'',
-          price:'',
-          unit:'',
-          categoryId:'',
+      return {
+        formData: {
+          productName: '',
+          content: '',
+          price: '',
+          unit: '',
+          categoryId: '',
         },
-        category:[],
+        category: [],
       }
     },
-    created:function(){
+    created: function () {
+      this.loadNullData();
       this.loadCategoryData()
     },
-    computed:{
+    computed: {},
 
-    },
-    mounted:function(){
-      var _this = this ;
-      $('#' + this.id ).validator({
-        validate:function(validity){
-
-        },
-        onValid: function(validity) {
-          $(validity.field).closest('.input-field').find('.am-alert').hide();
-        },
-        onInValid: function(validity) {
-          var $field = $(validity.field);
-          var $group = $field.closest('.input-field');
-          var $alert = $group.find('.am-alert');
-          // 使用自定义的提示信息 或 插件内置的提示信息
-          var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
-
-          if (!$alert.length) {
-            $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
-            appendTo($group);
-          }
-
-          $alert.html(msg).show();
-        },
-        submit:function(e){
-          e.preventDefault();
-          var $submitBtn = $('button[type=submit]',e.target);
-          $submitBtn.attr("disabled" ,"disabled" )
-          _this.$showLoading()
-          var formValidity = this.isFormValid();
-          var complete = function(){
-            _this.$hiddenLoading()
-            $submitBtn.removeAttr("disabled" ,"disabled" )
-          }
-          if(formValidity){
-            _this.save(complete);
-          }else{
-            complete.call()
-          }
-        }
-      });
-    },
-
-    methods:{
-      save:function(complete){
+    methods: {
+      saveServiceProduct:function () {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveServiceProduct,data,
-          function(ret){
-            complete.call()
-            if(ret.success){
+        io.post(io.apiAdminSaveServiceProduct, data,
+          function (ret) {
+            if (ret.success) {
               _this.$toast('OK')
-            }else{
+            } else {
               _this.$alert(ret.desc)
             }
 
           },
-          function(){
-            complete.call()
+          function () {
             _this.$alert('请求服务器失败')
           })
         _this.$emit('addSuccess')
       },
-      loadCategoryData:function () {
+      loadCategoryData: function () {
         var _this = this
         io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
           if (ret.success) {
@@ -164,6 +135,9 @@
           }
         })
       },
+      loadNullData: function () {
+        this.formData = {};
+      }
     }
   }
 </script>
