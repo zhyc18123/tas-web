@@ -4,7 +4,7 @@
       <div class="widget am-cf">
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-form ">
+          <div class="am-u-sm-12 am-form " v-show="isShow()">
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -51,7 +51,7 @@
                 <td>{{item.phoneNo}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item)">
+                    <a href="javascript:;" @click="confirmArrangeTeacher(item)" v-show="isShow()">
                       <i class="am-icon-edit"></i>确定
                     </a>
                     <a href="javascript:;" @click="">
@@ -70,14 +70,14 @@
             </div>
           </div>
 
-          <div class="am-align-left">
+          <div class="am-align-left" v-show="isShow()">
             <label>已选老师：</label>
             <span v-for="(item, index) in $root.teacherName "><a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a></span>
           </div>
 
 
           <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()">下一步</button>
+            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()" v-show="isShow()">下一步</button>
             <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
           </div>
 
@@ -108,10 +108,14 @@
         query:{},
       }
     },
-    props: ['classId'],
+    props: ['classId','isArrangeTeacher'],
     watch:{
       classId : function () {
-        this.loadNullData();
+        if ( this.isArrangeTeacher=='1'){
+          this.loadTableData(this.pageNo);
+        }else{
+          this.loadNullData();
+        }
       }
     },
     components: {
@@ -170,8 +174,8 @@
       },
       cancel:function(){
           //关闭，置空数组
-         this.$root.teacherName=[];
-         this.$emit("arrangementSuccess");
+        this.$root.teacherName=[];
+        this.$emit("arrangementSuccess");
       },
       nextStep:function(){
         //弹窗
@@ -182,6 +186,9 @@
           height: 500
         });
       },
+      isShow:function() {
+        return this.isArrangeTeacher!='1';
+      }
     }
   }
 </script>

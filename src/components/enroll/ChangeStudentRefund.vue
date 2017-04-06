@@ -69,7 +69,6 @@
     </div>
     <textarea required v-model="formData.returnResult"></textarea>
 
-
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
       <a href="javascript:void(0)" data-am-modal-close>
@@ -129,12 +128,17 @@
           io.post(io.apiAdminStudentRefundDetail, {studentRefundId: studentRefundId},
             function (ret) {
               if (ret.success) {
-                _this.formData.status=0
+                if (ret.data.status == null) {
+                  _this.formData.status = 0
+                }else {
+                  _this.formData.status = ret.data.status
+                }
                 _this.formData.studentRefundId = ret.data.studentRefundId
                 _this.formData.studentName = ret.data.studentName
                 _this.formData.classId = ret.data.classId
                 _this.formData.className = ret.data.className
                 _this.formData.studentId = ret.data.studentId
+                _this.formData.returnResult = ret.data.returnResult
                 _this.tableData = ret.data
               } else {
                 _this.$alert(ret.desc)
@@ -148,12 +152,13 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('审批成功')
+              _this.$root.$emit('studentRefundList:new')
             } else {
               _this.$alert('审批失败')
             }
           })
         _this.$emit('changeStudentRefund')
-        _this.$emit('studentRefundList:new')
+
       }
     }
   }

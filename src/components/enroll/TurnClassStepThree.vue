@@ -22,7 +22,7 @@
         </tr>
         <tr>
           <td class="bgColor">以上讲次：</td>
-          <td>/{{tableData.lectureAmount}}<!--{{tableData.endAmount-tableData.startAmount+1}}--></td>
+          <td>{{tableData.studyAmount}}/{{tableData.lectureAmount}}</td>
           <td class="bgColor">启报讲次：</td>
           <td>{{tableData.startAmount}}</td>
           <td class="bgColor">截止讲次：</td>
@@ -91,9 +91,13 @@
             _this.tableData = ret.data
             _this.tableData.startAmount = item.startAmount
             _this.tableData.endAmount = item.endAmount
-            _this.tableData.balanceAmount = formData.remainingAmount-(item.endAmount - item.startAmount + 1) * (ret.data.studyingFee / ret.data.lectureAmount)
+            _this.tableData.balanceAmount = formData.remainingAmount - (item.endAmount - item.startAmount + 1) * (ret.data.studyingFee / ret.data.lectureAmount)
             _this.formData = formData
-            _this.tableData.oldClassId = _this.formData.classId
+            _this.formData.oldClassId = _this.formData.classId
+            _this.formData.startAmount = item.startAmount
+            _this.tableData.studyAmount = _this.formData.studyAmount
+            _this.formData.classId = ret.data.classId
+            _this.formData.balanceAmount = _this.tableData.balanceAmount
           } else {
             _this.$alert(ret.desc)
           }
@@ -109,19 +113,19 @@
         var _this = this
       },
       confirm: function (tableData) {
-        var formData = this.args.formData
         var _this = this
-        io.post(io.apiAdminTurnClass, {formData: formData, classId: _this.args.item.classId},
+        io.post(io.apiAdminTurnClass, $.extend({},_this.formData),
           function (ret) {
             if (ret.success) {
-              _this.tableData = ret.data
-              _this.tableData.startAmount = item.startAmount
-              _this.tableData.endAmount = item.endAmount
+              _this.$toast('OK')
+
+              //通过实践通知订单组件重新加载数据
+              _this.$root.$emit('order:new')
+              _this.$root.$emit('class:new')
             } else {
               _this.$alert(ret.desc)
             }
           })
-//        console.log(tableData)
       }
     }
   }

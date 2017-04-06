@@ -45,7 +45,9 @@
                v-if="item.studentReg.chargingStatus==2">
               <i class="am-icon-edit"></i> 退费申请
             </a>
-            <span v-else="item.studentReg.chargingStatus!=2">欠费</span>
+            <a v-else="item.studentReg.chargingStatus==2" @click="allowRefund">
+              <i class="am-icon-edit"></i> 退费
+            </a>
           </div>
         </td>
       </tr>
@@ -112,7 +114,7 @@
         var _this = this
         _this.regId = regId
         _this.$refs.first.show({
-          width: 1000,
+          width: 1200,
           height: 600,
         })
       },
@@ -123,6 +125,10 @@
           width: 1000,
           height: 700,
         })
+      },
+      allowRefund: function () {
+        var _this = this
+        _this.$alert("尚未缴清学费，不能退费")
       }
     }
   }
