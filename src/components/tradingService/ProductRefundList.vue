@@ -91,7 +91,6 @@
       loadRefundListData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        console.log("=====")
 
       },
       edit: function () {

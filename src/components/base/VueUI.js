@@ -13,7 +13,7 @@ import Editor from './Editor'
 import Window from './Window'
 import Select2 from './Select2'
 import Dropdown from './Dropdown'
-
+import DateTimePicker from './DateTimePicker'
 
 var VueUI = function(){
 
@@ -80,6 +80,7 @@ VueUI.install = function (Vue){
   Vue.component('window',Window)
   Vue.component('select2',Select2)
   Vue.component('dropdown',Dropdown)
+  Vue.component('date-time-picker',DateTimePicker)
 
   Vue.filter('formatDate' ,util.formatDate )
 

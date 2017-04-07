@@ -27,7 +27,7 @@
               <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
                 <div class="am-form-group">
                   <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                          @click="search"><span class="am-icon-search"></span>查询
+                          @click=""><span class="am-icon-search"></span>查询
                   </button>
                 </div>
               </div>
@@ -76,26 +76,83 @@
           <!--手工排课时间-->
           <div class="am-tab-panel am-fade" id="tab2">
             <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
+              <div class="am-form-group ">
 
-              <div class="am-form-group">
-                <label class="am-u-sm-3 am-form-label">
-                  <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>首次上课时间：
-                </label>
-                <div class="am-u-sm-3 am-u-end input-field">
-                  <date-picker v-model="formData.joinTime">
-                    <input type="text" placeholder="请选择首次上课时间" data-am-datepicker required>
+                <div class="am-u-sm-3 input-field">
+                  <date-picker >
+                    <input type="text" class="am-input-lg" placeholder="请选择首次上课时间" data-am-datepicker required>
                   </date-picker>
                 </div>
+
+                <div class="am-u-sm-3 input-field">
+                  <select id="arrange_way">
+                    <option value="arrangeByWeek">按周排</option>
+                    <option value="arrangeByDay">按天排</option>
+                  </select>
+                </div>
+
+                <div class="am-u-sm-3 input-field ">
+                  <label><input type="checkbox" class="am-input-lg"></label>是否生成模板
+                </div>
+
+                <div class="am-u-sm-3 input-field">
+                  <input type="text" class="am-input-lg" placeholder="模板名称">
+                </div>
+
               </div>
 
-              <div class="am-form-group">
-                <label class="am-u-sm-3 am-form-label" for="arrange_way">排课方式</label>
-                <select class="am-u-sm-3 am-u-end input-field" id="arrange_way">
-                  <option value="arrangeByWeek">按周排</option>
-                  <option value="arrangeByDay">按天排</option>
-                </select>
-                <span class="am-form-caret"></span>
+              <div class="am-form-group ">
+
+                <div class="am-u-sm-1 input-field">
+                  周一
+                </div>
+
+                <div class="am-u-sm-4 input-field">
+                  <date-time-picker format="HH:mm">
+                    <input data-am-datetimepicker value="" class="am-form-field">
+                  </date-time-picker>
+                </div>
+                <div class="am-u-sm-4 input-field">
+                  <div class="am-g am-g-collapse">
+                    <div class="am-u-sm-2">
+                      <select >
+                        <option v-for="n in 24" :value="n">{{n}}</option>
+                      </select>
+                    </div>
+                    <div class="am-u-sm-1">
+                      :
+                    </div>
+                    <div class="am-u-sm-2">
+                      <select >
+                        <option v-for="n in 60" :value="n">{{n}}</option>
+                      </select>
+                    </div>
+                    <div class="am-u-sm-2">
+                      -
+                    </div>
+                    <div class="am-u-sm-2">
+                      <select >
+                        <option v-for="n in 24" :value="n">{{n}}</option>
+                      </select>
+                    </div>
+                    <div class="am-u-sm-1">
+                      :
+                    </div>
+                    <div class="am-u-sm-2">
+                      <select >
+                        <option v-for="n in 60" :value="n">{{n}}</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="am-u-sm-1 input-field am-u-end">
+                  1
+                </div>
+
+
               </div>
+
             </form>
           </div>
         </div>
