@@ -63,12 +63,18 @@ import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
 import FeeList from './components/settlement/FeeList'
 import FeeForm from './components/settlement/FeeForm'
 
-import CategoryList from './components/tradingService/CategoryList'
-import CategoryForm from './components/tradingService/CategoryForm'
+import ServiceManagerList from './components/tradingService/ServiceManagerList'
+import ServiceManagerForm from './components/tradingService/ServiceManagerForm'
+import ServiceManagerEditForm from './components/tradingService/ServiceManagerEditForm'
 import OrderList from './components/tradingService/OrderList'
 import OrderForm from './components/tradingService/OrderForm'
 import ProductTradingList from './components/tradingService/ProductTradingList'
 import ProductTradingForm from './components/tradingService/ProductTradingForm'
+import ProductTradingEditForm from './components/tradingService/ProductTradingEditForm'
+import CampusManageForm from './components/tradingService/CampusManageForm'
+import CampusManageList from './components/tradingService/CampusManageList'
+import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
+import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
 
 
 Vue.use(VueRouter)
@@ -148,15 +154,22 @@ const router = new VueRouter({
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
 
-      {path: 'tradingService/category/list' , component: CategoryList },
-      {path: 'tradingService/category/add' , component: CategoryForm},
-      {path: 'tradingService/category/edit/:categoryId' , component: CategoryForm },
+      {path: 'tradingService/service/list' , component: ServiceManagerList },
+      {path: 'tradingService/service/add' , component: ServiceManagerForm},
+      {path: 'tradingService/service/edit/:productId' , component: ServiceManagerEditForm },
       {path: 'tradingService/order/list' , component: OrderList },
       {path: 'tradingService/order/add' , component: OrderForm},
       {path: 'tradingService/order/edit/:orderId' , component: OrderForm },
       {path: 'tradingService/product/list' , component: ProductTradingList },
       {path: 'tradingService/product/add' , component: ProductTradingForm},
-      {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
+      {path: 'tradingService/product/edit/:productId' , component: ProductTradingEditForm },
+      {path: 'tradingService/rent/list', component:CampusManageList},
+      {path: 'tradingService/campusManage/add', component:CampusManageForm},
+      {path: 'tradingService/campusManage/edit/:productId', component:CampusManageForm},
+      {path: 'tradingService/rent/list', component:ClassRoomProtectList},
+      {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
+      {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
+
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

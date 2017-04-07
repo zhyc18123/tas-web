@@ -2,6 +2,9 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-body am-fr">
+        <div class="widget-function am-fr">
+          <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+        </div>
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
           <fieldset>
 
@@ -44,14 +47,14 @@
             </div>
 
             <!--<div class="am-form-group">-->
-              <!--<label class="am-u-sm-3 am-form-label">-->
-                <!--头像-->
-              <!--</label>-->
-              <!--<div class="am-u-sm-9 am-form-file input-field">-->
-                <!--<file-upload extensions="jpg,png" @uploaded="uploadAvatar">-->
-                  <!--<img class="am-margin-top" :src="formData.avatarUrl">-->
-                <!--</file-upload>-->
-              <!--</div>-->
+            <!--<label class="am-u-sm-3 am-form-label">-->
+            <!--头像-->
+            <!--</label>-->
+            <!--<div class="am-u-sm-9 am-form-file input-field">-->
+            <!--<file-upload extensions="jpg,png" @uploaded="uploadAvatar">-->
+            <!--<img class="am-margin-top" :src="formData.avatarUrl">-->
+            <!--</file-upload>-->
+            <!--</div>-->
             <!--</div>-->
 
             <div class="am-form-group">
@@ -68,9 +71,6 @@
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <a href="javascript:void(0)" @click="saveServiceProduct">
                   <button class="am-btn am-btn-primary">保存</button>
-                </a>
-                <a href="javascript:void(0)" data-am-modal-close id="cancel">
-                  <button class="am-btn am-btn-primary">取消</button>
                 </a>
               </div>
             </div>
@@ -98,6 +98,19 @@
       }
     },
     created: function () {
+      var productId = this.$params('productId');
+      if (productId) {
+        var _this = this
+        io.post(io.apiAdminServiceProductDetail, {productId: productId},
+          function (ret) {
+            if (ret.success) {
+              _this.formData = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      }
       this.loadCategoryData();
     },
     methods: {
@@ -108,6 +121,7 @@
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
+              _this.$router.push('/main/tradingService/product/list');
             } else {
               _this.$alert(ret.desc)
             }
@@ -116,7 +130,6 @@
           function () {
             _this.$alert('请求服务器失败')
           })
-        _this.$emit('addSuccess')
       },
       loadCategoryData: function () {
         var _this = this

@@ -108,6 +108,7 @@ export default {
 
         var menus  = toMenus(ret.data.resourceList)
         //_this.$root.$emit('changeMenus', menus )
+        console.log(JSON.stringify(toMenus(ret.data.resourceList)))
         _this.$root.config = {
         menus : toMenus(ret.data.resourceList),
         permission:toPermission(ret.data.resourceList),
