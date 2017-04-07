@@ -388,10 +388,10 @@
         var _this = this;
         _this.classId = classId;
         _this.isArrangeTeacher = isArrangeTeacher;
-        if (isArrangeTime!='1'){
+  /*      if (isArrangeTime!='1'){
             _this.$alert("请先排时间");
             return;
-        }
+        }*/
         this.$root.teacherName = [];
         _this.$refs.teacher_arrangement.show({
           width : 1000,
