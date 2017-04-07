@@ -7,7 +7,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品分类
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>服务分类
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required v-model="formData.categoryId" :options="category">
@@ -18,16 +18,16 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品名称
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>标题
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品名称" required v-model="formData.productName">
+                <input type="text" class="am-form-field" placeholder="请输入商品名称" required v-model="formData.title">
               </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品价格
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>单价
               </label>
               <div class="am-u-sm-9 input-field">
                 <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">元
@@ -43,37 +43,37 @@
               </div>
             </div>
 
-            <!--<div class="am-form-group">-->
-              <!--<label class="am-u-sm-3 am-form-label">-->
-                <!--头像-->
-              <!--</label>-->
-              <!--<div class="am-u-sm-9 am-form-file input-field">-->
-                <!--<file-upload extensions="jpg,png" @uploaded="uploadAvatar">-->
-                  <!--<img class="am-margin-top" :src="formData.avatarUrl">-->
-                <!--</file-upload>-->
-              <!--</div>-->
-            <!--</div>-->
+            <!--<div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                上传图片
+              </label>
+              <div class="am-u-sm-9 am-form-file input-field">
+                <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
+                  <img class="am-margin-top" :src="formData.avatarUrl">
+                </file-upload>
+              </div>
+            </div>-->
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                商品描述
+                服务描述
               </label>
               <div class="am-u-sm-9 input-field">
                 <editor v-model="formData.content"></editor>
               </div>
             </div>
 
-
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <a href="javascript:void(0)" @click="saveServiceProduct">
                   <button class="am-btn am-btn-primary">保存</button>
                 </a>
-                <a href="javascript:void(0)" data-am-modal-close id="cancel">
+                <a href="javascript:void(0)" data-am-modal-close>
                   <button class="am-btn am-btn-primary">取消</button>
                 </a>
               </div>
             </div>
+
           </fieldset>
         </form>
       </div>
@@ -88,17 +88,17 @@
     data(){
       return {
         formData: {
-          productName: '',
+          title: '',
           content: '',
           price: '',
           unit: '',
-          categoryId: '',
+          categoryId:'',
         },
-        category: [],
+        category:[],
       }
     },
     created: function () {
-      this.loadCategoryData();
+      this.loadCategoryData()
     },
     methods: {
       saveServiceProduct:function () {
@@ -108,6 +108,7 @@
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
+              _this.$root.$emit('addSuccess:new')
             } else {
               _this.$alert(ret.desc)
             }
