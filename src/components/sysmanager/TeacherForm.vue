@@ -132,6 +132,24 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>老师标签
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入老师标签,多个标签空格分开"   required v-model="formData.tags"/>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>老师签名
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入签名"  maxlength="100" required v-model="formData.signature"/>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 介绍
               </label>
               <div class="am-u-sm-9 input-field">
