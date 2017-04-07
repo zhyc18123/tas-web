@@ -105,9 +105,9 @@
               <td>{{item.quota}}</td>
               <td>{{item.teacherNames}}</td>
               <td>{{item.studyAmount}}/{{item.lectureAmount}}</td>
-              <td></td>
+              <td>{{item.busTeamName}}</td>
               <td>{{item.startCourseTime | formatDate }}</td>
-              <td></td>
+              <td>{{item.studyingTime}}</td>
               <td>
                 <div class="tpl-table-black-operation">
                   <a href="javascript:;" @click="confirm(item)" v-if="item.allow">
@@ -119,9 +119,6 @@
             </tr>
             </tbody>
           </table>
-          <!--<window ref="sure" title="转班第三步">
-            <confirm-class  @sure="$refs.sure.close()"></confirm-class>
-          </window>-->
         </div>
       </div>
 
@@ -213,7 +210,6 @@
       $(window).smoothScroll()
     },
     created: function () {
-      //this.loadTableData()
       this.loadProductData()
       this.loadCourseData()
     },
@@ -292,8 +288,7 @@
       },
       back: function () {
         var regId = this.args.regId
-        var formData = this.args.formData
-
+//        var formData = this.args.formData
         this.$emit('goStep', 'step-one', {regId2: regId})
       }
     }

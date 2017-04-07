@@ -105,11 +105,11 @@
               <td>{{item.periodName}}</td>
               <td>{{item.gradeName}}</td>
               <td>{{item.studyingFee}}</td>
-              <td>0/{{item.lectureAmount}}</td>
+              <td>{{item.courseProgress}}/{{item.lectureAmount}}</td>
               <td>{{item.teacherNames}}</td>
               <td>{{item.roomName}}</td>
               <td>{{item.startCourseTime | formatDate }}</td>
-              <td>{{0}}-{{0}}</td>
+              <td>{{item.studyingTime}}</td>
               <td>{{item.campusName}}</td>
               <td>
                 <div class="tpl-table-black-operation">

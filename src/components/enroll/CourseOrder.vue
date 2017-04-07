@@ -148,6 +148,8 @@
           if (ret.success) {
             //关闭当前弹窗页面
             _this.$alert("缴费成功")
+            _this.$root.$emit('order:new')
+            _this.$root.$emit('class:new')
             _this.$emit('paySuccess')
           } else {
             _this.$alert("缴费失败")
@@ -155,6 +157,8 @@
 
         })
       }
+
+
     }
   }
 
