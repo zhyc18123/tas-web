@@ -71,7 +71,7 @@
                       <i class="am-icon-edit"></i> 编辑
                     </a>
                     <a href="javascript:;" @click="del(item.productId)">
-                      <i class="am-icon-remove"></i>删除<span>{{item.productId}}</span>
+                      <i class="am-icon-remove"></i>删除
                     </a>
                   </div>
                 </td>
