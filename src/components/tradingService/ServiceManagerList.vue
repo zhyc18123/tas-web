@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">商品列表</div>
+          <div class="widget-title  am-cf">服务列表</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -13,7 +13,7 @@
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2  required v-model="query.categoryId" :options="category">
-                    <option value="">商品分类</option>
+                    <option value="">服务分类</option>
                   </select2>
                 </div>
               </div>
@@ -21,7 +21,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="productName" v-model="query.productName" placeholder="请输入商品名称"/>
+                <input type="text" class="am-input-lg" name="productName" v-model="query.title" placeholder="请输入服务名称"/>
               </div>
             </div>
 
@@ -46,8 +46,8 @@
               <thead>
               <tr>
                 <th>序号</th>
-                <th>商品名称</th>
-                <th>商品分类</th>
+                <th>标题</th>
+                <th>服务类型</th>
                 <th>单价</th>
                 <th>单位</th>
                 <th>更新人</th>
@@ -59,7 +59,7 @@
 
               <tr v-for="(item,index) in tableData" :key="item.productId">
                 <td>{{index+1}}</td>
-                <td>{{item.productName}}</td>
+                <td>{{item.title}}</td>
                 <td>{{item.categoryName}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.unit}}</td>
@@ -67,7 +67,7 @@
                 <td>{{item.updateTime | formatDate}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/tradingService/product/edit/'+item.productId)" v-if="hasPermission('edit')">
+                    <a href="javascript:;" @click="$router.push('/main/tradingService/service/edit/'+item.productId)" v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
                     </a>
                     <a href="javascript:;" @click="deleteServiceProduct(item)" v-if="hasPermission('delete')">
@@ -104,7 +104,7 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ProductTradingForm from '../tradingService/ProductTradingForm'
+  import ServiceManagerForm from '../tradingService/ServiceManagerForm'
 
   export default{
     data:function(){
@@ -123,7 +123,7 @@
     },
     components: {
       Pagination,
-      'add-ServiceProduct':ProductTradingForm
+      'add-ServiceProduct':ServiceManagerForm
     },
     mounted:function(){
       $(window).smoothScroll()
@@ -131,6 +131,12 @@
     created:function(){
       this.loadTableData(this.pageNo);
       this.loadCategoryData();
+      var _this = this
+      this.$root.$on('addSuccess:new',function () {
+        _this.pageNo = 1
+        _this.loadTableData(_this.pageNo)
+      })
+
     },
     methods:{
       search:function(){
@@ -172,6 +178,7 @@
         });
       },
       deleteServiceProduct:function (item) {
+        alert(item.productId);
         const _this = this ;
         _this.$confirm('你确定要删除？' ,
           function(){

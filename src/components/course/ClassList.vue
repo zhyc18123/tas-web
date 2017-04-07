@@ -192,8 +192,8 @@
                 <td>{{item.className}}</td>
                 <td>{{item.campusName}}</td>
                 <td>{{item.startCourseTime | formatDate}}</td>
-                <td></td>
-                <td>0/{{item.lectureAmount}}</td>
+                <td>{{item.studyingTime}}</td>
+                <td>{{item.courseProgress}}/{{item.lectureAmount}}</td>
                 <td>{{item.regAmount}}</td>
                 <td>{{item.quota}}</td>
                 <td>{{item.teacherNames}}</td>
