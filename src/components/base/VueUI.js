@@ -12,9 +12,17 @@ import FileUpload from './FileUpload'
 import Editor from './Editor'
 import Window from './Window'
 import Select2 from './Select2'
-import Dropdown from './Dropdown'
 import DateTimePicker from './DateTimePicker'
 import TimePicker from './TimePicker'
+
+import {
+  Table ,
+  TableColumn ,
+  Button,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem
+} from 'element-ui'
 
 var VueUI = function(){
 
@@ -80,9 +88,14 @@ VueUI.install = function (Vue){
   Vue.component('editor',Editor)
   Vue.component('window',Window)
   Vue.component('select2',Select2)
-  Vue.component('dropdown',Dropdown)
   Vue.component('date-time-picker',DateTimePicker)
   Vue.component('time-picker',TimePicker)
+  Vue.component(Table.name,Table)
+  Vue.component(TableColumn.name,TableColumn)
+  Vue.component(Button.name,Button)
+  Vue.component(Dropdown.name,Dropdown)
+  Vue.component(DropdownMenu.name,DropdownMenu)
+  Vue.component(DropdownItem.name,DropdownItem)
 
   Vue.filter('formatDate' ,util.formatDate )
 
