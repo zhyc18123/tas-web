@@ -38,7 +38,7 @@
                   <i class="am-icon-edit"></i> 审批
                 </a>
                 <a href="javascript:;" @click="del()">
-                  <i class="am-icon-edit"></i> 删除
+                  <i class="am-icon-remove"></i> 删除
                 </a>
               </div>
             </td>
@@ -64,7 +64,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import ProductEditForm from './ProductRefundEditForm'
+  import ProductRefundEditForm from './ProductRefundEditForm'
   export default{
     data: function () {
       return {
@@ -74,7 +74,7 @@
     },
     components: {
       Pagination,
-      'change-product-refund': ProductEditForm
+      'change-product-refund': ProductRefundEditForm
     },
     mounted: function () {
       $(window).smoothScroll()
