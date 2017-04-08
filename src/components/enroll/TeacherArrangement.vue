@@ -105,9 +105,7 @@
         total:0,
         pageSize:5,
         pageNo:1,
-        query:{},
-        classId:'',
-        isArrangeTeacher:'',
+        query:{}
       }
     },
     props: ['classId','isArrangeTeacher'],
@@ -182,8 +180,8 @@
       nextStep:function(){
         //弹窗
         var _this = this;
-        _this.classId = classId;
-        _this.isArrangeTeacher = isArrangeTeacher;
+        _this.classId = this.classId;
+        _this.isArrangeTeacher = this.isArrangeTeacher;
         _this.$emit("arrangementSuccess");
         _this.$refs.teacher_arrangement_nextStep.show({
           width : 1000,

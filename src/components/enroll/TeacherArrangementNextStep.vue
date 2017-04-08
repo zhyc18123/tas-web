@@ -35,17 +35,17 @@
                 </thead>
                 <tbody>
 
-                <tr v-for="">
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                <tr v-for="item in tableData" :key="item.classTimeId">
+                  <td>{{item.lecturnNo}}</td>
+                  <td>{{item.startTime | formatDate }}</td>
+                  <td>{{item.startTime | formatTime }}</td>
                   <td>
                     <select2>
-                      <option v-for="item in $root.teacherName">{{item.teacherName}}</option>
+                      <option v-for="teacherNameItem in $root.teacherName">{{teacherNameItem.teacherName}}</option>
                     </select2>
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td>{{}}</td>
+                  <td>{{}}</td>
                 </tr>
 
                 </tbody>
@@ -95,6 +95,7 @@
     },
     watch: {
       classId: function () {
+          console.log("test::"+this.classId+"::"+this.isArrangeTeacher)
         this.loadTableData(this.classId);
       }
     },
@@ -102,15 +103,21 @@
       this.$root.teacherName = [];
     },
     methods: {
-      loadTableData: function (classId) {
-        io.post(io.apiAdminGetClassMessage, {classId: classId},
-          function (ret) {
-            if (ret.success) {
-
-            } else {
-              _this.$alert(ret.desc)
-            }
-          })
+      loadTableData:function(pageNo){
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        io.post(io.apiAdminClassTimeList,{
+          classId:_this.classId,
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize
+        },function(ret){
+          if(ret.success){
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
       },
       delTeacher: function (index) {
         this.$root.teacherName.splice(index, 1);
