@@ -4,13 +4,13 @@ import Storage from '../storage'
 
 import Vue from 'vue'
 
-jQuery.cachedScript = function( url, options ) {
+$.cachedScript = function( url, options ) {
   options = $.extend( options || {}, {
     dataType: "script",
     cache: true,
     url: url
   });
-  return jQuery.ajax( options );
+  return $.ajax( options );
 };
 
 const io = {
@@ -99,6 +99,7 @@ const io = {
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
+    this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
