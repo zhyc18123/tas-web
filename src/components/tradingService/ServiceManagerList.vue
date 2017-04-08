@@ -21,7 +21,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="productName" v-model="query.title" placeholder="请输入服务名称"/>
+                <input type="text" class="am-input-lg" name="title" v-model="query.title" placeholder="请输入服务名称"/>
               </div>
             </div>
 
@@ -115,7 +115,7 @@
         pageNo:1,
         query:{
           categoryId:'',
-          productName:'',
+          title:'',
         },
         category:[],
         searchConfig:{}

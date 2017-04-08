@@ -72,11 +72,12 @@
                 <a href="javascript:void(0)" @click="saveServiceProduct">
                   <button class="am-btn am-btn-primary">保存</button>
                 </a>
-                <a href="javascript:void(0)" data-am-modal-close id="cancel">
+                <a href="javascript:void(0)" data-am-modal-close>
                   <button class="am-btn am-btn-primary">取消</button>
                 </a>
               </div>
             </div>
+
           </fieldset>
         </form>
       </div>
@@ -107,14 +108,14 @@
       saveServiceProduct:function () {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveServiceProduct, data,
+        io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
+              _this.$root.$emit('addSuccess:new')
             } else {
               _this.$alert(ret.desc)
             }
-
           },
           function () {
             _this.$alert('请求服务器失败')

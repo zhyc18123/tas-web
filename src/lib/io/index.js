@@ -130,16 +130,17 @@ const io = {
 
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
-    this.apiAdminSaveOrder = conf.baseApiPath + '/api/admin/trading/saveOrder'
-    this.apiAdminOrderDetail = conf.baseApiPath + '/api/admin/trading/getOrder'
-    this.apiAdminOrderList = conf.baseApiPath + '/api/admin/trading/showOrder'
-    this.apiAdminDeleteOrder = conf.baseApiPath + '/api/admin/trading/deleteOrder'
+    this.apiAdminSaveCategory = conf.baseApiPath + '/api/admin/trading/saveCategory'
+    this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
+    this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
+    this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
 
     this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
     this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
+    this.apiAdminSaveServiceManage = conf.baseApiPath + '/api/admin/trading/saveServiceManage'
 
   },
   getHeaders : function(){
