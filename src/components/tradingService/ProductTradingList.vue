@@ -178,7 +178,7 @@
       },
       del:function (productId) {
         var _this = this ;
-          _this.productId = productId
+        _this.productId = productId
         _this.$confirm('你确定要删除？' ,
           function(){
             io.post(io.apiAdminDeleteServiceProduct,{productId:_this.productId},function(ret){

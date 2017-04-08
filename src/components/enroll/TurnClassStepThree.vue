@@ -44,7 +44,7 @@
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <a href="javascript:void(0)" data-am-modal-close>
-        <button type="submit" class="am-btn am-btn-primary" @click="confirm(tableData)">确定</button>
+        <button type="button" class="am-btn am-btn-primary" @click="confirm(tableData)">确定</button>
       </a>
     </div>
 

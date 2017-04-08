@@ -30,7 +30,7 @@ module.exports = merge(baseWebpackConfig, {
       filename: 'index.html',
       template: 'index.html',
       inject: true,
-      chunks : ['app']
+      chunks : ['amazeui','app']
     }),
     new HtmlWebpackPlugin({
       filename: 'm/index.html',

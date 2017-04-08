@@ -178,11 +178,10 @@
               <tr v-for="item in tableData" :key="item.classId">
                 <td>
 
-                  <a href="javascript:;" @click="arrangeTime(item.classId,item.isArrangeTime)">排时间</a>
-                  <a href="javascript:;" @click="arrangeRoom(item.classId,item.isArrangeRoom)">排教室</a>
-                  <a href="javascript:;" @click="arrangeTeacher(item.classId,item.isArrangeTeacher,item.isArrangeTime)">排老师</a>
-
                   <div class="tpl-table-black-operation">
+                    <a href="javascript:;" @click="arrangeTime(item.classId,item.lectureAmount)">排时间</a>
+                    <a href="javascript:;" @click="arrangeRoom(item.classId,item.isArrangeRoom)">排教室</a>
+                    <a href="javascript:;" @click="arrangeTeacher(item.classId,item.isArrangeTeacher,item.isArrangeTime)">排老师</a>
                     <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
                        v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
@@ -225,11 +224,11 @@
     </div>
 
     <window ref="time_arrangement" title="排时间">
-      <time-arragngement :classId="classId" :isArrangeTime="isArrangeTime" @arrangementTime="$refs.time_arrangement.close()"></time-arragngement>
+      <time-arragngement :classId="classId" :lectureAmount="lectureAmount" @arrangementSuccess="$refs.time_arrangement.close()"></time-arragngement>
     </window>
 
     <window ref="room_arrangement" title="排课室">
-      <room-arrangement :classId="classId" :isArrangeRoom="isArrangeRoom" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
+      <room-arrangement :classId="classId" :isArrangeRoom="lectureAmount" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
     </window>
 
     <window ref="first" title="排老师" @close="classId=''">
@@ -261,6 +260,7 @@
         courses:[],
         courseClassId:'',
         classId:'',
+        lectureAmount :'',
         isArrangeRoom:'',
         isArrangeTeacher:'',
         isArrangeTime:'',
@@ -363,14 +363,14 @@
         })
       },
       //排课
-      arrangeTime:function (classId,isArrangeTime) {
+      arrangeTime:function (classId,lectureAmount) {
         //弹窗
         var _this = this;
         _this.classId = classId;
-        _this.isArrangeTime = isArrangeTime;
+        _this.lectureAmount = lectureAmount;
         _this.$refs.time_arrangement.show({
           width:1000,
-          height:500
+          height:700
         })
       },
       arrangeRoom:function (classId,isArrangeRoom) {
