@@ -131,7 +131,7 @@
       </div>
 
       <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-        <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
+        <button type="button" class="am-btn am-btn-primary" @click="back">上一步</button>
       </div>
 
     </div>

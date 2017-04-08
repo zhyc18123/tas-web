@@ -231,8 +231,8 @@
       <room-arrangement :classId="classId" :isArrangeRoom="lectureAmount" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
     </window>
 
-    <window ref="teacher_arrangement" title="排老师">
-      <teacher-arrangement :classId="classId" :isArrangeTeacher="isArrangeTeacher" @arrangementSuccess="$refs.teacher_arrangement.close()"></teacher-arrangement>
+    <window ref="first" title="排老师" @close="classId=''">
+      <teacher-arrangement :classId="classId" :isArrangeTeacher="isArrangeTeacher" @first="$refs.first.close()"></teacher-arrangement>
     </window>
   </div>
 </template>
@@ -393,7 +393,7 @@
             return;
         }*/
         this.$root.teacherName = [];
-        _this.$refs.teacher_arrangement.show({
+        _this.$refs.first.show({
           width : 1000,
           height: 500
         });

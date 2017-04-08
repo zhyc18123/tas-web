@@ -80,6 +80,8 @@ import CampusManageForm from './components/tradingService/CampusManageForm'
 import CampusManageList from './components/tradingService/CampusManageList'
 import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
 import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
+import BuyServiceList from './components/buyer/BuyServiceList'
+import BuyCommodityList from './components/buyer/BuyCommodityList'
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -175,6 +177,9 @@ const router = new VueRouter({
       {path: 'tradingService/rent/list', component:ClassRoomProtectList},
       {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
       {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
+
+      {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
+      {path: 'buyer/buyService/list', component:BuyServiceList},
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
