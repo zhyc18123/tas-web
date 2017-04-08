@@ -29,8 +29,11 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品价格
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">元
+              <div class="am-u-sm-3 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">
+              </div>
+              <div class="am-u-sm-6 input-field am-lg-text-left">
+                元
               </div>
             </div>
 

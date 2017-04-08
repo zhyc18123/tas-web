@@ -70,7 +70,7 @@
                     <a href="javascript:;" @click="$router.push('/main/tradingService/product/edit/'+item.productId)" v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
                     </a>
-                    <a href="javascript:;" @click="deleteServiceProduct(item)" v-if="hasPermission('delete')">
+                    <a href="javascript:;" @click="del(item.productId)">
                       <i class="am-icon-remove"></i>删除
                     </a>
                   </div>
@@ -131,6 +131,11 @@
     created:function(){
       this.loadTableData(this.pageNo);
       this.loadCategoryData();
+      var _this = this
+      this.$root.$on('product:new',function () {
+        _this.pageNo = 1
+        _this.loadTableData(_this.pageNo)
+      })
     },
     methods:{
       search:function(){
@@ -171,14 +176,15 @@
           height: 600
         });
       },
-      deleteServiceProduct:function (item) {
-        const _this = this ;
+      del:function (productId) {
+        var _this = this ;
+          _this.productId = productId
         _this.$confirm('你确定要删除？' ,
           function(){
-            io.post(io.apiAdminDeleteServiceProduct,{productId:item.productId},function(ret){
+            io.post(io.apiAdminDeleteServiceProduct,{productId:_this.productId},function(ret){
               if(ret.success){
                 _this.$toast('OK')
-                _this.loadTableData()
+                _this.$root.$emit('product:new')
               }else{
                 _this.$alert(ret.desc)
               }

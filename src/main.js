@@ -163,7 +163,6 @@ const router = new VueRouter({
       {path: 'tradingService/order/edit/:orderId' , component: OrderForm },
       {path: 'tradingService/product/list' , component: ProductTradingList },
       {path: 'tradingService/product/add' , component: ProductTradingForm},
-      {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
       {path: 'tradingService/product/edit/:productId' , component: ProductTradingEditForm },
