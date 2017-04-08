@@ -122,7 +122,7 @@
       saveServiceProduct:function () {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveServiceProduct, data,
+        io.post(io.apiAdminSaveServiceManage, $.extend({},data),
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
@@ -130,7 +130,6 @@
             } else {
               _this.$alert(ret.desc)
             }
-
           },
           function () {
             _this.$alert('请求服务器失败')

@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">订单信息</div>
+        <div class="widget-title am-fl">分类信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -12,7 +12,7 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>订单名称
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类名称
               </label>
               <div class="am-u-sm-9 input-field">
                 <input type="text" class="am-form-field" placeholder="请输入分类名称" v-model="formData.name" required>
@@ -45,10 +45,10 @@
     },
 
     created: function () {
-      var orderId = this.$params('orderId');
-      if (orderId) {
+      var categoryId = this.$params('categoryId');
+      if (categoryId) {
         var _this = this
-        io.post(io.apiAdminOrderDetail, {orderId: orderId},
+        io.post(io.apiAdminCategoryDetail, {categoryId: categoryId},
           function (ret) {
             if (ret.success) {
               _this.formData = ret.data
@@ -103,12 +103,12 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveOrder, data,
+        io.post(io.apiAdminSaveCategory, data,
           function (ret) {
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/tradingService/order/list')
+              _this.$router.push('/main/tradingService/category/list')
             } else {
               _this.$alert(ret.desc)
             }

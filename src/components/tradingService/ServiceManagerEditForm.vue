@@ -68,9 +68,7 @@
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-                <a href="javascript:void(0)" @click="saveServiceProduct">
-                  <button class="am-btn am-btn-primary">保存</button>
-                </a>
+                  <button type="submit" class="am-btn am-btn-primary">保存</button>
               </div>
             </div>
 
@@ -113,21 +111,43 @@
       }
       this.loadCategoryData()
     },
+    mounted:function(){
+      var _this = this ;
+      $('#' + this.id ).validator({
+        submit:function(e){
+          e.preventDefault();
+          var $submitBtn = $('button[type=submit]',e.target);
+          $submitBtn.attr("disabled" ,"disabled" )
+          _this.$showLoading()
+          var formValidity = this.isFormValid();
+          var complete = function(){
+            _this.$hiddenLoading()
+            $submitBtn.removeAttr("disabled" ,"disabled" )
+          }
+          if(formValidity){
+            _this.save(complete);
+          }else{
+            complete.call()
+          }
+        }
+      });
+    },
     methods: {
-      saveServiceProduct:function () {
+      save:function (complete) {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveServiceProduct, data,
+        io.post(io.apiAdminSaveServiceManage, $.extend({},data),
           function (ret) {
+            complete.call();
             if (ret.success) {
               _this.$toast('OK')
               _this.$router.push('/main/tradingService/service/list')
             } else {
               _this.$alert(ret.desc)
             }
-
           },
           function () {
+            complete.call();
             _this.$alert('请求服务器失败')
           })
       },
