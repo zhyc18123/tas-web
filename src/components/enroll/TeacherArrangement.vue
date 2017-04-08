@@ -77,12 +77,12 @@
 
 
           <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()" v-show="isShow()">下一步</button>
+            <button type="submit" class="am-btn am-btn-primary" @click="nextStep()">下一步</button>
             <button type="submit" class="am-btn am-btn-primary" @click="cancel">取消</button>
           </div>
 
           <window ref="teacher_arrangement_nextStep" title="排老师">
-            <teacher-arrangement-nextStep :classId="classId" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
+            <teacher-arrangement-nextStep :classId="classId" :isArrangeTeacher="isArrangeTeacher" @arrangementSuccessNextStep="$refs.teacher_arrangement_nextStep.close()"></teacher-arrangement-nextStep>
           </window>
 
         </div>
@@ -106,6 +106,8 @@
         pageSize:5,
         pageNo:1,
         query:{},
+        classId:'',
+        isArrangeTeacher:'',
       }
     },
     props: ['classId','isArrangeTeacher'],
@@ -180,7 +182,9 @@
       nextStep:function(){
         //弹窗
         var _this = this;
-        _this.$emit("arrangementSuccess"),
+        _this.classId = classId;
+        _this.isArrangeTeacher = isArrangeTeacher;
+        _this.$emit("arrangementSuccess");
         _this.$refs.teacher_arrangement_nextStep.show({
           width : 1000,
           height: 500

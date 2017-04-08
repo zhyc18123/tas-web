@@ -60,7 +60,7 @@
             </div>
 
             <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-              <button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button>
+              <button type="submit" class="am-btn am-btn-primary" @click="confirm" v-show="isShow()">确定</button>
               <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
             </div>
           </div>
@@ -84,7 +84,7 @@
         teacherIds: []
       }
     },
-    props: ["classId"],
+    props: ["classId","isArrangeTeacher"],
     components: {
       Pagination,
       "teacher-arrangement": TeacherArrangement,
@@ -137,6 +137,9 @@
         var formData = this.args.formData
 
         this.$emit('goStep', 'step-one', {regId2: regId})
+      },
+      isShow:function() {
+        return this.isArrangeTeacher!='1';
       }
     }
   }
