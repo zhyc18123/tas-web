@@ -35,17 +35,17 @@
                 </thead>
                 <tbody>
 
-                <tr v-for="">
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                <tr v-for="item in tableData" :key="item.classTimeId">
+                  <td>{{item.lecturnNo}}</td>
+                  <td>{{item.startTime | formatDate }}</td>
+                  <td>{{item.startTime | formatTime }}</td>
                   <td>
                     <select2>
-                      <option v-for="item in $root.teacherName">{{item.teacherName}}</option>
+                      <option v-for="teacherNameItem in $root.teacherName">{{teacherNameItem.teacherName}}</option>
                     </select2>
                   </td>
-                  <td></td>
-                  <td></td>
+                  <td>{{}}</td>
+                  <td>{{}}</td>
                 </tr>
 
                 </tbody>
@@ -60,7 +60,7 @@
             </div>
 
             <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-              <button type="submit" class="am-btn am-btn-primary" @click="confirm">确定</button>
+              <button type="submit" class="am-btn am-btn-primary" @click="confirm" v-show="isShow()">确定</button>
               <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
             </div>
           </div>
@@ -84,7 +84,7 @@
         teacherIds: []
       }
     },
-    props: ["classId"],
+    props: ["classId","isArrangeTeacher"],
     components: {
       Pagination,
       "teacher-arrangement": TeacherArrangement,
@@ -95,6 +95,7 @@
     },
     watch: {
       classId: function () {
+          console.log("test::"+this.classId+"::"+this.isArrangeTeacher)
         this.loadTableData(this.classId);
       }
     },
@@ -102,15 +103,21 @@
       this.$root.teacherName = [];
     },
     methods: {
-      loadTableData: function (classId) {
-        io.post(io.apiAdminGetClassMessage, {classId: classId},
-          function (ret) {
-            if (ret.success) {
-
-            } else {
-              _this.$alert(ret.desc)
-            }
-          })
+      loadTableData:function(pageNo){
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        io.post(io.apiAdminClassTimeList,{
+          classId:_this.classId,
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize
+        },function(ret){
+          if(ret.success){
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
       },
       delTeacher: function (index) {
         this.$root.teacherName.splice(index, 1);
@@ -137,6 +144,9 @@
         var formData = this.args.formData
 
         this.$emit('goStep', 'step-one', {regId2: regId})
+      },
+      isShow:function() {
+        return this.isArrangeTeacher!='1';
       }
     }
   }
