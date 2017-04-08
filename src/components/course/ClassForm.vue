@@ -93,7 +93,7 @@
                 <div class="am-radio">
                   <label>
                     <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
-                           :value="item.courseTemplateId" @click="fillData2Class(item)">
+                           :value="item.courseTemplateId" @click="fillData2Class(item)" required>
                   </label>
                 </div>
               </td>

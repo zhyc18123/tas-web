@@ -10,7 +10,8 @@
               </div>
               <div class="am-u-sm-12 am-u-md-12 am-u-lg-5">
                 <span v-for="(item, index) in $root.teacherName ">
-                  <a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a>
+                  <a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i
+                    class="am-icon-remove"></i></a>
                 </span>
               </div>
               <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 ">
@@ -29,23 +30,19 @@
                   <th>上课日期</th>
                   <th>上课时间</th>
                   <th>教师</th>
-                  <th>教室</th>
-                  <th>上课状态</th>
                 </tr>
                 </thead>
                 <tbody>
 
                 <tr v-for="item in tableData" :key="item.classTimeId">
-                  <td>{{item.lecturnNo}}</td>
-                  <td>{{item.startTime | formatDate }}</td>
-                  <td>{{item.startTime | formatTime }}</td>
+                  <td>{{item.lectureNo}}</td>
+                  <td>{{item.classDate | formatDate }}</td>
+                  <td>{{item.startTime }}</td>
                   <td>
                     <select2>
                       <option v-for="teacherNameItem in $root.teacherName">{{teacherNameItem.teacherName}}</option>
                     </select2>
                   </td>
-                  <td>{{}}</td>
-                  <td>{{}}</td>
                 </tr>
 
                 </tbody>
@@ -60,8 +57,10 @@
             </div>
 
             <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-              <button type="submit" class="am-btn am-btn-primary" @click="confirm" v-show="isShow()">确定</button>
-              <button type="submit" class="am-btn am-btn-primary" @click="back">上一步</button>
+              <a href="javascript:void(0)" data-am-modal-close>
+                <button type="button" class="am-btn am-btn-primary" @click="confirm" v-show="isShow()">确定</button>
+              </a>
+              <button type="button" class="am-btn am-btn-primary" @click="back">上一步</button>
             </div>
           </div>
         </div>
@@ -72,7 +71,6 @@
 
 <script>
   import io from '../../lib/io'
-  import TeacherArrangement from '../enroll/TeacherArrangement'
   import Pagination from '../base/Pagination'
 
   export default{
@@ -81,40 +79,40 @@
         total: 0,
         pageSize: 5,
         pageNo: 1,
-        teacherIds: []
+        teacherIds: [],
+        tableData: []
       }
     },
-    props: ["classId","isArrangeTeacher"],
+    props: ["classId", "isArrangeTeacher"],
     components: {
-      Pagination,
-      "teacher-arrangement": TeacherArrangement,
+      Pagination
     },
     mounted: function () {
     },
     created: function () {
+      this.loadTableData();
     },
     watch: {
       classId: function () {
-          console.log("test::"+this.classId+"::"+this.isArrangeTeacher)
-        this.loadTableData(this.classId);
+        this.loadTableData();
       }
     },
     destroyed: function () {
       this.$root.teacherName = [];
     },
     methods: {
-      loadTableData:function(pageNo){
+      loadTableData: function (pageNo) {
         var _this = this
-        _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminClassTimeList,{
-          classId:_this.classId,
-          pageNo:_this.pageNo,
-          pageSize:_this.pageSize
-        },function(ret){
-          if(ret.success){
+        _this.pageNo = pageNo || _this.pageNo || 1;
+        io.post(io.apiAdminClassTimeList, {
+          classId: _this.classId,
+          pageNo: _this.pageNo,
+          pageSize: _this.pageSize
+        }, function (ret) {
+          if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
-          }else{
+          } else {
             _this.$alert(ret.desc)
           }
         })
@@ -123,12 +121,12 @@
         this.$root.teacherName.splice(index, 1);
       },
       confirm: function () {
-        for ( var i=0 ; i<this.$root.teacherName.length; i++){
+        for (var i = 0; i < this.$root.teacherName.length; i++) {
           this.teacherIds.push(this.$root.teacherName[i].teacherId)
         }
         io.post(io.apiAdminArrangeTeacher, {
-            classId:this.classId,
-            teacherIds:this.teacherIds
+          classId: this.classId,
+          teacherIds: this.teacherIds
         }, function (ret) {
           if (ret.success) {
             alert(success);
@@ -137,16 +135,17 @@
         })
         this.$root.teacherName = [];
         this.teacherIds = [];
-        this.$emit("arrangementSuccessNextStep");
+        this.$emit('clear')
       },
       back: function () {
-        var regId = this.args.regId
-        var formData = this.args.formData
-
-        this.$emit('goStep', 'step-one', {regId2: regId})
+        //弹窗
+        this.$emit('goStep', 'step-one', {
+            classId: this.classId,
+            isArrangeTeacher: this.isArrangeTeacher,
+          })
       },
-      isShow:function() {
-        return this.isArrangeTeacher!='1';
+      isShow: function () {
+        return this.isArrangeTeacher != '1';
       }
     }
   }
