@@ -65,6 +65,7 @@ import AccountReportDetail from './components/settlement/AccountReportDetail'
 import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
 import FeeList from './components/settlement/FeeList'
 import FeeForm from './components/settlement/FeeForm'
+import ProfitReportDetail from './components/settlement/ProfitReportDetail'
 
 import ServiceManagerList from './components/tradingService/ServiceManagerList'
 import ServiceManagerForm from './components/tradingService/ServiceManagerForm'
@@ -159,6 +160,7 @@ const router = new VueRouter({
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
+      {path: 'settlement/account/report/profit/:mainAccountId' , component: ProfitReportDetail },
 
       {path: 'tradingService/service/list' , component: ServiceManagerList },
       {path: 'tradingService/service/add' , component: ServiceManagerForm},

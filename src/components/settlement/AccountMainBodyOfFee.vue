@@ -9,28 +9,24 @@
 
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>主体</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="item in tableData" :key="item.ownerId">
-                <td>{{item.name}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/settlement/fee/list/'+item.mainAccountId)" v-if="hasPermission('feture')">
-                      <i class="am-icon-edit"></i> 录入&查看
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              <!-- more data -->
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                prop="name"
+                label="主体"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                width="120">
+                <template scope="scope">
+                  <el-button size="small" @click.native="$router.push('/main/settlement/fee/list/'+scope.row.mainAccountId)">录入&查看</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
         </div>
       </div>
@@ -41,9 +37,10 @@
 
 <script>
 import io from '../../lib/io'
+import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 
     export default{
-        data:function(){
+      components: {ElButton}, data:function(){
           return {
             tableData:[]
           }

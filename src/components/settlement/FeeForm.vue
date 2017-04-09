@@ -26,6 +26,18 @@
                 <input type="number"  class="am-form-field" placeholder="请输入金额" required min="0" step="0.01" v-model="formData.amount">
               </div>
             </div>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>收款主体
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+
+                <select2 v-model="formData.receiverMainAccountId" :options="mainAccounts" required>
+                  <option value="">请选择</option>
+                </select2>
+
+              </div>
+            </div>
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
@@ -48,8 +60,12 @@ import io from '../../lib/io'
                 expensesTypes:[],
                 formData:{
                   mainAccountId : this.$params('mainAccountId')
-                }
+                },
+                mainAccounts :[]
             }
+        },
+        created:function(){
+            this.loadMainAccountList()
         },
         mounted:function(){
           var _this = this ;
@@ -109,6 +125,18 @@ import io from '../../lib/io'
             function(){
               complete.call()
               _this.$alert('请求服务器失败')
+            })
+          },
+          loadMainAccountList:function(){
+            var _this = this
+            io.post(io.apiAdminSettlementAllMainAccountList,{},function(ret){
+              if(ret.success){
+                _this.mainAccounts = ret.data.map(function(item){
+                    return {value : item.mainAccountId , text : item.name }
+                })
+              }else{
+                _this.$alert(ret.desc)
+              }
             })
           }
         }

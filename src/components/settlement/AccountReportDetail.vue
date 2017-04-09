@@ -36,26 +36,31 @@
 
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>备注</th>
-                <th>金额</th>
-                <th>时间</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="item in tableData" :key="item.recordId">
-                <td>{{item.remark}}</td>
-                <td>{{item.amount < 0 ? '' : '+'}}{{ item.amount }}</td>
-                <td>{{item.createTime | formatTime }}</td>
-              </tr>
-
-
-              <!-- more data -->
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                prop="remark"
+                label="备注"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="金额"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.amount < 0 ? '' : '+'}}{{ scope.row.amount | formatNumber(2) }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="时间"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.createTime | formatTime }}
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
 

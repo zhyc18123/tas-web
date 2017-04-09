@@ -21,6 +21,10 @@ export default  {
   },
   endDayOfMonth:function(){
     return moment().endOf('month')
+  },
+
+  formatNumber:function(val , fixed){
+    return parseFloat(val).toFixed(fixed)
   }
 
 

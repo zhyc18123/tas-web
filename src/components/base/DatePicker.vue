@@ -19,6 +19,10 @@
              $(this).val($(this).attr('value'))
              _this.$emit('input',$(this).val())
           })
+
+          if(this.value){
+            $('[data-am-datepicker]',this.$el ).val(this.value)
+          }
         }
 
     }

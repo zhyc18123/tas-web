@@ -122,10 +122,12 @@ const io = {
     this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
+    this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
+    this.apiAdminSettlementProfitDetaile = conf.baseApiPath + '/api/admin/settlement/profitDetail'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 

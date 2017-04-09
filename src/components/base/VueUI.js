@@ -98,8 +98,8 @@ VueUI.install = function (Vue){
   Vue.component(DropdownItem.name,DropdownItem)
 
   Vue.filter('formatDate' ,util.formatDate )
-
   Vue.filter('formatTime' , util.formatTime )
+  Vue.filter('formatNumber' , util.formatNumber )
 
   Vue.mixin({
     computed:{

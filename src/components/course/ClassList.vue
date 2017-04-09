@@ -148,68 +148,112 @@
           </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <td>操作</td>
-                <th>班级名称</th>
-                <th>校区</th>
-                <th>开课日期</th>
-                <th>上课时间</th>
-                <th>已上/总讲次</th>
-                <th>已报人数</th>
-                <th>学位数</th>
-                <th>教师</th>
-                <th>班主任</th>
-                <th>教室</th>
-                <th>学费</th>
-                <th>年级</th>
-                <th>科目</th>
-                <th>期名</th>
-                <th>开班状态</th>
-
-                <!--<th>进度状态</th>
-                <th>区域组</th>
-                <th>业务组</th>-->
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="item in tableData" :key="item.classId">
-                <td>
-
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="arrangeTime(item.classId,item.lectureAmount)">排时间</a>
-                    <a href="javascript:;" @click="arrangeRoom(item.classId,item.isArrangeRoom)">排教室</a>
-                    <a href="javascript:;" @click="arrangeTeacher(item.classId,item.isArrangeTeacher,item.isArrangeTime)">排老师</a>
-                    <a href="javascript:;" @click="$router.push('/main/course/class/edit/'+item.classId)"
-                       v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 编辑
-                    </a>
-                  </div>
-                </td>
-                <td>{{item.className}}</td>
-                <td>{{item.campusName}}</td>
-                <td>{{item.startCourseTime | formatDate}}</td>
-                <td>{{item.studyingTime}}</td>
-                <td>{{item.courseProgress}}/{{item.lectureAmount}}</td>
-                <td>{{item.regAmount}}</td>
-                <td>{{item.quota}}</td>
-                <td>{{item.teacherNames}}</td>
-                <td>{{item.seniorName}}</td>
-                <td>{{item.roomName}}</td>
-                <td>{{item.studyingFee}}</td>
-                <td>{{item.gradeName}}</td>
-                <td>{{item.subjectName}}</td>
-                <td>{{item.periodName}}</td>
-                <td>{{item.openStatus == 0 ? '未开办':'已开班'}}</td>
-
-                <!--<td>{{item.progressStatus == 0 ? '未开课' : item.progressStatus == 1 ?  '已开课' : '已结课' }}</td>
-                <td>{{item.areaTeamName}}</td>
-                <td>{{item.busTeamName}}</td>-->
-              </tr>
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                fixed
+                prop="className"
+                label="班级名称"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="campusName"
+                label="校区"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="开课日期"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.startCourseTime | formatDate}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="studyingTime"
+                label="上课时间"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="已上/总讲次"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.courseProgress}}/{{scope.row.lectureAmount}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="regAmount"
+                label="已报人数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="quota"
+                label="学位数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="teacherNames"
+                label="教师"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="seniorName"
+                label="班主任"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="roomName"
+                label="教室"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="studyingFee"
+                label="学费"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="gradeName"
+                label="年级"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="subjectName"
+                label="科目"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="periodName"
+                label="期名"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="开班状态"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.openStatus == 0 ? '未开办':'已开班'}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                fixed="right"
+                label="操作"
+                width="120">
+                <template scope="scope">
+                  <el-dropdown>
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item @click.native="arrangeTime(scope.row.classId,scope.row.lectureAmount)">排时间</el-dropdown-item>
+                      <el-dropdown-item @click.native="arrangeRoom(scope.row.classId,scope.row.isArrangeRoom)">排教室</el-dropdown-item>
+                      <el-dropdown-item @click.native="arrangeTeacher(scope.row.classId,scope.row.isArrangeTeacher,scope.row.isArrangeTime)">排老师</el-dropdown-item>
+                      <el-dropdown-item @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
 
