@@ -245,7 +245,6 @@
         total:0,
         pageSize:5,
         pageNo:1,
-        id: 'form-' + (new Date().getTime()),
         query: {
           areaTeamId: '',
           busTeamId: '',

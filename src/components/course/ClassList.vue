@@ -283,9 +283,9 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import RoomArrangement from '../enroll/RoomArrangement'
-  import TeacherArrangement from '../enroll/TeacherArrangement'
-  import TimeArrangement from '../enroll/TimeArrangement'
+  import RoomArrangement from './RoomArrangement'
+  import TeacherArrangement from './TeacherArrangement'
+  import TimeArrangement from './TimeArrangement'
 
   export default{
     data: function () {

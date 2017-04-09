@@ -28,11 +28,13 @@ import AreaTeamList from './components/sysmanager/AreaTeamList'
 import AreaTeamForm from './components/sysmanager/AreaTeamForm'
 import BusTeamList from './components/sysmanager/BusTeamList'
 import BusTeamForm from './components/sysmanager/BusTeamForm'
-import TeacherList from './components/sysmanager/TeacherList'
-import TeacherForm from './components/sysmanager/TeacherForm'
 
-import CampusList from './components/sysmanager/CampusList'
-import CampusForm from './components/sysmanager/CampusForm'
+
+import TeacherList from './components/teachingresource/TeacherList'
+import TeacherForm from './components/teachingresource/TeacherForm'
+
+import CampusList from './components/teachingresource/CampusList'
+import CampusForm from './components/teachingresource/CampusForm'
 
 import RoomList from './components/sysmanager/RoomList'
 import RoomForm from './components/sysmanager/RoomForm'
@@ -40,9 +42,8 @@ import RoomForm from './components/sysmanager/RoomForm'
 
 import CourseList from './components/course/CourseList'
 import CourseForm from './components/course/CourseForm'
-import ProductList from './components/product/ProductList'
-import ProductForm from './components/product/ProductForm'
-
+import ProductList from './components/course/ProductList'
+import ProductForm from './components/course/ProductForm'
 import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
 

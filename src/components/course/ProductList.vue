@@ -42,36 +42,50 @@
           </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>操作</th>
-                <th>产品</th>
-                <th>区域</th>
-                <th>操作人</th>
-                <th>操作时间</th>
-              </tr>
-              </thead>
-              <tbody>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                prop="name"
+                label="产品"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="区域"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.areaTeamName }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="操作人"
+                min-width="100">
+                <template scope="scope">
 
-              <tr v-for="item in tableData" :key="item.productId">
-                <td>
-                <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="$router.push('/main/product/product/edit/'+item.productId)" v-if="hasPermission('edit')">
-                    <i class="am-icon-edit"></i> 编辑
-                  </a>
-                </div>
-              </td>
-                <td>{{item.name}}</td>
-                <td>{{item.areaTeamName }}</td>
-                <td></td>
-                <td>{{item.updateTime}}</td>
-              </tr>
-
-
-              <!-- more data -->
-              </tbody>
-            </table>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="updateTime"
+                label="操作时间"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                width="120">
+                <template scope="scope">
+                  <el-dropdown>
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)">编辑</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
 
@@ -83,7 +97,6 @@
         </div>
     </div>
     </div>
-  </div>
 </template>
 
 <script>
