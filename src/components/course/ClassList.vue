@@ -395,7 +395,7 @@
         this.$root.teacherName = [];
         _this.$refs.first.show({
           width : 1000,
-          height: 500
+          height: 800
         });
       },
 
