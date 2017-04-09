@@ -16,13 +16,13 @@
               </div>
               <div class="am-u-sm-12 am-u-md-12 am-u-lg-4 ">
                 <div class="am-form-group">
-                  <button type="submit" class="am-btn am-btn-primary" @click="">单讲交替</button>
-                  <button type="submit" class="am-btn am-btn-primary" @click="">双讲交替</button>
+                  <button type="submit" class="am-btn am-btn-primary" @click="singleAndDoubleLecture(1)">单讲交替</button>
+                  <button type="submit" class="am-btn am-btn-primary" @click="singleAndDoubleLecture(0)">双讲交替</button>
                 </div>
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-scrollable-horizontal">
+            <div ref="lectureTable" class="am-u-sm-12 am-scrollable-horizontal">
               <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
                 <thead>
                 <tr>
@@ -34,26 +34,18 @@
                 </thead>
                 <tbody>
 
-                <tr v-for="item in tableData" :key="item.classTimeId">
+                <tr v-for="(item,index) in tableData" :key="item.classTimeId">
                   <td>{{item.lectureNo}}</td>
                   <td>{{item.classDate | formatDate }}</td>
                   <td>{{item.startTime }}</td>
                   <td>
-                    <select2>
-                      <option v-for="teacherNameItem in $root.teacherName">{{teacherNameItem.teacherName}}</option>
-                    </select2>
+                    <select2 required v-model="item.teacherId" :options="teacherForSelect">
+                      <!--<option value="">请选择</option>--></select2>
                   </td>
                 </tr>
 
                 </tbody>
               </table>
-            </div>
-
-            <div class="am-u-lg-12 am-cf">
-              <div class="am-fr">
-                <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                            @paging="loadTableData"/>
-              </div>
             </div>
 
             <div class="am-u-sm-12 am-text-center am-margin-top-lg">
@@ -80,14 +72,19 @@
         pageSize: 5,
         pageNo: 1,
         teacherIds: [],
-        tableData: []
+        tableData: [],
       }
     },
     props: ["classId", "isArrangeTeacher"],
+    computed: {
+      teacherForSelect: function () {
+        return this.$root.teacherName.map(function (item) {
+          return {value: item.teacherId, text: item.teacherName}
+        })
+      }
+    },
     components: {
       Pagination
-    },
-    mounted: function () {
     },
     created: function () {
       this.loadTableData();
@@ -101,17 +98,13 @@
       this.$root.teacherName = [];
     },
     methods: {
-      loadTableData: function (pageNo) {
+      loadTableData: function () {
         var _this = this
-        _this.pageNo = pageNo || _this.pageNo || 1;
         io.post(io.apiAdminClassTimeList, {
           classId: _this.classId,
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
         }, function (ret) {
           if (ret.success) {
-            _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.tableData = ret.data;
           } else {
             _this.$alert(ret.desc)
           }
@@ -121,31 +114,58 @@
         this.$root.teacherName.splice(index, 1);
       },
       confirm: function () {
+        var _this = this
         for (var i = 0; i < this.$root.teacherName.length; i++) {
           this.teacherIds.push(this.$root.teacherName[i].teacherId)
         }
-        io.post(io.apiAdminArrangeTeacher, {
-          classId: this.classId,
-          teacherIds: this.teacherIds
-        }, function (ret) {
-          if (ret.success) {
-            alert(success);
-          } else {
-          }
-        })
+        for (var i = 0; i < this.tableData.length; i++) {
+          console.log(i + ":" + this.tableData[i].teacherId)
+        }
+        /*io.post(io.apiAdminArrangeTeacher, {
+         classId: this.classId,
+         teacherIds: this.teacherIds
+         }, function (ret) {
+         if (ret.success) {
+         _this.$alert(success);
+         } else {
+         _this.$alert(ret.desc)
+         }
+         });*/
         this.$root.teacherName = [];
         this.teacherIds = [];
-        this.$emit('clear')
+//        this.$emit('clear')
       },
       back: function () {
         //弹窗
         this.$emit('goStep', 'step-one', {
-            classId: this.classId,
-            isArrangeTeacher: this.isArrangeTeacher,
-          })
+          classId: this.classId,
+          isArrangeTeacher: this.isArrangeTeacher,
+        })
       },
       isShow: function () {
         return this.isArrangeTeacher != '1';
+      },
+      //单双讲交替
+      singleAndDoubleLecture: function (flag) {
+        var _this = this;
+        if (this.$root.teacherName.length == 0) {
+          _this.$alert('请选择老师');
+          return;
+        }
+        var selects = this.$refs.lectureTable.querySelectorAll('select');
+        var cursor = 0;
+        for (var i = 0; i < selects.length; i++) {
+          var all_options = selects[i].options;
+          all_options[cursor].selected = true;
+          if (flag==1){
+            cursor++;
+          } else if (flag==0){
+            if (i % 2 != flag) cursor++;
+          }else{
+              return;
+          }
+          if (cursor >= this.$root.teacherName.length) cursor = 0;
+        }
       }
     }
   }
