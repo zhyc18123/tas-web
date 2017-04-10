@@ -85,6 +85,11 @@ import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectFo
 import BuyServiceList from './components/buyer/BuyServiceList'
 import BuyCommodityList from './components/buyer/BuyCommodityList'
 
+import SoldProductOrderList from './components/seller/SoldProductOrderList'
+import SoldServiceOrderList from './components/seller/SoldServiceOrderList'
+
+import SellerRegisterList from './components/platform/SellerRegisterList'
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
@@ -183,6 +188,11 @@ const router = new VueRouter({
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+
+      {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
+      {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
+
+      {path: 'platform/sellerRegister/list', component:SellerRegisterList},
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
