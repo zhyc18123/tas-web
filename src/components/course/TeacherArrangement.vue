@@ -1,5 +1,5 @@
 <template>
-  <component v-bind:is="currentStep" :classId="classId" :isArrangeTeacher="isArrangeTeacher" @goStep="goStep" @clear="clear" :args="args">
+  <component v-bind:is="currentStep" :courseClass="courseClass" @goStep="goStep" @completed="completed" :args="args">
   </component>
 </template>
 
@@ -21,9 +21,9 @@
       'step-two' :TeacherArrangementTwo
     },
 
-    props: ['classId','isArrangeTeacher'],
+    props: ['courseClass'],
     watch:{
-      classId : function () {
+      'courseClass.classId' : function () {
         //选择其他重置回第一步
           this.currentStep = 'step-one'
       }
@@ -36,8 +36,8 @@
           this.currentStep = which
           this.args = data || {}
       },
-      clear:function () {
-        this.currentStep = 'step-one';
+      completed:function () {
+        this.$emit('arrangementSuccess')
       }
     }
   }

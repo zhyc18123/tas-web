@@ -29,6 +29,17 @@
                 </select2>
               </div>
             </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 required  v-model="query.season"  >
+                  <option value="">季节</option>
+                  <option value="春季班">春季班</option>
+                  <option value="暑期班">暑期班</option>
+                  <option value="秋季班">秋季班</option>
+                  <option value="寒假班">寒假班</option>
+                </select2>
+              </div>
+            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -124,7 +135,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -132,16 +143,24 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新建班级
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="changeStatus(1)" ><span
+                  class="am-icon-plus"></span>开班
+                </button>
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="changeStatus(2)" ><span
+                  class="am-icon-plus"></span>作废
+                </button>
+                <!--<button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>快速排班
-                </button>
+                </button>-->
               </div>
             </div>
 
@@ -152,7 +171,13 @@
               :data="tableData"
               border
               stripe
+              @selection-change="handleSelectionChange"
               style="min-width: 100%">
+              <el-table-column
+                type="selection"
+                width="55">
+              </el-table-column>
+
               <el-table-column
                 fixed
                 prop="className"
@@ -162,11 +187,16 @@
               <el-table-column
                 prop="campusName"
                 label="校区"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="roomName"
+                label="教室"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 label="开课日期"
-                min-width="100">
+                min-width="150">
                 <template scope="scope">
                   {{scope.row.startCourseTime | formatDate}}
                 </template>
@@ -174,7 +204,7 @@
               <el-table-column
                 prop="studyingTime"
                 label="上课时间"
-                min-width="100">
+                min-width="150">
               </el-table-column>
               <el-table-column
                 label="已上/总讲次"
@@ -204,11 +234,6 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="roomName"
-                label="教室"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
                 prop="studyingFee"
                 label="学费"
                 min-width="100">
@@ -229,10 +254,19 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                label="开班状态"
+                label="状态"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.openStatus == 0 ? '未开办':'已开班'}}
+                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="排课状态"
+                min-width="250">
+                <template scope="scope">
+                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未时间':'已排时间'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
                 </template>
               </el-table-column>
               <el-table-column
@@ -245,10 +279,11 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="arrangeTime(scope.row.classId,scope.row.lectureAmount)">排时间</el-dropdown-item>
-                      <el-dropdown-item @click.native="arrangeRoom(scope.row.classId,scope.row.isArrangeRoom)">排教室</el-dropdown-item>
-                      <el-dropdown-item @click.native="arrangeTeacher(scope.row.classId,scope.row.isArrangeTeacher,scope.row.isArrangeTime)">排老师</el-dropdown-item>
-                      <el-dropdown-item @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                      <el-dropdown-item :disabled="scope.row.isArrangeTime == 1" @click.native="arrangeTime(scope.row)">排时间</el-dropdown-item>
+                      <el-dropdown-item :disabled="scope.row.isArrangeRoom == 1" @click.native="arrangeRoom(scope.row)">排教室</el-dropdown-item>
+                      <el-dropdown-item :disabled="scope.row.isArrangeTeacher == 1" @click.native="arrangeTeacher(scope.row)">排老师</el-dropdown-item>
+                      <el-dropdown-item :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                      <el-dropdown-item :disabled="scope.row.status == 0" @click.native="$router.push('/main/course/class/reg/'+scope.row.classId)">学生报名列表</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -267,16 +302,16 @@
       </div>
     </div>
 
-    <window ref="time_arrangement" title="排时间">
-      <time-arragngement :classId="classId" :lectureAmount="lectureAmount" @arrangementSuccess="$refs.time_arrangement.close()"></time-arragngement>
+    <window ref="timeArrangement" title="排时间" @close="courseClass={}">
+      <time-arragngement :courseClass = courseClass @arrangementSuccess="$refs.timeArrangement.close();loadTableData()"></time-arragngement>
     </window>
 
-    <window ref="room_arrangement" title="排课室">
-      <room-arrangement :classId="classId" :isArrangeRoom="lectureAmount" @arrangementSuccess="$refs.room_arrangement.close()"></room-arrangement>
+    <window ref="roomArrangement" title="排课室" @close="courseClass={}">
+      <room-arrangement :courseClass = courseClass @arrangementSuccess="$refs.roomArrangement.close();loadTableData()"></room-arrangement>
     </window>
 
-    <window ref="first" title="排老师" @close="classId=''">
-      <teacher-arrangement :classId="classId" :isArrangeTeacher="isArrangeTeacher" @first="$refs.first.close()"></teacher-arrangement>
+    <window ref="teacherArrangement" title="排老师" @close="courseClass={}">
+      <teacher-arrangement :courseClass = courseClass @arrangementSuccess="$refs.teacherArrangement.close();loadTableData()"></teacher-arrangement>
     </window>
   </div>
 </template>
@@ -302,13 +337,8 @@
         searchConfig: {},
         products:[],
         courses:[],
-        courseClassId:'',
-        classId:'',
-        lectureAmount :'',
-        isArrangeRoom:'',
-        isArrangeTeacher:'',
-        isArrangeTime:'',
-        teacherNames:''
+        courseClass :{},
+        selection:[]
       }
     },
     components: {
@@ -407,41 +437,80 @@
         })
       },
       //排课
-      arrangeTime:function (classId,lectureAmount) {
+      arrangeTime:function (courseClass) {
         //弹窗
-        var _this = this;
-        _this.classId = classId;
-        _this.lectureAmount = lectureAmount;
-        _this.$refs.time_arrangement.show({
+        this.courseClass = courseClass
+        this.$refs.timeArrangement.show({
           width:1000,
           height:700
         })
       },
-      arrangeRoom:function (classId,isArrangeRoom) {
-        //弹窗
-        var _this = this;
-        _this.classId = classId;
-        _this.isArrangeRoom = isArrangeRoom;
-        _this.$refs.room_arrangement.show({
+      arrangeRoom:function (courseClass) {
+
+        if(courseClass.isArrangeTime !=  1 ){
+          this.$alert('请先排时间')
+          return
+        }
+        this.courseClass = courseClass
+        this.$refs.roomArrangement.show({
           width : 1000,
           height: 500
         });
       },
-      arrangeTeacher:function (classId,isArrangeTeacher,isArrangeTime) {
+      arrangeTeacher:function (courseClass) {
         //弹窗
-        var _this = this;
-        _this.classId = classId;
-        _this.isArrangeTeacher = isArrangeTeacher;
-  /*      if (isArrangeTime!='1'){
-            _this.$alert("请先排时间");
-            return;
-        }*/
-        this.$root.teacherName = [];
-        _this.$refs.first.show({
+        if( courseClass.isArrangeTime !=  1 ){
+          this.$alert('请先排时间')
+          return
+        }
+        this.courseClass = courseClass
+        this.$refs.teacherArrangement.show({
           width : 1000,
-          height: 800
+          height: 700
         });
       },
+      changeStatus:function (status) {
+        if(this.selection.length == 0 ){
+          this.$alert('请选择记录')
+          return
+        }
+
+        for(var i =0 ;i < this.selection.length ;i++ ){
+            if(this.selection[i].status != 0 ){
+                this.$alert('只有"未开班"的记录才能"开班"或"作废"')
+                return
+            }
+
+            if(status  == 1 && this.selection[i].isArrangeTime == 0 ){
+              this.$alert('【'+this.selection[i].className+'】未排时间，无法开班')
+              return
+            }
+        }
+        var classIds = this.selection.map(function (item) {
+          return item.classId
+        })
+
+        var _this = this
+
+        io.post(io.apiAdminChangeCourseClassStatus, {
+          status:status,
+          classIds : classIds.join(',')
+        }, function (ret) {
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+
+
+
+
+      },
+      handleSelectionChange:function (selection) {
+        this.selection = selection
+      }
 
     }
   }

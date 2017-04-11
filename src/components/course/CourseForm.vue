@@ -76,11 +76,26 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                产品
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>产品
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2  v-model="formData.productId" :options="products" >
+                <select2 required  v-model="formData.productId" :options="products" >
                   <option value="请选择">请选择</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>季节
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required  v-model="formData.season"  >
+                  <option value="">请选择</option>
+                  <option value="春季班">春季班</option>
+                  <option value="暑期班">暑期班</option>
+                  <option value="秋季班">秋季班</option>
+                  <option value="寒假班">寒假班</option>
                 </select2>
               </div>
             </div>
@@ -94,14 +109,14 @@
               </div>
             </div>
 
-<!--            <div class="am-form-group">
+            <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每一讲时长(分钟)
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <input type="number" placeholder="输入时长"  required min="1" step="1"  v-model="formData.lectureDuration" >
               </div>
-            </div>-->
+            </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -111,7 +126,6 @@
                 <input type="number" placeholder="输入学位数"  required min="1" step="1"  v-model="formData.quota" >
               </div>
             </div>
-<!--
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
@@ -119,9 +133,9 @@
               <div class="am-u-sm-3 am-u-end input-field">
                 <input type="number" placeholder="输入学学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
               </div>
-            </div>-->
+            </div>
 
-            <div class="am-form-group am-u-sm-9 am-u-sm-offset-3 am-u-end">
+            <div class="am-form-group am-u-sm-12">
               <div class="am-tabs" data-am-tabs>
                 <ul class="am-tabs-nav am-nav am-nav-tabs">
                   <li class="am-active"><a href="#tab1">课程简介</a></li>
@@ -137,8 +151,6 @@
                 </div>
               </div>
             </div>
-
-
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
 
@@ -161,14 +173,13 @@ import util from '../../lib/util'
                 courseTypeData:[],
                 formData:{
                   areaTeamId:'',
-//                  productId:'',
                   busTeamId:'',
                   lectureAmount : 15,
                   lectureDuration : 45,
                   quota:0,
                   studyingFee : 0
                 },
-              products:[]
+                products:[]
             }
         },
         created:function(){
@@ -204,13 +215,6 @@ import util from '../../lib/util'
             .map(function(item){
               return {value:item.busTeamId,text:item.name}
             })
-            return options
-          },
-          products : function(){
-            var options =  (  this.formData.productId  || []  )
-              .map(function(item){
-                return {value:item.productId,text:item.name}
-              })
             return options
           },
           grades:function(){

@@ -1,59 +1,110 @@
 <template>
   <div class="am-u-sm-12 am-scrollable-horizontal">
-    <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-      <thead>
-      <tr>
-        <th>序号</th>
-        <th>期数</th>
-        <th>校区</th>
-        <th>年级</th>
-        <th>班级名称</th>
-        <th>总金额</th>
-        <th>以上/总讲数</th>
-        <th>报读开始讲数</th>
-        <th>报读结束讲数</th>
-        <th>报名讲数</th>
-        <th>开课日期</th>
-        <th>上课时间</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
+    <el-table
+      :data="tableData"
+      border
+      stripe
+      style="min-width: 100%">
+      <el-table-column
+        fixed
+        label="班级名称"
+        min-width="200">
+        <template scope="scope">
+          {{scope.row.courseClass.className}}
 
-      <tr v-for="(item,index) in tableData" :key="item.studentReg" v-if="item.studentReg.regStatus==0">
-        <td>{{index+1}}</td>
-        <td>{{item.courseClass.periodName}}</td>
-        <td>{{item.courseClass.campusName}}</td>
-        <td>{{item.courseClass.gradeName}}</td>
-        <td>{{item.courseClass.className}}</td>
-        <td>{{item.courseClass.studyingFee}}</td>
-        <td>/{{item.courseClass.lectureAmount}}</td>
-        <td>{{item.studentReg.startAmount}}</td>
-        <td>{{item.studentReg.endAmount}}</td>
-        <td>{{item.studentReg.endAmount-item.studentReg.startAmount+1}}</td>
-        <td>{{item.courseClass.startCourseTime | formatDate }}</td>
-        <td></td>
-        <td>
-          <div class="tpl-table-black-operation">
-            <a @click="turnClass(item.studentReg.regId)">
-              <i class="am-icon-edit"></i> 转班
-            </a>
-            <!--<a href="javascript:;" @click="">
-              <i class="am-icon-edit"></i> 班级退账户
-            </a>-->
-            <a href="javascript:;" @click="studentRefund(item.studentReg.regId)"
-               v-if="item.studentReg.chargingStatus==2">
-              <i class="am-icon-edit"></i> 退费申请
-            </a>
-            <a v-else="item.studentReg.chargingStatus==2" @click="allowRefund">
-              <i class="am-icon-edit"></i> 退费
-            </a>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="期数"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.courseClass.periodName}}
 
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="校区"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.courseClass.campusName}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="年级"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.courseClass.gradeName}}
+
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="总金额"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.courseClass.studyingFee}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="已上/总讲数"
+        min-width="120">
+        <template scope="scope">
+          {{scope.row.courseClass.courseProgress}}/{{scope.row.courseClass.lectureAmount}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="报读开始讲数"
+        min-width="150">
+        <template scope="scope">
+          {{scope.row.studentReg.startAmount}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="报读结束讲数"
+        min-width="150">
+        <template scope="scope">
+          {{scope.row.studentReg.endAmount}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="报名讲数"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.studentReg.endAmount - scope.row.studentReg.startAmount + 1}}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="开课日期"
+        min-width="150">
+        <template scope="scope">
+          {{scope.row.courseClass.startCourseTime | formatDate }}
+
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="courseClass.studyingTime"
+        label="上课时间"
+        min-width="150">
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="180">
+        <template scope="scope">
+          <el-button size="small" @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2"
+                     @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
     <window ref="first" title="转班" @close="regId=''">
       <turn-class :regId="regId" @first="$refs.first.close()"></turn-class>
     </window>
@@ -125,10 +176,6 @@
           width: 1000,
           height: 700,
         })
-      },
-      allowRefund: function () {
-        var _this = this
-        _this.$alert("尚未缴清学费，不能退费")
       }
     }
   }

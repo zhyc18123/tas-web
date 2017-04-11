@@ -7,16 +7,14 @@
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
       </div>
-      <div class="box">
-      <table class="am-u-sm-12 ">
+      <div class="am-padding-sm">
+      <table style="width: 100%">
         <tr>
           <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
           <td>学号：{{formData.studentNo}}</td>
-          <td>余额：</td>
           <td>年级：{{formData.gradeName}}</td>
         </tr>
         <tr>
-          <td>首报校区：</td>
           <td>电话：{{formData.phoneNo}}</td>
           <td>就读小学：{{formData.school}}</td>
         </tr>
@@ -39,7 +37,7 @@
               <student-apply :studentId="studentId"  ></student-apply>
             </div>
             <div class="am-tab-panel">
-              <student-regList :studentId="studentId" ></student-regList>
+              <reg-class-list :studentId="studentId" ></reg-class-list>
             </div>
             <div class="am-tab-panel">
               <student-order-list :studentId="studentId" v-if="tabIndex == 2"></student-order-list>
@@ -79,7 +77,7 @@
   import util from '../../lib/util'
   import StudentEditForm from './StudentEditForm'
   import StudentApply from './StudentApply'
-  import StudentRegList from './StudentRegList'
+  import RegClassList from './RegClassList'
   import StudentOrderList from './StudentOrderList'
   import StudentClassList from './StudentClassList'
   import ClassHistoryList from './ClassHistoryList'
@@ -94,7 +92,7 @@
     components:{
       'student-edit-from': StudentEditForm,
       'student-apply': StudentApply,
-      'student-regList': StudentRegList,
+      'reg-class-list': RegClassList,
       'student-order-list': StudentOrderList,
       'student-class-list': StudentClassList,
       'student-class-history-list': ClassHistoryList

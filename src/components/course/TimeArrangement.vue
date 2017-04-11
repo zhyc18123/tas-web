@@ -121,14 +121,14 @@
         arrangeResult: []
       }
     },
-    props: ['classId', 'lectureAmount'],
+    props: ['courseClass','classId', 'lectureAmount'],
     watch: {
       startDate: function (val) {
         if (this.arrangeWay == 'arrangeByWeek' && val) {
           $('#' + moment(val, "YYYY-MM-DD").format('dddd')).click()
         }
       },
-      classId : function(){
+      'courseClass.classId' : function(){
         this.init()
       }
     },
@@ -198,11 +198,16 @@
                     continue
                 }
                 for (var iii = 0; iii < selectedDays[ii].times.length; iii++) {
+                  var times  = selectedDays[ii].times[iii].split('-')
+                  if(times[0] >= times[1]){
+                    this.$alert('错误时间段：' + selectedDays[ii].times[iii] )
+                    return
+                  }
                   this.arrangeResult.push({
                     date : date ,
                     time : selectedDays[ii].times[iii]
                   })
-                  if (this.arrangeResult.length >= this.lectureAmount) {
+                  if (this.arrangeResult.length >= this.courseClass.lectureAmount) {
                     return
                   }
                 }
@@ -221,11 +226,16 @@
                 continue
               }
               for (var ii = 0; ii < this.everyday.times.length; ii++) {
+                var times  = this.everyday.times[ii].split('-')
+                if(times[0] >= times[1]){
+                  this.$alert('错误时间段：' + this.everyday.times[ii] )
+                  return
+                }
                 this.arrangeResult.push({
                   date : date ,
                   time : this.everyday.times[ii]
                 })
-                if (this.arrangeResult.length == this.lectureAmount) {
+                if (this.arrangeResult.length == this.courseClass.lectureAmount) {
                   return
                 }
               }
@@ -246,7 +256,7 @@
       save:function(){
           var _this  = this
           io.post(io.apiAdminSaveArrangeClassTimeResult,{
-            classId : this.classId ,
+            classId : this.courseClass.classId ,
             resultJsonStr : JSON.stringify(this.arrangeResult)
           },function(ret){
               if(ret.success){

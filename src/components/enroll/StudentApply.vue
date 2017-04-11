@@ -29,6 +29,18 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2 required  v-model="query.season"  >
+                <option value="">季节</option>
+                <option value="春季班">春季班</option>
+                <option value="暑期班">暑期班</option>
+                <option value="秋季班">秋季班</option>
+                <option value="寒假班">寒假班</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2 v-model="query.courseTemplateId" :options="courses">
                 <option value="">课程</option>
               </select2>
@@ -76,54 +88,96 @@
         </div>
 
         <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
-          <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-            <thead>
-            <tr>
-              <th>班级名称</th>
-              <th>开始讲数</th>
-              <th>结束讲数</th>
-              <th>讲数</th>
-              <th>期数</th>
-              <th>年级</th>
-              <th>学费</th>
-              <th>已报/学位数</th>
-              <th>老师</th>
-              <th>教室</th>
-              <th>开课日期</th>
-              <th>上课时间</th>
-              <th>校区</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
+          <el-table
+            :data="tableData"
+            border
+            stripe
+            style="min-width: 100%">
+            <el-table-column
+              fixed
+              prop="className"
+              label="班级名称"
+              min-width="200">
+            </el-table-column>
+            <el-table-column
+              label="开始讲数"
+              min-width="100">
+              <template scope="scope">
+                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.startAmount" @change="check(scope.row)"/>
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="结束讲数"
+              min-width="100">
+              <template scope="scope">
+                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.endAmount" @change="check(scope.row)"/>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="lectureAmount"
+              label="讲数"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="periodName"
+              label="期数"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="gradeName"
+              label="年级"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="studyingFee"
+              label="学费"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              label="已报/学位数"
+              min-width="100">
+              <template scope="scope">
+                {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="teacherNames"
+              label="老师"
+              min-width="100">
+            </el-table-column>
 
-            <tr v-for="item in tableData" :key="item.classId">
-              <td>{{item.className}}</td>
-              <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount" @change="check(item)"/></td>
-              <td><input type="number" class="am-form-field am-input-sm" v-model="item.endAmount" @change="check(item)"/></td>
-              <td>{{item.lectureAmount}}</td>
-              <td>{{item.periodName}}</td>
-              <td>{{item.gradeName}}</td>
-              <td>{{item.studyingFee}}</td>
-              <td>{{item.courseProgress}}/{{item.lectureAmount}}</td>
-              <td>{{item.teacherNames}}</td>
-              <td>{{item.roomName}}</td>
-              <td>{{item.startCourseTime | formatDate }}</td>
-              <td>{{item.studyingTime}}</td>
-              <td>{{item.campusName}}</td>
-              <td>
-                <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="studentReg(item)">
-                    <i class="am-icon-edit"></i> 报名
-                  </a>
-                  <a href="javascript:;" @click="pay(item.classId,item.startAmount,item.endAmount)">
-                    <i class="am-icon-edit"></i> 缴费
-                  </a>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+            <el-table-column
+              label="开课日期"
+              min-width="150">
+              <template scope="scope">
+                {{scope.row.startCourseTime | formatDate }}
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="studyingTime"
+              label="上课时间"
+              min-width="150">
+            </el-table-column>
+            <el-table-column
+              prop="campusName"
+              label="校区"
+              min-width="200">
+            </el-table-column>
+            <el-table-column
+              prop="roomName"
+              label="教室"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="150">
+              <template scope="scope">
+                <el-button size="small" @click.native="studentReg(scope.row)">报名</el-button>
+                <el-button size="small" @click.native="pay(scope.row.classId,scope.row.startAmount,scope.row.endAmount)">缴费</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
           <window ref="order" title="缴费">
             <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()"></course-order>
           </window>

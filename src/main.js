@@ -46,17 +46,12 @@ import ProductList from './components/course/ProductList'
 import ProductForm from './components/course/ProductForm'
 import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
+import ClassStudentRegList from './components/course/StudentRegList'
 
 
 import SearchStudentList from  './components/enroll/SearchStudentList'
-// import SearchStudentList from  './components/enroll/StuRegSearchList'
 import StudentForm from  './components/enroll/StudenForm'
 import StudentReg from  './components/enroll/StudentReg'
-import StudentApply from  './components/enroll/StudentApply'
-import StudentRegList from  './components/enroll/StudentRegList'
-import StudentOrderList from  './components/enroll/StudentOrderList'
-import StudentClassList from  './components/enroll/StudentClassList'
-import StudentRefundForm from './components/enroll/StudentRefundForm'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 import StudentRefundList from  './components/enroll/StudentRefundList'
 import TurnClass from  './components/enroll/TurnClassStepOne'
@@ -141,17 +136,14 @@ const router = new VueRouter({
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
+      {path: 'course/class/reg/:classId' , component: ClassStudentRegList },
 
       {path: 'enroll/student/search' , component: SearchStudentList },
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
       {path: 'enroll/student/reg/:studentId' , component: StudentReg },
-      {path: 'enroll/student/apply/:studentId' , component: StudentApply },
-      {path: 'enroll/student/regList/:studentId' , component: StudentRegList },
-      {path: 'enroll/student/orderList/:studentId' , component: StudentOrderList },
-      {path: 'enroll/student/classList/:studentId' , component: StudentClassList },
-      {path: 'enroll/student/studentRefundForm', component:StudentRefundForm},
+
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
       {path: 'enroll/student/turnClass', component:TurnClass},
