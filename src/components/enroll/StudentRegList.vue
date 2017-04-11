@@ -12,6 +12,12 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
+                <input type="text"  v-model="query.studentName" placeholder="请输入学生名"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
                 <select2 required  v-model="query.regStatus"  >
                   <option value="">状态</option>
                   <option value="0">在读</option>
@@ -119,7 +125,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminClassStudentRegList, $.extend({
+        io.post(io.apiAdminStudentRegList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {

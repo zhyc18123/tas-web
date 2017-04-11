@@ -46,7 +46,8 @@ import ProductList from './components/course/ProductList'
 import ProductForm from './components/course/ProductForm'
 import ClassList from './components/course/ClassList'
 import ClassForm from './components/course/ClassForm'
-import ClassStudentRegList from './components/course/StudentRegList'
+import ClassTimeList from './components/course/ClassTimeList'
+
 
 
 import SearchStudentList from  './components/enroll/SearchStudentList'
@@ -55,6 +56,8 @@ import StudentReg from  './components/enroll/StudentReg'
 import ClassHistoryList from  './components/enroll/ClassHistoryList'
 import StudentRefundList from  './components/enroll/StudentRefundList'
 import TurnClass from  './components/enroll/TurnClassStepOne'
+import StudentRegList from './components/enroll/StudentRegList'
+import CourseClassList from './components/enroll/CourseClassList.vue'
 
 import AccountReport from './components/settlement/AccountReport'
 import AccountReportDetail from './components/settlement/AccountReportDetail'
@@ -142,7 +145,8 @@ const router = new VueRouter({
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
-      {path: 'course/class/reg/:classId' , component: ClassStudentRegList },
+      {path: 'course/class/time/:classId' , component: ClassTimeList },
+
 
       {path: 'enroll/student/search' , component: SearchStudentList },
       {path: 'enroll/student/reg' , component: StudentReg },
@@ -150,9 +154,14 @@ const router = new VueRouter({
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
       {path: 'enroll/student/reg/:studentId' , component: StudentReg },
 
+      {path: 'enroll/class/list' , component: CourseClassList },
+      {path: 'enroll/class/reg/:classId' , component: StudentRegList },
+
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
       {path: 'enroll/student/turnClass', component:TurnClass},
+
+
 
       {path: 'settlement/account/report' , component: AccountReport },
       {path: 'settlement/account/report/detail/:subject/:mainAccountId' , component: AccountReportDetail },

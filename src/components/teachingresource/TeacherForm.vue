@@ -183,7 +183,7 @@ import util from '../../lib/util'
                   busTeamId:'',
                   gradeIds:[],
                   subjectIds:[],
-                  status:2
+                  status:1
                 }
             }
         },

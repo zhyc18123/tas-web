@@ -90,7 +90,7 @@ const io = {
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
-    this.apiAdminClassStudentRegList = conf.baseApiPath+ '/api/admin/classStudentRegList'
+
 
     this.apiAdminCourseProductTemplateList  = conf.baseApiPath + '/api/admin/courseProductList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
@@ -121,8 +121,8 @@ const io = {
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefund = conf.baseApiPath + '/api/admin/changeStudentRefund'
+    this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
 
-    this.apiAdminLoadGradesByAreaTeamIdAndBusTeamId = conf.baseApiPath + '/api/admin/loadGradesByAreaTeamIdAndBusTeamId'
 
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'

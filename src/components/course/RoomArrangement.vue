@@ -20,7 +20,7 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
               </div>
@@ -123,7 +123,6 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminRoomListForClassArrangement,$.extend({
-          areaTeamId :this.courseClass.areaTeamId ,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
@@ -146,10 +145,6 @@
             _this.$alert(ret.desc)
           }
         })
-      },
-      roomUsingSituation:function (roomId) {
-        var _this = this;
-        alert("coming soon");
       },
       loadCampus:function(){
         var _this = this;
