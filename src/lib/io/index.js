@@ -144,6 +144,9 @@ const io = {
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
     this.apiAdminSaveServiceManage = conf.baseApiPath + '/api/admin/trading/saveServiceManage'
+    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+    this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
+    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
 
   },
   getHeaders : function(){

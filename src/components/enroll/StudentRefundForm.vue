@@ -215,7 +215,6 @@
       },
       confirmToRefund: function () {
         var _this = this
-        console.log(_this.formData)
         io.post(io.apiAdminSaveOrupdateStudentRefund,$.extend({
 
           },_this.formData),
