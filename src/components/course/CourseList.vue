@@ -27,7 +27,18 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <select2  v-model="query.productId" :options="products">
-                <option value="请选择产品">请选择产品</option>
+                <option value="">请选择产品</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2 required  v-model="query.season"  >
+                <option value="">季节</option>
+                <option value="春季班">春季班</option>
+                <option value="暑期班">暑期班</option>
+                <option value="秋季班">秋季班</option>
+                <option value="寒假班">寒假班</option>
               </select2>
             </div>
           </div>
@@ -48,51 +59,30 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
+              <input type="text"  name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+              <button type="button" class="am-btn am-btn-default am-btn-success "
                       @click="search" ><span class="am-icon-search"></span>查询
               </button>
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
             <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group ">
-                  <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="$router.push('/main/course/course/add')"
-                          v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增课程</button>
-                </div>
-              </div>
-            </div>
-          </div>
+              <button type="button" class="am-btn am-btn-default am-btn-success " @click="$router.push('/main/course/course/add')"
+                      v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增课程</button>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <div class="am-form-group am-form-file">
-                <div>
-                  <button type="button" class="am-btn am-btn-default am-btn-sm">
-                    <i class="am-icon-cloud-upload"></i> 选择要上传的文件</button>
-                </div>
-                  <input id="courseTemplateFile" type="file"  @change="uploadExcel" />
-              </div>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group ">
-                  <!--<button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</button>-->
-                  <a type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="download"><span class="am-icon-download"></span>下载模板</a>
-                </div>
-              </div>
+              <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file"
+                      v-if="hasPermission('add')">
+                <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.ms-excel">
+                <span class="am-icon-cloud-upload"></span>批量导入</button>
+              <a href="http://onb2fl9k5.bkt.clouddn.com/course_tempalet_v4.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
             </div>
           </div>
 
@@ -108,7 +98,7 @@
               fixed
               prop="courseName"
               label="课程名"
-              min-width="100">
+              min-width="200">
             </el-table-column>
             <el-table-column
               label="课程类型"
@@ -142,26 +132,19 @@
               label="业务组"
               min-width="100">
             </el-table-column>
-            <el-table-column
+            <!--<el-table-column
               label="状态"
               min-width="100">
               <template scope="scope">
                 {{scope.row.status == 0 ? '未启用':'已启用'}}
                 </template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column
               fixed="right"
               label="操作"
               width="120">
               <template scope="scope">
-                <el-dropdown>
-                    <span class="el-dropdown-link">
-                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
-                    </span>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="$router.push('/main/course/course/edit/'+scope.row.courseTemplateId)">编辑</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
+                <el-button size="small" @click.native="$router.push('/main/course/course/edit/'+scope.row.courseTemplateId)">编辑</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -270,20 +253,17 @@ import Pagination from '../base/Pagination'
               }
             })
           },
-          download:function() {
-
-          },
           uploadExcel:function() {
             var _this = this;
             var formData = new FormData();
-            formData.append("file",document.getElementById('courseTemplateFile').files[0]);
+            formData.append("file",document.getElementById('uploadFile').files[0]);
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
-              if (ret.ok){
+              if (ret.ok && ret.data.success){
                 $("#courseTemplateFile").val("");
                 _this.loadTableData();
                 _this.$alert("上传成功");
               } else {
-                _this.$alert("上传失败");
+                _this.$alert(ret.data.desc || "上传失败");
               }
             })
           }

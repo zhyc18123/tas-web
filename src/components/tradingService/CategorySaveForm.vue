@@ -21,15 +21,14 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>所属分类
+                所属分类
               </label>
-              <div class="am-u-sm-3 am-u-end">
-                <select2 required v-model="query.categoryId" :options="category">
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 v-model="formData.categoryId" :options="category">
                   <option value="">请选择</option>
                 </select2>
               </div>
             </div>
-
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
@@ -52,29 +51,15 @@
       return {
         productTypeData: [],
         formData: {
-        },
-        query: {
           categoryId:'',
-        }
+          name:'',
+        },
+        category: [],
       }
     },
 
     created: function () {
-      var categoryId = this.$params('categoryId');
-      if (categoryId) {
-        var _this = this
-        io.post(io.apiAdminCategoryDetail, {categoryId: categoryId},
-          function (ret) {
-            if (ret.success) {
-              _this.formData = ret.data
-            }
-          },
-          function () {
-            _this.$alert('请求服务器失败')
-          })
-      } else {
-        this.loadCategoryData();
-      }
+      this.loadCategoryData();
     },
     mounted: function () {
       var _this = this;

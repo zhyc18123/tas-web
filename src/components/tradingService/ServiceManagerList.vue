@@ -21,7 +21,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="title" v-model="query.title" placeholder="请输入服务名称"/>
+                <input type="text" class="am-input-lg" name="productName" v-model="query.productName" placeholder="请输入服务名称"/>
               </div>
             </div>
 
@@ -59,12 +59,12 @@
 
               <tr v-for="(item,index) in tableData" :key="item.productId">
                 <td>{{index+1}}</td>
-                <td>{{item.title}}</td>
+                <td>{{item.productName}}</td>
                 <td>{{item.categoryName}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.unit}}</td>
                 <td>{{item.username}}</td>
-                <td>{{item.updateTime | formatDate}}</td>
+                <td>{{item.updateTime | formatTime}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/tradingService/service/edit/'+item.productId)" v-if="hasPermission('edit')">
@@ -115,7 +115,7 @@
         pageNo:1,
         query:{
           categoryId:'',
-          title:'',
+          productName:'',
         },
         category:[],
         searchConfig:{}

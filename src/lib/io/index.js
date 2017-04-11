@@ -61,20 +61,22 @@ const io = {
     this.apiAdminSaveBusTeam = conf.baseApiPath + '/api/admin/saveBusTeam'
     this.apiAdminDelBusTeam = conf.baseApiPath + '/api/admin/delBusTeam'
 
-    this.apiAdminTeacherList = conf.baseApiPath + '/api/admin/teacherList'
-    this.apiAdminTeacherDetail = conf.baseApiPath + '/api/admin/teacherDetail'
-    this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/saveOrUpdateTeacher'
-    this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/delTeacher'
+    this.apiAdminTeacherList = conf.baseApiPath + '/api/admin/teaching/resource/teacherList'
+    this.apiAdminTeacherDetail = conf.baseApiPath + '/api/admin/teaching/resource/teacherDetail'
+    this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
+    this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
 
-    this.apiAdminCampusList = conf.baseApiPath + '/api/admin/campusList'
-    this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/campusDetail'
-    this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/saveOrUpdateCampus'
-    this.apiAdminDelCampus = conf.baseApiPath + '/api/admin/delCampus'
+    this.apiAdminCampusList = conf.baseApiPath + '/api/admin/teaching/resource/campusList'
+    this.apiAdminAllCampus = conf.baseApiPath + '/api/admin/teaching/resource/allCampus'
+    this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/teaching/resource/campusDetail'
+    this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
+    this.apiAdminDelCampus = conf.baseApiPath + '/api/admin/teaching/resource/delCampus'
 
-    this.apiAdminRoomList = conf.baseApiPath + '/api/admin/roomList'
-    this.apiAdminRoomDetail = conf.baseApiPath + '/api/admin/roomDetail'
-    this.apiAdminSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/saveOrUpdateRoom'
-    this.apiAdminDelRoom = conf.baseApiPath + '/api/admin/delRoom'
+    this.apiAdminRoomList = conf.baseApiPath + '/api/admin/teaching/resource/roomList'
+    this.apiAdminRoomDetail = conf.baseApiPath + '/api/admin/teaching/resource/roomDetail'
+    this.apiAdminSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateRoom'
+    this.apiAdminDelRoom = conf.baseApiPath + '/api/admin/teaching/resource/delRoom'
+
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
@@ -89,6 +91,7 @@ const io = {
     this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
     this.apiAdminDownloadCourseExcel = conf.baseApiPath+ '/api/admin/downloadCourseTemplate'
+    this.apiAdminClassStudentRegList = conf.baseApiPath+ '/api/admin/classStudentRegList'
 
     this.apiAdminCourseProductTemplateList  = conf.baseApiPath + '/api/admin/courseProductList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
@@ -99,6 +102,7 @@ const io = {
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
+    this.apiAdminChangeCourseClassStatus = conf.baseApiPath + '/api/admin/changeCourseClassStatus'
     this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
@@ -134,6 +138,7 @@ const io = {
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
     this.apiAdminSaveCategory = conf.baseApiPath + '/api/admin/trading/saveCategory'
+    this.apiAdminEditCategory = conf.baseApiPath + '/api/admin/trading/editCategory'
     this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
     this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'

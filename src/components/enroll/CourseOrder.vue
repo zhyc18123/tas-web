@@ -23,7 +23,7 @@
             <td>{{item.courseClass.lectureAmount}}</td>
             <td>{{item.studentReg.startAmount}}</td>
             <td>{{item.studentReg.endAmount}}</td>
-            <td>{{item.studentReg.coursePay}}</td>
+            <td>{{item.studentReg.totalAmount}}</td>
           </tr>
           </tbody>
         </table>

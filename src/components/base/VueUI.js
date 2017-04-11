@@ -21,7 +21,8 @@ import {
   Button,
   Dropdown,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
+  Tag
 } from 'element-ui'
 
 var VueUI = function(){
@@ -96,6 +97,7 @@ VueUI.install = function (Vue){
   Vue.component(Dropdown.name,Dropdown)
   Vue.component(DropdownMenu.name,DropdownMenu)
   Vue.component(DropdownItem.name,DropdownItem)
+  Vue.component(Tag.name,Tag)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )

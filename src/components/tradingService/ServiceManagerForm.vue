@@ -18,10 +18,10 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>标题
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>服务名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品名称" required v-model="formData.title">
+                <input type="text" class="am-form-field" placeholder="请输入服务名称" required v-model="formData.productName">
               </div>
             </div>
 
@@ -91,7 +91,7 @@
     data(){
       return {
         formData: {
-          title: '',
+          productName: '',
           content: '',
           price: '',
           unit: '',
@@ -122,7 +122,7 @@
       saveServiceProduct:function () {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveServiceManage, $.extend({},data),
+        io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')

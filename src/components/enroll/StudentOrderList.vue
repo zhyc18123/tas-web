@@ -1,41 +1,64 @@
 <template>
   <div class="am-u-sm-12 am-scrollable-horizontal">
-    <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-      <thead>
-      <tr>
-        <th>序号</th>
-        <th>订单编号</th>
-        <th>缴费时间</th>
-        <th>总金额</th>
-        <th>应缴金额</th>
-        <th>已缴金额</th>
-        <th>欠费金额</th>
-        <th>缴费状态</th>
-        <th>操作</th>
-      </tr>
-      </thead>
-      <tbody>
 
-      <tr v-for="(item,index) in tableData" :key="item.courseOrderId">
-        <td>{{index+1}}</td>
-        <td>{{item.courseOrderId}}</td>
-        <td>{{item.createTime | formatTime}}</td>
-        <td>{{item.totalAmount}}</td>
-        <td>{{item.payableAmount}}</td>
-        <td>{{item.paidAmount}}</td>
-        <td>{{item.payableAmount-item.paidAmount}}</td>
-        <td>
-          {{item.chargingStatus == 0 ? '未缴费' : (item.chargingStatus ==  1  ? '欠费' : '已缴费') }}
-        </td>
-        <td>
-          <div class="tpl-table-black-operation">
-              <a  href="javascript:;" @click = showDetail(item.courseOrderId) v-if="item.chargingStatus != 2 "><i class="am-icon-edit"></i>缴费</a>
-              <a  href="javascript:;" @click = showDetail(item.courseOrderId)><i class="am-icon-edit"></i>订单详情</a>
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <el-table
+      :data="tableData"
+      border
+      stripe
+      style="min-width: 100%">
+      <el-table-column
+        fixed
+        prop="courseOrderId"
+        label="订单编号"
+        min-width="150">
+      </el-table-column>
+      <el-table-column
+        label="缴费时间"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.createTime | formatTime}}
+              </template>
+      </el-table-column>
+      <el-table-column
+        prop="totalAmount"
+        label="总金额"
+        min-width="100">
+      </el-table-column>
+      <el-table-column
+        prop="payableAmount"
+        label="应缴金额"
+        min-width="100">
+      </el-table-column>
+      <el-table-column
+        prop="paidAmount"
+        label="已缴金额"
+        min-width="100">
+      </el-table-column>
+      <el-table-column
+        label="欠费金额"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.payableAmount-scope.row.paidAmount}}
+                </template>
+      </el-table-column>
+      <el-table-column
+        label="缴费状态"
+        min-width="100">
+        <template scope="scope">
+          {{scope.row.chargingStatus == 0 ? '未缴费' : (scope.row.chargingStatus == 1 ? '欠费' : '已缴费') }}
+                </template>
+      </el-table-column>
+      <el-table-column
+        fixed="right"
+        label="操作"
+        width="180">
+        <template scope="scope">
+          <el-button size="small" :disabled="scope.row.chargingStatus == 2 " @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
+          <el-button size="small" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
     <window ref="order" title="订单详情">
       <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()" ></course-order>
     </window>

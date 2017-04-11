@@ -4,11 +4,11 @@
       <div class="widget am-cf">
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-form " v-show="isShow()">
+          <div class="am-g am-form " >
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="teacherName" v-model="query.teacherName" placeholder="请输入教师名称"/>
+                <input type="text" class="am-input-lg" name="selectedTeacher" v-model="query.selectedTeacher" placeholder="请输入教师名称"/>
               </div>
             </div>
 
@@ -18,7 +18,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
                   <span class="am-icon-search"></span>查询
@@ -29,39 +29,42 @@
 
           <!--table-->
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>序号</th>
-                <th>教师姓名</th>
-                <th>任教性质</th>
-                <th>任教科目</th>
-                <th>入职时间</th>
-                <th>电话号码</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(item, index) in tableData" :key="item.teacherId">
-                <td>{{index+1}}</td>
-                <td>{{item.teacherName}}</td>
-                <td>{{item.jobNature}}</td>
-                <td>{{item.teachSubjectNames}}</td>
-                <td>{{item.joinTime | formatDate}}</td>
-                <td>{{item.phoneNo}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="confirmArrangeTeacher(item)" v-show="isShow()">
-                      <i class="am-icon-edit"></i>确定
-                    </a>
-                    <a href="javascript:;" @click="">
-                      <i class="am-icon-edit"></i>查看占用情况
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                prop="teacherName"
+                label="教师姓名"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="teachSubjectNames"
+                label="任教科目"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="入职时间"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.joinTime | formatDate}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="phoneNo"
+                label="电话号码"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                width="200">
+                <template scope="scope">
+                  <el-button size="small" @click.native="confirmArrangeTeacher(scope.row)">确定</el-button>
+                  <el-button size="small" @click.native="">查看占用情况</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
 
           <div class="am-u-lg-12 am-cf">
@@ -70,9 +73,11 @@
             </div>
           </div>
 
-          <div class="am-align-left" v-show="isShow()">
-            <label>已选老师：</label>
-            <span v-for="(item, index) in $root.teacherName "><a href="javascript:;" @click="delTeacher(index)">{{item.teacherName}}<i class="am-icon-remove"></i></a></span>
+          <div class="am-g am-text-left">
+            <label class="am-u-sm-2">已选老师：</label>
+            <div class="am-u-sm-10 am-u-sm-pull-1 am-u-end">
+              <button class="am-btn am-btn-default am-btn-sm am-margin-left-xs" v-for="(item, index) in selectedTeacher ">{{item.teacherName}}<i @click="delTeacher(index)" class="am-icon-remove"></i></button>
+            </div>
           </div>
 
 
@@ -84,7 +89,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -100,16 +104,15 @@
         total:0,
         pageSize:5,
         pageNo:1,
-        query:{}
+        query:{},
+        selectedTeacher:[]
       }
     },
-    props: ['classId','isArrangeTeacher'],
+    props: ['courseClass'],
     watch:{
-      classId : function () {
-        if ( this.isArrangeTeacher=='1'){
-          this.loadTableData(this.pageNo);
-        }else{
-          this.loadNullData();
+      'courseClass.classId' : function () {
+        if(this.courseClass.classId ){
+          this.loadTableData()
         }
       }
     },
@@ -120,10 +123,8 @@
       $(window).smoothScroll();
     },
     created:function(){
-      if ( this.isArrangeTeacher=='1'){
-        this.loadTableData(this.pageNo);
-      }else{
-        this.loadNullData();
+      if(this.courseClass.classId ){
+        this.loadTableData()
       }
     },
     destroyed:function () {
@@ -132,14 +133,13 @@
       search:function(){
         this.loadTableData(this.pageNo)
       },
-      loadNullData:function () {
-        this.tableData = null;
-      },
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
-          classId:_this.classId,
+          busTeamId:_this.courseClass.busTeamId,
+          gradeName:_this.courseClass.gradeName,
+          subjectName:_this.courseClass.subjectName,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
@@ -154,8 +154,8 @@
       confirmArrangeTeacher:function(item){
         //将老师放进全局数组中
         var isHad = false;
-        for (var i = 0; i < this.$root.teacherName.length; i++) {
-          if (this.$root.teacherName[i].teacherId == item.teacherId) {
+        for (var i = 0; i < this.selectedTeacher.length; i++) {
+          if (this.selectedTeacher[i].teacherId == item.teacherId) {
             isHad = true
             this.$alert("老师已经被选了")
             break
@@ -163,23 +163,24 @@
         }
         //判断是否存在，如果不存在，则添加
         if(!isHad){
-          this.$root.teacherName.push(item)
+          this.selectedTeacher.push(item)
         }
       },
       delTeacher:function(index){
           //点击删除老师，从数组中移除
-        this.$root.teacherName.splice(index,1)
+        this.selectedTeacher.splice(index,1)
       },
       cancel:function(){
           //关闭，置空数组
-        this.$root.teacherName=[];
+        this.selectedTeacher=[];
       },
       nextStep:function(){
+        if(this.selectedTeacher.length == 0 ){
+          this.$alert('至少选择一个老师')
+          return
+        }
         //弹窗
-        this.$emit('goStep', 'step-two', {classId:this.classId,isArrangeTeacher:this.isArrangeTeacher});
-      },
-      isShow:function() {
-        return this.isArrangeTeacher!='1';
+        this.$emit('goStep', 'step-two', { teachers : this.selectedTeacher});
       }
     }
   }

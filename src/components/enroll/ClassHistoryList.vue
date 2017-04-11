@@ -1,58 +1,116 @@
 <template>
   <div>
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="4" class="who" checked>全部班级</span>
-      <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="0" class="who">在读班级</span>
-      <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="1" class="who">转出班级</span>
-      <!--<span class="am-u-lg-1"><input  type="radio" name="classStatus" value="2" class="who">退账户班级</span>-->
-      <span class="am-u-lg-1"><input  type="radio" name="classStatus" value="3" class="who">退费班级</span>
-      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-        <thead>
-        <tr>
-          <th>序号</th>
-          <th>班级名称</th>
-          <th>状态</th>
-          <th>期数</th>
-          <th>班级编号</th>
-          <th>校区</th>
-          <th>学科</th>
-          <th>老师</th>
-          <th>教室</th>
-          <th>原价</th>
-          <th>优惠金额</th>
-          <th>实缴金额</th>
-          <th>欠款金额</th>
-          <th>退款金额</th>
-          <th>开始讲次/结束讲次</th>
-          <th>班级已上讲次</th>
-          <th>开课时间</th>
-          <th>上课时间</th>
-        </tr>
-        </thead>
-        <tbody>
+      <div class="am-form">
+        <div class="am-form-group">
+          <label ><input  type="radio" name="regStatus" value=""  v-model="regStatus">全部班级</label>
+          <label ><input  type="radio" name="regStatus" value="0" v-model="regStatus">在读班级</label>
+          <label ><input  type="radio" name="regStatus" value="1" v-model="regStatus">转出班级</label>
+          <label ><input  type="radio" name="regStatus" value="3" v-model="regStatus">退费班级</label>
 
-        <tr v-for="(item, index) in tableData" :key="item.classId">
-          <td>{{index+1}}</td>
-          <td>{{item.className}}</td>
-          <td>{{item.status}}</td>
-          <td>{{item.periodName}}</td>
-          <td>{{item.classId}}</td>
-          <td>{{item.campusName}}</td>
-          <td>{{item.subjectName}}</td>
-          <td>{{item.teacherNames}}</td>
-          <td>{{item.roomName}}</td>
-          <td>{{item.totalAmount}}</td>
-          <td></td>
-          <td>{{item.paidAmount}}</td>
-          <td>{{item.totalAmount - item.paidAmount}}</td>
-          <td>{{item.amount}}</td>
-          <td>{{item.startAmount}} / {{item.endAmount}}</td>
-          <td>{{item.courseProgress}}</td>
-          <td>{{item.startCourseTime}}</td>
-          <td></td>
-        </tr>
-        </tbody>
-      </table>
+        </div>
+      </div>
+
+      <el-table
+        :data="tableData"
+        border
+        stripe
+        style="min-width: 100%">
+        <el-table-column
+          fixed
+          label="班级名称"
+          min-width="200">
+          <template scope="scope">
+            {{scope.row.courseClass.className}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="报读状态"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.studentReg.regStatus == 0 ? '在读' : scope.row.studentReg.regStatus ==  1 ? '转班' : scope.row.studentReg.regStatus ==  2 ? '退账户' :'退班退费' }}
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="期数"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.courseClass.periodName}}
+
+        </template>
+        </el-table-column>
+
+        <el-table-column
+          label="校区"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.courseClass.campusName}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="年级"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.courseClass.gradeName}}
+
+        </template>
+        </el-table-column>
+
+        <el-table-column
+          label="总金额"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.courseClass.studyingFee}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="已上/总讲数"
+          min-width="120">
+          <template scope="scope">
+            {{scope.row.courseClass.courseProgress}}/{{scope.row.courseClass.lectureAmount}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="报读开始讲数"
+          min-width="150">
+          <template scope="scope">
+            {{scope.row.studentReg.startAmount}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="报读结束讲数"
+          min-width="150">
+          <template scope="scope">
+            {{scope.row.studentReg.endAmount}}
+
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="报名讲数"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.studentReg.endAmount - scope.row.studentReg.startAmount + 1}}
+        </template>
+        </el-table-column>
+        <el-table-column
+          label="开课日期"
+          min-width="150">
+          <template scope="scope">
+            {{scope.row.courseClass.startCourseTime | formatDate }}
+        </template>
+        </el-table-column>
+        <el-table-column
+          prop="courseClass.studyingTime"
+          label="上课时间"
+          min-width="150">
+        </el-table-column>
+      </el-table>
+
     </div>
   </div>
 </template>
@@ -72,19 +130,21 @@
       var regStatus = 4;
       this.loadDataTable(regStatus);
     },
+    watch:{
+      regStatus:function(val){
+          console.log(this.regStatus)
+          this.loadDataTable()
+      }
+    },
     mounted:function () {
-      var _this = this;
-      $(".who").unbind("click").click(function () {
-        var regStatus = $(this).val();
-        _this.loadDataTable(regStatus);
-      })
+
     },
     methods: {
-      loadDataTable: function (regStatus) {
+      loadDataTable: function () {
         var _this = this;
         var studentId = this.$params('studentId');
         io.get(io.apiAdminClassHistoryList,{
-          regStatus:regStatus,
+          regStatus:this.regStatus,
           studentId:studentId,
         },function(ret){
           if(ret.success){

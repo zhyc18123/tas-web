@@ -20,38 +20,63 @@
             </div>
           </div>
           <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>姓名</th>
-                <th>学号</th>
-                <th>手机号码</th>
-                <th>出生日期</th>
-                <th>年级</th>
-                <th>就读学校</th>
-                <th>地区</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="item in tableData" :key="item.studentId">
-                <td>{{item.name}}</td>
-                <td>{{item.studentNo }}</td>
-                <td>{{item.phoneNo}}</td>
-                <td>{{item.birthday | formatDate }}</td>
-                <td>{{item.gradeName}}</td>
-                <td>{{item.school}}</td>
-                <td>{{item.location}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/enroll/student/reg/'+item.studentId)" v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 确认
-                    </a>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                fixed
+                label="学号"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.studentNo }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                fixed
+                prop="name"
+                label="姓名"
+                min-width="100">
+              </el-table-column>
+
+              <el-table-column
+                fixed
+                prop="phoneNo"
+                label="手机号码"
+                min-width="150">
+              </el-table-column>
+              <el-table-column
+                label="出生日期"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.birthday | formatDate }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="gradeName"
+                label="年级"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="school"
+                label="就读学校"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="location"
+                label="地区"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                fixed="right"
+                label="操作"
+                width="120">
+                <template scope="scope">
+                  <el-button size="small" @click.native="$router.push('/main/enroll/student/reg/'+scope.row.studentId)">确认</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">

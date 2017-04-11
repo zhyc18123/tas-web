@@ -21,19 +21,19 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <input type="text" class="am-input-lg" name="name" v-model="query.name" placeholder="请输入产品名称"/>
+              <input type="text" name="name" v-model="query.name" placeholder="请输入产品名称"/>
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+              <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search" ><span class="am-icon-search"></span>查询
               </button>
             </div>
           </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增产品</button>
               </div>
@@ -60,29 +60,10 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="操作人"
-                min-width="100">
-                <template scope="scope">
-
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="updateTime"
-                label="操作时间"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-dropdown>
-                    <span class="el-dropdown-link">
-                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
-                    </span>
-                    <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)">编辑</el-dropdown-item>
-                    </el-dropdown-menu>
-                  </el-dropdown>
+                  <el-button size="small" @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)">编辑</el-button>
                 </template>
               </el-table-column>
             </el-table>

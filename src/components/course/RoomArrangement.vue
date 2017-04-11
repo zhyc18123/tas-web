@@ -5,15 +5,20 @@
         <div class="widget-body  am-fr">
 
           <!--search-->
-          <div class="am-u-sm-12 am-form " v-show="isShow()">
-
+          <div class="am-g am-form">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.campusId" :options="campus">
+                  <option value="">校区</option>
+                </select2>
+              </div>
+            </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <input type="text" class="am-input-lg" name="roomName" v-model="query.roomName" placeholder="请输入教室名称"/>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -25,39 +30,42 @@
 
           <!--table-->
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>序号</th>
-                <th>所在校区</th>
-                <th>教室名称</th>
-                <th>座位数</th>
-                <th>备注</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="(item, index) in tableData" :key="item.roomId">
-                <td>{{index}}</td>
-                <td>{{item.campusName }}</td>
-                <td>{{item.roomName}}</td>
-                <td>{{item.seatAmount}}</td>
-                <td>{{item.memo}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" v-show="isShow()" @click="confirmArrangeRoom(item.roomId)" >
-                      <i class="am-icon-edit"></i> 确定
-                    </a>
-                    <a href="javascript:;" @click="roomUsingSituation" >
-                      <i class="am-icon-edit"></i> 查看占用情况
-                    </a>
-                  </div>
-                </td>
-              </tr>
-
-              </tbody>
-            </table>
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                label="所在校区"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.campusName }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="roomName"
+                label="教室名称"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="seatAmount"
+                label="座位数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="memo"
+                label="备注"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="操作"
+                width="220">
+                <template scope="scope">
+                  <el-button size="small" @click.native="confirmArrangeRoom(scope.row.roomId)">确定</el-button>
+                  <el-button size="small" @click.native="roomUsingSituation">查看占用情况</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
 
           <div class="am-u-lg-12 am-cf">
@@ -69,7 +77,6 @@
         </div>
       </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -86,31 +93,29 @@
         pageSize:10,
         pageNo:1,
         query:{},
+        campus:[]
       }
     },
-    props: ['classId','isArrangeRoom'],
-    components: {
-      Pagination
-    },
+    props: ['courseClass'],
+    components: { Pagination},
     watch:{
-      classId:function () {
-          if ( this.isArrangeRoom=='1'){
-            this.loadTableData(this.pageNo);
-          }else{
-              this.loadNullData();
-          }
+      'courseClass.classId':function () {
+        this.tableData = []
+        if(this.courseClass.classId){
+          this.loadCampus()
+        }
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
-      if (this.classId) this.loadTableData(this.pageNo);
+      if (this.courseClass.classId) {
+        this.loadTableData(this.pageNo)
+        this.loadCampus()
+      }
     },
     methods:{
-      loadNullData:function () {
-        this.tableData = null;
-      },
       search:function(){
         this.loadTableData(this.pageNo)
       },
@@ -118,7 +123,7 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminRoomListForClassArrangement,$.extend({
-          classId:this.classId,
+          areaTeamId :this.courseClass.areaTeamId ,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
@@ -132,12 +137,11 @@
       },
       confirmArrangeRoom:function (roomId) {
         var _this = this;
-        io.post(io.apiAdminArrangeRoom, {classId: this.classId, roomId: roomId},
+        io.post(io.apiAdminArrangeRoom, {classId: this.courseClass.classId, roomId: roomId},
           function (ret) {
           if (ret.success) {
             _this.$toast('OK');
             _this.$emit('arrangementSuccess');
-            _this.$emit('courseClass:new');
           } else {
             _this.$alert(ret.desc)
           }
@@ -147,10 +151,21 @@
         var _this = this;
         alert("coming soon");
       },
-      //已安排不显示安排按钮
-      isShow:function () {
-        return this.isArrangeRoom!='1';
+      loadCampus:function(){
+        var _this = this;
+        io.post(io.apiAdminAllCampus,{},
+          function (ret) {
+            if (ret.success) {
+              _this.campus = ret.data.map(function(item){
+                  return {value : item.campusId  , text : item.campusName}
+              })
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
       }
+
+
     }
   }
 </script>

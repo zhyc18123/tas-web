@@ -5,49 +5,65 @@
         <div class="widget-title am-fl">学生退费管理</div>
       </div>
       <div class="widget-body am-fr">
-        <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-          <thead>
-          <tr>
-            <th>序号</th>
-            <th>学生姓名</th>
-            <th>班级名称</th>
-            <th>申请退费讲次</th>
-            <th>退费金额</th>
-            <th>退费原因</th>
-            <th>退费方式</th>
-            <th>审批意见</th>
-            <th>状态</th>
-            <th>操作</th>
-          </tr>
-          </thead>
-          <tbody>
-
-          <tr v-for="(item,index) in tableData" :key="item.studentRefundId">
-            <td>{{index+1}}</td>
-            <td>{{item.studentName}}</td>
-            <td>{{item.className}}</td>
-            <td>{{item.refundLecture}}</td>
-            <td>{{item.amount}}</td>
-            <td>{{item.description}}</td>
-            <td>
-              <span v-if="item.refundWay==0">支付宝</span>
-              <span v-if="item.refundWay==1">微信</span>
-              <span v-if="item.refundWay==2">现金</span>
-              <span v-if="item.refundWay==3">余额账户</span>
-              <span v-if="item.refundWay==4">银行卡转账</span>
-            </td>
-            <td>{{item.returnResult}}</td>
-            <td>{{item.status==0?'处理中':(item.status==1?'已处理':'已拒绝')}}</td>
-            <td>
-              <div class="tpl-table-black-operation">
-                <a @click="editRefund(item.studentRefundId)">
-                  <i class="am-icon-edit"></i> 修改
-                </a>
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <el-table
+          :data="tableData"
+          border
+          stripe
+          style="min-width: 100%">
+          <el-table-column
+            fixed
+            prop="studentName"
+            label="学生姓名"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="className"
+            label="班级名称"
+            min-width="200">
+          </el-table-column>
+          <el-table-column
+            prop="refundLecture"
+            label="申请退费讲次"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="amount"
+            label="退费金额"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="description"
+            label="退费原因"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            label="退费方式"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.refundWay == 0 ? '支付宝' : scope.row.refundWay == 1 ? '微信' : scope.row.refundWay == 2 ? '现金' : scope.row.refundWay == 3 ? '余额账户':'银行卡转账' }}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="returnResult"
+            label="审批意见"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            label="状态"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.status==0?'处理中':(scope.row.status==1?'已处理':'已拒绝')}}
+                </template>
+          </el-table-column>
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="120">
+            <template scope="scope">
+              <el-button size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">修改</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
         <window ref="studentRefund" title="退费审批">
           <change-student-refund :studentRefundId="studentRefundId"
                                  @changeStudentRefund="$refs.studentRefund.close()"></change-student-refund>

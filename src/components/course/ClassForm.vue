@@ -9,107 +9,117 @@
       </div>
 
 
-      <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" >
+      <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
         <fieldset>
-          <div v-if="willShow">
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <select2  v-model="query.areaTeamId" :options="areaTeams">
-              <option value="">区域组</option>
-            </select2>
-          </div>
-          </div>
+          <div class="am-g" v-if="willShow">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">区域组</option>
+                </select2>
+              </div>
+            </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <select2  v-model="query.busTeamId" :options="busTeams">
-              <option value="">业务组</option>
-            </select2>
-          </div>
-          </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.busTeamId" :options="busTeams">
+                  <option value="">业务组</option>
+                </select2>
+              </div>
+            </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <select2  v-model="query.productId" :options="products">
-              <option value="请选择产品">请选择产品</option>
-            </select2>
-          </div>
-          </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.productId" :options="products">
+                  <option value="请选择产品">请选择产品</option>
+                </select2>
+              </div>
+            </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <select2  v-model="query.gradeId" :options="grades">
-              <option value="">年级</option>
-            </select2>
-          </div>
-          </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 required  v-model="query.season"  >
+                  <option value="">季节</option>
+                  <option value="春季班">春季班</option>
+                  <option value="暑期班">暑期班</option>
+                  <option value="秋季班">秋季班</option>
+                  <option value="寒假班">寒假班</option>
+                </select2>
+              </div>
+            </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2  v-model="query.subjectId" :options="subjects">
-                <option value="">科目</option>
-              </select2>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.gradeId" :options="grades">
+                  <option value="">年级</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.subjectId" :options="subjects">
+                  <option value="">科目</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName"
+                       placeholder="请输入课程名称"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                        @click="search"><span class="am-icon-search"></span>查询
+
+                </button>
+              </div>
             </div>
           </div>
-
-          <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">-->
-          <!--<div class="am-form-group">-->
-            <!--<select2  v-model="formData.periodId" :options="periodName">-->
-              <!--<option value="">期数</option>-->
-            <!--</select2>-->
-          <!--</div>-->
-          <!--</div>-->
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-          <div class="am-form-group">
-            <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName" placeholder="请输入课程名称"/>
-          </div>
-          </div>
-
-          <div class="am-form-group">
-            <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                    @click="search" ><span class="am-icon-search"></span>查询
-            </button>
-          </div>
-          </div>
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap" v-if="addShow">
-            <thead>
-            <tr>
-              <th v-if="willShow">选择</th>
-              <th>课程名称</th>
-              <th>产品</th>
-              <th>年级</th>
-              <th>学科</th>
-              <th>学位</th>
-              <th>讲数</th>
-              <th>学费</th>
-            </tr>
-            </thead>
-            <tbody>
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap"
+                   v-if="addShow">
+              <thead>
+              <tr>
+                <th v-if="willShow">选择</th>
+                <th>课程名称</th>
+                <th>产品</th>
+                <th>年级</th>
+                <th>学科</th>
+                <th>学位</th>
+                <th>讲数</th>
+                <th>学费</th>
+              </tr>
+              </thead>
+              <tbody>
 
-            <tr v-for="item in tableData" :key="item.courseTemplateId">
-              <td v-if="willShow">
-                <div class="am-radio">
-                  <label>
-                    <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
-                           :value="item.courseTemplateId" @click="fillData2Class(item)" required>
-                  </label>
-                </div>
-              </td>
-              <td>{{item.courseName }}</td>
-              <td>{{item.productName}}</td>
-              <td>{{item.gradeName}}</td>
-              <td>{{item.subjectName}}</td>
-              <td>{{item.quota}}</td>
-              <td>{{item.lectureAmount}}</td>
-              <td>{{item.studyingFee}}</td>
-            </tr>
-            </tbody>
-          </table>
+              <tr v-for="item in tableData" :key="item.courseTemplateId">
+                <td v-if="willShow">
+                  <div class="am-radio">
+                    <label>
+                      <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
+                             :value="item.courseTemplateId" @click="fillData2Class(item)" required>
+                    </label>
+                  </div>
+                </td>
+                <td>{{item.courseName }}</td>
+                <td>{{item.productName}}</td>
+                <td>{{item.gradeName}}</td>
+                <td>{{item.subjectName}}</td>
+                <td>{{item.quota}}</td>
+                <td>{{item.lectureAmount}}</td>
+                <td>{{item.studyingFee}}</td>
+              </tr>
+              </tbody>
+            </table>
 
 
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap" v-if="editShow">
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap"
+                   v-if="editShow">
               <thead>
               <tr>
                 <th>课程名称</th>
@@ -138,7 +148,8 @@
           <div class="am-u-lg-12 am-cf">
 
             <div class="am-fr">
-            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
             </div>
           </div>
 
@@ -154,20 +165,20 @@
           </div>
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
-              所在业务组
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在业务组
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 v-model="formData.busTeamId" :options="busTeamsData">
+              <select2 required v-model="formData.busTeamId" :options="busTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>
           </div>
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
-              期数
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 v-model="formData.periodId" :options="periods">
+              <select2 required v-model="formData.periodId" :options="periods">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -206,7 +217,7 @@
             </div>
           </div>
 
-          <div class="am-form-group am-u-sm-9 am-u-sm-offset-3 am-u-end">
+          <div class="am-form-group am-u-sm-12">
             <div class="am-tabs" data-am-tabs>
               <ul class="am-tabs-nav am-nav am-nav-tabs">
                 <li class="am-active"><a href="#tab1">课程简介</a></li>
@@ -214,10 +225,10 @@
               </ul>
               <div class="am-tabs-bd">
                 <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                  <editor v-model="formData.courseDescription" ></editor>
+                  <editor v-model="formData.courseDescription"></editor>
                 </div>
                 <div class="am-tab-panel am-fade" id="tab2">
-                  <editor v-model="formData.courseOutline" ></editor>
+                  <editor v-model="formData.courseOutline"></editor>
                 </div>
               </div>
             </div>
@@ -229,7 +240,7 @@
           </div>
         </fieldset>
       </form>
-      </div>
+    </div>
   </div>
 </template>
 
@@ -241,42 +252,42 @@
   export default{
     data(){
       return {
-        tableData:[],
-        total:0,
-        pageSize:5,
-        pageNo:1,
+        tableData: [],
+        total: 0,
+        pageSize: 5,
+        pageNo: 1,
         query: {
           areaTeamId: '',
           busTeamId: '',
-          gradeId:'',
-          subjectId:'',
-          courseName:'',
-          productId : ''
+          gradeId: '',
+          subjectId: '',
+          courseName: '',
+          productId: ''
         },
-        formData:{
+        formData: {
           areaTeamId: '',
           busTeamId: '',
-          productId : '',
-          periodId:'',
-          className:'',
-          no:'',
-          quota:'',
-          studyingFee:'',
-          courseDescription:'',
-          courseOutline:'',
+          productId: '',
+          periodId: '',
+          className: '',
+          no: '',
+          quota: '',
+          studyingFee: '',
+          courseDescription: '',
+          courseOutline: '',
         },
-        courseTemplateData:{
-          courseName:'',
-          productName:'',
-          gradeName:'',
-          subjectName:'',
-          quota:'',
-          lectureAmount:'',
-          studyingFee:'',
+        courseTemplateData: {
+          courseName: '',
+          productName: '',
+          gradeName: '',
+          subjectName: '',
+          quota: '',
+          lectureAmount: '',
+          studyingFee: '',
         },
-        products:[],
-        classDescription:'',
-        classOutline:''
+        products: [],
+        classDescription: '',
+        classOutline: ''
       }
     },
     components: {
@@ -424,31 +435,32 @@
             _this.$alert('请求服务器失败')
           })
       },
-      search:function(){
+      search: function () {
         this.loadTableData()
       },
-      loadTableData:function(pageNo){
+      loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseTemplateList,$.extend({
-          pageNo:_this.pageNo,
-          pageSize:_this.pageSize
-        },_this.query),function(ret){
-          if(ret.success){
+        io.post(io.apiAdminCourseTemplateList, $.extend({
+          pageNo: _this.pageNo,
+          pageSize: _this.pageSize
+        }, _this.query), function (ret) {
+          if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
-          }else{
+          } else {
             _this.$alert(ret.desc)
           }
         })
       },
       fillData2Class: function (item) {
-        this.formData.courseDescription = item.courseDescription;
-        this.formData.courseOutline = item.courseOutline;
-        this.formData.studyingFee = item.studyingFee;
-        this.formData.areaTeamId = item.areaTeamId;
-        this.formData.busTeamId = item.busTeamId;
-        this.formData.quota = item.quota;
+        this.formData.courseDescription = item.courseDescription
+        this.formData.courseOutline = item.courseOutline
+        this.formData.studyingFee = item.studyingFee
+        this.formData.areaTeamId = item.areaTeamId
+        this.formData.busTeamId = item.busTeamId
+        this.formData.quota = item.quota
+        this.formData.className = item.courseName;
       }
     },
   }
