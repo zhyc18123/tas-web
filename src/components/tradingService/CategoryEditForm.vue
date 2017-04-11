@@ -20,6 +20,17 @@
             </div>
 
             <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                所属分类
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 v-model="formData.categoryId" :options="category">
+                  <option value="">请选择</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <button type="submit" class="am-btn am-btn-primary am-radius">保存</button>
                 <button type="button" class="am-btn am-btn-primary am-radius" @click="$router.go(-1)">取消</button>
@@ -40,7 +51,11 @@
       return {
         productTypeData: [],
         formData: {
-        }
+          categoryId:'',
+          name:'',
+          parentId:'',
+        },
+        category: [],
       }
     },
 
@@ -58,6 +73,7 @@
             _this.$alert('请求服务器失败')
           })
       }
+      this.loadCategoryData();
     },
     mounted: function () {
       var _this = this;
@@ -103,7 +119,11 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSaveCategory, data,
+        var _categoryId = _this.$params('categoryId');
+        var _parentId = _this.formData.categoryId;
+        _this.formData.categoryId = _categoryId;
+        _this.formData.parentId = _parentId;
+        io.post(io.apiAdminEditCategory, data,
           function (ret) {
             complete.call()
             if (ret.success) {
@@ -118,7 +138,19 @@
             complete.call()
             _this.$alert('请求服务器失败')
           })
-      }
+      },
+      loadCategoryData:function() {
+        var _this = this
+        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+          if (ret.success) {
+            _this.category = ret.data.map(function (item) {
+              return {value: item.categoryId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 </script>

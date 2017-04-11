@@ -67,7 +67,8 @@ import ServiceManagerList from './components/tradingService/ServiceManagerList'
 import ServiceManagerForm from './components/tradingService/ServiceManagerForm'
 import ServiceManagerEditForm from './components/tradingService/ServiceManagerEditForm'
 import CategoryList from './components/tradingService/CategoryList'
-import CategoryForm from './components/tradingService/CategoryForm'
+import CategorySaveForm from './components/tradingService/CategorySaveForm'
+import CategoryEditForm from './components/tradingService/CategoryEditForm'
 import ProductTradingList from './components/tradingService/ProductTradingList'
 import ProductTradingForm from './components/tradingService/ProductTradingForm'
 import ProductRefundList from './components/tradingService/ProductRefundList'
@@ -79,6 +80,11 @@ import ClassRoomProtectList from './components/tradingService/ClassRoomProtectLi
 import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
 import BuyServiceList from './components/buyer/BuyServiceList'
 import BuyCommodityList from './components/buyer/BuyCommodityList'
+
+import SoldProductOrderList from './components/seller/SoldProductOrderList'
+import SoldServiceOrderList from './components/seller/SoldServiceOrderList'
+
+import SellerRegisterList from './components/platform/SellerRegisterList'
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -159,8 +165,8 @@ const router = new VueRouter({
       {path: 'tradingService/service/add' , component: ServiceManagerForm},
       {path: 'tradingService/service/edit/:productId' , component: ServiceManagerEditForm },
       {path: 'tradingService/category/list' , component: CategoryList },
-      {path: 'tradingService/category/add' , component: CategoryForm},
-      {path: 'tradingService/category/edit/:categoryId' , component: CategoryForm },
+      {path: 'tradingService/category/add' , component: CategorySaveForm},
+      {path: 'tradingService/category/edit/:categoryId' , component: CategoryEditForm },
       {path: 'tradingService/product/list' , component: ProductTradingList },
       {path: 'tradingService/product/add' , component: ProductTradingForm},
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
@@ -175,6 +181,11 @@ const router = new VueRouter({
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+
+      {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
+      {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
+
+      {path: 'platform/sellerRegister/list', component:SellerRegisterList},
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
