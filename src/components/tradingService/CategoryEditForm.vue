@@ -118,11 +118,14 @@
     methods: {
       save: function (complete) {
         var _this = this
-        var data = _this.formData
         var _categoryId = _this.$params('categoryId');
-        var _parentId = _this.formData.categoryId;
-        _this.formData.categoryId = _categoryId;
-        _this.formData.parentId = _parentId;
+        var _parentId;
+        if(_categoryId != _this.formData.categoryId) {
+          _parentId = _this.formData.categoryId;
+          _this.formData.categoryId = _categoryId;
+          _this.formData.parentId = _parentId;
+        }
+        var data = _this.formData
         io.post(io.apiAdminEditCategory, data,
           function (ret) {
             complete.call()

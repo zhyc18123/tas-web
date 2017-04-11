@@ -64,7 +64,7 @@
                 <td>{{item.price}}</td>
                 <td>{{item.unit}}</td>
                 <td>{{item.username}}</td>
-                <td>{{item.updateTime | formatDate}}</td>
+                <td>{{item.updateTime | formatTime}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/tradingService/service/edit/'+item.productId)" v-if="hasPermission('edit')">
