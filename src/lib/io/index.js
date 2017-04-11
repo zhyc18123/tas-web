@@ -90,7 +90,8 @@ const io = {
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseStatus = conf.baseApiPath + '/api/admin/changeCourseStatus'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
-
+    this.apiAdminDownloadCourseExcel = conf.baseApiPath+ '/api/admin/downloadCourseTemplate'
+    this.apiAdminClassStudentRegList = conf.baseApiPath+ '/api/admin/classStudentRegList'
 
     this.apiAdminCourseProductTemplateList  = conf.baseApiPath + '/api/admin/courseProductList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
@@ -147,6 +148,10 @@ const io = {
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
+    this.apiAdminSaveServiceManage = conf.baseApiPath + '/api/admin/trading/saveServiceManage'
+    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+    this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
+    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
 
   },
   getHeaders : function(){
