@@ -20,6 +20,18 @@
             </div>
 
             <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>所属分类
+              </label>
+              <div class="am-u-sm-3 am-u-end">
+                <select2 required v-model="query.categoryId" :options="category">
+                  <option value="">请选择</option>
+                </select2>
+              </div>
+            </div>
+
+
+            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <button type="submit" class="am-btn am-btn-primary am-radius">保存</button>
                 <button type="button" class="am-btn am-btn-primary am-radius" @click="$router.go(-1)">取消</button>
@@ -40,6 +52,9 @@
       return {
         productTypeData: [],
         formData: {
+        },
+        query: {
+          categoryId:'',
         }
       }
     },
@@ -57,6 +72,8 @@
           function () {
             _this.$alert('请求服务器失败')
           })
+      } else {
+        this.loadCategoryData();
       }
     },
     mounted: function () {
@@ -118,7 +135,19 @@
             complete.call()
             _this.$alert('请求服务器失败')
           })
-      }
+      },
+      loadCategoryData:function() {
+        var _this = this
+        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+          if (ret.success) {
+            _this.category = ret.data.map(function (item) {
+              return {value: item.categoryId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 </script>
