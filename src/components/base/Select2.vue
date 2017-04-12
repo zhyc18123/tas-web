@@ -1,5 +1,5 @@
 <template>
-    <select :class="">
+    <select :required="required" :disabled="disabled" >
       <slot></slot>
       <option v-for="item in options"  :value="item.value">{{item.text}}</option>
     </select>
@@ -8,7 +8,7 @@
 <script>
     export default{
         name: 'select2',
-        props:['value','options','required','class' ],
+        props:['value','options','required','disabled' ],
         watch:{
           value:function(){
              this.setSelect(this.value)
@@ -25,9 +25,7 @@
           $(_this.$el).on('change',function(){
             _this.$emit('input' , $(_this.$el).val() )
           })
-          if(this.required != undefined ){
-            $(this.$el).prop('required','required')
-          }
+
         },
         methods:{
           setSelect:function(val){

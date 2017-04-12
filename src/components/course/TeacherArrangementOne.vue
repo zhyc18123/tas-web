@@ -34,6 +34,11 @@
               border
               stripe
               style="min-width: 100%">
+              <el-table-column type="expand">
+                <template scope="scope">
+                  <calendar :teacherId="scope.row.teacherId"></calendar>
+                </template>
+              </el-table-column>
               <el-table-column
                 prop="teacherName"
                 label="教师姓名"
@@ -58,10 +63,9 @@
               </el-table-column>
               <el-table-column
                 label="操作"
-                width="200">
+                width="100">
                 <template scope="scope">
                   <el-button size="small" @click.native="confirmArrangeTeacher(scope.row)">确定</el-button>
-                  <el-button size="small" @click.native="">查看占用情况</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -95,6 +99,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
+  import Calendar from './CalendarForTeacher'
 
   export default{
     data:function(){
@@ -117,7 +122,7 @@
       }
     },
     components: {
-      Pagination,
+      Pagination,'calendar' :Calendar
     },
     mounted:function(){
       $(window).smoothScroll();

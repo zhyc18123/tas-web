@@ -34,7 +34,7 @@
                 <tr v-for="(item,index) in tableData" :key="item.classTimeId">
                   <td>{{item.lectureNo}}</td>
                   <td>{{item.classDate | formatDate }}</td>
-                  <td>{{item.startTime }}</td>
+                  <td>{{item.startTime }}-{{item.endTime }}</td>
                   <td>
                     <div class="am-form">
                       <select2 required v-model="item.teacherId" :options="teacherForSelect"></select2>
@@ -125,10 +125,13 @@
           teacherIds.push(this.tableData[i].teacherId)
         }
 
+        _this.$showLoading()
+
         io.post(io.apiAdminArrangeTeacher, {
          classId: this.courseClass.classId,
          teacherIds: teacherIds.join(",")
          }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.$emit('completed')
           } else {
