@@ -124,7 +124,6 @@ const io = {
     this.apiAdminChangeStudentRefund = conf.baseApiPath + '/api/admin/changeStudentRefund'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
 
-
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
@@ -152,6 +151,9 @@ const io = {
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
+    this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
+    this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
+    this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
 
   },
   getHeaders : function(){
