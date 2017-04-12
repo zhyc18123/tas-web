@@ -158,7 +158,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required v-model="formData.areaTeamId" :options="areaTeamsData">
+              <select2 required disabled v-model="formData.areaTeamId" :options="areaTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>

@@ -35,6 +35,11 @@
               border
               stripe
               style="min-width: 100%">
+              <el-table-column type="expand">
+                <template scope="scope">
+                  <calendar :roomId="scope.row.roomId"></calendar>
+                </template>
+              </el-table-column>
               <el-table-column
                 label="所在校区"
                 min-width="100">
@@ -59,10 +64,9 @@
               </el-table-column>
               <el-table-column
                 label="操作"
-                width="220">
+                width="100">
                 <template scope="scope">
                   <el-button size="small" @click.native="confirmArrangeRoom(scope.row.roomId)">确定</el-button>
-                  <el-button size="small" @click.native="roomUsingSituation">查看占用情况</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -84,6 +88,10 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
+  import Calendar from './CalendarForRoom'
+  require('fullcalendar/dist/fullcalendar.css')
+  require('fullcalendar')
+  require('fullcalendar/dist/locale/zh-cn.js')
 
   export default{
     data:function(){
@@ -97,7 +105,7 @@
       }
     },
     props: ['courseClass'],
-    components: { Pagination},
+    components: { Pagination ,'calendar':Calendar },
     watch:{
       'courseClass.classId':function () {
         this.tableData = []
@@ -136,14 +144,16 @@
       },
       confirmArrangeRoom:function (roomId) {
         var _this = this;
+        _this.$showLoading()
         io.post(io.apiAdminArrangeRoom, {classId: this.courseClass.classId, roomId: roomId},
           function (ret) {
-          if (ret.success) {
-            _this.$toast('OK');
-            _this.$emit('arrangementSuccess');
-          } else {
-            _this.$alert(ret.desc)
-          }
+            _this.$hiddenLoading()
+            if (ret.success) {
+              _this.$toast('OK');
+              _this.$emit('arrangementSuccess');
+            } else {
+              _this.$alert(ret.desc)
+            }
         })
       },
       loadCampus:function(){
@@ -159,8 +169,6 @@
             }
           })
       }
-
-
     }
   }
 </script>

@@ -97,21 +97,13 @@ Vue.use(VueUI)
 Vue.use(VueResource)
 
 const Index = { template: '<div>Index YYYY</div>' }
-const Refresh = {
-  beforeCreate:function(){
-    this.$router.back()
-  },
-  render:function(){
-    return '辅助刷新组件'
-  }
-}
+
 
 const router = new VueRouter({
   routes:[{
     path: '/main',
     component: Main,
     children:[
-      {path: 'r' , component: Refresh },
       {path: 'index' , component: Index },
       {path: 'sys/user/profile' , component: UserProfile },
       {path: 'sys/user/list' , component: UserList },
