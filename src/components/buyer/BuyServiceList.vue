@@ -68,7 +68,7 @@
             <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"  v-if="items.serviceOrder==1">
               <div class="am-panel-hd">
-                <span>{{items.serviceOrder.createDate | formatDate}}</span>
+                <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
 

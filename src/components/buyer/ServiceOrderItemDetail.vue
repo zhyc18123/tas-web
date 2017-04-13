@@ -31,7 +31,7 @@
 
             <div class="am-panel am-panel-default">
               <div class="am-panel-hd">
-                <span>{{tableData.createDate | formatDate}}</span>
+                <span>{{tableData.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
               </div>
 

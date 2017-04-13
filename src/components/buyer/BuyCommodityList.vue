@@ -70,7 +70,7 @@
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==0">
               <div class="am-panel-hd">
-                <span>{{items.serviceOrder.createDate | formatDate}}</span>
+                <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
 
