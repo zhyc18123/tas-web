@@ -2,6 +2,9 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-body am-fr">
+        <div class="widget-function am-fr">
+          <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+        </div>
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
           <fieldset>
 
@@ -29,11 +32,8 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品价格
               </label>
-              <div class="am-u-sm-3 input-field">
+              <div class="am-u-sm-9 input-field">
                 <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">
-              </div>
-              <div class="am-u-sm-6 input-field am-lg-text-left">
-                元
               </div>
             </div>
 
@@ -45,17 +45,6 @@
                 <input type="text" class="am-form-field" placeholder="请输入商品单位" required v-model="formData.unit">
               </div>
             </div>
-
-            <!--<div class="am-form-group">-->
-              <!--<label class="am-u-sm-3 am-form-label">-->
-                <!--头像-->
-              <!--</label>-->
-              <!--<div class="am-u-sm-9 am-form-file input-field">-->
-                <!--<file-upload extensions="jpg,png" @uploaded="uploadAvatar">-->
-                  <!--<img class="am-margin-top" :src="formData.avatarUrl">-->
-                <!--</file-upload>-->
-              <!--</div>-->
-            <!--</div>-->
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -69,15 +58,10 @@
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-                <a href="javascript:void(0)" @click="saveServiceProduct">
-                  <button class="am-btn am-btn-primary">保存</button>
-                </a>
-                <a href="javascript:void(0)" data-am-modal-close>
-                  <button class="am-btn am-btn-primary">取消</button>
-                </a>
+                <button type="submit" class="am-btn am-btn-primary">保存</button>
+                <button type="button" class="am-btn am-btn-primary am-radius" @click="$router.go(-1)">取消</button>
               </div>
             </div>
-
           </fieldset>
         </form>
       </div>
@@ -102,29 +86,64 @@
       }
     },
     created: function () {
-      this.loadCategoryData();
-    },
-    methods: {
-      saveServiceProduct:function () {
+      var productId = this.$params('productId');
+      if (productId) {
         var _this = this
-        var data = _this.formData
-        io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
+        io.post(io.apiAdminServiceProductDetail, {productId: productId},
           function (ret) {
             if (ret.success) {
-              _this.$toast('OK')
-              _this.$root.$emit('addSuccess:new')
-            } else {
-              _this.$alert(ret.desc)
+              _this.formData = ret.data
             }
           },
           function () {
             _this.$alert('请求服务器失败')
           })
-        _this.$emit('addSuccess')
+      }
+      this.loadCategoryData();
+    },
+    mounted:function(){
+      var _this = this ;
+      $('#' + this.id ).validator({
+        submit:function(e){
+          e.preventDefault();
+          var $submitBtn = $('button[type=submit]',e.target);
+          $submitBtn.attr("disabled" ,"disabled" )
+          _this.$showLoading()
+          var formValidity = this.isFormValid();
+          var complete = function(){
+            _this.$hiddenLoading()
+            $submitBtn.removeAttr("disabled" ,"disabled" )
+          }
+          if(formValidity){
+            _this.save(complete);
+          }else{
+            complete.call()
+          }
+        }
+      });
+    },
+    methods: {
+      save:function (complete) {
+        var _this = this
+        var data = _this.formData;
+        io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
+          function (ret) {
+            complete.call();
+            if (ret.success) {
+              _this.$toast('OK')
+              _this.$router.push('/main/tradingService/product/list');
+            } else {
+              _this.$alert(ret.desc)
+            }
+          },
+          function () {
+            complete.call();
+            _this.$alert('请求服务器失败')
+          })
       },
       loadCategoryData: function () {
         var _this = this
-        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+        io.post(io.apiAdminGetAllCategoryDetail, {type:0}, function (ret) {
           if (ret.success) {
             _this.category = ret.data.map(function (item) {
               return {value: item.categoryId, text: item.name}

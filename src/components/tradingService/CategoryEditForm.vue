@@ -144,7 +144,7 @@
       },
       loadCategoryData:function() {
         var _this = this
-        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+        io.post(io.apiAdminGetCategory, {}, function (ret) {
           if (ret.success) {
             _this.category = ret.data.map(function (item) {
               return {value: item.categoryId, text: item.name}
