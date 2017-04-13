@@ -151,7 +151,7 @@ const io = {
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
-    this.apiAdminSaveServiceManage = conf.baseApiPath + '/api/admin/trading/saveServiceManage'
+    this.apiAdminUploadFile = conf.baseApiPath + '/api/admin/trading/uploadImage'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
@@ -266,7 +266,7 @@ const io = {
     })
   },
   postUploadFile:function (url,data,success) {
-    Vue.http.post(io.apiAdminSaveServiceProductImage+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+    Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);
     })
   },

@@ -80,7 +80,7 @@
                     11111<img src="item.imageUrl"/>
                   </span>
                   <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.price}}</span>
+                  <span class="am-u-sm-1">￥{{item.price}}</span>
                   <span class="am-u-sm-1">{{item.amount}}</span>
                   <span class="am-u-sm-2">{{item.price}}</span>
                   <span class="am-u-sm-2">{{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}</span>
