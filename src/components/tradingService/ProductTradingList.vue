@@ -35,7 +35,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="addServiceProduct()">新增</button>
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/product/add')">新增</button>
               </div>
             </div>
 
@@ -89,11 +89,6 @@
       </div>
     </div>
 
-    <window ref="add_Serviceproduct" title="新建商品">
-      <add-ServiceProduct @addSuccess="$refs.add_Serviceproduct.close()"></add-ServiceProduct>
-    </window>
-
-
   </div>
 
 
@@ -104,7 +99,6 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ProductTradingForm from '../tradingService/ProductTradingForm'
 
   export default{
     data:function(){
@@ -123,7 +117,6 @@
     },
     components: {
       Pagination,
-      'add-ServiceProduct':ProductTradingForm
     },
     mounted:function(){
       $(window).smoothScroll()
@@ -131,11 +124,6 @@
     created:function(){
       this.loadTableData(this.pageNo);
       this.loadCategoryData();
-      var _this = this
-      this.$root.$on('product:new',function () {
-        _this.pageNo = 1
-        _this.loadTableData(_this.pageNo)
-      })
     },
     methods:{
       search:function(){
@@ -143,7 +131,7 @@
       },
       loadCategoryData:function() {
         var _this = this
-        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+        io.post(io.apiAdminGetAllCategoryDetail, {type:0}, function (ret) {
           if (ret.success) {
             _this.category = ret.data.map(function (item) {
               return {value: item.categoryId, text: item.name}
@@ -158,7 +146,8 @@
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminServiceProductList,$.extend({
           pageNo:_this.pageNo,
-          pageSize:_this.pageSize
+          pageSize:_this.pageSize,
+          type: 0,
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
@@ -167,14 +156,6 @@
             _this.$alert(ret.desc)
           }
         })
-      },
-      addServiceProduct:function () {
-        //弹窗
-        var _this = this;
-        _this.$refs.add_Serviceproduct.show({
-          width : 1500,
-          height: 600
-        });
       },
       del:function (productId) {
         var _this = this ;

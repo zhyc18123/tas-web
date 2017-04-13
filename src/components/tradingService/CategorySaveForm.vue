@@ -59,6 +59,19 @@
     },
 
     created: function () {
+      var categoryId = this.$params('categoryId');
+      if (categoryId) {
+        var _this = this
+        io.post(io.apiAdminCategoryDetail, {categoryId: categoryId},
+          function (ret) {
+            if (ret.success) {
+              _this.formData = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      }
       this.loadCategoryData();
     },
     mounted: function () {
@@ -123,7 +136,7 @@
       },
       loadCategoryData:function() {
         var _this = this
-        io.post(io.apiAdminGetAllCategoryDetail, {}, function (ret) {
+        io.post(io.apiAdminGetCategory, {}, function (ret) {
           if (ret.success) {
             _this.category = ret.data.map(function (item) {
               return {value: item.categoryId, text: item.name}
