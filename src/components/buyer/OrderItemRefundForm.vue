@@ -49,8 +49,19 @@
       </div>
 
       <div class="am-g">
-        <div class="am-u-sm-12 am-text-left">
-          <span>退费原因：{{formData.reason}}</span>
+        <div class="am-u-sm-2 am-text-left">
+          <span>退费原因：</span>
+        </div>
+        <div class="am-u-sm-10 am-text-left">
+          <label class="am-radio-inline">
+            <input type="radio" value="商品质量问题" name="reason" v-model="formData.reason"> 商品质量问题
+          </label>
+          <label class="am-checkbox-inline">
+            <input type="radio" value="个人原因" name="reason" v-model="formData.reason"> 个人原因
+          </label>
+          <label class="am-checkbox-inline">
+            <input type="radio" value="无条件退款" name="reason" v-model="formData.reason"> 无条件退款
+          </label>
         </div>
       </div>
 
@@ -59,35 +70,12 @@
           <span>退费说明：</span>
         </div>
         <div class="am-u-sm-10  am-text-left">
-          <p>{{formData.description}}</p>
-        </div>
-      </div>
-
-      <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
-          <span>审批状态：</span>
-        </div>
-        <div class="am-u-sm-10 am-text-left">
-          <label class="am-checkbox-inline">
-            <input type="radio" value="1" name="reason" v-model="formData.status"> 已处理
-          </label>
-          <label class="am-checkbox-inline">
-            <input type="radio" value="2" name="reason" v-model="formData.status"> 已拒绝
-          </label>
-        </div>
-      </div>
-
-      <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
-          <span>审批说明：</span>
-        </div>
-        <div class="am-u-sm-10  am-text-left">
-          <textarea v-model="formData.returnResult">{{tableData.returnResult}}</textarea>
+          <textarea v-model="formData.description"></textarea>
         </div>
       </div>
 
       <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-        <button type="button" class="am-btn am-btn-primary" @click="confirm(formData)">提交审批</button>
+        <button type="button" class="am-btn am-btn-primary" @click="confirmRefund(formData)">提交退费申请</button>
         <a href="javascript:void(0)" data-am-modal-close>
           <button class="am-btn am-btn-primary">取消</button>
         </a>
@@ -107,15 +95,17 @@
     data: function () {
       return {
         tableData: [],
-        formData:''
+        formData:{
+          returnResult:'',
+        }
       }
     },
-    props: ['serviceProductRefundId'],
+    props: ['orderItemId'],
     created: function () {
-      this.loadTableData(this.serviceProductRefundId)
+      this.loadTableData(this.orderItemId)
     },
     watch:{
-      serviceProductRefundId:function (val) {
+      orderItemId:function (val) {
         this.loadTableData(val)
       }
     },
@@ -123,39 +113,43 @@
       $(window).smoothScroll()
     },
     methods: {
-      loadTableData: function (serviceProductRefundId) {
+      loadTableData: function (orderItemId) {
         var _this = this
-        if (serviceProductRefundId) {
-          io.post(io.apiAdminProductRefundDetail, {serviceProductRefundId: serviceProductRefundId},
+        if (orderItemId) {
+          io.post(io.apiAdminOrderItemDetail, {orderItemId: orderItemId},
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data
-                _this.tableData.createTime = ''
-                _this.tableData.updateTime = ''
-                _this.formData = _this.tableData
-
+                _this.formData.price = _this.tableData.price
+                _this.formData.orderItemId =orderItemId
+                _this.formData.orderId = _this.tableData.orderId
+                _this.formData.productId = _this.tableData.productId
+                _this.formData.productName = _this.tableData.productName
+                _this.formData.sellerId = _this.tableData.sellerId
+                _this.formData.sellerrName = _this.tableData.sellerName
+                _this.formData.reason = '无条件退款'
+                _this.formData.description = ''
               } else {
                 _this.$alert(ret.desc)
               }
             })
         }
       },
-      confirm: function (formData) {
+      confirmRefund: function (formData) {
         var _this = this
         io.post(io.apiAdminSaveOrUpdateProductRefund, $.extend({},formData),
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-              _this.$root.$emit('productRefund:new')
+              _this.$root.$emit('orderList:new')
             } else {
               _this.$alert('申请失败')
             }
           })
-        _this.$emit('changeProductRefund')
+        _this.$emit('refundApply')
       }
     }
   }
 
 
 </script>
-

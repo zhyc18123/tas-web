@@ -68,21 +68,23 @@ import ProfitReportDetail from './components/settlement/ProfitReportDetail'
 
 import ServiceManagerList from './components/tradingService/ServiceManagerList'
 import ServiceManagerForm from './components/tradingService/ServiceManagerForm'
-import ServiceManagerEditForm from './components/tradingService/ServiceManagerEditForm'
+import ServiceManagerEditForm from './components/tradingService/ServiceManagerForm'
 import CategoryList from './components/tradingService/CategoryList'
-import CategorySaveForm from './components/tradingService/CategorySaveForm'
 import CategoryEditForm from './components/tradingService/CategoryEditForm'
+import CategorySaveForm from './components/tradingService/CategorySaveForm'
 import ProductTradingList from './components/tradingService/ProductTradingList'
-import ProductTradingForm from './components/tradingService/ProductTradingForm'
 import ProductRefundList from './components/tradingService/ProductRefundList'
 import ProductRefundEditForm from './components/tradingService/ProductRefundEditForm'
-import ProductTradingEditForm from './components/tradingService/ProductTradingEditForm'
+import ProductTradingForm from './components/tradingService/ProductTradingForm'
 import CampusManageForm from './components/tradingService/CampusManageForm'
 import CampusManageList from './components/tradingService/CampusManageList'
 import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
 import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
+
 import BuyServiceList from './components/buyer/BuyServiceList'
 import BuyCommodityList from './components/buyer/BuyCommodityList'
+import ProductOrderItemDetail from './components/buyer/ProductOrderItemDetail'
+import ServiceOrderItemDetail from './components/buyer/ServiceOrderItemDetail'
 
 import SoldProductOrderList from './components/seller/SoldProductOrderList'
 import SoldServiceOrderList from './components/seller/SoldServiceOrderList'
@@ -163,25 +165,27 @@ const router = new VueRouter({
       {path: 'settlement/account/report/profit/:mainAccountId' , component: ProfitReportDetail },
 
       {path: 'tradingService/service/list' , component: ServiceManagerList },
-      {path: 'tradingService/service/add' , component: ServiceManagerForm},
-      {path: 'tradingService/service/edit/:productId' , component: ServiceManagerEditForm },
+      {path: 'tradingService/service/add' , component: ServiceManagerEditForm},
+      {path: 'tradingService/service/edit/:productId' , component: ServiceManagerForm },
       {path: 'tradingService/category/list' , component: CategoryList },
       {path: 'tradingService/category/add' , component: CategorySaveForm},
       {path: 'tradingService/category/edit/:categoryId' , component: CategoryEditForm },
       {path: 'tradingService/product/list' , component: ProductTradingList },
       {path: 'tradingService/product/add' , component: ProductTradingForm},
+      {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
-      {path: 'tradingService/product/edit/:productId' , component: ProductTradingEditForm },
-      {path: 'tradingService/rent/list', component:CampusManageList},
+      {path: 'tradingService/campusManage/list', component:CampusManageList},
       {path: 'tradingService/campusManage/add', component:CampusManageForm},
-      {path: 'tradingService/campusManage/edit/:productId', component:CampusManageForm},
-      {path: 'tradingService/rent/list', component:ClassRoomProtectList},
+      {path: 'tradingService/campusManage/edit:productId', component:CampusManageForm},
+      {path: 'tradingService/classRoomProtect/list', component:ClassRoomProtectList},
       {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
       {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+      {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
+      {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},

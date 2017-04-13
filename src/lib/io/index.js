@@ -126,7 +126,6 @@ const io = {
     this.apiAdminChangeStudentRefund = conf.baseApiPath + '/api/admin/changeStudentRefund'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
 
-
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
@@ -145,15 +144,25 @@ const io = {
     this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
 
+    this.apiAdminGetCategory = conf.baseApiPath + '/api/admin/trading/getCategoryMessage'
     this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
     this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
+
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
-    this.apiAdminSaveServiceManage = conf.baseApiPath + '/api/admin/trading/saveServiceManage'
+    this.apiAdminUploadFile = conf.baseApiPath + '/api/admin/trading/uploadImage'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
+    this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
+    this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
+    this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
+    this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
+    this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
+    this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
+    this.apiAdminProductRefundDetail = conf.baseApiPath + '/api/admin/trading/productRefundDetail'
 
   },
   getHeaders : function(){
@@ -257,6 +266,11 @@ const io = {
   },
   postMitiFile:function (url,data,success) {
     Vue.http.post(io.importCourseExcel+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+      if (success) success(data);
+    })
+  },
+  postUploadFile:function (url,data,success) {
+    Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);
     })
   },
