@@ -80,8 +80,11 @@ import CampusManageForm from './components/tradingService/CampusManageForm'
 import CampusManageList from './components/tradingService/CampusManageList'
 import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
 import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
+
 import BuyServiceList from './components/buyer/BuyServiceList'
 import BuyCommodityList from './components/buyer/BuyCommodityList'
+import ProductOrderItemDetail from './components/buyer/ProductOrderItemDetail'
+import ServiceOrderItemDetail from './components/buyer/ServiceOrderItemDetail'
 
 import SoldProductOrderList from './components/seller/SoldProductOrderList'
 import SoldServiceOrderList from './components/seller/SoldServiceOrderList'
@@ -93,21 +96,13 @@ Vue.use(VueUI)
 Vue.use(VueResource)
 
 const Index = { template: '<div>Index YYYY</div>' }
-const Refresh = {
-  beforeCreate:function(){
-    this.$router.back()
-  },
-  render:function(){
-    return '辅助刷新组件'
-  }
-}
+
 
 const router = new VueRouter({
   routes:[{
     path: '/main',
     component: Main,
     children:[
-      {path: 'r' , component: Refresh },
       {path: 'index' , component: Index },
       {path: 'sys/user/profile' , component: UserProfile },
       {path: 'sys/user/list' , component: UserList },
@@ -189,6 +184,8 @@ const router = new VueRouter({
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+      {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
+      {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},

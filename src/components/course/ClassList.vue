@@ -185,6 +185,11 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
+                prop="periodName"
+                label="期数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
                 prop="campusName"
                 label="校区"
                 min-width="200">
@@ -248,11 +253,7 @@
                 label="科目"
                 min-width="100">
               </el-table-column>
-              <el-table-column
-                prop="periodName"
-                label="期名"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 label="状态"
                 min-width="100">
