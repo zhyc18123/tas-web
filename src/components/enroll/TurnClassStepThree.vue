@@ -21,7 +21,7 @@
           <td>{{tableData.teacherNames}}</td>
         </tr>
         <tr>
-          <td class="bgColor">以上讲次：</td>
+          <td class="bgColor">已上讲次：</td>
           <td>{{tableData.studyAmount}}/{{tableData.lectureAmount}}</td>
           <td class="bgColor">启报讲次：</td>
           <td>{{tableData.startAmount}}</td>
@@ -38,14 +38,12 @@
         <label class="am-radio-inline">
           <span>{{tableData.balanceAmount}}</span>
         </label>
-        </label>
       </div>
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <a href="javascript:void(0)" data-am-modal-close>
-        <button type="button" class="am-btn am-btn-primary" @click="confirm(tableData)">确定</button>
-      </a>
+      <button type="button" class="am-btn am-btn-primary" @click="back">上一步</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirm()">确定</button>
     </div>
 
 
@@ -69,6 +67,7 @@
 
 <script>
   import io from '../../lib/io'
+  import math from '../../lib/math'
 
   import Pagination from '../base/Pagination'
   import ChooseClass from  './TurnClassStepTwo'
@@ -77,7 +76,7 @@
     data: function () {
       return {
         tableData: [],
-        formData: []
+        formData: {}
       }
     },
     props: ['args'],
@@ -91,7 +90,7 @@
             _this.tableData = ret.data
             _this.tableData.startAmount = item.startAmount
             _this.tableData.endAmount = item.endAmount
-            _this.tableData.balanceAmount = formData.remainingAmount - (item.endAmount - item.startAmount + 1) * (ret.data.studyingFee / ret.data.lectureAmount)
+            _this.tableData.balanceAmount = math.round(formData.remainingAmount - math.mul( (item.endAmount - item.startAmount + 1) , math.div(ret.data.studyingFee , ret.data.lectureAmount)),2)
             _this.formData = formData
             _this.formData.oldClassId = _this.formData.classId
             _this.formData.startAmount = item.startAmount
@@ -103,22 +102,16 @@
           }
         })
     },
-
-    watch: {},
     mounted: function () {
       $(window).smoothScroll()
     },
     methods: {
-      loadTableData: function () {
-        var _this = this
-      },
-      confirm: function (tableData) {
+      confirm: function () {
         var _this = this
         io.post(io.apiAdminTurnClass, $.extend({},_this.formData),
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
-
               //通过实践通知订单组件重新加载数据
               _this.$root.$emit('order:new')
               _this.$root.$emit('class:new')
@@ -126,6 +119,9 @@
               _this.$alert(ret.desc)
             }
           })
+      },
+      back: function () {
+        this.$emit('goStep', 'step-two',this.args)
       }
     }
   }

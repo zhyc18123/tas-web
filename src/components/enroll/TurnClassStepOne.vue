@@ -8,47 +8,47 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td>{{tableData.periodName}}</td>
+          <td>{{formData.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td>{{tableData.busTeamName}}</td>
+          <td>{{formData.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td>{{tableData.className}}</td>
+          <td>{{formData.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">班级编号：</td>
-          <td>{{tableData.classId}}</td>
+          <td>{{formData.classId}}</td>
           <td class="bgColor">任课老师：</td>
-          <td>{{tableData.teacherNames}}</td>
+          <td>{{formData.teacherNames}}</td>
           <td class="bgColor">教室：</td>
-          <td>{{tableData.roomName}}</td>
+          <td>{{formData.roomName}}</td>
         </tr>
         <tr>
           <td class="bgColor">开课日期：</td>
-          <td>{{tableData.startCourseTime | formatDate}}</td>
+          <td>{{formData.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td>{{tableData.sum}}</td>
+          <td>{{formData.regLectureAmount}}</td>
           <td class="bgColor">已交金额：</td>
-          <td>{{tableData.payAmount}}</td>
+          <td>{{formData.payAmount}}</td>
         </tr>
         </tbody>
       </table>
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="bold-font">
-          以上讲次:
+          已上讲次:
         </label>
-        <label class="am-radio-inline">
+        <label class="am-radio-inline" style="width: 70px;">
           <!--<input type="text" v-model="formData.studyAmount"/>-->
           <select v-model="formData.studyAmount">
-            <option>0</option>
-            <option v-for="n in tableData.sum">{{n}}</option>
+            <option value="0">0</option>
+            <option v-for="n in formData.regLectureAmount" :value="n">{{n}}</option>
           </select>
         </label>
         <label class="bold-font">
-          剩余金额：￥
+          &nbsp;剩余金额：
         </label>
         <label class="am-radio-inline font-color bold-font">
-          <span>{{remaining>=0?remaining:tableData.payAmount}}</span>
+          <span>{{this.formData.remainingAmount}}￥</span>
         </label>
       </div>
 
@@ -102,15 +102,17 @@
 
 <script>
   import io from '../../lib/io'
+  import math from '../../lib/math'
 
   import Pagination from '../base/Pagination'
 
   export default{
     data: function () {
       return {
-        tableData: [],
         formData: {
-          studyAmount: 0
+          reason:'与原校时间冲突',
+          studyAmount: 0,
+          remainingAmount :0
         },
       }
     },
@@ -132,41 +134,34 @@
         if(val){
           this.loadTableData(val)
         }
-      }
-    },
-    computed:{
-      remaining:function () {
-        this.formData.remainingAmount = (this.tableData.payAmount) - (this.formData.studyAmount * this.tableData.per)
-        return (this.tableData.payAmount) - (this.formData.studyAmount * this.tableData.per)
+      },
+      'formData.studyAmount':function(){
+          this.calRemainAmount()
       }
     },
     methods: {
 
       loadTableData: function (regId) {
-        if (regId != null) {
+        if (regId) {
           var _this = this
           io.post(io.apiAdminShowOldClassDetail, {regId: regId},
             function (ret) {
               if (ret.success) {
-                _this.tableData = ret.data
-                _this.tableData.sum = (ret.data.endAmount - ret.data.startAmount) + 1
-                _this.tableData.per = (ret.data.totalAmount / _this.tableData.sum)
-                _this.remaining = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
-                //_this.tableData.remainingAmount = (ret.data.payAmount) - (_this.formData.studyAmount * _this.tableData.per)
-                _this.formData.reason = '与原校时间冲突'
-                _this.formData.regId = ret.data.regId
-                _this.formData.classId = ret.data.classId
-                _this.formData.studyingFee = ret.data.studyingFee
-                _this.formData.endAmount = ret.data.endAmount
-                _this.formData.counts = ret.data.lectureAmount
+                _this.formData = $.extend({},_this.formData,ret.data)
+                _this.formData.regLectureAmount = (ret.data.endAmount - ret.data.startAmount) + 1
+                _this.formData.per = math.div(ret.data.totalAmount , _this.formData.regLectureAmount )
+                _this.calRemainAmount()
               } else {
                 _this.$alert(ret.desc)
               }
             })
         }
       },
+      calRemainAmount :function(){
+        this.formData.remainingAmount = math.round( math.sub( this.formData.totalAmount , math.mul( this.formData.studyAmount , this.formData.per )), 2)
+      },
       nextStep: function () {
-        this.$emit('goStep', 'step-two', {regId: this.regId, formData: this.formData})
+        this.$emit('goStep', 'step-two', {formData: this.formData})
       }
     }
   }

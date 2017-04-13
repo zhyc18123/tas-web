@@ -18,6 +18,20 @@
           min-width="200">
         </el-table-column>
         <el-table-column
+          fixed
+          prop="periodName"
+          label="期数"
+          min-width="100">
+        </el-table-column>
+        <el-table-column
+          fixed
+          label="已报/学位数"
+          min-width="100">
+          <template scope="scope">
+            {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+        </template>
+        </el-table-column>
+        <el-table-column
           prop="startAmount"
           label="开始讲数"
           min-width="100">
@@ -32,11 +46,7 @@
           label="讲数"
           min-width="100">
         </el-table-column>
-        <el-table-column
-          prop="periodName"
-          label="期数"
-          min-width="100">
-        </el-table-column>
+
         <el-table-column
           prop="gradeName"
           label="年级"
@@ -47,13 +57,7 @@
           label="学费"
           min-width="100">
         </el-table-column>
-        <el-table-column
-          label="已报/学位数"
-          min-width="100">
-          <template scope="scope">
-            {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
-        </template>
-        </el-table-column>
+
         <el-table-column
           prop="teacherNames"
           label="老师"

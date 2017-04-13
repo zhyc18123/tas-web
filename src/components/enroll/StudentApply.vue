@@ -100,6 +100,21 @@
               min-width="200">
             </el-table-column>
             <el-table-column
+              fixed
+              prop="periodName"
+              label="期数"
+              min-width="70">
+            </el-table-column>
+            <el-table-column
+              fixed
+              label="已报/学位数"
+              min-width="100">
+              <template scope="scope">
+                {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+                </template>
+            </el-table-column>
+
+            <el-table-column
               label="开始讲数"
               min-width="100">
               <template scope="scope">
@@ -118,11 +133,7 @@
               label="讲数"
               min-width="100">
             </el-table-column>
-            <el-table-column
-              prop="periodName"
-              label="期数"
-              min-width="100">
-            </el-table-column>
+
             <el-table-column
               prop="gradeName"
               label="年级"
@@ -132,13 +143,6 @@
               prop="studyingFee"
               label="学费"
               min-width="100">
-            </el-table-column>
-            <el-table-column
-              label="已报/学位数"
-              min-width="100">
-              <template scope="scope">
-                {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
-                </template>
             </el-table-column>
             <el-table-column
               prop="teacherNames"
@@ -173,7 +177,7 @@
               label="操作"
               width="150">
               <template scope="scope">
-                <el-button size="small" @click.native="studentReg(scope.row)">报名</el-button>
+                <el-button size="small" :disabled="hadReg(scope.row)" @click.native="studentReg(scope.row)">报名</el-button>
                 <el-button size="small" @click.native="pay(scope.row.classId,scope.row.startAmount,scope.row.endAmount)">缴费</el-button>
               </template>
             </el-table-column>
@@ -329,21 +333,23 @@
           }
         })
       },
-      studentReg: function (classInfo) {
+      hadReg:function(classInfo){
         var isHad = false;
         for (var i = 0; i < this.$root.courseShoppingCart.length; i++) {
           if (this.$root.courseShoppingCart[i].classId == classInfo.classId) {
             isHad = true
-            this.$alert('已报名，请查看代缴费页')
+
             break
           }
         }
-
-        if (!isHad) {
+        return isHad
+      },
+      studentReg: function (classInfo) {
+        if (!this.hadReg(classInfo)) {
           this.$root.courseShoppingCart.push(classInfo)
+        }else{
+          this.$alert('已报名，请查看代缴费页')
         }
-
-
       },
       createOrder: function (regClassInfoList) {
         var studentId = this.$params('studentId')

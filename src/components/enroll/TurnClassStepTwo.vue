@@ -29,6 +29,18 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2 required  v-model="query.season"  >
+                <option value="">季节</option>
+                <option value="春季班">春季班</option>
+                <option value="暑期班">暑期班</option>
+                <option value="秋季班">秋季班</option>
+                <option value="寒假班">寒假班</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2 v-model="query.courseTemplateId" :options="courses">
                 <option value="">课程</option>
               </select2>
@@ -76,49 +88,85 @@
         </div>
 
         <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
-          <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-            <thead>
-            <tr>
-              <th>班级名称</th>
-              <th>开始讲数</th>
-              <th>结束讲数</th>
-              <th>年级</th>
-              <th>剩余名额</th>
-              <th>学位数</th>
-              <th>教师</th>
-              <th>以上/总讲数</th>
-              <th>业务组</th>
-              <th>开课日期</th>
-              <th>上课时间</th>
-              <th>操作</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            <tr v-for="item in tableData" :key="item.classId">
-              <td>{{item.className}}</td>
-              <td><input type="number" class="am-form-field am-input-sm" v-model="item.startAmount"
-                         @change="check(item)"/></td>
-              <td><span v-model="item.endAmount" @change="check(item)">{{item.lectureAmount}}</span></td>
-              <td>{{item.gradeName}}</td>
-              <td>{{item.quota-item.regAmount}}</td>
-              <td>{{item.quota}}</td>
-              <td>{{item.teacherNames}}</td>
-              <td>{{item.studyAmount}}/{{item.lectureAmount}}</td>
-              <td>{{item.busTeamName}}</td>
-              <td>{{item.startCourseTime | formatDate }}</td>
-              <td>{{item.studyingTime}}</td>
-              <td>
-                <div class="tpl-table-black-operation">
-                  <a href="javascript:;" @click="confirm(item)" v-if="item.allow">
-                    <i class="am-icon-edit"></i> 确定
-                  </a>
-                  <a v-else="item.allow">不符合</a>
-                </div>
-              </td>
-            </tr>
-            </tbody>
-          </table>
+          <el-table
+            :data="tableData"
+            border
+            stripe
+            style="min-width: 100%">
+            <el-table-column
+              fixed
+              prop="className"
+              label="班级名称"
+              min-width="200">
+            </el-table-column>
+            <el-table-column
+              label="开始讲数"
+              min-width="100">
+              <template scope="scope">
+                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.startAmount"
+                       @change="check(scope.row)"/>
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="endAmount"
+              label="结束讲数"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="gradeName"
+              label="年级"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              label="剩余名额"
+              min-width="100">
+              <template scope="scope">
+                {{scope.row.quota-scope.row.regAmount}}
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="quota"
+              label="学位数"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="teacherNames"
+              label="教师"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              label="以上/总讲数"
+              min-width="100">
+              <template scope="scope">
+                {{scope.row.studyAmount}}/{{scope.row.lectureAmount}}
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="busTeamName"
+              label="业务组"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              label="开课日期"
+              min-width="100">
+              <template scope="scope">
+                {{scope.row.startCourseTime | formatDate }}
+                </template>
+            </el-table-column>
+            <el-table-column
+              prop="studyingTime"
+              label="上课时间"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              fixed="right"
+              label="操作"
+              width="120">
+              <template scope="scope">
+                <el-button size="small" :disabled="!scope.row.allow" @click.native="confirm(scope.row)">确定</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
         </div>
       </div>
 
@@ -157,7 +205,7 @@
           areaTeamId: '',
           busTeamId: '',
           productId: '',
-
+          status : 1
         },
         products: [],
         courses: [],
@@ -243,11 +291,8 @@
               ret.data.list[i].startAmount = parseInt(_this.args.formData.studyAmount) + 1
               ret.data.list[i].endAmount = _this.args.formData.endAmount
               ret.data.list[i].regId = _this.regId
-              ret.data.list[i].cost = _this.args.formData.studyingFee
-              ret.data.list[i].studyAmount = _this.args.formData.studyAmount
-              ret.data.list[i].counts = _this.args.formData.counts
 
-              if ((ret.data.list[i].cost == ret.data.list[i].studyingFee) && (ret.data.list[i].counts == ret.data.list[i].lectureAmount)) {
+              if (( _this.args.formData.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.formData.lectureAmount == ret.data.list[i].lectureAmount)) {
                 ret.data.list[i].allow = true
               } else {
                 ret.data.list[i].allow = false
@@ -287,9 +332,7 @@
         this.$emit('goStep', 'step-three', {item: item, formData: this.args.formData})
       },
       back: function () {
-        var regId = this.args.regId
-//        var formData = this.args.formData
-        this.$emit('goStep', 'step-one', {regId2: regId})
+        this.$emit('goStep', 'step-one' )
       }
     }
   }

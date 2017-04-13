@@ -144,7 +144,9 @@
             return ;
         }
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminPayCourseOrder, $.extend({}, _this.formData), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             //关闭当前弹窗页面
             _this.$alert("缴费成功")
@@ -152,7 +154,7 @@
             _this.$root.$emit('class:new')
             _this.$emit('paySuccess')
           } else {
-            _this.$alert("缴费失败")
+            _this.$alert( ret.desc || "缴费失败")
           }
 
         })
