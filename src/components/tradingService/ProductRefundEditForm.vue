@@ -1,95 +1,102 @@
 <template>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">退费信息</div>
-      <table width="100%" class="am-table am-table-bordered am-table-compact ">
-        <tbody>
-        <tr>
-          <td class="bgColor">用户姓名：</td>
-          <td>{{}}</td>
-          <td class="bgColor">商品名称：</td>
-          <td>{{}}</td>
-        </tr>
-        <tr>
-          <td class="bgColor">商品数量：</td>
-          <td>{{}}</td>
-          <td class="bgColor">退费金额：</td>
-          <td>{{}}</td>
-        </tr>
-        <tr>
-          <td class="bgColor">退费原因：</td>
-          <td>{{}}</td>
-        </tr>
-        </tbody>
-      </table>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm">商品信息</div>
+
+      <div class="am-g">
+        <div class="am-u-sm-3">
+          <div class="am-u-sm-4">
+            <img class="am-radius" src="http://7xwcmb.com1.z0.glb.clouddn.com/FkMo7QvZ7XTQHRkFioMQoE7o7TFo" width="180"
+                 height="100"/>
+          </div>
+        </div>
+
+        <div class="am-u-sm-9 am-text-left">
+          <div class="am-u-sm-12">
+            <span v-model="formData.productName">
+              {{tableData.productName}}
+            </span>
+          </div>
+
+          <div class="am-u-sm-12 am-center">
+            <span>商家名称：</span>
+            <span v-model="formData.userName">
+              {{tableData.sellerName}}
+            </span>
+          </div>
+
+          <div class="am-u-sm-12">
+            <span>数量：</span>
+            <span v-model="formData.amount">
+              {{tableData.quantity}}
+            </span>
+          </div>
+
+          <div class="am-u-sm-12">
+            <span>合计：￥</span>
+            <span v-model="formData.price">
+              {{tableData.price}}
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="am-u-sm-12 am-text-left">
+        <span class="red">退费金额：￥
+          <span>{{tableData.sum}}</span>
+        </span>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-12 am-text-left">
+          <span>退费原因：{{formData.reason}}</span>
+        </div>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-2 am-text-left">
+          <span>退费说明：</span>
+        </div>
+        <div class="am-u-sm-10  am-text-left">
+          <p>{{formData.description}}</p>
+        </div>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-2 am-text-left">
+          <span>审批状态：</span>
+        </div>
+        <div class="am-u-sm-10 am-text-left">
+          <label class="am-checkbox-inline">
+            <input type="radio" value="1" name="reason" v-model="formData.status"> 已处理
+          </label>
+          <label class="am-checkbox-inline">
+            <input type="radio" value="2" name="reason" v-model="formData.status"> 已拒绝
+          </label>
+        </div>
+      </div>
+
+      <div class="am-g">
+        <div class="am-u-sm-2 am-text-left">
+          <span>审批说明：</span>
+        </div>
+        <div class="am-u-sm-10  am-text-left">
+          <textarea v-model="formData.returnResult">{{tableData.returnResult}}</textarea>
+        </div>
+      </div>
+
+      <div class="am-u-sm-12 am-text-center am-margin-top-lg">
+        <button type="button" class="am-btn am-btn-primary" @click="confirm(formData)">提交审批</button>
+        <a href="javascript:void(0)" data-am-modal-close>
+          <button class="am-btn am-btn-primary">取消</button>
+        </a>
+      </div>
 
     </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-      退费方式:
-      <span class="red">支付宝</span>
-      <span class="red">微信</span>
-      <span class="red" >现金</span>
-      <span class="red">余额账户</span>
-      <span class="red">银行卡转账</span>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      <label class="am-radio-inline">
-        转账银行<input type="text">
-      </label>
-      <label class="am-checkbox-inline">
-        银行开户城市<input type="text" >
-      </label>
-      <label class="am-checkbox-inline">
-        姓名<input type="text" >
-      </label>
-      <label class="am-checkbox-inline">
-        转账账号<input type="text" >
-      </label>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">审批状态</div>
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      <label class="am-radio-inline">
-        处理中<input type="radio" value="0" name="status">
-      </label>
-      <label class="am-checkbox-inline">
-        已处理<input type="radio" value="1" name="status">
-      </label>
-      <label class="am-checkbox-inline">
-        已拒绝<input type="radio"  value="2" name="status">
-      </label>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-      <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>审批详情
-    </div>
-    <textarea required ></textarea>
-
-    <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
-      <a href="javascript:void(0)" data-am-modal-close>
-        <button class="am-btn am-btn-primary">取消</button>
-      </a>
-    </div>
-
   </form>
 
 </template>
-<style>
-  .bold-font {
-    font-weight: bold;
-  }
-
-  .bgColor {
-    background-color: #eee;
-    text-align: center;
-  }
-  .red{
-    color: red;
-  }
-</style>
 
 <script>
   import io from '../../lib/io'
@@ -99,26 +106,51 @@
   export default{
     data: function () {
       return {
-
+        tableData: [],
+        formData:''
       }
     },
-    components: {},
-    props: [''],
+    props: ['serviceProductRefundId'],
     created: function () {
-
+      this.loadTableData(this.serviceProductRefundId)
     },
-    watch: {},
+    watch:{
+      serviceProductRefundId:function (val) {
+        this.loadTableData(val)
+      }
+    },
     mounted: function () {
       $(window).smoothScroll()
     },
-    computed: {},
     methods: {
-      loadTableData: function () {
+      loadTableData: function (serviceProductRefundId) {
         var _this = this
+        if (serviceProductRefundId) {
+          io.post(io.apiAdminProductRefundDetail, {serviceProductRefundId: serviceProductRefundId},
+            function (ret) {
+              if (ret.success) {
+                _this.tableData = ret.data
+                _this.tableData.createTime = ''
+                _this.tableData.updateTime = ''
+                _this.formData = _this.tableData
 
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+        }
       },
-      confirmToRefund: function () {
+      confirm: function (formData) {
         var _this = this
+        io.post(io.apiAdminSaveOrUpdateProductRefund, $.extend({},formData),
+          function (ret) {
+            if (ret.success) {
+              _this.$alert('已接受退款申请')
+              _this.$root.$emit('productRefund:new')
+            } else {
+              _this.$alert('申请失败')
+            }
+          })
         _this.$emit('changeProductRefund')
       }
     }
@@ -126,3 +158,4 @@
 
 
 </script>
+

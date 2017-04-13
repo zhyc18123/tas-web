@@ -75,11 +75,12 @@
               <ul class="am-list am-list-static">
                 <li class="am-u-sm-12" v-for="(item,num) in items.itemList" :key="item.orderItemId">
                   <span class="am-u-sm-2">
-                    11111<img src="item.imageUrl"/>
+                    <img class="am-radius" :src="item.imageUrl"  width="180"
+                         height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{item.productName}}</span>
                   <span class="am-u-sm-1">{{item.price}}</span>
-                  <span class="am-u-sm-1">{{item.amount}}</span>
+                  <span class="am-u-sm-1">{{item.quantity}}</span>
                   <span class="am-u-sm-2">{{item.price}}</span>
                   <span class="am-u-sm-2">{{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}</span>
                   <span class="am-u-sm-2">
