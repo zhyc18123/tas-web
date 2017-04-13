@@ -48,6 +48,18 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>上传图片
+              </label>
+              <div class="am-u-sm-9">
+                <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file" v-if="hasPermission('add')">
+                  <input id="uploadFile" @change="uploadImage" type="file" accept="application/formData">
+                  <span class="am-icon-cloud-upload"></span>导入图片
+                </button>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 商品描述
               </label>
               <div class="am-u-sm-9 input-field">
@@ -81,8 +93,10 @@
           price: '',
           unit: '',
           categoryId: '',
+          imageId:''
         },
         category: [],
+        imgId:''
       }
     },
     created: function () {
@@ -125,6 +139,7 @@
     methods: {
       save:function (complete) {
         var _this = this
+        _this.formData.imageId = _this.imgId;
         var data = _this.formData;
         io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
           function (ret) {
@@ -149,6 +164,18 @@
               return {value: item.categoryId, text: item.name}
             })
           } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      uploadImage:function () {
+        var _this = this;
+        var formUrl = new FormData();
+        formUrl.append("file",document.getElementById('uploadFile').files[0]);
+        io.postUploadFile(io.apiAdminUploadFile,formUrl,function (ret) {
+          if (ret.data.success){
+            _this.imgId = ret.data.data
+          }else {
             _this.$alert(ret.desc)
           }
         })

@@ -38,15 +38,18 @@
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th>操作</th>
                 <th>分类名称</th>
                 <th>创建时间</th>
                 <th>更新时间</th>
+                <th>操作</th>
               </tr>
               </thead>
               <tbody>
 
               <tr v-for="item in tableData" :key="item.orderId">
+                <td>{{item.name}}</td>
+                <td>{{item.createTime | formatDate}}</td>
+                <td>{{item.updateTime |formatDate}}</td>
                 <td>
                   <div class="tpl-table-black-operation">
                     <a href="javascript:;" @click="$router.push('/main/tradingService/category/edit/'+item.categoryId)"
@@ -58,9 +61,6 @@
                     </a>
                   </div>
                 </td>
-                <td>{{item.name}}</td>
-                <td>{{item.createTime | formatDate}}</td>
-                <td>{{item.updateTime |formatDate}}</td>
               </tr>
 
 

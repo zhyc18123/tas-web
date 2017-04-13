@@ -175,10 +175,10 @@ const router = new VueRouter({
       {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
-      {path: 'tradingService/rent/list', component:CampusManageList},
+      {path: 'tradingService/campusManage/list', component:CampusManageList},
       {path: 'tradingService/campusManage/add', component:CampusManageForm},
-      {path: 'tradingService/campusManage/edit/:productId', component:CampusManageForm},
-      {path: 'tradingService/rent/list', component:ClassRoomProtectList},
+      {path: 'tradingService/campusManage/edit:productId', component:CampusManageForm},
+      {path: 'tradingService/classRoomProtect/list', component:ClassRoomProtectList},
       {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
       {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
 
