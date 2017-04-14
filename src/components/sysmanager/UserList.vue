@@ -96,13 +96,13 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/sys/user/edit/'+scope.row.userId)">编辑
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/user/edit/'+scope.row.userId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="$router.push('/main/sys/user/roles/'+scope.row.userId)">设置权限
+                      <el-dropdown-item v-if="hasPermission('permission')" @click.native="$router.push('/main/sys/user/roles/'+scope.row.userId)">设置权限
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="del(scope.row.userId)">删除</el-dropdown-item>
-                      <el-dropdown-item v-if="scope.row.status == 1" @click.native="changeStatus(scope.row.userId ,0)">禁用</el-dropdown-item>
-                      <el-dropdown-item v-if="scope.row.status == 0" @click.native="changeStatus(scope.row.userId , 1 )">解禁</el-dropdown-item>
+                      <el-dropdown-item  @click.native="del(scope.row.userId)">删除</el-dropdown-item>
+                      <el-dropdown-item v-if="scope.row.status == 1 && hasPermission('enable_disable')" @click.native="changeStatus(scope.row.userId ,0)">禁用</el-dropdown-item>
+                      <el-dropdown-item v-if="scope.row.status == 0 && hasPermission('enable_disable')" @click.native="changeStatus(scope.row.userId , 1 )">解禁</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

@@ -144,7 +144,7 @@
               label="操作"
               width="120">
               <template scope="scope">
-                <el-button size="small" @click.native="$router.push('/main/course/course/edit/'+scope.row.courseTemplateId)">编辑</el-button>
+                <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/course/course/edit/'+scope.row.courseTemplateId)">编辑</el-button>
               </template>
             </el-table-column>
           </el-table>

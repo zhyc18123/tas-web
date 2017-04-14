@@ -89,9 +89,7 @@
 
   import Pagination from '../base/Pagination'
   import Calendar from './CalendarForRoom'
-  require('fullcalendar/dist/fullcalendar.css')
-  require('fullcalendar')
-  require('fullcalendar/dist/locale/zh-cn.js')
+
 
   export default{
     data:function(){

@@ -84,5 +84,7 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       jQuery: 'jquery'
-    })]
+    }),
+    new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en|zh/)
+  ]
 }

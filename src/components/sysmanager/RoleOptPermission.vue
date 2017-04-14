@@ -64,6 +64,7 @@
           function (ret) {
             if (ret.success) {
               _this.$toast('OK')
+              _this.$root.$emit('reloadConfig')
               _this.$router.push('/main/sys/role/list')
             }
           },

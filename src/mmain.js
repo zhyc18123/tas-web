@@ -4,6 +4,8 @@ import VueRouter from 'vue-router'
 
 import VueUI from './components/base/VueUI'
 
+require('amazeui/dist/css/amazeui.css')
+require('amazeui')
 
 import PayCourseOrder from 'components/m/pay/PayCourseOrder'
 import PaySuccess from 'components/m/pay/PaySuccess'

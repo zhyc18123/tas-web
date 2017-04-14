@@ -121,9 +121,9 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/sys/teacher/edit/'+scope.row.teacherId)">编辑
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/teacher/edit/'+scope.row.teacherId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="del(scope.row.teacherId)">删除</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.teacherId)">删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

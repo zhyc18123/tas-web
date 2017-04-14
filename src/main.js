@@ -11,85 +11,84 @@ import storage from './lib/storage'
 
 import VueUI from './components/base/VueUI'
 
-import Main from './components/Main'
-import NotFound from './components/error/NotFound'
-import Login from './components/login/Login'
-import Enroll from './components/login/Enroll'
+const Main = resolve => require(['./components/Main'], resolve)
+const NotFound = resolve => require(['./components/error/NotFound'], resolve)
+const Login = resolve => require(['./components/login/Login'], resolve)
+const Enroll = resolve => require(['./components/login/Enroll'], resolve)
 
-import UserProfile from './components/sysmanager/UserProfile'
-import UserList from './components/sysmanager/UserList'
-import UserForm from './components/sysmanager/UserForm'
-import UserRoles from './components/sysmanager/UserRoles'
-import RoleList from './components/sysmanager/RoleList'
-import RoleForm from './components/sysmanager/RoleForm'
-import RoleUsers from './components/sysmanager/RoleUsers'
-import RoleOptPermission from './components/sysmanager/RoleOptPermission'
-import AreaTeamList from './components/sysmanager/AreaTeamList'
-import AreaTeamForm from './components/sysmanager/AreaTeamForm'
-import BusTeamList from './components/sysmanager/BusTeamList'
-import BusTeamForm from './components/sysmanager/BusTeamForm'
-
-
-import TeacherList from './components/teachingresource/TeacherList'
-import TeacherForm from './components/teachingresource/TeacherForm'
-
-import CampusList from './components/teachingresource/CampusList'
-import CampusForm from './components/teachingresource/CampusForm'
-
-import RoomList from './components/sysmanager/RoomList'
-import RoomForm from './components/sysmanager/RoomForm'
+const UserProfile = resolve => require(['./components/sysmanager/UserProfile'], resolve)
+const UserList = resolve => require(['./components/sysmanager/UserList'], resolve)
+const UserForm = resolve => require(['./components/sysmanager/UserForm'], resolve)
+const UserRoles = resolve => require(['./components/sysmanager/UserRoles'], resolve)
+const RoleList = resolve => require(['./components/sysmanager/RoleList'], resolve)
+const RoleForm = resolve => require(['./components/sysmanager/RoleForm'], resolve)
+const RoleUsers = resolve => require(['./components/sysmanager/RoleUsers'], resolve)
+const RoleOptPermission = resolve => require(['./components/sysmanager/RoleOptPermission'], resolve)
+const AreaTeamList = resolve => require(['./components/sysmanager/AreaTeamList'], resolve)
+const AreaTeamForm = resolve => require(['./components/sysmanager/AreaTeamForm'], resolve)
+const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], resolve)
+const BusTeamForm = resolve => require(['./components/sysmanager/BusTeamForm'], resolve)
 
 
-import CourseList from './components/course/CourseList'
-import CourseForm from './components/course/CourseForm'
-import ProductList from './components/course/ProductList'
-import ProductForm from './components/course/ProductForm'
-import ClassList from './components/course/ClassList'
-import ClassForm from './components/course/ClassForm'
-import ClassTimeList from './components/course/ClassTimeList'
+const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
+const TeacherForm = resolve => require(['./components/teachingresource/TeacherForm'], resolve)
+
+const CampusList = resolve => require(['./components/teachingresource/CampusList'], resolve)
+const CampusForm = resolve => require(['./components/teachingresource/CampusForm'], resolve)
+
+const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
+const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
+
+const CourseList = resolve => require(['./components/course/CourseList'], resolve)
+const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
+const ProductList = resolve => require(['./components/course/ProductList'], resolve)
+const ProductForm = resolve => require(['./components/course/ProductForm'], resolve)
+const ClassList = resolve => require(['./components/course/ClassList'], resolve)
+const ClassForm = resolve => require(['./components/course/ClassForm'], resolve)
+const ClassTimeList = resolve => require(['./components/course/ClassTimeList'], resolve)
 
 
 
-import SearchStudentList from  './components/enroll/SearchStudentList'
-import StudentForm from  './components/enroll/StudenForm'
-import StudentReg from  './components/enroll/StudentReg'
-import ClassHistoryList from  './components/enroll/ClassHistoryList'
-import StudentRefundList from  './components/enroll/StudentRefundList'
-import TurnClass from  './components/enroll/TurnClassStepOne'
-import StudentRegList from './components/enroll/StudentRegList'
-import CourseClassList from './components/enroll/CourseClassList.vue'
+const SearchStudentList = resolve => require([ './components/enroll/SearchStudentList'], resolve)
+const StudentForm = resolve => require([ './components/enroll/StudenForm'], resolve)
+const StudentReg = resolve => require([ './components/enroll/StudentReg'], resolve)
+const ClassHistoryList = resolve => require([ './components/enroll/ClassHistoryList'], resolve)
+const StudentRefundList = resolve => require([ './components/enroll/StudentRefundList'], resolve)
+const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
+const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
+const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
-import AccountReport from './components/settlement/AccountReport'
-import AccountReportDetail from './components/settlement/AccountReportDetail'
-import AccountMainBodyOfFee from './components/settlement/AccountMainBodyOfFee'
-import FeeList from './components/settlement/FeeList'
-import FeeForm from './components/settlement/FeeForm'
-import ProfitReportDetail from './components/settlement/ProfitReportDetail'
+const AccountReport = resolve => require(['./components/settlement/AccountReport'], resolve)
+const AccountReportDetail = resolve => require(['./components/settlement/AccountReportDetail'], resolve)
+const AccountMainBodyOfFee = resolve => require(['./components/settlement/AccountMainBodyOfFee'], resolve)
+const FeeList = resolve => require(['./components/settlement/FeeList'], resolve)
+const FeeForm = resolve => require(['./components/settlement/FeeForm'], resolve)
+const ProfitReportDetail = resolve => require(['./components/settlement/ProfitReportDetail'], resolve)
 
-import ServiceManagerList from './components/tradingService/ServiceManagerList'
-import ServiceManagerForm from './components/tradingService/ServiceManagerForm'
-import ServiceManagerEditForm from './components/tradingService/ServiceManagerForm'
-import CategoryList from './components/tradingService/CategoryList'
-import CategoryEditForm from './components/tradingService/CategoryEditForm'
-import CategorySaveForm from './components/tradingService/CategorySaveForm'
-import ProductTradingList from './components/tradingService/ProductTradingList'
-import ProductRefundList from './components/tradingService/ProductRefundList'
-import ProductRefundEditForm from './components/tradingService/ProductRefundEditForm'
-import ProductTradingForm from './components/tradingService/ProductTradingForm'
-import CampusManageForm from './components/tradingService/CampusManageForm'
-import CampusManageList from './components/tradingService/CampusManageList'
-import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
-import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
+const ServiceManagerList = resolve => require(['./components/tradingService/ServiceManagerList'], resolve)
+const ServiceManagerForm = resolve => require(['./components/tradingService/ServiceManagerForm'], resolve)
+const ServiceManagerEditForm = resolve => require(['./components/tradingService/ServiceManagerForm'], resolve)
+const CategoryList = resolve => require(['./components/tradingService/CategoryList'], resolve)
+const CategoryEditForm = resolve => require(['./components/tradingService/CategoryEditForm'], resolve)
+const CategorySaveForm = resolve => require(['./components/tradingService/CategorySaveForm'], resolve)
+const ProductTradingList = resolve => require(['./components/tradingService/ProductTradingList'], resolve)
+const ProductRefundList = resolve => require(['./components/tradingService/ProductRefundList'], resolve)
+const ProductRefundEditForm = resolve => require(['./components/tradingService/ProductRefundEditForm'], resolve)
+const ProductTradingForm = resolve => require(['./components/tradingService/ProductTradingForm'], resolve)
+const CampusManageForm = resolve => require(['./components/tradingService/CampusManageForm'], resolve)
+const CampusManageList = resolve => require(['./components/tradingService/CampusManageList'], resolve)
+const ClassRoomProtectList = resolve => require(['./components/tradingService/ClassRoomProtectList'], resolve)
+const ClassRoomProtectForm = resolve => require(['./components/tradingService/ClassRoomProtectForm'], resolve)
 
-import BuyServiceList from './components/buyer/BuyServiceList'
-import BuyCommodityList from './components/buyer/BuyCommodityList'
-import ProductOrderItemDetail from './components/buyer/ProductOrderItemDetail'
-import ServiceOrderItemDetail from './components/buyer/ServiceOrderItemDetail'
+const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
+const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
+const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
+const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
 
-import SoldProductOrderList from './components/seller/SoldProductOrderList'
-import SoldServiceOrderList from './components/seller/SoldServiceOrderList'
+const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
+const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 
-import SellerRegisterList from './components/platform/SellerRegisterList'
+const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
 
 Vue.use(VueRouter)
 Vue.use(VueUI)

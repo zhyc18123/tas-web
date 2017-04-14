@@ -111,7 +111,6 @@ VueUI.install = function (Vue){
     },
     methods: {
       hasPermission: function (permission) {
-        return true
         return this.$root.config.permission[this.$route.path] && this.$root.config.permission[this.$route.path][permission] ? true : false
       }
     }

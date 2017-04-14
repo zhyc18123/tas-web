@@ -149,11 +149,11 @@
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新建班级
                 </button>
-                <button type="button" class="am-btn am-btn-default am-btn-success"
+                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
                         @click="changeStatus(1)" ><span
                   class="am-icon-plus"></span>开班
                 </button>
-                <button type="button" class="am-btn am-btn-default am-btn-success"
+                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
                         @click="changeStatus(2)" ><span
                   class="am-icon-plus"></span>作废
                 </button>
@@ -265,7 +265,7 @@
                 label="排课状态"
                 min-width="250">
                 <template scope="scope">
-                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未时间':'已排时间'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
                   <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
                   <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
                 </template>
@@ -280,11 +280,11 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item :disabled="scope.row.isArrangeTime == 1" @click.native="arrangeTime(scope.row)">排时间</el-dropdown-item>
-                      <el-dropdown-item :disabled="scope.row.isArrangeRoom == 1" @click.native="arrangeRoom(scope.row)">排教室</el-dropdown-item>
-                      <el-dropdown-item :disabled="scope.row.isArrangeTeacher == 1" @click.native="arrangeTeacher(scope.row)">排老师</el-dropdown-item>
-                      <el-dropdown-item :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
-                      <el-dropdown-item  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('arrange_time')" :disabled="scope.row.isArrangeTime == 1" @click.native="arrangeTime(scope.row)">排时间</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('arrange_room')" :disabled="scope.row.isArrangeRoom == 1" @click.native="arrangeRoom(scope.row)">排教室</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('arrange_teacher')" :disabled="scope.row.isArrangeTeacher == 1" @click.native="arrangeTeacher(scope.row)">排老师</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

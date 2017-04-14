@@ -63,7 +63,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)">编辑</el-button>
+                  <el-button size="small" @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)" v-if="hasPermission('edit')">编辑</el-button>
                 </template>
               </el-table-column>
             </el-table>

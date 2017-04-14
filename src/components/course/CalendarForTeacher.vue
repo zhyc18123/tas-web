@@ -5,6 +5,10 @@
 <script>
   import io from '../../lib/io'
 
+  require('fullcalendar/dist/fullcalendar.css')
+  require('fullcalendar')
+  require('fullcalendar/dist/locale/zh-cn.js')
+
   export default{
     data:function(){
       return {}

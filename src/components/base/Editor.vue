@@ -8,6 +8,10 @@
 
 import io from '../../lib/io'
 
+require('../../../static/ueditor/ueditor.config.js')
+require('../../../static/ueditor/ueditor.all.js')
+require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
+
     export default{
         name:'editor',
         props:['value','width','height'],
@@ -30,12 +34,18 @@ import io from '../../lib/io'
           value:function(val){
             if(this.editor){
               if(this.ok){
-                this.editor.setContent(val)
+                if(val){
+                  this.editor.setContent(val)
+                }
+
               }else{
                 var _this = this
                 _this.editor.addListener('ready',function(){
                   _this.ok = true
-                  _this.editor.setContent(val)
+                  if(val){
+                    _this.editor.setContent(val)
+                  }
+
                 })
               }
 

@@ -106,6 +106,7 @@ import io from '../../lib/io'
               var formValidity = this.isFormValid();
               var complete = function(){
                 _this.$hiddenLoading()
+                _this.$root.$emit('reloadConfig')
                 $submitBtn.removeAttr("disabled" ,"disabled" )
               }
               if(formValidity){

@@ -41,14 +41,14 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/sys/role/edit/'+scope.row.roleId)">编辑
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/role/edit/'+scope.row.roleId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="$router.push('/main/sys/role/optPermission/'+scope.row.roleId)">
+                      <el-dropdown-item v-if="hasPermission('permission')" @click.native="$router.push('/main/sys/role/optPermission/'+scope.row.roleId)">
                         设置操作权限
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="$router.push('/main/sys/role/users/'+scope.row.roleId)">权限回收
+                      <el-dropdown-item v-if="hasPermission('recycle')" @click.native="$router.push('/main/sys/role/users/'+scope.row.roleId)">权限回收
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="del(scope.row.roleId ,0)">删除</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.roleId ,0)">删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

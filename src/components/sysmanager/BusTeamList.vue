@@ -45,9 +45,9 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/sys/busteam/edit/'+scope.row.busTeamId)">编辑
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/busteam/edit/'+scope.row.busTeamId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="del(scope.row.busTeamId ,0)">删除</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.busTeamId ,0)">删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

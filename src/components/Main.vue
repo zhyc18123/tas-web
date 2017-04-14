@@ -45,8 +45,9 @@ export default {
   },
   mounted:function(){
     this.loadConfig()
+    var _this = this
     this.$root.$on('reloadConfig',function(){
-      this.loadConfig()
+      _this.loadConfig()
     })
   },
   methods:{
