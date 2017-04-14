@@ -98,7 +98,7 @@
             _this.$alert(ret.desc)
           }
         })
-      },
+      }/*,
       loadAddress: function (addressId) {
         var _this = this
         io.post(io.apiAdminShippingAddressDetail, {addressId: addressId}, function (ret) {
@@ -108,7 +108,7 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      }*/
     }
   }
 </script>
