@@ -6,7 +6,7 @@
       </div>
 
       <div class="am-u-sm-12 am-form">
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+        <div class="am-u-sm-4">
           <div class="am-form-group tpl-table-list-select">
             <div class="am-form-group">
               <select2 v-model="formData.type">
@@ -18,7 +18,7 @@
             </div>
           </div>
         </div>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+        <div class="am-u-sm-8">
           <div class="am-form-group">
             <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
                     @click="search"><span class="am-icon-search"></span>查询
@@ -62,10 +62,6 @@
                   <i class="am-icon-edit"></i> 审批
                 </a>
                 <span v-else="item.status==0">{{item.status==1?'已处理':'已拒绝'}}</span>
-
-               <!-- <a href="javascript:;" @click="del(item.serviceProductRefundId)">
-                  <i class="am-icon-remove"></i> 删除
-                </a>-->
               </div>
             </td>
           </tr>
