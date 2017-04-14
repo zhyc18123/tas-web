@@ -4,13 +4,38 @@
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">商品产品退费管理</div>
       </div>
+
+      <div class="am-u-sm-12 am-form">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group tpl-table-list-select">
+            <div class="am-form-group">
+              <select2 v-model="formData.type">
+                <option value="">所有</option>
+                <option value="0">商品退费</option>
+                <option value="1">服务退费</option>
+                <option value="2">租赁退费</option>
+              </select2>
+            </div>
+          </div>
+        </div>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                    @click="search"><span class="am-icon-search"></span>查询
+            </button>
+          </div>
+        </div>
+
+      </div>
+
       <div class="widget-body am-fr">
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
           <thead>
           <tr>
             <th>序号</th>
             <th>用户姓名</th>
-            <th>商品名称</th>
+            <th>退货商品名称</th>
+            <th>类型</th>
             <th>商品数量</th>
             <th>退费金额</th>
             <th>退费原因</th>
@@ -25,6 +50,7 @@
             <td>{{index+1}}</td>
             <td>{{item.userName}}</td>
             <td>{{item.productName}}</td>
+            <td>{{item.type==0?'商品':(item.type==1?'服务':'租赁')}}</td>
             <td>{{item.quantity}}</td>
             <td>{{item.price}}</td>
             <td>{{item.reason}}</td>
@@ -36,6 +62,7 @@
                   <i class="am-icon-edit"></i> 审批
                 </a>
                 <span v-else="item.status==0">{{item.status==1?'已处理':'已拒绝'}}</span>
+
                <!-- <a href="javascript:;" @click="del(item.serviceProductRefundId)">
                   <i class="am-icon-remove"></i> 删除
                 </a>-->
@@ -44,6 +71,10 @@
           </tr>
           </tbody>
         </table>
+
+        <div class="am-g" v-if="tableData==''">
+          <div class="am-u-sm-12 am-lg-text-center">暂无数据</div>
+        </div>
 
         <window ref="productRefund" title="退费审批">
           <change-product-refund :serviceProductRefundId="serviceProductRefundId" @changeProductRefund="$refs.productRefund.close()"></change-product-refund>
@@ -68,7 +99,10 @@
     data: function () {
       return {
         tableData:[],
-        pageSize:10,
+        formData:{
+          type:''
+        },
+        pageSize:5,
         pageNo:1,
         total:0,
         serviceProductRefundId:''
@@ -82,27 +116,29 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo)
+      this.search(this.pageNo)
       var _this = this
       this.$root.$on('productRefund:new',function () {
         _this.pageNo = 1
-        _this.loadTableData(_this.pageNo)
+        _this.search(_this.pageNo)
       })
     },
     methods: {
+      search:function () {
+        this.loadTableData()
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminProductRefundList,{
+        io.post(io.apiAdminProductRefundList,$.extend({
           pageNo:_this.pageNo,
-          pageSize:_this.pageSize
-        },function (ret) {
+          pageSize:_this.pageSize,
+        },_this.formData),function (ret) {
           if (ret.success){
             _this.tableData = ret.data.list
             _this.total = ret.data.total
           }
         })
-
       },
       edit: function (serviceProductRefundId) {
         var _this = this
