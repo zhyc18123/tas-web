@@ -22,6 +22,13 @@
             min-width="200">
           </el-table-column>
           <el-table-column
+            label="申请时间"
+            min-width="200">
+            <template scope="scope">
+              {{scope.row.createTime | formatTime }}
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="refundLecture"
             label="申请退费讲次"
             min-width="100">

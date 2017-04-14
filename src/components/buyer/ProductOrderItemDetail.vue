@@ -17,18 +17,18 @@
           </tr>
           <tr>
             <td class="bgColor">收货人：</td>
-            <td>{{address.userName}}</td>
+            <td>{{tableData.consignee}}</td>
             <td class="bgColor">手机号：</td>
-            <td>{{address.phoneNo}}</td>
+            <td>{{tableData.phoneNo}}</td>
           </tr>
           <tr>
             <td class="bgColor">地址：</td>
-            <td>{{address.address}}</td>
+            <td>{{tableData.address}}</td>
             <td class="bgColor">订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>
           <tr>
-            <td class="bgColor"> 商家：</td>
+            <td class="bgColor"> 用户：</td>
             <td>{{tableData.userName}}</td>
             <td class="bgColor">订单状态：</td>
             <td>{{tableData.status==0?'未支付':(tableData.status==1?'已支付':(tableData.status==2?'取消订单':'退费中的订单'))}}</td>
@@ -54,6 +54,7 @@
                   <span class="am-u-sm-2">{{item.productName}}</span>
                   <span class="am-u-sm-1">{{item.price}}</span>
                   <span class="am-u-sm-1">{{item.quantity}}</span>
+                  <span class="am-u-sm-2">{{item.price}}</span>
                   <span class="am-u-sm-2">{{item.price}}</span>
                   </span>
                 </li>
@@ -104,12 +105,12 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
-            _this.loadAddress(ret.data.serviceOrder.addressId)
+            //_this.loadAddress(ret.data.serviceOrder.addressId)
           } else {
             _this.$alert(ret.desc)
           }
         })
-      },
+      }/*,
       loadAddress: function (addressId) {
         var _this = this
         io.post(io.apiAdminShippingAddressDetail, {addressId: addressId}, function (ret) {
@@ -119,7 +120,7 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      }*/
     }
   }
 </script>

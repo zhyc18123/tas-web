@@ -52,7 +52,7 @@
         label="已上/总讲数"
         min-width="120">
         <template scope="scope">
-          {{scope.row.courseClass.courseProgress}}/{{scope.row.courseClass.lectureAmount}}
+          {{scope.row.courseClass.completedLectureAmount}}/{{scope.row.courseClass.lectureAmount}}
 
         </template>
       </el-table-column>
