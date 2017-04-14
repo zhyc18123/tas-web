@@ -3,24 +3,11 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">我购买的服务</div>
+          <div class="widget-title  am-cf">商家商品订单</div>
         </div>
         <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form">
-
-            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group tpl-table-list-select">
-                <div class="am-form-group">
-                  <select2 v-model="query.createTime">
-                    <option value="0">最近一个星期</option>
-                    <option value="1">最近一个月</option>
-                    <option value="2">最近三个月</option>
-                    <option value="3">最近一年</option>
-                  </select2>
-                </div>
-              </div>
-            </div>-->
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
@@ -88,8 +75,8 @@
                       <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 服务详情
                       </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)">
-                        <i class="am-icon-edit"></i> 退费申请
+                      <a href="javascript:;" @click="allowRefund(item.orderItemId)">
+                        <i class="am-icon-edit"></i> 确认退费
                       </a>
                     </div>
                   </div>
@@ -161,10 +148,10 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminProductOrderList, $.extend({
+        io.post(io.apiAdminSellProductOrderList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          type: 1
+          type: 0
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
@@ -177,7 +164,7 @@
       orderItemDetail: function () {
         var _this = this
       },
-      productRefund: function (orderItemId) {
+      allowRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
         _this.$refs.productRefund.show({

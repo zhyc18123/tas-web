@@ -163,6 +163,7 @@ const io = {
     this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
     this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
     this.apiAdminProductRefundDetail = conf.baseApiPath + '/api/admin/trading/productRefundDetail'
+    this.apiAdminSellProductOrderList = conf.baseApiPath + '/api/admin/trading/sellProductOrderList'
 
   },
   getHeaders : function(){
