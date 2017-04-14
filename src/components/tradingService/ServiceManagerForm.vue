@@ -137,6 +137,7 @@
     methods: {
       save:function (complete) {
         var _this = this
+        _this.formData.imageId = _this.imgId;
         var data = _this.formData;
         io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
           function (ret) {
