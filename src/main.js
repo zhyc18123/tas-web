@@ -11,6 +11,7 @@ import storage from './lib/storage'
 
 import VueUI from './components/base/VueUI'
 
+
 const Main = resolve => require(['./components/Main'], resolve)
 const NotFound = resolve => require(['./components/error/NotFound'], resolve)
 const Login = resolve => require(['./components/login/Login'], resolve)
@@ -89,6 +90,7 @@ const SoldProductOrderList = resolve => require(['./components/seller/SoldProduc
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 
 const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -174,12 +176,6 @@ const router = new VueRouter({
       {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
-      {path: 'tradingService/campusManage/list', component:CampusManageList},
-      {path: 'tradingService/campusManage/add', component:CampusManageForm},
-      {path: 'tradingService/campusManage/edit:productId', component:CampusManageForm},
-      {path: 'tradingService/classRoomProtect/list', component:ClassRoomProtectList},
-      {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
-      {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},

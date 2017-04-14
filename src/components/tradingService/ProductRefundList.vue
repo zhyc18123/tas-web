@@ -6,7 +6,7 @@
       </div>
 
       <div class="am-u-sm-12 am-form">
-        <div class="am-u-sm-4">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
           <div class="am-form-group tpl-table-list-select">
             <div class="am-form-group">
               <select2 v-model="formData.type">
@@ -18,7 +18,15 @@
             </div>
           </div>
         </div>
-        <div class="am-u-sm-8">
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-form-group">
+            <input type="text" class="am-input-lg" name="name" v-model="formData.userName" placeholder="请输入买家姓名"/>
+          </div>
+        </div>
+
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+
           <div class="am-form-group">
             <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
                     @click="search"><span class="am-icon-search"></span>查询
@@ -33,7 +41,7 @@
           <thead>
           <tr>
             <th>序号</th>
-            <th>用户姓名</th>
+            <th>买家姓名</th>
             <th>退货商品名称</th>
             <th>类型</th>
             <th>商品数量</th>
