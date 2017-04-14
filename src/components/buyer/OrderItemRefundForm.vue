@@ -126,7 +126,8 @@
                 _this.formData.productId = _this.tableData.productId
                 _this.formData.productName = _this.tableData.productName
                 _this.formData.sellerId = _this.tableData.sellerId
-                _this.formData.sellerrName = _this.tableData.sellerName
+                _this.formData.sellerrName = _this.tableData.sellerrName
+                _this.formData.type = _this.tableData.type
                 _this.formData.reason = '无条件退款'
                 _this.formData.description = ''
               } else {

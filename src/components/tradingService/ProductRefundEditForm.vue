@@ -133,7 +133,6 @@
                 _this.tableData.createTime = ''
                 _this.tableData.updateTime = ''
                 _this.formData = _this.tableData
-
               } else {
                 _this.$alert(ret.desc)
               }
