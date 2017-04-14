@@ -76,10 +76,6 @@ import ProductTradingList from './components/tradingService/ProductTradingList'
 import ProductRefundList from './components/tradingService/ProductRefundList'
 import ProductRefundEditForm from './components/tradingService/ProductRefundEditForm'
 import ProductTradingForm from './components/tradingService/ProductTradingForm'
-import CampusManageForm from './components/tradingService/CampusManageForm'
-import CampusManageList from './components/tradingService/CampusManageList'
-import ClassRoomProtectList from './components/tradingService/ClassRoomProtectList'
-import ClassRoomProtectForm from './components/tradingService/ClassRoomProtectForm'
 
 import BuyServiceList from './components/buyer/BuyServiceList'
 import BuyCommodityList from './components/buyer/BuyCommodityList'
@@ -175,12 +171,6 @@ const router = new VueRouter({
       {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
-      {path: 'tradingService/campusManage/list', component:CampusManageList},
-      {path: 'tradingService/campusManage/add', component:CampusManageForm},
-      {path: 'tradingService/campusManage/edit:productId', component:CampusManageForm},
-      {path: 'tradingService/classRoomProtect/list', component:ClassRoomProtectList},
-      {path: 'tradingService/classRoomProtect/add', component:ClassRoomProtectForm},
-      {path: 'tradingService/classRoomProtect/edit/:productId', component:ClassRoomProtectForm},
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
