@@ -48,7 +48,7 @@
               <ul class="am-list am-list-static">
                 <li class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
                   <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl"  width="180"
+                    <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{item.productName}}</span>
@@ -69,7 +69,7 @@
 </template>
 
 <style>
-  .font-size{
+  .font-size {
 
     font-size: 26px;
     text-align: center;
@@ -105,22 +105,23 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
+
             //_this.loadAddress(ret.data.serviceOrder.addressId)
           } else {
             _this.$alert(ret.desc)
           }
         })
       }/*,
-      loadAddress: function (addressId) {
-        var _this = this
-        io.post(io.apiAdminShippingAddressDetail, {addressId: addressId}, function (ret) {
-          if (ret.success) {
-            _this.address = ret.data
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      }*/
+       loadAddress: function (addressId) {
+       var _this = this
+       io.post(io.apiAdminShippingAddressDetail, {addressId: addressId}, function (ret) {
+       if (ret.success) {
+       _this.address = ret.data
+       } else {
+       _this.$alert(ret.desc)
+       }
+       })
+       }*/
     }
   }
 </script>

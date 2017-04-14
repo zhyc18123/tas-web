@@ -6,7 +6,7 @@
       <div class="am-g">
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">
-            <img class="am-radius" src="http://7xwcmb.com1.z0.glb.clouddn.com/FkMo7QvZ7XTQHRkFioMQoE7o7TFo" width="180"
+            <img class="am-radius" :src="tableData.imageUrl" width="180"
                  height="100"/>
           </div>
         </div>
@@ -125,8 +125,8 @@
                 _this.formData.orderId = _this.tableData.orderId
                 _this.formData.productId = _this.tableData.productId
                 _this.formData.productName = _this.tableData.productName
-                _this.formData.sellerId = _this.tableData.sellerId
-                _this.formData.sellerrName = _this.tableData.sellerrName
+                _this.formData.sellerId = _this.tableData.busTeamId
+                _this.formData.sellerrName = _this.tableData.busTeamName
                 _this.formData.type = _this.tableData.type
                 _this.formData.reason = '无条件退款'
                 _this.formData.description = ''
