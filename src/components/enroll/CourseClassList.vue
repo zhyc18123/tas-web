@@ -142,7 +142,7 @@
                 label="已上/总讲次"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.courseProgress}}/{{scope.row.lectureAmount}}
+                  {{scope.row.completedLectureAmount}}/{{scope.row.lectureAmount}}
                 </template>
               </el-table-column>
               <el-table-column

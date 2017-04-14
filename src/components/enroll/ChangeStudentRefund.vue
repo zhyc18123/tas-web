@@ -29,8 +29,6 @@
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
       退费方式:
-        <span class="red" v-if="tableData.refundWay==0">支付宝</span>
-        <span class="red" v-if="tableData.refundWay==1">微信</span>
         <span class="red" v-if="tableData.refundWay==2">现金</span>
         <span class="red"v-if="tableData.refundWay==3">余额账户</span>
         <span class="red" v-if="tableData.refundWay==4">银行卡转账</span>
@@ -53,14 +51,11 @@
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">审批状态</div>
     <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      <label class="am-radio-inline">
-        处理中<input type="radio" v-model="formData.status" value="0" name="status">
+      <label class="am-checkbox-inline">
+        同意<input type="radio" v-model="formData.status" value="1" name="status">
       </label>
       <label class="am-checkbox-inline">
-        已处理<input type="radio" v-model="formData.status" value="1" name="status">
-      </label>
-      <label class="am-checkbox-inline">
-        已拒绝<input type="radio" v-model="formData.status" value="2" name="status">
+        拒绝<input type="radio" v-model="formData.status" value="2" name="status">
       </label>
     </div>
 
@@ -148,16 +143,21 @@
       },
       confirmToRefund: function () {
         var _this = this
-        io.post(io.apiAdminChangeStudentRefund, $.extend({}, _this.formData),
+        io.post(io.apiAdminChangeStudentRefundStatus, {
+            studentRefundId : _this.formData.studentRefundId ,
+            status : _this.formData.status,
+            returnResult : _this.formData.returnResult
+          },
           function (ret) {
             if (ret.success) {
               _this.$alert('审批成功')
+              _this.$emit('changeStudentRefund')
               _this.$root.$emit('studentRefundList:new')
             } else {
               _this.$alert('审批失败')
             }
           })
-        _this.$emit('changeStudentRefund')
+
 
       }
     }

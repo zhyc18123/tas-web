@@ -82,7 +82,7 @@
           <span>审批说明：</span>
         </div>
         <div class="am-u-sm-10  am-text-left">
-          <textarea v-model="formData.returnResult">{{tableData.returnResult}}</textarea>
+          <textarea v-model="formData.returnResult"></textarea>
         </div>
       </div>
 
