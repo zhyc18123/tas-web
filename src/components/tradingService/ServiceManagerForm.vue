@@ -94,6 +94,7 @@
           categoryId:'',
         },
         category:[],
+        imgId:''
       }
     },
     created: function () {
@@ -164,6 +165,18 @@
           }
         })
       },
+      uploadImage:function () {
+        var _this = this;
+        var formUrl = new FormData();
+        formUrl.append("file",document.getElementById('uploadFile').files[0]);
+        io.postUploadFile(io.apiAdminUploadFile,formUrl,function (ret) {
+          if (ret.data.success){
+            _this.imgId = ret.data.data
+          }else {
+            _this.$alert(ret.desc)
+          }
+        })
+      }
     }
   }
 </script>
