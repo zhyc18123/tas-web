@@ -88,6 +88,10 @@ const SoldServiceOrderList = resolve => require(['./components/seller/SoldServic
 const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
 
 
+const AttendanceCourseClassList = resolve => require(['./components/attendance/AttendanceCourseClassList'], resolve)
+const AttendanceRecordList = resolve => require(['./components/attendance/AttendanceRecordList'], resolve)
+
+
 Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
@@ -182,6 +186,9 @@ const router = new VueRouter({
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
 
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},
+
+      {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
+      {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList }
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

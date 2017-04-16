@@ -20,6 +20,8 @@
 import conf from '../../lib/conf'
 import io from '../../lib/io'
 
+require('../../../static/qiniu/qiniu.js')
+
 export default{
         name:'file-upload',
         data(){
@@ -31,7 +33,7 @@ export default{
         props:['extensions'],
         mounted:function(){
           var _this = this
-          io.getScripts(['http://cdn.staticfile.org/plupload/2.1.9/plupload.full.min.js','http://cdn.staticfile.org/qiniu-js-sdk/1.0.14-beta/qiniu.min.js'],function(){
+          io.getScripts(['http://cdn.staticfile.org/plupload/2.1.9/plupload.full.min.js'],function(){
             _this.uploader = Qiniu.uploader({
               runtimes: 'html5,flash,html4',    //上传模式,依次退化
               browse_button: _this.btnId,       //上传选择的点选按钮，**必需**

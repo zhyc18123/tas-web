@@ -1,9 +1,9 @@
 /* 前后端通信相关的配置,注释只允许使用多行方式 */
 {
 
-    "qiniuUploadUrl" : "http://upload.qiniu.com/" ,
-    "qiniuUploadTokenApi" : "http://demo.cc.zy.com/ykt-api/api/qiniu/upload/token" ,
-    "qiniuCDN" : "http://7xwcmb.com1.z0.glb.clouddn.com/" ,
+    "qiniuUploadUrl" : "http://upload-z2.qiniu.com/" ,
+    "qiniuUploadTokenApi" : "http://test.yuyou100.com/yyfn-api/api/qiniu/upload/token" ,
+    "qiniuCDN" : "http://onb2fl9k5.bkt.clouddn.com/" ,
 
     /* 上传图片配置项 */
     "imageActionName": "uploadimage", /* 执行上传图片的action名称 */

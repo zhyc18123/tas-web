@@ -16,7 +16,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
               <button class="am-btn  am-btn-default am-btn-success  am-icon-search " type="button" @click="search">查询</button>
-              <button class="am-btn  am-btn-default am-btn-success " type="button" @click="$router.push('/main/enroll/student/add')" v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增学员</button>
+              <button class="am-btn  am-btn-default am-btn-success " type="button" @click="$router.push('/main/enroll/student/add')" ><span class="am-icon-plus"></span>新增学员</button>
             </div>
           </div>
           <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
