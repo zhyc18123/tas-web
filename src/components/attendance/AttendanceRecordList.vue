@@ -19,6 +19,7 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                fixed
                 label="是否考勤"
                 min-width="100">
                 <template scope="scope">
@@ -59,7 +60,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 1" @click.native="$router.push('/main/enroll/class/reg/'+scope.row.classId)">考勤</el-button>
+                  <el-button size="small"  @click.native="showDetailWin(scope.row)">考勤</el-button>
                 </template>
               </el-table-column>
 
@@ -68,16 +69,21 @@
         </div>
       </div>
     </div>
+    <window ref="detailWin" title="考勤">
+      <detail-list :attendanceRecord="attendanceRecord" @completed="loadTableData();$refs.detailWin.close()"></detail-list>
+    </window>
   </div>
 </template>
 <script>
   import io from '../../lib/io'
-  import Pagination from '../base/Pagination'
+  import AttendanceRecordDetailList from './AttendanceRecordDetailList'
 
   export default{
+    components: {'detail-list':AttendanceRecordDetailList},
     data: function () {
       return {
-        tableData: []
+        tableData: [],
+        attendanceRecord:{}
       }
     },
     mounted: function () {
@@ -97,6 +103,13 @@
           } else {
             _this.$alert(ret.desc)
           }
+        })
+      },
+      showDetailWin:function(attendanceRecord){
+        this.attendanceRecord = attendanceRecord
+        this.$refs.detailWin.show({
+          width : 800,
+          height : 500
         })
       }
     }

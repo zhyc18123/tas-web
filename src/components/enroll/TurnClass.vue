@@ -1,5 +1,5 @@
 <template>
-  <component v-bind:is="currentStep" :regId="regId" @goStep="goStep" :args="args">
+  <component v-bind:is="currentStep" :regId="regId" @goStep="goStep" :args="args" @completed="$emit('completed')">
   </component>
 </template>
 

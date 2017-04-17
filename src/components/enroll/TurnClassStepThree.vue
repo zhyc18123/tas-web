@@ -108,10 +108,13 @@
     methods: {
       confirm: function () {
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminTurnClass, $.extend({},_this.formData),
           function (ret) {
+            _this.$hiddenLoading()
             if (ret.success) {
               _this.$toast('OK')
+              _this.$emit("completed")
               //通过实践通知订单组件重新加载数据
               _this.$root.$emit('order:new')
               _this.$root.$emit('class:new')

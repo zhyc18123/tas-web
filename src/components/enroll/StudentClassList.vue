@@ -106,7 +106,7 @@
       </el-table-column>
     </el-table>
     <window ref="first" title="转班" @close="regId=''">
-      <turn-class :regId="regId" @first="$refs.first.close()"></turn-class>
+      <turn-class :regId="regId" @completed="$refs.first.close()"></turn-class>
     </window>
 
 
