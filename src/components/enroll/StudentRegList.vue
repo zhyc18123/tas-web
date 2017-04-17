@@ -4,6 +4,9 @@
       <div class="widget am-cf">
         <div class="widget-head am-cf">
           <div class="widget-title  am-cf">报名列表</div>
+          <div class="widget-function am-fr">
+            <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+          </div>
         </div>
         <div class="widget-body am-fr">
 
@@ -115,7 +118,7 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.classId = this.$params('classId')
+      this.query.classId = this.$params('classId')
       this.loadTableData(this.pageNo)
     },
     methods: {
