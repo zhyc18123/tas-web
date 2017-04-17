@@ -131,7 +131,7 @@
                 _this.formData.payWay = 0
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
-                _this.payQRCodeUrl = io.apiQrcodeEncode + "?content=" + conf.basePath + '/m/index.html#/pay/course/order/' +ret.data.courseOrder.courseOrderId
+                _this.payQRCodeUrl = io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +ret.data.courseOrder.courseOrderId)
               } else {
                 _this.$alert(ret.desc)
               }

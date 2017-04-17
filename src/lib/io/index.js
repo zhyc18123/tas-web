@@ -198,7 +198,7 @@ const io = {
         if (fail) {
           fail(xhr, status, error);
         } else {
-          alert("服务端出错");
+          //alert("服务端出错");
         }
       }
     });
@@ -220,7 +220,7 @@ const io = {
         if (fail) {
           fail(xhr, status, error);
         } else {
-          alert("服务端出错");
+          //alert("服务端出错");
         }
       }
     });
@@ -243,7 +243,7 @@ const io = {
         if (fail) {
           fail(xhr, status, error);
         } else {
-          alert("服务端出错");
+          //alert("服务端出错");
         }
       }
     });
@@ -267,7 +267,7 @@ const io = {
         if (fail) {
           fail(xhr, status, error);
         }else {
-          alert("服务端出错");
+          //alert("服务端出错");
         }
       }
     });

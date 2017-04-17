@@ -187,7 +187,6 @@
             function(ret){
               if(ret.success){
                 _this.orderDetail = ret.data
-                console.log(_this.orderDetail)
               }else{
                 _this.$alert( ret.desc || '请求服务器失败')
               }
@@ -227,7 +226,10 @@
         },function(ret){
           if(ret.success){
             pingpp.createPayment( ret.data , function(result, err) {
-              console.log(result)
+              if(result == 'success'){
+                document.location.href = conf.basePath + "/m/index.html#/pay/success"
+              }else{
+              }
             });
           }else{
             alert('准备支付失败')
