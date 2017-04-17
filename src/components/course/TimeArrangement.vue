@@ -125,6 +125,7 @@
     watch: {
       startDate: function (val) {
         if (this.arrangeWay == 'arrangeByWeek' && val) {
+          console.log($('#' + moment(val, "YYYY-MM-DD").format('dddd')))
           $('#' + moment(val, "YYYY-MM-DD").format('dddd')).click()
         }
       },
@@ -133,6 +134,7 @@
       }
     },
     created:function(){
+       moment.locale('en')
        this.init()
     },
     methods: {
