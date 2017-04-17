@@ -56,7 +56,7 @@
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th class="am-u-sm-4">商品</th>
+                <th class="am-u-sm-4 am-text-center">商品名称</th>
                 <th class="am-u-sm-1">单价</th>
                 <th class="am-u-sm-1">数量</th>
                 <th class="am-u-sm-2">实付款</th>
@@ -64,11 +64,12 @@
                 <th class="am-u-sm-2">操作</th>
               </tr>
               </thead>
-              </table>
+            </table>
 
             <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==0">
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
+                 v-if="items.serviceOrder.type==0">
               <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
@@ -77,23 +78,26 @@
               <ul class="am-list am-list-static">
                 <li class="am-u-sm-12" v-for="(item,num) in items.itemList" :key="item.orderItemId">
                   <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl"  width="180"
+                    <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
                   <div class="am-u-sm-2">{{item.productName}}&nbsp;</div>
                   <div class="am-u-sm-1">￥{{item.price}}</div>
                   <div class="am-u-sm-1">{{item.quantity}}</div>
                   <div class="am-u-sm-2">{{item.price}}</div>
-                  <div class="am-u-sm-2">{{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}</div>
                   <div class="am-u-sm-2">
-                     <div class="tpl-table-black-operation">
-                       <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
-                          <i class="am-icon-edit"></i> 商品详情
-                        </a>
-                        <a href="javascript:;" @click="productRefund(item.orderItemId)"  v-if="item.status!=4">
-                          <i class="am-icon-edit"></i> 退费申请
-                        </a>
-                       <span v-else="item.status!=4">
+                    {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
+                  </div>
+                  <div class="am-u-sm-2">
+                    <div class="tpl-table-black-operation">
+                      <a href="javascript:;"
+                         @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
+                        <i class="am-icon-edit"></i> 订单详情
+                      </a>
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
+                        <i class="am-icon-edit"></i> 退费申请
+                      </a>
+                      <span v-else="item.status!=4">
                            已经申请退费
                         </span>
                     </div>
@@ -110,7 +114,8 @@
               </div>
             </div>
             <window ref="productRefund" title="商品退费申请">
-              <order-item-refund :orderItemId="orderItemId" @refundApply="$refs.productRefund.close()"></order-item-refund>
+              <order-item-refund :orderItemId="orderItemId"
+                                 @refundApply="$refs.productRefund.close()"></order-item-refund>
             </window>
           </div>
         </div>
@@ -123,7 +128,8 @@
   .left-margin {
     margin-left: 10%;
   }
-  .font-style{
+
+  .font-style {
     text-align: center;
   }
 </style>
@@ -146,7 +152,7 @@
           name: '',
         },
         searchConfig: {},
-        orderItemId:''
+        orderItemId: ''
       }
     },
     components: {
@@ -159,7 +165,7 @@
     created: function () {
       this.loadTableData(this.pageNo);
       var _this = this
-      this.$root.$on('orderList:new',function () {
+      this.$root.$on('orderList:new', function () {
         _this.loadTableData(this.pageNo)
       })
     },
@@ -186,14 +192,14 @@
       orderItemDetail: function () {
         var _this = this
       },
-       productRefund: function (orderItemId) {
-       var _this = this
-       _this.orderItemId = orderItemId
-       _this.$refs.productRefund.show({
-       width: 1000,
-       height: 600
-       })
-       }
+      productRefund: function (orderItemId) {
+        var _this = this
+        _this.orderItemId = orderItemId
+        _this.$refs.productRefund.show({
+          width: 1000,
+          height: 600
+        })
+      }
     }
   }
 </script>

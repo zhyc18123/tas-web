@@ -110,12 +110,12 @@
         formData:''
       }
     },
-    props: ['serviceProductRefundId'],
+    props: ['orderItemId'],
     created: function () {
-      this.loadTableData(this.serviceProductRefundId)
+//      this.loadTableData(orderItemId)
     },
     watch:{
-      serviceProductRefundId:function (val) {
+      orderItemId:function (val) {
         this.loadTableData(val)
       }
     },
@@ -123,10 +123,10 @@
       $(window).smoothScroll()
     },
     methods: {
-      loadTableData: function (serviceProductRefundId) {
+      loadTableData: function (orderItemId) {
         var _this = this
-        if (serviceProductRefundId) {
-          io.post(io.apiAdminProductRefundDetail, {serviceProductRefundId: serviceProductRefundId},
+        if (orderItemId) {
+          io.post(io.apiAdminSellOrderDetail, {orderItemId: orderItemId},
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data
@@ -145,7 +145,6 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-              _this.$root.$emit('productRefund:new')
             } else {
               _this.$alert('申请失败')
             }

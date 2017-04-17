@@ -51,9 +51,9 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>上传图片
               </label>
               <div class="am-u-sm-9">
-                <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file" v-if="hasPermission('add')">
+                <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file">
                   <input id="uploadFile" @change="uploadImage" type="file" accept="application/formData">
-                  <span class="am-icon-cloud-upload"></span>导入图片
+                  <span class="am-icon-cloud-upload"></span>请选择图片上传
                 </button>
               </div>
             </div>

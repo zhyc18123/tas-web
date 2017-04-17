@@ -164,6 +164,8 @@ const io = {
     this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
     this.apiAdminProductRefundDetail = conf.baseApiPath + '/api/admin/trading/productRefundDetail'
     this.apiAdminSellProductOrderList = conf.baseApiPath + '/api/admin/trading/sellProductOrderList'
+    this.apiAdminSellOrderDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
+    this.apiAdminchangeSellOrderItem = conf.baseApiPath + '/api/admin/trading/updateOrderItemStatus'
 
 
     this.apiAdminAttendanceCourseClassList = conf.baseApiPath + '/api/admin/attendance/courseClassList'
