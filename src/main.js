@@ -1,6 +1,7 @@
 
 require('amazeui/dist/css/amazeui.css')
 require('amazeui')
+require('./assets/css/app.css')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
