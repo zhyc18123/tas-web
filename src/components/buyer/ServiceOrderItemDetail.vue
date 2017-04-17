@@ -93,7 +93,7 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
-            _this.loadAddress(ret.data.serviceOrder.addressId)
+//            _this.loadAddress(ret.data.serviceOrder.addressId)
           } else {
             _this.$alert(ret.desc)
           }

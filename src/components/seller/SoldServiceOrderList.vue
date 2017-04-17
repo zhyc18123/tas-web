@@ -3,24 +3,11 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">我购买的服务</div>
+          <div class="widget-title  am-cf">商家服务订单</div>
         </div>
         <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form">
-
-            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group tpl-table-list-select">
-                <div class="am-form-group">
-                  <select2 v-model="query.createTime">
-                    <option value="0">最近一个星期</option>
-                    <option value="1">最近一个月</option>
-                    <option value="2">最近三个月</option>
-                    <option value="3">最近一年</option>
-                  </select2>
-                </div>
-              </div>
-            </div>-->
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
@@ -56,7 +43,7 @@
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th class="am-u-sm-4">服务名称</th>
+                <th class="am-u-sm-4 am-text-center">服务名称</th>
                 <th class="am-u-sm-1">单价</th>
                 <th class="am-u-sm-1">数量</th>
                 <th class="am-u-sm-2">实付款</th>
@@ -66,7 +53,7 @@
               </thead>
             </table>
             <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"  v-if="items.serviceOrder==1">
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"  v-if="items.serviceOrder.type==1">
               <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
@@ -88,9 +75,13 @@
                       <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 服务详情
                       </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)">
-                        <i class="am-icon-edit"></i> 退费申请
+                      <a href="javascript:;" @click="sureServiceRefund(item.orderItemId)" v-if="item.status==4">
+                        <i class="am-icon-edit"></i> 确认退费
                       </a>
+                      <a href="javascript:;" @click="changeServiceStatus(item.orderItemId)" v-if="item.status!=3">
+                        <i class="am-icon-edit"></i> 修改状态
+                      </a>
+                      {{item.status==0?'下单中':(item.status==1?'已付款':(item.status==2?'发货中':(item.status==3?'交易成功':'退费')))}}
                     </div>
                   </div>
                 </li>
@@ -104,8 +95,12 @@
                             @paging="loadTableData"/>
               </div>
             </div>
-            <window ref="productRefund" title="商品退费申请">
-              <order-item-refund :orderItemId="orderItemId" @refundApply="$refs.productRefund.close()"></order-item-refund>
+            <window ref="serviceRefundApproval " title="服务退费申请审批">
+              <service-refund :orderItemId="orderItemId" @productApproval="$refs.serviceRefundApproval.close()"></service-refund>
+            </window>
+
+            <window ref="changeServiceItemStatus" title="设置服务交易状态">
+              <service-item-status :orderItemId="orderItemId" @changeStatus="$refs.changeServiceItemStatus.close()"></service-item-status>
             </window>
           </div>
         </div>
@@ -127,7 +122,8 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import OrderItemRefundForm from '../buyer/OrderItemRefundForm'
+  import RefundApprovalForm from './RefundApprovalForm'
+  import ChangeOrderItemStatus from './ChangeOrderItemStatus'
 
   export default{
     data: function () {
@@ -146,13 +142,18 @@
     },
     components: {
       Pagination,
-      'order-item-refund': OrderItemRefundForm
+      'service-refund': RefundApprovalForm,
+      'service-item-status': ChangeOrderItemStatus
     },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
       this.loadTableData(this.pageNo);
+      var _this = this
+      this.$root.$on('sellerServiceOrderList:new', function () {
+        _this.loadTableData(this.pageNo)
+      })
     },
     methods: {
       search: function () {
@@ -161,7 +162,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminProductOrderList, $.extend({
+        io.post(io.apiAdminSellProductOrderList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           type: 1
@@ -174,16 +175,24 @@
           }
         })
       },
-      orderItemDetail: function () {
-        var _this = this
-      },
-      productRefund: function (orderItemId) {
+      sureServiceRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        _this.$refs.productRefund.show({
+        _this.$refs.serviceRefundApproval.show({
           width: 1000,
           height: 600
         })
+        _this.$root.$emit('productRefund:new')
+        _this.$root.$emit('sellerServiceOrderList:new')
+      },
+      changeServiceStatus: function (orderItemId) {
+        var _this = this
+        _this.orderItemId = orderItemId
+        _this.$refs.changeServiceItemStatus.show({
+          width: 500,
+          height: 200
+        })
+       _this.$root.$emit('sellerServiceOrderList:new')
       }
     }
   }
