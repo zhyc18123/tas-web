@@ -6,7 +6,7 @@
       <div class="am-g">
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">
-            <img class="am-radius" src="http://7xwcmb.com1.z0.glb.clouddn.com/FkMo7QvZ7XTQHRkFioMQoE7o7TFo" width="180"
+            <img class="am-radius" :src="tableData.imageUrl" width="180"
                  height="100"/>
           </div>
         </div>
@@ -34,8 +34,7 @@
 
           <div class="am-u-sm-12">
             <span>合计：￥</span>
-            <span v-model="formData.price">
-            </span>
+            <span>{{tableData.price}}</span>
           </div>
         </div>
 
@@ -43,13 +42,13 @@
 
       <div class="am-u-sm-12 am-text-left">
         <span class="red">退费金额：￥
-          <span v-model="formData.price"></span>
+          <span>{{tableData.price}}</span>
         </span>
       </div>
 
       <div class="am-g">
         <div class="am-u-sm-12 am-text-left">
-          <span>退费原因：{{formData.reason}}</span>
+          <span>退费原因：{{tableData.reason}}</span>
         </div>
       </div>
 
@@ -58,7 +57,7 @@
           <span>退费说明：</span>
         </div>
         <div class="am-u-sm-10  am-text-left">
-          <p>{{formData.description}}</p>
+          <p>{{tableData.description}}</p>
         </div>
       </div>
 
@@ -112,7 +111,9 @@
     data: function () {
       return {
         tableData: [],
-        formData:''
+        formData:{
+          price:''
+        }
       }
     },
     props: ['orderItemId'],
@@ -131,7 +132,7 @@
       loadTableData: function (orderItemId) {
         var _this = this
         if (orderItemId) {
-          io.post(io.apiAdminSellOrderDetail, {orderItemId: orderItemId},
+          io.post(io.apiAdminGetOrderItemRefundDetail, {orderItemId: orderItemId},
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data
