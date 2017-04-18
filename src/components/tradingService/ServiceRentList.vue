@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">服务列表</div>
+          <div class="widget-title  am-cf">租聘教室列表</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -12,8 +12,8 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
-                  <select2  required v-model="query.categoryId" :options="category">
-                    <option value="">服务分类</option>
+                  <select2  required v-model="query.campusId" :options="campuses">
+                    <option value="">校区分类</option>
                   </select2>
                 </div>
               </div>
@@ -21,7 +21,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="productName" v-model="query.productName" placeholder="请输入服务名称"/>
+                <input type="text" class="am-input-lg" name="productName" v-model="query.productName" placeholder="请输入教室名称"/>
               </div>
             </div>
 
@@ -35,51 +35,57 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/service/add')">新增</button>
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/rent/add')">新增</button>
               </div>
             </div>
 
           </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>序号</th>
-                <th>标题</th>
-                <th>服务类型</th>
-                <th>单价</th>
-                <th>单位</th>
-                <th>操作人</th>
-                <th>更新时间</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
+            <el-table :data="tableData" border stripe style="min-width: 100%">
+              <el-table-column fixed prop="busTeamName" label="所属商家" min-width="100"></el-table-column>
+              <el-table-column label="座位数" min-width="100">
+                <template scope="scope">{{scope.row.seatAmount }}</template>
+              </el-table-column>
+              <el-table-column label="地区" min-width="100">
+                <template scope="scope">
+                  {{scope.row.city}}{{scope.row.district ? '/' + scope.row.district : '' }}
+                </template>
+              </el-table-column>
+              <el-table-column prop="productName" label="教室名称" min-width="100"></el-table-column>
+              <el-table-column label="价格" min-width="100">
+                <template scope="scope">
+                  {{scope.row.price}}{{scope.row.unit? '/' + scope.row.unit : '' }}
+                </template>
+              </el-table-column>
+              <el-table-column prop="rent" label="每小时" min-width="100"></el-table-column>
+              <el-table-column label="多媒体" min-width="100">
+                <template scope="scope">{{scope.row.isMultimedia == '0' ? '不是' : '是'}}</template>
+              </el-table-column>
+              <el-table-column label="状态" min-width="100">
+                <template scope="scope">{{scope.row.status == '0' ? '未启用' : '正常'}}</template>
+              </el-table-column>
+              <el-table-column prop="memo" label="备注" min-width="100"></el-table-column>
 
-              <tr v-for="(item,index) in tableData" :key="item.productId">
-                <td>{{index+1}}</td>
-                <td>{{item.productName}}</td>
-                <td>{{item.categoryName}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.unit}}</td>
-                <td>{{item.username}}</td>
-                <td>{{item.updateTime | formatTime}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/tradingService/rent/edit/'+item.productId)" v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 编辑
-                    </a>
-                    <a href="javascript:;" @click="deleteServiceProduct(item.productId)">
-                      <i class="am-icon-remove"></i>删除
-                    </a>
-                  </div>
-                </td>
-              </tr>
+              <el-table-column fixed="right" label="操作" width="120">
+                <template scope="scope">
+                  <el-dropdown>
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/tradingService/rent/edit/'+scope.row.productId)">编辑
+                      </el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="deleteServiceProduct(scope.row.productId)">删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
 
-              </tbody>
-            </table>
+
+            </el-table>
           </div>
+
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
@@ -108,10 +114,10 @@
         pageSize:15,
         pageNo:1,
         query:{
-          categoryId:'',
+          campusId:'',
           productName:'',
         },
-        category:[],
+        campuses:[],
         searchConfig:{}
       }
     },
@@ -123,18 +129,18 @@
     },
     created:function(){
       this.loadTableData(this.pageNo);
-      this.loadCategoryData();
+      this.loadCampusData();
     },
     methods:{
       search:function(){
         this.loadTableData()
       },
-      loadCategoryData:function() {
+      loadCampusData:function() {
         var _this = this
-        io.post(io.apiAdminGetAllCategoryDetail, {type:1}, function (ret) {
+        io.post(io.apiAdminAllCampus, function (ret) {
           if (ret.success) {
-            _this.category = ret.data.map(function (item) {
-              return {value: item.categoryId, text: item.name}
+            _this.campuses = ret.data.map(function (item) {
+              return {value: item.campusId, text: item.campusName}
             })
           } else {
             _this.$alert(ret.desc)
@@ -147,7 +153,7 @@
         io.post(io.apiAdminServiceProductList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize,
-          type:1
+          type:2
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
