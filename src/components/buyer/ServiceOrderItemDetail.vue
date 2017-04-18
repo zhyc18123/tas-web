@@ -12,15 +12,15 @@
         <table width="100%" class="am-table am-table-bordered am-table-compact" v-if="tableData!=null">
           <tbody>
           <tr>
-            <td class="bgColor">购买类型：</td>
+            <td>购买类型：</td>
             <td>服务</td>
-            <td class="bgColor">订单编号：</td>
+            <td>订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>
           <tr>
-            <td class="bgColor"> 商家：</td>
+            <td> 商家：</td>
             <td>{{tableData.userName}}</td>
-            <td class="bgColor">订单状态：</td>
+            <td>订单状态：</td>
             <td>{{tableData.status==0?'未支付':(tableData.status==1?'已支付':(tableData.status==2?'取消订单':'退费中的订单'))}}</td>
           </tr>
           </tbody>
@@ -50,7 +50,8 @@
                 </li>
               </ul>-->
 
-              <div class="am-g" v-for="item in itemList" :key="item.orderItemId">
+              <div class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
+                <div class="am-g">
                 <div class="am-u-sm-3">
                   <div class="am-u-sm-4">
                     <img class="am-radius" :src="item.imageUrl" width="180"
@@ -60,6 +61,7 @@
 
                 <div class="am-u-sm-4 am-text-left">
                   <div class="am-u-sm-12">
+                    <span>商品名称：</span>
                     <span>
                       {{item.productName}}
                     </span>
@@ -74,9 +76,9 @@
 
                   <div class="am-u-sm-12">
                     <span>数量：</span>
-                    <div>
+                    <span>
                       {{item.quantity}}
-                    </div>
+                    </span>
                   </div>
 
                   <div class="am-u-sm-12">
@@ -87,8 +89,19 @@
 
                 <div class="am-u-sm-5">
                   <span>具体要求：</span>
-                  <div v-html="item.content"></div>
+                  <article v-html="item.content"></article>
                 </div>
+                </div>
+
+                <div class="am-u-sm-12">
+                  <span>联系方式：</span>
+                  <span>{{}}</span>
+                </div>
+
+                <!--<div class="am-u-sm-12">
+                  <span>附件：</span>
+                  <span></span>
+                </div>-->
 
               </div>
 

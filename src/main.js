@@ -81,6 +81,8 @@ const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'],
 const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
 const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
 const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
+const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
+const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
@@ -181,6 +183,8 @@ const router = new VueRouter({
       {path: 'buyer/buyService/list', component:BuyServiceList},
       {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
       {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
+      {path: 'buyer/address/list/', component:AddressList},
+      {path: 'buyer/address/add/', component:AddressForm},
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
