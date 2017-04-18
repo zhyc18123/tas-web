@@ -19,7 +19,7 @@
               <button class="am-btn  am-btn-default am-btn-success " type="button" @click="$router.push('/main/enroll/student/add')" ><span class="am-icon-plus"></span>新增学员</button>
             </div>
           </div>
-          <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
+          <div class="am-u-sm-12" v-if="tableData&&tableData.length>0">
             <el-table
               :data="tableData"
               border

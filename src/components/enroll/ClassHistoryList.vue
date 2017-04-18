@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="am-u-sm-12 am-scrollable-horizontal">
+    <div class="am-u-sm-12">
       <div class="am-form">
         <div class="am-form-group">
           <label ><input  type="radio" name="regStatus" value=""  v-model="regStatus">全部班级</label>

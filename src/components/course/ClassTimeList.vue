@@ -10,7 +10,7 @@
         </div>
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
+          <div class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
