@@ -34,9 +34,7 @@
 
           <div class="am-u-sm-12">
             <span>合计：￥</span>
-            <span v-model="formData.price">
-              {{tableData.price}}
-            </span>
+            <span>{{formData.price}}</span>
           </div>
         </div>
 
@@ -44,7 +42,7 @@
 
       <div class="am-u-sm-12 am-text-left">
         <span class="red">退费金额：￥
-          <span>{{tableData.sum}}</span>
+          <span>{{tableData.price}}</span>
         </span>
       </div>
 
@@ -85,6 +83,12 @@
   </form>
 
 </template>
+
+<style>
+  .red{
+    color: red;
+  }
+</style>
 
 <script>
   import io from '../../lib/io'

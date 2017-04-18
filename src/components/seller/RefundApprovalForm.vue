@@ -35,7 +35,6 @@
           <div class="am-u-sm-12">
             <span>合计：￥</span>
             <span v-model="formData.price">
-              {{tableData.price}}
             </span>
           </div>
         </div>
@@ -44,7 +43,7 @@
 
       <div class="am-u-sm-12 am-text-left">
         <span class="red">退费金额：￥
-          <span>{{tableData.sum}}</span>
+          <span v-model="formData.price"></span>
         </span>
       </div>
 
@@ -98,6 +97,12 @@
 
 </template>
 
+<style>
+  .red{
+    color: red;
+  }
+</style>
+
 <script>
   import io from '../../lib/io'
 
@@ -130,6 +135,7 @@
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data
+                _this.formData.price = _this.tableData.price
                 _this.formData = _this.tableData
                 _this.formData.createTime = ''
                 _this.formData.updateTime = ''
