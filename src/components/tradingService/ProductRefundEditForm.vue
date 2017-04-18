@@ -6,7 +6,7 @@
       <div class="am-g">
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">
-            <img class="am-radius" src="http://7xwcmb.com1.z0.glb.clouddn.com/FkMo7QvZ7XTQHRkFioMQoE7o7TFo" width="180"
+            <img class="am-radius" :src="tableData.imageUrl" width="180"
                  height="100"/>
           </div>
         </div>
@@ -150,6 +150,7 @@
               _this.$alert('申请失败')
             }
           })
+
         _this.$emit('changeProductRefund')
       }
     }

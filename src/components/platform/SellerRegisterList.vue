@@ -30,9 +30,10 @@
             <td>{{item.status==0?'未审批':(item.status==1?'审批通过':'审批不通过')}}</td>
             <td>
               <div class="tpl-table-black-operation">
-                <a href="javascript:;" @click="edit(item.merchantId)">
+                <a href="javascript:;" @click="edit(item.merchantId)" v-if="item.status==0">
                   <i class="am-icon-edit"></i> 审批
                 </a>
+                <span v-else="item.status==0">{{item.status==1?'审批通过':'审批不通过'}}</span>
                 <!--<a href="javascript:;" @click="del(merchantId)">
                   <i class="am-icon-remove"></i> 删除
                 </a>-->
