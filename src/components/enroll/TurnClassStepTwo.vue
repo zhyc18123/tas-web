@@ -87,7 +87,7 @@
 
         </div>
 
-        <div class="am-u-sm-12 am-scrollable-horizontal" v-if="tableData&&tableData.length>0">
+        <div class="am-u-sm-12" v-if="tableData&&tableData.length>0">
           <el-table
             :data="tableData"
             border

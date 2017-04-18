@@ -158,7 +158,7 @@ const io = {
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
-    this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
+    // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
     this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
     this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
     this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
@@ -166,6 +166,9 @@ const io = {
     this.apiAdminSellProductOrderList = conf.baseApiPath + '/api/admin/trading/sellProductOrderList'
     this.apiAdminSellOrderDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
     this.apiAdminchangeSellOrderItem = conf.baseApiPath + '/api/admin/trading/updateOrderItemStatus'
+    this.apiAdminSaveOrUpdateAddress = conf.baseApiPath + '/api/admin/trading/saveOrUpdateShippingAddress'
+    this.apiAdminAddressList = conf.baseApiPath + '/api/admin/trading/shippingAddressList'
+    this.apiAdminDelAddress = conf.baseApiPath + '/api/admin/trading/delShippingAddress'
 
 
     this.apiAdminAttendanceCourseClassList = conf.baseApiPath + '/api/admin/attendance/courseClassList'

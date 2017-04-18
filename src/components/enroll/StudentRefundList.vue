@@ -1,5 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-scrollable-horizontal">
+  <div class="am-u-sm-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">学生退费管理</div>
