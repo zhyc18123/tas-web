@@ -102,14 +102,28 @@
                   <span>附件：</span>
                   <span></span>
                 </div>-->
-
               </div>
-
-
             </div>
+
+            <div class="am-u-sm-12">
+              <div class="am-panel am-panel-default">
+                <div class="am-panel-hd"><label>评论</label></div>
+                <div class="am-panel-bd">
+                  <ul class="am-comments-list am-comments-list-flip">
+                    <li class="am-comment">
+                      <div class="am-panel am-panel-default">
+                        <div class="am-panel-hd">2017年4月19&nbsp;&nbsp;&nbsp;买家：沙瑞金</div>
+                        <div class="am-panel-bd">
+                          <article>达康书记别低头，GDP会掉！！！</article>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
           </div>
-
-
         </div>
       </div>
     </div>

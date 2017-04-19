@@ -198,7 +198,7 @@ const router = new VueRouter({
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
-      {path: 'seller/sellerProduct/detail/:orderId', component:SellerProductDetail},
+      {path: 'seller/sellerProduct/detail/:orderItemId', component:SellerProductDetail},
       {path: 'seller/sellerService/detail/:orderId', component:SellerServiceDetail},
 
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},

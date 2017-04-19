@@ -4,16 +4,16 @@
       <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>状态
     </label>
     <div class="am-u-sm-3 am-u-end input-field">
-      <select2 v-model="tableData.status">
+      <select2 v-model="tableData.itemStatus">
         <option value="0">下单中</option>
         <option value="1">已付款</option>
         <option value="2">发货中</option>
         <option value="3">交易成功</option>
-        <option value="4">退费</option>
+        <!--<option value="4">退费</option>-->
       </select2>
     </div>
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="change()">修改</button>
+      <button type="button" class="am-btn am-btn-primary" @click="change(tableData.itemStatus)">修改</button>
       <a href="javascript:void(0)" data-am-modal-close>
         <button class="am-btn am-btn-primary">取消</button>
       </a>
@@ -36,7 +36,7 @@
     },
     watch:{
       orderItemId:function (val) {
-        this.loadTableData(val)
+        this.orderItemId = val
       }
     },
     mounted: function () {
@@ -44,8 +44,8 @@
     },
     methods:{
       loadTableData:function (orderItemId) {
-        var _this = this
-        io.post(io.apiAdminSellOrderDetail,{
+        /*var _this = this
+        io.post(io.apiAdminOrderItemDetail,{
           orderItemId:orderItemId
         },function (ret) {
           if (ret.success){
@@ -53,18 +53,20 @@
           }else {
             _this.$alert(ret.desc)
           }
-        })
+        })*/
       },
-      change:function () {
+      change:function (itemStatus) {
         var _this = this
+        _this.itemStatus = itemStatus
         io.post(io.apiAdminchangeSellOrderItemStatus,{
           orderItemId:_this.orderItemId,
-          itemStatus:_this.tableData.status
+          itemStatus:_this.itemStatus
         },function (ret) {
           console.log(ret.data)
           if (ret.success){
             _this.$toast("ok")
             _this.$root.$emit('sellerOrderList:new')
+            _this.$root.$emit('sellerServiceOrderList:new')
           }else {
             _this.$alert(ret.desc)
           }
