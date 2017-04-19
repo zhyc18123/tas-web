@@ -77,7 +77,7 @@
                   <div class="am-u-sm-2">
                     <div class="tpl-table-black-operation">
                       <a href="javascript:;"
-                         @click="$router.push('/main/buyer/productOrderItem/detail/'+items.order.orderId)">
+                         @click="$router.push('/main/seller/sellerProduct/detail/'+items.order.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
                       <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">

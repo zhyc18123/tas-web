@@ -73,7 +73,7 @@
                   <div class="am-u-sm-2">{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</div>
                   <div class="am-u-sm-2">
                     <div class="tpl-table-black-operation">
-                      <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.order.orderId)">
+                      <a href="javascript:;" @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
                         <i class="am-icon-edit"></i> 服务详情
                       </a>
                       <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
