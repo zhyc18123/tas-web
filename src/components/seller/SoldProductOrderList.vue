@@ -160,6 +160,7 @@
       this.loadTableData(this.pageNo);
       var _this = this
       this.$root.$on('sellerOrderList:new', function () {
+        _this.pageNo = 1
         _this.loadTableData(this.pageNo)
       })
     },
@@ -200,7 +201,6 @@
           width: 500,
           height: 200
         })
-        _this.$root.$emit('sellerOrderList:new')
       }
     }
   }

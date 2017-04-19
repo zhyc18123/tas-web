@@ -156,7 +156,7 @@
               _this.$alert('申请失败')
             }
           })
-        _this.$emit('changeProductRefund')
+        _this.$emit('productApproval')
       }
     }
   }

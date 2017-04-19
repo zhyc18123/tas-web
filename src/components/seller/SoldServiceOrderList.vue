@@ -75,7 +75,7 @@
                       <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 服务详情
                       </a>
-                      <a href="javascript:;" @click="sureServiceRefund(item.orderItemId)" v-if="item.status==4">
+                      <a href="javascript:;" @click="serviceToRefund(item.orderItemId)" v-if="item.status==4">
                         <i class="am-icon-edit"></i> 确认退费
                       </a>
                       <a href="javascript:;" @click="changeServiceStatus(item.orderItemId)" v-if="item.status!=3">
@@ -95,7 +95,8 @@
                             @paging="loadTableData"/>
               </div>
             </div>
-            <window ref="serviceRefundApproval " title="服务退费申请审批">
+
+            <window ref="serviceRefundApproval" title="服务退费申请审批">
               <service-refund :orderItemId="orderItemId" @productApproval="$refs.serviceRefundApproval.close()"></service-refund>
             </window>
 
@@ -152,6 +153,7 @@
       this.loadTableData(this.pageNo);
       var _this = this
       this.$root.$on('sellerServiceOrderList:new', function () {
+        _this.pageNo = 1
         _this.loadTableData(this.pageNo)
       })
     },
@@ -175,7 +177,7 @@
           }
         })
       },
-      sureServiceRefund: function (orderItemId) {
+      serviceToRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
         _this.$refs.serviceRefundApproval.show({

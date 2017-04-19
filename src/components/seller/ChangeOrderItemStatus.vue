@@ -57,12 +57,14 @@
       },
       change:function () {
         var _this = this
-        io.post(io.apiAdminchangeSellOrderItem,{
+        io.post(io.apiAdminchangeSellOrderItemStatus,{
           orderItemId:_this.orderItemId,
           itemStatus:_this.tableData.status
         },function (ret) {
+          console.log(ret.data)
           if (ret.success){
             _this.$toast("ok")
+            _this.$root.$emit('sellerOrderList:new')
           }else {
             _this.$alert(ret.desc)
           }
