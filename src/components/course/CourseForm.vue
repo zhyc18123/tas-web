@@ -123,7 +123,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学位数"  required min="1" step="1"  v-model="formData.quota" >
+                <input type="number" placeholder="输入学位数"  required min="1" step="1" v-model="formData.quota" >
               </div>
             </div>
             <div class="am-form-group">
@@ -131,7 +131,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
+                <input type="number" placeholder="输入学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
               </div>
             </div>
 
