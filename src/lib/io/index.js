@@ -284,6 +284,7 @@ const io = {
       if (success) success(data);
     })
   },
+  //TODO:del
   postUploadFile:function (url,data,success) {
     Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);

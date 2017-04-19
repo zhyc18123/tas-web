@@ -168,6 +168,7 @@
           }
         })
       },
+      //TODO:del
       uploadImage:function () {
         var _this = this;
         var formUrl = new FormData();
