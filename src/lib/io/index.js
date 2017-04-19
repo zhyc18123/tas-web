@@ -171,6 +171,7 @@ const io = {
     this.apiAdminDelAddress = conf.baseApiPath + '/api/admin/trading/delShippingAddress'
     this.apiAdminGetOrderItemRefundDetail = conf.baseApiPath + '/api/admin/trading/getOrderItemRefundDetail'
 
+    this.apiAdminRoomListOfCampus = conf.baseApiPath + '/api/admin/trading/roomListOfCampus'
 
     this.apiAdminAttendanceCourseClassList = conf.baseApiPath + '/api/admin/attendance/courseClassList'
     this.apiAdminAttendanceAttendanceRecordList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordList'
