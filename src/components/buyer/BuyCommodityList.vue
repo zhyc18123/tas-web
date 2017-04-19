@@ -60,7 +60,7 @@
                 <th class="am-u-sm-1">单价</th>
                 <th class="am-u-sm-1">数量</th>
                 <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">交易状态</th>
+                <th class="am-u-sm-2">订单交易状态</th>
                 <th class="am-u-sm-2">操作</th>
               </tr>
               </thead>
@@ -100,6 +100,10 @@
                       <span v-else="item.status!=4">
                            已经申请退费
                         </span>
+                      <a href="javascript:;"
+                         @click="$router.push('/main/buyer/productOrderItem/comment/'+item.productId)">
+                        <i class="am-icon-edit"></i> 追加评论
+                      </a>
                     </div>
                   </div>
                 </li>

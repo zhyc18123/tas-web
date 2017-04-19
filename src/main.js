@@ -81,6 +81,8 @@ const ServiceRentForm = resolve => require([ './components/tradingService/Servic
 
 const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
 const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
+const ProductComment = resolve => require(['./components/buyer/ProductComment'], resolve)
+const ServiceComment = resolve => require(['./components/buyer/ServiceComment'], resolve)
 const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
 const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
 const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
@@ -88,6 +90,8 @@ const AddressForm = resolve => require(['./components/buyer/AddressForm'], resol
 
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
+const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
+const SellerServiceDetail = resolve => require(['./components/seller/SellerServiceDetail'], resolve)
 
 const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
 
@@ -187,11 +191,15 @@ const router = new VueRouter({
       {path: 'buyer/buyService/list', component:BuyServiceList},
       {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
       {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
+      {path: 'buyer/productOrderItem/comment/:productId', component:ProductComment},
+      {path: 'buyer/ServiceOrderItem/comment/:productId', component:ServiceComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
+      {path: 'seller/sellerProduct/detail/:orderItemId', component:SellerProductDetail},
+      {path: 'seller/sellerService/detail/:orderId', component:SellerServiceDetail},
 
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},
 
