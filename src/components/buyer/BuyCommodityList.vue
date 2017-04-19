@@ -60,7 +60,7 @@
                 <th class="am-u-sm-1">单价</th>
                 <th class="am-u-sm-1">数量</th>
                 <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">交易状态</th>
+                <th class="am-u-sm-2">订单交易状态</th>
                 <th class="am-u-sm-2">操作</th>
               </tr>
               </thead>

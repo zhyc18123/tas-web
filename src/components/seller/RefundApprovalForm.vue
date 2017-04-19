@@ -62,9 +62,9 @@
       </div>
 
       <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
+        <span class="am-u-sm-2 am-text-left">
           <span>审批状态：</span>
-        </div>
+        </span>
         <div class="am-u-sm-10 am-text-left">
           <label class="am-checkbox-inline">
             <input type="radio" value="1" name="reason" v-model="formData.status"> 已处理
