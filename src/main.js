@@ -76,6 +76,8 @@ const ProductTradingList = resolve => require([ './components/tradingService/Pro
 const ProductRefundList = resolve => require([ './components/tradingService/ProductRefundList'], resolve)
 const ProductRefundEditForm = resolve => require([ './components/tradingService/ProductRefundEditForm'], resolve)
 const ProductTradingForm = resolve => require([ './components/tradingService/ProductTradingForm'], resolve)
+const ServiceRentList = resolve => require([ './components/tradingService/ServiceRentList'], resolve)
+const ServiceRentForm = resolve => require([ './components/tradingService/ServiceRentForm'], resolve)
 
 const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
 const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
@@ -178,6 +180,8 @@ const router = new VueRouter({
       {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
       {path: 'tradingService/productRefund/list' , component: ProductRefundList },
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
+      {path: 'tradingService/rent/list' , component: ServiceRentList },
+      {path: 'tradingService/rent/add' , component: ServiceRentForm},
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
