@@ -158,6 +158,7 @@ const io = {
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
+    this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'
     // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
     this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
     this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
