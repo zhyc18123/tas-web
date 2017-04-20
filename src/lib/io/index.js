@@ -153,6 +153,7 @@ const io = {
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
     this.apiAdminUploadFile = conf.baseApiPath + '/api/admin/trading/uploadImage'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+    io.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
@@ -283,12 +284,6 @@ const io = {
   },
   postMitiFile:function (url,data,success) {
     Vue.http.post(io.importCourseExcel+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
-      if (success) success(data);
-    })
-  },
-  //TODO:del
-  postUploadFile:function (url,data,success) {
-    Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);
     })
   },

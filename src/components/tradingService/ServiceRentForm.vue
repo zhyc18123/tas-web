@@ -37,7 +37,8 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>省
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入省" required v-model="formData.province" disabled>
+                <input type="text" class="am-form-field" placeholder="请输入省" required v-model="formData.province"
+                       disabled>
               </div>
             </div>
 
@@ -55,7 +56,8 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>区
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入区" required v-model="formData.district" disabled>
+                <input type="text" class="am-form-field" placeholder="请输入区" required v-model="formData.district"
+                       disabled>
               </div>
             </div>
 
@@ -78,7 +80,8 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>地址
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输地址" required v-model="formData.address" disabled>
+                <input type="text" class="am-form-field" placeholder="请输地址" required v-model="formData.address"
+                       disabled>
               </div>
             </div>
 
@@ -103,18 +106,18 @@
             </div>
 
             <!--图片-->
-            <div class="am-form-group" v-for="(item,index) in serviceImages">
-              <label class="am-u-sm-3 am-form-label" >
-                <span v-if="index==0">图片</span>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span>图片</span>
               </label>
-              <div class="am-u-sm-2 am-form-file input-field">
+              <div class="am-u-sm-9 am-form-file input-field">
                 <file-upload extensions="jpg,png" @uploaded="uploadImages">
-                  <img class="am-margin-top am-radius" :src="item.imageUrl" v-model="serviceImages[index].imageUrl" style="width:168px;height:168px">
+                  <div class="am-inline-block" v-for="(item, index) in productImages" style="margin-left: 10px">
+                    <img class="am-margin-top am-radius" :src="productImages[index]" style="width:168px;height:168px">
+                  </div>
+                  <a class="am-align-right" href="javascript:;" @click="clearImages"> <i
+                    class="am-icon-btn-md am-icon-trash-o"></i></a>
                 </file-upload>
-              </div>
-              <div class="am-u-sm-7 input-field">
-                <a href="javascript:;" @click="addProductImage"> <i class="am-icon-plus"></i></a>
-                <a href="javascript:;" @click="delProductImage(index)"><i class="am-icon-remove"></i></a>
               </div>
             </div>
 
@@ -152,12 +155,11 @@
           price: '',
           unit: '',
           isMultimedia: '0',
-          type:"2"
+          type: "2"
         },
         campuses: [],
         rooms: [],
-        serviceImages: [{}],
-        productImage:[]
+        productImages: []
       }
     },
     created: function () {
@@ -168,11 +170,22 @@
           function (ret) {
             if (ret.success) {
               _this.formData = ret.data
+              if (_this.formData.roomId) _this.loadRoomData(true);
             }
           },
           function () {
             _this.$alert('请求服务器失败')
-          })
+          }),
+        io.post(io.apiAdminServiceProductImages, {productId: productId},
+          function (ret) {
+            if (ret.success) {
+              _this.productImages = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          }
+        )
       }
       this.loadCampusData();
       this.rooms = []
@@ -199,18 +212,17 @@
       });
     },
     methods: {
-        //TODO:handler room
       save: function (complete) {
         var _this = this
         var data = _this.formData;
         io.post(io.apiAdminSaveServiceProduct, $.extend({
-          productImages:JSON.stringify(this.productImage)
+            productImages: JSON.stringify(this.productImages)
           }, data),
           function (ret) {
             complete.call();
             if (ret.success) {
               _this.$toast('OK')
-//              _this.$router.push('/main/tradingService/rent/list')
+              _this.$router.push('/main/tradingService/rent/list')
             } else {
               _this.$alert(ret.desc)
             }
@@ -232,9 +244,9 @@
           }
         })
       },
-      loadRoomData: function () {
+      loadRoomData: function (flag) {
         var _this = this;
-        if (!_this.formData.campusId) {
+        if (!flag && !_this.formData.campusId) {
           _this.formData.province = '';
           _this.formData.city = '';
           _this.formData.district = '';
@@ -253,14 +265,6 @@
             _this.$alert(ret.desc)
           }
         })
-      },
-      uploadImages: function (info) {
-        console.log("info:"+info.url)
-        this.productImage.push( info.url)
-        console.log("array:"+this.productImage.toString())
-        console.log("List:"+this.serviceImages.map(function (item) {
-            return item.imageUrl;
-          }))
       },
       fillAServiceRentWithRoomData: function (roomId) {
         var _this = this;
@@ -288,14 +292,11 @@
             _this.$alert('请求服务器失败')
           })
       },
-      addProductImage :function () {
-        this.serviceImages.push({});
+      uploadImages: function (info) {
+        this.productImages.push(info.url)
       },
-      delProductImage:function (index) {
-        if(this.serviceImages.length <= 1){
-          return
-        }
-        this.serviceImages.splice(index,1)
+      clearImages: function () {
+        this.productImages = [];
       }
     }
   }
