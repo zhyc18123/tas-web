@@ -175,8 +175,7 @@
           },
           function () {
             _this.$alert('请求服务器失败')
-          }
-        ),
+          }),
         io.post(io.apiAdminServiceProductImages, {productId: productId},
           function (ret) {
             if (ret.success) {
@@ -267,9 +266,6 @@
           }
         })
       },
-      uploadImages: function (info) {
-        this.productImages.push(info.url)
-      },
       fillAServiceRentWithRoomData: function (roomId) {
         var _this = this;
         if (!roomId) {
@@ -295,6 +291,9 @@
           }, function () {
             _this.$alert('请求服务器失败')
           })
+      },
+      uploadImages: function (info) {
+        this.productImages.push(info.url)
       },
       clearImages: function () {
         this.productImages = [];
