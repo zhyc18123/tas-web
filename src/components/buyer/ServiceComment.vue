@@ -16,27 +16,27 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>服务态度
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="请输入评价分数"  required min="1" step="1" max="5" v-model="formData.serviceAttitude" >
-              </div>
+              <label>
+                <el-rate v-model="formData.serviceAttitude" show-text></el-rate>
+              </label>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>工作速度
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>工作效率
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="请输入评价分数"  required min="1" step="1" max="5" v-model="formData.workEfficiency" >
-              </div>
+              <label>
+                <el-rate v-model="formData.workEfficiency" show-text></el-rate>
+              </label>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>完成质量
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="请输入评价分数"  required min="1" step="1" max="5" v-model="formData.completeQuality" >
-              </div>
+              <label>
+                <el-rate v-model="formData.completeQuality" show-text></el-rate>
+              </label>
             </div>
 
             <div class="am-form-group">
@@ -82,9 +82,9 @@
     data(){
       return{
         formData:{
-          serviceAttitude:'',
-          workEfficiency:'',
-          completeQuality:'',
+          serviceAttitude:null,
+          workEfficiency:null,
+          completeQuality:null,
           comment:'',
           productId:'',
           type:"",

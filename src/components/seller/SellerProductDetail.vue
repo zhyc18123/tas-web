@@ -74,7 +74,9 @@
                 <li class="am-comment" v-for="item in commentData" v-if="commentData!=''" :key="item.commentId">
                   <div class="am-panel am-panel-default">
                     <div class="am-panel-hd">
-                      <span>评分：{{item.evaluation}}分</span>
+                      <label>
+                        <el-rate v-model="item.evaluation" disabled ></el-rate>
+                      </label>
                       <span class="left-margin">{{item.createTime | formatDate}}</span>
                       <span class="left-margin">买家：{{item.userName}}</span>
                     </div>
@@ -90,6 +92,7 @@
                   <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData"/>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -101,7 +104,7 @@
 
 <style>
   .left-margin{
-    margin-left: 10%;
+    margin-left: 5%;
   }
 </style>
 

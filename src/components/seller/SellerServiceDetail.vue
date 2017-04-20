@@ -35,21 +35,6 @@
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
               </div>
 
-              <!--<ul class="am-list am-list-static">
-                <li class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
-                  <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl"  width="180"
-                         height="100"/>
-                  </span>
-                  <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.price/item.quantity | formatNumber(2)}}</span>
-                  <span class="am-u-sm-1">{{item.quantity}}</span>
-                  <span class="am-u-sm-2">{{item.price}}</span>
-                  <span class="am-u-sm-2">{{item.busTeamName}}</span>
-                  </span>
-                </li>
-              </ul>-->
-
               <div class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
                 <div class="am-g">
                   <div class="am-u-sm-3">
@@ -113,7 +98,15 @@
                     <li class="am-comment" v-for="item in commentData" v-if="commentData!=''" :key="item.commentId">
                       <div class="am-panel am-panel-default">
                         <div class="am-panel-hd">
-                          <span>评分：{{item.evaluation}}分</span>
+                          <label>
+                            服务态度：<el-rate v-model="item.serviceAttitude" disabled></el-rate>
+                          </label>
+                          <label>
+                            工作效率：<el-rate v-model="item.workEfficiency" disabled></el-rate>
+                          </label>
+                          <label>
+                            完成质量：<el-rate v-model="item.completeQuality" disabled></el-rate>
+                          </label>
                           <span class="left-margin">{{item.createTime | formatDate}}</span>
                           <span class="left-margin">买家：{{item.userName}}</span>
                         </div>
@@ -141,7 +134,9 @@
 </template>
 
 <style>
-
+  .left-margin{
+    margin-left: 5%;
+  }
 </style>
 
 <script>
@@ -187,7 +182,7 @@
       loadCommentData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        _this.productId = _this.tableData.productId
+        _this.productId = _this.itemList[0].productId
         io.post(io.apiAdminCommentList,{
           productId:_this.productId,
           pageNo:_this.pageNo,
