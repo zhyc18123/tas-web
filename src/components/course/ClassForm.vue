@@ -267,27 +267,12 @@
         formData: {
           areaTeamId: '',
           busTeamId: '',
-          productId: '',
           periodId: '',
-          className: '',
-          no: '',
           quota: '',
-          studyingFee: '',
-          courseDescription: '',
-          courseOutline: '',
+          studyingFee: ''
         },
-        courseTemplateData: {
-          courseName: '',
-          productName: '',
-          gradeName: '',
-          subjectName: '',
-          quota: '',
-          lectureAmount: '',
-          studyingFee: '',
-        },
-        products: [],
-        classDescription: '',
-        classOutline: ''
+        courseTemplateData: {},
+        products: []
       }
     },
     components: {
