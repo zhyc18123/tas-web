@@ -3,11 +3,18 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">商品列表</div>
+          <div class="widget-title am-cf">商品列表</div>
         </div>
-        <div class="widget-body  am-fr">
-
+        <div class="widget-body am-fr">
           <div class="am-u-sm-12 am-form ">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="$router.push('/main/tradingService/product/add')">
+                  <span class="am-icon-plus"></span>新增
+                </button>
+              </div>
+            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
@@ -20,65 +27,41 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="productName" v-model="query.productName" placeholder="请输入商品名称"/>
+              <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                <input type="text" class="am-input-lg am-form-field" name="productName" v-model="query.productName"
+                       placeholder="请输入商品名称"/>
+                <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="search" ><span class="am-icon-search"></span>查询
-                </button>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/tradingService/product/add')">新增</button>
-              </div>
-            </div>
-
           </div>
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th>序号</th>
-                <th>商品名称</th>
-                <th>商品分类</th>
-                <th>单价</th>
-                <th>单位</th>
-                <th>操作人</th>
-                <th>更新时间</th>
-                <th>操作</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="(item,index) in tableData" :key="item.productId">
-                <td>{{index+1}}</td>
-                <td>{{item.productName}}</td>
-                <td>{{item.categoryName}}</td>
-                <td>{{item.price}}</td>
-                <td>{{item.unit}}</td>
-                <td>{{item.username}}</td>
-                <td>{{item.updateTime | formatTime}}</td>
-                <td>
-                  <div class="tpl-table-black-operation">
-                    <a href="javascript:;" @click="$router.push('/main/tradingService/product/edit/'+item.productId)" v-if="hasPermission('edit')">
-                      <i class="am-icon-edit"></i> 编辑
-                    </a>
-                    <a href="javascript:;" @click="del(item.productId)">
-                      <i class="am-icon-remove"></i>删除
-                    </a>
-                  </div>
-                </td>
-              </tr>
-
-              </tbody>
-            </table>
+          <div class="am-u-sm-12">
+            <el-table :data="tableData" border stripe style="min-width: 100%">
+              <el-table-column fixed type="index" label="序号" min-width="100"></el-table-column>
+              <el-table-column prop="productName" label="商品名称" min-width="100"></el-table-column>
+              <el-table-column prop="categoryName" label="商品分类" min-width="100"></el-table-column>
+              <el-table-column prop="price" label="价格" min-width="100"></el-table-column>
+              <el-table-column prop="unit" label="单位" min-width="100"></el-table-column>
+              <el-table-column prop="username" label="操作人" min-width="100"></el-table-column>
+              <el-table-column label="更新时间" min-width="100">
+                <template scope="scope" >{{scope.row.updateTime | formatTime}}</template>
+              </el-table-column>
+              <el-table-column fixed="right" label="操作" width="120">
+                <template scope="scope">
+                  <el-dropdown>
+                    <span class="el-dropdown-link">操作菜单<i class="el-icon-caret-bottom el-icon--right"></i></span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/tradingService/product/edit/'+scope.row.productId)">
+                        编辑</el-dropdown-item>
+                      <el-dropdown-item @click.native="del(scope.row.productId)">删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
+            </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
@@ -88,11 +71,8 @@
         </div>
       </div>
     </div>
-
   </div>
 
-
-  </div>
 </template>
 
 <script>
@@ -109,14 +89,14 @@
         pageNo:1,
         query:{
           categoryId:'',
-          productName:'',
+          productName:''
         },
         category:[],
         searchConfig:{}
       }
     },
     components: {
-      Pagination,
+      Pagination
     },
     mounted:function(){
       $(window).smoothScroll()
@@ -147,7 +127,7 @@
         io.post(io.apiAdminServiceProductList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize,
-          type: 0,
+          type: 0
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
@@ -171,7 +151,7 @@
               }
             })
           });
-      },
+      }
     }
   }
 </script>
