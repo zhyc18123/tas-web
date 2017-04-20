@@ -213,7 +213,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
             </label>
             <div class="am-u-sm-9 input-field">
-              <input type="text" class="am-form-field" placeholder="输入学费" required v-model="formData.studyingFee">
+              <input type="number" class="am-form-field" placeholder="输入学费" min="0" step="0.01" required v-model="formData.studyingFee">
             </div>
           </div>
 

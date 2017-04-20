@@ -73,7 +73,7 @@
                   <div class="am-u-sm-2">{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</div>
                   <div class="am-u-sm-2">
                     <div class="tpl-table-black-operation">
-                      <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.order.orderId)">
+                      <a href="javascript:;" @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
                         <i class="am-icon-edit"></i> 服务详情
                       </a>
                       <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
@@ -87,7 +87,6 @@
                   </div>
                 </li>
               </ul>
-
             </div>
 
             <div class="am-u-lg-12 am-cf">
@@ -104,7 +103,9 @@
             <window ref="changeServiceItemStatus" title="设置服务交易状态">
               <service-item-status :orderItemId="orderItemId" @changeStatus="$refs.changeServiceItemStatus.close()"></service-item-status>
             </window>
+
           </div>
+
         </div>
       </div>
     </div>
@@ -183,8 +184,6 @@
           width: 1000,
           height: 600
         })
-        _this.$root.$emit('productRefund:new')
-        _this.$root.$emit('sellerServiceOrderList:new')
       },
       changeServiceStatus: function (orderItemId) {
         var _this = this
@@ -193,7 +192,7 @@
           width: 500,
           height: 200
         })
-       _this.$root.$emit('sellerServiceOrderList:new')
+
       }
     }
   }

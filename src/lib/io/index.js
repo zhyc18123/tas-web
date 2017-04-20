@@ -160,19 +160,20 @@ const io = {
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
     this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'
     // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
-    this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
+    this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/orderItemDetail'
     this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
     this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
     this.apiAdminProductRefundDetail = conf.baseApiPath + '/api/admin/trading/productRefundDetail'
     this.apiAdminSellProductOrderList = conf.baseApiPath + '/api/admin/trading/sellProductOrderList'
 
-    this.apiAdminSellOrderDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
+    // this.apiAdminSellOrderDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
     this.apiAdminchangeSellOrderItemStatus = conf.baseApiPath + '/api/admin/trading/updateOrderItemStatus'
     this.apiAdminSaveOrUpdateAddress = conf.baseApiPath + '/api/admin/trading/saveOrUpdateShippingAddress'
     this.apiAdminAddressList = conf.baseApiPath + '/api/admin/trading/shippingAddressList'
     this.apiAdminDelAddress = conf.baseApiPath + '/api/admin/trading/delShippingAddress'
     this.apiAdminGetOrderItemRefundDetail = conf.baseApiPath + '/api/admin/trading/getOrderItemRefund'
 
+    this.apiAdminRoomListOfCampus = conf.baseApiPath + '/api/admin/trading/roomListOfCampus'
 
     this.apiAdminAttendanceCourseClassList = conf.baseApiPath + '/api/admin/attendance/courseClassList'
     this.apiAdminAttendanceAttendanceRecordList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordList'
@@ -285,6 +286,7 @@ const io = {
       if (success) success(data);
     })
   },
+  //TODO:del
   postUploadFile:function (url,data,success) {
     Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);

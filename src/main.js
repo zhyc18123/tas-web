@@ -90,6 +90,8 @@ const AddressForm = resolve => require(['./components/buyer/AddressForm'], resol
 
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
+const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
+const SellerServiceDetail = resolve => require(['./components/seller/SellerServiceDetail'], resolve)
 
 const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
 
@@ -196,6 +198,8 @@ const router = new VueRouter({
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
+      {path: 'seller/sellerProduct/detail/:orderItemId', component:SellerProductDetail},
+      {path: 'seller/sellerService/detail/:orderId', component:SellerServiceDetail},
 
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},
 

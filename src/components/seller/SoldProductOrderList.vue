@@ -77,7 +77,7 @@
                   <div class="am-u-sm-2">
                     <div class="tpl-table-black-operation">
                       <a href="javascript:;"
-                         @click="$router.push('/main/buyer/productOrderItem/detail/'+items.order.orderId)">
+                         @click="$router.push('/main/seller/sellerProduct/detail/'+items.orderItemId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
                       <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
@@ -190,8 +190,7 @@
           width: 1000,
           height: 600
         })
-        _this.$root.$emit('productRefund:new')
-        _this.$root.$emit('sellerOrderList:new')
+
       },
       changeStatus: function (orderItemId) {
         var _this = this
