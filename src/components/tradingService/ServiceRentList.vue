@@ -3,14 +3,15 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">租聘教室列表</div>
+          <div class="widget-title am-cf">租聘教室列表</div>
         </div>
-        <div class="widget-body  am-fr">
+        <div class="widget-body am-fr">
           <div class="am-u-sm-12 am-form ">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/tradingService/rent/add')"><span class="am-icon-plus"></span>新增
+                        @click="$router.push('/main/tradingService/rent/add')">
+                  <span class="am-icon-plus"></span>新增
                 </button>
               </div>
             </div>
@@ -30,16 +31,15 @@
                 <input type="text" class="am-input-lg am-form-field " name="productName" v-model="query.productName"
                        placeholder="请输入教室名称"/>
                 <span class="am-input-group-btn">
-                  <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search"
-                          type="button"
-                          @click="search"></button>
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
                 </span>
               </div>
             </div>
 
           </div>
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
+          <div class="am-u-sm-12">
             <el-table :data="tableData" border stripe style="min-width: 100%">
               <el-table-column fixed prop="busTeamName" label="所属商家" min-width="100"></el-table-column>
               <el-table-column label="座位数" min-width="100">

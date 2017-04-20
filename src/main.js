@@ -186,6 +186,7 @@ const router = new VueRouter({
       {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
       {path: 'tradingService/rent/list' , component: ServiceRentList },
       {path: 'tradingService/rent/add' , component: ServiceRentForm},
+      {path: 'tradingService/rent/edit/:productId' , component: ServiceRentForm},
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},

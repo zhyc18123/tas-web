@@ -1,6 +1,6 @@
 <template>
 
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">商品评价</div>
@@ -16,11 +16,17 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>综合评价
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="请输入评价分数"  required min="1" step="1" max="5" v-model="formData.evaluation" >
-              </div>
+              <label>
+                <input type="hidden" name="score" id="score" value="">
+                <a class="am-padding-lg" role="button">
+                  <i class="am-icon-star-o score" data-score="1"></i>
+                  <i class="am-icon-star-o score" data-score="2"></i>
+                  <i class="am-icon-star-o score" data-score="3"></i>
+                  <i class="am-icon-star-o score" data-score="4"></i>
+                  <i class="am-icon-star-o score" data-score="5"></i>
+                </a>
+              </label>
             </div>
-
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -31,13 +37,13 @@
               </div>
             </div>
 
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 上传图片
               </label>
               <div class="am-u-sm-9 am-form-file input-field">
                 <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
+                  <img class="am-margin-top" :src="formData.imageUrl">
                 </file-upload>
               </div>
             </div>
@@ -63,64 +69,82 @@
   import util from '../../lib/util'
   export default{
     data(){
-      return{
-        formData:{
+      return {
+        formData: {
           evaluation:'',
-          comment:'',
-          productId:'',
-          type:'',
+          comment: '',
+          productId: '',
+          type: '',
         },
       }
     },
-    created:function(){
+    created: function () {
       this.formData.productId = this.$params("productId");
     },
-    mounted:function(){
-      var _this = this ;
-      $('#' + this.id ).validator({
-        submit:function(e){
+    mounted: function () {
+      var _this = this;
+      $('#' + this.id).validator({
+        submit: function (e) {
           e.preventDefault();
-          var $submitBtn = $('button[type=submit]',e.target);
-          $submitBtn.attr("disabled" ,"disabled" )
+          var $submitBtn = $('button[type=submit]', e.target);
+          $submitBtn.attr("disabled", "disabled")
           _this.$showLoading()
           var formValidity = this.isFormValid();
-          var complete = function(){
+          var complete = function () {
             _this.$hiddenLoading()
-            $submitBtn.removeAttr("disabled" ,"disabled" )
+            $submitBtn.removeAttr("disabled", "disabled")
           }
-          if(formValidity){
+          if (formValidity) {
             _this.save(complete);
-          }else{
+          } else {
             complete.call()
           }
         }
       });
+      //星星评分
+      $(".score").on('click', function () {
+        var imgs = $(".score");
+        imgs.removeClass('am-icon-star');
+        imgs.removeClass("am-icon-star-o");
+        var clickIndex = $(this).data("score");
+        $("#score").val(clickIndex);
+        $.each(imgs, function (index, element) {
+          var index1 = $(element).data("score");
+          if (index1 <= clickIndex) {
+            $(element).addClass("am-icon-star");
+          } else {
+            $(element).addClass("am-icon-star-o");
+          }
+        });
+      });
     },
 
-    methods:{
-      save:function(complete){
+    methods: {
+      save: function (complete) {
         var _this = this
         _this.formData.type = 0;
+        _this.formData.evaluation = $("#score").val();
         var data = _this.formData
-        io.post(io.apiAdminAddComment,data,
-          function(ret){
+        io.post(io.apiAdminAddComment, data,
+          function (ret) {
             complete.call()
-            if(ret.success){
+            if (ret.success) {
               _this.$toast('OK')
               _this.$router.push('/main/buyer/buyCommodity/list');
-            }else{
+            } else {
               _this.$alert(ret.desc)
             }
 
           },
-          function(){
+          function () {
             complete.call()
             _this.$alert('请求服务器失败')
           })
       },
-      uploadAvatar:function(info){
+      uploadAvatar: function (info) {
         this.formData.imageUrl = info.url
       },
     }
   }
+
 </script>
