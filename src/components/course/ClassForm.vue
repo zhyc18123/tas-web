@@ -15,7 +15,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域组</option>
+                  <option value="">区域</option>
                 </select2>
               </div>
             </div>
@@ -192,14 +192,14 @@
               <input type="text" class="am-form-field" placeholder="输入班级名" required v-model="formData.className">
             </div>
           </div>
-          <div class="am-form-group">
+          <!--<div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>序号
             </label>
             <div class="am-u-sm-9 input-field">
               <input type="text" class="am-form-field" placeholder="输入序号" required v-model="formData.no">
             </div>
-          </div>
+          </div>-->
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
@@ -314,6 +314,8 @@
           function () {
             _this.$alert('请求服务器失败')
           })
+      }else{
+          this.search()
       }
     },
     computed: {

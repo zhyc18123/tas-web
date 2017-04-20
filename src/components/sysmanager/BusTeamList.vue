@@ -33,7 +33,7 @@
               </el-table-column>
               <el-table-column
                 prop="areaTeamName"
-                label="所属区域组"
+                label="所属区域"
                 min-width="100">
               </el-table-column>
               <el-table-column

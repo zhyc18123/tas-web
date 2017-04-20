@@ -8,7 +8,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="selectedTeacher" v-model="query.selectedTeacher" placeholder="请输入教师名称"/>
+                <input type="text" class="am-input-lg" name="selectedTeacher" v-model="query.selectedTeacher" placeholder="请输入教师姓名"/>
               </div>
             </div>
 

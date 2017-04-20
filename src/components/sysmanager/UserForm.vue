@@ -44,7 +44,7 @@
                 <select2 required v-model="formData.userType" >
                   <option value="">请选择</option>
                   <option value="0">誉优</option>
-                  <option value="1">区域组</option>
+                  <option value="1">区域</option>
                   <option value="2">业务组</option>
                 </select2>
               </div>

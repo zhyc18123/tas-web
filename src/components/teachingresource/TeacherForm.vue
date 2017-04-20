@@ -75,7 +75,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required v-model="formData.areaTeamId" :options="areaTeams" >

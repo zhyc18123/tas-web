@@ -3,7 +3,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title  am-cf">区域组列表</div>
+        <div class="widget-title  am-cf">区域列表</div>
       </div>
       <div class="widget-body  am-fr">
 
@@ -25,7 +25,7 @@
             style="min-width: 100%">
             <el-table-column
               prop="name"
-              label="区域组名"
+              label="区域名"
               min-width="100">
             </el-table-column>
             <el-table-column
