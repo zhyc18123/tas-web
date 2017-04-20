@@ -13,7 +13,7 @@
             <div class="am-form-group tpl-table-list-select">
               <div class="am-form-group">
                 <select2  required v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域组</option>
+                  <option value="">区域</option>
                 </select2>
               </div>
             </div>
