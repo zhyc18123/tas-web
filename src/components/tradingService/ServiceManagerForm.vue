@@ -46,15 +46,19 @@
               </div>
             </div>
 
+            <!--图片-->
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>上传图片
+                <span>图片</span>
               </label>
-              <div class="am-u-sm-9">
-                <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file">
-                  <input id="uploadFile" @change="uploadImage" type="file" accept="application/formData">
-                  <span class="am-icon-cloud-upload"></span>请选择图片上传
-                </button>
+              <div class="am-u-sm-9 am-form-file input-field">
+                <file-upload extensions="jpg,png" @uploaded="uploadImages">
+                  <div class="am-inline-block" v-for="(item, index) in productImages" style="margin-left: 10px">
+                    <img class="am-margin-top am-radius" :src="productImages[index]" style="width:168px;height:168px">
+                  </div>
+                  <a class="am-align-right" href="javascript:;" @click="clearImages"> <i
+                    class="am-icon-btn-md am-icon-trash-o"></i></a>
+                </file-upload>
               </div>
             </div>
 
@@ -91,10 +95,10 @@
           content: '',
           price: '',
           unit: '',
-          categoryId:'',
+          categoryId:''
         },
         category:[],
-        imgId:''
+        productImages: []
       }
     },
     created: function () {
@@ -105,6 +109,15 @@
           function (ret) {
             if (ret.success) {
               _this.formData = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          }),
+        io.post(io.apiAdminServiceProductImages, {productId: productId},
+          function (ret) {
+            if (ret.success) {
+              _this.productImages = ret.data
             }
           },
           function () {
@@ -137,9 +150,10 @@
     methods: {
       save:function (complete) {
         var _this = this
-        _this.formData.imageId = _this.imgId;
         var data = _this.formData;
-        io.post(io.apiAdminSaveServiceProduct, $.extend({},data),
+        io.post(io.apiAdminSaveServiceProduct, $.extend({
+            productImages: JSON.stringify(this.productImages)
+          },data),
           function (ret) {
             complete.call();
             if (ret.success) {
@@ -166,19 +180,11 @@
           }
         })
       },
-
-      //TODO:del
-      uploadImage:function () {
-        var _this = this;
-        var formUrl = new FormData();
-        formUrl.append("file",document.getElementById('uploadFile').files[0]);
-        io.postUploadFile(io.apiAdminUploadFile,formUrl,function (ret) {
-          if (ret.data.success){
-            _this.imgId = ret.data.data
-          }else {
-            _this.$alert(ret.desc)
-          }
-        })
+      uploadImages: function (info) {
+        this.productImages.push(info.url)
+      },
+      clearImages: function () {
+        this.productImages = [];
       }
     }
   }

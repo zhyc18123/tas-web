@@ -143,7 +143,7 @@ const io = {
     this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
     this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
-
+    this.apiAdminGetChildCategory = conf.baseApiPath + '/api/admin/trading/getChildCategory'
     this.apiAdminGetCategory = conf.baseApiPath + '/api/admin/trading/getCategoryMessage'
     this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
     this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
@@ -153,6 +153,7 @@ const io = {
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
     this.apiAdminUploadFile = conf.baseApiPath + '/api/admin/trading/uploadImage'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+    io.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
@@ -285,12 +286,6 @@ const io = {
   },
   postMitiFile:function (url,data,success) {
     Vue.http.post(io.importCourseExcel+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
-      if (success) success(data);
-    })
-  },
-  //TODO:del
-  postUploadFile:function (url,data,success) {
-    Vue.http.post(io.apiAdminUploadFile+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);
     })
   },
