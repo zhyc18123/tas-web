@@ -143,7 +143,7 @@ const io = {
     this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
     this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
-
+    this.apiAdminGetChildCategory = conf.baseApiPath + '/api/admin/trading/getChildCategory'
     this.apiAdminGetCategory = conf.baseApiPath + '/api/admin/trading/getCategoryMessage'
     this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
     this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
@@ -160,6 +160,8 @@ const io = {
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
     this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'
+    this.apiAdminCommentList = conf.baseApiPath + '/api/admin/trading/commentList'
+
     // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
     this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/orderItemDetail'
     this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'

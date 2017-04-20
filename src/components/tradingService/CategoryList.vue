@@ -94,17 +94,24 @@
       deleteCategory: function (categoryId) {
         var _this = this;
         _this.categoryId = categoryId
-        _this.$confirm('你确定要删除？',
-          function () {
-            io.post(io.apiAdminDeleteCategory, {categoryId: _this.categoryId}, function (ret) {
-              if (ret.success) {
-                _this.$toast('OK')
-                _this.loadTableData()
-              } else {
-                _this.$alert(ret.desc)
-              }
-            })
-          });
+        io.post(io.apiAdminGetChildCategory, {categoryId :_this.categoryId}, function (ret) {
+            if(ret.desc == "该分类下还有分类") {
+              _this.$confirm(ret.desc+",无法删除");
+            } else {
+              _this.$confirm(ret.desc,
+                function () {
+                  io.post(io.apiAdminDeleteCategory, {categoryId: _this.categoryId}, function (ret) {
+                    if (ret.success) {
+                      _this.$toast('OK')
+                      _this.loadTableData()
+                    } else {
+                      _this.$alert(ret.desc)
+                    }
+                  })
+                });
+            }
+
+        });
       },
       search: function () {
         this.loadTableData()
