@@ -56,7 +56,7 @@
                        v-if="hasPermission('edit')">
                       <i class="am-icon-edit"></i> 编辑
                     </a>
-                    <a href="javascript:;" @click="deleteCategory(item.categoryId)" v-if="hasPermission('delete')">
+                    <a href="javascript:;" @click="deleteCategory(item.categoryId)">
                       <i class="am-icon-remove"></i>删除
                     </a>
                   </div>
