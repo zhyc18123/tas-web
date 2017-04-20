@@ -31,6 +31,51 @@
             </div>
 
             <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性1
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入分类属性" v-model="formData.attribute1">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性2
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入分类属性" v-model="formData.attribute2">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性3
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入分类属性" v-model="formData.attribute3">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性4
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入分类名属性" v-model="formData.attribute4">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性5
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入分类属性" v-model="formData.attribute5">
+              </div>
+            </div>
+
+            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <button type="submit" class="am-btn am-btn-primary am-radius">保存</button>
                 <button type="button" class="am-btn am-btn-primary am-radius" @click="$router.go(-1)">取消</button>
@@ -54,6 +99,11 @@
           categoryId:'',
           name:'',
           parentId:'',
+          attribute1:'',
+          attribute2:'',
+          attribute3:'',
+          attribute4:'',
+          attribute5:'',
         },
         category: [],
       }
