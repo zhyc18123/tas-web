@@ -63,8 +63,6 @@
               </thead>
             </table>
 
-            <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
-
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
                  v-if="items.serviceOrder.type==0">
               <div class="am-panel-hd">
@@ -81,7 +79,7 @@
                   <div class="am-u-sm-2">{{item.productName}}&nbsp;</div>
                   <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
                   <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-2">{{item.price}}</div>
+                  <div class="am-u-sm-2">￥{{item.price}}</div>
                   <div class="am-u-sm-2">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>

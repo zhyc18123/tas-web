@@ -5,43 +5,60 @@
         <div class="widget-title am-fl">服务商注册审核管理</div>
       </div>
       <div class="widget-body am-fr">
-        <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-          <thead>
-          <tr>
-            <th>序号</th>
-            <th>商家名称</th>
-            <th>手机号码</th>
-            <th>注册时间</th>
-            <th>服务类型</th>
-            <th>服务区域</th>
-            <th>审批状态</th>
-            <th>操作</th>
-          </tr>
-          </thead>
-          <tbody>
 
-          <tr v-for="(item,index) in tableData" :key="item.merchantId">
-            <td>{{index+1}}</td>
-            <td>{{item.merchantName}}</td>
-            <td>{{item.phoneNo}}</td>
-            <td>{{item.createTime | formatTime}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.serviceArea}}</td>
-            <td>{{item.status==0?'未审批':(item.status==1?'审批通过':'审批不通过')}}</td>
-            <td>
-              <div class="tpl-table-black-operation">
-                <a href="javascript:;" @click="edit(item.merchantId)" v-if="item.status==0">
-                  <i class="am-icon-edit"></i> 审批
-                </a>
-                <span v-else="item.status==0">{{item.status==1?'审批通过':'审批不通过'}}</span>
-                <!--<a href="javascript:;" @click="del(merchantId)">
-                  <i class="am-icon-remove"></i> 删除
-                </a>-->
-              </div>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+        <el-table
+          :data="tableData"
+          border
+          stripe
+          style="min-width: 100%">
+          <el-table-column
+            fixed
+            type="index"
+            label="序号"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="merchantName"
+            label="商家名称"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="phoneNo"
+            label="联系电话"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            label="注册时间"
+            min-width="100">
+            <template scope="scope" >
+              {{scope.row.createTime | formatTime}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="name"
+            label="服务类型"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="serviceArea"
+            label="服务区域"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            label="审批状态"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.status==0?'未审批':(scope.row.status==1?'审批通过':'审批不通过')}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="操作"
+            width="120">
+            <template scope="scope">
+              <el-button size="small" :disabled="scope.row.status!=0" @click.native="edit(scope.row.merchantId)">审批</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
 
         <window ref="sellerRegister" title="服务商注册审批">
           <change-seller-register :merchantId="merchantId" @changeSellerRegister="$refs.sellerRegister.close()"></change-seller-register>
