@@ -25,7 +25,7 @@
         <div id="tabs"  class="am-tabs" data-am-tabs="{noSwipe: 1}" >
           <ul class="am-tabs-nav am-nav am-nav-tabs">
             <li class="am-active"><a href="javascript: void(0)">班级报名</a></li>
-            <li><a href="javascript: void(0)" @click="tabIndex = 1">代缴费</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 1">待缴费</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 2">订单信息</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 3">在读班级</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 4">班级历史</a></li>

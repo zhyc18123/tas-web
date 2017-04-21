@@ -35,21 +35,6 @@
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
               </div>
 
-              <!--<ul class="am-list am-list-static">
-                <li class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
-                  <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl"  width="180"
-                         height="100"/>
-                  </span>
-                  <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.price/item.quantity | formatNumber(2)}}</span>
-                  <span class="am-u-sm-1">{{item.quantity}}</span>
-                  <span class="am-u-sm-2">{{item.price}}</span>
-                  <span class="am-u-sm-2">{{item.busTeamName}}</span>
-                  </span>
-                </li>
-              </ul>-->
-
               <div class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
                 <div class="am-g">
                   <div class="am-u-sm-3">
@@ -110,15 +95,33 @@
                 <div class="am-panel-hd"><label>评论</label></div>
                 <div class="am-panel-bd">
                   <ul class="am-comments-list am-comments-list-flip">
-                    <li class="am-comment">
+                    <li class="am-comment" v-for="item in commentData" v-if="commentData!=''" :key="item.commentId">
                       <div class="am-panel am-panel-default">
-                        <div class="am-panel-hd">2017年4月19&nbsp;&nbsp;&nbsp;买家：沙瑞金</div>
+                        <div class="am-panel-hd">
+                          <label>
+                            服务态度：<el-rate v-model="item.serviceAttitude" disabled></el-rate>
+                          </label>
+                          <label>
+                            工作效率：<el-rate v-model="item.workEfficiency" disabled></el-rate>
+                          </label>
+                          <label>
+                            完成质量：<el-rate v-model="item.completeQuality" disabled></el-rate>
+                          </label>
+                          <span class="left-margin">{{item.createTime | formatDate}}</span>
+                          <span class="left-margin">买家：{{item.userName}}</span>
+                        </div>
                         <div class="am-panel-bd">
-                          <article>达康书记别低头，GDP会掉！！！</article>
+                          <article>{{item.comment}}</article>
                         </div>
                       </div>
                     </li>
                   </ul>
+
+                  <div class="am-u-lg-12 am-cf">
+                    <div class="am-fr">
+                      <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadCommentData"/>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -131,10 +134,8 @@
 </template>
 
 <style>
-  .font-size {
-    font-size: 26px;
-    text-align: center;
-    margin: auto 0;
+  .left-margin{
+    margin-left: 5%;
   }
 </style>
 
@@ -142,7 +143,6 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import OrderItemRefundForm from '../buyer/OrderItemRefundForm'
 
   export default{
     data: function () {
@@ -150,7 +150,14 @@
         tableData: [],
         itemList: [],
         address: [],
+        pageNo:1,
+        pageSize:5,
+        total:0,
+        commentData:[],
       }
+    },
+    components:{
+      Pagination
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -166,22 +173,27 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
-//            _this.loadAddress(ret.data.serviceOrder.addressId)
+            _this.loadCommentData(_this.pageNo)
           } else {
             _this.$alert(ret.desc)
           }
         })
-      }/*,
-       loadAddress: function (addressId) {
-       var _this = this
-       io.post(io.apiAdminShippingAddressDetail, {addressId: addressId}, function (ret) {
-       if (ret.success) {
-       _this.address = ret.data
-       } else {
-       _this.$alert(ret.desc)
-       }
-       })
-       }*/
+      },
+      loadCommentData: function (pageNo) {
+        var _this = this
+        _this.pageNo = pageNo || _this.pageNo || 1
+        _this.productId = _this.itemList[0].productId
+        io.post(io.apiAdminCommentList,{
+          productId:_this.productId,
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize
+        },function (ret) {
+          if (ret.success){
+            _this.commentData = ret.data.list
+            _this.total = ret.data.total
+          }
+        })
+      }
     }
   }
 </script>

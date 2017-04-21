@@ -29,7 +29,7 @@
                   <option value="idNo">身份证号码</option>
                   <option value="teachGradeNames">任教年级</option>
                   <option value="teachSubjectNames">任教科目</option>
-                  <option value="areaTeamName">区域组</option>
+                  <option value="areaTeamName">区域</option>
                   <option value="busTeamName">业务组</option>
                 </select>
               </selected>
@@ -87,12 +87,12 @@
               </el-table-column>
               <el-table-column
                 prop="areaTeamName"
-                label="所在区域组织"
+                label="所在区域"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 prop="busTeamName"
-                label="所在业务组织"
+                label="所在业务组"
                 min-width="100">
               </el-table-column>
               <el-table-column

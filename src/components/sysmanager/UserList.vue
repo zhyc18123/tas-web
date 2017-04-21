@@ -28,7 +28,7 @@
                   <option value="username">用户名</option>
                   <option value="realName">姓名</option>
                   <option value="phoneNo">电话号码</option>
-                  <option value="busTeamName">业务组织</option>
+                  <option value="busTeamName">业务组</option>
                   <option value="status">状态</option>
                 </select>
               </selected>
@@ -71,12 +71,12 @@
               </el-table-column>
               <el-table-column
                 prop="areaTeamName"
-                label="区域组织"
+                label="区域"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 prop="busTeamName"
-                label="业务组织"
+                label="业务组"
                 min-width="100">
               </el-table-column>
               <el-table-column

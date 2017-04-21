@@ -12,7 +12,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <select2  v-model="query.areaTeamId" :options="areaTeams">
-                <option value="">区域组</option>
+                <option value="">区域</option>
               </select2>
             </div>
           </div>
@@ -102,10 +102,8 @@
             </el-table-column>
             <el-table-column
               label="课程类型"
+              prop="courseTypeName"
               min-width="100">
-              <template scope="scope">
-                {{scope.row.courseTypeName }}
-                </template>
             </el-table-column>
             <el-table-column
               prop="gradeName"
@@ -123,8 +121,18 @@
               min-width="100">
             </el-table-column>
             <el-table-column
+              prop="season"
+              label="季节"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="level"
+              label="层次"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
               prop="areaTeamName"
-              label="区域组"
+              label="区域"
               min-width="100">
             </el-table-column>
             <el-table-column

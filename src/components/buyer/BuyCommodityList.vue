@@ -37,20 +37,17 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="name" v-model="query.sn" placeholder="请输入订单编号"/>
+              <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                <input type="text" class="am-input-lg am-from-feild" name="name" v-model="query.sn"
+                       placeholder="请输入订单编号"/>
+                <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search"><span class="am-icon-search"></span>查询
-                </button>
-              </div>
-            </div>
-
           </div>
+
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
@@ -65,8 +62,6 @@
               </tr>
               </thead>
             </table>
-
-            <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
                  v-if="items.serviceOrder.type==0">
@@ -84,7 +79,7 @@
                   <div class="am-u-sm-2">{{item.productName}}&nbsp;</div>
                   <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
                   <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-2">{{item.price}}</div>
+                  <div class="am-u-sm-2">￥{{item.price}}</div>
                   <div class="am-u-sm-2">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
@@ -152,7 +147,7 @@
         pageNo: 1,
         query: {
           areaTeamId: '',
-          name: '',
+          name: ''
         },
         searchConfig: {},
         orderItemId: ''

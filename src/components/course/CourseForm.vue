@@ -53,7 +53,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required v-model="formData.areaTeamId" :options="areaTeams" >
@@ -96,6 +96,22 @@
                   <option value="暑期班">暑期班</option>
                   <option value="秋季班">秋季班</option>
                   <option value="寒假班">寒假班</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>层级
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required  v-model="formData.level"  >
+                  <option value="">请选择</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
                 </select2>
               </div>
             </div>
@@ -177,7 +193,8 @@ import util from '../../lib/util'
                   lectureAmount : 15,
                   lectureDuration : 45,
                   quota:0,
-                  studyingFee : 0
+                  studyingFee : 0,
+                  level : 5
                 },
                 products:[]
             }

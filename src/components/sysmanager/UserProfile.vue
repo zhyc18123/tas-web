@@ -43,7 +43,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                业务组织
+                业务组
               </label>
               <div class="am-u-sm-9 input-field">
                 {{formData.busTeamName}}

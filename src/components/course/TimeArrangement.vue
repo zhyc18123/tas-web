@@ -125,7 +125,6 @@
     watch: {
       startDate: function (val) {
         if (this.arrangeWay == 'arrangeByWeek' && val) {
-          console.log($('#' + moment(val, "YYYY-MM-DD").format('dddd')))
           $('#' + moment(val, "YYYY-MM-DD").format('dddd')).click()
         }
       },
@@ -134,19 +133,19 @@
       }
     },
     created:function(){
-       moment.locale('en')
+       moment.locale('cn')
        this.init()
     },
     methods: {
       init:function(){
         this.weekDays = [
-          {id: 'Monday', selected: false, name: '周一', times: ['08:00-10:00']},
-          {id: 'Tuesday', selected: false, name: '周二', times: ['08:00-10:00']},
-          {id: 'Wednesday', selected: false, name: '周三', times: ['08:00-10:00']},
-          {id: 'Thursday', selected: false, name: '周四', times: ['08:00-10:00']},
-          {id: 'Friday', selected: false, name: '周五', times: ['08:00-10:00']},
-          {id: 'Saturday', selected: false, name: '周六', times: ['08:00-10:00']},
-          {id: 'Sunday', selected: false, name: '周日', times: ['08:00-10:00']},
+          {id: '星期一', selected: false, name: '星期一', times: ['08:00-10:00']},
+          {id: '星期二', selected: false, name: '星期二', times: ['08:00-10:00']},
+          {id: '星期三', selected: false, name: '星期三', times: ['08:00-10:00']},
+          {id: '星期四', selected: false, name: '星期四', times: ['08:00-10:00']},
+          {id: '星期五', selected: false, name: '星期五', times: ['08:00-10:00']},
+          {id: '星期六', selected: false, name: '星期六', times: ['08:00-10:00']},
+          {id: '星期日', selected: false, name: '星期日', times: ['08:00-10:00']},
         ]
         this.everyday = { name: '每天', times: ['08:00-10:00']}
         this.arrangeResult= []
@@ -176,6 +175,13 @@
 
         if (this.arrangeWay == 'arrangeByWeek') {
 
+
+          var startDateWeek = moment(this.startDate, "YYYY-MM-DD").format('dddd') ;
+          if( !$('#' + startDateWeek).prop('checked')){
+              this.$alert('请选上' + startDateWeek )
+          }
+
+
           var selectedDays = []
           for (var i = 0; i < this.weekDays.length; i++) {
             if (this.weekDays[i].selected) {
@@ -184,6 +190,7 @@
               })
             }
           }
+
 
 
           if(selectedDays.length == 0 ){

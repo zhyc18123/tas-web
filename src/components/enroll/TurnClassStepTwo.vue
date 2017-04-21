@@ -7,7 +7,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <select2 v-model="query.areaTeamId" :options="areaTeams">
-                <option value="">区域组</option>
+                <option value="">区域</option>
               </select2>
             </div>
           </div>

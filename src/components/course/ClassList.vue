@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域组</option>
+                  <option value="">区域</option>
                 </select2>
               </div>
             </div>
@@ -177,7 +177,12 @@
                 type="selection"
                 width="55">
               </el-table-column>
-
+              <el-table-column
+                fixed
+                prop="classNo"
+                label="班级编号"
+                min-width="100">
+              </el-table-column>
               <el-table-column
                 fixed
                 prop="className"
@@ -269,6 +274,16 @@
                   <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
                   <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
                 </template>
+              </el-table-column>
+              <el-table-column
+                prop="areaTeamName"
+                label="区域"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="busTeamName"
+                label="业务组"
+                min-width="100">
               </el-table-column>
               <el-table-column
                 fixed="right"
