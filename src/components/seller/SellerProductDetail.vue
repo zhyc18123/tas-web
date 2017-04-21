@@ -161,6 +161,8 @@
           if (ret.success){
             _this.commentData = ret.data.list
             _this.total = ret.data.total
+          }else {
+            _this.$alert(ret.desc)
           }
         })
       }
