@@ -7,6 +7,7 @@
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
+
         </div>
 
         <table width="100%" class="am-table am-table-bordered am-table-compact">
