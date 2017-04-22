@@ -81,10 +81,13 @@ const ServiceRentForm = resolve => require([ './components/tradingService/Servic
 
 const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
 const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
+const RentRecordList = resolve => require(['./components/buyer/RentRecordList'], resolve)
 const ProductComment = resolve => require(['./components/buyer/ProductComment'], resolve)
 const ServiceComment = resolve => require(['./components/buyer/ServiceComment'], resolve)
+const RentComment = resolve => require(['./components/buyer/RentComment'], resolve)
 const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
 const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
+const RentDetail = resolve => require(['./components/buyer/RentDetail'], resolve)
 const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
 const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
@@ -192,10 +195,13 @@ const router = new VueRouter({
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+      {path: 'buyer/rentRecord/list', component:RentRecordList},
       {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
       {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
+      {path: 'buyer/rent/detail/:orderId', component:RentDetail},
       {path: 'buyer/productOrderItem/comment/:productId', component:ProductComment},
       {path: 'buyer/ServiceOrderItem/comment/:productId', component:ServiceComment},
+      {path: 'buyer/rent/comment/:productId', component:RentComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
 
