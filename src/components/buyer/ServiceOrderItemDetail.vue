@@ -95,7 +95,7 @@
 
                 <div class="am-u-sm-12">
                   <span>联系方式：</span>
-                  <span>{{}}</span>
+                  <span>{{item.phoneNo}}</span>
                 </div>
 
                 <!--<div class="am-u-sm-12">

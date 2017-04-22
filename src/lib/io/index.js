@@ -151,7 +151,6 @@ const io = {
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
-    this.apiAdminUploadFile = conf.baseApiPath + '/api/admin/trading/uploadImage'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
     io.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
