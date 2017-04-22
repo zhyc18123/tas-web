@@ -52,7 +52,7 @@
                          height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.price/item.quantity | formatNumber(2)}}</span>
+                  <span class="am-u-sm-1">{{item.unitPrice | formatNumber(2)}}</span>
                   <span class="am-u-sm-1">{{item.quantity}}</span>
                   <span class="am-u-sm-2">{{item.price}}</span>
                   <span class="am-u-sm-2">{{item.busTeamName}}</span>

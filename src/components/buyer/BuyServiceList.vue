@@ -65,8 +65,9 @@
                     <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
+
                   <div class="am-u-sm-2">{{item.productName}}</div>
-                  <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
+                  <div class="am-u-sm-1">￥{{item.unitPrice}}</div>
                   <div class="am-u-sm-1">{{item.quantity}}</div>
                   <div class="am-u-sm-2">￥{{item.price}}</div>
                   <div class="am-u-sm-2">

@@ -40,6 +40,12 @@
               <template scope="scope">{{scope.row.type == 0?'商品':(scope.row.type==1?'服务':'租赁')}}</template>
             </el-table-column>
             <el-table-column prop="quantity" label="商品数量" min-width="100"></el-table-column>
+            <el-table-column prop="rentSpan" label="租赁时长" min-width="100"></el-table-column>
+            <el-table-column label="租赁时间" min-width="100">
+              <template scope="scope">
+                {{scope.row.startDate}}~{{scope.row.endDate}} {{scope.row.startTime}}-{{scope.row.endTime}}
+              </template>
+            </el-table-column>
             <el-table-column prop="price" label="退费金额" min-width="100"></el-table-column>
             <el-table-column prop="reason" label="退费原因" min-width="100"></el-table-column>
             <el-table-column prop="returnResult" label="审批意见" min-width="100"></el-table-column>

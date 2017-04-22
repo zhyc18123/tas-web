@@ -1,7 +1,10 @@
 <template>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm">商品信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==0">商品信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==1">服务信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==2">租赁信息</div>
+
 
       <div class="am-g">
         <div class="am-u-sm-3">
@@ -24,8 +27,19 @@
               {{tableData.sellerName}}
             </span>
           </div>
+          <div class="am-u-sm-12" v-if="tableData.type==2">
+            <span>租赁时长：</span>
+            <span v-model="formData.rentSpan">
+              {{tableData.rentSpan}}
+            </span>
+          </div>
 
-          <div class="am-u-sm-12">
+          <div class="am-u-sm-12" v-if="tableData.type==2">
+            <span>租赁时间：</span>
+            <span>{{tableData.startDate}} {{tableData.startTime}}—{{tableData.endDate}} {{tableData.endTime}}</span>
+          </div>
+
+          <div class="am-u-sm-12" v-if="tableData.type!=2">
             <span>数量：</span>
             <span v-model="formData.amount">
               {{tableData.quantity}}

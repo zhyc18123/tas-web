@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-fl">订单信息</div>
+          <div class="widget-title am-fl">服务订单信息</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
@@ -56,6 +56,13 @@
                       <span>商家名称：</span>
                       <span>
                       {{item.busTeamName}}
+                    </span>
+                    </div>
+
+                    <div class="am-u-sm-12">
+                      <span>单价：</span>
+                      <span>
+                      {{item.unitPrice}}
                     </span>
                     </div>
 
