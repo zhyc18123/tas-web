@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">我购买的服务</div>
+          <div class="widget-title  am-cf">租赁记录</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -42,19 +42,19 @@
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th class="am-u-sm-4 am-text-center">服务名称</th>
+                <th class="am-u-sm-4 am-text-center">租赁商品名称</th>
                 <th class="am-u-sm-1">单价</th>
                 <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-1">时间段</th>
-                <th class="am-u-sm-2">实付款</th>
+                <th class="am-u-sm-3">时间段</th>
+                <th class="am-u-sm-1">实付款</th>
                 <th class="am-u-sm-1">订单交易状态</th>
-                <th class="am-u-sm-2">操作</th>
+                <th class="am-u-sm-1">操作</th>
               </tr>
               </thead>
             </table>
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
-                 v-if="items.serviceOrder.type==1">
+                 v-if="items.serviceOrder.type==2">
               <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
@@ -69,12 +69,12 @@
                   <div class="am-u-sm-2">{{item.productName}}</div>
                   <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
                   <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-1">{{item.startDate}} {{item.startTime}} - {{item.endDate}} {{item.endTime}}</div>
-                  <div class="am-u-sm-2">￥{{item.price}}</div>
-                  <div class="am-u-sm-2">
+                  <div class="am-u-sm-3">{{item.startDate}} {{item.startTime}} - {{item.endDate}} {{item.endTime}}</div>
+                  <div class="am-u-sm-1">￥{{item.price}}</div>
+                  <div class="am-u-sm-1">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
-                  <div class="am-u-sm-2">
+                  <div class="am-u-sm-1">
                     <div class="tpl-table-black-operation">
                       <a href="javascript:;"
                          @click="$router.push('/main/buyer/rent/detail/'+items.serviceOrder.orderId)">
@@ -101,7 +101,7 @@
                 <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData"/>
               </div>
             </div>
-            <window ref="productRefund" title="商品退费申请">
+            <window ref="productRefund" title="退费申请">
               <order-item-refund :orderItemId="orderItemId" @refundApply="$refs.productRefund.close()"></order-item-refund>
             </window>
           </div>
@@ -114,10 +114,6 @@
 <style>
   .left-margin {
     margin-left: 10%;
-  }
-
-  .font-style {
-    text-align: center;
   }
 </style>
 
@@ -171,9 +167,6 @@
             _this.$alert(ret.desc)
           }
         })
-      },
-      orderItemDetail: function () {
-        var _this = this
       },
       productRefund: function (orderItemId) {
         var _this = this

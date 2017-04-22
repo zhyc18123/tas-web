@@ -17,14 +17,6 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>综合评价
               </label>
               <label>
-                <!--<input type="hidden" name="score" id="score" value="">
-                <a class="am-padding-lg" role="button">
-                  <i class="am-icon-star-o score" data-score="1"></i>
-                  <i class="am-icon-star-o score" data-score="2"></i>
-                  <i class="am-icon-star-o score" data-score="3"></i>
-                  <i class="am-icon-star-o score" data-score="4"></i>
-                  <i class="am-icon-star-o score" data-score="5"></i>
-                </a>-->
                 <el-rate v-model="formData.evaluation" show-text></el-rate>
               </label>
             </div>
@@ -102,36 +94,20 @@
           }
         }
       });
-      //星星评分
-//      $(".score").on('click', function () {
-//        var imgs = $(".score");
-//        imgs.removeClass('am-icon-star');
-//        imgs.removeClass("am-icon-star-o");
-//        var clickIndex = $(this).data("score");
-//        $("#score").val(clickIndex);
-//        $.each(imgs, function (index, element) {
-//          var index1 = $(element).data("score");
-//          if (index1 <= clickIndex) {
-//            $(element).addClass("am-icon-star");
-//          } else {
-//            $(element).addClass("am-icon-star-o");
-//          }
-//        });
-//      });
+
     },
 
     methods: {
       save: function (complete) {
         var _this = this
         _this.formData.type = 0;
-        /*_this.formData.evaluation = $("#score").val();*/
         var data = _this.formData
         io.post(io.apiAdminAddComment, data,
           function (ret) {
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/buyer/buyCommodity/list');
+              _this.$router.push('/main/buyer/rentRecord/list');
             } else {
               _this.$alert(ret.desc)
             }
