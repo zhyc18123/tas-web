@@ -167,8 +167,7 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-//              _this.$root.$emit('orderList:new')
-              _this.$root.$emit('sellerOrderList:new')
+              _this.$root.$emit('orderList:new')
             } else {
               _this.$alert('申请失败')
             }

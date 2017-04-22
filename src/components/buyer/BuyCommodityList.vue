@@ -52,7 +52,7 @@
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
-              <tr class="styleTitle">
+              <tr>
                 <th class="am-u-sm-4 am-text-center">商品名称</th>
                 <th class="am-u-sm-1 am-text-center">单价</th>
                 <th class="am-u-sm-1 am-text-center">数量</th>
@@ -64,7 +64,7 @@
             </table>
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==0">
-              <div class="am-text-center orderTime">
+              <div class="left-margin">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -88,7 +88,7 @@
                          @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                       <span v-if="item.status==4">
@@ -124,14 +124,6 @@
 <style>
   .left-margin {
     margin-left: 10%;
-  }
-  .styleTitle {
-    color:#333333;
-    background-color: #EEF1F6
-  }
-  .orderTime {
-    background-color: #6d787c;
-    color: #111111
   }
 </style>
 

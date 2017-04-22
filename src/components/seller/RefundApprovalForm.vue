@@ -112,9 +112,6 @@
   .red{
     color: red;
   }
-   .left-margin {
-     margin-left: 10%;
-   }
   .font-style{
     text-align: center;
   }
@@ -170,7 +167,6 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-              _this.$root.$emit('productRefund:new')
               _this.$root.$emit('sellerOrderList:new')
             } else {
               _this.$alert('申请失败')
