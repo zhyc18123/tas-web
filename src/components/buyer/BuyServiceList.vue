@@ -8,14 +8,15 @@
         <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2 v-model="query.status">
                     <option value="">所有</option>
-                    <option value="0">未支付</option>
-                    <option value="1">已支付</option>
-                    <option value="2">取消的订单</option>
+                    <option value="0">待付款</option>
+                    <option value="1">交易完成</option>
+                    <option value="2">已取消订单</option>
                     <option value="3">退款中的订单</option>
                   </select2>
                 </div>
@@ -23,18 +24,16 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="name" v-model="query.sn" placeholder="请输入订单编号"/>
+              <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                <input type="text" class="am-input-lg am-from-feild" name="name" v-model="query.sn"
+                       placeholder="请输入订单编号"/>
+                <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search"><span class="am-icon-search"></span>查询
-                </button>
-              </div>
-            </div>
+          </div>
 
           </div>
 

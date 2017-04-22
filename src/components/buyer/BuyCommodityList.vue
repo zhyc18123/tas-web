@@ -22,7 +22,7 @@
               </div>
             </div>-->
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2 v-model="query.status">
