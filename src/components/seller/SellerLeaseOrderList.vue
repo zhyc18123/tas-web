@@ -46,7 +46,7 @@
               <tr>
                 <th class="am-u-sm-4 am-text-center">租赁名称</th>
                 <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量（小时）</th>
+                <th class="am-u-sm-1">租赁时长</th>
                 <th class="am-u-sm-3 am-text-center">租用时间</th>
                 <th class="am-u-sm-1">实付款</th>
                 <th class="am-u-sm-1">商品交易状态</th>

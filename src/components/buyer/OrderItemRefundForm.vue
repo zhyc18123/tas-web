@@ -15,40 +15,40 @@
 
         <div class="am-u-sm-9 am-text-left">
           <div class="am-u-sm-12">
-            <span v-model="formData.productName">
+            <span>
               {{tableData.productName}}
             </span>
           </div>
 
           <div class="am-u-sm-12 am-center">
             <span>商家名称：</span>
-            <span v-model="formData.userName">
+            <span>
               {{tableData.sellerName}}
             </span>
           </div>
 
           <div class="am-u-sm-12" v-if="tableData.type==2">
             <span>租赁时长：</span>
-            <span v-model="formData.rentSpan">
+            <span>
               {{tableData.rentSpan}}
             </span>
           </div>
 
           <div class="am-u-sm-12" v-if="tableData.type==2">
             <span>租赁时间：</span>
-            <span>{{tableData.startDate}} {{tableData.startTime}}—{{tableData.endDate}} {{tableData.endTime}}</span>
+            <span>{{tableData.startDate}}~{{tableData.endDate}} {{tableData.startTime}}-{{tableData.endTime}}</span>
           </div>
 
           <div class="am-u-sm-12" v-if="tableData.type!=2">
             <span>数量：</span>
-            <span v-model="formData.amount">
+            <span>
               {{tableData.quantity}}
             </span>
           </div>
 
           <div class="am-u-sm-12">
             <span>合计：￥</span>
-            <span>{{formData.price}}</span>
+            <span>{{tableData.price}}</span>
           </div>
         </div>
 
@@ -146,6 +146,13 @@
                 _this.formData.sellerId = _this.tableData.busTeamId
                 _this.formData.sellerrName = _this.tableData.busTeamName
                 _this.formData.type = _this.tableData.type
+                _this.formData.quantity = _this.tableData.quantity
+                _this.formData.startDate = _this.tableData.startDate
+                _this.formData.endDate = _this.tableData.endDate
+                _this.formData.startTime = _this.tableData.startTime
+                _this.formData.endTime = _this.tableData.endTime
+                _this.formData.rentSapn = _this.tableData.rentSapn
+                _this.formData.imageUrl = _this.tableData.imageUrl
                 _this.formData.reason = '无条件退款'
                 _this.formData.description = ''
               } else {
@@ -160,7 +167,8 @@
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-              _this.$root.$emit('orderList:new')
+//              _this.$root.$emit('orderList:new')
+              _this.$root.$emit('sellerOrderList:new')
             } else {
               _this.$alert('申请失败')
             }
