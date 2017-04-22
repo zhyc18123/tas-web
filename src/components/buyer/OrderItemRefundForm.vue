@@ -46,12 +46,6 @@
             </span>
           </div>
 
-          <div class="am-u-sm-12" v-if="formData.type==2">
-            <span>时间：</span>
-            <span v-model="formData.startDate">{{tableData.startDate}}</span>~<span v-model="formData.endDate">{{tableData.endDate}}</span>
-            <span v-model="formData.startTime">{{tableData.startTime}}</span>-<span v-model="formData.endTime">{{tableData.endTime}}</span>
-          </div>
-
           <div class="am-u-sm-12">
             <span>合计：￥</span>
             <span>{{formData.price}}</span>

@@ -41,10 +41,10 @@
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
-              <tr style="color:#333333; background-color: #CCCCCC">
+              <tr class="styleTitle">
                 <th class="am-u-sm-4 am-text-center">租赁商品名称</th>
                 <th class="am-u-sm-1 am-text-center">单价</th>
-                <th class="am-u-sm-1 am-text-center">数量</th>
+                <th class="am-u-sm-1 am-text-center">租赁时长</th>
                 <th class="am-u-sm-3 am-text-center">时间段</th>
                 <th class="am-u-sm-1 am-text-center">实付款</th>
                 <th class="am-u-sm-1 am-text-center">订单交易状态</th>
@@ -53,8 +53,8 @@
               </thead>
             </table>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==2">
-              <div class="am-panel-hd">
+            <div v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==2">
+              <div class="am-text-center orderTime">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -62,12 +62,11 @@
               <ul class="am-list am-list-static">
                 <li class="am-u-sm-12" v-for="(item,num) in items.itemList" :key="item.orderItemId">
                   <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl" width="180"
-                         height="100"/>
+                    <img class="am-radius" :src="item.imageUrl" width="180" height="100"/>
                   </span>
                   <div class="am-u-sm-2 am-text-center">{{item.productName}}</div>
                   <div class="am-u-sm-1 am-text-center">￥{{item.price/item.quantity | formatNumber(2)}}</div>
-                  <div class="am-u-sm-1 am-text-center">{{item.quantity}}</div>
+                  <div class="am-u-sm-1 am-text-center">{{item.rentSpan}}</div>
                   <div class="am-u-sm-3 am-text-center">{{item.startDate}} ~ {{item.endDate}} {{item.startTime}}-{{item.endTime}}</div>
                   <div class="am-u-sm-1 am-text-center">￥{{item.price}}</div>
                   <div class="am-u-sm-1 am-text-center">
@@ -111,6 +110,14 @@
 <style>
   .left-margin {
     margin-left: 10%;
+  }
+  .styleTitle {
+    color:#333333;
+    background-color: #EEF1F6
+  }
+  .orderTime {
+    background-color: #6d787c;
+    color: #111111
   }
 </style>
 
