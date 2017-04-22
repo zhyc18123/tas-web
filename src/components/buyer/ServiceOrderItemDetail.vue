@@ -35,21 +35,6 @@
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
               </div>
 
-              <!--<ul class="am-list am-list-static">
-                <li class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
-                  <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl"  width="180"
-                         height="100"/>
-                  </span>
-                  <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.price/item.quantity | formatNumber(2)}}</span>
-                  <span class="am-u-sm-1">{{item.quantity}}</span>
-                  <span class="am-u-sm-2">{{item.price}}</span>
-                  <span class="am-u-sm-2">{{item.busTeamName}}</span>
-                  </span>
-                </li>
-              </ul>-->
-
               <div class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
                 <div class="am-g">
                 <div class="am-u-sm-3">
@@ -75,6 +60,13 @@
                   </div>
 
                   <div class="am-u-sm-12">
+                    <span>单价：</span>
+                    <span>
+                      {{item.unitPrice}}
+                    </span>
+                  </div>
+
+                  <div class="am-u-sm-12">
                     <span>数量：</span>
                     <span>
                       {{item.quantity}}
@@ -95,7 +87,7 @@
 
                 <div class="am-u-sm-12">
                   <span>联系方式：</span>
-                  <span>{{}}</span>
+                  <span>{{item.phoneNo}}</span>
                 </div>
 
                 <!--<div class="am-u-sm-12">

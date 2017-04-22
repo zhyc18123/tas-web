@@ -13,7 +13,7 @@
           <tbody>
           <tr>
             <td>购买类型：</td>
-            <td>服务</td>
+            <td>租赁</td>
             <td>订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>
@@ -29,7 +29,7 @@
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-scrollable-horizontal">
 
-            <div class="am-panel am-panel-default">
+            <div class="rentDetail">
               <div class="am-panel-hd">
                 <span>{{tableData.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
@@ -39,49 +39,44 @@
                 <div class="am-g">
                   <div class="am-u-sm-3">
                     <div class="am-u-sm-4">
-                      <img class="am-radius" :src="item.imageUrl" width="180"
-                           height="100"/>
+                      <img class="am-radius" :src="item.imageUrl" width="180" height="100"/>
                     </div>
                   </div>
 
                   <div class="am-u-sm-4 am-text-left">
-                    <div class="am-u-sm-12">
+                    <div class="am-g am-g-fixed">
                       <span>商品名称：</span>
                       <span>
                       {{item.productName}}
                     </span>
                     </div>
 
-                    <div class="am-u-sm-12">
+                    <div class="am-g am-g-fixed">
                       <span>商家名称：</span>
                       <span>
                       {{item.busTeamName}}
                     </span>
                     </div>
 
-                    <div class="am-u-sm-12">
+                    <div class="am-g am-g-fixed">
                       <span>数量：</span>
                       <span>
                       {{item.quantity}}
                     </span>
                     </div>
 
-                    <div class="am-u-sm-12">
+                    <div class="am-g am-g-fixed">
                       <span>合计：￥</span>
                       <span>{{item.price}}</span>
                     </div>
                   </div>
 
-                  <div class="am-u-sm-5">
+                  <div class="am-g am-g-fixed">
                     <span>具体要求：</span>
                     <article v-html="item.content"></article>
                   </div>
                 </div>
 
-                <div class="am-u-sm-12">
-                  <span>联系方式：</span>
-                  <span>{{}}</span>
-                </div>
               </div>
             </div>
           </div>
@@ -90,6 +85,12 @@
     </div>
   </div>
 </template>
+<style>
+  .rentDetail {
+    background-color: #EEF1F6
+  }
+
+</style>
 
 <script>
   import io from '../../lib/io'

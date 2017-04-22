@@ -65,7 +65,7 @@
                          height="100"/>
                   </span>
                   <div class="am-u-sm-2">{{items.productName}}</div>
-                  <div class="am-u-sm-1">{{items.price/items.quantity | formatNumber(2)}}</div>
+                  <div class="am-u-sm-1">{{items.unitPrice}}</div>
                   <div class="am-u-sm-1">{{items.quantity}}</div>
                   <div class="am-u-sm-2">{{items.price}}</div>
                   <div class="am-u-sm-2">

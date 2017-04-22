@@ -14,9 +14,9 @@
                 <div class="am-form-group">
                   <select2 v-model="query.status">
                     <option value="">所有</option>
-                    <option value="0">待付款</option>
-                    <option value="1">交易完成</option>
-                    <option value="2">已取消订单</option>
+                    <option value="0">未支付</option>
+                    <option value="1">已支付</option>
+                    <option value="2">取消的订单</option>
                     <option value="3">退款中的订单</option>
                   </select2>
                 </div>
@@ -40,20 +40,20 @@
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
-              <tr>
+              <tr class="styleTitle">
                 <th class="am-u-sm-4 am-text-center">服务名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">订单交易状态</th>
-                <th class="am-u-sm-2">操作</th>
+                <th class="am-u-sm-1 am-text-center">单价</th>
+                <th class="am-u-sm-1 am-text-center">数量</th>
+                <th class="am-u-sm-2 am-text-center">实付款</th>
+                <th class="am-u-sm-2 am-text-center">订单交易状态</th>
+                <th class="am-u-sm-2 am-text-center">操作</th>
               </tr>
               </thead>
             </table>
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
                  v-if="items.serviceOrder.type==1">
-              <div class="am-panel-hd">
+              <div class="am-text-center orderTime">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -64,15 +64,16 @@
                     <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
-                  <div class="am-u-sm-2">{{item.productName}}</div>
-                  <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
-                  <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-2">￥{{item.price}}</div>
-                  <div class="am-u-sm-2">
+
+                  <div class="am-u-sm-2 am-text-center">{{item.productName}}</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.unitPrice}}</div>
+                  <div class="am-u-sm-1 am-text-center">{{item.quantity}}</div>
+                  <div class="am-u-sm-2 am-text-center">￥{{item.price}}</div>
+                  <div class="am-u-sm-2 am-text-center">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
                   <div class="am-u-sm-2">
-                    <div class="tpl-table-black-operation">
+                    <div class="tpl-table-black-operation am-text-center">
                       <a href="javascript:;"
                          @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
@@ -80,11 +81,10 @@
                       <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
-                      <span v-else="item.status!=4">
+                      <span v-if="item.status==4">
                            已经申请退费
                       </span>
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/ServiceOrderItem/comment/'+item.productId)">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/comment/'+item.productId)" v-if="item.status==3">
                         <i class="am-icon-edit"></i> 追加评论
                       </a>
                     </div>
@@ -114,9 +114,13 @@
   .left-margin {
     margin-left: 10%;
   }
-
-  .font-style {
-    text-align: center;
+  .styleTitle {
+    color:#333333;
+    background-color: #EEF1F6
+  }
+  .orderTime {
+    background-color: #6d787c;
+    color: #111111
   }
 </style>
 

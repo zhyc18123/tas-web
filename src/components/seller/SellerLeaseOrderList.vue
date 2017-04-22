@@ -1,22 +1,22 @@
-<template>
+<template xmlns="http://www.w3.org/1999/html">
   <div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">商家服务订单</div>
+          <div class="widget-title  am-cf">商家租赁订单</div>
         </div>
-        <div class="widget-body am-fr">
+        <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form">
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2 v-model="query.status">
                     <option value="">所有</option>
                     <option value="0">下单中</option>
                     <option value="1">已支付</option>
-                    <option value="2">已发货</option>
+                    <option value="2">已使用</option>
                     <option value="3">交易成功</option>
                     <option value="4">退费</option>
                   </select2>
@@ -25,16 +25,18 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
-                <input type="text" class="am-input-lg am-from-feild" name="name" v-model="query.sn"
-                       placeholder="请输入订单编号"/>
-                <span class="am-input-group-btn">
-                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
-                          type="button" @click="search"></button>
-                </span>
+              <div class="am-form-group">
+                <input type="text" class="am-input-lg" name="name" v-model="query.sn" placeholder="请输入订单编号"/>
               </div>
             </div>
-          </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
+                        @click="search"><span class="am-icon-search"></span>查询
+                </button>
+              </div>
+            </div>
 
           </div>
 
@@ -42,17 +44,18 @@
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
               <tr>
-                <th class="am-u-sm-4 am-text-center">服务名称</th>
+                <th class="am-u-sm-4 am-text-center">租赁名称</th>
                 <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">服务交易状态</th>
-                <th class="am-u-sm-2">操作</th>
+                <th class="am-u-sm-1">租赁时长</th>
+                <th class="am-u-sm-3 am-text-center">租用时间</th>
+                <th class="am-u-sm-1">实付款</th>
+                <th class="am-u-sm-1">商品交易状态</th>
+                <th class="am-u-sm-1">操作</th>
               </tr>
               </thead>
             </table>
-            <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId"  v-if="items.order.type==1">
+
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId">
               <div class="am-panel-hd">
                 <span>{{items.order.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.order.sn}}</span>
@@ -61,30 +64,32 @@
               <ul class="am-list am-list-static">
                 <li class="am-u-sm-12">
                   <span class="am-u-sm-2">
-                    <img class="am-radius" :src="items.imageUrl"  width="180"
+                    <img class="am-radius" :src="items.imageUrl" width="180"
                          height="100"/>
                   </span>
                   <div class="am-u-sm-2">{{items.productName}}</div>
                   <div class="am-u-sm-1">{{items.unitPrice}}</div>
-                  <div class="am-u-sm-1">{{items.quantity}}</div>
-                  <div class="am-u-sm-2">{{items.price}}</div>
-                  <div class="am-u-sm-2">{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</div>
-                  <div class="am-u-sm-2">
+                  <div class="am-u-sm-1">&nbsp;{{items.rentSpan}}</div>
+                  <div class="am-u-sm-3">{{items.startDate}}~{{items.endDate}} {{items.startTime}}-{{items.endTime}}</div>
+                  <div class="am-u-sm-1">{{items.price}}</div>
+                  <div class="am-u-sm-1">
+                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
+                  </div>
+
+                  <div class="am-u-sm-1">
                     <div class="tpl-table-black-operation">
-                      <a href="javascript:;" @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
-                        <i class="am-icon-edit"></i> 服务详情
+                      <a href="javascript:;"
+                         @click="$router.push('/main/seller/leaseRecord/detail/'+items.orderItemId)">
+                        <i class="am-icon-edit"></i> 订单详情
                       </a>
-                      <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
+                      <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
                         <i class="am-icon-edit"></i> 确认退费
                       </a>
-                      <!--<a href="javascript:;" @click="changeServiceStatus(items.orderItemId)" v-if="items.status!=3">
-                        <i class="am-icon-edit"></i> 修改状态
-                      </a>
-                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}-->
                     </div>
                   </div>
                 </li>
               </ul>
+
             </div>
 
             <div class="am-u-lg-12 am-cf">
@@ -94,16 +99,15 @@
               </div>
             </div>
 
-            <window ref="serviceRefundApproval" title="服务退费申请审批">
-              <service-refund :orderItemId="orderItemId" @productApproval="$refs.serviceRefundApproval.close()"></service-refund>
+            <window ref="productRefundApproval" title="商品退费申请审批">
+              <product-refund :orderItemId="orderItemId"
+                              @productApproval="$refs.productRefundApproval.close()"></product-refund>
             </window>
 
-            <window ref="changeServiceItemStatus" title="设置服务交易状态">
-              <service-item-status :orderItemId="orderItemId" @changeStatus="$refs.changeServiceItemStatus.close()"></service-item-status>
+            <window ref="changeItemStatus" title="设置商品交易状态">
+              <item-status :orderItemId="orderItemId" @changeStatus="$refs.changeItemStatus.close()"></item-status>
             </window>
-
           </div>
-
         </div>
       </div>
     </div>
@@ -114,7 +118,8 @@
   .left-margin {
     margin-left: 10%;
   }
-  .font-style{
+
+  .font-style {
     text-align: center;
   }
 </style>
@@ -136,13 +141,13 @@
         query: {
         },
         searchConfig: {},
-        orderItemId:''
+        orderItemId: '',
       }
     },
     components: {
       Pagination,
-      'service-refund': RefundApprovalForm,
-      'service-item-status': ChangeOrderItemStatus
+      'product-refund': RefundApprovalForm,
+      'item-status': ChangeOrderItemStatus
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -150,7 +155,7 @@
     created: function () {
       this.loadTableData(this.pageNo);
       var _this = this
-      this.$root.$on('sellerServiceOrderList:new', function () {
+      this.$root.$on('sellerOrderList:new', function () {
         _this.pageNo = 1
         _this.loadTableData(this.pageNo)
       })
@@ -165,7 +170,7 @@
         io.post(io.apiAdminSellProductOrderList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          type: 1
+          type: 2
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
@@ -175,22 +180,22 @@
           }
         })
       },
-      serviceToRefund: function (orderItemId) {
+      sureRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        _this.$refs.serviceRefundApproval.show({
+        _this.$refs.productRefundApproval.show({
           width: 1000,
           height: 600
         })
+
       },
-      changeServiceStatus: function (orderItemId) {
+      changeStatus: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        _this.$refs.changeServiceItemStatus.show({
+        _this.$refs.changeItemStatus.show({
           width: 500,
           height: 200
         })
-
       }
     }
   }
