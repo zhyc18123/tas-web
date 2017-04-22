@@ -9,28 +9,18 @@
           </div>
         </div>
 
-        <table width="100%" class="am-table am-table-bordered am-table-compact">
+        <table width="100%" class="am-table am-table-bordered am-table-compact" v-if="tableData!=null">
           <tbody>
           <tr>
-            <th>收货信息：</th>
-            <th></th>
-          </tr>
-          <tr>
-            <td class="bgColor">收货人：</td>
-            <td>{{tableData.consignee}}</td>
-            <td class="bgColor">手机号：</td>
-            <td>{{tableData.phoneNo}}</td>
-          </tr>
-          <tr>
-            <td class="bgColor">地址：</td>
-            <td>{{tableData.address}}</td>
-            <td class="bgColor">订单编号：</td>
+            <td>购买类型：</td>
+            <td>租赁</td>
+            <td>订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>
           <tr>
-            <td class="bgColor"> 用户：</td>
+            <td> 商家：</td>
             <td>{{tableData.userName}}</td>
-            <td class="bgColor">订单状态：</td>
+            <td>订单状态：</td>
             <td>{{tableData.status==0?'未支付':(tableData.status==1?'已支付':(tableData.status==2?'取消订单':'退费中的订单'))}}</td>
           </tr>
           </tbody>
@@ -39,27 +29,55 @@
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-scrollable-horizontal">
 
-            <div class="am-panel am-panel-default">
+            <div class="rentDetail">
               <div class="am-panel-hd">
                 <span>{{tableData.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{tableData.sn}}</span>
               </div>
 
-              <ul class="am-list am-list-static">
-                <li class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
-                  <span class="am-u-sm-2">
-                    <img class="am-radius" :src="item.imageUrl" width="180"
-                         height="100"/>
-                  </span>
-                  <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.unitPrice | formatNumber(2)}}</span>
-                  <span class="am-u-sm-1">{{item.quantity}}</span>
-                  <span class="am-u-sm-2">{{item.price}}</span>
-                  <span class="am-u-sm-2">{{item.busTeamName}}</span>
-                  </span>
-                </li>
-              </ul>
+              <div class="am-u-sm-12" v-for="item in itemList" :key="item.orderItemId">
+                <div class="am-g">
+                  <div class="am-u-sm-3">
+                    <div class="am-u-sm-4">
+                      <img class="am-radius" :src="item.imageUrl" width="180" height="100"/>
+                    </div>
+                  </div>
 
+                  <div class="am-u-sm-4 am-text-left">
+                    <div class="am-g am-g-fixed">
+                      <span>商品名称：</span>
+                      <span>
+                      {{item.productName}}
+                    </span>
+                    </div>
+
+                    <div class="am-g am-g-fixed">
+                      <span>商家名称：</span>
+                      <span>
+                      {{item.busTeamName}}
+                    </span>
+                    </div>
+
+                    <div class="am-g am-g-fixed">
+                      <span>数量：</span>
+                      <span>
+                      {{item.quantity}}
+                    </span>
+                    </div>
+
+                    <div class="am-g am-g-fixed">
+                      <span>合计：￥</span>
+                      <span>{{item.price}}</span>
+                    </div>
+                  </div>
+
+                  <div class="am-g am-g-fixed">
+                    <span>具体要求：</span>
+                    <article v-html="item.content"></article>
+                  </div>
+                </div>
+
+              </div>
             </div>
           </div>
         </div>
@@ -67,14 +85,11 @@
     </div>
   </div>
 </template>
-
 <style>
-  .font-size {
-
-    font-size: 26px;
-    text-align: center;
-    margin: auto 0;
+  .rentDetail {
+    background-color: #EEF1F6
   }
+
 </style>
 
 <script>
@@ -105,8 +120,7 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
-
-            //_this.loadAddress(ret.data.serviceOrder.addressId)
+//            _this.loadAddress(ret.data.serviceOrder.addressId)
           } else {
             _this.$alert(ret.desc)
           }

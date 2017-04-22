@@ -170,6 +170,7 @@
             _this.$alert('请求服务器失败')
           })
       },
+
       loadCategoryData: function () {
         var _this = this
         io.post(io.apiAdminGetAllCategoryDetail, {type: 0}, function (ret) {

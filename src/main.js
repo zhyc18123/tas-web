@@ -85,10 +85,14 @@ const ServiceRentForm = resolve => require([ './components/tradingService/Servic
 
 const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
 const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
+const RentRecordList = resolve => require(['./components/buyer/RentRecordList'], resolve)
+const RentRoomTimeList = resolve => require(['./components/buyer/RentRoomTimeList'], resolve)
 const ProductComment = resolve => require(['./components/buyer/ProductComment'], resolve)
 const ServiceComment = resolve => require(['./components/buyer/ServiceComment'], resolve)
+const RentComment = resolve => require(['./components/buyer/RentComment'], resolve)
 const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
 const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
+const RentDetail = resolve => require(['./components/buyer/RentDetail'], resolve)
 const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
 const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
@@ -96,6 +100,8 @@ const SoldProductOrderList = resolve => require(['./components/seller/SoldProduc
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
 const SellerServiceDetail = resolve => require(['./components/seller/SellerServiceDetail'], resolve)
+const SellerLeaseOrderList = resolve => require(['./components/seller/SellerLeaseOrderList'], resolve)
+const SellerLeaseDetail = resolve => require(['./components/seller/SellerLeaseDetail'], resolve)
 
 const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
 
@@ -199,10 +205,14 @@ const router = new VueRouter({
 
       {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
       {path: 'buyer/buyService/list', component:BuyServiceList},
+      {path: 'buyer/rentRecord/list', component:RentRecordList},
+      {path: 'buyer/rentRoomTime/list', component:RentRoomTimeList},
       {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
       {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
+      {path: 'buyer/rent/detail/:orderId', component:RentDetail},
       {path: 'buyer/productOrderItem/comment/:productId', component:ProductComment},
       {path: 'buyer/ServiceOrderItem/comment/:productId', component:ServiceComment},
+      {path: 'buyer/rent/comment/:productId', component:RentComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
 
@@ -210,6 +220,8 @@ const router = new VueRouter({
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
       {path: 'seller/sellerProduct/detail/:orderItemId', component:SellerProductDetail},
       {path: 'seller/sellerService/detail/:orderId', component:SellerServiceDetail},
+      {path: 'seller/leaseRecord/list/', component:SellerLeaseOrderList},
+      {path: 'seller/leaseRecord/detail/:orderItemId', component:SellerLeaseDetail},
 
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},
 

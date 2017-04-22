@@ -3,39 +3,35 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-fl">商品订单信息</div>
+          <div class="widget-title am-fl">租赁订单信息</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
 
         </div>
 
-        <table width="100%" class="am-table am-table-bordered am-table-compact">
+        <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
           <tbody>
-          <tr>
-            <th>收货信息：</th>
-            <th></th>
-          </tr>
-          <tr>
-            <td class="bgColor">收货人：</td>
-            <td>{{order.consignee}}</td>
-            <td class="bgColor">手机号：</td>
-            <td>{{order.phoneNo}}</td>
-          </tr>
-          <tr>
-            <td class="bgColor">地址：</td>
-            <td>{{order.address}}</td>
-            <td class="bgColor">订单编号：</td>
+         <!-- <tr>
+            <td>购买类型：</td>
+            <td>服务</td>
+            <td>订单编号：</td>
             <td>{{order.sn}}</td>
           </tr>
           <tr>
-            <td class="bgColor"> 用户：</td>
+            <td> 商家：</td>
             <td>{{order.userName}}</td>
-            <td class="bgColor">订单状态：</td>
-            <td>
-              {{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}
-            </td>
-          </tr>
+            <td>订单状态：</td>
+            <td>{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
+          </tr>-->
+         <tr>
+           <td>购买类型：服务</td>
+           <td>订单编号：{{order.sn}}</td>
+         </tr>
+         <tr>
+           <td>买家姓名：{{order.userName}}</td>
+           <td>订单状态：{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
+         </tr>
           </tbody>
         </table>
 
@@ -56,9 +52,10 @@
                   </span>
                   <span class="am-u-sm-2">{{tableData.productName}}</span>
                   <span class="am-u-sm-1">{{tableData.unitPrice}}</span>
-                  <span class="am-u-sm-1">{{tableData.quantity}}</span>
-                  <span class="am-u-sm-2">{{tableData.price}}</span>
-                  <span class="am-u-sm-2">{{tableData.busTeamName}}</span>
+                  <span class="am-u-sm-1">&nbsp;{{tableData.rentSpan}}</span>
+                  <span class="am-u-sm-3">{{tableData.startDate}}~{{tableData.endDate}} {{tableData.startTime}}-{{tableData.endTime}}</span>
+                  <span class="am-u-sm-1">{{tableData.price}}</span>
+                  <span class="am-u-sm-2">商家：{{tableData.busTeamName}}</span>
                   </span>
                 </li>
               </ul>
@@ -134,7 +131,6 @@
     created: function () {
       var orderItemId = this.$params("orderItemId")
       this.loadOrderItemData(orderItemId);
-
     },
     methods: {
       loadOrderItemData: function (orderItemId) {
