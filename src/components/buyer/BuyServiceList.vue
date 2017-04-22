@@ -30,8 +30,8 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search"><span class="am-icon-search"></span>查询
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
+                  <span class="am-icon-search"></span>查询
                 </button>
               </div>
             </div>
@@ -81,11 +81,10 @@
                       <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
-                      <span v-else="item.status!=4">
+                      <span v-if="item.status==4">
                            已经申请退费
                       </span>
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/ServiceOrderItem/comment/'+item.productId)">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/ServiceOrderItem/comment/'+item.productId)" v-if="item.status==3">
                         <i class="am-icon-edit"></i> 追加评论
                       </a>
                     </div>
@@ -114,10 +113,6 @@
 <style>
   .left-margin {
     margin-left: 10%;
-  }
-
-  .font-style {
-    text-align: center;
   }
 </style>
 

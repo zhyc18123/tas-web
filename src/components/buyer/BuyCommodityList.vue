@@ -92,11 +92,10 @@
                       <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
-                      <span v-else="item.status!=4">
+                      <span v-if="item.status==4">
                            已经申请退费
                         </span>
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/productOrderItem/comment/'+item.productId)">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.productId)" v-if="item.status==3">
                         <i class="am-icon-edit"></i> 追加评论
                       </a>
                     </div>
@@ -126,10 +125,6 @@
 <style>
   .left-margin {
     margin-left: 10%;
-  }
-
-  .font-style {
-    text-align: center;
   }
 </style>
 

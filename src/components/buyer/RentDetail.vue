@@ -13,7 +13,7 @@
           <tbody>
           <tr>
             <td>购买类型：</td>
-            <td>服务</td>
+            <td>租赁</td>
             <td>订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>

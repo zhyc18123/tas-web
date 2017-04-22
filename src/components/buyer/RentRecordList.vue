@@ -30,8 +30,8 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search"><span class="am-icon-search"></span>查询
+                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
+                  <span class="am-icon-search"></span>查询
                 </button>
               </div>
             </div>
@@ -41,20 +41,19 @@
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
-              <tr>
+              <tr style="color:#333333; background-color: #CCCCCC">
                 <th class="am-u-sm-4 am-text-center">租赁商品名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-3">时间段</th>
-                <th class="am-u-sm-1">实付款</th>
-                <th class="am-u-sm-1">订单交易状态</th>
-                <th class="am-u-sm-1">操作</th>
+                <th class="am-u-sm-1 am-text-center">单价</th>
+                <th class="am-u-sm-1 am-text-center">数量</th>
+                <th class="am-u-sm-3 am-text-center">时间段</th>
+                <th class="am-u-sm-1 am-text-center">实付款</th>
+                <th class="am-u-sm-1 am-text-center">订单交易状态</th>
+                <th class="am-u-sm-1 am-text-center">操作</th>
               </tr>
               </thead>
             </table>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
-                 v-if="items.serviceOrder.type==2">
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==2">
               <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
@@ -66,28 +65,26 @@
                     <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
-                  <div class="am-u-sm-2">{{item.productName}}</div>
-                  <div class="am-u-sm-1">￥{{item.price/item.quantity | formatNumber(2)}}</div>
-                  <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-3">{{item.startDate}} {{item.startTime}} - {{item.endDate}} {{item.endTime}}</div>
-                  <div class="am-u-sm-1">￥{{item.price}}</div>
-                  <div class="am-u-sm-1">
+                  <div class="am-u-sm-2 am-text-center">{{item.productName}}</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.price/item.quantity | formatNumber(2)}}</div>
+                  <div class="am-u-sm-1 am-text-center">{{item.quantity}}</div>
+                  <div class="am-u-sm-3 am-text-center">{{item.startDate}} ~ {{item.endDate}} {{item.startTime}}-{{item.endTime}}</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.price}}</div>
+                  <div class="am-u-sm-1 am-text-center">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
-                  <div class="am-u-sm-1">
+                  <div class="am-u-sm-1 am-text-center">
                     <div class="tpl-table-black-operation">
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/rent/detail/'+items.serviceOrder.orderId)">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/rent/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
                       <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
-                      <span v-else="item.status!=4">
+                      <span v-if="item.status==4"><br>
                            已经申请退费
                       </span>
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/rent/comment/'+item.productId)">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/rent/comment/'+item.productId)" v-if="item.status==3">
                         <i class="am-icon-edit"></i> 追加评论
                       </a>
                     </div>
@@ -147,6 +144,10 @@
     },
     created: function () {
       this.loadTableData(this.pageNo);
+      var _this = this;
+      this.$root.$on('orderList:new', function () {
+        _this.loadTableData(this.pageNo)
+      })
     },
     methods: {
       search: function () {
