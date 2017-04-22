@@ -190,7 +190,6 @@
           width: 1000,
           height: 600
         })
-
       },
       changeStatus: function (orderItemId) {
         var _this = this

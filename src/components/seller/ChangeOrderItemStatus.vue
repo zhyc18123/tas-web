@@ -62,11 +62,9 @@
           orderItemId:_this.orderItemId,
           itemStatus:_this.itemStatus
         },function (ret) {
-          console.log(ret.data)
           if (ret.success){
             _this.$toast("ok")
             _this.$root.$emit('sellerOrderList:new')
-            _this.$root.$emit('sellerServiceOrderList:new')
           }else {
             _this.$alert(ret.desc)
           }

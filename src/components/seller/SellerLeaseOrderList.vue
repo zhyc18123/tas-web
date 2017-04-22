@@ -85,8 +85,12 @@
                       <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
                         <i class="am-icon-edit"></i> 确认退费
                       </a>
+                      <a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
+                        <i class="am-icon-edit"></i> 修改状态
+                      </a>
+                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
                     </div>
-                  </div>
+                    </div>
                 </li>
               </ul>
 
@@ -99,13 +103,13 @@
               </div>
             </div>
 
-            <window ref="productRefundApproval" title="商品退费申请审批">
-              <product-refund :orderItemId="orderItemId"
-                              @productApproval="$refs.productRefundApproval.close()"></product-refund>
+            <window ref="leaseRefundApproval" title="租赁退费申请审批">
+              <lease-refund :orderItemId="orderItemId"
+                              @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
             </window>
 
-            <window ref="changeItemStatus" title="设置商品交易状态">
-              <item-status :orderItemId="orderItemId" @changeStatus="$refs.changeItemStatus.close()"></item-status>
+            <window ref="changeLeaseStatus" title="设置租赁交易状态">
+              <lease-status :orderItemId="orderItemId" @changeStatus="$refs.changeLeaseStatus.close()"></lease-status>
             </window>
           </div>
         </div>
@@ -146,8 +150,8 @@
     },
     components: {
       Pagination,
-      'product-refund': RefundApprovalForm,
-      'item-status': ChangeOrderItemStatus
+      'lease-refund': RefundApprovalForm,
+      'lease-status': ChangeOrderItemStatus
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -183,7 +187,7 @@
       sureRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        _this.$refs.productRefundApproval.show({
+        _this.$refs.leaseRefundApproval.show({
           width: 1000,
           height: 600
         })
@@ -192,7 +196,7 @@
       changeStatus: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        _this.$refs.changeItemStatus.show({
+        _this.$refs.changeLeaseStatus.show({
           width: 500,
           height: 200
         })

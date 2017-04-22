@@ -67,10 +67,8 @@
       </div>
 
       <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
+        <div class="am-u-sm-12 am-text-left">
           <span>退费原因：</span>
-        </div>
-        <div class="am-u-sm-10 am-text-left">
           <label class="am-radio-inline">
             <input type="radio" value="商品质量问题" name="reason" v-model="formData.reason"> 商品质量问题
           </label>
@@ -87,7 +85,7 @@
         <div class="am-u-sm-2 am-text-left">
           <span>退费说明：</span>
         </div>
-        <div class="am-u-sm-10  am-text-left">
+        <div class="am-u-sm-12  am-text-left">
           <textarea v-model="formData.description"></textarea>
         </div>
       </div>
@@ -105,7 +103,7 @@
 </template>
 
 <style>
-  .red{
+  .red {
     color: red;
   }
 </style>
@@ -119,8 +117,8 @@
     data: function () {
       return {
         tableData: [],
-        formData:{
-          returnResult:'',
+        formData: {
+          returnResult: '',
         }
       }
     },
@@ -128,8 +126,8 @@
     created: function () {
       this.loadTableData(this.orderItemId)
     },
-    watch:{
-      orderItemId:function (val) {
+    watch: {
+      orderItemId: function (val) {
         this.loadTableData(val)
       }
     },
@@ -145,7 +143,7 @@
               if (ret.success) {
                 _this.tableData = ret.data
                 _this.formData.price = _this.tableData.price
-                _this.formData.orderItemId =orderItemId
+                _this.formData.orderItemId = orderItemId
                 _this.formData.orderId = _this.tableData.orderId
                 _this.formData.productId = _this.tableData.productId
                 _this.formData.productName = _this.tableData.productName
@@ -169,12 +167,11 @@
       },
       confirmRefund: function (formData) {
         var _this = this
-        io.post(io.apiAdminSaveOrUpdateProductRefund, $.extend({},formData),
+        io.post(io.apiAdminSaveOrUpdateProductRefund, $.extend({}, formData),
           function (ret) {
             if (ret.success) {
               _this.$alert('已接受退款申请')
-//              _this.$root.$emit('orderList:new')
-              _this.$root.$emit('sellerOrderList:new')
+              _this.$root.$emit('orderList:new')
             } else {
               _this.$alert('申请失败')
             }

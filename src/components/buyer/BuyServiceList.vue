@@ -147,6 +147,10 @@
     },
     created: function () {
       this.loadTableData(this.pageNo);
+      var _this = this
+      this.$root.$on('orderList:new', function () {
+        _this.loadTableData(this.pageNo)
+      })
     },
     methods: {
       search: function () {

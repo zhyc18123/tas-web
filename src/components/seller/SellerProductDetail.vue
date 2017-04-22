@@ -134,6 +134,7 @@
     created: function () {
       var orderItemId = this.$params("orderItemId")
       this.loadOrderItemData(orderItemId);
+
     },
     methods: {
       loadOrderItemData: function (orderItemId) {

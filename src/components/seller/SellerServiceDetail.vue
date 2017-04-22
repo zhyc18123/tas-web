@@ -9,9 +9,9 @@
           </div>
         </div>
 
-        <table width="100%" class="am-table am-table-bordered am-table-compact" v-if="tableData!=null">
+        <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover" v-if="tableData!=null">
           <tbody>
-          <tr>
+          <!--<tr>
             <td>购买类型：</td>
             <td>服务</td>
             <td>订单编号：</td>
@@ -22,6 +22,14 @@
             <td>{{tableData.userName}}</td>
             <td>订单状态：</td>
             <td>{{tableData.status==0?'未支付':(tableData.status==1?'已支付':(tableData.status==2?'取消订单':'退费中的订单'))}}</td>
+          </tr>-->
+          <tr>
+            <td>购买类型：服务</td>
+            <td>订单编号：{{tableData.sn}}</td>
+          </tr>
+          <tr>
+            <td>买家姓名：{{tableData.userName}}</td>
+            <td>订单状态：{{tableData.status==0?'未支付':(tableData.status==1?'已支付':(tableData.status==2?'取消订单':'退费中的订单'))}}</td>
           </tr>
           </tbody>
         </table>
