@@ -145,6 +145,7 @@
             io.post(io.apiAdminDeleteServiceProduct,{productId:_this.productId},function(ret){
               if(ret.success){
                 _this.$toast('OK')
+                _this.loadTableData();
                 _this.$root.$emit('product:new')
               }else{
                 _this.$alert(ret.desc)
