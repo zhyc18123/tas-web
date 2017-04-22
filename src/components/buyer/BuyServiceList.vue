@@ -8,7 +8,8 @@
         <div class="widget-body  am-fr">
 
           <div class="am-u-sm-12 am-form">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2 v-model="query.status">
@@ -23,18 +24,16 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="name" v-model="query.sn" placeholder="请输入订单编号"/>
+              <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+                <input type="text" class="am-input-lg am-from-feild" name="name" v-model="query.sn"
+                       placeholder="请输入订单编号"/>
+                <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg" @click="search">
-                  <span class="am-icon-search"></span>查询
-                </button>
-              </div>
-            </div>
+          </div>
 
           </div>
 
@@ -43,18 +42,18 @@
               <thead>
               <tr>
                 <th class="am-u-sm-4 am-text-center">服务名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">订单交易状态</th>
-                <th class="am-u-sm-2">操作</th>
+                <th class="am-u-sm-1 am-text-center">单价</th>
+                <th class="am-u-sm-1 am-text-center">数量</th>
+                <th class="am-u-sm-2 am-text-center">实付款</th>
+                <th class="am-u-sm-2 am-text-center">订单交易状态</th>
+                <th class="am-u-sm-2 am-text-center">操作</th>
               </tr>
               </thead>
             </table>
 
             <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
                  v-if="items.serviceOrder.type==1">
-              <div class="am-panel-hd">
+              <div class="am-panel">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -66,20 +65,20 @@
                          height="100"/>
                   </span>
 
-                  <div class="am-u-sm-2">{{item.productName}}</div>
-                  <div class="am-u-sm-1">￥{{item.unitPrice}}</div>
-                  <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-2">￥{{item.price}}</div>
-                  <div class="am-u-sm-2">
+                  <div class="am-u-sm-2 am-text-center">{{item.productName}}</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.unitPrice}}</div>
+                  <div class="am-u-sm-1 am-text-center">{{item.quantity}}</div>
+                  <div class="am-u-sm-2 am-text-center">￥{{item.price}}</div>
+                  <div class="am-u-sm-2 am-text-center">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
                   <div class="am-u-sm-2">
-                    <div class="tpl-table-black-operation">
+                    <div class="tpl-table-black-operation am-text-center">
                       <a href="javascript:;"
                          @click="$router.push('/main/buyer/ServiceOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                       <span v-if="item.status==4">

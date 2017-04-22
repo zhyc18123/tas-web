@@ -152,7 +152,7 @@ const io = {
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
-    io.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
+    this.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
@@ -174,6 +174,7 @@ const io = {
     this.apiAdminAddressList = conf.baseApiPath + '/api/admin/trading/shippingAddressList'
     this.apiAdminDelAddress = conf.baseApiPath + '/api/admin/trading/delShippingAddress'
     this.apiAdminGetOrderItemRefundDetail = conf.baseApiPath + '/api/admin/trading/getOrderItemRefund'
+    this.apiAdminRentRoomList = conf.baseApiPath + '/api/admin/trading/rentRoomList'
 
     this.apiAdminRoomListOfCampus = conf.baseApiPath + '/api/admin/trading/roomListOfCampus'
 

@@ -22,7 +22,7 @@
               </div>
             </div>-->
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2 v-model="query.status">
@@ -54,18 +54,17 @@
               <thead>
               <tr>
                 <th class="am-u-sm-4 am-text-center">商品名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">订单交易状态</th>
-                <th class="am-u-sm-2">操作</th>
+                <th class="am-u-sm-1 am-text-center">单价</th>
+                <th class="am-u-sm-1 am-text-center">数量</th>
+                <th class="am-u-sm-2 am-text-center">实付款</th>
+                <th class="am-u-sm-2 am-text-center">订单交易状态</th>
+                <th class="am-u-sm-2 am-text-center">操作</th>
               </tr>
               </thead>
             </table>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
-                 v-if="items.serviceOrder.type==0">
-              <div class="am-panel-hd">
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==0">
+              <div class="left-margin">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -76,11 +75,11 @@
                     <img class="am-radius" :src="item.imageUrl" width="180"
                          height="100"/>
                   </span>
-                  <div class="am-u-sm-2">{{item.productName}}&nbsp;</div>
-                  <div class="am-u-sm-1">￥{{item.unitPrice | formatNumber(2)}}</div>
-                  <div class="am-u-sm-1">{{item.quantity}}</div>
-                  <div class="am-u-sm-2">￥{{item.price}}</div>
-                  <div class="am-u-sm-2">
+                  <div class="am-u-sm-2 am-text-center">{{item.productName}}&nbsp;</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.unitPrice | formatNumber(2)}}</div>
+                  <div class="am-u-sm-1 am-text-center">{{item.quantity}}</div>
+                  <div class="am-u-sm-2 am-text-center">￥{{item.price}}</div>
+                  <div class="am-u-sm-2 am-text-center">
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
                   <div class="am-u-sm-2">
@@ -89,7 +88,7 @@
                          @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status!=4">
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                       <span v-if="item.status==4">
