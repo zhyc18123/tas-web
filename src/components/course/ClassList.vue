@@ -98,7 +98,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.isArrangeRoom">
-                  <option value="">是否教室</option>
+                  <option value="">是否排教室</option>
                   <option value="0">否</option>
                   <option value="1">是</option>
                 </select2>
@@ -108,7 +108,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.isArrangeTeacher">
-                  <option value="">是否老师</option>
+                  <option value="">是否排老师</option>
                   <option value="0">否</option>
                   <option value="1">是</option>
                 </select2>

@@ -186,6 +186,17 @@
 
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段次
+            </label>
+            <div class="am-u-sm-3 am-u-end input-field">
+              <select2 required v-model="formData.segmentNo" :options="segments">
+                <option value="">请选择</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
             </label>
             <div class="am-u-sm-9 input-field">
@@ -346,6 +357,23 @@
         return this.$root.config.periods.map(function (item) {
           return {value: item.periodId, text: item.periodNo}
         })
+      },
+      segments: function () {
+        if(!this.formData.periodId){
+            return []
+        }
+        var segments = 0 ;
+        for(var i = 0 ;i < this.$root.config.periods.length ;i++ ){
+            if(this.$root.config.periods[i].periodId == this.formData.periodId ){
+              segments = this.$root.config.periods[i].segments
+              break
+            }
+        }
+        var ret = [] ;
+        for(var i = 1 ;i <= segments ;i++  ){
+            ret.push({value: i , text: i })
+        }
+        return ret
       }
     },
     mounted: function () {

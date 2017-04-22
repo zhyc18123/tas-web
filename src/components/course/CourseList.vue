@@ -148,11 +148,13 @@
                 </template>
             </el-table-column>-->
             <el-table-column
+              align="center"
               fixed="right"
               label="操作"
-              width="120">
+              width="150">
               <template scope="scope">
                 <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/course/course/edit/'+scope.row.courseTemplateId)">编辑</el-button>
+                <el-button v-if="hasPermission('del')" size="small" @click.native="del(scope.row.courseTemplateId)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -272,6 +274,19 @@ import Pagination from '../base/Pagination'
                 _this.$alert("上传成功");
               } else {
                 _this.$alert(ret.data.desc || "上传失败");
+              }
+            })
+          },
+          del:function(courseTemplateId){
+            var _this  = this
+            io.post(io.apiAdminDeleteCourseTemplate,{
+              courseTemplateId : courseTemplateId
+            },function(ret){
+              if(ret.success){
+                _this.loadTableData()
+                _this.$alert('删除成功')
+              }else{
+                _this.$alert(ret.desc)
               }
             })
           }

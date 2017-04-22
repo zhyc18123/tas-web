@@ -29,6 +29,8 @@ const AreaTeamList = resolve => require(['./components/sysmanager/AreaTeamList']
 const AreaTeamForm = resolve => require(['./components/sysmanager/AreaTeamForm'], resolve)
 const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], resolve)
 const BusTeamForm = resolve => require(['./components/sysmanager/BusTeamForm'], resolve)
+const PeriodList = resolve => require(['./components/sysmanager/PeriodList'], resolve)
+const PeriodForm = resolve => require(['./components/sysmanager/PeriodForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -47,6 +49,8 @@ const ProductForm = resolve => require(['./components/course/ProductForm'], reso
 const ClassList = resolve => require(['./components/course/ClassList'], resolve)
 const ClassForm = resolve => require(['./components/course/ClassForm'], resolve)
 const ClassTimeList = resolve => require(['./components/course/ClassTimeList'], resolve)
+const ClassRecommendList = resolve => require(['./components/course/ClassRecommendList'], resolve)
+
 
 
 
@@ -129,6 +133,9 @@ const router = new VueRouter({
       {path: 'sys/busteam/list' , component: BusTeamList },
       {path: 'sys/busteam/add' , component: BusTeamForm },
       {path: 'sys/busteam/edit/:busTeamId' , component: BusTeamForm },
+      {path: 'sys/period/list' , component: PeriodList },
+      {path: 'sys/period/add' , component: PeriodForm },
+      {path: 'sys/period/edit/:periodId' , component: PeriodForm },
       {path: 'sys/teacher/list' , component: TeacherList },
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
@@ -149,6 +156,8 @@ const router = new VueRouter({
       {path: 'course/class/add' , component: ClassForm},
       {path: 'course/class/edit/:classId' , component: ClassForm },
       {path: 'course/class/time/:classId' , component: ClassTimeList },
+
+      {path: 'course/class/recommend/list' , component: ClassRecommendList },
 
 
       {path: 'enroll/student/search' , component: SearchStudentList },

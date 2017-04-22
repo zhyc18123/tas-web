@@ -60,10 +60,12 @@
                 </template>
               </el-table-column>
               <el-table-column
+                align="center"
                 label="操作"
-                width="120">
+                width="150">
                 <template scope="scope">
                   <el-button size="small" @click.native="$router.push('/main/product/product/edit/'+scope.row.productId)" v-if="hasPermission('edit')">编辑</el-button>
+                  <el-button size="small" @click.native="del(scope.row.productId)" v-if="hasPermission('del')">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -124,13 +126,26 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseProductTemplateList,$.extend({
+        io.post(io.apiAdminProductList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
             _this.tableData = ret.data.list
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      del:function(productId){
+        var _this  = this
+        io.post(io.apiAdminDeleteProduct,{
+            productId : productId
+        },function(ret){
+          if(ret.success){
+            _this.loadTableData()
+            _this.$alert('删除成功')
           }else{
             _this.$alert(ret.desc)
           }

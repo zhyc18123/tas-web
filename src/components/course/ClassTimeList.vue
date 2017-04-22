@@ -23,7 +23,7 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                label="排课时间"
+                label="上课时间"
                 min-width="100">
                 <template scope="scope">
                   <span v-if="scope.row.classDate">{{scope.row.classDate | formatDate }}&nbsp;{{scope.row.startTime}}-{{scope.row.endTime}}</span>
@@ -31,7 +31,7 @@
               </el-table-column>
               <el-table-column
                 prop="teacherName"
-                label="排课老师"
+                label="上课老师"
                 min-width="100">
               </el-table-column>
 
