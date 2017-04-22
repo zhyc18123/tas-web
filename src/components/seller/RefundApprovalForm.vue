@@ -1,7 +1,9 @@
 <template>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm">商品信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==0">商品信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==1">服务信息</div>
+      <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==2">租赁信息</div>
 
       <div class="am-g">
         <div class="am-u-sm-3">
@@ -25,11 +27,21 @@
             </span>
           </div>
 
-          <div class="am-u-sm-12">
+          <div class="am-u-sm-12" v-if="tableData.type!=2">
             <span>数量：</span>
             <span v-model="formData.quantity">
               {{tableData.quantity}}
             </span>
+          </div>
+          <div class="am-u-sm-12" v-else="tableData.type!=2">
+            <span>租赁时长：</span>
+            <span v-model="formData.rentSpan">
+              {{tableData.rentSpan}}小时
+            </span>
+          </div>
+          <div class="am-u-sm-12" v-if="tableData.type==2">
+            <span>租赁时间：</span>
+            <span>{{tableData.startDate}}~{{tableData.endDate}} {{tableData.startTime}}-{{tableData.endTime}}</span>
           </div>
 
           <div class="am-u-sm-12">
@@ -90,9 +102,7 @@
           <button class="am-btn am-btn-primary">取消</button>
         </a>
       </div>
-
       <div class="font-style" v-else="tableData.status==0">{{tableData.status==1?'已处理':'已拒绝'}}</div>
-
     </div>
   </form>
 
