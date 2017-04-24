@@ -39,10 +39,10 @@
                          height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{tableData.productName}}</span>
-                  <span class="am-u-sm-1">{{tableData.unitPrice}}</span>
-                  <span class="am-u-sm-1">&nbsp;{{tableData.rentSpan}}</span>
+                  <span class="am-u-sm-1">￥{{tableData.unitPrice}}</span>
+                  <span class="am-u-sm-1">{{tableData.rentSpan}}</span>
                   <span class="am-u-sm-3">{{tableData.startDate}}~{{tableData.endDate}} {{tableData.startTime}}-{{tableData.endTime}}</span>
-                  <span class="am-u-sm-1">{{tableData.price}}</span>
+                  <span class="am-u-sm-1">￥{{tableData.price}}</span>
                   <span class="am-u-sm-2">商家：{{tableData.busTeamName}}</span>
                   </span>
                 </li>

@@ -32,81 +32,81 @@
                 </span>
             </div>
           </div>
+        </div>
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th class="am-u-sm-4 am-text-center">租赁名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">租赁时长</th>
-                <th class="am-u-sm-3 am-text-center">租用时间</th>
-                <th class="am-u-sm-1">实付款</th>
-                <th class="am-u-sm-1">商品交易状态</th>
-                <th class="am-u-sm-1">操作</th>
-              </tr>
-              </thead>
-            </table>
+        <div class="am-u-sm-12 am-scrollable-horizontal">
+          <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+            <thead>
+            <tr>
+              <th class="am-u-sm-4 am-text-center">租赁名称</th>
+              <th class="am-u-sm-1">单价</th>
+              <th class="am-u-sm-1">租赁时长</th>
+              <th class="am-u-sm-3 am-text-center">租用时间</th>
+              <th class="am-u-sm-1">实付款</th>
+              <th class="am-u-sm-1">商品交易状态</th>
+              <th class="am-u-sm-1">操作</th>
+            </tr>
+            </thead>
+          </table>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId">
-              <div class="am-panel-hd">
-                <span>{{items.order.createTime | formatDate}}</span>
-                <span class="left-margin">订单编号：{{items.order.sn}}</span>
-                <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
-              </div>
+          <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId">
+            <div class="am-panel-hd">
+              <span>{{items.order.createTime | formatDate}}</span>
+              <span class="left-margin">订单编号：{{items.order.sn}}</span>
+              <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
+            </div>
 
-              <ul class="am-list am-list-static">
-                <li class="am-u-sm-12">
+            <ul class="am-list am-list-static">
+              <li class="am-u-sm-12">
                   <span class="am-u-sm-2">
                     <img class="am-radius" :src="items.imageUrl" width="180"
                          height="100"/>
                   </span>
-                  <div class="am-u-sm-2">{{items.productName}}</div>
-                  <div class="am-u-sm-1">{{items.unitPrice}}</div>
-                  <div class="am-u-sm-1">&nbsp;{{items.rentSpan}}</div>
-                  <div class="am-u-sm-3">{{items.startDate}}~{{items.endDate}} {{items.startTime}}-{{items.endTime}}
-                  </div>
-                  <div class="am-u-sm-1">{{items.price}}</div>
-                  <div class="am-u-sm-1">
+                <div class="am-u-sm-2">{{items.productName}}</div>
+                <div class="am-u-sm-1">￥{{items.unitPrice}}</div>
+                <div class="am-u-sm-1">&nbsp;{{items.rentSpan}}</div>
+                <div class="am-u-sm-3">{{items.startDate}}~{{items.endDate}} {{items.startTime}}-{{items.endTime}}
+                </div>
+                <div class="am-u-sm-1">￥{{items.price}}</div>
+                <div class="am-u-sm-1">
+                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
+                </div>
+
+                <div class="am-u-sm-1">
+                  <div class="tpl-table-black-operation">
+                    <a href="javascript:;"
+                       @click="$router.push('/main/seller/leaseRecord/detail/'+items.orderItemId)">
+                      <i class="am-icon-edit"></i> 订单详情
+                    </a>
+                    <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
+                      <i class="am-icon-edit"></i> 确认退费
+                    </a>
+                    <!--<a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
+                      <i class="am-icon-edit"></i> 修改状态
+                    </a>--><br>
                     {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
                   </div>
+                </div>
+              </li>
+            </ul>
 
-                  <div class="am-u-sm-1">
-                    <div class="tpl-table-black-operation">
-                      <a href="javascript:;"
-                         @click="$router.push('/main/seller/leaseRecord/detail/'+items.orderItemId)">
-                        <i class="am-icon-edit"></i> 订单详情
-                      </a>
-                      <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
-                        <i class="am-icon-edit"></i> 确认退费
-                      </a>
-                      <!--<a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
-                        <i class="am-icon-edit"></i> 修改状态
-                      </a>--><br>
-                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
-                    </div>
-                  </div>
-                </li>
-              </ul>
-
-            </div>
-
-            <div class="am-u-lg-12 am-cf">
-              <div class="am-fr">
-                <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                            @paging="loadTableData"/>
-              </div>
-            </div>
-
-            <window ref="leaseRefundApproval" title="租赁退费申请审批">
-              <lease-refund :orderItemId="orderItemId"
-                            @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
-            </window>
-
-            <window ref="changeLeaseStatus" title="设置租赁交易状态">
-              <lease-status :orderItemId="orderItemId" @changeStatus="$refs.changeLeaseStatus.close()"></lease-status>
-            </window>
           </div>
+
+          <div class="am-u-lg-12 am-cf">
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
+
+          <window ref="leaseRefundApproval" title="租赁退费申请审批">
+            <lease-refund :orderItemId="orderItemId"
+                          @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
+          </window>
+
+          <window ref="changeLeaseStatus" title="设置租赁交易状态">
+            <lease-status :orderItemId="orderItemId" @changeStatus="$refs.changeLeaseStatus.close()"></lease-status>
+          </window>
         </div>
       </div>
     </div>

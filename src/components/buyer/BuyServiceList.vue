@@ -171,9 +171,6 @@
           }
         })
       },
-      orderItemDetail: function () {
-        var _this = this
-      },
       productRefund: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId

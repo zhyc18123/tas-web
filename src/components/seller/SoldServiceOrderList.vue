@@ -66,9 +66,9 @@
                          height="100"/>
                   </span>
                   <div class="am-u-sm-2">{{items.productName}}</div>
-                  <div class="am-u-sm-1">{{items.unitPrice}}</div>
+                  <div class="am-u-sm-1">￥{{items.unitPrice}}</div>
                   <div class="am-u-sm-1">{{items.quantity}}</div>
-                  <div class="am-u-sm-2">{{items.price}}</div>
+                  <div class="am-u-sm-2">￥{{items.price}}</div>
                   <!--<div class="am-u-sm-2">{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</div>-->
                   <div class="am-u-sm-2">{{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}</div>
                   <div class="am-u-sm-2">
