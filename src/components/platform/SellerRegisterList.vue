@@ -4,6 +4,31 @@
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">服务商注册审核管理</div>
       </div>
+
+      <div class="widget-body  am-fr">
+        <div class="am-u-sm-12 am-form">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
+            <div class="am-form-group tpl-table-list-select">
+              <div class="am-form-group">
+                <input type="text" class="am-input-lg am-from-feild" v-model="query.merchantName"
+                       placeholder="商家名称"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
+              <input type="text" class="am-input-lg am-from-feild" v-model="query.phoneNo"
+                     placeholder="手机号码"/>
+              <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="widget-body am-fr">
 
         <el-table
@@ -87,7 +112,10 @@
         pageNo:1,
         pageSize: 10,
         total:0,
-        merchantId:''
+        merchantId:'',
+        query:{
+
+        }
       }
     },
     components: {
@@ -106,13 +134,16 @@
       })
     },
     methods: {
+      search:function () {
+        this.loadTableData()
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminServiceMerchantList,{
+        io.post(io.apiAdminServiceMerchantList,$.extend({
           pageSize:_this.pageSize,
           pageNo:_this.pageNo
-        },function (ret) {
+        },_this.query),function (ret) {
           if (ret.success){
             _this.tableData = ret.data.list
             _this.total = ret.data.total
