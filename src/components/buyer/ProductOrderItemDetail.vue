@@ -52,10 +52,10 @@
                          height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{item.productName}}</span>
-                  <span class="am-u-sm-1">{{item.unitPrice | formatNumber(2)}}</span>
-                  <span class="am-u-sm-1">{{item.quantity}}</span>
-                  <span class="am-u-sm-2">{{item.price}}</span>
-                  <span class="am-u-sm-2">{{item.busTeamName}}</span>
+                  <span class="am-u-sm-2">单价：￥{{item.unitPrice}}</span>
+                  <span class="am-u-sm-2">数量：{{item.quantity}}</span>
+                  <span class="am-u-sm-2">合计：￥{{item.price}}</span>
+                  <span class="am-u-sm-2">商家：{{item.busTeamName}}</span>
                   </span>
                 </li>
               </ul>

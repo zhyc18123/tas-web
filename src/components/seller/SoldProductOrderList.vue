@@ -6,9 +6,7 @@
           <div class="widget-title  am-cf">商家商品订单</div>
         </div>
         <div class="widget-body  am-fr">
-
           <div class="am-u-sm-12 am-form">
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
@@ -56,6 +54,7 @@
               <div class="am-panel-hd">
                 <span>{{items.order.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.order.sn}}</span>
+                <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
               </div>
 
               <ul class="am-list am-list-static">
@@ -117,9 +116,8 @@
 
 <style>
   .left-margin {
-    margin-left: 10%;
+    margin-left: 5%;
   }
-
   .font-style {
     text-align: center;
   }

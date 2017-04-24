@@ -12,26 +12,14 @@
 
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
           <tbody>
-         <!-- <tr>
-            <td>购买类型：</td>
-            <td>服务</td>
-            <td>订单编号：</td>
-            <td>{{order.sn}}</td>
+          <tr>
+            <td>购买类型：服务</td>
+            <td>订单编号：{{order.sn}}</td>
           </tr>
           <tr>
-            <td> 商家：</td>
-            <td>{{order.userName}}</td>
-            <td>订单状态：</td>
-            <td>{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
-          </tr>-->
-         <tr>
-           <td>购买类型：服务</td>
-           <td>订单编号：{{order.sn}}</td>
-         </tr>
-         <tr>
-           <td>买家姓名：{{order.userName}}</td>
-           <td>订单状态：{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
-         </tr>
+            <td>买家姓名：{{order.userName}}</td>
+            <td>订单状态：{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
+          </tr>
           </tbody>
         </table>
 

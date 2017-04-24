@@ -60,7 +60,7 @@
                   </div>
 
                   <div class="am-u-sm-12">
-                    <span>单价：</span>
+                    <span>单价：￥</span>
                     <span>
                       {{item.unitPrice}}
                     </span>

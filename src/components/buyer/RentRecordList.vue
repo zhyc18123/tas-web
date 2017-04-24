@@ -52,8 +52,8 @@
               </thead>
             </table>
 
-            <div v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==2">
-              <div class="am-text-center">
+            <div  class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==2">
+              <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
               </div>
@@ -64,7 +64,7 @@
                     <img class="am-radius" :src="item.imageUrl" width="180" height="100"/>
                   </span>
                   <div class="am-u-sm-2 am-text-center">{{item.productName}}</div>
-                  <div class="am-u-sm-1 am-text-center">￥{{item.price/item.quantity | formatNumber(2)}}</div>
+                  <div class="am-u-sm-1 am-text-center">￥{{item.unitPrice}}</div>
                   <div class="am-u-sm-1 am-text-center">{{item.rentSpan}}</div>
                   <div class="am-u-sm-3 am-text-center">{{item.startDate}} ~ {{item.endDate}} {{item.startTime}}-{{item.endTime}}</div>
                   <div class="am-u-sm-1 am-text-center">￥{{item.price}}</div>

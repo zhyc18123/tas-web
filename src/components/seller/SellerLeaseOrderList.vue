@@ -6,9 +6,7 @@
           <div class="widget-title  am-cf">商家租赁订单</div>
         </div>
         <div class="widget-body  am-fr">
-
           <div class="am-u-sm-12 am-form">
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
@@ -28,16 +26,11 @@
               <div class="am-form-group">
                 <input type="text" class="am-input-lg" name="name" v-model="query.sn" placeholder="请输入订单编号"/>
               </div>
+              <span class="am-input-group-btn">
+                  <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
+                          type="button" @click="search"></button>
+                </span>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success am-btn-lg"
-                        @click="search"><span class="am-icon-search"></span>查询
-                </button>
-              </div>
-            </div>
-
           </div>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
@@ -59,6 +52,7 @@
               <div class="am-panel-hd">
                 <span>{{items.order.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.order.sn}}</span>
+                <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
               </div>
 
               <ul class="am-list am-list-static">
@@ -70,7 +64,8 @@
                   <div class="am-u-sm-2">{{items.productName}}</div>
                   <div class="am-u-sm-1">{{items.unitPrice}}</div>
                   <div class="am-u-sm-1">&nbsp;{{items.rentSpan}}</div>
-                  <div class="am-u-sm-3">{{items.startDate}}~{{items.endDate}} {{items.startTime}}-{{items.endTime}}</div>
+                  <div class="am-u-sm-3">{{items.startDate}}~{{items.endDate}} {{items.startTime}}-{{items.endTime}}
+                  </div>
                   <div class="am-u-sm-1">{{items.price}}</div>
                   <div class="am-u-sm-1">
                     {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
@@ -85,12 +80,12 @@
                       <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
                         <i class="am-icon-edit"></i> 确认退费
                       </a>
-                      <a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
+                      <!--<a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
                         <i class="am-icon-edit"></i> 修改状态
-                      </a>
+                      </a>--><br>
                       {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
                     </div>
-                    </div>
+                  </div>
                 </li>
               </ul>
 
@@ -105,7 +100,7 @@
 
             <window ref="leaseRefundApproval" title="租赁退费申请审批">
               <lease-refund :orderItemId="orderItemId"
-                              @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
+                            @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
             </window>
 
             <window ref="changeLeaseStatus" title="设置租赁交易状态">
@@ -120,7 +115,7 @@
 
 <style>
   .left-margin {
-    margin-left: 10%;
+    margin-left: 5%;
   }
 
   .font-style {
@@ -142,8 +137,7 @@
         total: 0,
         pageSize: 3,
         pageNo: 1,
-        query: {
-        },
+        query: {},
         searchConfig: {},
         orderItemId: '',
       }
