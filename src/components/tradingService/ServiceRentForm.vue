@@ -10,6 +10,16 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>服务分类
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.categoryId" :options="category" disabled>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>校区
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
@@ -159,7 +169,8 @@
         },
         campuses: [],
         rooms: [],
-        productImages: []
+        productImages: [],
+        category:[]
       }
     },
     created: function () {
@@ -176,17 +187,18 @@
           function () {
             _this.$alert('请求服务器失败')
           }),
-        io.post(io.apiAdminServiceProductImages, {productId: productId},
-          function (ret) {
-            if (ret.success) {
-              _this.productImages = ret.data
+          io.post(io.apiAdminServiceProductImages, {productId: productId},
+            function (ret) {
+              if (ret.success) {
+                _this.productImages = ret.data
+              }
+            },
+            function () {
+              _this.$alert('请求服务器失败')
             }
-          },
-          function () {
-            _this.$alert('请求服务器失败')
-          }
-        )
+          )
       }
+      this.loadCategoryData();
       this.loadCampusData();
       this.rooms = []
     },
@@ -291,6 +303,18 @@
           }, function () {
             _this.$alert('请求服务器失败')
           })
+      },
+      loadCategoryData: function () {
+        var _this = this
+        io.post(io.apiAdminGetAllCategoryDetail, {type: 2}, function (ret) {
+          if (ret.success) {
+            _this.category = ret.data.map(function (item) {
+              return {value: item.categoryId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       uploadImages: function (info) {
         this.productImages.push(info.url)
