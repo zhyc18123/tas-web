@@ -13,7 +13,8 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>服务分类
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.categoryId" :options="category" disabled>
+                <select2 required v-model="formData.categoryId" :options="category" >
+                  <option value="" >请选择</option>
                 </select2>
               </div>
             </div>
@@ -165,7 +166,8 @@
           price: '',
           unit: '',
           isMultimedia: '0',
-          type: "2"
+          type: "2",
+          categoryId:''
         },
         campuses: [],
         rooms: [],
@@ -234,7 +236,7 @@
             complete.call();
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/tradingService/rent/list')
+//              _this.$router.push('/main/tradingService/rent/list')
             } else {
               _this.$alert(ret.desc)
             }
