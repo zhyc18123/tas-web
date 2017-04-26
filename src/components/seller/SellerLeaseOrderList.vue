@@ -24,11 +24,12 @@
               <div class="am-form-group">
                 <select2 v-model="query.status">
                   <option value="">所有</option>
-                  <option value="0">下单中</option>
-                  <option value="1">已支付</option>
-                  <option value="2">已使用</option>
-                  <option value="3">交易成功</option>
-                  <option value="4">退费</option>
+                  <option value="0">待付款</option>
+                  <option value="1">交易完成</option>
+                  <option value="2">使用资源</option>
+                  <option value="3">买家确认</option>
+                  <option value="4">退款中的订单</option>
+                  <option value="5">已评价</option>
                 </select2>
               </div>
             </div>
