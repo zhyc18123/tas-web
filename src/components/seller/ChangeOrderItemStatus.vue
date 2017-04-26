@@ -5,11 +5,8 @@
     </label>
     <div class="am-u-sm-3 am-u-end input-field">
       <select2 v-model="tableData.itemStatus">
-        <option value="0">下单中</option>
         <option value="1">已付款</option>
-        <option value="2">发货中</option>
-        <option value="3">交易成功</option>
-        <!--<option value="4">退费</option>-->
+        <option value="2">发货中/商家开始工作/使用资源</option>
       </select2>
     </div>
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">

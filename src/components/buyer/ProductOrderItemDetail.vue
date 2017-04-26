@@ -9,6 +9,15 @@
           </div>
         </div>
 
+        <div class="am-u-sm-12">
+          <el-steps :space="100" :active="num">
+            <el-step title="下单"></el-step>
+            <el-step title="已支付"></el-step>
+            <el-step title="取消订单"></el-step>
+            <el-step title="退费中"></el-step>
+          </el-steps>
+        </div>
+
         <table width="100%" class="am-table am-table-bordered am-table-compact">
           <tbody>
           <tr>
@@ -89,6 +98,7 @@
         tableData: [],
         itemList: [],
         address: [],
+        num:null
       }
     },
     mounted: function () {
@@ -104,8 +114,8 @@
         io.post(io.apiAdminProductOrderDetail, {orderId: orderId}, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
+            _this.num = parseInt(_this.tableData.status)+1
             _this.itemList = ret.data.itemList
-
             //_this.loadAddress(ret.data.serviceOrder.addressId)
           } else {
             _this.$alert(ret.desc)

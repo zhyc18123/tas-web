@@ -67,8 +67,7 @@
                 <div class="am-u-sm-1">{{items.quantity}}</div>
                 <div class="am-u-sm-2">￥{{items.price}}</div>
                 <div class="am-u-sm-2">
-                  <!--{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}-->
-                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
+                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'确认收货':(items.status==4?'退费':'已评价'))))}}
                 </div>
                 <div class="am-u-sm-2">
                   <div class="tpl-table-black-operation">
@@ -82,7 +81,7 @@
                     <a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
                       <i class="am-icon-edit"></i> 修改状态
                     </a>
-                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
+                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'确认收货':(items.status==4?'退费':'已评价'))))}}
                   </div>
                 </div>
               </li>

@@ -88,13 +88,19 @@
                          @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
                         <i class="am-icon-edit"></i> 订单详情
                       </a>
+                      <a href="javascript:;" @click="buyerConfirm(item.orderItemId)" v-if="item.status==2">
+                        <i class="am-icon-edit"></i> 退费申请
+                      </a>
                       <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                       <span v-if="item.status==4">
                            已经申请退费
                         </span>
-                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.productId)" v-if="item.status==3">
+                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)" v-if="item.status==3">
+                        <i class="am-icon-edit"></i> 追加评论
+                      </a>
+                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)" v-if="item.status==5">
                         <i class="am-icon-edit"></i> 追加评论
                       </a>
                     </div>
@@ -190,6 +196,21 @@
         _this.$refs.productRefund.show({
           width: 1000,
           height: 600
+        })
+      },
+      buyerConfirm: function (orderItemId) {
+        var _this = this
+        _this.orderItemId = orderItemId
+        io.post(io.apiAdminchangeSellOrderItemStatus,{
+          orderItemId:_this.orderItemId,
+          itemStatus:3
+        },function (ret) {
+          if (ret.success){
+            _this.$toast("ok")
+            _this.$root.$emit('orderList:new')
+          }else {
+            _this.$alert(ret.desc)
+          }
         })
       }
     }

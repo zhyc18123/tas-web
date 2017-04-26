@@ -74,13 +74,13 @@
         formData: {
           evaluation:null,
           comment: '',
-          productId: '',
+          orderItemId: '',
           type: '',
         },
       }
     },
     created: function () {
-      this.formData.productId = this.$params("productId");
+      this.formData.orderItemId = this.$params("orderItemId");
     },
     mounted: function () {
       var _this = this;
