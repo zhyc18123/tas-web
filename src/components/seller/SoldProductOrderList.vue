@@ -91,7 +91,7 @@
                     <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
                       <i class="am-icon-edit"></i> 确认退费
                     </a>
-                    <a href="javascript:;" @click="changeStatus(items.orderItemId)" v-if="items.status!=3">
+                    <a href="javascript:;" @click="changeProductStatus(items.orderItemId)" v-if="items.status<3">
                       <i class="am-icon-edit"></i> 修改状态
                     </a>
                     {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'确认收货':(items.status==4?'退费':'已评价'))))}}
@@ -196,7 +196,7 @@
           height: 600
         })
       },
-      changeStatus: function (orderItemId) {
+      changeProductStatus: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
         _this.$refs.changeItemStatus.show({
