@@ -9,21 +9,32 @@
 
           <div class="am-u-sm-12 am-form">
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-lg-offset-6">
-              <div class="am-form-group tpl-table-list-select">
-                <div class="am-form-group">
-                  <select2 v-model="query.status">
-                    <option value="">所有</option>
-                    <option value="0">未支付</option>
-                    <option value="1">已支付</option>
-                    <option value="2">取消的订单</option>
-                    <option value="3">退款中的订单</option>
-                  </select2>
-                </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.time">
+                  <option value="">请选择下单时间</option>
+                  <option value="0">最近一个星期</option>
+                  <option value="1">最近一个月</option>
+                  <option value="2">最近三个月</option>
+                  <option value="3">最近一年</option>
+                </select2>
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+
+            <div class="aam-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.status">
+                  <option value="">所有</option>
+                  <option value="0">待付款</option>
+                  <option value="1">交易完成</option>
+                  <option value="2">已取消订单</option>
+                  <option value="3">退款中的订单</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
                 <input type="text" class="am-input-lg am-from-feild" name="name" v-model="query.sn"
                        placeholder="请输入订单编号"/>
@@ -33,6 +44,7 @@
                 </span>
               </div>
             </div>
+
           </div>
 
           </div>
