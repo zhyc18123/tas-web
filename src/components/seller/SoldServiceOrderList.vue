@@ -82,8 +82,7 @@
                   <div class="am-u-sm-1">￥{{items.unitPrice}}</div>
                   <div class="am-u-sm-1">{{items.quantity}}</div>
                   <div class="am-u-sm-2">￥{{items.price}}</div>
-                  <!--<div class="am-u-sm-2">{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</div>-->
-                  <div class="am-u-sm-2">{{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}</div>
+                  <div class="am-u-sm-2">{{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家开始工作':(items.status==3?'服务确认':(items.status==4?'退费':'已评价'))))}}</div>
                   <div class="am-u-sm-2">
                     <div class="tpl-table-black-operation">
                       <a href="javascript:;" @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
@@ -92,10 +91,10 @@
                       <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
                         <i class="am-icon-edit"></i> 确认退费
                       </a>
-                      <!--<a href="javascript:;" @click="changeServiceStatus(items.orderItemId)" v-if="items.status!=3">
+                      <a href="javascript:;" @click="changeServiceStatus(items.orderItemId)" v-if="items.status!=3">
                         <i class="am-icon-edit"></i> 修改状态
-                      </a>--><br>
-                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'交易成功':'退费')))}}
+                      </a><br>
+                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家开始工作':(items.status==3?'服务确认':(items.status==4?'退费':'已评价'))))}}
                     </div>
                   </div>
                 </li>

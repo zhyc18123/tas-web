@@ -23,7 +23,9 @@ import {
   DropdownMenu,
   DropdownItem,
   Tag,
-  Rate
+  Rate,
+  Steps,
+  Step
 } from 'element-ui'
 
 var VueUI = function(){
@@ -100,6 +102,8 @@ VueUI.install = function (Vue){
   Vue.component(DropdownItem.name,DropdownItem)
   Vue.component(Tag.name,Tag)
   Vue.component(Rate.name,Rate)
+  Vue.component(Steps.name,Steps)
+  Vue.component(Step.name,Step)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )

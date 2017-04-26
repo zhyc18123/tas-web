@@ -9,6 +9,17 @@
           </div>
         </div>
 
+        <div class="am-u-sm-12">
+          <el-steps :space="100" :active="num">
+            <el-step title="下单"></el-step>
+            <el-step title="已支付"></el-step>
+            <el-step title="商家开始工作"></el-step>
+            <el-step title="服务确认"></el-step>
+            <el-step title="退费"></el-step>
+            <el-step title="评价"></el-step>
+          </el-steps>
+        </div>
+
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover" v-if="tableData!=null">
           <tbody>
           <tr>
@@ -160,6 +171,7 @@
         pageSize: 5,
         total: 0,
         commentData: [],
+        num:null
       }
     },
     components: {
@@ -179,6 +191,7 @@
           if (ret.success) {
             _this.tableData = ret.data.serviceOrder
             _this.itemList = ret.data.itemList
+            _this.num = parseInt(_this.itemList[0].status)+2
             _this.loadCommentData(_this.pageNo)
           } else {
             _this.$alert(ret.desc)

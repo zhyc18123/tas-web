@@ -7,7 +7,17 @@
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
+        </div>
 
+        <div class="am-u-sm-12">
+          <el-steps :space="100" :active="num">
+            <el-step title="下单"></el-step>
+            <el-step title="已支付"></el-step>
+            <el-step title="使用资源"></el-step>
+            <el-step title="买家确认"></el-step>
+            <el-step title="退费"></el-step>
+            <el-step title="评价"></el-step>
+          </el-steps>
         </div>
 
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
@@ -108,6 +118,7 @@
         pageSize: 5,
         total: 0,
         commentData: [],
+        num:null
       }
     },
     components: {
@@ -127,6 +138,7 @@
         io.post(io.apiAdminOrderItemDetail, {orderItemId: _this.orderItemId}, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data
+            _this.num = parseInt(_this.tableData.status)+1
             _this.order = ret.data.order
             _this.loadTableData(_this.pageNo)
           } else {
