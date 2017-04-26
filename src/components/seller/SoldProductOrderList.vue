@@ -27,8 +27,10 @@
                   <option value="">所有</option>
                   <option value="0">待付款</option>
                   <option value="1">完成交易</option>
-                  <option value="2">已取消订单</option>
-                  <option value="3">退款中的订单</option>
+                  <option value="2">已发货</option>
+                  <option value="3">买家确认</option>
+                  <option value="4">退款中的商品</option>
+                  <option value="5">已评价</option>
                 </select2>
               </div>
             </div>
