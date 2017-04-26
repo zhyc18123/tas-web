@@ -55,6 +55,7 @@
               </label>
               <div class="am-u-sm-9 am-form-file input-field">
                 <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
+                  <img class="am-margin-top" :src="formData.imageUrl">
                 </file-upload>
               </div>
             </div>
@@ -88,6 +89,7 @@
           comment:'',
           orderItemId:'',
           type:"",
+          imageUrl:""
         },
       }
     },

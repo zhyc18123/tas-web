@@ -68,6 +68,7 @@
           comment: '',
           orderItemId: '',
           type: '',
+          imageUrl:''
         },
       }
     },
