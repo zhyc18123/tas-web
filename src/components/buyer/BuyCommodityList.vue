@@ -10,27 +10,27 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                  <select2 v-model="query.time">
-                    <option value="">请选择下单时间</option>
-                    <option value="0">最近一个星期</option>
-                    <option value="1">最近一个月</option>
-                    <option value="2">最近三个月</option>
-                    <option value="3">最近一年</option>
-                  </select2>
+                <select2 v-model="query.time">
+                  <option value="">请选择下单时间</option>
+                  <option value="0">最近一个星期</option>
+                  <option value="1">最近一个月</option>
+                  <option value="2">最近三个月</option>
+                  <option value="3">最近一年</option>
+                </select2>
               </div>
             </div>
 
 
             <div class="aam-u-sm-12 am-u-md-12 am-u-lg-3">
-                <div class="am-form-group">
-                  <select2 v-model="query.status">
-                    <option value="">所有</option>
-                    <option value="0">待付款</option>
-                    <option value="1">交易完成</option>
-                    <option value="2">已取消订单</option>
-                    <option value="3">退款中的订单</option>
-                  </select2>
-                </div>
+              <div class="am-form-group">
+                <select2 v-model="query.status">
+                  <option value="">所有</option>
+                  <option value="0">待付款</option>
+                  <option value="1">交易完成</option>
+                  <option value="2">已取消订单</option>
+                  <option value="3">退款中的订单</option>
+                </select2>
+              </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
@@ -61,7 +61,8 @@
               </thead>
             </table>
 
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId" v-if="items.serviceOrder.type==0">
+            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.serviceOrder.orderId"
+                 v-if="items.serviceOrder.type==0">
               <div class="am-panel-hd">
                 <span>{{items.serviceOrder.createTime | formatDate}}</span>
                 <span class="left-margin">订单编号：{{items.serviceOrder.sn}}</span>
@@ -81,26 +82,39 @@
                     {{items.serviceOrder.status==0?'未支付':(items.serviceOrder.status==1?'已支付':(items.serviceOrder.status==2?'取消订单':'退费中的订单'))}}
                   </div>
                   <div class="am-u-sm-2">
-                    <div class="tpl-table-black-operation">
-                      <a href="javascript:;"
-                         @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
-                        <i class="am-icon-edit"></i> 订单详情
-                      </a>
-                      <a href="javascript:;" @click="buyerConfirm(item.orderItemId)" v-if="item.status==2">
-                        <i class="am-icon-edit"></i> 退费申请
-                      </a>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
-                        <i class="am-icon-edit"></i> 退费申请
-                      </a>
-                      <span v-if="item.status==4">
-                           已经申请退费
-                        </span>
-                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)" v-if="item.status==3">
-                        <i class="am-icon-edit"></i> 追加评论
-                      </a>
-                      <a href="javascript:;" @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)" v-if="item.status==5">
-                        <i class="am-icon-edit"></i> 追加评论
-                      </a>
+                    <div class="tpl-table-black-operation am-text-center">
+                      <div>
+                        <a href="javascript:;"
+                           @click="$router.push('/main/buyer/productOrderItem/detail/'+items.serviceOrder.orderId)">
+                          <i class="am-icon-edit"></i> 订单详情
+                        </a>
+                      </div>
+                      <div>
+                        <a href="javascript:;" @click="buyerConfirm(item.orderItemId)" v-if="item.status==2">
+                          <i class="am-icon-edit"></i> 商品确认
+                        </a>
+                      </div>
+                      <div>
+                        <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
+                          <i class="am-icon-edit"></i> 退费申请
+                        </a>
+                      </div>
+                      <div v-if="item.status==4">
+                        已经申请退费
+                      </div>
+                      <div>
+                        <a href="javascript:;"
+                           @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)"
+                           v-if="item.status==3">
+                          <i class="am-icon-edit"></i> 追加评论
+                        </a></div>
+                      <div>
+                        <a href="javascript:;"
+                           @click="$router.push('/main/buyer/productOrderItem/comment/'+item.orderItemId)"
+                           v-if="item.status==5">
+                          <i class="am-icon-edit"></i> 追加评论
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </li>
@@ -196,14 +210,14 @@
       buyerConfirm: function (orderItemId) {
         var _this = this
         _this.orderItemId = orderItemId
-        io.post(io.apiAdminchangeSellOrderItemStatus,{
-          orderItemId:_this.orderItemId,
-          itemStatus:3
-        },function (ret) {
-          if (ret.success){
+        io.post(io.apiAdminchangeSellOrderItemStatus, {
+          orderItemId: _this.orderItemId,
+          itemStatus: 3
+        }, function (ret) {
+          if (ret.success) {
             _this.$toast("ok")
             _this.$root.$emit('orderList:new')
-          }else {
+          } else {
             _this.$alert(ret.desc)
           }
         })
