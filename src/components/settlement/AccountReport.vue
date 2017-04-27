@@ -25,6 +25,11 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                prop="realtimeBalanceAmount"
+                label="实时账户余额"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
                 label="操作"
                 width="120">
                 <template scope="scope">

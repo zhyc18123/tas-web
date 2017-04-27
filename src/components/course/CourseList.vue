@@ -82,7 +82,7 @@
                       v-if="hasPermission('add')">
                 <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.ms-excel">
                 <span class="am-icon-cloud-upload"></span>批量导入</button>
-              <a href="http://onb2fl9k5.bkt.clouddn.com/course_tempalet_v4.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
+              <a href="http://static.yuyou100.com/course_tempalet_v4.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
             </div>
           </div>
 

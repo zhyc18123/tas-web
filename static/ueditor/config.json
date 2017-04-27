@@ -3,7 +3,7 @@
 
     "qiniuUploadUrl" : "http://upload-z2.qiniu.com/" ,
     "qiniuUploadTokenApi" : "http://test.yuyou100.com/yyfn-api/api/qiniu/upload/token" ,
-    "qiniuCDN" : "http://onb2fl9k5.bkt.clouddn.com/" ,
+    "qiniuCDN" : "http://static.yuyou100.com/" ,
 
     /* 上传图片配置项 */
     "imageActionName": "uploadimage", /* 执行上传图片的action名称 */

@@ -183,7 +183,8 @@ import util from '../../lib/util'
                   busTeamId:'',
                   gradeIds:[],
                   subjectIds:[],
-                  status:1
+                  status:1,
+                  avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
                 }
             }
         },
