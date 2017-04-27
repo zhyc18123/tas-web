@@ -4,16 +4,14 @@
       <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>状态
     </label>
     <div class="am-u-sm-3 am-u-end input-field">
-      <select2 v-model="tableData.itemStatus">
-        <option value="0">下单中</option>
+      <select2 requried v-model="tableData.itemStatus">
+        <option value="">选择状态</option>
         <option value="1">已付款</option>
-        <option value="2">发货中</option>
-        <option value="3">交易成功</option>
-        <!--<option value="4">退费</option>-->
+        <option value="2">发货中/商家开始工作/使用资源</option>
       </select2>
     </div>
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="change(tableData.itemStatus)">修改</button>
+      <button type="button" class="am-btn am-btn-primary" @click="change">修改</button>
       <a href="javascript:void(0)" data-am-modal-close>
         <button class="am-btn am-btn-primary">取消</button>
       </a>
@@ -27,7 +25,7 @@
   export default{
     data:function () {
       return{
-        tableData:[],
+        tableData:{},
       }
     },
     props:['orderItemId'],
@@ -35,9 +33,9 @@
 //      this.loadTableData(this.orderItemId)
     },
     watch:{
-      orderItemId:function (val) {
+      /*orderItemId:function (val) {
         this.orderItemId = val
-      }
+      }*/
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -55,13 +53,11 @@
           }
         })*/
       },
-      change:function (itemStatus) {
+      change:function () {
         var _this = this
-        _this.itemStatus = itemStatus
-        io.post(io.apiAdminchangeSellOrderItemStatus,{
-          orderItemId:_this.orderItemId,
-          itemStatus:_this.itemStatus
-        },function (ret) {
+        io.post(io.apiAdminchangeSellOrderItemStatus,$.extend({
+          orderItemId:_this.orderItemId
+        },_this.tableData),function (ret) {
           if (ret.success){
             _this.$toast("ok")
             _this.$root.$emit('sellerOrderList:new')

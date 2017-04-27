@@ -132,7 +132,6 @@
     },
     watch:{
       regStatus:function(val){
-          console.log(this.regStatus)
           this.loadDataTable()
       }
     },

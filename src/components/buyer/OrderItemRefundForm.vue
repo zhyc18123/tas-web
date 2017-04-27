@@ -5,6 +5,14 @@
       <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==1">服务信息</div>
       <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==2">租赁信息</div>
 
+      <div class="am-u-sm-12 am-text-left">
+        <el-steps :space="100" :active="1">
+          <el-step title="退费申请"></el-step>
+          <el-step title="申请确认"></el-step>
+          <el-step title="退费成功"></el-step>
+        </el-steps>
+      </div>
+
       <div class="am-g">
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">

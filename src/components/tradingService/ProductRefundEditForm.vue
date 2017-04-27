@@ -69,23 +69,20 @@
       </div>
 
       <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
-          <span>退费说明：</span>
+        <div class="am-u-sm-12 am-text-left">
+          <span>退费说明：{{formData.description}}</span>
         </div>
-        <div class="am-u-sm-10  am-text-left">
-          <p>{{formData.description}}</p>
         </div>
       </div>
 
+      <div class="am-u-sm-12">
       <div class="am-g">
-        <div class="am-u-sm-2 am-text-left">
+        <div class="am-u-sm-12 am-text-left">
           <span>审批状态：</span>
-        </div>
-        <div class="am-u-sm-10 am-text-left">
-          <label class="am-checkbox-inline">
+          <label class="am-radio-inline">
             <input type="radio" value="1" name="reason" v-model="formData.status"> 已处理
           </label>
-          <label class="am-checkbox-inline">
+          <label class="am-radio-inline">
             <input type="radio" value="2" name="reason" v-model="formData.status"> 已拒绝
           </label>
         </div>
@@ -95,7 +92,7 @@
         <div class="am-u-sm-2 am-text-left">
           <span>审批说明：</span>
         </div>
-        <div class="am-u-sm-10  am-text-left">
+        <div class="am-u-sm-12 am-text-left">
           <textarea v-model="formData.returnResult"></textarea>
         </div>
       </div>
@@ -106,10 +103,9 @@
           <button class="am-btn am-btn-primary">取消</button>
         </a>
       </div>
-
+        </div>
     </div>
   </form>
-
 </template>
 
 <script>

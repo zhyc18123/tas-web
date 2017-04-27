@@ -210,9 +210,9 @@ const router = new VueRouter({
       {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
       {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
       {path: 'buyer/rent/detail/:orderId', component:RentDetail},
-      {path: 'buyer/productOrderItem/comment/:productId', component:ProductComment},
-      {path: 'buyer/ServiceOrderItem/comment/:productId', component:ServiceComment},
-      {path: 'buyer/rent/comment/:productId', component:RentComment},
+      {path: 'buyer/productOrderItem/comment/:orderItemId', component:ProductComment},
+      {path: 'buyer/ServiceOrderItem/comment/:orderItemId', component:ServiceComment},
+      {path: 'buyer/rent/comment/:orderItemId', component:RentComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
 

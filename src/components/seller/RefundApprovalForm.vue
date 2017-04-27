@@ -5,6 +5,14 @@
       <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==1">服务信息</div>
       <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.type==2">租赁信息</div>
 
+      <div class="am-u-sm-12 am-text-left">
+        <el-steps :space="100" :active="num">
+          <el-step title="退费申请"></el-step>
+          <el-step title="申请确认"></el-step>
+          <el-step title="退费审批完成"></el-step>
+        </el-steps>
+      </div>
+
       <div class="am-g">
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">
@@ -111,7 +119,7 @@
           <button class="am-btn am-btn-primary">取消</button>
         </a>
       </div>
-    </div>
+
     </div>
 
   </form>
@@ -141,13 +149,14 @@
     data: function () {
       return {
         tableData: [],
-        formData: []
+        formData: [],
+        num:null
       }
     },
     props: ['orderItemId'],
     created: function () {
-      /*var orderItem = this.$params('orderItemId')
-       this.loadTableData(orderItem);*/
+      /*var orderItemId = this.$params('orderItemId')
+       this.loadTableData(orderItemId);*/
     },
     watch: {
       orderItemId: function (val) {
@@ -169,6 +178,7 @@
                 _this.formData.price = _this.tableData.price
                 _this.formData.type = _this.tableData.type
                 _this.formData.status = _this.tableData.status
+                _this.num = parseInt(_this.tableData.status)+1
                 _this.formData.returnResult = _this.tableData.returnResult
                 _this.formData.serviceProductRefundId = _this.tableData.serviceProductRefundId
                 _this.formData.createTime = ''

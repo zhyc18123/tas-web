@@ -7,31 +7,29 @@
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
+        </div>
 
+        <div class="am-u-sm-12">
+          <el-steps :space="100" :active="num">
+            <el-step title="下单"></el-step>
+            <el-step title="已支付"></el-step>
+            <el-step title="使用资源"></el-step>
+            <el-step title="买家确认"></el-step>
+            <el-step title="退费"></el-step>
+            <el-step title="评价"></el-step>
+          </el-steps>
         </div>
 
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
           <tbody>
-         <!-- <tr>
-            <td>购买类型：</td>
-            <td>服务</td>
-            <td>订单编号：</td>
-            <td>{{order.sn}}</td>
+          <tr>
+            <td>购买类型：服务</td>
+            <td>订单编号：{{order.sn}}</td>
           </tr>
           <tr>
-            <td> 商家：</td>
-            <td>{{order.userName}}</td>
-            <td>订单状态：</td>
-            <td>{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
-          </tr>-->
-         <tr>
-           <td>购买类型：服务</td>
-           <td>订单编号：{{order.sn}}</td>
-         </tr>
-         <tr>
-           <td>买家姓名：{{order.userName}}</td>
-           <td>订单状态：{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
-         </tr>
+            <td>买家姓名：{{order.userName}}</td>
+            <td>订单状态：{{order.status==0?'未支付':(order.status==1?'已支付':(order.status==2?'取消订单':'退费中的订单'))}}</td>
+          </tr>
           </tbody>
         </table>
 
@@ -51,10 +49,10 @@
                          height="100"/>
                   </span>
                   <span class="am-u-sm-2">{{tableData.productName}}</span>
-                  <span class="am-u-sm-1">{{tableData.unitPrice}}</span>
-                  <span class="am-u-sm-1">&nbsp;{{tableData.rentSpan}}</span>
+                  <span class="am-u-sm-1">￥{{tableData.unitPrice}}</span>
+                  <span class="am-u-sm-1">{{tableData.rentSpan}}</span>
                   <span class="am-u-sm-3">{{tableData.startDate}}~{{tableData.endDate}} {{tableData.startTime}}-{{tableData.endTime}}</span>
-                  <span class="am-u-sm-1">{{tableData.price}}</span>
+                  <span class="am-u-sm-1">￥{{tableData.price}}</span>
                   <span class="am-u-sm-2">商家：{{tableData.busTeamName}}</span>
                   </span>
                 </li>
@@ -120,6 +118,7 @@
         pageSize: 5,
         total: 0,
         commentData: [],
+        num:null
       }
     },
     components: {
@@ -139,6 +138,7 @@
         io.post(io.apiAdminOrderItemDetail, {orderItemId: _this.orderItemId}, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data
+            _this.num = parseInt(_this.tableData.status)+1
             _this.order = ret.data.order
             _this.loadTableData(_this.pageNo)
           } else {
