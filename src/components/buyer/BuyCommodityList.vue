@@ -5,6 +5,28 @@
         <div class="widget-head am-cf">
           <div class="widget-title  am-cf">我购买的商品</div>
         </div>
+
+        <div class="am-u-sm-12">
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的商品</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyService/list')">我购买的服务</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我租赁的记录</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+          </div>
+        </div>
+
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form">
 

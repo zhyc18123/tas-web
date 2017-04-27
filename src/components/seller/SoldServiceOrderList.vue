@@ -5,10 +5,30 @@
         <div class="widget-head am-cf">
           <div class="widget-title  am-cf">商家服务订单</div>
         </div>
+
+        <div class="am-u-sm-12">
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的商品</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyService/list')">我购买的服务</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我租赁的记录</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
+          </div>
+          <div class="am-u-sm-2">
+            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+          </div>
+        </div>
+
         <div class="widget-body am-fr">
-
           <div class="am-u-sm-12 am-form">
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.time">
@@ -45,83 +65,85 @@
             </span>
               </div>
             </div>
-
-
-
-          </div>
-
-          </div>
-
-          <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
-              <thead>
-              <tr>
-                <th class="am-u-sm-4 am-text-center">服务名称</th>
-                <th class="am-u-sm-1">单价</th>
-                <th class="am-u-sm-1">数量</th>
-                <th class="am-u-sm-2">实付款</th>
-                <th class="am-u-sm-2">服务交易状态</th>
-                <th class="am-u-sm-2">操作</th>
-              </tr>
-              </thead>
-            </table>
-            <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
-            <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId"  v-if="items.order.type==1">
-              <div class="am-panel-hd">
-                <span>{{items.order.createTime | formatDate}}</span>
-                <span class="left-margin">订单编号：{{items.order.sn}}</span>
-                <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
-              </div>
-
-              <ul class="am-list am-list-static">
-                <li class="am-u-sm-12">
-                  <span class="am-u-sm-2">
-                    <img class="am-radius" :src="items.imageUrl"  width="180"
-                         height="100"/>
-                  </span>
-                  <div class="am-u-sm-2">{{items.productName}}</div>
-                  <div class="am-u-sm-1">￥{{items.unitPrice}}</div>
-                  <div class="am-u-sm-1">{{items.quantity}}</div>
-                  <div class="am-u-sm-2">￥{{items.price}}</div>
-                  <div class="am-u-sm-2">{{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家已工作':(items.status==3?'服务确认':(items.status==4?'退费中':'已评价'))))}}</div>
-                  <div class="am-u-sm-2">
-                    <div class="tpl-table-black-operation">
-                      <a href="javascript:;" @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
-                        <i class="am-icon-edit"></i> 服务详情
-                      </a>
-                      <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
-                        <i class="am-icon-edit"></i> 确认退费
-                      </a>
-                      <a href="javascript:;" @click="changeServiceStatus(items.orderItemId)" v-if="items.status==1">
-                        <i class="am-icon-edit"></i> 商家开始工作
-                      </a><br>
-                      {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家已工作':(items.status==3?'服务确认':(items.status==4?'退费中':'已评价'))))}}
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            <div class="am-u-lg-12 am-cf">
-              <div class="am-fr">
-                <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                            @paging="loadTableData"/>
-              </div>
-            </div>
-
-            <window ref="serviceRefundApproval" title="服务退费申请审批">
-              <service-refund :orderItemId="orderItemId" @productApproval="$refs.serviceRefundApproval.close()"></service-refund>
-            </window>
-
-            <!--<window ref="changeServiceItemStatus" title="设置服务交易状态">
-              <service-item-status :orderItemId="orderItemId" @changeStatus="$refs.changeServiceItemStatus.close()"></service-item-status>
-            </window>-->
-
           </div>
 
         </div>
+
+        <div class="am-u-sm-12 am-scrollable-horizontal">
+          <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+            <thead>
+            <tr>
+              <th class="am-u-sm-4 am-text-center">服务名称</th>
+              <th class="am-u-sm-1">单价</th>
+              <th class="am-u-sm-1">数量</th>
+              <th class="am-u-sm-2">实付款</th>
+              <th class="am-u-sm-2">服务交易状态</th>
+              <th class="am-u-sm-2">操作</th>
+            </tr>
+            </thead>
+          </table>
+          <div class="am-u-sm-12 font-style" v-if="tableData==''">暂无数据</div>
+          <div class="am-panel am-panel-default" v-for="(items,index) in tableData" :key="items.orderItemId"
+               v-if="items.order.type==1">
+            <div class="am-panel-hd">
+              <span>{{items.order.createTime | formatDate}}</span>
+              <span class="left-margin">订单编号：{{items.order.sn}}</span>
+              <span class="left-margin">订单状态：{{items.order.status==0?'未支付':(items.order.status==1?'已支付':(items.order.status==2?'取消订单':'退费中的订单'))}}</span>
+            </div>
+
+            <ul class="am-list am-list-static">
+              <li class="am-u-sm-12">
+                  <span class="am-u-sm-2">
+                    <img class="am-radius" :src="items.imageUrl" width="180"
+                         height="100"/>
+                  </span>
+                <div class="am-u-sm-2">{{items.productName}}</div>
+                <div class="am-u-sm-1">￥{{items.unitPrice}}</div>
+                <div class="am-u-sm-1">{{items.quantity}}</div>
+                <div class="am-u-sm-2">￥{{items.price}}</div>
+                <div class="am-u-sm-2">
+                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家已工作':(items.status==3?'服务确认':(items.status==4?'退费中':'已评价'))))}}
+                </div>
+                <div class="am-u-sm-2">
+                  <div class="tpl-table-black-operation">
+                    <a href="javascript:;"
+                       @click="$router.push('/main/seller/sellerService/detail/'+items.order.orderId)">
+                      <i class="am-icon-edit"></i> 服务详情
+                    </a>
+                    <a href="javascript:;" @click="serviceToRefund(items.orderItemId)" v-if="items.status==4">
+                      <i class="am-icon-edit"></i> 确认退费
+                    </a>
+                    <a href="javascript:;" @click="changeServiceStatus(items.orderItemId)" v-if="items.status==1">
+                      <i class="am-icon-edit"></i> 商家开始工作
+                    </a><br>
+                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'商家已工作':(items.status==3?'服务确认':(items.status==4?'退费中':'已评价'))))}}
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="am-u-lg-12 am-cf">
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
+
+          <window ref="serviceRefundApproval" title="服务退费申请审批">
+            <service-refund :orderItemId="orderItemId"
+                            @productApproval="$refs.serviceRefundApproval.close()"></service-refund>
+          </window>
+
+          <!--<window ref="changeServiceItemStatus" title="设置服务交易状态">
+            <service-item-status :orderItemId="orderItemId" @changeStatus="$refs.changeServiceItemStatus.close()"></service-item-status>
+          </window>-->
+
+        </div>
+
       </div>
     </div>
+  </div>
   </div>
 </template>
 
@@ -129,7 +151,8 @@
   .left-margin {
     margin-left: 5%;
   }
-  .font-style{
+
+  .font-style {
     text-align: center;
   }
 </style>
@@ -148,10 +171,9 @@
         total: 0,
         pageSize: 3,
         pageNo: 1,
-        query: {
-        },
+        query: {},
         searchConfig: {},
-        orderItemId:''
+        orderItemId: ''
       }
     },
     components: {
@@ -201,11 +223,11 @@
       changeServiceStatus: function (orderItemId) {
         var _this = this
         /*_this.$refs.changeServiceItemStatus.show({
-          width: 500,
-          height: 200
-        })*/
+         width: 500,
+         height: 200
+         })*/
         io.post(io.apiAdminchangeSellOrderItemStatus, {
-          orderItemId:orderItemId,
+          orderItemId: orderItemId,
           itemStatus: 2
         }, function (ret) {
           if (ret.success) {
