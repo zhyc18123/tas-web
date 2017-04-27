@@ -101,12 +101,12 @@
                       </a>
                     </div>
                     <div>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status>1">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                     </div>
-                    <div v-if="item.status==4"><br>
-                      已经申请退费
+                    <div>
+                      {{item.status==0?'下单中':(item.status==1?'已付款':(item.status==2?'使用资源':(item.status==3?'买家确认':(item.status==4?'退费中':'已评价'))))}}
                     </div>
                     <div>
                       <a href="javascript:;" @click="$router.push('/main/buyer/rent/comment/'+item.orderItemId)"

@@ -33,9 +33,9 @@
 //      this.loadTableData(this.orderItemId)
     },
     watch:{
-      orderItemId:function (val) {
+      /*orderItemId:function (val) {
         this.orderItemId = val
-      }
+      }*/
     },
     mounted: function () {
       $(window).smoothScroll()

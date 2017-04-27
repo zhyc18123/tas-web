@@ -80,7 +80,7 @@
                 <div class="am-u-sm-1">{{items.quantity}}</div>
                 <div class="am-u-sm-2">￥{{items.price}}</div>
                 <div class="am-u-sm-2">
-                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'确认收货':(items.status==4?'退费':'已评价'))))}}
+                  {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'已发货':(items.status==3?'确认收货':(items.status==4?'退费中':'已评价'))))}}
                 </div>
                 <div class="am-u-sm-2">
                   <div class="tpl-table-black-operation">
@@ -91,10 +91,10 @@
                     <a href="javascript:;" @click="sureRefund(items.orderItemId)" v-if="items.status==4">
                       <i class="am-icon-edit"></i> 确认退费
                     </a>
-                    <a href="javascript:;" @click="changeProductStatus(items.orderItemId)" v-if="items.status<3">
-                      <i class="am-icon-edit"></i> 修改状态
+                    <a href="javascript:;" @click="changeProductStatus(items.orderItemId)" v-if="items.status==1">
+                      <i class="am-icon-edit"></i> 设置为已发货
                     </a>
-                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'发货中':(items.status==3?'确认收货':(items.status==4?'退费':'已评价'))))}}
+                    {{items.status==0?'下单中':(items.status==1?'已付款':(items.status==2?'已发货':(items.status==3?'确认收货':(items.status==4?'退费中':'已评价'))))}}
                   </div>
                 </div>
               </li>
@@ -198,10 +198,21 @@
       },
       changeProductStatus: function (orderItemId) {
         var _this = this
-        _this.orderItemId = orderItemId
-        _this.$refs.changeItemStatus.show({
+//        _this.orderItemId = orderItemId
+        /*_this.$refs.changeItemStatus.show({
           width: 500,
           height: 200
+        })*/
+        io.post(io.apiAdminchangeSellOrderItemStatus, {
+          orderItemId: orderItemId,
+          itemStatus: 2
+        }, function (ret) {
+          if (ret.success) {
+            _this.$toast("ok")
+            _this.$root.$emit('sellerOrderList:new')
+          } else {
+            _this.$alert(ret.desc)
+          }
         })
       }
     }

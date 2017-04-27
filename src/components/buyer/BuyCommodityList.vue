@@ -91,16 +91,16 @@
                       </div>
                       <div>
                         <a href="javascript:;" @click="buyerConfirm(item.orderItemId)" v-if="item.status==2">
-                          <i class="am-icon-edit"></i> 商品确认
+                          <i class="am-icon-edit"></i> 确认收货
                         </a>
                       </div>
                       <div>
-                        <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
+                        <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status>1">
                           <i class="am-icon-edit"></i> 退费申请
                         </a>
                       </div>
-                      <div v-if="item.status==4">
-                        已经申请退费
+                      <div>
+                        {{item.status==0?'下单中':(item.status==1?'已付款':(item.status==2?'已发货':(item.status==3?'确认收货':(item.status==4?'退费中':'已评价'))))}}
                       </div>
                       <div>
                         <a href="javascript:;"

@@ -155,8 +155,8 @@
     },
     props: ['orderItemId'],
     created: function () {
-      /*var orderItem = this.$params('orderItemId')
-       this.loadTableData(orderItem);*/
+      /*var orderItemId = this.$params('orderItemId')
+       this.loadTableData(orderItemId);*/
     },
     watch: {
       orderItemId: function (val) {
@@ -178,7 +178,7 @@
                 _this.formData.price = _this.tableData.price
                 _this.formData.type = _this.tableData.type
                 _this.formData.status = _this.tableData.status
-                _this.num = parseInt(_this.tableData.status)+2
+                _this.num = parseInt(_this.tableData.status)+1
                 _this.formData.returnResult = _this.tableData.returnResult
                 _this.formData.serviceProductRefundId = _this.tableData.serviceProductRefundId
                 _this.formData.createTime = ''

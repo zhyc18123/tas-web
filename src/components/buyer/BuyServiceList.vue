@@ -93,7 +93,7 @@
                       </a>
                     </div>
                     <div>
-                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status<3">
+                      <a href="javascript:;" @click="productRefund(item.orderItemId)" v-if="item.status>1">
                         <i class="am-icon-edit"></i> 退费申请
                       </a>
                     </div>
@@ -102,8 +102,8 @@
                         <i class="am-icon-edit"></i> 服务确认
                       </a>
                     </div>
-                    <div v-if="item.status==4">
-                      已经申请退费
+                    <div>
+                      {{item.status==0?'下单中':(item.status==1?'已付款':(item.status==2?'商家已工作':(item.status==3?'服务确认':(item.status==4?'退费':'已评价'))))}}
                     </div>
                     <div>
                       <a href="javascript:;"
