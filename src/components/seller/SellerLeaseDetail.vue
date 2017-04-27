@@ -23,7 +23,7 @@
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
           <tbody>
           <tr>
-            <td>购买类型：服务</td>
+            <td>购买类型：租赁</td>
             <td>订单编号：{{order.sn}}</td>
           </tr>
           <tr>
