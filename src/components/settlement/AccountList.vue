@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">财务报表</div>
+          <div class="widget-title  am-cf">账户管理</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -42,6 +42,7 @@
                       <el-dropdown-item @click.native="$router.push('/main/settlement/account/report/detail/real_income/'+scope.row.mainAccountId)">收入明细</el-dropdown-item>
                       <el-dropdown-item @click.native="$router.push('/main/settlement/account/report/detail/cost/'+scope.row.mainAccountId)">成本明细</el-dropdown-item>
                       <el-dropdown-item @click.native="$router.push('/main/settlement/account/report/profit/'+scope.row.mainAccountId)">利润</el-dropdown-item>
+                      <el-dropdown-item @click.native="$router.push('/main/settlement/account/withdrawal/list/'+scope.row.mainAccountId)">提现</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

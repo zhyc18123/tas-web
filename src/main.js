@@ -63,12 +63,15 @@ const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], 
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
 const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
-const AccountReport = resolve => require(['./components/settlement/AccountReport'], resolve)
+const AccountList = resolve => require(['./components/settlement/AccountList'], resolve)
 const AccountReportDetail = resolve => require(['./components/settlement/AccountReportDetail'], resolve)
 const AccountMainBodyOfFee = resolve => require(['./components/settlement/AccountMainBodyOfFee'], resolve)
 const FeeList = resolve => require(['./components/settlement/FeeList'], resolve)
 const FeeForm = resolve => require(['./components/settlement/FeeForm'], resolve)
 const ProfitReportDetail = resolve => require(['./components/settlement/ProfitReportDetail'], resolve)
+const AccountWithdrawalList = resolve => require(['./components/settlement/AccountWithdrawalList'], resolve)
+const WithdrawalList = resolve => require(['./components/settlement/WithdrawalList'], resolve)
+const ApplyWithdrawalForm = resolve => require(['./components/settlement/ApplyWithdrawalForm'], resolve)
 
 const ServiceManagerList = resolve => require([ './components/tradingService/ServiceManagerList'], resolve)
 const ServiceManagerForm = resolve => require([ './components/tradingService/ServiceManagerForm'], resolve)
@@ -181,12 +184,15 @@ const router = new VueRouter({
 
 
 
-      {path: 'settlement/account/report' , component: AccountReport },
+      {path: 'settlement/account/list' , component: AccountList },
       {path: 'settlement/account/report/detail/:subject/:mainAccountId' , component: AccountReportDetail },
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
       {path: 'settlement/account/report/profit/:mainAccountId' , component: ProfitReportDetail },
+      {path: 'settlement/account/withdrawal/list/:mainAccountId' , component: AccountWithdrawalList },
+      {path: 'settlement/account/withdrawal/apply/:mainAccountId' , component: ApplyWithdrawalForm },
+      {path: 'settlement/withdrawal/list' , component: WithdrawalList },
 
       {path: 'tradingService/service/list' , component: ServiceManagerList },
       {path: 'tradingService/service/add' , component: ServiceManagerEditForm},
