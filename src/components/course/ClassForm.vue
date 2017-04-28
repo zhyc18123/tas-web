@@ -401,6 +401,14 @@
         },
         submit: function (e) {
           e.preventDefault();//因为点击事件往上冒泡到form e.preventDefault可以改变这种行为 或者button类型不要submit类型 ，OK懂了么en
+          if( !_this.formData.courseDescription){
+            _this.$alert('请输入课程描述')
+            return ''
+          }
+          if( !_this.formData.courseOutline){
+            _this.$alert('请输入课程大纲')
+            return ''
+          }
           var $submitBtn = $('button[type=submit]', e.target);
           $submitBtn.attr("disabled", "disabled")
           _this.$showLoading()

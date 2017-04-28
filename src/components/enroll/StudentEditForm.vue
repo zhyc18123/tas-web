@@ -208,7 +208,7 @@
             complete.call()
             if(ret.success){
               _this.$toast('OK')
-              _this.$emit('saveCompleted')
+              _this.$emit('saveCompleted',ret.data)
             }else{
               _this.$alert(ret.desc)
             }

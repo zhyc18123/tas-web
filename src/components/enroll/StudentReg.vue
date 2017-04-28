@@ -29,7 +29,7 @@
             <li><a href="javascript: void(0)" @click="tabIndex = 2">订单信息</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 3">在读班级</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 4">班级历史</a></li>
-            <li><a href="javascript: void(0)" @click="tabIndex = 5">学生明细</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 5">学生信息</a></li>
           </ul>
 
           <div class="am-tabs-bd am-tabs-bd-ofv">

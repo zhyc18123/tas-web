@@ -25,7 +25,6 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
             }
           })
           _this.editor.addListener('contentChange',function(){
-
             _this.$emit('input',_this.editor.getContent())
           })
 
@@ -34,7 +33,7 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
           value:function(val){
             if(this.editor){
               if(this.ok){
-                if(val){
+                if(val && this.editor.getContent() != val ){
                   this.editor.setContent(val)
                 }
 

@@ -86,13 +86,13 @@
 
     <template v-if="formData.refundWay == 4 ">
       <div class="am-u-sm-12 am-g am-g-collapse am-text-left am-margin-top-sm">
-        <div class="am-u-sm-1 am-margin-top-xs">转账银行</div>
+        <div class="am-u-sm-1 am-margin-top-xs am-text-right">转账银行</div>
         <div class="am-u-sm-2"><input type="text" v-model="formData.bankName"></div>
-        <div class="am-u-sm-1 am-margin-top-xs">开户城市</div>
+        <div class="am-u-sm-1 am-margin-top-xs am-text-right">开户城市</div>
         <div class="am-u-sm-2"><input type="text" v-model="formData.bankCity"></div>
-        <div class="am-u-sm-1 am-margin-top-xs">姓名</div>
+        <div class="am-u-sm-1 am-margin-top-xs am-text-right">姓名</div>
         <div class="am-u-sm-2"><input type="text" v-model="formData.cardUser"></div>
-        <div class="am-u-sm-1 am-margin-top-xs">转账账号</div>
+        <div class="am-u-sm-1 am-margin-top-xs am-text-right">转账账号</div>
         <div class="am-u-sm-2 am-u-end"><input type="text" v-model="formData.cardNo"></div>
       </div>
     </template>
@@ -184,9 +184,31 @@
       },
       confirmToRefund: function () {
         var _this = this
-        if (this.formData.refundWay == 4 && ( !!this.formData.bankName ||  !!this.formData.bankCity || !!this.formData.cardUser || !!this.formData.cardNo )) {
-          this.$alert('请填写完整银行信息')
-          return
+        if (this.formData.refundWay == 4 ) {
+          if(!this.formData.bankName){
+            this.$alert('请填开户银行')
+            return
+          }
+          if(!this.formData.bankCity){
+            this.$alert('请填开户城市')
+            return
+          }
+
+          if(!this.formData.cardUser){
+            this.$alert('请填姓名')
+            return
+          }
+
+          if(!this.formData.cardNo){
+            this.$alert('请填转账账号')
+            return
+          }
+
+          if(!/^\d{16}|\d{19}$/.test( this.formData.cardNo )){
+            this.$alert('请确认转账账号是16或19')
+            return
+          }
+
         }
         _this.$showLoading()
         io.post(io.apiAdminSaveOrupdateStudentRefund, $.extend({}, _this.formData),

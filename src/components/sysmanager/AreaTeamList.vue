@@ -29,6 +29,14 @@
               min-width="100">
             </el-table-column>
             <el-table-column
+              prop="name"
+              label="地区"
+              min-width="150">
+              <template scope="scope">
+                {{scope.row.province}}-{{scope.row.city}}
+              </template>
+            </el-table-column>
+            <el-table-column
               label="操作"
               width="120">
               <template scope="scope">

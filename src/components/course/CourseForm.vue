@@ -194,10 +194,18 @@ import util from '../../lib/util'
                   lectureDuration : 45,
                   quota:0,
                   studyingFee : 0,
-                  level : 5
+                  level : 5,
+                  courseOutline : this.generateCourseOutlineTemplate(15)
                 },
                 products:[]
             }
+        },
+        watch:{
+          'formData.lectureAmount':function (val) {
+            if(!this.addMode){
+              this.formData.courseOutline = this.generateCourseOutlineTemplate(val)
+            }
+          }
         },
         created:function(){
          var courseTemplateId  = this.$params('courseId');
@@ -220,6 +228,9 @@ import util from '../../lib/util'
 
         },
         computed:{
+          addMode:function(){
+            return !!this.$params('courseId')
+          },
           areaTeams : function(){
             var options =  ( this.$root.config.areaTeams || [] )
             .map(function(item){
@@ -270,6 +281,16 @@ import util from '../../lib/util'
             },
             submit:function(e){
               e.preventDefault();
+              //
+              if( !_this.formData.courseDescription){
+                _this.$alert('请输入课程描述')
+                return ''
+              }
+              if( !_this.formData.courseOutline){
+                _this.$alert('请输入课程大纲')
+                return ''
+              }
+
               var $submitBtn = $('button[type=submit]',e.target);
               $submitBtn.attr("disabled" ,"disabled" )
               _this.$showLoading()
@@ -336,6 +357,14 @@ import util from '../../lib/util'
               }
             })
           },
+          generateCourseOutlineTemplate:function (lectureAmount) {
+            var html = ''
+            for(var i = 0 ;i < lectureAmount ; i++ ){
+                html += '<p>第'+(i+1)+'讲：</p>'
+            }
+            return html
+
+          }
         }
     }
 </script>

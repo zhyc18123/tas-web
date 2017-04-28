@@ -69,7 +69,7 @@
     </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg" v-if="courseOrder.chargingStatus != 2 ">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmPay">确定</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmPay">确定缴费</button>
     </div>
 
   </form>

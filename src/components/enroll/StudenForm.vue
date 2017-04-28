@@ -40,8 +40,8 @@
       }
     },
     methods:{
-      saveCompleted : function(){
-        this.$router.push('/main/enroll/student/search')
+      saveCompleted : function(studentId){
+        this.$router.push('/main/enroll/student/reg/' + studentId)
       }
     }
   }
