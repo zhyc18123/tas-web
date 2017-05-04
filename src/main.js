@@ -31,6 +31,10 @@ const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], 
 const BusTeamForm = resolve => require(['./components/sysmanager/BusTeamForm'], resolve)
 const PeriodList = resolve => require(['./components/sysmanager/PeriodList'], resolve)
 const PeriodForm = resolve => require(['./components/sysmanager/PeriodForm'], resolve)
+const StudentSchoolList = resolve => require(['./components/sysmanager/StudentSchoolList'], resolve)
+const StudentSchoolForm = resolve => require(['./components/sysmanager/StudentSchoolForm'], resolve)
+const ClassRemunerationList = resolve => require(['./components/sysmanager/ClassRemunerationList'], resolve)
+const ClassRemunerationForm = resolve => require(['./components/sysmanager/ClassRemunerationForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -154,6 +158,13 @@ const router = new VueRouter({
       {path: 'sys/room/list' , component: RoomList },
       {path: 'sys/room/add' , component: RoomForm },
       {path: 'sys/room/edit/:roomId' , component: RoomForm },
+      {path: 'sys/student/school/list' , component: StudentSchoolList },
+      {path: 'sys/student/school/add' , component: StudentSchoolForm },
+      {path: 'sys/student/school/edit/:studentSchoolId' , component: StudentSchoolForm },
+      {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
+      {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
+      {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
+
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
       {path: 'course/course/edit/:courseId' , component: CourseForm },

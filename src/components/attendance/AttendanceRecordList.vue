@@ -23,7 +23,7 @@
                 label="是否考勤"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status  == 0 ? '否' : '是'}}
+                  {{scope.row.attendanceStatus  == 0 ? '否' : '是'}}
                 </template>
               </el-table-column>
               <el-table-column

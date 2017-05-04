@@ -56,7 +56,7 @@
     },
     props: ['attendanceRecord'],
     watch: {
-      'attendanceRecord.recordId': function () {
+      'attendanceRecord.classLectureId': function () {
         this.loadTableData()
       }
     },
@@ -65,12 +65,12 @@
     },
     methods: {
       loadTableData: function () {
-        if (!this.attendanceRecord.recordId) {
+        if (!this.attendanceRecord.classLectureId) {
           return
         }
         var _this = this
         io.post(io.apiAdminAttendanceAttendanceRecordDetailList, {
-          recordId: this.attendanceRecord.recordId
+          classLectureId: this.attendanceRecord.classLectureId
         }, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data;
@@ -82,7 +82,7 @@
       save: function () {
         var _this = this
         io.post(io.apiAdminAttendanceSaveAttendanceRecordDetail, {
-          recordId: this.attendanceRecord.recordId,
+          classLectureId: this.attendanceRecord.classLectureId,
           details: JSON.stringify(this.tableData.map(function (item) {
             return {
               detailId: item.detailId,

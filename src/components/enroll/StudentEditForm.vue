@@ -49,8 +49,11 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
         </label>
-        <div class="am-u-sm-9 input-field">
-          <input type="text" placeholder="请输入就读学校"  required  v-model="formData.school" >
+        <div class="am-u-sm-6 input-field">
+          <input type="text" placeholder="请输入就读学校"  required  v-model="formData.school"  readonly>
+        </div>
+        <div class="am-u-sm-3">
+          <button type="button" class="am-btn am-btn-default" @click="$refs.selectStudentSchool.show()">选择</button>
         </div>
       </div>
 
@@ -115,6 +118,7 @@
         </div>
       </div>
     </fieldset>
+    <select-student-school ref="selectStudentSchool" @select="selectStudentSchool"/>
   </form>
 </template>
 
@@ -122,16 +126,22 @@
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
+  import SelectStudentSchool from '../sysmanager/SelectStudentSchool'
+
   export default{
     data(){
       return{
         guardianList:[{}],
         formData:{
-          sex:''
-        }
+          sex:'',
+          school:''
+        },
+        studentSchoolList:[]
+
       }
     },
     props:['studentId'],
+    components:{'select-student-school' :SelectStudentSchool },
     computed:{
       grades:function(){
         return this.$root.config.grades.map(function(item){
@@ -227,6 +237,9 @@
           return
         }
         this.guardianList.splice(index,1)
+      },
+      selectStudentSchool:function (studentSchool) {
+        this.formData.school = studentSchool.province + ' ' + studentSchool.city + ' ' + studentSchool.district + ' ' + studentSchool.schoolName
       }
     }
   }

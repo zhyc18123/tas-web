@@ -118,6 +118,22 @@
               </div>
             </div>
 
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>星级
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.level" >
+                  <option value="">请选择</option>
+                  <option value="1">1星</option>
+                  <option value="2">2星</option>
+                  <option value="3">3星</option>
+                  <option value="4">4星</option>
+                  <option value="5">5星</option>
+                </select2>
+              </div>
+            </div>
+
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">

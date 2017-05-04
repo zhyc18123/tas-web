@@ -65,6 +65,18 @@ const io = {
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
 
+    this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
+    this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'
+    this.apiAdminSaveOrUpdateStudentSchool = conf.baseApiPath + '/api/admin/saveOrUpdateStudentSchool'
+    this.apiAdminSearchStudentSchool = conf.baseApiPath + '/api/admin/searchStudentSchool'
+
+    this.apiAdminClassRemunerationList = conf.baseApiPath + '/api/admin/classRemunerationList'
+    this.apiAdminClassRemunerationDetail = conf.baseApiPath + '/api/admin/classRemunerationDetail'
+    this.apiAdminSaveOrUpdateClassRemuneration = conf.baseApiPath + '/api/admin/saveOrUpdateClassRemuneration'
+    this.apiAdminDelClassRemuneration = conf.baseApiPath + '/api/admin/delClassRemuneration'
+
+
+
     this.apiAdminTeacherList = conf.baseApiPath + '/api/admin/teaching/resource/teacherList'
     this.apiAdminTeacherDetail = conf.baseApiPath + '/api/admin/teaching/resource/teacherDetail'
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
@@ -87,7 +99,7 @@ const io = {
     this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassTimeList'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
     this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
-    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/ClassTimeList'
+    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/ClassLectureList'
 
 
 

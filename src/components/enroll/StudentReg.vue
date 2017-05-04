@@ -16,7 +16,7 @@
         </tr>
         <tr>
           <td>电话：{{formData.phoneNo}}</td>
-          <td>就读小学：{{formData.school}}</td>
+          <td>就读学校：{{formData.school}}</td>
         </tr>
       </table>
       </div>
