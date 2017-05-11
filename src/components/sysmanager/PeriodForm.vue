@@ -20,6 +20,14 @@
             </div>
             <div class="am-form-group am-form-select">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期名
+              </label>
+              <div class="am-u-sm-3 input-field am-u-end">
+                <input type="text" class="am-form-field"  placeholder="请输期名" required v-model="formData.periodName">
+              </div>
+            </div>
+            <div class="am-form-group am-form-select">
+              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段数
               </label>
               <div class="am-u-sm-3 input-field am-u-end">

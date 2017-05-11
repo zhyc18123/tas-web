@@ -11,145 +11,16 @@
 
       <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
         <fieldset>
-          <div class="am-g" v-if="willShow">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
-                </select2>
-              </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属课程
+            </label>
+            <div class="am-u-sm-6 input-field">
+              <input type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 v-model="query.busTeamId" :options="busTeams">
-                  <option value="">业务组</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 v-model="query.productId" :options="products">
-                  <option value="请选择产品">请选择产品</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2   v-model="query.season"  >
-                  <option value="">季节</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 v-model="query.gradeId" :options="grades">
-                  <option value="">年级</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 v-model="query.subjectId" :options="subjects">
-                  <option value="">科目</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="courseName" v-model="query.courseName"
-                       placeholder="请输入课程名称"/>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="search"><span class="am-icon-search"></span>查询
-
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="am-u-sm-12 am-scrollable-horizontal">
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap"
-                   v-if="addShow">
-              <thead>
-              <tr>
-                <th v-if="willShow">选择</th>
-                <th>课程名称</th>
-                <th>产品</th>
-                <th>年级</th>
-                <th>学科</th>
-                <th>学位</th>
-                <th>讲数</th>
-                <th>学费</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr v-for="item in tableData" :key="item.courseTemplateId">
-                <td v-if="willShow">
-                  <div class="am-radio">
-                    <label>
-                      <input type="radio" name="courseTemplateId" v-model="formData.courseTemplateId"
-                             :value="item.courseTemplateId" @click="fillData2Class(item)" required>
-                    </label>
-                  </div>
-                </td>
-                <td>{{item.courseName }}</td>
-                <td>{{item.productName}}</td>
-                <td>{{item.gradeName}}</td>
-                <td>{{item.subjectName}}</td>
-                <td>{{item.quota}}</td>
-                <td>{{item.lectureAmount}}</td>
-                <td>{{item.studyingFee}}</td>
-              </tr>
-              </tbody>
-            </table>
-
-
-            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap"
-                   v-if="editShow">
-              <thead>
-              <tr>
-                <th>课程名称</th>
-                <th>产品</th>
-                <th>年级</th>
-                <th>学科</th>
-                <th>学位</th>
-                <th>讲数</th>
-                <th>学费</th>
-              </tr>
-              </thead>
-              <tbody>
-
-              <tr>
-                <td>{{courseTemplateData.courseName }}</td>
-                <td>{{courseTemplateData.productName}}</td>
-                <td>{{courseTemplateData.gradeName}}</td>
-                <td>{{courseTemplateData.subjectName}}</td>
-                <td>{{courseTemplateData.quota}}</td>
-                <td>{{courseTemplateData.lectureAmount}}</td>
-                <td>{{courseTemplateData.studyingFee}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="am-u-lg-12 am-cf">
-
-            <div class="am-fr">
-              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                          @paging="loadTableData"/>
+            <div class="am-u-sm-3 input-field">
+              <button type="button" class="am-btn am-btn-default" @click="$refs.selectCourse.show()">选择</button>
             </div>
           </div>
 
@@ -252,29 +123,18 @@
         </fieldset>
       </form>
     </div>
+    <select-course ref="selectCourse" @ok="fillData2Class"></select-course>
   </div>
 </template>
 
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
-  import Pagination from '../base/Pagination'
+  import SelectCourse from './SelectCourse'
 
   export default{
     data(){
       return {
-        tableData: [],
-        total: 0,
-        pageSize: 5,
-        pageNo: 1,
-        query: {
-          areaTeamId: '',
-          busTeamId: '',
-          gradeId: '',
-          subjectId: '',
-          courseName: '',
-          productId: ''
-        },
         formData: {
           areaTeamId: '',
           busTeamId: '',
@@ -282,24 +142,16 @@
           quota: '',
           studyingFee: ''
         },
-        courseTemplateData: {},
-        products: []
+        courseTemplateData: {}
       }
     },
     components: {
-      Pagination
+      'select-course':SelectCourse
     },
     created: function () {
-      this.loadProductData();
       var courseClassId = this.$params('classId');
-      this.willShow = true;
-      this.addShow = true;
-      this.editShow = false;
       if (courseClassId) {
         var _this = this;
-        _this.willShow = false;
-        _this.addShow = false;
-        _this.editShow = true;
         io.post(io.apiAdminCourseClassDetail, {courseClassId: courseClassId},
           function (ret) {
             if (ret.success) {
@@ -310,25 +162,9 @@
           function () {
             _this.$alert('请求服务器失败')
           })
-      }else{
-          this.search()
       }
     },
-    computed: {
-      areaTeams: function () {
-        var options = ( this.$root.config.areaTeams || [] )
-          .map(function (item) {
-            return {value: item.areaTeamId, text: item.name}
-          })
-        return options
-      },
-      busTeams: function () {
-        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
-          .map(function (item) {
-            return {value: item.busTeamId, text: item.name}
-          })
-        return options
-      },
+    computed:{
       areaTeamsData: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
@@ -343,16 +179,6 @@
           })
         return options
       },
-      grades: function () {
-        return this.$root.config.grades.map(function (item) {
-          return {value: item.gradeId, text: item.gradeName}
-        })
-      },
-      subjects: function () {
-        return this.$root.config.subjects.map(function (item) {
-          return {value: item.subjectId, text: item.subjectName}
-        })
-      },
       periods: function () {
         return this.$root.config.periods.map(function (item) {
           return {value: item.periodId, text: item.periodNo}
@@ -360,24 +186,23 @@
       },
       segments: function () {
         if(!this.formData.periodId){
-            return []
+          return []
         }
         var segments = 0 ;
         for(var i = 0 ;i < this.$root.config.periods.length ;i++ ){
-            if(this.$root.config.periods[i].periodId == this.formData.periodId ){
-              segments = this.$root.config.periods[i].segments
-              break
-            }
+          if(this.$root.config.periods[i].periodId == this.formData.periodId ){
+            segments = this.$root.config.periods[i].segments
+            break
+          }
         }
         var ret = [] ;
         for(var i = 1 ;i <= segments ;i++  ){
-            ret.push({value: i , text: i })
+          ret.push({value: i , text: i })
         }
         return ret
       }
     },
     mounted: function () {
-      $(window).smoothScroll();
       var _this = this;
       $('#' + this.id).validator({
         validate: function (validity) {
@@ -425,20 +250,7 @@
         }
       });
     },
-
     methods: {
-      loadProductData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
-          if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
       save: function (complete) {
         var _this = this
         var data = _this.formData;
@@ -458,24 +270,6 @@
             _this.$alert('请求服务器失败')
           })
       },
-      search: function () {
-        this.loadTableData()
-      },
-      loadTableData: function (pageNo) {
-        var _this = this
-        _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseTemplateList, $.extend({
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
-        }, _this.query), function (ret) {
-          if (ret.success) {
-            _this.total = ret.data.total
-            _this.tableData = ret.data.list
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
       fillData2Class: function (item) {
         this.formData.courseDescription = item.courseDescription
         this.formData.courseOutline = item.courseOutline
@@ -484,6 +278,8 @@
         this.formData.busTeamId = item.busTeamId
         this.formData.quota = item.quota
         this.formData.className = item.courseName;
+        this.courseTemplateData.courseName = item.courseName;
+        this.formData.courseTemplateId=item.courseTemplateId
       }
     },
   }

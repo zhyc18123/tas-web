@@ -101,7 +101,7 @@
             </el-table-column>
             <el-table-column
               fixed
-              prop="periodName"
+              prop="periodNo"
               label="期数"
               min-width="70">
             </el-table-column>
@@ -110,7 +110,7 @@
               label="已报/学位数"
               min-width="100">
               <template scope="scope">
-                {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+                {{scope.row.regAmount}}/{{scope.row.quota}}
                 </template>
             </el-table-column>
 

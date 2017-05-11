@@ -36,7 +36,7 @@
           label="期数"
           min-width="100">
           <template scope="scope">
-            {{scope.row.courseClass.periodName}}
+            {{scope.row.courseClass.periodNo}}
 
         </template>
         </el-table-column>

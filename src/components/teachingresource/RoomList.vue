@@ -62,11 +62,13 @@
 
                 </template>
               </el-table-column>
+              <!--
               <el-table-column
                 prop="rent"
                 label="每小时"
                 min-width="100">
               </el-table-column>
+              -->
               <el-table-column
                 label="状态"
                 min-width="100">

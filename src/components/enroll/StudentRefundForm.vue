@@ -6,7 +6,7 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td>{{formData.periodName}}</td>
+          <td>{{formData.periodNo}}</td>
           <td class="bgColor">业务组：</td>
           <td>{{formData.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>

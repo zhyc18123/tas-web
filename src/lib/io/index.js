@@ -64,6 +64,7 @@ const io = {
     this.apiAdminPeriodList = conf.baseApiPath + '/api/admin/periodList'
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
+    this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
 
     this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
     this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'

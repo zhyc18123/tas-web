@@ -181,7 +181,7 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="periodName"
+                prop="periodNo"
                 label="期名"
                 min-width="100">
               </el-table-column>
