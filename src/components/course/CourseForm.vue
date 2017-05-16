@@ -205,6 +205,9 @@ import util from '../../lib/util'
             if(!this.addMode){
               this.formData.courseOutline = this.generateCourseOutlineTemplate(val)
             }
+          },
+          'formData.areaTeamId':function(){
+            this.loadProductData()
           }
         },
         created:function(){
@@ -347,7 +350,9 @@ import util from '../../lib/util'
           },
           loadProductData: function () {
             var _this = this
-            io.post(io.apiAdminBaseProductList, {}, function (ret) {
+            io.post(io.apiAdminBaseProductListForAreaTeam, {
+                areaTeamId : _this.formData.areaTeamId
+            }, function (ret) {
               if (ret.success) {
                 _this.products = ret.data.map(function (item) {
                   return {value: item.productId, text: item.name}

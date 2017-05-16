@@ -225,7 +225,7 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 

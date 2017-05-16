@@ -13,6 +13,13 @@ $.cachedScript = function( url, options ) {
   return $.ajax( options );
 };
 
+function checkResult (ret) {
+  if( !ret.success && ret.desc && ret.desc.indexOf('accessToken不存在或已过期') != -1 ){
+    //document.location.reload()
+  }
+
+}
+
 const io = {
 
 
@@ -84,7 +91,7 @@ const io = {
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
 
     this.apiAdminCampusList = conf.baseApiPath + '/api/admin/teaching/resource/campusList'
-    this.apiAdminAllCampus = conf.baseApiPath + '/api/admin/teaching/resource/allCampus'
+    this.apiAdminBaseCampusList = conf.baseApiPath + '/api/admin/teaching/resource/baseCampusList'
     this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/teaching/resource/campusDetail'
     this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
     this.apiAdminDelCampus = conf.baseApiPath + '/api/admin/teaching/resource/delCampus'
@@ -115,6 +122,7 @@ const io = {
     this.apiAdminDeleteProduct = conf.baseApiPath + '/api/admin/deleteProduct'
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
     this.apiAdminBaseProductList = conf.baseApiPath + '/api/admin/baseProductList'
+    this.apiAdminBaseProductListForAreaTeam = conf.baseApiPath + '/api/admin/baseProductListForAreaTeam'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
@@ -223,6 +231,7 @@ const io = {
       cache: true,
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -245,6 +254,7 @@ const io = {
       dataType: 'json',
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -268,6 +278,7 @@ const io = {
       timeout : 30000,
       async : false ,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -292,6 +303,7 @@ const io = {
       processData: false,
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -319,6 +331,7 @@ const io = {
     }));
     $.when.apply($, $scripts).done(done)
   }
+
 };
 
 io.configUrls()

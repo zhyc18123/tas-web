@@ -57,18 +57,23 @@
                 label="姓名"
                 min-width="100">
               </el-table-column>
+
+              <el-table-column
+                prop="idNo"
+                label="身份证号码"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="authenticationCode"
+                label="识别码"
+                min-width="100">
+              </el-table-column>
               <el-table-column
                 label="性别"
                 min-width="100">
                 <template scope="scope">
                   {{scope.row.sex == 1 ? '男' : '女' }}
-
                 </template>
-              </el-table-column>
-              <el-table-column
-                prop="idNo"
-                label="身份证号码"
-                min-width="200">
               </el-table-column>
               <el-table-column
                 prop="phoneNo"
@@ -155,7 +160,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {},
         searchConfig: {}

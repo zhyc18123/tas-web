@@ -52,7 +52,7 @@
 
             <div class="am-form-group" v-if="formData.userType == 1 || formData.userType == 2">
               <label class="am-u-sm-3 am-form-label">
-                区域组
+                区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">

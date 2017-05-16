@@ -98,7 +98,7 @@
         total:0,
         pageSize:10,
         pageNo:1,
-        query:{},
+        query:{ },
         campus:[]
       }
     },
@@ -109,6 +109,11 @@
         this.tableData = []
         if(this.courseClass.classId){
           this.loadCampus()
+          this.query = {
+            areaTeamId : this.courseClass.areaTeamId ,
+            campusId : this.courseClass.campusId
+          }
+          this.loadTableData()
         }
       }
     },
@@ -156,7 +161,10 @@
       },
       loadCampus:function(){
         var _this = this;
-        io.post(io.apiAdminAllCampus,{},
+        io.post(io.apiAdminBaseCampusList,{
+            areaTeamId : _this.courseClass.areaTeamId ,
+            campusId : _this.courseClass.campusId
+          },
           function (ret) {
             if (ret.success) {
               _this.campus = ret.data.map(function(item){

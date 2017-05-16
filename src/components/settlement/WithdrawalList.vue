@@ -130,7 +130,7 @@ import Pagination from '../base/Pagination'
             tableData:[],
             query:{},
             total: 0,
-            pageSize: 5,
+            pageSize: 10,
             pageNo: 1
           }
         },

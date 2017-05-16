@@ -219,7 +219,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
@@ -278,7 +278,7 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 

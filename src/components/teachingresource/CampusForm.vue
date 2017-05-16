@@ -53,18 +53,12 @@
               </div>
             </div>
 
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                归属
+                区域
               </label>
               <div class="am-u-sm-3 input-field">
                 <select2 required name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -72,7 +66,6 @@
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
               </div>
             </div>
@@ -94,7 +87,6 @@ import conf from '../../lib/conf'
                 districtMap:{},
                 formData:{
                   areaTeamId:'',
-                  busTeamId:'',
                   province : '',
                   city : '',
                   district :''
@@ -123,13 +115,6 @@ import conf from '../../lib/conf'
             var options =  ( this.$root.config.areaTeams || [] )
             .map(function(item){
               return {value:item.areaTeamId,text:item.name}
-            })
-            return options
-          },
-          busTeams : function(){
-            var options =  ( ( this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] )  : [] )
-            .map(function(item){
-              return {value:item.busTeamId,text:item.name}
             })
             return options
           },

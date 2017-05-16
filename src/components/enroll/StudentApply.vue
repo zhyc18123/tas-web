@@ -101,7 +101,7 @@
             </el-table-column>
             <el-table-column
               fixed
-              prop="periodNo"
+              prop="periodName"
               label="期数"
               min-width="70">
             </el-table-column>
@@ -211,7 +211,7 @@
         studentId: '',
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',
@@ -258,7 +258,7 @@
       },
       periods: function () {
         return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
     },

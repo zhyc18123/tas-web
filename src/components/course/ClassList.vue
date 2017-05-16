@@ -153,10 +153,10 @@
                         @click="changeStatus(1)" ><span
                   class="am-icon-plus"></span>开班
                 </button>
-                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
+                <!--<button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
                         @click="changeStatus(2)" ><span
                   class="am-icon-plus"></span>作废
-                </button>
+                </button>-->
                 <!--<button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>快速排班
@@ -190,7 +190,7 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="periodNo"
+                prop="periodName"
                 label="期数"
                 min-width="100">
               </el-table-column>
@@ -343,7 +343,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
@@ -404,7 +404,7 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 

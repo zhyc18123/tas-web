@@ -13,7 +13,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                区域组
+                区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams" required >

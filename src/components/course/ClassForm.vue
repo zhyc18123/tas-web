@@ -17,7 +17,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属课程
             </label>
             <div class="am-u-sm-6 input-field">
-              <input type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly>
+              <input type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="$refs.selectCourse.show()">
             </div>
             <div class="am-u-sm-3 input-field">
               <button type="button" class="am-btn am-btn-default" @click="$refs.selectCourse.show()">选择</button>
@@ -26,7 +26,7 @@
 
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
-              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域组
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
               <select2 required disabled v-model="formData.areaTeamId" :options="areaTeamsData">
@@ -71,9 +71,22 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>班级名
             </label>
             <div class="am-u-sm-9 input-field">
-              <input type="text" class="am-form-field" placeholder="输入班级名" required v-model="formData.className">
+              <input  type="text" class="am-form-field" placeholder="输入班级名" required v-model="formData.className">
             </div>
           </div>
+
+          <div class="am-form-group">
+            <label class="am-u-sm-3 am-form-label">
+              校区
+            </label>
+            <div class="am-u-sm-6 input-field">
+              <input type="text" placeholder="校区"  v-model="formData.campusName"  readonly @click="$refs.selectCampus.show()">
+            </div>
+            <div class="am-u-sm-3 input-field">
+              <button type="button" class="am-btn am-btn-default" @click="$refs.selectCampus.show()">选择</button>
+            </div>
+          </div>
+
           <!--<div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>序号
@@ -124,6 +137,7 @@
       </form>
     </div>
     <select-course ref="selectCourse" @ok="fillData2Class"></select-course>
+    <select-campus ref="selectCampus" :areaTeamId="formData.areaTeamId" @ok="selectCampusCallback" ></select-campus>
   </div>
 </template>
 
@@ -131,6 +145,7 @@
   import io from '../../lib/io'
   import util from '../../lib/util'
   import SelectCourse from './SelectCourse'
+  import SelectCampus from '../teachingresource/SelectCampus'
 
   export default{
     data(){
@@ -140,13 +155,22 @@
           busTeamId: '',
           periodId: '',
           quota: '',
-          studyingFee: ''
+          studyingFee: '',
+          campusName: ''
         },
-        courseTemplateData: {}
+        courseTemplateData: {},
+        disable:false
       }
     },
     components: {
-      'select-course':SelectCourse
+      'select-course':SelectCourse,
+      'select-campus':SelectCampus
+    },
+    watch:{
+      'formData.courseTemplateId':function(){
+        this.formData.campusId = ''
+        this.formData.campusName = ''
+      }
     },
     created: function () {
       var courseClassId = this.$params('classId');
@@ -181,7 +205,7 @@
       },
       periods: function () {
         return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       },
       segments: function () {
@@ -280,6 +304,10 @@
         this.formData.className = item.courseName;
         this.courseTemplateData.courseName = item.courseName;
         this.formData.courseTemplateId=item.courseTemplateId
+      },
+      selectCampusCallback:function(campus){
+        this.formData.campusId = campus.campusId
+        this.formData.campusName = campus.campusName
       }
     },
   }

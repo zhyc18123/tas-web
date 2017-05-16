@@ -19,7 +19,7 @@
         </el-table-column>
         <el-table-column
           fixed
-          prop="periodNo"
+          prop="periodName"
           label="期数"
           min-width="100">
         </el-table-column>

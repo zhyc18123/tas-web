@@ -2,7 +2,7 @@
   <header>
     <!-- logo -->
     <div class="am-fl tpl-header-logo">
-      <a href="javascript:;"><img src="../../assets/img/logo.png" alt=""></a>
+      <a href="javascript:;"><img src="../../assets/logo.jpg" alt=""></a>
     </div>
     <!-- 右侧内容 -->
     <div class="tpl-header-fluid">
@@ -17,6 +17,9 @@
       <div class="am-fr tpl-header-navbar">
         <ul>
           <!-- 欢迎语 -->
+          <li class="am-text-sm ">
+            <img class="am-circle" :src="avatarUrl" alt="" style="width: 30px;height: 30px ;margin-top: 10px;">
+          </li>
           <li class="am-text-sm tpl-header-navbar-welcome">
             <a href="javascript:;">欢迎你, <span>{{name}}</span> </a>
           </li>
@@ -129,6 +132,11 @@
 
           <!-- 退出 -->
           <li class="am-text-sm">
+            <a href="javascript:;" @click="$router.push('/main/sys/user/profile')">
+              <span class="am-icon-pencil"></span> 账号设置
+            </a>
+          </li>
+          <li class="am-text-sm">
             <a href="javascript:;" @click="signOut">
               <span class="am-icon-sign-out"></span> 退出
             </a>
@@ -147,11 +155,13 @@ import storage from '../../lib/storage'
 export default {
   name: 'main-header',
   data:function(){
-    return {name:storage.getCurrentUserInfo().realName}
+    var userInfo = storage.getCurrentUserInfo()
+    return {name:userInfo.realName,avatarUrl: userInfo.avatarUrl || require('../../assets/img/user04.png')}
   },
   created:function(){
     this.$root.$on('userInfoChange',function(userInfo){
       this.name = userInfo.realName
+      this.avatarUrl = userInfo.avatarUrl
     })
   },
   mounted:function(){
