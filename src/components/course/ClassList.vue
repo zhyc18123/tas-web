@@ -295,9 +295,19 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item v-if="hasPermission('arrange_time')" :disabled="scope.row.isArrangeTime == 1" @click.native="arrangeTime(scope.row)">排时间</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('arrange_room')" :disabled="scope.row.isArrangeRoom == 1" @click.native="arrangeRoom(scope.row)">排教室</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('arrange_teacher')" :disabled="scope.row.isArrangeTeacher == 1" @click.native="arrangeTeacher(scope.row)">排老师</el-dropdown-item>
+                      <template v-if="hasPermission('arrange_time')">
+                        <el-dropdown-item  @click.native="arrangeTime(scope.row)" v-if="scope.row.isArrangeTime == 0">排时间</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeTime(scope.row)" v-else>重排时间</el-dropdown-item>
+                      </template>
+                      <template v-if="hasPermission('arrange_room')">
+                        <el-dropdown-item  @click.native="arrangeRoom(scope.row)" v-if="scope.row.isArrangeRoom == 0">排教室</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeRoom(scope.row)" v-else>重排教室</el-dropdown-item>
+                      </template>
+                      <template v-if="hasPermission('arrange_teacher')">
+                        <el-dropdown-item  @click.native="arrangeTeacher(scope.row)" v-if="scope.row.isArrangeTeacher == 0">排老师</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeTeacher(scope.row)" v-else>重排老师</el-dropdown-item>
+                      </template>
+
                       <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
                     </el-dropdown-menu>
@@ -461,6 +471,22 @@
           height:700
         })
       },
+      rearrangeTime:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排时间',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'1'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeTime()
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+
+      },
       arrangeRoom:function (courseClass) {
 
         if(courseClass.isArrangeTime !=  1 ){
@@ -473,6 +499,22 @@
           height: 500
         });
       },
+      rearrangeRoom:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排课室',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'2'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeRoom()
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+
+      },
       arrangeTeacher:function (courseClass) {
         //弹窗
         if( courseClass.isArrangeTime !=  1 ){
@@ -484,6 +526,21 @@
           width : 1000,
           height: 700
         });
+      },
+      rearrangeTeacher:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排老师',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'3'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeTeacher()
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
       },
       changeStatus:function (status) {
         if(this.selection.length == 0 ){

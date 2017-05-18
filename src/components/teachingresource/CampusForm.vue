@@ -57,7 +57,7 @@
               <label class="am-u-sm-3 am-form-label">
                 区域
               </label>
-              <div class="am-u-sm-3 input-field">
+              <div class="am-u-sm-3 input-field am-u-end">
                 <select2 required name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">
                   <option value="">请选择</option>
                 </select2>

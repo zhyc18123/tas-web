@@ -78,7 +78,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.areaTeamId" :options="areaTeams" >
+                <select2 :disabled="!editable" required v-model="formData.areaTeamId" :options="areaTeams" >
                   <option value="">请选择</option>
                 </select2>
 
@@ -90,7 +90,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在业务组
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.busTeamId" :options="busTeams" >
+                <select2 :disabled="!editable" required v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -194,14 +194,15 @@ import util from '../../lib/util'
         name:'teacher-form',
         data(){
             return{
-                formData:{
-                  areaTeamId:'',
-                  busTeamId:'',
-                  gradeIds:[],
-                  subjectIds:[],
-                  status:1,
-                  avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
-                }
+              formData:{
+                areaTeamId:'',
+                busTeamId:'',
+                gradeIds:[],
+                subjectIds:[],
+                status:1,
+                avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
+              },
+              editable:true
             }
         },
         created:function(){
@@ -221,6 +222,7 @@ import util from '../../lib/util'
               _this.$alert('请求服务器失败')
           })
          }
+         this.editable = !teacherId
 
 
         },

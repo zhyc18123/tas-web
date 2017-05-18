@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
+                <input :disabled="!editable" type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
               </div>
             </div>
             <div class="am-form-group am-form-select">
@@ -31,7 +31,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段数
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input type="number" class="am-form-field" min="1" step="1" placeholder="请输段数" required v-model="formData.segments">
+                <input :disabled="!editable" type="number" class="am-form-field" min="1" step="1" placeholder="请输段数" required v-model="formData.segments">
               </div>
             </div>
 
@@ -41,7 +41,7 @@
               </label>
               <div class="am-u-sm-3 input-field">
                 <date-picker v-model="item.startDate" >
-                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly  required >
+                  <input :disabled="!editable" type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly  required >
                 </date-picker>
               </div>
               <div class="am-u-sm-1 input-field am-text-center">
@@ -49,7 +49,7 @@
               </div>
               <div class="am-u-sm-3 am-u-end input-field">
                 <date-picker v-model="item.endDate" >
-                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly  required >
+                  <input :disabled="!editable" type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly  required >
                 </date-picker>
               </div>
             </div>
@@ -73,11 +73,12 @@ import util from '../../lib/util'
     export default{
         data(){
             return{
-                formData:{
-                  segments: 1
+              formData:{
+                segments: 1
 
-                },
-                segmentList:[{}]
+              },
+              segmentList:[{}],
+              editable:true
             }
         },
         watch:{
@@ -111,6 +112,8 @@ import util from '../../lib/util'
               _this.$alert('请求服务器失败')
           })
          }
+
+         this.editable = !periodId
 
 
         },

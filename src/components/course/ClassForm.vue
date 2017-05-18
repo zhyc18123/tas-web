@@ -130,7 +130,7 @@
           </div>
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
-              <button type="submit" class="am-btn am-btn-primary">提交</button>
+              <button :disabled="!editable" type="submit" class="am-btn am-btn-primary">提交</button>
             </div>
           </div>
         </fieldset>
@@ -159,7 +159,7 @@
           campusName: ''
         },
         courseTemplateData: {},
-        disable:false
+        editable:true
       }
     },
     components: {
@@ -181,12 +181,14 @@
             if (ret.success) {
               _this.formData = ret.data.courseClass;
               _this.courseTemplateData = ret.data.courseTemplate;
+              _this.editable = ret.data.courseClass.status  == 0
             }
           },
           function () {
             _this.$alert('请求服务器失败')
           })
       }
+      this.editable = !courseClassId
     },
     computed:{
       areaTeamsData: function () {

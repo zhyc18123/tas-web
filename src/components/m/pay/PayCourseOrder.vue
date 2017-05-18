@@ -162,15 +162,26 @@
 
     },
     created:function(){
+
+        if(this.inWeixin ){
+          if(!this.openId || !sessionStorage.getItem('wx_oauth') ){
+            sessionStorage.setItem('wx_oauth','Y')
+            document.location.href = 'http://wx.yuyou100.com/wechat/oauth2?needUserInfo=false&redirectUrl='+ encodeURIComponent(location.href)
+          }
+        }
+
+        if(this.inWeixin ){
+          this.payMethod = 'wx_pub'
+        }else{
+          this.payMethod = 'alipay_wap'
+        }
+
         var courseOrderId  = this.$params('courseOrderId')
         if(courseOrderId){
             this.courseOrderId = courseOrderId
             this.loadCourseOrderDetail();
         }
 
-        if(this.inWeixin && !this.openId ){
-            document.location.href = 'http://wx.yuyou100.com/wechat/oauth2?redirectUrl='+ encodeURIComponent(location.href)
-        }
     },
     methods: {
 
@@ -190,9 +201,6 @@
               }else{
                 _this.$alert( ret.desc || '请求服务器失败')
               }
-            },
-            function(){
-              _this.$alert('请求服务器失败')
             })
 
       },
