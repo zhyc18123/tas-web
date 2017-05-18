@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">用户信息</div>
+        <div class="widget-title am-fl">成本录入</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -32,9 +32,12 @@
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
 
-                <select2 v-model="formData.receiverMainAccountId" :options="mainAccounts" required>
-                  <option value="">请选择</option>
-                </select2>
+                <choose v-model="formData.receiverMainAccountId">
+                  <select required data-placeholder="收款主体" style="min-width:300px;" class="chosen-select">
+                    <option value=""></option>
+                    <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                  </select>
+                </choose>
 
               </div>
             </div>
@@ -54,8 +57,9 @@
 
 <script>
 import io from '../../lib/io'
+import Choose from "../base/Choose";
     export default{
-        data(){
+      components: {Choose}, data(){
             return{
                 expensesTypes:[],
                 formData:{
@@ -65,12 +69,13 @@ import io from '../../lib/io'
             }
         },
         created:function(){
-            this.loadMainAccountList()
+          this.loadMainAccountList()
         },
         mounted:function(){
           var _this = this ;
           $('#' + this.id ).validator({
             validate:function(validity){
+
             },
             onValid: function(validity) {
               $(validity.field).closest('.input-field').find('.am-alert').hide();
@@ -110,6 +115,12 @@ import io from '../../lib/io'
 
         methods:{
           save:function(complete){
+            if(!this.formData.receiverMainAccountId){
+              complete.call()
+              this.$alert('录入收款主体')
+              return
+            }
+
             var _this = this
             io.post(io.apiAdminSettlementSaveFee,_this.formData,
             function(ret){
@@ -131,9 +142,7 @@ import io from '../../lib/io'
             var _this = this
             io.post(io.apiAdminSettlementAllMainAccountList,{},function(ret){
               if(ret.success){
-                _this.mainAccounts = ret.data.map(function(item){
-                    return {value : item.mainAccountId , text : item.name }
-                })
+                _this.mainAccounts = ret.data;
               }else{
                 _this.$alert(ret.desc)
               }
