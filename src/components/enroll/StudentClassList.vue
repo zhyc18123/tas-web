@@ -98,8 +98,8 @@
         label="操作"
         width="180">
         <template scope="scope">
-          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2" @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
-          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1"
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 " @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 || scope.row.studentReg.refundStatus == 1 "
                      @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
           </el-button>
         </template>

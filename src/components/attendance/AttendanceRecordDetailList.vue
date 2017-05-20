@@ -85,7 +85,7 @@
           classLectureId: this.attendanceRecord.classLectureId,
           details: JSON.stringify(this.tableData.map(function (item) {
             return {
-              detailId: item.detailId,
+              attendClassRecordId: item.attendClassRecordId,
               attendanceStatus: item.attendanceStatus
             }
           }))

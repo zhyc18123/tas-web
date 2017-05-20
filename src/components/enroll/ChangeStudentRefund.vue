@@ -142,6 +142,10 @@
         }
       },
       confirmToRefund: function () {
+        if(!this.formData.status || this.formData.status ==  0 ){
+          this.$alert('请选择审批状态')
+          return
+        }
         var _this = this
         io.post(io.apiAdminChangeStudentRefundStatus, {
             studentRefundId : _this.formData.studentRefundId ,
