@@ -161,7 +161,7 @@
         this.formData.remainingAmount = math.round( math.sub( this.formData.totalAmount , math.mul( this.formData.studyAmount , this.formData.per )), 2)
       },
       nextStep: function () {
-        this.$emit('goStep', 'step-two', {formData: this.formData})
+        this.$emit('goStep', 'step-two', { refundClass : this.formData })
       }
     }
   }

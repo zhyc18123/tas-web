@@ -310,6 +310,9 @@
 
                       <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0"  @click.native="openClass(scope.row.classId,1)">开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1"  @click.native="openClass(scope.row.classId,0)">取消开班</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -580,6 +583,20 @@
 
 
 
+      },
+      openClass:function(classId , status ){
+        var _this = this
+        io.post(io.apiAdminChangeCourseClassStatus, {
+          status: status ,
+          classIds : [classId].join(',')
+        }, function (ret) {
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       handleSelectionChange:function (selection) {
         this.selection = selection

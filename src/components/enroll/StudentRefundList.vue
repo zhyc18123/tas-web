@@ -67,7 +67,7 @@
             label="操作"
             width="120">
             <template scope="scope">
-              <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">修改</el-button>
+              <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">审核</el-button>
             </template>
           </el-table-column>
         </el-table>

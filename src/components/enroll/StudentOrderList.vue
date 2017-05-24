@@ -38,7 +38,7 @@
         label="欠费金额"
         min-width="100">
         <template scope="scope">
-          {{scope.row.payableAmount-scope.row.paidAmount}}
+          {{ ( scope.row.payableAmount-scope.row.paidAmount ) | formatNumber(2)}}
                 </template>
       </el-table-column>
       <el-table-column
@@ -60,7 +60,7 @@
     </el-table>
 
     <window ref="order" title="订单详情">
-      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()" ></course-order>
+      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close();courseOrderId='';$root.$meit('mainAccount:change')" ></course-order>
     </window>
     <div class="am-u-lg-12 am-cf">
       <div class="am-fr">

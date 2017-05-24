@@ -6,27 +6,27 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td>{{tableData.periodName}}</td>
+          <td>{{this.newClass.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td>{{tableData.busTeamName}}</td>
+          <td>{{this.newClass.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td>{{tableData.className}}</td>
+          <td>{{this.newClass.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">学科：</td>
-          <td>{{tableData.subjectName}}</td>
+          <td>{{this.newClass.subjectName}}</td>
           <td class="bgColor">教室：</td>
-          <td>{{tableData.roomName}}</td>
+          <td>{{this.newClass.roomName}}</td>
           <td class="bgColor">教师：</td>
-          <td>{{tableData.teacherNames}}</td>
+          <td>{{this.newClass.teacherNames}}</td>
         </tr>
         <tr>
           <td class="bgColor">已上讲次：</td>
-          <td>{{tableData.studyAmount}}/{{tableData.lectureAmount}}</td>
+          <td>{{this.newClass.completedLectureAmount}}/{{this.newClass.lectureAmount}}</td>
           <td class="bgColor">启报讲次：</td>
-          <td>{{tableData.startAmount}}</td>
+          <td>{{this.newClass.startAmount}}</td>
           <td class="bgColor">截止讲次：</td>
-          <td>{{tableData.endAmount}}</td>
+          <td>{{this.newClass.endAmount}}</td>
         </tr>
         </tbody>
       </table>
@@ -36,7 +36,7 @@
           转班差额:
         </label>
         <label class="am-radio-inline">
-          <span>{{tableData.balanceAmount}}</span>
+          <span>{{formData.balanceAmount}}</span>
         </label>
       </div>
     </div>
@@ -75,32 +75,22 @@
   export default{
     data: function () {
       return {
-        tableData: [],
-        formData: {}
+        newClass :{} ,
+        refundClass : {},
+        formData: {},
       }
     },
-    props: ['args'],
+    props: ['args','regId'],
     created: function () {
-      var _this = this
-      var item = _this.args.item
-      var formData = _this.args.formData
-      io.post(io.apiAdminShowNewClassDetail, {classId: item.classId},
-        function (ret) {
-          if (ret.success) {
-            _this.tableData = ret.data
-            _this.tableData.startAmount = item.startAmount
-            _this.tableData.endAmount = item.endAmount
-            _this.tableData.balanceAmount = math.round(formData.remainingAmount - math.mul( (item.endAmount - item.startAmount + 1) , math.div(ret.data.studyingFee , ret.data.lectureAmount)),2)
-            _this.formData = formData
-            _this.formData.oldClassId = _this.formData.classId
-            _this.formData.startAmount = item.startAmount
-            _this.tableData.studyAmount = _this.formData.studyAmount
-            _this.formData.classId = ret.data.classId
-            _this.formData.balanceAmount = _this.tableData.balanceAmount
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
+      this.newClass  = this.args.newClass
+      this.refundClass  = this.args.refundClass
+      this.formData.regId = this.regId
+      this.formData.balanceAmount = math.round( this.refundClass.remainingAmount - math.mul( ( this.newClass.endAmount - this.newClass.startAmount + 1) , math.div(this.newClass.studyingFee , this.newClass.lectureAmount)),2)
+      this.formData.oldClassId = this.refundClass.classId
+      this.formData.startAmount = this.newClass.startAmount
+      this.formData.endAmount = this.newClass.endAmount
+      this.formData.classId = this.newClass.classId
+      this.formData.studyAmount = this.refundClass.studyAmount
     },
     mounted: function () {
       $(window).smoothScroll()

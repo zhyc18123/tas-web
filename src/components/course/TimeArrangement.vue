@@ -83,7 +83,7 @@
               <tbody>
               <tr v-for="( item,index ) in arrangeResult">
                 <td>第{{index + 1 }}讲</td>
-                <td>{{item.date}}</td>
+                <td>{{item.date}} {{item.date|week}}</td>
                 <td>{{item.time}}</td>
               </tr>
               </tbody>
@@ -276,6 +276,11 @@
           })
       }
 
+    },
+    filters:{
+        week : function(v){
+            return moment(v).format('dddd')
+        }
     }
   }
 </script>

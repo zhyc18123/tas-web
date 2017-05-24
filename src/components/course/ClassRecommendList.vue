@@ -181,7 +181,8 @@
         query: {
           areaTeamId : '',
           busTeamId : '',
-          productId : ''
+          productId : '',
+          status : 1 ,
         },
         searchConfig: {},
         products:[],

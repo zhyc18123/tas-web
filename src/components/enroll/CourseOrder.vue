@@ -38,11 +38,11 @@
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      欠费金额：{{courseOrder.payableAmount-courseOrder.paidAmount}}￥
+      欠费金额：{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}￥
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      缴费金额：<input type="text" class="am-input-sm"  v-model="formData.payAmount" style="display:inline;width:80px;" @change="check"/>￥
+      缴费金额：<input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" style="display:inline;width:100px;" @change="check"/>￥
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
@@ -80,6 +80,7 @@
 <script>
   import io from '../../lib/io'
   import conf from '../../lib/conf'
+  import util from '../../lib/util'
 
   import Pagination from '../base/Pagination'
 
@@ -127,7 +128,7 @@
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data;
-                _this.formData.payAmount = (ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount)
+                _this.formData.payAmount = util.formatNumber((ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount),2 )
                 _this.formData.payWay = 0
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder

@@ -65,7 +65,7 @@
     <textarea required v-model="formData.returnResult"></textarea>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">审核</button>
       <a href="javascript:void(0)" data-am-modal-close>
         <button class="am-btn am-btn-primary">取消</button>
       </a>

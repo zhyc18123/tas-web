@@ -225,25 +225,32 @@
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           status: 1,
-          busTeamId : _this.args.formData.busTeamId,
-          periodId : _this.args.formData.periodId
+          busTeamId : _this.args.refundClass.busTeamId,
+          periodId : _this.args.refundClass.periodId
         }, _this.query), function (ret) {
 
           if (ret.success) {
             _this.total = ret.data.total
+
+            var courseList  = []
+
             for (var i = 0; i < ret.data.list.length; i++) {
 
-              ret.data.list[i].startAmount = parseInt(_this.args.formData.studyAmount) + 1
-              ret.data.list[i].endAmount = _this.args.formData.endAmount
+              ret.data.list[i].startAmount = parseInt(_this.args.refundClass.studyAmount) + 1
+              ret.data.list[i].endAmount = _this.args.refundClass.endAmount
               ret.data.list[i].regId = _this.regId
 
-              if (( _this.args.formData.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.formData.lectureAmount == ret.data.list[i].lectureAmount)) {
+              if (( _this.args.refundClass.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.refundClass.lectureAmount == ret.data.list[i].lectureAmount)) {
                 ret.data.list[i].allow = true
               } else {
                 ret.data.list[i].allow = false
               }
+
+              if(ret.data.list[i].classId != _this.args.refundClass.classId ){//过滤
+                courseList.push(ret.data.list[i])
+              }
             }
-            _this.tableData = ret.data.list
+            _this.tableData = courseList
           } else {
             _this.$alert(ret.desc)
           }
@@ -262,7 +269,7 @@
         })
       },
       confirm: function (item) {
-        this.$emit('goStep', 'step-three', {item: item, formData: this.args.formData})
+        this.$emit('goStep', 'step-three', { newClass: item, refundClass : this.args.refundClass })
       },
       back: function () {
         this.$emit('goStep', 'step-one' )

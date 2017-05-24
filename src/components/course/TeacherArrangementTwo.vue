@@ -11,7 +11,7 @@
                   <button class="am-btn am-btn-default am-btn-sm am-margin-left-xs" v-for="(item, index) in args.teachers ">{{item.teacherName}}<i @click="delTeacher(index)" class="am-icon-remove"></i></button>
                 </div>
               </div>
-              <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-right">
+              <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-text-right" v-if="args.teachers.length > 1 ">
                 <div class="am-form-group">
                   <button type="submit" class="am-btn am-btn-primary" @click="quickArrange(1)">单讲交替</button>
                   <button type="submit" class="am-btn am-btn-primary" @click="quickArrange(2)">双讲交替</button>

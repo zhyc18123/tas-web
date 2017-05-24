@@ -83,7 +83,7 @@
         </label>
         <div class="am-u-sm-2 input-field">
           <select2 required v-model="guardianList[index].relationship" >
-            <option value="0">请选择</option>
+            <option value="">请选择</option>
             <option value="父亲">父亲</option>
             <option value="母亲">母亲</option>
             <option value="爷爷">爷爷</option>

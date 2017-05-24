@@ -214,6 +214,9 @@ const io = {
     this.apiAdminAttendanceSaveAttendanceRecordDetail = conf.baseApiPath + '/api/admin/attendance/saveAttendanceRecordDetail'
 
 
+    this.apiAdminStudentMainAccount = conf.baseApiPath + '/api/admin/studentMainAccount'
+
+
   },
   getHeaders : function(){
     const accessToken = Storage.getAccessToken() || '' ;

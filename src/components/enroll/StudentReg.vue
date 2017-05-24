@@ -13,11 +13,15 @@
           <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
           <td>学号：{{formData.studentNo}}</td>
           <td>年级：{{formData.gradeName}}</td>
+          <td>账户余额：{{mainAccount.balanceAmount}}</td>
         </tr>
         <tr>
           <td>电话：{{formData.phoneNo}}</td>
           <td>就读学校：{{formData.school}}</td>
+          <td></td>
         </tr>
+
+
       </table>
       </div>
       <div class="widget-body am-fr">
@@ -84,9 +88,10 @@
   export default{
     data(){
       return {
-        studentId : '',
+        studentId : this.$params('studentId') ,
         tabIndex : 0 ,
-        formData:[]
+        formData:[],
+        mainAccount:{}
       }
     },
     components:{
@@ -98,26 +103,38 @@
       'student-class-history-list': ClassHistoryList
     },
     created: function () {
-      var studentId = this.$params('studentId')
-      if (studentId) {
-        this.studentId = studentId
-        var _this = this
-        io.get(io.apiAdminStudentDetail, {studentId: studentId},
-          function (ret) {
-            if (ret.success) {
-              ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
-              _this.formData = ret.data.student
-            }
-          },
-          function () {
-            _this.$alert('请求服务器失败')
-          })
-      }
+      this.loadStudent()
+      this.loadMainAccount()
+      this.$root.$on('mainAccount:change',function(){
+        this.loadMainAccount()
+      })
     },
     mounted: function () {
 
     },
     methods: {
+
+        loadMainAccount:function(){
+          var _this = this
+          io.post(io.apiAdminStudentMainAccount,{
+              studentId : _this.studentId
+          },function(ret){
+              if(ret.success){
+                _this.mainAccount = ret.data
+              }else{
+                  _this.$alert(ret.desc)
+              }
+          })
+        },
+        loadStudent:function(){
+          var _this = this
+          io.get(io.apiAdminStudentDetail, {studentId: _this.studentId},
+            function (ret) {
+              if (ret.success) {
+                ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
+                _this.formData = ret.data.student
+              }})
+        }
 
     }
   }

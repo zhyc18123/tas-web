@@ -177,7 +177,7 @@
               label="操作"
               width="100">
               <template scope="scope">
-                <el-button size="small" :disabled="hadReg(scope.row)" @click.native="studentReg(scope.row)">报名</el-button>
+                <el-button size="small" :disabled="hadReg(scope.row) || scope.row.regAmount == scope.row.quota" @click.native="studentReg(scope.row)">报名</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -272,8 +272,9 @@
     },
     methods: {
       check:function(item){
-        if(item.startAmount <= 0 || item.startAmount > item.lectureAmount ){
-          item.startAmount = 1
+        var start = item.completedLectureAmount + 1
+        if(item.startAmount < start || item.startAmount > item.lectureAmount ){
+          item.startAmount = start
         }
 
         if( item.endAmount < 0 || item.endAmount > item.lectureAmount ){
@@ -295,9 +296,9 @@
           if (ret.success) {
             _this.total = ret.data.total
             for (var i = 0; i < ret.data.list.length; i++) {
-              ret.data.list[i].startAmount = 1;
+              ret.data.list[i].completedLectureAmount = parseInt(ret.data.list[i].completedLectureAmount)
+              ret.data.list[i].startAmount = ret.data.list[i].completedLectureAmount + 1 ;
               ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
-
             }
             _this.tableData = ret.data.list
           } else {
