@@ -14,8 +14,8 @@ $.cachedScript = function( url, options ) {
 };
 
 function checkResult (ret) {
-  if( !ret.success && ret.desc && ret.desc.indexOf('accessToken不存在或已过期') != -1 ){
-    //document.location.reload()
+  if( !ret.success && ret.desc && ( ret.desc.indexOf('accessToken不存在或已过期') != -1 || ret.desc.indexOf('token不能为空') != -1 ) ){
+    document.location.href = '/'
   }
 
 }
@@ -156,6 +156,7 @@ const io = {
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
+    this.apiAdminSettlementFeelDetail = conf.baseApiPath + '/api/admin/settlement/feelDetail'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
     this.apiAdminSettlementDeleteFee = conf.baseApiPath + '/api/admin/settlement/deleteFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'

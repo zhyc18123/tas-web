@@ -69,6 +69,19 @@ import Choose from "../base/Choose";
             }
         },
         created:function(){
+          var feeId = this.$params('feeId');
+          if (feeId) {
+            var _this = this
+            io.post(io.apiAdminSettlementFeelDetail, {feeId: feeId},
+              function (ret) {
+                if (ret.success) {
+                  _this.formData = ret.data
+                }
+              },
+              function () {
+                _this.$alert('请求服务器失败')
+              })
+          }
           this.loadMainAccountList()
         },
         mounted:function(){

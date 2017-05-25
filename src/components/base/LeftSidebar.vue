@@ -45,9 +45,15 @@
     mounted: function () {
       var $sidebar = $('.sidebar-nav')
       $('.sidebar-nav').on('click', '.sidebar-nav-sub-title', function () {
-        $('.sidebar-open', $sidebar).removeClass('sidebar-open').siblings('.sidebar-nav-sub').slideToggle(80).end()
-          .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate')
-        $(this).addClass("sidebar-open").siblings('.sidebar-nav-sub').slideToggle(80)
+
+        var $open = $('.sidebar-open', $sidebar) ;
+
+        if(!$open.is(this)){
+          $open.removeClass('sidebar-open').siblings('.sidebar-nav-sub').slideToggle(80).end()
+            .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate')
+        }
+
+        $(this).toggleClass("sidebar-open").siblings('.sidebar-nav-sub').slideToggle(80)
           .end()
           .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 

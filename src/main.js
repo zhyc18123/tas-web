@@ -200,6 +200,7 @@ const router = new VueRouter({
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
+      {path: 'settlement/fee/edit/:mainAccountId/:feeId' , component: FeeForm },
       {path: 'settlement/account/report/profit/:mainAccountId' , component: ProfitReportDetail },
       {path: 'settlement/account/withdrawal/list/:mainAccountId' , component: AccountWithdrawalList },
       {path: 'settlement/account/withdrawal/apply/:mainAccountId' , component: ApplyWithdrawalForm },
