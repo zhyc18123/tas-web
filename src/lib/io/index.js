@@ -157,6 +157,7 @@ const io = {
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
+    this.apiAdminSettlementDeleteFee = conf.baseApiPath + '/api/admin/settlement/deleteFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
     this.apiAdminSettlementProfitDetaile = conf.baseApiPath + '/api/admin/settlement/profitDetail'
     this.apiAdminSettlementAccountWithdrawalList = conf.baseApiPath + '/api/admin/settlement/accountWithdrawalList'

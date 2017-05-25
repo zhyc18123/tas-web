@@ -150,13 +150,13 @@
                   class="am-icon-plus"></span>新建班级
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
-                        @click="changeStatus(1)" ><span
+                        @click="batchChangeStatus(1)" ><span
                   class="am-icon-plus"></span>开班
                 </button>
-                <!--<button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
-                        @click="changeStatus(2)" ><span
+                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('invalid')"
+                        @click="batchChangeStatus(2)" ><span
                   class="am-icon-plus"></span>作废
-                </button>-->
+                </button>
                 <!--<button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>快速排班
@@ -311,8 +311,9 @@
                       <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
 
-                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0"  @click.native="openClass(scope.row.classId,1)">开班</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1"  @click.native="openClass(scope.row.classId,0)">取消开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 "  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('invalid')" :disabled="scope.row.regAmount > 0 "  @click.native="changeStatus(scope.row.classId,2)">作废</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -482,7 +483,7 @@
             which:'1'
           }, function (ret) {
             if (ret.success) {
-              _this.arrangeTime()
+              _this.arrangeTime(courseClass)
             } else {
               _this.$alert(ret.desc)
             }
@@ -510,7 +511,7 @@
             which:'2'
           }, function (ret) {
             if (ret.success) {
-              _this.arrangeRoom()
+              _this.arrangeRoom(courseClass)
             } else {
               _this.$alert(ret.desc)
             }
@@ -538,22 +539,23 @@
             which:'3'
           }, function (ret) {
             if (ret.success) {
-              _this.arrangeTeacher()
+              _this.arrangeTeacher(courseClass)
             } else {
               _this.$alert(ret.desc)
             }
           })
         })
       },
-      changeStatus:function (status) {
+      batchChangeStatus:function (status) {
         if(this.selection.length == 0 ){
           this.$alert('请选择记录')
           return
         }
 
         for(var i =0 ;i < this.selection.length ;i++ ){
-            if(this.selection[i].status != 0 ){
-                this.$alert('只有"未开班"的记录才能"开班"或"作废"')
+
+            if( status  == 2 && this.selection[i].regAmount > 0  ){
+                this.$alert('有学生报名，不能作废')
                 return
             }
 
@@ -567,11 +569,13 @@
         })
 
         var _this = this
+        _this.$showLoading()
 
         io.post(io.apiAdminChangeCourseClassStatus, {
           status:status,
           classIds : classIds.join(',')
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
             _this.$alert('处理成功')
@@ -581,15 +585,15 @@
         })
 
 
-
-
       },
-      openClass:function(classId , status ){
+      changeStatus:function(classId , status ){
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminChangeCourseClassStatus, {
           status: status ,
           classIds : [classId].join(',')
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
             _this.$alert('处理成功')

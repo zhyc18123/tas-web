@@ -176,7 +176,7 @@
           value = value == '正常' ? 1 : 0
         }
         this.query[this.searchConfig.searchItem] = value
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

@@ -60,7 +60,7 @@
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-        <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>审批详情
+        审批详情
     </div>
     <textarea required v-model="formData.returnResult"></textarea>
 
