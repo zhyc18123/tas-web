@@ -158,7 +158,7 @@
           return
         }
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

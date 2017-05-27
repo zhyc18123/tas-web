@@ -180,7 +180,7 @@
     },
     methods: {
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function () {
         var _this = this

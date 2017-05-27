@@ -45,7 +45,7 @@
         label="缴费状态"
         min-width="100">
         <template scope="scope">
-          {{scope.row.chargingStatus == 0 ? '未缴费' : (scope.row.chargingStatus == 1 ? '欠费' : '已缴费') }}
+          {{scope.row.chargingStatus == 0 ? '未缴费' : (scope.row.chargingStatus == 1 ? '欠费' : ( scope.row.chargingStatus == 2 ? '已缴费' : '已撤销' )) }}
                 </template>
       </el-table-column>
       <el-table-column
