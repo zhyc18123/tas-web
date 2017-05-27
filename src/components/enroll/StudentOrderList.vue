@@ -52,9 +52,9 @@
         fixed="right"
         label="操作"
         width="180">
-        <template scope="scope">
-          <el-button size="small" :disabled="scope.row.chargingStatus == 2 " @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
-          <el-button size="small" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
+        <template scope="scope" >
+          <el-button size="small" :disabled="scope.row.chargingStatus == 2 ||  scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
+          <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
         </template>
       </el-table-column>
     </el-table>
