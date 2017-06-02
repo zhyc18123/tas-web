@@ -46,14 +46,14 @@
       var $sidebar = $('.sidebar-nav')
       $('.sidebar-nav').on('click', '.sidebar-nav-sub-title', function () {
 
-        var $open = $('.sidebar-open', $sidebar) ;
+        var $open = $('.active', $sidebar) ;
 
         if(!$open.is(this)){
-          $open.removeClass('sidebar-open').siblings('.sidebar-nav-sub').slideToggle(80).end()
+          $open.removeClass('active').siblings('.sidebar-nav-sub').slideToggle(80).end()
             .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate')
         }
 
-        $(this).toggleClass("sidebar-open").siblings('.sidebar-nav-sub').slideToggle(80)
+        $(this).toggleClass("active").siblings('.sidebar-nav-sub').slideToggle(80)
           .end()
           .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 

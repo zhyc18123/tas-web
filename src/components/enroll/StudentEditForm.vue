@@ -25,11 +25,11 @@
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
-          <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>出生日期
+          出生日期
         </label>
         <div class="am-u-sm-3 am-u-end  input-field">
           <date-picker v-model="formData.birthday" >
-            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  required >
+            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  >
           </date-picker>
         </div>
       </div>
