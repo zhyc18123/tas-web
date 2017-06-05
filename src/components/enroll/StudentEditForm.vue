@@ -158,7 +158,7 @@
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
               _this.formData = ret.data.student
-              _this.guardianList = ret.data.guardianList
+              _this.guardianList =  ret.data.guardianList && ret.data.guardianList.length == 0  ?  [{}] : ret.data.guardianList
             }
           },
           function(){
@@ -239,7 +239,7 @@
         this.guardianList.splice(index,1)
       },
       selectStudentSchool:function (studentSchool) {
-        this.formData.school = studentSchool.province + ' ' + studentSchool.city + ' ' + studentSchool.district + ' ' + studentSchool.schoolName
+        this.formData.school =  studentSchool.schoolName
       }
     }
   }

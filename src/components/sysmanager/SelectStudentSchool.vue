@@ -36,7 +36,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12">
+            <div class="am-u-sm-12" v-if="total != 0">
               <el-table
                 :data="tableData"
                 border
@@ -67,6 +67,15 @@
               </el-table>
             </div>
           </div>
+
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
+
         </div>
       </div>
     </window>
@@ -98,7 +107,7 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo);
+      //this.loadTableData(this.pageNo);
     },
     methods: {
       search:function(){
@@ -121,7 +130,7 @@
       },
       show:function(){
           this.$refs.win.show({
-            width: 700,
+            width: 800,
             height : 500,
           })
       }

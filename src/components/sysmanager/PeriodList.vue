@@ -27,7 +27,7 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="periodName"
+                prop="periodNo"
                 label="期次"
                 min-width="50">
               </el-table-column>

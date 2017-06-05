@@ -12,7 +12,7 @@
         <ul class="sidebar-nav sidebar-nav-sub" v-if="item.subMenus">
           <li class="sidebar-nav-link" v-for="subItem in item.subMenus">
             <a href="javascript:;" @click="go(item,subItem)">
-              <span class="sidebar-nav-link-logo" :class="subItem.icon"></span> {{subItem.name}}
+              <span class="sidebar-nav-link-logo am-icon-angle-right" :class="subItem.icon"></span> {{subItem.name}}
             </a>
           </li>
         </ul>

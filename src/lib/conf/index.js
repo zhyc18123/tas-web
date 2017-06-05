@@ -2,7 +2,7 @@
 
 window.UEDITOR_HOME_URL = '/static/ueditor/'
 
-
+/**
 export default {
 
   baseApiPath : 'development' == process.env.NODE_ENV ? 'http://localhost:8080' : 'http://118.89.53.121/yyfn-api',
@@ -12,7 +12,7 @@ export default {
 
 }
 
-/**
+ */
 
 //prod
 
@@ -22,7 +22,7 @@ export default {
   qiniuCDN : 'http://static.yuyou100.com/',
   qiniuUploadTokenApi: 'http://119.29.5.64/yyfn-api/api/qiniu/upload/token'
 }
- */
+
 
 
 /*

@@ -20,6 +20,26 @@
             </div>
           </div>
 
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+            <div class="am-form-group tpl-table-list-select">
+              <selected v-model="searchConfig.searchItem">
+                <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
+                  <option></option>
+                  <option value="schoolName">校名</option>
+                </select>
+              </selected>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+              <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
+              <span class="am-input-group-btn">
+              <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"
+                      @click="search"></button>
+            </span>
+            </div>
+          </div>
+
           <div class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -50,6 +70,13 @@
               </el-table-column>
             </el-table>
           </div>
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -68,7 +95,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 10,
+        pageSize: 50,
         pageNo: 1,
         query: {},
         searchConfig: {}
@@ -84,6 +111,19 @@
       this.loadTableData(this.pageNo);
     },
     methods: {
+      search: function () {
+        this.query = {}
+        if (!this.searchConfig.searchItem) {
+          this.$alert('请选择搜索选项')
+          return
+        }
+        let value = this.searchConfig.searchValue
+        if (this.searchConfig.searchItem == 'status') {
+          value = value == '正常' ? 1 : 0
+        }
+        this.query[this.searchConfig.searchItem] = value
+        this.loadTableData(1)
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
