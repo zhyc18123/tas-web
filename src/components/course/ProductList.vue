@@ -121,7 +121,7 @@
       },
     methods:{
       search:function(){
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData:function(pageNo){
         var _this = this

@@ -118,6 +118,17 @@ VueUI.install = function (Vue){
         return 'id-' + (parseInt(Math.random() * 1000 ))  +'-'+(new Date().getTime())
       }
     },
+    created:function(){
+      if(this.query && this.$route && this.$root[this.$route.fullPath]){
+        Object.assign(this,this.$root[this.$route.fullPath])
+      }
+    },
+    beforeRouteLeave (to, from, next) {
+      if(this.$data.query){
+        this.$root[from.fullPath] = this.$data
+      }
+      next()
+    },
     methods: {
       hasPermission: function (permission) {
         return this.$root.config.permission[this.$route.path] && this.$root.config.permission[this.$route.path][permission] ? true : false

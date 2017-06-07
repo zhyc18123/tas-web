@@ -179,6 +179,7 @@
           var startDateWeek = moment(this.startDate, "YYYY-MM-DD").format('dddd') ;
           if( !$('#' + startDateWeek).prop('checked')){
               this.$alert('请选上' + startDateWeek )
+              return ;
           }
 
 

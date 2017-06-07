@@ -290,7 +290,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-dropdown>
+                  <el-dropdown v-if="scope.row.status != 2">
                     <span class="el-dropdown-link">
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
