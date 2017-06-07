@@ -117,7 +117,7 @@
           this.$alert('请输入学生编号／姓名／手机号')
           return
         }
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData:function(pageNo){
         var _this = this

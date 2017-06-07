@@ -1,13 +1,13 @@
 <template>
   <div>
-    <window title="生源学校" ref="win">
+    <window title="学生列表" ref="win">
       <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
         <div class="widget am-cf">
 
           <div class="am-u-sm-12 am-form ">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
               <div class="am-form-group">
-                <input type="text" name="teacherNames" v-model="query.schoolName" placeholder="请输入学校名"/>
+                <input type="text" name="teacherNames" v-model="query.keyword" placeholder="请输入学生编号／姓名／手机号"/>
               </div>
             </div>
 
@@ -31,20 +31,50 @@
                 stripe
                 style="min-width: 100%">
                 <el-table-column
-                  prop="schoolName"
-                  label="校名"
-                  min-width="200">
-                </el-table-column>
-                <el-table-column
-                  label="地址"
-                  min-width="250">
+                  fixed
+                  label="学号"
+                  min-width="150">
                   <template scope="scope">
-                    {{scope.row.province }}{{scope.row.city }}{{scope.row.district }}{{scope.row.address}}
+                    {{scope.row.studentNo }}
                 </template>
                 </el-table-column>
-
+                <el-table-column
+                  fixed
+                  prop="name"
+                  label="姓名"
+                  min-width="100">
+                </el-table-column>
 
                 <el-table-column
+                  fixed
+                  prop="phoneNo"
+                  label="手机号码"
+                  min-width="150">
+                </el-table-column>
+                <el-table-column
+                  label="出生日期"
+                  min-width="150">
+                  <template scope="scope">
+                    {{scope.row.birthday | formatDate }}
+                </template>
+                </el-table-column>
+                <el-table-column
+                  prop="gradeName"
+                  label="年级"
+                  min-width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="school"
+                  label="就读学校"
+                  min-width="100">
+                </el-table-column>
+                <el-table-column
+                  prop="location"
+                  label="地区"
+                  min-width="100">
+                </el-table-column>
+                <el-table-column
+                  fixed="right"
                   label="操作"
                   width="120">
                   <template scope="scope">
@@ -91,27 +121,26 @@
     components: {
       Window, Pagination
     },
-    mounted: function () {
-      $(window).smoothScroll()
-    },
-    created: function () {
-      //this.loadTableData(this.pageNo);
-    },
+
     methods: {
       search:function(){
-        this.loadTableData(1);
+        if(!this.query.keyword){
+          this.$alert('请输入学生编号／姓名／手机号')
+          return
+        }
+        this.loadTableData(1)
       },
-      loadTableData: function (pageNo) {
+      loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminStudentSchoolList, $.extend({
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
-        }, _this.query), function (ret) {
-          if (ret.success) {
+        io.post(io.apiAdminSearchStudent,$.extend({
+          pageNo:_this.pageNo,
+          pageSize:_this.pageSize
+        },_this.query),function(ret){
+          if(ret.success){
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
-          } else {
+            _this.tableData = ret.data.list;
+          }else{
             _this.$alert(ret.desc)
           }
         })

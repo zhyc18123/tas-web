@@ -69,6 +69,18 @@
         </div>
       </div>
 
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          推荐人
+        </label>
+        <div class="am-u-sm-6 input-field">
+          <input type="text" placeholder="推荐人"    v-model="formData.referrerName"  readonly>
+        </div>
+        <div class="am-u-sm-3">
+          <button type="button" class="am-btn am-btn-default" @click="$refs.selectStudent.show()">选择</button>
+        </div>
+      </div>
+
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
@@ -119,6 +131,7 @@
       </div>
     </fieldset>
     <select-student-school ref="selectStudentSchool" @select="selectStudentSchool"/>
+    <select-student ref="selectStudent" @select="selectReferrer"/>
   </form>
 </template>
 
@@ -127,6 +140,7 @@
   import io from '../../lib/io'
   import util from '../../lib/util'
   import SelectStudentSchool from '../sysmanager/SelectStudentSchool'
+  import SelectStudent from './SelectStudent'
 
   export default{
     data(){
@@ -134,14 +148,15 @@
         guardianList:[{}],
         formData:{
           sex:'',
-          school:''
+          school:'',
+          referrerName:''
         },
         studentSchoolList:[]
 
       }
     },
     props:['studentId'],
-    components:{'select-student-school' :SelectStudentSchool },
+    components:{'select-student-school' :SelectStudentSchool,'select-student':SelectStudent },
     computed:{
       grades:function(){
         return this.$root.config.grades.map(function(item){
@@ -240,6 +255,10 @@
       },
       selectStudentSchool:function (studentSchool) {
         this.formData.school =  studentSchool.schoolName
+      },
+      selectReferrer:function(student){
+        this.formData.referrerId = student.studentId
+        this.formData.referrerName = student.name
       }
     }
   }
