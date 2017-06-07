@@ -313,7 +313,7 @@
 
                       <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 "  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('invalid')" :disabled="scope.row.regAmount > 0 "  @click.native="changeStatus(scope.row.classId,2)">作废</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('invalid')" :disabled="scope.row.regAmount > 0 "  @click.native="cancellation(scope.row)">作废</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -584,6 +584,13 @@
           }
         })
 
+
+      },
+      cancellation:function(courseClass){
+        var _this  = this
+        this.$confirm('确定作废',function () {
+          _this.changeStatus(courseClass.classId,2)
+        })
 
       },
       changeStatus:function(classId , status ){
