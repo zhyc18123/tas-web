@@ -105,8 +105,9 @@
     created: function () {
       this.loadStudent()
       this.loadMainAccount()
+      var _this  = this
       this.$root.$on('mainAccount:change',function(){
-        this.loadMainAccount()
+        _this.loadMainAccount()
       })
     },
     mounted: function () {

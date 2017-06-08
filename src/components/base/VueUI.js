@@ -3,6 +3,7 @@ import util from '../../lib/util'
 
 import AMLoading from './Loading'
 import AMAlert from './Alert'
+import ADialog from './Dialog'
 import AMConfirm from './Confirm'
 import AMPrompt from './Prompt'
 import AMToast from './Toast.vue'
@@ -40,6 +41,7 @@ VueUI.install = function (Vue){
 
   const Loading = Vue.extend(AMLoading)
   const Alert = Vue.extend(AMAlert)
+  const Dialog = Vue.extend(ADialog)
   const Confirm = Vue.extend(AMConfirm)
   const Prompt = Vue.extend(AMPrompt)
   const Toast = Vue.extend(AMToast)
@@ -65,6 +67,10 @@ VueUI.install = function (Vue){
 
   Vue.alert = Vue.prototype.$alert = function (msg){
     getInstance(Alert,'alert').show(msg)
+  }
+
+  Vue.dialog = Vue.prototype.$dialog = function (title,content){
+    getInstance(Dialog,'dialog').show(title,content)
   }
 
   Vue.confirm = Vue.prototype.$confirm = function (msg,confirm,cancel){

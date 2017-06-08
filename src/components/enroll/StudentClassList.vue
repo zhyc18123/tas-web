@@ -111,7 +111,7 @@
 
 
     <window ref="studentRefund" title="退费申请">
-      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close();$root.$meit('mainAccount:change')"></student-refund>
+      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close();$root.$emit('mainAccount:change')"></student-refund>
     </window>
 
   </div>

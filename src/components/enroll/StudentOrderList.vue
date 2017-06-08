@@ -10,14 +10,21 @@
         fixed
         prop="courseOrderId"
         label="订单编号"
-        min-width="150">
+        min-width="200">
+      </el-table-column>
+      <el-table-column
+        label="订单来源"
+        min-width="100">
+        <template scope="scope">
+          {{ scope.row.regFrom == 0 ? '线下' : '线上' }}
+        </template>
       </el-table-column>
       <el-table-column
         label="缴费时间"
-        min-width="100">
+        min-width="200">
         <template scope="scope">
           {{scope.row.createTime | formatTime}}
-              </template>
+        </template>
       </el-table-column>
       <el-table-column
         prop="totalAmount"
@@ -30,6 +37,13 @@
         min-width="100">
       </el-table-column>
       <el-table-column
+        label="优惠金额"
+        min-width="100">
+        <template scope="scope">
+          {{ ( scope.row.totalAmount - scope.row.payableAmount ) | formatNumber(2)}}
+        </template>
+      </el-table-column>
+      <el-table-column
         prop="paidAmount"
         label="已缴金额"
         min-width="100">
@@ -39,7 +53,7 @@
         min-width="100">
         <template scope="scope">
           {{ ( scope.row.payableAmount-scope.row.paidAmount ) | formatNumber(2)}}
-                </template>
+        </template>
       </el-table-column>
       <el-table-column
         label="缴费状态"
@@ -51,17 +65,32 @@
       <el-table-column
         fixed="right"
         label="操作"
-        width="180">
-        <template scope="scope" >
+        width="320">
+        <template scope="scope">
           <el-button size="small" :disabled="scope.row.chargingStatus == 2 ||  scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
+          <el-button size="small" :disabled="scope.row.chargingStatus != 0" @click.native="cancel(scope.row.courseOrderId)">撤销</el-button>
           <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
+          <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="printCert(scope.row.courseOrderId)">打印听课证</el-button>
         </template>
       </el-table-column>
     </el-table>
 
     <window ref="order" title="订单详情">
-      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close();courseOrderId='';$root.$meit('mainAccount:change')" ></course-order>
+      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close();courseOrderId='';$root.$emit('mainAccount:change')" ></course-order>
     </window>
+
+    <window ref="cert" title="听课证">
+
+      <div style="height:95%">
+        <iframe id="certIframe" src="http://localhost:7070/#/main/enroll/student/reg/565837953041956864" height="100%" width="100%" frameborder="0"></iframe>
+      </div>
+
+      <div style="height:5%;padding-top: 4px ;">
+        <button type="button" class="am-btn am-btn-primary" @click="confirmPrint">确定打印</button>
+      </div>
+
+    </window>
+
     <div class="am-u-lg-12 am-cf">
       <div class="am-fr">
         <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -131,7 +160,50 @@
           width:1000,
           height:600
         })
+      },
+      cancel(courseOrderId){
+        var _this = this
+        this.$confirm('确定撤销订单',function(){
+          _this.$showLoading()
+          io.post(io.apiAdminCancelCourseOrder,{
+            courseOrderId
+          },function(ret){
+            _this.$hiddenLoading()
+            if(ret.success){
+              _this.loadTableData(1)
+            }else{
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+
+      },
+      printCert:function(courseOrderId){
+        var _this  = this
+        io.post(io.apiAdminCourseOrderDetail,{ courseOrderId },
+          function(ret){
+            if(ret.success){
+              try{
+                document.getElementById("certIframe").contentWindow.fillData(ret.data)
+                _this.$refs.cert.show({
+                  width:1000,
+                  height:600
+                })
+              }catch (e){
+                _this.$alert( '打印出错')
+              }
+
+            }else{
+              _this.$alert( ret.desc || '请求服务器失败')
+            }
+          })
+      },
+      confirmPrint:function(){
+        var frame = document.getElementById("certIframe");
+        frame.contentWindow.focus()
+        frame.contentWindow.print();
       }
+
 
     }
   }

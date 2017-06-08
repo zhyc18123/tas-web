@@ -20,6 +20,18 @@
         <div class="am-u-sm-3">{{orderDetail.courseOrder.chargingStatus == 0 ? '未缴费':( orderDetail.courseOrder.chargingStatus == 1) ? '欠费':'已缴费' }}</div>
       </div>
       <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">总计金额</label>
+        <div class="am-u-sm-3 price">{{orderDetail.courseOrder.totalAmount}}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">优惠金额</label>
+        <div class="am-u-sm-3 price">{{ courseOrder.totalAmount - courseOrder.payableAmount }}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">应缴金额</label>
+        <div class="am-u-sm-3 price">{{ courseOrder.payableAmount }}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
         <label class="am-u-sm-9">已缴金额</label>
         <div class="am-u-sm-3 price">{{orderDetail.courseOrder.paidAmount}}￥</div>
       </div>
