@@ -26,6 +26,7 @@
                   <option value="0">在读</option>
                   <option value="1">转班</option>
                   <option value="3">退班退费</option>
+                  <option value="4">撤销</option>
                 </select2>
               </div>
             </div>
@@ -72,7 +73,7 @@
                 label="状态"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' : '退班退费' }}
+                  {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'撤销' }}
                 </template>
               </el-table-column>
 

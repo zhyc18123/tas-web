@@ -42,7 +42,10 @@
       <input type="radio" value="0" name="discountAmount" v-model="formData.discountAmount" > 无
       </label>
       <label class="am-radio-inline">
-        <input type="radio" value="51" name="discountAmount" v-model="formData.discountAmount" > 三科连报(99元)
+        <input type="radio" value="51" name="discountAmount" v-model="formData.discountAmount" > 三科连报优惠51
+      </label>
+      <label class="am-radio-inline">
+        <input type="radio" value="34" name="discountAmount" v-model="formData.discountAmount" > 两科连报优惠34
       </label>
     </div>
 

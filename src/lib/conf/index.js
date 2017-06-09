@@ -11,8 +11,8 @@ export default {
   qiniuUploadTokenApi: 'http://test.yuyou100.com/yyfn-api/api/qiniu/upload/token'
 
 }
-
 /**
+
 
 //prod
 
