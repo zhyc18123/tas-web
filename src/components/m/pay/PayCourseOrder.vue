@@ -25,11 +25,11 @@
       </div>
       <div class="am-g am-g-collapse">
         <label class="am-u-sm-9">优惠金额</label>
-        <div class="am-u-sm-3 price">{{ courseOrder.totalAmount - courseOrder.payableAmount }}￥</div>
+        <div class="am-u-sm-3 price">{{ orderDetail.courseOrder.totalAmount - orderDetail.courseOrder.payableAmount }}￥</div>
       </div>
       <div class="am-g am-g-collapse">
         <label class="am-u-sm-9">应缴金额</label>
-        <div class="am-u-sm-3 price">{{ courseOrder.payableAmount }}￥</div>
+        <div class="am-u-sm-3 price">{{ orderDetail.courseOrder.payableAmount }}￥</div>
       </div>
       <div class="am-g am-g-collapse">
         <label class="am-u-sm-9">已缴金额</label>

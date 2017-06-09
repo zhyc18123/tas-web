@@ -45,6 +45,12 @@
             style="min-width: 100%">
             <el-table-column
               fixed
+              prop="classNo"
+              label="班级编号"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              fixed
               prop="className"
               label="班级名称"
               min-width="200">

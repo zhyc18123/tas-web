@@ -81,8 +81,8 @@
 
     <window ref="cert" title="听课证">
 
-      <div style="height:95%">
-        <iframe id="certIframe" src="http://localhost:7070/#/main/enroll/student/reg/565837953041956864" height="100%" width="100%" frameborder="0"></iframe>
+      <div style="height:95%" id="certIframe">
+
       </div>
 
       <div style="height:5%;padding-top: 4px ;">
@@ -102,6 +102,7 @@
 
 <script>
   import io from '../../lib/io'
+  import conf from '../../lib/conf'
 
   import Pagination from '../base/Pagination'
   import CourseOrder from './CourseOrder'
@@ -132,6 +133,7 @@
         _this.pageNo = 1
         _this.loadTableData(_this.pageNo)
       })
+      window._apiAdminStudentClassCertDetail = io.apiAdminStudentClassCertDetail + '?accessToken='+io.getHeaders().accessToken
     },
     methods:{
       loadTableData:function(pageNo){
@@ -147,7 +149,7 @@
           if(ret.success){
 //            alert(JSON.stringify(ret.data));
             _this.total = ret.data.total
-            _this.tableData = ret.data.list;
+            _this.tableData = ret.data.list
           }else{
             _this.$alert(ret.desc)
           }
@@ -179,27 +181,14 @@
 
       },
       printCert:function(courseOrderId){
-        var _this  = this
-        io.post(io.apiAdminCourseOrderDetail,{ courseOrderId },
-          function(ret){
-            if(ret.success){
-              try{
-                document.getElementById("certIframe").contentWindow.fillData(ret.data)
-                _this.$refs.cert.show({
-                  width:1000,
-                  height:600
-                })
-              }catch (e){
-                _this.$alert( '打印出错')
-              }
-
-            }else{
-              _this.$alert( ret.desc || '请求服务器失败')
-            }
-          })
+        $('#certIframe').html('<iframe height="100%" src="./static/cert/index.html?courseOrderId='+courseOrderId+'" width="100%" frameborder="0"></iframe>')
+        this.$refs.cert.show({
+          width:1000,
+          height:600
+        })
       },
       confirmPrint:function(){
-        var frame = document.getElementById("certIframe");
+        var frame = $("#certIframe iframe")[0];
         frame.contentWindow.focus()
         frame.contentWindow.print();
       }

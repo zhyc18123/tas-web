@@ -1,0 +1,254 @@
+<html>
+
+<head>
+    <title>誉优品学</title>
+    <link rel="stylesheet" href="css/common.css">
+  <style>
+
+    @media print {
+      body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      @page {
+        margin: 0cm;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="J_printArea">
+        <div class="p_background"><img src="images/background.png" alt=""></div>
+        <div class="p_foreground">
+            <div class="f_left">
+
+                <div class="l_header clearfix">
+                    <div class="h_left"><img src="images/logo.png" alt=""></div>
+
+                    <div class="h_right">
+                        <div class="r_type">
+                            <span>报名方式：</span> <span id="regFrom"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="l_certificate">
+                    <div class="c_txt">
+                        <img src="images/certificate.png" alt="">
+                    </div>
+                </div>
+
+                <div class="l_voucher">
+                    <div class="v_item">
+                        <div class="i_title">学生编号：</div>
+                        <div class="i_txt" id="studentNo"></div>
+                    </div>
+                    <div class="v_item ml160">
+                        <div class="i_title">学生姓名：</div>
+                        <div class="i_txt" id="studentName"></div>
+                    </div>
+                </div>
+
+                <div class="l_table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td><div><img src="images/dot_blue.png" /><span>校区</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>年级</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>班别</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>课室</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>起止讲数</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>上课时间</span></div></td>
+                                <td><div><img src="images/dot_blue.png" /><span>上课日期</span></div></td>
+                            </tr>
+                        </thead>
+                        <tbody id ="courseList">
+                            <!--<tr>
+                                <td>动物园高中部</td>
+                                <td>高三</td>
+                                <td>2017-春季班碉堡化学能通气班1</td>
+                                <td>606</td>
+                                <td>4-4</td>
+                                <td>9:30-10:50</td>
+                                <td>周日 201-05-07</td>
+                            </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="l_details clearfix">
+                    <div class="d_left">
+                        <div class="l_item">
+                            <div class="i_title">校区地址：</div>
+                            <div class="i_txt" id="campusName"></div>
+                        </div>
+                    </div>
+                    <div class="d_right">
+                        <div class="r_item">
+                            <div class="i_title">联系电话：</div>
+                            <div class="i_txt" id="campusPhoneNo">
+                                <span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="l_remarks clearfix">
+                    <div class="r_left">
+                        <div class="l_list">
+                            <div class="l_item">
+                                <div class="i_title">操作员：</div>
+                                <div class="i_txt" id="principal"></div>
+                            </div>
+                            <div class="l_item">
+                                <div class="i_title">打印日期：</div>
+                                <div class="i_txt" id="now"></div>
+                            </div>
+                        </div>
+                        <div class="l_tips">温馨提示：请同学们自行保管好财物及交通工具，校区不负保管责任。</div>
+                    </div>
+                    <div class="r_right">
+                        <div class="r_qrcode">
+                            <img src="images/qrcode.png" alt="" />
+                            <p>誉优品学公众号</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="f_right">
+                <div class="r_title">收款凭证</div>
+                <div class="r_list">
+                    <div class="l_item">
+                        <div class="i_title">学生编号：</div>
+                        <div class="i_txt" id="studentNo2"></div>
+                    </div>
+                    <div class="l_item">
+                        <div class="i_title">总金额：</div>
+                        <div class="i_txt" id="totalAmount"></div>
+                    </div>
+
+                    <div class="l_item">
+                        <div class="i_title">优惠金额：</div>
+                        <div class="i_txt" id="discountAmount"></div>
+                    </div>
+
+                    <div class="l_item">
+                        <div class="i_title">应收金额：</div>
+                        <div class="i_txt" id="payableAmount"></div>
+                    </div>
+
+                    <div class="l_item">
+                        <div class="i_title">已付款金额：</div>
+                        <div class="i_txt" id="paidAmount"></div>
+                    </div>
+
+                    <div class="l_item">
+                        <div class="i_title">欠费金额：</div>
+                        <div class="i_txt" id="owingAmount"></div>
+                    </div>
+
+                </div>
+                <div class="r_remarksList">
+                    <!--<div class="l_item">
+                        <div class="i_title">操作员：</div>
+                        <div class="i_txt"></div>
+                    </div>-->
+                    <div class="l_item">
+                        <div class="i_title">缴费日期：</div>
+                        <div class="i_txt" id="courseOrderUpdate"></div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.0/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/moment.js/2.18.0/locale/zh-cn.js"></script>
+    <script>
+
+      function getQueryString (name){
+        var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
+        if(r) {
+          return r[2];
+        }
+        return null;
+      }
+
+      function formatDate (time , format ) {
+        if (!time) return "";
+        if (typeof time == "string") {
+          time = parseInt(time, 10);
+        }
+        return moment(time).format(format || 'YYYY-MM-DD')
+      }
+
+      function fillData(data){
+
+        function str(s){
+          return s ? s : ''
+        }
+
+        var courseListHtml = ''
+        for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
+          var c  = data.regDetailVos[i]
+          courseListHtml +=  '<tr><td>'+str( c.courseClass.campusName )+'</td><td>'+str(c.courseClass.gradeName)+'</td><td>'+str(c.courseClass.className)+'</td><td>'+str(c.courseClass.roomName)+'</td><td>'+str(c.studentReg.startAmount)+'-'+str(c.studentReg.endAmount)+'</td><td>'+str(c.courseClass.classDateTip)+'&nbsp;'+str(c.courseClass.studyingTime)+'</td><td>'+str( formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ))+'</td></tr>'
+        }
+
+        document.getElementById('courseList').innerHTML = courseListHtml
+
+        document.getElementById('totalAmount').innerHTML = data.courseOrder.totalAmount
+        document.getElementById('discountAmount').innerHTML = data.courseOrder.totalAmount - data.courseOrder.payableAmount
+        document.getElementById('payableAmount').innerHTML = data.courseOrder.payableAmount
+        document.getElementById('paidAmount').innerHTML = data.courseOrder.paidAmount
+        document.getElementById('owingAmount').innerHTML = data.courseOrder.payableAmount - data.courseOrder.paidAmount
+        document.getElementById('courseOrderUpdate').innerHTML = formatDate ( data.courseOrder.updateTime)
+
+        document.getElementById('principal').innerHTML = data.principal
+        document.getElementById('now').innerHTML = moment().format('YYYY-MM-DD H:mm:ss')
+
+
+        document.getElementById('regFrom').innerHTML = data.courseOrder.regFrom == 0 ? '线下' :'线上'
+
+
+        document.getElementById('studentNo').innerHTML = data.student.studentNo
+        document.getElementById('studentNo2').innerHTML = data.student.studentNo
+        document.getElementById('studentName').innerHTML = data.student.name
+
+        if(data.campus){
+          document.getElementById('campusName').innerHTML = data.campus.address
+          document.getElementById('campusPhoneNo').innerHTML = data.campus.phoneNo
+        }
+
+
+      }
+
+      $(function () {
+        $.post(window.top.window._apiAdminStudentClassCertDetail ,{ courseOrderId : getQueryString('courseOrderId') },
+          function(ret){
+            if(ret.success){
+              fillData(ret.data)
+            }else{
+              alert( ret.desc || '请求服务器失败')
+            }
+          },"json")
+      })
+
+
+    </script>
+
+
+</body>
+
+</html>

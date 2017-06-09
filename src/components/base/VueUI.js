@@ -56,6 +56,11 @@ VueUI.install = function (Vue){
     }
     return o ;
   }
+  function getInstanceNoCache(Component){
+    var o  = new Component ;
+    $('#_componentSlot').append(o.$mount().$el)
+    return o ;
+  }
 
   Vue.showLoading = Vue.prototype.$showLoading = function (){
     getInstance(Loading,'loading').show()
@@ -74,11 +79,11 @@ VueUI.install = function (Vue){
   }
 
   Vue.confirm = Vue.prototype.$confirm = function (msg,confirm,cancel){
-    getInstance(Confirm,'confirm').show(msg,confirm,cancel)
+    getInstanceNoCache(Confirm).show(msg,confirm,cancel)
   }
 
   Vue.prompt = Vue.prototype.$prompt = function (msg,confirm,cancel){
-    getInstance(Prompt,'prompt').show(msg,confirm,cancel)
+    getInstanceNoCache(Prompt).show(msg,confirm,cancel)
   }
 
   Vue.toast = Vue.prototype.$toast = function (msg, options = {}){

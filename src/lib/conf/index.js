@@ -22,8 +22,8 @@ export default {
   qiniuCDN : 'http://static.yuyou100.com/',
   qiniuUploadTokenApi: 'http://119.29.5.64/yyfn-api/api/qiniu/upload/token'
 }
-
  */
+
 
 /*
 export default {
