@@ -107,7 +107,7 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          regStatus: '',
+          regStatus: '0',
           classId: ''
         }
       }
