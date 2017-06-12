@@ -313,6 +313,10 @@
 
                       <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 "  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班</el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType == 1 || scope.row.classType == 2 ||scope.row.isArrangeTime == 0 || scope.row.isArrangeTeacher == 0"  @click.native="changeClassType(scope.row.classId,2)">众筹</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType == 0 || scope.row.status !=0 "  @click.native="changeClassType(scope.row.classId,0)">取消众筹</el-dropdown-item>
+
                       <el-dropdown-item v-if="hasPermission('invalid')" :disabled="scope.row.regAmount > 0 "  @click.native="cancellation(scope.row)">作废</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -609,10 +613,25 @@
           }
         })
       },
+      changeClassType:function(classId,classType){
+        var _this = this
+        _this.$showLoading()
+        io.post(io.apiAdminChangeClassType,{
+          classIds: [classId].join(','),
+          classType: classType
+        },function(ret){
+          _this.$hiddenLoading()
+          if(ret.success){
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       handleSelectionChange:function (selection) {
         this.selection = selection
       }
-
     }
   }
 </script>

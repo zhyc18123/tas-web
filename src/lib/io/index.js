@@ -132,6 +132,7 @@ const io = {
     this.apiAdminChangeCourseClassStatus = conf.baseApiPath + '/api/admin/changeCourseClassStatus'
     this.apiAdminRecommendCourseClass = conf.baseApiPath + '/api/admin/recommendCourseClass'
     this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
+    this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
