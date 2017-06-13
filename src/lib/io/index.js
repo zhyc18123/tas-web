@@ -134,6 +134,8 @@ const io = {
     this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
     this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
 
+    this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/teaching/resource/crowdfundingClassMgr'
+
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
     this.apiAdminSearchStudent = conf.baseApiPath + '/api/admin/searchStudent'

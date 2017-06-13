@@ -20,14 +20,7 @@
                   <option value="">业务组</option>
                 </select2>
               </div>
-            </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
-                  <option value="">产品</option>
-                </select2>
-              </div>
             </div>
              <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -115,29 +108,31 @@
                 min-width="150">
               </el-table-column>
               <el-table-column
-                prop="quota"
                 label="学位数"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.discountType == 0 ? scope.row.quota : ( scope.row.quotaMin + ' - ' + scope.row.quotaMax ) }}
+                </template>
               </el-table-column>
                <el-table-column
                 label="众筹定价"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status == 0 ? '连续优惠': '分段优惠' }}
+                  {{scope.row.discountType == 0 ? '众筹定价': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
                 </template>
               </el-table-column>           
               <el-table-column
                 label="开班"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                  {{scope.row.status == 0 ? '否': ( scope.row.status == 1 ? '是' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
                 </template>
               </el-table-column>
               <el-table-column
-                label="众筹"
+                label="详情"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.classType == 0 ? '否':  '是'}}
+                  {{scope.row.discountType != 0 ? '>':  ''}}
                 </template>
               </el-table-column>          
             </el-table>
@@ -233,7 +228,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseClassList, $.extend({
+        io.post(io.apiAdminCrowdfundingClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
