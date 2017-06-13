@@ -46,6 +46,8 @@ const CampusForm = resolve => require(['./components/teachingresource/CampusForm
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
 
+const CrowdfundingClassList = resolve => require(['./components/teachingresource/CrowdfundingClassList'], resolve)
+
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
 const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
 const ProductList = resolve => require(['./components/course/ProductList'], resolve)
@@ -164,6 +166,7 @@ const router = new VueRouter({
       {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
       {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
       {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
+      {path: 'sys/crowdfunding/list', component: CrowdfundingClassList },
 
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
