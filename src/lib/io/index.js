@@ -135,6 +135,8 @@ const io = {
     this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
 
     this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/teaching/resource/crowdfundingClassMgr'
+    this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'
+    this.apiAdminCrowdfundingClassEdit = conf.baseApiPath + '/api/admin/crowdfundingClassDetail'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'

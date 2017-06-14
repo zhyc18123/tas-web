@@ -131,8 +131,8 @@
               <el-table-column
                 label="详情"
                 min-width="100">
-                <template scope="scope">
-                  {{scope.row.discountType != 0 ? '>':  ''}}
+                 <template scope="scope"> 
+                   <el-button size="small" :disabled="scope.row.discountType == 2" @click.native="$router.push( '/main/sys/crowdfunding/edit/' + scope.row.classId) "> 查看 </el-button>     
                 </template>
               </el-table-column>          
             </el-table>
