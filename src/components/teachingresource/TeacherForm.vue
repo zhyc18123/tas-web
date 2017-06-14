@@ -53,10 +53,13 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>任教年级
               </label>
-              <div class="am-u-sm-9 am-margin-top-xs input-field">
-                <label v-for="item in $root.config.grades" :key="item.gradeId" class="am-checkbox-inline">
-                  <input type="checkbox" :value="item.gradeId" name="gradeIds" required v-model="formData.gradeIds">{{item.gradeName}}
-                </label>
+              <div class="am-u-sm-9  input-field">
+                <choose v-model="formData.gradeIds">
+                  <select required data-placeholder="选择任教年级" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in $root.config.grades" :value="item.gradeId">{{item.gradeName}}</option>
+                  </select>
+                </choose>
               </div>
             </div>
 
@@ -64,10 +67,13 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>任教科目
               </label>
-              <div class="am-u-sm-9 am-margin-top-xs input-field">
-                <label v-for="item in $root.config.subjects" :key="item.subjectId" class="am-checkbox-inline">
-                  <input type="checkbox" :value="item.subjectId" name="subjectIds" required v-model="formData.subjectIds">{{item.subjectName}}
-                </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.subjectIds">
+                  <select required data-placeholder="选择任教科目" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in $root.config.subjects" :value="item.subjectId">{{item.subjectName}}</option>
+                  </select>
+                </choose>
               </div>
             </div>
 
@@ -151,7 +157,14 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>老师标签
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入老师标签,多个标签空格分开"   required v-model="formData.tags"/>
+
+                <choose v-model="formData.tags" :config="{max_selected_options: 3}">
+                  <select required data-placeholder="选择老师标签" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in tags" :value="item">{{item}}</option>
+                  </select>
+                </choose>
+
               </div>
             </div>
 
@@ -202,6 +215,7 @@ import util from '../../lib/util'
                 status:1,
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },
+              tags:[],
               editable:true
             }
         },
@@ -215,6 +229,7 @@ import util from '../../lib/util'
                 ret.data.gradeIds = ret.data.teachGradeIds ? ret.data.teachGradeIds.split(',') : []
                 ret.data.subjectIds = ret.data.teachSubjectIds ? ret.data.teachSubjectIds.split(','):[]
                 ret.data.joinTime = util.formatDate ( ret.data.joinTime )
+                ret.data.tags = ret.data.tags ? ret.data.tags.split(',') : []
                 _this.formData = ret.data
               }
             },
@@ -224,7 +239,7 @@ import util from '../../lib/util'
          }
          this.editable = !teacherId
 
-
+          this.loadTeacherTags()
         },
         computed:{
           areaTeams : function(){
@@ -285,11 +300,24 @@ import util from '../../lib/util'
         },
 
         methods:{
+          loadTeacherTags:function(){
+            var _this = this
+            io.post(io.apiAdminTeacherTags,{},
+              function(ret){
+                if(ret.success){
+                  _this.tags  = ret.data
+                }
+              },
+              function(){
+                _this.$alert('请求服务器失败')
+              })
+          },
           save:function(complete){
             var _this = this
             var data = _this.formData
             data.teachGradeIds = data.gradeIds.join(',')
             data.teachSubjectIds = data.subjectIds.join(',')
+            data.tags = data.tags.join(',')
             io.post(io.apiAdminSaveOrUpdateTeacher,data,
             function(ret){
               complete.call()

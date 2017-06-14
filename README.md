@@ -19,12 +19,12 @@ npm run build
 
 ### 测试
 ```
-scp -r dist/* yunwei@118.89.53.121:/apps/html
+scp -P 50000 -r dist/* yunwei@118.89.53.121:/apps/html
 ```
 
 ### 正式
 ```
-scp -r dist/* yunwei@119.29.5.64:/apps/html
+scp -P 50000 -r dist/* yunwei@119.29.5.64:/apps/html
 ```
 
 

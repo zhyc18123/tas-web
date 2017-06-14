@@ -37,16 +37,8 @@
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus == 0 ">
-      优惠方式：
-      <label class="am-radio-inline">
-      <input type="radio" value="0" name="discountAmount" v-model="formData.discountAmount" > 无
-      </label>
-      <label class="am-radio-inline">
-        <input type="radio" value="51" name="discountAmount" v-model="formData.discountAmount" > 三科连报优惠51
-      </label>
-      <label class="am-radio-inline">
-        <input type="radio" value="34" name="discountAmount" v-model="formData.discountAmount" > 两科连报优惠34
-      </label>
+      优惠金额：
+      <input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount" style="display:inline;width:100px;" @change="checkDiscountAmount"/>
     </div>
 
 
@@ -135,6 +127,11 @@
         }
 
       },
+      checkDiscountAmount:function(){
+          if(this.formData.discountAmount < 0 || this.formData.discountAmount > this.courseOrder.totalAmount ){
+            this.formData.discountAmount = 0
+          }
+      },
       loadCourseOrderDetail: function (courseOrderId) {
         var _this = this
         if (courseOrderId) {
@@ -156,28 +153,30 @@
           this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +this.courseOrder.courseOrderId)+'" />')
       },
       confirmPay: function () {
-
         var _this = this
-        _this.$showLoading()
-        io.post(io.apiAdminConfirmPayOrder, $.extend({}, _this.formData), function (ret) {
-          _this.$hiddenLoading()
-          if (ret.success) {
+        _this.$confirm("确定缴费" , function(){
+          _this.$showLoading()
+          io.post(io.apiAdminConfirmPayOrder, $.extend({}, _this.formData), function (ret) {
+            _this.$hiddenLoading()
+            if (ret.success) {
 
-            if(_this.formData.payWay == 4 ){
-              _this.showQRCode()
-            }else{
-              _this.$alert("缴费成功")
+              if(_this.formData.payWay == 4 ){
+                _this.showQRCode()
+              }else{
+                _this.$alert("缴费成功")
+              }
+
+              _this.$root.$emit('order:new')
+              _this.$root.$emit('class:new')
+              _this.$emit('paySuccess')
+
+            } else {
+              _this.$alert( ret.desc || "缴费失败")
             }
 
-            _this.$root.$emit('order:new')
-            _this.$root.$emit('class:new')
-            _this.$emit('paySuccess')
-
-          } else {
-            _this.$alert( ret.desc || "缴费失败")
-          }
-
+          })
         })
+
       }
 
 

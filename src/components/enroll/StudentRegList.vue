@@ -104,7 +104,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 10,
+        pageSize: 20,
         pageNo: 1,
         query: {
           regStatus: '0',

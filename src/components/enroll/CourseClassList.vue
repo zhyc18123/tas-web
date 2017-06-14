@@ -93,6 +93,18 @@
               </div>
             </div>
 
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.status">
+                  <option value="">班级状态</option>
+                  <option value="0">未开班</option>
+                  <option value="1">已开班</option>
+                  <option value="2">已作废</option>
+                  <option value="3">已结课</option>
+                </select2>
+              </div>
+            </div>
+
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
