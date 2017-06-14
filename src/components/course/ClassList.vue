@@ -314,7 +314,7 @@
                         <el-dropdown-item  @click.native="rearrangeTeacher(scope.row)" v-else>重排老师</el-dropdown-item>
                       </template>
 
-                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('edit')"  @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
 
                       <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>

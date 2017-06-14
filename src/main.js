@@ -126,7 +126,7 @@ Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
 
-const Index = { template: '<div>Index YYYY</div>' }
+const Index = { template: '<div>欢迎来到誉优综合业务管理平台</div>' }
 
 
 const router = new VueRouter({

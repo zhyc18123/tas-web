@@ -17,10 +17,10 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属课程
             </label>
             <div class="am-u-sm-6 input-field">
-              <input type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="$refs.selectCourse.show()">
+              <input :disabled="!editable" type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="$refs.selectCourse.show()">
             </div>
             <div class="am-u-sm-3 input-field">
-              <button type="button" class="am-btn am-btn-default" @click="$refs.selectCourse.show()">选择</button>
+              <button :disabled="!editable" type="button" class="am-btn am-btn-default" @click="$refs.selectCourse.show()">选择</button>
             </div>
           </div>
 
@@ -29,7 +29,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required disabled v-model="formData.areaTeamId" :options="areaTeamsData">
+              <select2 :disabled="!editable" required disabled v-model="formData.areaTeamId" :options="areaTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -39,7 +39,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在业务组
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required v-model="formData.busTeamId" :options="busTeamsData">
+              <select2 :disabled="!editable" required v-model="formData.busTeamId" :options="busTeamsData">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -49,7 +49,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required v-model="formData.periodId" :options="periods">
+              <select2 :disabled="!editable" required v-model="formData.periodId" :options="periods">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -60,7 +60,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段次
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 required v-model="formData.segmentNo" :options="segments">
+              <select2 :disabled="!editable" required v-model="formData.segmentNo" :options="segments">
                 <option value="">请选择</option>
               </select2>
             </div>
@@ -130,7 +130,7 @@
           </div>
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
-              <button :disabled="!editable" type="submit" class="am-btn am-btn-primary">提交</button>
+              <button  type="submit" class="am-btn am-btn-primary">提交</button>
             </div>
           </div>
         </fieldset>

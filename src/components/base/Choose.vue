@@ -28,7 +28,21 @@
         },
         methods:{
           setSelect:function(val){
-            $('select' , this.$el).find('option[value='+val+']').attr('selected', true).trigger('chosen:updated')
+            try{
+              var $s  = $('select' , this.$el);
+              if(val instanceof Array ){
+                for(var i = 0 ; i < val.length ;i++ ){
+                  $s.find('option[value='+val[i]+']').attr('selected', true)
+                }
+              }else{
+                $s.find('option[value='+val+']').attr('selected', true)
+              }
+              $s.trigger('chosen:updated')
+            }catch (e){
+
+            }
+
+
           },
           initChoose:function(){
             var _this = this

@@ -89,6 +89,7 @@ const io = {
     this.apiAdminTeacherDetail = conf.baseApiPath + '/api/admin/teaching/resource/teacherDetail'
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
+    this.apiAdminTeacherTags = conf.baseApiPath + '/api/admin/teaching/resource/teacherTags'
 
     this.apiAdminCampusList = conf.baseApiPath + '/api/admin/teaching/resource/campusList'
     this.apiAdminBaseCampusList = conf.baseApiPath + '/api/admin/teaching/resource/baseCampusList'
