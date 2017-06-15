@@ -4,71 +4,115 @@
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">众筹定价</div>
       </div>
-      <div class="widget-body am-fr">
+      <div class="widget-body am-fr">      
+            <div class="am-form-group">    
+            <tr>
+              <td style="width:300px; height:250px;">
+                  <img class="am-margin-top" :src="teachersData.avatarUrl" >
+              </td>
+              <td style="width:300px; height:250px;padding-left:5%;padding-top:20%">   
+                  {{teachersData.teacherName}} </br>
+                  {{teachersData.sex == 1 ? '男' : (teachersData.sex == 2 ? '女' : '')}} </br>
+                  {{teachersData.teachGradeNames}}</br>
+                  {{teachersData.phoneNo}}</br>
+                  {{teachersData.areaTeamName}} </br>
+                  {{teachersData.tags}}            
+              </td>
+            </tr>      
+            </div>
+            
+            
+            
+
         <el-table
-          :data="tableData"
+          :data="classData"
           border
           stripe
           style="min-width: 100%">
           <el-table-column
             fixed
-            prop="studentName"
-            label="名师班级"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
             prop="className"
-            label="班级名称"
+            label="名师班级"
             min-width="200">
           </el-table-column>
           <el-table-column
-            label="申请时间"
-            min-width="200">
+            prop="gradeName"
+            label="年级"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="subjectName"
+            label="科目"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="season"
+            label="学期"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="lectureAmount"
+            label="讲数"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            prop="level"
+            label="层级"
+            min-width="100">
+          </el-table-column>
+          <el-table-column
+            label="学位"
+            min-width="100">      
             <template scope="scope">
-              {{scope.row.createTime | formatTime }}
+                {{scope.row.discountType == 0 ? ' - ':(scope.row.quotaMin + '-' + scope.row.quotaMax)}}
+            </template>     
+          </el-table-column>
+          <el-table-column
+            prop="discountType"
+            label="优惠方式"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.discountType == 1 ? "连续优惠" : (scope.row.discountType == 2 ? "分段优惠" : "-" )}}
+            </template>
+              }
+          </el-table-column>
+          <el-table-column
+            label="最低单价"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.discountType == 0 ? '-' : scope.row.lowestPrice }}
             </template>
           </el-table-column>
           <el-table-column
-            prop="refundLecture"
-            label="申请退费讲次"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
-            prop="amount"
-            label="退费金额"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
-            prop="description"
-            label="退费原因"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
-            label="退费方式"
+            label="最高单价"
             min-width="100">
             <template scope="scope">
-              {{scope.row.refundWay == 0 ? '支付宝' : scope.row.refundWay == 1 ? '微信' : scope.row.refundWay == 2 ? '现金' : scope.row.refundWay == 3 ? '余额账户':'银行卡转账' }}
-            </template>
-          </el-table-column>
-          <el-table-column
-            prop="returnResult"
-            label="审批意见"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
-            label="状态"
-            min-width="100">
-            <template scope="scope">
-              {{scope.row.status==0?'处理中':(scope.row.status==1?'已处理':'已拒绝')}}
+              {{scope.row.discountType ==0 ? '-': scope.row.highestPrice}}
                 </template>
           </el-table-column>
           <el-table-column
             fixed="right"
             label="操作"
             width="120">
-            <template scope="scope">
-              <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">审核</el-button>
-            </template>
+             <template scope="scope">
+                  <el-dropdown v-if="scope.row.status != 2">
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <template >
+                        <el-dropdown-item  @click.native="setPrice()" v-if="scope.row.discountType == 0">定价</el-dropdown-item>
+                        <el-dropdown-item  @click.native="setPrice()" v-else>重新定价</el-dropdown-item>
+                      </template>
+                      <template >
+                        <el-dropdown-item  :disabled="scope.row.status != 0 "  @click.native="changeStatus(scope.row.classId,1)"> 开班
+                        </el-dropdown-item>
+                        <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)"> 取消开班
+                        </el-dropdown-item>
+                      </template>           
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
           </el-table-column>
         </el-table>
        
@@ -81,24 +125,32 @@
         </div>
       </div>
     </div>
+    <window ref="priceSetting" title="设置价格" @close="priceRange = {}">
+      <price-setting :priceRange = priceRange @arrangementSuccess="$refs.SetPrice.close();loadTableData()"></price-setting>
+    </window>
   </div>
+
 </template>
 
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
+  import SetPrice from './SetPrice'
   export default{
     data: function () {
       return {
-        tableData: [],
+        teachersData: {},
+        classData:[],
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        classId: ''
+        classId: '',
+        priceRange: {}
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'price-setting':SetPrice
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -122,19 +174,22 @@
           classId: _this.classId
         }, function (ret) {
           if (ret.success) {
-            _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.teachersData = ret.data.teacherList[0]
+            var classData = [];
+            classData.push(ret.data.crowdfundingClass);
+            _this.classData = classData;
           } else {
             _this.$alert(ret.desc)
           }
         })
       },
-      editRefund: function (studentRefundId) {
-        var _this = this
-        _this.studentRefundId = studentRefundId
-        _this.$refs.studentRefund.show({
-          width: 1000,
-          height: 600
+      //众筹定价
+      setPrice:function () {
+        //弹窗
+        //this.courseClass = courseClass
+        this.$refs.priceSetting.show({
+          width:1000,
+          height:700
         })
       }
     }
