@@ -7,8 +7,8 @@
       <div class="widget-body am-fr">      
             <div class="am-form-group">    
             <tr>
-              <td style="width:300px; height:250px;">
-                  <img class="am-margin-top" :src="teachersData.avatarUrl" >
+              <td style="width:100px; height:50px;">
+                  <img height="300" width="300" :src="teachersData.avatarUrl" >
               </td>
               <td style="width:300px; height:250px;padding-left:5%;padding-top:20%">   
                   {{teachersData.teacherName}} </br>
@@ -101,8 +101,8 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <template >
-                        <el-dropdown-item  @click.native="setPrice()" v-if="scope.row.discountType == 0">定价</el-dropdown-item>
-                        <el-dropdown-item  @click.native="setPrice()" v-else>重新定价</el-dropdown-item>
+                        <el-dropdown-item  :classId="classId" @click.native="setPrice(scope.row.classId)" v-if="scope.row.discountType == 0">定价</el-dropdown-item>
+                        <el-dropdown-item  :classId="classId" @click.native="setPrice(scope.row.classId)" v-else>重新定价</el-dropdown-item>
                       </template>
                       <template >
                         <el-dropdown-item  :disabled="scope.row.status != 0 "  @click.native="changeStatus(scope.row.classId,1)"> 开班
@@ -126,7 +126,7 @@
       </div>
     </div>
     <window ref="priceSetting" title="设置价格" @close="priceRange = {}">
-      <price-setting :priceRange = priceRange @arrangementSuccess="$refs.SetPrice.close();loadTableData()"></price-setting>
+      <price-setting :classId = classId @arrangementSuccess="$refs.SetPrice.close();loadTableData()"></price-setting>
     </window>
   </div>
 
@@ -184,9 +184,9 @@
         })
       },
       //众筹定价
-      setPrice:function () {
-        //弹窗
-        //this.courseClass = courseClass
+      setPrice:function (classId) {//弹窗
+        
+        this.classId = classId
         this.$refs.priceSetting.show({
           width:1000,
           height:700
