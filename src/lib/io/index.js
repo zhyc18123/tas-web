@@ -49,6 +49,10 @@ const io = {
     this.apiAdminRoleResourceList = conf.baseApiPath + '/api/admin/roleResourceList'
     this.apiAdminSaveRoleResource = conf.baseApiPath + '/api/admin/saveRoleResource'
 
+    this.apiAdminSysDataPermissionConfig = conf.baseApiPath + '/api/admin/sysDataPermissionConfig'
+    this.apiAdminSaveUserDataPermission = conf.baseApiPath + '/api/admin/saveUserDataPermission'
+    this.apiAdminUserDataPermissionList = conf.baseApiPath + '/api/admin/userDataPermissionList'
+
     this.apiAdminRoleList = conf.baseApiPath + '/api/admin/roleList'
     this.apiAdminRoleDetail = conf.baseApiPath + '/api/admin/roleDetail'
     this.apiAdminSaveRole = conf.baseApiPath + '/api/admin/saveRole'

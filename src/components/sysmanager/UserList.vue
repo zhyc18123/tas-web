@@ -70,15 +70,13 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="areaTeamName"
-                label="区域"
+                label="用户角色"
                 min-width="100">
+                <template scope="scope">
+                  {{ { '0':'誉优','1':'区域','2':'业务组' }[scope.row.userType]}}
+                </template>
               </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                label="业务组"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 label="状态"
                 min-width="100">
@@ -98,7 +96,9 @@
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/user/edit/'+scope.row.userId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('permission')" @click.native="$router.push('/main/sys/user/roles/'+scope.row.userId)">设置权限
+                      <el-dropdown-item v-if="hasPermission('permission')" @click.native="$router.push('/main/sys/user/roles/'+scope.row.userId)">设置操作权限
+                      </el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('data_permission')" @click.native="$router.push('/main/sys/role/dataPermission/'+scope.row.userId)">设置数据权限
                       </el-dropdown-item>
                       <el-dropdown-item  @click.native="del(scope.row.userId)">删除</el-dropdown-item>
                       <el-dropdown-item v-if="scope.row.status == 1 && hasPermission('enable_disable')" @click.native="changeStatus(scope.row.userId ,0)">禁用</el-dropdown-item>
