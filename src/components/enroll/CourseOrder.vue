@@ -9,8 +9,7 @@
             <th>开课日期</th>
             <th>上课时间</th>
             <th>讲数</th>
-            <th>起始讲数</th>
-            <th>结束讲数</th>
+            <th>起止讲数</th>
             <th>学费</th>
           </tr>
           </thead>
@@ -21,8 +20,7 @@
             <td>{{item.courseClass.startCourseTime | formatDate}}</td>
             <td>{{item.courseClass.classDateTip}} {{item.courseClass.studyingTime}}</td>
             <td>{{item.courseClass.lectureAmount}}</td>
-            <td>{{item.studentReg.startAmount}}</td>
-            <td>{{item.studentReg.endAmount}}</td>
+            <td>{{item.studentReg.startAmount}}-{{item.studentReg.endAmount}}</td>
             <td>{{item.studentReg.totalAmount}}</td>
           </tr>
           </tbody>
@@ -39,6 +37,8 @@
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus == 0 ">
       优惠金额：
       <input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount" style="display:inline;width:100px;" @change="checkDiscountAmount"/>
+      优惠原因：
+      <input type="text" class="am-input-sm"  v-model="formData.discountReason" style="display:inline;width:200px;" />
     </div>
 
 
@@ -153,6 +153,19 @@
           this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +this.courseOrder.courseOrderId)+'" />')
       },
       confirmPay: function () {
+
+        if(this.courseOrder.chargingStatus == 0 && this.formData.discountAmount > 0 ){
+            if(!this.formData.discountReason){
+              this.$alert('请输入优惠原因')
+              return
+            }
+
+            if(this.formData.discountReason.length > 140 ){
+              this.$alert('输入优惠原因过长(140字以内)')
+              return
+            }
+        }
+
         var _this = this
         _this.$confirm("确定缴费" , function(){
           _this.$showLoading()

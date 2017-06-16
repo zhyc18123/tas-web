@@ -63,29 +63,13 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="报读开始讲数"
-        min-width="150">
-        <template scope="scope">
-          {{scope.row.studentReg.startAmount}}
-
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="报读结束讲数"
-        min-width="150">
-        <template scope="scope">
-          {{scope.row.studentReg.endAmount}}
-
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="报名讲数"
+        label="起止讲数"
         min-width="100">
         <template scope="scope">
-          {{scope.row.studentReg.endAmount - scope.row.studentReg.startAmount + 1}}
-
+          {{scope.row.studentReg.startAmount}}-{{scope.row.studentReg.endAmount}}
         </template>
       </el-table-column>
+
       <el-table-column
         label="开课日期"
         min-width="150">
