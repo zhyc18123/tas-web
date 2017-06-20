@@ -32,6 +32,8 @@ import conf from '../lib/conf'
 
 import Vue from 'vue'
 
+import storage from '../lib/storage'
+
 
 function loadConfig( cb ){
   io.post(io.apiAdminConfig , {},function(ret){
@@ -123,10 +125,13 @@ export default {
     loadConfig(function(config){
         next(function(vm){
           vm.$root.config =  config
-          Vue.hiddenLoading()
           clearTimeout(st)
+          Vue.hiddenLoading()
         })
     })
+  },
+  created:function(){
+    this.refreshUserInfo()
   },
   mounted:function(){
     var _this = this
@@ -135,6 +140,22 @@ export default {
         _this.$root.config =  config
       })
     })
+  },
+  methods:{
+    refreshUserInfo:function(){
+      if(!storage.getLogin()){
+        return
+      }
+      var _this = this
+      io.post(io.apiAdminSysUserDetail,{
+        userId : storage.getLogin().userId
+      },function(ret){
+        if(ret.success){
+          storage.setCurrentUserInfo(ret.data)
+          _this.$root.$emit('userInfoChange',ret.data)
+        }
+      })
+    }
   }
 }
 

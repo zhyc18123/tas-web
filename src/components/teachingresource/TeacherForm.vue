@@ -93,12 +93,25 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在业务组
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>人事关系
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 :disabled="!editable" required v-model="formData.busTeamId" :options="busTeams" >
+                <select2 :disabled="!editable"  v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>服务关系
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.serviceBusTeamIds">
+                  <select required data-placeholder="选择服务业务组" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option v-for="item in busTeams" :value="item.value">{{item.text}}</option>
+                  </select>
+                </choose>
               </div>
             </div>
 
@@ -212,6 +225,7 @@ import util from '../../lib/util'
                 busTeamId:'',
                 gradeIds:[],
                 subjectIds:[],
+                serviceBusTeamIds:[],
                 status:1,
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },
@@ -230,6 +244,7 @@ import util from '../../lib/util'
                 ret.data.subjectIds = ret.data.teachSubjectIds ? ret.data.teachSubjectIds.split(','):[]
                 ret.data.joinTime = util.formatDate ( ret.data.joinTime )
                 ret.data.tags = ret.data.tags ? ret.data.tags.split(',') : []
+                ret.data.serviceBusTeamIds = ret.data.serviceBusTeamIds ? ret.data.serviceBusTeamIds.split(',') : []
                 _this.formData = ret.data
               }
             },
@@ -282,6 +297,28 @@ import util from '../../lib/util'
             },
             submit:function(e){
               e.preventDefault();
+
+              if(!this.formData.teachGradeIds){
+                _this.$alert('请选择任教年级')
+                return
+              }
+
+              if(!this.formData.teachSubjectIds){
+                _this.$alert('请选择任教科目')
+                return
+              }
+
+
+              if(!this.formData.tags){
+                _this.$alert('请选择老师标签')
+                return
+              }
+
+              if(!this.formData.serviceBusTeamIds){
+                _this.$alert('请选择服务业务组')
+                return
+              }
+
               var $submitBtn = $('button[type=submit]',e.target);
               $submitBtn.attr("disabled" ,"disabled" )
               _this.$showLoading()
@@ -313,11 +350,17 @@ import util from '../../lib/util'
               })
           },
           save:function(complete){
+
+
+
+
+
             var _this = this
             var data = _this.formData
             data.teachGradeIds = data.gradeIds.join(',')
             data.teachSubjectIds = data.subjectIds.join(',')
             data.tags = data.tags.join(',')
+            data.serviceBusTeamIds = data.serviceBusTeamIds.join(',')
             io.post(io.apiAdminSaveOrUpdateTeacher,data,
             function(ret){
               complete.call()

@@ -67,7 +67,7 @@ VueUI.install = function (Vue){
   }
 
   Vue.hiddenLoading = Vue.prototype.$hiddenLoading = function (){
-    getInstance(Loading,'loading').show()
+    getInstance(Loading,'loading').close()
   }
 
   Vue.alert = Vue.prototype.$alert = function (msg){
