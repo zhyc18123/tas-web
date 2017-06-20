@@ -46,8 +46,9 @@ const CampusForm = resolve => require(['./components/teachingresource/CampusForm
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
 
-const CrowdfundingClassList = resolve => require(['./components/teachingresource/CrowdfundingClassList'], resolve)
-const CrowdfundingClassDetail = resolve => require(['./components/teachingresource/CrowdfundingClassDetail'], resolve)  
+const CrowdfundingClassList = resolve => require(['./components/crowdfunding/CrowdfundingClassList'], resolve)
+const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)  
+const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve) 
 
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
 const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
@@ -69,7 +70,7 @@ const StudentRefundList = resolve => require([ './components/enroll/StudentRefun
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
 const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
-const CrowdfundingRegList = resolve => require(['./components/enroll/CrowdfundingRegList'], resolve) 
+
                 
 
 const AccountList = resolve => require(['./components/settlement/AccountList'], resolve)
@@ -169,8 +170,9 @@ const router = new VueRouter({
       {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
       {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
       {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
-      {path: 'sys/crowdfunding/list', component: CrowdfundingClassList },
-      {path: 'sys/crowdfunding/edit/:classId' , component: CrowdfundingClassDetail},
+
+      {path: 'crowdfunding/list', component: CrowdfundingClassList },
+      {path: 'crowdfunding/edit/:classId' , component: CrowdfundingClassDetail},
 
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
@@ -195,7 +197,7 @@ const router = new VueRouter({
 
       {path: 'enroll/class/list' , component: CourseClassList },
       {path: 'enroll/class/reg/:classId' , component: StudentRegList },
-      {path: 'enroll/crowdfundingClass/reg/:classId' , component: CrowdfundingRegList },
+      {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},

@@ -216,7 +216,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfundingClass/reg/')) + scope.row.classId)">报名列表</el-button>
+                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfunding/reg/')) + scope.row.classId)">报名列表</el-button>
                 </template>
               </el-table-column>
 

@@ -93,10 +93,6 @@
         </el-table>
       </div>
     </div>
-      <window ref="priceSetting" title="设置价格" @close="priceRange = {}">
-        <price-setting :classId = classId @arrangementSuccess="$refs.SetPrice.close();loadTableData()"></price-setting>
-      </window>
-
 
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" style="width:800px">
       <fieldset>
@@ -169,7 +165,34 @@
               <input type="text" placeholder=""  required  v-model="formData.totalPrice" >
             </div>
           </div>
+
+           <div class="am-form-group">
+          <div class="am-u-sm-3 am-u-sm-centered">
+            <button type="button" class="am-btn am-btn-primary" @click="arrangePrice">预览</button>
+          </div>
+        </div>
+
+        <div class="am-form-group" v-if="arrangeResult.length > 0 ">
+          <div class="am-u-sm-12 am-scrollable-horizontal">
+            <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+              <thead>
+              <tr>
+                <th>总人数</th>
+                <th>人均价格</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="( item,index ) in arrangeResult">
+                <td>{{item.number}}</td>
+                <td>{{item.price}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+
+
       <div class="am-form-group">
         <div class="am-u-sm-9 am-u-sm-push-3">
           <button type="submit" class="am-btn am-btn-primary">提交</button>
@@ -183,7 +206,6 @@
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
-  import SetPrice from './SetPrice'
   export default{
     data: function () {
       return {
@@ -194,16 +216,14 @@
         pageNo: 1,
         classId: '',
         priceList:[{}],
+        arrangeResult: [],
         formData:{
           priceRange:'',
           discountType:'1',
-          deposit:'',
+          deposit : '',
           endRegTime:''
         }
       }
-    },
-    components: {
-      'price-setting':SetPrice,
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -309,6 +329,7 @@
             if(ret.success){
               _this.$toast('OK')
               _this.$emit('saveCompleted',ret.data)
+              window.location.reload()
             }else{
               _this.$alert(ret.desc)
             }
@@ -318,6 +339,32 @@
             complete.call()
             _this.$alert('请求服务器失败')
           })
+      },
+      //价格区间计算
+      arrangePrice : function(){
+        var data = this.formData
+        if(!data.quotaMin){
+          this.$alert("请填写学位下限")
+          return
+        }
+          
+        if(!data.quotaMax){
+          this.$alert("请填写学位上限")
+          return
+        }
+        if(!data.totalPrice){
+          this.$alert("请输入总价")
+          return
+        }   
+        this.arrangeResult = []
+
+        for(var i = data.quotaMin ; i <= data.quotaMax ; i++)
+        {
+          this.arrangeResult.push({
+            number : i ,
+            price : Math.ceil(data.totalPrice/i)
+          })
+        }
       },
       addPrice : function(){
         this.priceList.push({})
@@ -332,15 +379,6 @@
         this.formData.referrerId = student.studentId
         this.formData.referrerName = student.name
       },
-      //众筹定价
-      setPrice:function (classId) {//弹窗
-        
-        this.classId = classId
-        this.$refs.priceSetting.show({
-          width:1000,
-          height:700
-        })
-      }
     }
   }
 </script>

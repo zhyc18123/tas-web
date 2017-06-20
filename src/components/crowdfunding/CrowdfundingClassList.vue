@@ -139,7 +139,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                           <template >
-                            <el-dropdown-item  :classId="classId" @click.native="$router.push( '/main/sys/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
+                            <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
                           </template>
                           <template >
                             <el-dropdown-item  :disabled="scope.row.status != 0 "  @click.native="changeStatus(scope.row.classId,1)"> 开班
