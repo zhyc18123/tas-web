@@ -50,26 +50,11 @@
               <el-table-column
                 prop="studentName"
                 label="姓名"
-                min-width="150">
-              </el-table-column>
-              <el-table-column
-                prop="phoneNo"
-                label="联系方式"
-                min-width="150">
-              </el-table-column>
-               <el-table-column
-                prop="payAmount"
-                label="截止报名时价格"
-                min-width="150">
-              </el-table-column>
-               <el-table-column
-                prop="payAmount"
-                label="预约金"
-                min-width="150">
+                min-width="200">
               </el-table-column>
               <el-table-column
                 prop="regTime"
-                label="预约金支付日期"
+                label="报名日期"
                 min-width="200">
                 <template scope="scope">
                   {{scope.row.regTime | formatTime }}
@@ -77,40 +62,44 @@
               </el-table-column>
               <el-table-column
                 prop="payAmount"
-                label="众筹余款"
-                min-width="100">
+                label="报名时付款"
+                min-width="150">
               </el-table-column>
-               <el-table-column
-                prop="regTime"
-                label="余款支付日期"
-                min-width="200">
-                <template scope="scope">
-                  {{scope.row.regTime | formatTime }}
-                </template>
+              <el-table-column
+                prop="currentPrice"
+                label="截至报名时价格"
+                min-width="150">
               </el-table-column>
               <el-table-column
                 prop="refundAmount"
-                label="众筹状态"
-                min-width="100">
+                label="优惠返还"
+                min-width="150">
               </el-table-column>
               <el-table-column
-                label="学生状态"
-                min-width="100">
+                label="系统返还日期"
+                min-width="200">
+                <template scope="scope">
+                  {{scope.row.refundTime | formatTime }}
+                </template>
+              </el-table-column>       
+              <el-table-column
+                prop="startAmount"
+                label="报读开始讲数"
+                min-width="150">
+              </el-table-column>
+              <el-table-column
+                prop="endAmount"
+                label="报读结束讲数"
+                min-width="150">
+              </el-table-column>
+              <el-table-column
+                label="状态"
+                min-width="150">
                 <template scope="scope">
                   {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'撤销' }}
                 </template>
               </el-table-column>
-              <el-table-column
-                label="短信提醒支付余额"
-                min-width="100">
-                <template scope="scope">
-                  >
-                </template>
-              </el-table-column>  
-              <el-table-column
-                label="退款"
-                min-width="100">
-              </el-table-column>                
+
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">

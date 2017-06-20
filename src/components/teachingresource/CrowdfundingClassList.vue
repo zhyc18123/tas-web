@@ -111,14 +111,14 @@
                 label="学位数"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.discountType == 0 ? scope.row.quota : ( scope.row.quotaMin + ' - ' + scope.row.quotaMax ) }}
+                  {{scope.row.discountType == 0 ? '-' : ( scope.row.quotaMin + ' - ' + scope.row.quotaMax ) }}
                 </template>
               </el-table-column>
                <el-table-column
-                label="众筹定价"
+                label="优惠方式"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.discountType == 0 ? '众筹定价': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
+                  {{scope.row.discountType == 0 ? '-': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
                 </template>
               </el-table-column>           
               <el-table-column
@@ -129,12 +129,29 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="详情"
-                min-width="100">
-                 <template scope="scope"> 
-                   <el-button size="small" :disabled="scope.row.discountType == 2" @click.native="$router.push( '/main/sys/crowdfunding/edit/' + scope.row.classId) "> 查看 </el-button>     
-                </template>
-              </el-table-column>          
+                fixed="right"
+                label="操作"
+                width="120">
+                 <template scope="scope">
+                      <el-dropdown v-if="scope.row.status != 2">
+                        <span class="el-dropdown-link">
+                          操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <template >
+                            <el-dropdown-item  :classId="classId" @click.native="$router.push( '/main/sys/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
+                          </template>
+                          <template >
+                            <el-dropdown-item  :disabled="scope.row.status != 0 "  @click.native="changeStatus(scope.row.classId,1)"> 开班
+                            </el-dropdown-item>
+                            <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">  
+                              取消开班
+                            </el-dropdown-item>
+                          </template>
+                          </el-dropdown-menu>     
+                      </el-dropdown>
+                    </template>
+            </el-table-column>         
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
@@ -267,7 +284,23 @@
      
       handleSelectionChange:function (selection) {
         this.selection = selection
-      }
+      },
+     changeStatus:function(classId , status ){
+      var _this = this
+      _this.$showLoading()
+      io.post(io.apiAdminChangeCourseClassStatus, {
+        status: status ,
+        classIds : [classId].join(',')
+      }, function (ret) {
+        _this.$hiddenLoading()
+        if (ret.success) {
+          _this.loadTableData(_this.pageNo)
+          _this.$alert('处理成功')
+        } else {
+          _this.$alert(ret.desc)
+        }
+      })
+    },
     }
   }
 </script>
