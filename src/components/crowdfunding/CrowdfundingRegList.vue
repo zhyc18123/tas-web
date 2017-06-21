@@ -11,6 +11,7 @@
         <div class="widget-body am-fr">
 
           <!--searching condition-->
+          <!--
           <div class="am-u-sm-12 am-form ">
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
@@ -40,7 +41,7 @@
             </div>
 
           </div>
-
+          -->
           <div class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -57,59 +58,44 @@
                 label="联系方式"
                 min-width="150">
               </el-table-column>
-               <el-table-column
-                prop="payAmount"
-                label="截止报名时价格"
-                min-width="150">
-              </el-table-column>
-               <el-table-column
-                prop="payAmount"
-                label="预约金"
-                min-width="150">
-              </el-table-column>
               <el-table-column
-                prop="regTime"
                 label="预约金支付日期"
-                min-width="200">
+                min-width="150">
                 <template scope="scope">
-                  {{scope.row.regTime | formatTime }}
+                  {{scope.row.depositPayDate | formatTime }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="payAmount"
-                label="众筹余款"
-                min-width="100">
+                label="余款支付状态"
+                min-width="150">
+              <template scope="scope">
+                  {{scope.row.amountPayDate == null ? '未支付':'已支付'}}
+              </template>
               </el-table-column>
                <el-table-column
-                prop="regTime"
                 label="余款支付日期"
-                min-width="200">
+                min-width="150">
                 <template scope="scope">
-                  {{scope.row.regTime | formatTime }}
+                  {{scope.row.amountPayDate | formatTime }}
                 </template>
-              </el-table-column>
-              <el-table-column
-                prop="refundAmount"
-                label="众筹状态"
-                min-width="100">
               </el-table-column>
               <el-table-column
                 label="学生状态"
-                min-width="100">
+                min-width="150">
                 <template scope="scope">
-                  {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'撤销' }}
+                  {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'' }}
                 </template>
               </el-table-column>
               <el-table-column
                 label="短信提醒支付余额"
-                min-width="100">
+                min-width="150">
                 <template scope="scope">
                   >
                 </template>
               </el-table-column>  
               <el-table-column
                 label="退款"
-                min-width="100">
+                min-width="150">
               </el-table-column>                
             </el-table>
           </div>
@@ -175,7 +161,6 @@
           }
         })
       }
-
     }
   }
 </script>
