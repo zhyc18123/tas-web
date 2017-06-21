@@ -8,40 +8,53 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
         </div>
+
+      <div class="widget-body am-fr">
+        <div class="am-u-sm-12">
+          <el-table
+           :data="classData"
+            border
+            stripe
+            style="min-width: 100%">
+             <el-table-column
+                prop="deposit"
+                label="预约金"
+                min-width="150">
+              </el-table-column>
+               <el-table-column
+                label="报名截止时间"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.endRegTime | formatTime}}
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop="currentPrice"
+                label="报名截止价格"
+                min-width="150">
+              </el-table-column>
+               <el-table-column
+                label="众筹余款"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.currentPrice - scope.row.deposit}}
+                </template>
+              </el-table-column>
+               <el-table-column
+                prop="crowdfundingStatus"
+                label="众筹状态"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.crowdfundingStatus == 0 ? '众筹中': scope.row.crowdfundingStatus == 1 ?  '众筹成功':'众筹失败'}}
+                </template>
+              </el-table-column>
+          </el-table>
+      </div>
+
+
+        </div>
+
         <div class="widget-body am-fr">
-
-          <!--searching condition-->
-          <!--
-          <div class="am-u-sm-12 am-form ">
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text"  v-model="query.studentName" placeholder="请输入学生名"/>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.regStatus"  >
-                  <option value="">状态</option>
-                  <option value="0">在读</option>
-                  <option value="1">转班</option>
-                  <option value="3">退班退费</option>
-                  <option value="4">撤销</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
-              <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success "
-                        @click="search" ><span class="am-icon-search"></span>查询
-              </button>
-              </div>
-            </div>
-
-          </div>
-          -->
           <div class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -92,10 +105,6 @@
                 <template scope="scope">
                   >
                 </template>
-              </el-table-column>  
-              <el-table-column
-                label="退款"
-                min-width="150">
               </el-table-column>                
             </el-table>
           </div>
@@ -123,6 +132,7 @@
     data: function () {
       return {
         tableData: [],
+        classData:[],
         total: 0,
         pageSize: 10,
         pageNo: 1,
@@ -141,6 +151,7 @@
     created: function () {
       this.query.classId = this.$params('classId')
       this.loadTableData(this.pageNo)
+      this.loadClassData()
     },
     methods: {
       search: function () {
@@ -157,6 +168,17 @@
             _this.total = ret.data.total
             _this.tableData = ret.data.list
           } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadClassData:function(){
+        var _this = this
+        io.post(io.apiAdminCrowdfundingClassEdit,{classId: _this.query.classId}
+          ,function(ret){
+          if(ret.success){
+            _this.classData.push(ret.data.crowdfundingClass)
+          }else{
             _this.$alert(ret.desc)
           }
         })
