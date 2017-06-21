@@ -133,7 +133,7 @@
       }
     },
     created:function(){
-       moment.locale('cn')
+       moment.locale('zh-cn')
        this.init()
     },
     methods: {

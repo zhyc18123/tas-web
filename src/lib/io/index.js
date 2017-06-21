@@ -109,20 +109,22 @@ const io = {
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
     this.apiAdminRoomTimeList = conf.baseApiPath + '/api/admin/arrangement/roomTimeList'
-    this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassTimeList'
+    this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassLectureList'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
     this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
-    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/ClassLectureList'
+    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/classLectureList'
 
 
 
-    this.apiAdminCourseTemplateList = conf.baseApiPath + '/api/admin/courseTemplateList'
+    this.apiAdminCourseTemplateManageList = conf.baseApiPath + '/api/admin/courseTemplateManageList'
+    this.apiAdminCourseTemplateUseList = conf.baseApiPath + '/api/admin/courseTemplateUseList'
     this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
     this.apiAdminDeleteCourseTemplate = conf.baseApiPath + '/api/admin/deleteCourseTemplate'
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
 
-    this.apiAdminProductList  = conf.baseApiPath + '/api/admin/productList'
+    this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
+    this.apiAdminProductManageUseList  = conf.baseApiPath + '/api/admin/productUseList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
     this.apiAdminDeleteProduct = conf.baseApiPath + '/api/admin/deleteProduct'
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
@@ -133,10 +135,13 @@ const io = {
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
+    this.apiAdminCourseClassBaseDetail = conf.baseApiPath + '/api/admin/courseClassBaseDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
     this.apiAdminChangeCourseClassStatus = conf.baseApiPath + '/api/admin/changeCourseClassStatus'
     this.apiAdminRecommendCourseClass = conf.baseApiPath + '/api/admin/recommendCourseClass'
-    this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
+    this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/arrangement/saveArrangeClassTimeResult'
+    this.apiAdminRearrangeTimeForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTimeForLecture'
+    this.apiAdminRearrangeTeacherForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTeacherForLecture'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
