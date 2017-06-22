@@ -142,10 +142,9 @@
                             <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
                           </template>
                           <template >
-                            <el-dropdown-item  :disabled="scope.row.status != 0 "  @click.native="changeStatus(scope.row.classId,1)"> 开班
+                            <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开班
                             </el-dropdown-item>
-                            <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">  
-                              取消开班
+                            <el-dropdown-item  :disabled="scope.row.status != 1 || scope.row.registrationNumber >0"  @click.native="changeStatus(scope.row.classId,0)">取消开班
                             </el-dropdown-item>
                           </template>
                           </el-dropdown-menu>     
@@ -186,7 +185,7 @@
         products:[],
         courses:[],
         courseClass :{},
-        selection:[]
+        selection:[],
       }
     },
     components: {
@@ -288,6 +287,7 @@
      changeStatus:function(classId , status ){
       var _this = this
       _this.$showLoading()
+
       io.post(io.apiAdminChangeCourseClassStatus, {
         status: status ,
         classIds : [classId].join(',')

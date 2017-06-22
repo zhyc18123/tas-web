@@ -140,6 +140,8 @@ const io = {
     this.apiAdminCrowdfundingClassEdit = conf.baseApiPath + '/api/admin/crowdfundingClassDetail'
     this.apiAdminCrowdfundingSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateCrowdfundingClass'
 
+    this.apiAdminBookingOrder = conf.baseApiPath + '/api/admin/countBookingStudent'
+
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
     this.apiAdminSearchStudent = conf.baseApiPath + '/api/admin/searchStudent'

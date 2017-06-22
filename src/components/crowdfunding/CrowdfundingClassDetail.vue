@@ -76,18 +76,24 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="endRegTime"
             label="报名截止时间"
             min-width="100">
             <template scope="scope">
-              {{scope.row.endRegTime | formatDate}}
+              {{scope.row.endRegTime}}
+            </template>
+          </el-table-column>
+          <el-table-column
+            label="开课时间"
+            min-width="100">
+            <template scope="scope">
+              {{scope.row.startCourseTime}}
             </template>
           </el-table-column>
           <el-table-column
             label="课表"
             min-width="100">
             <template scope="scope">
-             <el-button size="small"  @click.native="$router.push(('/main') + scope.row.classId)">查看</el-button>
+             <el-button size="small"  @click.native="$router.push(('/main/course/class/time/') + scope.row.classId)">查看</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -195,7 +201,8 @@
 
       <div class="am-form-group">
         <div class="am-u-sm-9 am-u-sm-push-3">
-          <button type="submit" class="am-btn am-btn-primary">提交</button>
+        {{formData.bookingStudentSum }}
+          <button type="submit" class="am-btn am-btn-primary" :disabled = "formData.bookingStudentSum > 0">提交</button>
         </div>
       </div>
     </fieldset>
@@ -221,7 +228,9 @@
           priceRange:'',
           discountType:'1',
           deposit : '',
-          endRegTime:''
+          endRegTime: '' ,
+          startCourseTime:'',
+          bookingStudentSum:''
         }
       }
     },
@@ -251,6 +260,51 @@
         },
         submit:function(e){
           e.preventDefault();
+          var data = _this.formData
+          if( _this.DateDiff(data.startCourseTime , data.endRegTime) < 3){
+            _this.$alert("报名截止时间必须比开课时间早3天以上");
+            return;
+          }
+          
+          //计算价格区间
+          if(1 == data.discountType)
+          {
+            var str = ""
+            for(var i = data.quotaMin ; i <= data.quotaMax ; i++)
+            {
+              str = str + i +":" + Math.ceil(data.totalPrice/i) + ","
+            }
+            str = str.substring(0, str.length -1) 
+            data.lowestPrice = Math.ceil(data.totalPrice/data.quotaMax)
+            data.highestPrice = Math.ceil(data.totalPrice/data.quotaMin)
+          }else{
+            var str = ""
+            for (var i = 0; i < _this.priceList.length; i++) {
+              if( 0 != i && parseInt(_this.priceList[i-1]["number"]) >= parseInt(_this.priceList[i]["number"])){
+                _this.$alert("报名人数须递增")
+                return 
+              }
+              if(0 != i && parseInt(_this.priceList[i-1]["price"]) <= parseInt(_this.priceList[i]["price"])){
+                _this.$alert("报名价格须递减")
+                return 
+              }
+              str = str + _this.priceList[i]["number"] + ":" + _this.priceList[i]["price"] + ","
+            }   
+            str = str.substring(0, str.length -1) ;
+
+            data.quotaMin = _this.priceList[0]["number"];
+            data.highestPrice = _this.priceList[0]["price"];
+            data.quotaMax = _this.priceList[_this.priceList.length - 1]["number"];
+            data.lowestPrice = _this.priceList[_this.priceList.length - 1]["price"];
+          }
+          //预约金不能大于最低价格   
+          if(parseInt(data.lowestPrice) < parseInt(data.deposit)){
+            _this.$alert("预约金不能大于最低价");
+            return ;
+          }
+          data.priceRange = str
+          data.classId = _this.classId
+
           var $submitBtn = $('button[type=submit]',e.target);
           $submitBtn.attr("disabled" ,"disabled" )
           _this.$showLoading()
@@ -260,7 +314,7 @@
             $submitBtn.removeAttr("disabled" ,"disabled" )
           }
           if(formValidity){
-            _this.save(complete);
+            _this.save(data,complete);
           }else{
             complete.call()
           }
@@ -270,6 +324,7 @@
     created: function () {
       this.classId = this.$params('classId')
       this.loadTableData(this.pageNo)
+      this.loadBookingOrderData(this.classId)
       var _this = this
       this.$root.$on('studentRefundList:new', function () {
         _this.pageNo = 1
@@ -290,39 +345,27 @@
             var classData = [];
             classData.push(ret.data.crowdfundingClass);
             _this.classData = classData;
+            _this.formData = ret.data.crowdfundingClass
+            _this.formData.endRegTime = util.formatDate(_this.formData.endRegTime,'YYYY-MM-DD')
+            _this.formData.startCourseTime = util.formatDate(_this.formData.startCourseTime,'YYYY-MM-DD')
           } else {
             _this.$alert(ret.desc)
           }
         })
       },
-      save:function(complete){
+      loadBookingOrderData:function(classId){   
         var _this = this
-        var data = _this.formData
-        //计算价格区间
-        if(1== data.discountType)
-        {
-          var str = ""
-          for(var i = data.quotaMin ; i <= data.quotaMax ; i++)
-          {
-            str = str + i +":" + Math.ceil(data.totalPrice/i) + ","
+        //设置交了预约金的学生总数
+        io.post(io.apiAdminBookingOrder,{classId:classId},function(ret){
+          if(ret.success){
+            _this.formData.bookingStudentSum = ret.data
+          }else{
+            _this.$alert(ret.desc)
           }
-          str = str.substring(0, str.length -1) 
-          data.lowestPrice = Math.ceil(data.totalPrice/data.quotaMax)
-          data.highestPrice = Math.ceil(data.totalPrice/data.quotaMin)
-        }else{
-          var str = ""
-          for (var i = 0; i < _this.priceList.length; i++) {
-            str = str + _this.priceList[i]["number"] + ":" + _this.priceList[i]["price"] + ","
-          }   
-          str = str.substring(0, str.length -1) 
-
-          data.quotaMin = _this.priceList[0]["number"]
-          data.lowestPrice = _this.priceList[0]["price"]
-          data.quotaMax = _this.priceList[_this.priceList.length - 1]["number"]
-          data.highestPrice = _this.priceList[_this.priceList.length - 1]["price"]
-        }   
-        data.priceRange = str
-        data.classId = _this.classId
+        })
+      },
+      save:function(data,complete){
+        var _this = this 
         io.post(io.apiAdminCrowdfundingSaveOrUpdate,data ,
           function(ret){
             complete.call()
@@ -367,6 +410,10 @@
         }
       },
       addPrice : function(){
+        if(4 == this.priceList.length){
+          this.$alert("最多只能添加 4 行")
+          return 
+        } 
         this.priceList.push({})
       },
       delPrice : function(index){
@@ -379,6 +426,16 @@
         this.formData.referrerId = student.studentId
         this.formData.referrerName = student.name
       },
+      //计算天数差的函数，通用  
+      DateDiff:function(sDate1, sDate2){    //sDate1和sDate2是2016-12-18格式  
+        var  aDate, oDate1, oDate2, iDays  
+        aDate  =  sDate1.split("-")  
+        oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2016格式  
+        aDate  =  sDate2.split("-")  
+        oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
+        iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数  
+        return  iDays  
+      }  
     }
   }
 </script>

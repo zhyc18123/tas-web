@@ -50,6 +50,7 @@ const CrowdfundingClassList = resolve => require(['./components/crowdfunding/Cro
 const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)  
 const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve) 
 
+
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
 const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
 const ProductList = resolve => require(['./components/course/ProductList'], resolve)
