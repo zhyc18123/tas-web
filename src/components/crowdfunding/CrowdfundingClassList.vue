@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">班级列表</div>
+          <div class="widget-title  am-cf">众筹班级</div>
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
@@ -20,39 +20,12 @@
                   <option value="">业务组</option>
                 </select2>
               </div>
-            </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
-                  <option value="">产品</option>
-                </select2>
-              </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.season"  >
-                  <option value="">季节</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.courseTemplateId" :options="courses">
-                  <option value="">课程</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.periodId" :options="periods">
-                  <option value="">期数</option>
+                  <option value="">学期</option>
                 </select2>
               </div>
             </div>
@@ -85,26 +58,6 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <date-picker v-model="query.startCourseTime" >
-                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
-                </date-picker>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.status">
-                  <option value="">班级状态</option>
-                  <option value="0">未开班</option>
-                  <option value="1">已开班</option>
-                  <option value="2">已作废</option>
-                  <option value="3">已结课</option>
-                </select2>
-              </div>
-            </div>
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
@@ -113,7 +66,6 @@
               </div>
             </div>
 
-
           </div>
 
           <div class="am-u-sm-12">
@@ -121,12 +73,11 @@
               :data="tableData"
               border
               stripe
+              @selection-change="handleSelectionChange"
               style="min-width: 100%">
               <el-table-column
-                fixed
-                prop="classNo"
-                label="班级编号"
-                min-width="100">
+                type="selection"
+                width="55">
               </el-table-column>
               <el-table-column
                 fixed
@@ -135,24 +86,17 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="campusName"
-                label="校区"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="roomName"
-                label="教室"
+                prop="teacherNames"
+                label="教师"
                 min-width="100">
               </el-table-column>
-               <el-table-column
-                label="众筹"
+              <el-table-column
+                prop="periodName"
+                label="学期"
                 min-width="100">
-                <template scope="scope">
-                  {{scope.row.classType == 0 ? "否" : "是"}}
-                </template>
               </el-table-column>
               <el-table-column
-                label="开课日期"
+                label="上课日期"
                 min-width="150">
                 <template scope="scope">
                   {{scope.row.startCourseTime | formatDate}}
@@ -164,62 +108,49 @@
                 min-width="150">
               </el-table-column>
               <el-table-column
-                label="已上/总讲次"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.completedLectureAmount}}/{{scope.row.lectureAmount}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="regAmount"
-                label="已报人数"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="quota"
                 label="学位数"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.discountType == 0 ? '-' : ( scope.row.quotaMin + ' - ' + scope.row.quotaMax ) }}
+                </template>
               </el-table-column>
-              <el-table-column
-                prop="teacherNames"
-                label="教师"
+               <el-table-column
+                label="优惠方式"
                 min-width="100">
-              </el-table-column>
+                <template scope="scope">
+                  {{scope.row.discountType == 0 ? '-': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
+                </template>
+              </el-table-column>           
               <el-table-column
-                prop="seniorName"
-                label="班主任"
+                label="开班"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.status == 0 ? '否': ( scope.row.status == 1 ? '是' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                </template>
               </el-table-column>
-              <el-table-column
-                prop="studyingFee"
-                label="学费"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="gradeName"
-                label="年级"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                label="科目"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="periodName"
-                label="期名"
-                min-width="100">
-              </el-table-column>
-
               <el-table-column
                 fixed="right"
                 label="操作"
                 width="120">
-                <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfunding/reg/')) + scope.row.classId)">报名列表</el-button>
-                </template>
-              </el-table-column>
-
+                 <template scope="scope">
+                      <el-dropdown v-if="scope.row.status != 2">
+                        <span class="el-dropdown-link">
+                          操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                          <template >
+                            <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
+                          </template>
+                          <template >
+                            <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开班
+                            </el-dropdown-item>
+                            <el-dropdown-item  :disabled="scope.row.status != 1 || scope.row.registrationNumber >0"  @click.native="changeStatus(scope.row.classId,0)">取消开班
+                            </el-dropdown-item>
+                          </template>
+                          </el-dropdown-menu>     
+                      </el-dropdown>
+                    </template>
+            </el-table-column>         
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
@@ -249,17 +180,16 @@
           areaTeamId : '',
           busTeamId : '',
           productId : '',
-          status : 1
         },
         searchConfig: {},
         products:[],
         courses:[],
         courseClass :{},
-        selection:[]
+        selection:[],
       }
     },
     components: {
-      Pagination
+      Pagination,
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -314,7 +244,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCourseClassList, $.extend({
+        io.post(io.apiAdminCrowdfundingClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
@@ -349,7 +279,28 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+     
+      handleSelectionChange:function (selection) {
+        this.selection = selection
+      },
+     changeStatus:function(classId , status ){
+      var _this = this
+      _this.$showLoading()
+
+      io.post(io.apiAdminChangeCourseClassStatus, {
+        status: status ,
+        classIds : [classId].join(',')
+      }, function (ret) {
+        _this.$hiddenLoading()
+        if (ret.success) {
+          _this.loadTableData(_this.pageNo)
+          _this.$alert('处理成功')
+        } else {
+          _this.$alert(ret.desc)
+        }
+      })
+    },
     }
   }
 </script>
