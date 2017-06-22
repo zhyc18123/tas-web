@@ -231,7 +231,7 @@
           areaTeamId : '',
           busTeamId : '',
           productId : '',
-          status : 1
+          periodId : ''
         },
         searchConfig: {},
         products:[],
@@ -255,6 +255,8 @@
         _this.pageNo = 1
         _this.loadTableData(_this.pageNo)
       })
+      let currentPeriod = this.$root.config.periods.filter(function(item){ return item.isCurrent == 1 })[0] ;
+      this.query.periodId  = currentPeriod ? currentPeriod.periodId : ''
     },
     computed: {
       areaTeams: function () {

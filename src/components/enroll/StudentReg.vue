@@ -121,7 +121,7 @@
               studentId : _this.studentId
           },function(ret){
               if(ret.success){
-                _this.mainAccount = ret.data
+                _this.mainAccount = ret.data || { balanceAmount : 0 }
               }else{
                   _this.$alert(ret.desc)
               }
