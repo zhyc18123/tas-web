@@ -294,15 +294,6 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="排课状态"
-                min-width="250">
-                <template scope="scope">
-                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
-                </template>
-              </el-table-column>
-              <el-table-column
                 prop="areaTeamName"
                 label="区域"
                 min-width="100">
