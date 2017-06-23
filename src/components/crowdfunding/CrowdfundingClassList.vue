@@ -144,7 +144,7 @@
                           <template >
                             <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开班
                             </el-dropdown-item>
-                            <el-dropdown-item  :disabled="scope.row.status != 1 || scope.row.registrationNumber >0"  @click.native="changeStatus(scope.row.classId,0)">取消开班
+                            <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班
                             </el-dropdown-item>
                           </template>
                           </el-dropdown-menu>     

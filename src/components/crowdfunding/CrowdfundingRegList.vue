@@ -37,7 +37,7 @@
                 label="众筹余款"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.currentPrice - scope.row.deposit}}
+                  {{scope.row.crowdfundingStatus == 1 ? (scope.row.currentPrice - scope.row.deposit):''}}
                 </template>
               </el-table-column>
                <el-table-column
@@ -75,7 +75,7 @@
                 label="预约金支付日期"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.depositPayDate | formatTime }}
+                  {{ scope.row.chargingStatus == 2 ?  (scope.row.depositPayDate | formatTime):'' }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -98,14 +98,7 @@
                 <template scope="scope">
                   {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'' }}
                 </template>
-              </el-table-column>
-              <el-table-column
-                label="短信提醒支付余额"
-                min-width="150">
-                <template scope="scope">
-                  >
-                </template>
-              </el-table-column>                
+              </el-table-column>    
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
@@ -177,7 +170,9 @@
         io.post(io.apiAdminCrowdfundingClassEdit,{classId: _this.query.classId}
           ,function(ret){
           if(ret.success){
-            _this.classData.push(ret.data.crowdfundingClass)
+            if(0 == _this.classData.length){
+               _this.classData.push(ret.data.crowdfundingClass)
+            }
           }else{
             _this.$alert(ret.desc)
           }

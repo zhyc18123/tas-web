@@ -3,6 +3,9 @@
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">众筹定价</div>
+        <div class="widget-function am-fr">
+            <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+          </div>
       </div>
       <div class="widget-body am-fr">      
             <div class="am-form-group">    
@@ -119,6 +122,7 @@
             <input type="text" class="am-form-field" placeholder="请选择报名截止日期" data-am-datepicker  >
           </date-picker>
         </div>
+        <span class="am-text-danger am-margin-right-xs am-text-xs">报名截至日期须比开课时间早三天以上</span>
       </div>
       <div class="am-form-group">
           <label><input name="" type="radio" value="1" v-model="formData.discountType"/>连续人均定价 </label> 
@@ -201,8 +205,7 @@
 
       <div class="am-form-group">
         <div class="am-u-sm-9 am-u-sm-push-3">
-        {{formData.bookingStudentSum }}
-          <button type="submit" class="am-btn am-btn-primary" :disabled = "formData.bookingStudentSum > 0">提交</button>
+          <button type="submit" class="am-btn am-btn-primary" >提交</button>
         </div>
       </div>
     </fieldset>
@@ -226,7 +229,7 @@
         arrangeResult: [],
         formData:{
           priceRange:'',
-          discountType:'1',
+          discountType:'',
           deposit : '',
           endRegTime: '' ,
           startCourseTime:'',
@@ -261,6 +264,10 @@
         submit:function(e){
           e.preventDefault();
           var data = _this.formData
+          if( 1== _this.classData[0].status){
+            _this.$alert("已开班不能修改众筹信息")
+            return 
+          }
           if( _this.DateDiff(data.startCourseTime , data.endRegTime) < 3){
             _this.$alert("报名截止时间必须比开课时间早3天以上");
             return;
@@ -346,6 +353,7 @@
             classData.push(ret.data.crowdfundingClass);
             _this.classData = classData;
             _this.formData = ret.data.crowdfundingClass
+            _this.formData.discountType = 1
             _this.formData.endRegTime = util.formatDate(_this.formData.endRegTime,'YYYY-MM-DD')
             _this.formData.startCourseTime = util.formatDate(_this.formData.startCourseTime,'YYYY-MM-DD')
           } else {
@@ -400,8 +408,7 @@
           return
         }   
         this.arrangeResult = []
-
-        for(var i = data.quotaMin ; i <= data.quotaMax ; i++)
+        for(var i = parseInt(data.quotaMin) ; i <= parseInt(data.quotaMax); i++)
         {
           this.arrangeResult.push({
             number : i ,
@@ -433,7 +440,7 @@
         oDate1  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])    //转换为12-18-2016格式  
         aDate  =  sDate2.split("-")  
         oDate2  =  new  Date(aDate[1]  +  '-'  +  aDate[2]  +  '-'  +  aDate[0])  
-        iDays  =  parseInt(Math.abs(oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数  
+        iDays  =  parseInt((oDate1  -  oDate2)  /  1000  /  60  /  60  /24)    //把相差的毫秒数转换为天数  
         return  iDays  
       }  
     }
