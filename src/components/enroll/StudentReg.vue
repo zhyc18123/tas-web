@@ -13,7 +13,7 @@
           <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
           <td>学号：{{formData.studentNo}}</td>
           <td>年级：{{formData.gradeName}}</td>
-          <td>账户余额：{{mainAccount.balanceAmount}}</td>
+          <td>账户余额：{{mainAccount.balanceAmount | formatNumber(2)}}</td>
         </tr>
         <tr>
           <td>电话：{{formData.phoneNo}}</td>
@@ -121,7 +121,7 @@
               studentId : _this.studentId
           },function(ret){
               if(ret.success){
-                _this.mainAccount = ret.data
+                _this.mainAccount = ret.data || { balanceAmount : 0 }
               }else{
                   _this.$alert(ret.desc)
               }

@@ -163,7 +163,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminCampusList, $.extend({
+        io.post(io.apiAdminCampusManageList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {

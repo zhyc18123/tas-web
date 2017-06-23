@@ -45,14 +45,19 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="balanceAmount"
                 label="账户余额"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.balanceAmount|formatNumber(2)}}
+                </template>
               </el-table-column>
+
               <el-table-column
-                prop="realtimeBalanceAmount"
                 label="实时账户余额"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.realtimeBalanceAmount|formatNumber(2)}}
+                </template>
               </el-table-column>
               <el-table-column
                 label="操作"

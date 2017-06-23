@@ -97,7 +97,7 @@
               </el-table-column>
               <el-table-column
                 prop="busTeamName"
-                label="所在业务组"
+                label="人事关系"
                 min-width="100">
               </el-table-column>
               <el-table-column
@@ -105,7 +105,6 @@
                 min-width="100">
                 <template scope="scope">
                   {{scope.row.joinTime | formatDate}}
-
                 </template>
               </el-table-column>
               <el-table-column

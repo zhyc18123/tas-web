@@ -25,6 +25,7 @@ const RoleList = resolve => require(['./components/sysmanager/RoleList'], resolv
 const RoleForm = resolve => require(['./components/sysmanager/RoleForm'], resolve)
 const RoleUsers = resolve => require(['./components/sysmanager/RoleUsers'], resolve)
 const RoleOptPermission = resolve => require(['./components/sysmanager/RoleOptPermission'], resolve)
+const DataPermission = resolve => require(['./components/sysmanager/DataPermission'], resolve)
 const AreaTeamList = resolve => require(['./components/sysmanager/AreaTeamList'], resolve)
 const AreaTeamForm = resolve => require(['./components/sysmanager/AreaTeamForm'], resolve)
 const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], resolve)
@@ -146,6 +147,7 @@ const router = new VueRouter({
       {path: 'sys/role/add' , component: RoleForm },
       {path: 'sys/role/edit/:roleId' , component: RoleForm },
       {path: 'sys/role/optPermission/:roleId' , component: RoleOptPermission },
+      {path: 'sys/role/dataPermission/:userId' , component: DataPermission },
       {path: 'sys/role/users/:roleId' , component: RoleUsers },
       {path: 'sys/areateam/list' , component: AreaTeamList },
       {path: 'sys/areateam/add' , component: AreaTeamForm },
@@ -286,25 +288,6 @@ var appVue = new Vue({
   router,
   template: '<div><router-view class="view"></router-view></div>',
   data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[], teacherName:[]},
-  created:function(){
-    this.refreshUserInfo()
-  },
-  methods:{
-    refreshUserInfo:function(){
-      if(!storage.getLogin()){
-        return
-      }
-      var _this = this
-      io.post(io.apiAdminSysUserDetail,{
-        userId : storage.getLogin().userId
-      },function(ret){
-        if(ret.success){
-          storage.setCurrentUserInfo(ret.data)
-          _this.$root.$emit('userInfoChange',ret.data)
-        }
-      })
-    }
-  }
 
 })
 

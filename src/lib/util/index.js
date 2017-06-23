@@ -1,5 +1,9 @@
 import moment from 'moment'
 
+moment.locale('zh-cn')
+
+console.log(1)
+
 export default  {
 
   getQueryString : function (name){

@@ -104,7 +104,7 @@
             return
         }
         _this.query.areaTeamId = _this.areaTeamId
-        io.post(io.apiAdminCampusList, $.extend({
+        io.post(io.apiAdminCampusUseList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {

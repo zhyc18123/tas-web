@@ -65,7 +65,7 @@
                 label="操作"
                 width="100">
                 <template scope="scope">
-                  <el-button size="small" @click.native="confirmArrangeTeacher(scope.row)">确定</el-button>
+                  <el-button size="small" @click.native="ok(scope.row)">确定</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -75,19 +75,6 @@
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
-          </div>
-
-          <div class="am-g am-text-left">
-            <label class="am-u-sm-2">已选老师：</label>
-            <div class="am-u-sm-10 am-u-sm-pull-1 am-u-end">
-              <button class="am-btn am-btn-default am-btn-sm am-margin-left-xs" v-for="(item, index) in selectedTeacher ">{{item.teacherName}}<i @click="delTeacher(index)" class="am-icon-remove"></i></button>
-            </div>
-          </div>
-
-
-          <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-            <button type="button" class="am-btn am-btn-primary" @click="nextStep">下一步</button>
-            <a href="javascript: void(0)" data-am-modal-close><button type="button" class="am-btn am-btn-primary" @click="cancel" >取消</button></a>
           </div>
 
         </div>
@@ -113,12 +100,10 @@
         selectedTeacher:[]
       }
     },
-    props: ['courseClass'],
+    props: ['courseClass','classLecture'],
     watch:{
-      'courseClass.classId' : function () {
-        if(this.courseClass.classId ){
-          this.loadTableData()
-        }
+      classLecture : function () {
+        this.loadTableData()
       }
     },
     components: {
@@ -128,9 +113,7 @@
       $(window).smoothScroll();
     },
     created:function(){
-      if(this.courseClass.classId ){
-        this.loadTableData()
-      }
+      this.loadTableData()
     },
     destroyed:function () {
     },
@@ -157,36 +140,19 @@
           }
         })
       },
-      confirmArrangeTeacher:function(item){
-        //将老师放进全局数组中
-        var isHad = false;
-        for (var i = 0; i < this.selectedTeacher.length; i++) {
-          if (this.selectedTeacher[i].teacherId == item.teacherId) {
-            isHad = true
-            this.$alert("老师已经被选了")
-            break
+      ok:function(teacher){
+        var _this  = this
+        io.post(io.apiAdminRearrangeTeacherForLecture,{
+          classLectureId : this.classLecture.classLectureId ,
+          teacherId  : teacher.teacherId ,
+          updateAfterLecture : false
+        },function(ret){
+          if(ret.success){
+            _this.$emit('ok')
+          }else{
+            _this.$alert(ret.desc ||  '处理失败')
           }
-        }
-        //判断是否存在，如果不存在，则添加
-        if(!isHad){
-          this.selectedTeacher.push(item)
-        }
-      },
-      delTeacher:function(index){
-          //点击删除老师，从数组中移除
-        this.selectedTeacher.splice(index,1)
-      },
-      cancel:function(){
-          //关闭，置空数组
-        this.selectedTeacher=[];
-      },
-      nextStep:function(){
-        if(this.selectedTeacher.length == 0 ){
-          this.$alert('至少选择一个老师')
-          return
-        }
-        //弹窗
-        this.$emit('goStep', 'step-two', { teachers : this.selectedTeacher});
+        })
       }
     }
   }

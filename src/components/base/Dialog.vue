@@ -17,7 +17,7 @@
 <script>
 
     export default {
-      name: 'alert',
+      name: 'dialog',
       data: function(){
         return {
           title:'提示',

@@ -190,20 +190,23 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="periodName"
-                label="期数"
-                min-width="100">
+                label="排课状态"
+                min-width="250">
+                <template scope="scope">
+                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
+                </template>
               </el-table-column>
+
               <el-table-column
-                prop="campusName"
-                label="校区"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="roomName"
-                label="教室"
+                label="状态"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                </template>
               </el-table-column>
+
               <el-table-column
                 label="开课日期"
                 min-width="150">
@@ -216,6 +219,19 @@
                 label="上课时间"
                 min-width="150">
               </el-table-column>
+
+
+              <el-table-column
+                prop="campusName"
+                label="校区"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="roomName"
+                label="教室"
+                min-width="100">
+              </el-table-column>
+
               <el-table-column
                 label="已上/总讲次"
                 min-width="100">
@@ -249,6 +265,11 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                prop="periodName"
+                label="期数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
                 prop="gradeName"
                 label="年级"
                 min-width="100">
@@ -270,15 +291,6 @@
                 min-width="100">
                 <template scope="scope">
                   {{scope.row.classType == 0 ? '否':  '是'}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="排课状态"
-                min-width="250">
-                <template scope="scope">
-                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
                 </template>
               </el-table-column>
               <el-table-column
