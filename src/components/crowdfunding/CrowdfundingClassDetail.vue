@@ -82,7 +82,7 @@
             label="报名截止时间"
             min-width="100">
             <template scope="scope">
-              {{scope.row.endRegTime}}
+              {{scope.row.endRegTime}} 
             </template>
           </el-table-column>
           <el-table-column
@@ -175,14 +175,14 @@
               <input type="text" placeholder=""  required  v-model="formData.totalPrice" >
             </div>
           </div>
+      </div>
 
-           <div class="am-form-group">
+       <div class="am-form-group">
           <div class="am-u-sm-3 am-u-sm-centered">
-            <button type="button" class="am-btn am-btn-primary" @click="arrangePrice">预览</button>
+              <button type="button" class="am-btn am-btn-primary" @click="arrangePrice">预览</button>
           </div>
-        </div>
-
-        <div class="am-form-group" v-if="arrangeResult.length > 0 ">
+       </div>
+       <div class="am-form-group" v-if="1 == formData.discountType && continuousResult.length > 0 ">
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
               <thead>
@@ -192,16 +192,35 @@
               </tr>
               </thead>
               <tbody>
-              <tr v-for="( item,index ) in arrangeResult">
-                <td>{{item.number}}</td>
+              <tr v-for="(item,index) in continuousResult">
+                <td>{{ 0 == index ? item.number + '(可开课)' : item.number}}</td>
                 <td>{{item.price}}</td>
               </tr>
               </tbody>
             </table>
           </div>
         </div>
-      </div>
 
+         <div class="am-form-group" v-if="2 == formData.discountType && segmentResult.length > 0 ">
+            <div class="am-u-sm-12 am-scrollable-horizontal">
+              <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+                <thead>
+                <tr>
+                  <th>总人数</th>
+                  <th>金额</th>
+                  <th>课程总价</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in segmentResult">
+                  <td>{{ 0 == index ? item.number + '(可开课)' : item.number}}</td>
+                  <td>{{item.price}}</td>
+                  <td>{{item.totalPrice}}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
 
       <div class="am-form-group">
         <div class="am-u-sm-9 am-u-sm-push-3">
@@ -226,7 +245,8 @@
         pageNo: 1,
         classId: '',
         priceList:[{}],
-        arrangeResult: [],
+        continuousResult: [], //连续定价
+        segmentResult:[], //分段定价
         formData:{
           priceRange:'',
           discountType:'',
@@ -353,7 +373,7 @@
             classData.push(ret.data.crowdfundingClass);
             _this.classData = classData;
             _this.formData = ret.data.crowdfundingClass
-            _this.formData.discountType = 1
+            _this.formData.discountType = (_this.formData.discountType == 0) ? 1: _this.formData.discountType //默认值
             _this.formData.endRegTime = util.formatDate(_this.formData.endRegTime,'YYYY-MM-DD')
             _this.formData.startCourseTime = util.formatDate(_this.formData.startCourseTime,'YYYY-MM-DD')
           } else {
@@ -394,28 +414,40 @@
       //价格区间计算
       arrangePrice : function(){
         var data = this.formData
-        if(!data.quotaMin){
-          this.$alert("请填写学位下限")
-          return
-        }
+        this.continuousResult = []
+        this.segmentResult = []
+        if(data.discountType == 1){
+            if(!data.quotaMin){
+            this.$alert("请填写学位下限")
+            return
+          }
+            
+          if(!data.quotaMax){
+            this.$alert("请填写学位上限")
+            return
+          }
+          if(!data.totalPrice){
+            this.$alert("请输入总价")
+            return
+          }   
           
-        if(!data.quotaMax){
-          this.$alert("请填写学位上限")
-          return
+          for(var i = parseInt(data.quotaMin) ; i <= parseInt(data.quotaMax); i++)
+          {
+            this.continuousResult.push({
+              number : i ,
+              price : Math.ceil(data.totalPrice/i)
+            })
+          }
+        }else{
+            for (var i = 0; i < this.priceList.length; i++) {
+              this.segmentResult.push({
+                number: this.priceList[i]["number"],
+                price: this.priceList[i]["price"],
+                totalPrice: this.priceList[i]["number"] * this.priceList[i]["price"],
+              })
+            } 
         }
-        if(!data.totalPrice){
-          this.$alert("请输入总价")
-          return
-        }   
-        this.arrangeResult = []
-        for(var i = parseInt(data.quotaMin) ; i <= parseInt(data.quotaMax); i++)
-        {
-          this.arrangeResult.push({
-            number : i ,
-            price : Math.ceil(data.totalPrice/i)
-          })
-        }
-      },
+        },
       addPrice : function(){
         if(4 == this.priceList.length){
           this.$alert("最多只能添加 4 行")

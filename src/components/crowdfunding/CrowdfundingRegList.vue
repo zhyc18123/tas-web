@@ -32,6 +32,9 @@
                 prop="currentPrice"
                 label="报名截止价格"
                 min-width="150">
+                <template scope="scope">
+                  {{scope.row.crowdfundingStatus == 1 ? scope.row.currentPrice :''}}
+                </template>
               </el-table-column>
                <el-table-column
                 label="众筹余款"
