@@ -297,7 +297,7 @@
           if(1 == data.discountType)
           {
             var str = ""
-            for(var i = data.quotaMin ; i <= data.quotaMax ; i++)
+            for(var i = parseInt(data.quotaMin) ; i <= parseInt(data.quotaMax) ; i++)
             {
               str = str + i +":" + Math.ceil(data.totalPrice/i) + ","
             }
