@@ -106,7 +106,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>众筹预约金
             </label>
             <div class="am-u-sm-9 input-field">
-              <input type="text" placeholder=""  required  v-model="formData.deposit" >
+              <input type="number" placeholder="请输入众筹预约金" min="0" step="0.01"  required  v-model="formData.deposit" >
             </div>
           </div>
           <div class="am-form-group">
@@ -132,13 +132,13 @@
               </template>{{index == 0 ? "可开课总人数" : "总人数"}}
         </label>
             <div class="am-u-sm-2 input-field">
-              <input type="text" class="am-form-field" required placeholder=" " v-model="priceList[index].number" >
+              <input type="number" min="0" step="1" class="am-form-field" required placeholder="请输入" v-model="priceList[index].number" >
             </div>
             <label class="am-u-sm-2 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>价格/人
         </label>
             <div class="am-u-sm-2 input-field">
-              <input type="text" class="am-form-field" required placeholder="" v-model="priceList[index].price" >
+              <input type="number" min="0" step="0.01" class="am-form-field" required placeholder="请输入" v-model="priceList[index].price" >
             </div>
             <div class="am-u-sm-1 input-field">
               <a href="javascript:;" @click="addPrice"> <i class="am-icon-plus"></i></a>
@@ -152,7 +152,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>可开课学位下限
             </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" placeholder=""  required  v-model="formData.quotaMin" >
+                <input type="number" min="0" step="1" placeholder="请输入学位"  required  v-model="formData.quotaMin" >
               </div>
             </div>
             <div class="am-form-group">
@@ -160,7 +160,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位上限
             </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" placeholder=""  required  v-model="formData.quotaMax" >
+                <input type="number" placeholder="请输学位上限"  required  v-model="formData.quotaMax" >
               </div>
             </div>
             <div class="am-form-group">
@@ -168,7 +168,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课程总价
             </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" placeholder=""  required  v-model="formData.totalPrice" >
+                <input type="number" min="0" step="0.01" placeholder="请输入课程总价"  required  v-model="formData.totalPrice" >
               </div>
             </div>
           </div>
