@@ -78,11 +78,12 @@
               <button type="button" class="am-btn am-btn-default am-btn-success " @click="$router.push('/main/course/course/add')"
                       v-if="hasPermission('add')"><span class="am-icon-plus"></span>新增课程</button>
 
-              <button type="button" class="am-btn am-btn-default am-btn-success  am-form-file"
-                      v-if="hasPermission('add')">
-                <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.ms-excel">
+              <button type="button" class="am-btn am-btn-default am-btn-success"
+                      v-if="hasPermission('add')" @click="prepareUpload">
+                <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.ms-excel" style="display: none">
                 <span class="am-icon-cloud-upload"></span>批量导入</button>
-              <a href="http://static.yuyou100.com/course_tempalet_v4.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
+
+              <a href="http://static.yuyou100.com/course_tempalet_v6.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
             </div>
           </div>
 
@@ -239,7 +240,7 @@ import Pagination from '../base/Pagination'
           loadTableData:function(pageNo){
             var _this = this
             _this.pageNo = pageNo || _this.pageNo || 1
-            io.post(io.apiAdminCourseTemplateList,$.extend({
+            io.post(io.apiAdminCourseTemplateManageList,$.extend({
               pageNo:_this.pageNo,
               pageSize:_this.pageSize
             },_this.query),function(ret){
@@ -263,6 +264,9 @@ import Pagination from '../base/Pagination'
               }
             })
           },
+          prepareUpload:function(){
+              $('#uploadFile').click()
+          },
           uploadExcel:function() {
             var _this = this;
             var formData = new FormData();
@@ -270,11 +274,12 @@ import Pagination from '../base/Pagination'
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
               if (ret.ok && ret.data.success){
                 $("#courseTemplateFile").val("");
-                _this.loadTableData();
-                _this.$alert("上传成功");
+                document.location.reload()
               } else {
-                _this.$alert(ret.data.desc || "上传失败");
+                alert(ret.data.desc || "上传失败");
+                document.location.reload()
               }
+
             })
           },
           del:function(courseTemplateId){

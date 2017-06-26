@@ -26,6 +26,7 @@
                 <input type="number"  class="am-form-field" placeholder="输入座位数" min="0" step="1" required v-model="formData.seatAmount">
               </div>
             </div>
+            <!--
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每小时租金
@@ -34,6 +35,7 @@
                 <input type="number"  class="am-form-field" placeholder="输入租金" min="0" step="1" required v-model="formData.rent">
               </div>
             </div>
+            -->
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">

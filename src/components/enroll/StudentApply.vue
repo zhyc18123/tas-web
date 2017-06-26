@@ -95,6 +95,12 @@
             style="min-width: 100%">
             <el-table-column
               fixed
+              prop="classNo"
+              label="班级编号"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              fixed
               prop="className"
               label="班级名称"
               min-width="200">
@@ -103,14 +109,14 @@
               fixed
               prop="periodName"
               label="期数"
-              min-width="70">
+              min-width="100">
             </el-table-column>
             <el-table-column
               fixed
               label="已报/学位数"
               min-width="100">
               <template scope="scope">
-                {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+                {{scope.row.regAmount}}/{{scope.row.quota}}
                 </template>
             </el-table-column>
 
@@ -177,7 +183,7 @@
               label="操作"
               width="100">
               <template scope="scope">
-                <el-button size="small" :disabled="hadReg(scope.row)" @click.native="studentReg(scope.row)">报名</el-button>
+                <el-button size="small" :disabled="hadReg(scope.row) || scope.row.regAmount == scope.row.quota" @click.native="studentReg(scope.row)">报名</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -211,7 +217,7 @@
         studentId: '',
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',
@@ -258,7 +264,7 @@
       },
       periods: function () {
         return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
     },
@@ -272,8 +278,9 @@
     },
     methods: {
       check:function(item){
-        if(item.startAmount <= 0 || item.startAmount > item.lectureAmount ){
-          item.startAmount = 1
+        var start = item.completedLectureAmount + 1
+        if(item.startAmount < start || item.startAmount > item.lectureAmount ){
+          item.startAmount = start
         }
 
         if( item.endAmount < 0 || item.endAmount > item.lectureAmount ){
@@ -282,7 +289,7 @@
 
       },
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -295,9 +302,9 @@
           if (ret.success) {
             _this.total = ret.data.total
             for (var i = 0; i < ret.data.list.length; i++) {
-              ret.data.list[i].startAmount = 1;
+              ret.data.list[i].completedLectureAmount = parseInt(ret.data.list[i].completedLectureAmount)
+              ret.data.list[i].startAmount = ret.data.list[i].completedLectureAmount + 1 ;
               ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
-
             }
             _this.tableData = ret.data.list
           } else {

@@ -13,6 +13,12 @@
         </el-table-column>
         <el-table-column
           fixed
+          prop="classNo"
+          label="班级编号"
+          min-width="100">
+        </el-table-column>
+        <el-table-column
+          fixed
           prop="className"
           label="班级名称"
           min-width="200">
@@ -28,7 +34,7 @@
           label="已报/学位数"
           min-width="100">
           <template scope="scope">
-            {{scope.row.regAmount}}/{{scope.row.lectureAmount}}
+            {{scope.row.regAmount}}/{{scope.row.quota}}
         </template>
         </el-table-column>
         <el-table-column

@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">产品列表</div>
+          <div class="widget-title  am-cf">请基于区域设置相应的教学产品线</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -121,12 +121,12 @@
       },
     methods:{
       search:function(){
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminProductList,$.extend({
+        io.post(io.apiAdminProductManageList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){

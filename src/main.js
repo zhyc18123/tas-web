@@ -25,12 +25,17 @@ const RoleList = resolve => require(['./components/sysmanager/RoleList'], resolv
 const RoleForm = resolve => require(['./components/sysmanager/RoleForm'], resolve)
 const RoleUsers = resolve => require(['./components/sysmanager/RoleUsers'], resolve)
 const RoleOptPermission = resolve => require(['./components/sysmanager/RoleOptPermission'], resolve)
+const DataPermission = resolve => require(['./components/sysmanager/DataPermission'], resolve)
 const AreaTeamList = resolve => require(['./components/sysmanager/AreaTeamList'], resolve)
 const AreaTeamForm = resolve => require(['./components/sysmanager/AreaTeamForm'], resolve)
 const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], resolve)
 const BusTeamForm = resolve => require(['./components/sysmanager/BusTeamForm'], resolve)
 const PeriodList = resolve => require(['./components/sysmanager/PeriodList'], resolve)
 const PeriodForm = resolve => require(['./components/sysmanager/PeriodForm'], resolve)
+const StudentSchoolList = resolve => require(['./components/sysmanager/StudentSchoolList'], resolve)
+const StudentSchoolForm = resolve => require(['./components/sysmanager/StudentSchoolForm'], resolve)
+const ClassRemunerationList = resolve => require(['./components/sysmanager/ClassRemunerationList'], resolve)
+const ClassRemunerationForm = resolve => require(['./components/sysmanager/ClassRemunerationForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -41,6 +46,11 @@ const CampusForm = resolve => require(['./components/teachingresource/CampusForm
 
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
+
+const CrowdfundingClassList = resolve => require(['./components/crowdfunding/CrowdfundingClassList'], resolve)
+const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)  
+const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve) 
+
 
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
 const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
@@ -62,6 +72,8 @@ const StudentRefundList = resolve => require([ './components/enroll/StudentRefun
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
 const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
+
+                
 
 const AccountList = resolve => require(['./components/settlement/AccountList'], resolve)
 const AccountReportDetail = resolve => require(['./components/settlement/AccountReportDetail'], resolve)
@@ -117,7 +129,7 @@ Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
 
-const Index = { template: '<div>Index YYYY</div>' }
+const Index = { template: '<div>欢迎来到誉优综合业务管理平台</div>' }
 
 
 const router = new VueRouter({
@@ -135,6 +147,7 @@ const router = new VueRouter({
       {path: 'sys/role/add' , component: RoleForm },
       {path: 'sys/role/edit/:roleId' , component: RoleForm },
       {path: 'sys/role/optPermission/:roleId' , component: RoleOptPermission },
+      {path: 'sys/role/dataPermission/:userId' , component: DataPermission },
       {path: 'sys/role/users/:roleId' , component: RoleUsers },
       {path: 'sys/areateam/list' , component: AreaTeamList },
       {path: 'sys/areateam/add' , component: AreaTeamForm },
@@ -154,6 +167,16 @@ const router = new VueRouter({
       {path: 'sys/room/list' , component: RoomList },
       {path: 'sys/room/add' , component: RoomForm },
       {path: 'sys/room/edit/:roomId' , component: RoomForm },
+      {path: 'sys/student/school/list' , component: StudentSchoolList },
+      {path: 'sys/student/school/add' , component: StudentSchoolForm },
+      {path: 'sys/student/school/edit/:studentSchoolId' , component: StudentSchoolForm },
+      {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
+      {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
+      {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
+
+      {path: 'crowdfunding/list', component: CrowdfundingClassList },
+      {path: 'crowdfunding/edit/:classId' , component: CrowdfundingClassDetail},
+
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
       {path: 'course/course/edit/:courseId' , component: CourseForm },
@@ -177,6 +200,7 @@ const router = new VueRouter({
 
       {path: 'enroll/class/list' , component: CourseClassList },
       {path: 'enroll/class/reg/:classId' , component: StudentRegList },
+      {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
@@ -189,6 +213,7 @@ const router = new VueRouter({
       {path: 'settlement/fee/accountmainbody' , component: AccountMainBodyOfFee },
       {path: 'settlement/fee/list/:mainAccountId' , component: FeeList },
       {path: 'settlement/fee/add/:mainAccountId' , component: FeeForm },
+      {path: 'settlement/fee/edit/:mainAccountId/:feeId' , component: FeeForm },
       {path: 'settlement/account/report/profit/:mainAccountId' , component: ProfitReportDetail },
       {path: 'settlement/account/withdrawal/list/:mainAccountId' , component: AccountWithdrawalList },
       {path: 'settlement/account/withdrawal/apply/:mainAccountId' , component: ApplyWithdrawalForm },
@@ -263,25 +288,6 @@ var appVue = new Vue({
   router,
   template: '<div><router-view class="view"></router-view></div>',
   data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[], teacherName:[]},
-  created:function(){
-    this.refreshUserInfo()
-  },
-  methods:{
-    refreshUserInfo:function(){
-      if(!storage.getLogin()){
-        return
-      }
-      var _this = this
-      io.post(io.apiAdminSysUserDetail,{
-        userId : storage.getLogin().userId
-      },function(ret){
-        if(ret.success){
-          storage.setCurrentUserInfo(ret.data)
-          _this.$root.$emit('userInfoChange',ret.data)
-        }
-      })
-    }
-  }
 
 })
 

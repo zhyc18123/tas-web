@@ -33,7 +33,7 @@
 
       <div class="am-u-sm-12 am-text-left am-margin-top-sm">
         <label class="bold-font">
-          当前剩余讲次：第<span>{{formData.completedLectureAmount + 1}}</span>讲次~第<span>{{formData.endAmount}}</span>讲次
+          当前剩余讲次：第<span>{{ formData.completedLectureAmount < formData.startAmount  ? formData.startAmount : 1 + formData.completedLectureAmount }}</span>讲次~第<span>{{formData.endAmount}}</span>讲次
         </label>
         <div class="bold-font am-text-left am-margin-top-sm ">
           申请讲次：第
@@ -164,10 +164,15 @@
           io.post(io.apiAdminShowClassMessage, {regId: regId},
             function (ret) {
               if (ret.success) {
+                ret.data.startAmount = parseInt(ret.data.startAmount)
+                ret.data.endAmount = parseInt(ret.data.endAmount)
+                ret.data.lectureAmount = parseInt(ret.data.lectureAmount)
+                ret.data.completedLectureAmount = parseInt(ret.data.completedLectureAmount)
+                ret.data.regLectureAmount = (ret.data.endAmount - ret.data.startAmount) + 1
+                ret.data.startAmount =  Math.max(ret.data.startAmount,ret.data.completedLectureAmount + 1)
                 _this.formData = $.extend({}, _this.formData, ret.data)
                 _this.formData.regId = regId
                 _this.formData.description = '与原校时间冲突'
-                _this.formData.regLectureAmount = (_this.formData.endAmount - _this.formData.startAmount) + 1
                 var lectureNos = []
                 for (var no = _this.formData.startAmount; no <= _this.formData.endAmount; no++) {
                   lectureNos.push(no)

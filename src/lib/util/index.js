@@ -1,7 +1,18 @@
 import moment from 'moment'
 
+moment.locale('zh-cn')
+
+console.log(1)
+
 export default  {
 
+  getQueryString : function (name){
+    var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
+    if(r) {
+      return r[2];
+    }
+    return null;
+  },
   formatTime : function (time , format ) {
     if (!time) return "";
     if (typeof time == "string") {

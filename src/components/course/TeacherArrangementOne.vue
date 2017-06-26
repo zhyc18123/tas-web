@@ -107,7 +107,7 @@
         tableData:[],
         teacherData:[],
         total:0,
-        pageSize:5,
+        pageSize:10,
         pageNo:1,
         query:{},
         selectedTeacher:[]
@@ -142,7 +142,8 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
-          busTeamId:_this.courseClass.busTeamId,
+          areaTeamId:_this.courseClass.areaTeamId,
+          //busTeamId:_this.courseClass.busTeamId,
           gradeName:_this.courseClass.gradeName,
           subjectName:_this.courseClass.subjectName,
           pageNo:_this.pageNo,

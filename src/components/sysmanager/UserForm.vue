@@ -50,28 +50,6 @@
               </div>
             </div>
 
-            <div class="am-form-group" v-if="formData.userType == 1 || formData.userType == 2">
-              <label class="am-u-sm-3 am-form-label">
-                区域组
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group" v-if="formData.userType == 2" >
-              <label class="am-u-sm-3 am-form-label">
-                业务组
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams" >
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-            </div>
-
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -126,39 +104,10 @@ import io from '../../lib/io'
 
 
         },
-        computed:{
-          areaTeams : function(){
-            var options =  ( ( this.formData.userType == 1 || this.formData.userType == 2 ) ? this.$root.config.areaTeams : [] )
-            .map(function(item){
-              return {value:item.areaTeamId,text:item.name}
-            })
-            return options
-          },
-          busTeams : function(){
-            var options =  ( ( this.formData.userType == 2 && this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] )  : [] )
-            .map(function(item){
-              return {value:item.busTeamId,text:item.name}
-            })
-            return options
-          }
-        },
         mounted:function(){
           var _this = this ;
           $('#' + this.id ).validator({
             validate:function(validity){
-              if($(validity.field).is('select[name=busTeam]')){
-                if(_this.formData.userType == 2 &&  !$(validity.field).val() ){
-                  validity.valid = false
-                  validity.valueMissing=true
-                }
-              }
-
-              if($(validity.field).is('select[name=areaTeam]')){
-                if( ( _this.formData.userType == 1 || _this.formData.userType == 2 ) &&  !$(validity.field).val() ){
-                  validity.valid = false
-                  validity.valueMissing=true
-                }
-              }
 
             },
             onValid: function(validity) {

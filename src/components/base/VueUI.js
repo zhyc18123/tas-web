@@ -3,6 +3,7 @@ import util from '../../lib/util'
 
 import AMLoading from './Loading'
 import AMAlert from './Alert'
+import ADialog from './Dialog'
 import AMConfirm from './Confirm'
 import AMPrompt from './Prompt'
 import AMToast from './Toast.vue'
@@ -14,6 +15,8 @@ import Window from './Window'
 import Select2 from './Select2'
 import DateTimePicker from './DateTimePicker'
 import TimePicker from './TimePicker'
+import Choose from './Choose'
+
 
 import {
   Table ,
@@ -38,6 +41,7 @@ VueUI.install = function (Vue){
 
   const Loading = Vue.extend(AMLoading)
   const Alert = Vue.extend(AMAlert)
+  const Dialog = Vue.extend(ADialog)
   const Confirm = Vue.extend(AMConfirm)
   const Prompt = Vue.extend(AMPrompt)
   const Toast = Vue.extend(AMToast)
@@ -52,25 +56,34 @@ VueUI.install = function (Vue){
     }
     return o ;
   }
+  function getInstanceNoCache(Component){
+    var o  = new Component ;
+    $('#_componentSlot').append(o.$mount().$el)
+    return o ;
+  }
 
   Vue.showLoading = Vue.prototype.$showLoading = function (){
     getInstance(Loading,'loading').show()
   }
 
   Vue.hiddenLoading = Vue.prototype.$hiddenLoading = function (){
-    getInstance(Loading,'loading').show()
+    getInstance(Loading,'loading').close()
   }
 
   Vue.alert = Vue.prototype.$alert = function (msg){
     getInstance(Alert,'alert').show(msg)
   }
 
+  Vue.dialog = Vue.prototype.$dialog = function (title,content){
+    getInstance(Dialog,'dialog').show(title,content)
+  }
+
   Vue.confirm = Vue.prototype.$confirm = function (msg,confirm,cancel){
-    getInstance(Confirm,'confirm').show(msg,confirm,cancel)
+    getInstanceNoCache(Confirm).show(msg,confirm,cancel)
   }
 
   Vue.prompt = Vue.prototype.$prompt = function (msg,confirm,cancel){
-    getInstance(Prompt,'prompt').show(msg,confirm,cancel)
+    getInstanceNoCache(Prompt).show(msg,confirm,cancel)
   }
 
   Vue.toast = Vue.prototype.$toast = function (msg, options = {}){
@@ -92,6 +105,7 @@ VueUI.install = function (Vue){
   Vue.component('editor',Editor)
   Vue.component('window',Window)
   Vue.component('select2',Select2)
+  Vue.component('choose',Choose)
   Vue.component('date-time-picker',DateTimePicker)
   Vue.component('time-picker',TimePicker)
   Vue.component(Table.name,Table)
@@ -114,6 +128,17 @@ VueUI.install = function (Vue){
       id:function(){
         return 'id-' + (parseInt(Math.random() * 1000 ))  +'-'+(new Date().getTime())
       }
+    },
+    created:function(){
+      if(this.query && this.$route && this.$root[this.$route.fullPath]){
+        Object.assign(this,this.$root[this.$route.fullPath])
+      }
+    },
+    beforeRouteLeave (to, from, next) {
+      if(this.$data.query){
+        this.$root[from.fullPath] = this.$data
+      }
+      next()
     },
     methods: {
       hasPermission: function (permission) {

@@ -1,5 +1,5 @@
 <template>
-  <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
+  <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
       <div class="am-u-sm-12 am-scrollable-horizontal">
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
           <thead class="bg-color">
@@ -9,8 +9,7 @@
             <th>开课日期</th>
             <th>上课时间</th>
             <th>讲数</th>
-            <th>起始讲数</th>
-            <th>结束讲数</th>
+            <th>起止讲数</th>
             <th>学费</th>
           </tr>
           </thead>
@@ -19,10 +18,9 @@
             <td>{{item.courseClass.className}}</td>
             <td>{{item.courseClass.gradeName}}</td>
             <td>{{item.courseClass.startCourseTime | formatDate}}</td>
-            <td></td>
+            <td>{{item.courseClass.classDateTip}} {{item.courseClass.studyingTime}}</td>
             <td>{{item.courseClass.lectureAmount}}</td>
-            <td>{{item.studentReg.startAmount}}</td>
-            <td>{{item.studentReg.endAmount}}</td>
+            <td>{{item.studentReg.startAmount}}-{{item.studentReg.endAmount}}</td>
             <td>{{item.studentReg.totalAmount}}</td>
           </tr>
           </tbody>
@@ -30,19 +28,23 @@
       </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      总计金额：{{courseOrder.totalAmount}}￥
+      总计金额：<span class="am-text-danger">{{courseOrder.totalAmount}}</span>￥ 优惠金额：<span class="am-text-danger">{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span>￥ 应缴金额：<span class="am-text-danger">{{courseOrder.payableAmount}}</span>￥
     </div>
-
     <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      已缴金额：{{courseOrder.paidAmount}}￥
+      已缴金额：<span class="am-text-danger">{{courseOrder.paidAmount}}</span>￥ 欠费金额：<span class="am-text-danger">{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span>￥
     </div>
 
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      欠费金额：{{courseOrder.payableAmount-courseOrder.paidAmount}}￥
+    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus == 0 ">
+      优惠金额：
+      <input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount" style="display:inline;width:100px;" @change="checkDiscountAmount"/>
+      优惠原因：
+      <input type="text" class="am-input-sm"  v-model="formData.discountReason" style="display:inline;width:200px;" />
     </div>
 
+
+
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      缴费金额：<input type="text" class="am-input-sm"  v-model="formData.payAmount" style="display:inline;width:80px;" @change="check"/>￥
+      缴费金额：<input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" style="display:inline;width:100px;" @change="check"/>￥
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
@@ -64,9 +66,6 @@
       </label>
     </div>
 
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="formData.payWay == 4 " >
-      <img :src="payQRCodeUrl" />
-    </div>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg" v-if="courseOrder.chargingStatus != 2 ">
       <button type="button" class="am-btn am-btn-primary" @click="confirmPay">确定缴费</button>
@@ -80,6 +79,7 @@
 <script>
   import io from '../../lib/io'
   import conf from '../../lib/conf'
+  import util from '../../lib/util'
 
   import Pagination from '../base/Pagination'
 
@@ -90,7 +90,8 @@
         formData: {
           payWay: '',
           payAmount: '',
-          courseOrderId: ''
+          courseOrderId: '',
+          discountAmount:0
         },
         courseOrder: { },
         payQRCodeUrl : ''
@@ -102,11 +103,17 @@
     created: function () {
       if (this.courseOrderId) {
         this.loadCourseOrderDetail(this.courseOrderId)
+        this.formData.discountAmount = 0
       }
     },
     watch: {
       courseOrderId: function (val) {
         this.loadCourseOrderDetail(val)
+        this.formData.discountAmount = 0
+      },
+      'formData.discountAmount':function(val){
+        this.courseOrder.payableAmount = this.courseOrder.totalAmount -  val
+        this.formData.payAmount = util.formatNumber((this.courseOrder.payableAmount) - (this.courseOrder.paidAmount),2 )
       }
     },
     mounted: function () {
@@ -120,44 +127,69 @@
         }
 
       },
+      checkDiscountAmount:function(){
+          if(this.formData.discountAmount < 0 || this.formData.discountAmount > this.courseOrder.totalAmount ){
+            this.formData.discountAmount = 0
+          }
+      },
       loadCourseOrderDetail: function (courseOrderId) {
         var _this = this
-        if (courseOrderId != null) {
+        if (courseOrderId) {
           io.post(io.apiAdminCourseOrderDetail, {courseOrderId: courseOrderId},
             function (ret) {
               if (ret.success) {
                 _this.tableData = ret.data;
-                _this.formData.payAmount = (ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount)
+                _this.formData.payAmount = util.formatNumber((ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount),2 )
                 _this.formData.payWay = 0
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
-                _this.payQRCodeUrl = io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +ret.data.courseOrder.courseOrderId)
               } else {
                 _this.$alert(ret.desc)
               }
             })
         }
       },
+      showQRCode:function(){
+          this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +this.courseOrder.courseOrderId)+'" />')
+      },
       confirmPay: function () {
-        if(this.formData.payWay == 4 ){
-            this.$emit('paySuccess')
-            return ;
-        }
-        var _this = this
-        _this.$showLoading()
-        io.post(io.apiAdminPayCourseOrder, $.extend({}, _this.formData), function (ret) {
-          _this.$hiddenLoading()
-          if (ret.success) {
-            //关闭当前弹窗页面
-            _this.$alert("缴费成功")
-            _this.$root.$emit('order:new')
-            _this.$root.$emit('class:new')
-            _this.$emit('paySuccess')
-          } else {
-            _this.$alert( ret.desc || "缴费失败")
-          }
 
+        if(this.courseOrder.chargingStatus == 0 && this.formData.discountAmount > 0 ){
+            if(!this.formData.discountReason){
+              this.$alert('请输入优惠原因')
+              return
+            }
+
+            if(this.formData.discountReason.length > 140 ){
+              this.$alert('输入优惠原因过长(140字以内)')
+              return
+            }
+        }
+
+        var _this = this
+        _this.$confirm("确定缴费" , function(){
+          _this.$showLoading()
+          io.post(io.apiAdminConfirmPayOrder, $.extend({}, _this.formData), function (ret) {
+            _this.$hiddenLoading()
+            if (ret.success) {
+
+              if(_this.formData.payWay == 4 ){
+                _this.showQRCode()
+              }else{
+                _this.$alert("缴费成功")
+              }
+
+              _this.$root.$emit('order:new')
+              _this.$root.$emit('class:new')
+              _this.$emit('paySuccess')
+
+            } else {
+              _this.$alert( ret.desc || "缴费失败")
+            }
+
+          })
         })
+
       }
 
 

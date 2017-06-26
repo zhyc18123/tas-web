@@ -150,11 +150,11 @@
                   class="am-icon-plus"></span>新建班级
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
-                        @click="changeStatus(1)" ><span
+                        @click="batchChangeStatus(1)" ><span
                   class="am-icon-plus"></span>开班
                 </button>
-                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
-                        @click="changeStatus(2)" ><span
+                <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('invalid')"
+                        @click="batchChangeStatus(2)" ><span
                   class="am-icon-plus"></span>作废
                 </button>
                 <!--<button type="button" class="am-btn am-btn-default am-btn-success"
@@ -190,20 +190,23 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="periodName"
-                label="期数"
-                min-width="100">
+                label="排课状态"
+                min-width="250">
+                <template scope="scope">
+                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
+                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
+                </template>
               </el-table-column>
+
               <el-table-column
-                prop="campusName"
-                label="校区"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="roomName"
-                label="教室"
+                label="状态"
                 min-width="100">
+                <template scope="scope">
+                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                </template>
               </el-table-column>
+
               <el-table-column
                 label="开课日期"
                 min-width="150">
@@ -216,6 +219,19 @@
                 label="上课时间"
                 min-width="150">
               </el-table-column>
+
+
+              <el-table-column
+                prop="campusName"
+                label="校区"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="roomName"
+                label="教室"
+                min-width="100">
+              </el-table-column>
+
               <el-table-column
                 label="已上/总讲次"
                 min-width="100">
@@ -249,6 +265,11 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                prop="periodName"
+                label="期数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
                 prop="gradeName"
                 label="年级"
                 min-width="100">
@@ -258,7 +279,6 @@
                 label="科目"
                 min-width="100">
               </el-table-column>
-
               <el-table-column
                 label="状态"
                 min-width="100">
@@ -267,12 +287,10 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="排课状态"
-                min-width="250">
+                label="众筹"
+                min-width="100">
                 <template scope="scope">
-                  <el-tag :type="scope.row.isArrangeTime == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTime == 0 ? '未排时间':'已排时间'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeRoom == 0 ? 'warring' : 'success'">{{scope.row.isArrangeRoom == 0 ? '未排教室':'已排教室'}}</el-tag>
-                  <el-tag :type="scope.row.isArrangeTeacher == 0 ? 'warring' : 'success'">{{scope.row.isArrangeTeacher == 0 ? '未排老师':'已排老师'}}</el-tag>
+                  {{scope.row.classType == 0 ? '否':  '是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -290,16 +308,34 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-dropdown>
+                  <el-dropdown v-if="scope.row.status != 2">
                     <span class="el-dropdown-link">
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item v-if="hasPermission('arrange_time')" :disabled="scope.row.isArrangeTime == 1" @click.native="arrangeTime(scope.row)">排时间</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('arrange_room')" :disabled="scope.row.isArrangeRoom == 1" @click.native="arrangeRoom(scope.row)">排教室</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('arrange_teacher')" :disabled="scope.row.isArrangeTeacher == 1" @click.native="arrangeTeacher(scope.row)">排老师</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.status != 0" @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
+                      <template v-if="hasPermission('arrange_time')">
+                        <el-dropdown-item  @click.native="arrangeTime(scope.row)" v-if="scope.row.isArrangeTime == 0">排时间</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeTime(scope.row)" v-else>重排时间</el-dropdown-item>
+                      </template>
+                      <template v-if="hasPermission('arrange_room')">
+                        <el-dropdown-item  @click.native="arrangeRoom(scope.row)" v-if="scope.row.isArrangeRoom == 0">排教室</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeRoom(scope.row)" v-else>重排教室</el-dropdown-item>
+                      </template>
+                      <template v-if="hasPermission('arrange_teacher')">
+                        <el-dropdown-item  @click.native="arrangeTeacher(scope.row)" v-if="scope.row.isArrangeTeacher == 0">排老师</el-dropdown-item>
+                        <el-dropdown-item  @click.native="rearrangeTeacher(scope.row)" v-else>重排老师</el-dropdown-item>
+                      </template>
+
+                      <el-dropdown-item v-if="hasPermission('edit')"  @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,0)">取消开班</el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType != 0 ||scope.row.isArrangeTime == 0 || scope.row.isArrangeTeacher == 0 || scope.row.status != 0"  @click.native="changeClassType(scope.row.classId,2)">众筹</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType == 0 || scope.row.status !=0 "  @click.native="changeClassType(scope.row.classId,0)">取消众筹</el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('invalid')" :disabled="scope.row.regAmount > 0 "  @click.native="cancellation(scope.row)">作废</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -343,7 +379,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
@@ -404,14 +440,14 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 
     },
     methods: {
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -461,6 +497,22 @@
           height:700
         })
       },
+      rearrangeTime:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排时间',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'1'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeTime(courseClass)
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+
+      },
       arrangeRoom:function (courseClass) {
 
         if(courseClass.isArrangeTime !=  1 ){
@@ -472,6 +524,22 @@
           width : 1000,
           height: 500
         });
+      },
+      rearrangeRoom:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排课室',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'2'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeRoom(courseClass)
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+
       },
       arrangeTeacher:function (courseClass) {
         //弹窗
@@ -485,15 +553,31 @@
           height: 700
         });
       },
-      changeStatus:function (status) {
+      rearrangeTeacher:function (courseClass) {
+        var _this = this
+        _this.$confirm('确定重排老师',function(){
+          io.post(io.apiAdminPrepareRearrange, {
+            classId : courseClass.classId,
+            which:'3'
+          }, function (ret) {
+            if (ret.success) {
+              _this.arrangeTeacher(courseClass)
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+        })
+      },
+      batchChangeStatus:function (status) {
         if(this.selection.length == 0 ){
           this.$alert('请选择记录')
           return
         }
 
         for(var i =0 ;i < this.selection.length ;i++ ){
-            if(this.selection[i].status != 0 ){
-                this.$alert('只有"未开班"的记录才能"开班"或"作废"')
+
+            if( status  == 2 && this.selection[i].regAmount > 0  ){
+                this.$alert('有学生报名，不能作废')
                 return
             }
 
@@ -507,11 +591,13 @@
         })
 
         var _this = this
+        _this.$showLoading()
 
         io.post(io.apiAdminChangeCourseClassStatus, {
           status:status,
           classIds : classIds.join(',')
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
             _this.$alert('处理成功')
@@ -521,13 +607,49 @@
         })
 
 
+      },
+      cancellation:function(courseClass){
+        var _this  = this
+        this.$confirm('确定作废',function () {
+          _this.changeStatus(courseClass.classId,2)
+        })
 
-
+      },
+      changeStatus:function(classId , status ){
+        var _this = this
+        _this.$showLoading()
+        io.post(io.apiAdminChangeCourseClassStatus, {
+          status: status ,
+          classIds : [classId].join(',')
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      changeClassType:function(classId,classType){
+        var _this = this
+        _this.$showLoading()
+        io.post(io.apiAdminChangeClassType,{
+          classIds: [classId].join(','),
+          classType: classType
+        },function(ret){
+          _this.$hiddenLoading()
+          if(ret.success){
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
       },
       handleSelectionChange:function (selection) {
         this.selection = selection
       }
-
     }
   }
 </script>

@@ -7,6 +7,12 @@
       style="min-width: 100%">
       <el-table-column
         fixed
+        prop="courseClass.classNo"
+        label="班级编号"
+        min-width="100">
+      </el-table-column>
+      <el-table-column
+        fixed
         label="班级名称"
         min-width="200">
         <template scope="scope">
@@ -18,7 +24,7 @@
         label="期数"
         min-width="100">
         <template scope="scope">
-          {{scope.row.courseClass.periodName}}
+          {{scope.row.courseClass.periodName }}
 
         </template>
       </el-table-column>
@@ -57,29 +63,13 @@
         </template>
       </el-table-column>
       <el-table-column
-        label="报读开始讲数"
-        min-width="150">
-        <template scope="scope">
-          {{scope.row.studentReg.startAmount}}
-
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="报读结束讲数"
-        min-width="150">
-        <template scope="scope">
-          {{scope.row.studentReg.endAmount}}
-
-        </template>
-      </el-table-column>
-      <el-table-column
-        label="报名讲数"
+        label="起止讲数"
         min-width="100">
         <template scope="scope">
-          {{scope.row.studentReg.endAmount - scope.row.studentReg.startAmount + 1}}
-
+          {{scope.row.studentReg.startAmount}}-{{scope.row.studentReg.endAmount}}
         </template>
       </el-table-column>
+
       <el-table-column
         label="开课日期"
         min-width="150">
@@ -98,8 +88,8 @@
         label="操作"
         width="180">
         <template scope="scope">
-          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2" @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
-          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1"
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 " @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 || scope.row.studentReg.refundStatus == 1 "
                      @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
           </el-button>
         </template>
@@ -111,7 +101,7 @@
 
 
     <window ref="studentRefund" title="退费申请">
-      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close()"></student-refund>
+      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close();$root.$emit('mainAccount:change')"></student-refund>
     </window>
 
   </div>

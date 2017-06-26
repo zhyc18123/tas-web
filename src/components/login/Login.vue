@@ -106,21 +106,20 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
             },function(ret){
               $submitBtn.removeAttr("disabled")
               if(ret.success){
-                if( _this.rememberMe ) {
-                  storage.setAccessToken(ret.data.accessToken)
-                  storage.setLogin({
-                    username:_this.formData.username,
-                    password:password,
-                    rememberMe : _this.rememberMe,
-                    userId : ret.data.user.userId ,
-                    successLogin :true ,
-                    loginAt : new Date().getTime()
-                  })
-                  storage.setCurrentUserInfo(ret.data.user)
 
-                  _this.$router.push('/main/index')
-                }
+                storage.setLogin({
+                  username:_this.formData.username,
+                  password:password,
+                  rememberMe : _this.rememberMe,
+                  userId : ret.data.user.userId ,
+                  successLogin :true ,
+                  loginAt : new Date().getTime()
+                })
+                storage.setCurrentUserInfo(ret.data.user)
+                storage.setAccessToken(ret.data.accessToken)
+                _this.$router.push('/main/index')
               }else{
+                _this.checkNeedCaptcha()
                 _this.$alert(ret.desc ||  '登录失败' )
               }
             })

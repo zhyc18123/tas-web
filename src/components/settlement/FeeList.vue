@@ -96,6 +96,8 @@
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item @click.native="auditing(scope.row.feeId, 1 )">审核通过</el-dropdown-item>
                       <el-dropdown-item @click.native="auditing(scope.row.feeId , 2)">审核失败</el-dropdown-item>
+                      <el-dropdown-item @click.native="$router.push('/main/settlement/fee/edit/'+query.mainAccountId+'/'+scope.row.feeId)">编辑</el-dropdown-item>
+                      <el-dropdown-item @click.native="del(scope.row.feeId )">删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -151,7 +153,7 @@
     },
     methods: {
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -173,6 +175,18 @@
         io.post(io.apiAdminSettlementAuditingFee, {
           feeId: feeId,
           status: status
+        }, function (ret) {
+          if (ret.success) {
+            _this.loadTableData()
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      del:function(feeId){
+        var _this = this
+        io.post(io.apiAdminSettlementDeleteFee, {
+          feeId: feeId
         }, function (ret) {
           if (ret.success) {
             _this.loadTableData()

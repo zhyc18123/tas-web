@@ -4,56 +4,6 @@
 
       <div class="widget-body  am-fr">
         <div class="am-u-sm-12 am-form ">
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.areaTeamId" :options="areaTeams">
-                <option value="">区域</option>
-              </select2>
-            </div>
-          </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.busTeamId" :options="busTeams">
-                <option value="">业务组</option>
-              </select2>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.productId" :options="products">
-                <option value="">产品</option>
-              </select2>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 required  v-model="query.season"  >
-                <option value="">季节</option>
-                <option value="春季班">春季班</option>
-                <option value="暑期班">暑期班</option>
-                <option value="秋季班">秋季班</option>
-                <option value="寒假班">寒假班</option>
-              </select2>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.courseTemplateId" :options="courses">
-                <option value="">课程</option>
-              </select2>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.periodId" :options="periods">
-                <option value="">期数</option>
-              </select2>
-            </div>
-          </div>
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
@@ -95,9 +45,30 @@
             style="min-width: 100%">
             <el-table-column
               fixed
+              prop="classNo"
+              label="班级编号"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              fixed
               prop="className"
               label="班级名称"
               min-width="200">
+            </el-table-column>
+            <el-table-column
+              prop="periodName"
+              label="期数"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="campusName"
+              label="校区"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="studyingFee"
+              label="学费"
+              min-width="100">
             </el-table-column>
             <el-table-column
               label="开始讲数"
@@ -199,17 +170,12 @@
         studentId: '',
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId: '',
-          busTeamId: '',
-          productId: '',
           status : 1
         },
-        products: [],
         courses: [],
-        searchConfig: {},
         courseOrderId: '',
       }
     },
@@ -222,22 +188,6 @@
       }
     },
     computed: {
-
-      areaTeams: function () {
-        var options = ( this.$root.config.areaTeams || [] )
-          .map(function (item) {
-            return {value: item.areaTeamId, text: item.name}
-          })
-        return options
-      },
-      busTeams: function () {
-        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
-          .map(function (item) {
-            return {value: item.busTeamId, text: item.name}
-          })
-        this.query.busTeamId = ''
-        return options
-      },
       grades: function () {
         return this.$root.config.grades.map(function (item) {
           return {value: item.gradeId, text: item.gradeName}
@@ -250,7 +200,7 @@
       },
       periods: function () {
         return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName }
         })
       }
     },
@@ -258,7 +208,6 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadProductData()
       this.loadCourseData()
     },
     methods: {
@@ -273,7 +222,7 @@
 
       },
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -281,36 +230,33 @@
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          status: 1
+          status: 1,
+          busTeamId : _this.args.refundClass.busTeamId,
+          periodId : _this.args.refundClass.periodId
         }, _this.query), function (ret) {
 
           if (ret.success) {
             _this.total = ret.data.total
+
+            var courseList  = []
+
             for (var i = 0; i < ret.data.list.length; i++) {
 
-              ret.data.list[i].startAmount = parseInt(_this.args.formData.studyAmount) + 1
-              ret.data.list[i].endAmount = _this.args.formData.endAmount
+              ret.data.list[i].startAmount = parseInt(_this.args.refundClass.studyAmount) + 1
+              ret.data.list[i].endAmount = _this.args.refundClass.endAmount
               ret.data.list[i].regId = _this.regId
 
-              if (( _this.args.formData.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.formData.lectureAmount == ret.data.list[i].lectureAmount)) {
+              if (( _this.args.refundClass.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.refundClass.lectureAmount == ret.data.list[i].lectureAmount)) {
                 ret.data.list[i].allow = true
               } else {
                 ret.data.list[i].allow = false
               }
+
+              if(ret.data.list[i].classId != _this.args.refundClass.classId ){//过滤
+                courseList.push(ret.data.list[i])
+              }
             }
-            _this.tableData = ret.data.list
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadProductData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
-          if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
+            _this.tableData = courseList
           } else {
             _this.$alert(ret.desc)
           }
@@ -329,7 +275,7 @@
         })
       },
       confirm: function (item) {
-        this.$emit('goStep', 'step-three', {item: item, formData: this.args.formData})
+        this.$emit('goStep', 'step-three', { newClass: item, refundClass : this.args.refundClass })
       },
       back: function () {
         this.$emit('goStep', 'step-one' )

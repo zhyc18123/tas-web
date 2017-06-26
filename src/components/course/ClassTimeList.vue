@@ -20,13 +20,13 @@
               <el-table-column
                 prop="lectureNo"
                 label="讲数"
-                min-width="100">
+                min-width="50">
               </el-table-column>
               <el-table-column
                 label="上课时间"
-                min-width="100">
+                min-width="150">
                 <template scope="scope">
-                  <span v-if="scope.row.classDate">{{scope.row.classDate | formatDate }}&nbsp;{{scope.row.startTime}}-{{scope.row.endTime}}</span>
+                  <span v-if="scope.row.classDate">{{ scope.row.classDate | formatDate('dddd YYYY-MM-DD') }}&nbsp;{{scope.row.startTime}}-{{scope.row.endTime}}</span>
                 </template>
               </el-table-column>
               <el-table-column
@@ -34,37 +34,93 @@
                 label="上课老师"
                 min-width="100">
               </el-table-column>
+              <el-table-column
+                align="center"
+                fixed="right"
+                label="操作"
+                width="150">
+                <template scope="scope">
+                    <el-dropdown v-if="scope.row.attendanceStatus == 0">
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                      <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item  :disabled="!scope.row.classDate"  @click.native="rearrangeTime(scope.row)">重排时间</el-dropdown-item>
+                        <el-dropdown-item  :disabled="!scope.row.teacherId"  @click.native="rearrangeTeacher(scope.row)">重排老师</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                </template>
+              </el-table-column>
 
             </el-table>
           </div>
         </div>
       </div>
     </div>
+
+    <window ref="rearrangeTime" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲时间'" @close="courseClass=null">
+      <rearrange-time v-if="!!classLecture" :classLecture="classLecture" @ok="$refs.rearrangeTime.close();loadTableData()"></rearrange-time>
+    </window>
+
+    <window ref="rearrangeTeacher" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲老师'" @close="courseClass=null">
+      <rearrange-teacher v-if="!!classLecture&&!!courseClass" :courseClass="courseClass" :classLecture="classLecture" @ok="$refs.rearrangeTeacher.close();loadTableData()"></rearrange-teacher>
+    </window>
+
   </div>
 </template>
 <script>
   import io from '../../lib/io'
+
+  import RearrangeTimeForSingleLecture from './RearrangeTimeForSingleLecture'
+  import RearrangeTeacherForSingleLecture from './RearrangeTeacherForSingleLecture'
 
   export default{
     data: function () {
       return {
         tableData: [],
         query: {
-          classId : ''
-        }
+          classId : this.$params('classId')
+        },
+        courseClass:null,
+        classLecture:null
       }
     },
+    components:{ 'rearrange-time' :  RearrangeTimeForSingleLecture,'rearrange-teacher' :  RearrangeTeacherForSingleLecture },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
-      this.query.classId = this.$params('classId')
       this.loadTableData()
-
     },
     methods: {
+      rearrangeTime:function(classLecture){
+        this.classLecture = classLecture
+        this.$refs.rearrangeTime.show({
+          width : 1000,
+          height: 230
+        })
+      },
+      rearrangeTeacher:function(classLecture){
+
+        var _this = this;
+        io.post(io.apiAdminCourseClassBaseDetail, { classId : classLecture.classId },
+          function (ret) {
+            if (ret.success) {
+              _this.courseClass = ret.data
+              _this.classLecture = classLecture
+              _this.$refs.rearrangeTeacher.show({
+                width : 1000,
+                height: 500
+              })
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+
+      },
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

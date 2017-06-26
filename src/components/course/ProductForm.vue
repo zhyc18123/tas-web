@@ -24,7 +24,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属区域
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.areaTeamId" :options="areaTeams">
+                <select2 :disabled="!editable" required v-model="formData.areaTeamId" :options="areaTeams">
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -52,7 +52,8 @@
         productTypeData: [],
         formData: {
           areaTeamId: ''
-        }
+        },
+        editable:true
       }
     },
 
@@ -70,6 +71,7 @@
             _this.$alert('请求服务器失败')
           })
       }
+      this.editable = !productId
     },
     computed: {
       areaTeams: function () {

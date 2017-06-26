@@ -13,6 +13,13 @@ $.cachedScript = function( url, options ) {
   return $.ajax( options );
 };
 
+function checkResult (ret) {
+  if( !ret.success && ret.desc && ( ret.desc.indexOf('accessToken不存在或已过期') != -1 || ret.desc.indexOf('token不能为空') != -1 ) ){
+    document.location.href = '/'
+  }
+
+}
+
 const io = {
 
 
@@ -42,6 +49,10 @@ const io = {
     this.apiAdminRoleResourceList = conf.baseApiPath + '/api/admin/roleResourceList'
     this.apiAdminSaveRoleResource = conf.baseApiPath + '/api/admin/saveRoleResource'
 
+    this.apiAdminSysDataPermissionConfig = conf.baseApiPath + '/api/admin/sysDataPermissionConfig'
+    this.apiAdminSaveUserDataPermission = conf.baseApiPath + '/api/admin/saveUserDataPermission'
+    this.apiAdminUserDataPermissionList = conf.baseApiPath + '/api/admin/userDataPermissionList'
+
     this.apiAdminRoleList = conf.baseApiPath + '/api/admin/roleList'
     this.apiAdminRoleDetail = conf.baseApiPath + '/api/admin/roleDetail'
     this.apiAdminSaveRole = conf.baseApiPath + '/api/admin/saveRole'
@@ -64,14 +75,29 @@ const io = {
     this.apiAdminPeriodList = conf.baseApiPath + '/api/admin/periodList'
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
+    this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
+
+    this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
+    this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'
+    this.apiAdminSaveOrUpdateStudentSchool = conf.baseApiPath + '/api/admin/saveOrUpdateStudentSchool'
+    this.apiAdminSearchStudentSchool = conf.baseApiPath + '/api/admin/searchStudentSchool'
+
+    this.apiAdminClassRemunerationList = conf.baseApiPath + '/api/admin/classRemunerationList'
+    this.apiAdminClassRemunerationDetail = conf.baseApiPath + '/api/admin/classRemunerationDetail'
+    this.apiAdminSaveOrUpdateClassRemuneration = conf.baseApiPath + '/api/admin/saveOrUpdateClassRemuneration'
+    this.apiAdminDelClassRemuneration = conf.baseApiPath + '/api/admin/delClassRemuneration'
+
+
 
     this.apiAdminTeacherList = conf.baseApiPath + '/api/admin/teaching/resource/teacherList'
     this.apiAdminTeacherDetail = conf.baseApiPath + '/api/admin/teaching/resource/teacherDetail'
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
+    this.apiAdminTeacherTags = conf.baseApiPath + '/api/admin/teaching/resource/teacherTags'
 
-    this.apiAdminCampusList = conf.baseApiPath + '/api/admin/teaching/resource/campusList'
-    this.apiAdminAllCampus = conf.baseApiPath + '/api/admin/teaching/resource/allCampus'
+    this.apiAdminCampusManageList = conf.baseApiPath + '/api/admin/teaching/resource/campusManageList'
+    this.apiAdminCampusUseList = conf.baseApiPath + '/api/admin/teaching/resource/campusUseList'
+    this.apiAdminBaseCampusList = conf.baseApiPath + '/api/admin/teaching/resource/baseCampusList'
     this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/teaching/resource/campusDetail'
     this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
     this.apiAdminDelCampus = conf.baseApiPath + '/api/admin/teaching/resource/delCampus'
@@ -84,41 +110,58 @@ const io = {
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
     this.apiAdminRoomTimeList = conf.baseApiPath + '/api/admin/arrangement/roomTimeList'
-    this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassTimeList'
+    this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassLectureList'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
     this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
-    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/ClassTimeList'
+    this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/classLectureList'
 
 
 
-    this.apiAdminCourseTemplateList = conf.baseApiPath + '/api/admin/courseTemplateList'
+    this.apiAdminCourseTemplateManageList = conf.baseApiPath + '/api/admin/courseTemplateManageList'
+    this.apiAdminCourseTemplateUseList = conf.baseApiPath + '/api/admin/courseTemplateUseList'
     this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
     this.apiAdminDeleteCourseTemplate = conf.baseApiPath + '/api/admin/deleteCourseTemplate'
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
 
-    this.apiAdminProductList  = conf.baseApiPath + '/api/admin/productList'
+    this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
+    this.apiAdminProductManageUseList  = conf.baseApiPath + '/api/admin/productUseList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
     this.apiAdminDeleteProduct = conf.baseApiPath + '/api/admin/deleteProduct'
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
     this.apiAdminBaseProductList = conf.baseApiPath + '/api/admin/baseProductList'
+    this.apiAdminBaseProductListForAreaTeam = conf.baseApiPath + '/api/admin/baseProductListForAreaTeam'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
+    this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
+    this.apiAdminCourseClassBaseDetail = conf.baseApiPath + '/api/admin/courseClassBaseDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
     this.apiAdminChangeCourseClassStatus = conf.baseApiPath + '/api/admin/changeCourseClassStatus'
     this.apiAdminRecommendCourseClass = conf.baseApiPath + '/api/admin/recommendCourseClass'
-    this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/saveArrangeClassTimeResult'
+    this.apiAdminSaveArrangeClassTimeResult = conf.baseApiPath + '/api/admin/arrangement/saveArrangeClassTimeResult'
+    this.apiAdminRearrangeTimeForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTimeForLecture'
+    this.apiAdminRearrangeTeacherForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTeacherForLecture'
+    this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
+
+    this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/teaching/resource/crowdfundingClassMgr'
+    this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'
+    this.apiAdminCrowdfundingClassEdit = conf.baseApiPath + '/api/admin/crowdfundingClassDetail'
+    this.apiAdminCrowdfundingSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateCrowdfundingClass'
+
+    this.apiAdminBookingOrder = conf.baseApiPath + '/api/admin/countBookingStudent'
 
     this.studentSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateStudent'
     this.apiAdminStudentDetail = conf.baseApiPath + '/api/admin/studentDetail'
     this.apiAdminSearchStudent = conf.baseApiPath + '/api/admin/searchStudent'
     this.apiAdminCreateOfflineOrder = conf.baseApiPath + '/api/admin/createOfflineOrder'
     this.apiAdminCourseOrderList = conf.baseApiPath + '/api/admin/courseOrderList'
+    this.apiAdminCancelCourseOrder = conf.baseApiPath + '/api/admin/cancelCourseOrder'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
-    this.apiAdminPayCourseOrder= conf.baseApiPath + '/api/admin/payCourseOrder'
+    this.apiAdminStudentClassCertDetail = conf.baseApiPath + '/api/admin/studentClassCertDetail'
+    this.apiAdminConfirmPayOrder= conf.baseApiPath + '/api/admin/confirmPayOrder'
     // this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
     this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
     this.apiAdminShowNewClassDetail = conf.baseApiPath + '/api/admin/showNewClass'
@@ -134,7 +177,9 @@ const io = {
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
+    this.apiAdminSettlementFeelDetail = conf.baseApiPath + '/api/admin/settlement/feelDetail'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
+    this.apiAdminSettlementDeleteFee = conf.baseApiPath + '/api/admin/settlement/deleteFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
     this.apiAdminSettlementProfitDetaile = conf.baseApiPath + '/api/admin/settlement/profitDetail'
     this.apiAdminSettlementAccountWithdrawalList = conf.baseApiPath + '/api/admin/settlement/accountWithdrawalList'
@@ -192,6 +237,9 @@ const io = {
     this.apiAdminAttendanceSaveAttendanceRecordDetail = conf.baseApiPath + '/api/admin/attendance/saveAttendanceRecordDetail'
 
 
+    this.apiAdminStudentMainAccount = conf.baseApiPath + '/api/admin/studentMainAccount'
+
+
   },
   getHeaders : function(){
     const accessToken = Storage.getAccessToken() || '' ;
@@ -210,6 +258,7 @@ const io = {
       cache: true,
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -232,6 +281,7 @@ const io = {
       dataType: 'json',
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -255,6 +305,7 @@ const io = {
       timeout : 30000,
       async : false ,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -279,6 +330,7 @@ const io = {
       processData: false,
       timeout : 30000,
       success: function (data) {
+        checkResult(data)
         if (success) {
           success(data);
         }
@@ -306,6 +358,7 @@ const io = {
     }));
     $.when.apply($, $scripts).done(done)
   }
+
 };
 
 io.configUrls()

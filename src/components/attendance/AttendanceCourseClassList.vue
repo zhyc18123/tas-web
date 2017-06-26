@@ -112,6 +112,12 @@
               style="min-width: 100%">
               <el-table-column
                 fixed
+                prop="classNo"
+                label="班级编号"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                fixed
                 prop="className"
                 label="班级名称"
                 min-width="200">
@@ -192,7 +198,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push('/main/attendance/attendance/record/'+scope.row.classId)">考勤</el-button>
+                  <el-button size="small" :disabled="scope.row.status == 0 || scope.row.regAmount == 0 " @click.native="$router.push('/main/attendance/attendance/record/'+scope.row.classId)">考勤</el-button>
                 </template>
               </el-table-column>
 
@@ -219,13 +225,13 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
           busTeamId : '',
           productId : '',
-          status : 1
+          periodId : ''
         },
         searchConfig: {},
         products:[],
@@ -249,6 +255,8 @@
         _this.pageNo = 1
         _this.loadTableData(_this.pageNo)
       })
+      let currentPeriod = this.$root.config.periods.filter(function(item){ return item.isCurrent == 1 })[0] ;
+      this.query.periodId  = currentPeriod ? currentPeriod.periodId : ''
     },
     computed: {
       areaTeams: function () {
@@ -278,14 +286,14 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 
     },
     methods: {
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

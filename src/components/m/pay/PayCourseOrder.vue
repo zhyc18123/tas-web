@@ -20,6 +20,18 @@
         <div class="am-u-sm-3">{{orderDetail.courseOrder.chargingStatus == 0 ? '未缴费':( orderDetail.courseOrder.chargingStatus == 1) ? '欠费':'已缴费' }}</div>
       </div>
       <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">总计金额</label>
+        <div class="am-u-sm-3 price">{{orderDetail.courseOrder.totalAmount}}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">优惠金额</label>
+        <div class="am-u-sm-3 price">{{ orderDetail.courseOrder.totalAmount - orderDetail.courseOrder.payableAmount }}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
+        <label class="am-u-sm-9">应缴金额</label>
+        <div class="am-u-sm-3 price">{{ orderDetail.courseOrder.payableAmount }}￥</div>
+      </div>
+      <div class="am-g am-g-collapse">
         <label class="am-u-sm-9">已缴金额</label>
         <div class="am-u-sm-3 price">{{orderDetail.courseOrder.paidAmount}}￥</div>
       </div>
@@ -162,15 +174,26 @@
 
     },
     created:function(){
+
+        if(this.inWeixin ){
+          if(!this.openId || !sessionStorage.getItem('wx_oauth') ){
+            sessionStorage.setItem('wx_oauth','Y')
+            document.location.href = 'http://wx.yuyou100.com/wechat/oauth2?needUserInfo=false&redirectUrl='+ encodeURIComponent(location.href)
+          }
+        }
+
+        if(this.inWeixin ){
+          this.payMethod = 'wx_pub'
+        }else{
+          this.payMethod = 'alipay_wap'
+        }
+
         var courseOrderId  = this.$params('courseOrderId')
         if(courseOrderId){
             this.courseOrderId = courseOrderId
             this.loadCourseOrderDetail();
         }
 
-        if(this.inWeixin && !this.openId ){
-            document.location.href = 'http://wx.yuyou100.com/wechat/oauth2?redirectUrl='+ encodeURIComponent(location.href)
-        }
     },
     methods: {
 
@@ -190,9 +213,6 @@
               }else{
                 _this.$alert( ret.desc || '请求服务器失败')
               }
-            },
-            function(){
-              _this.$alert('请求服务器失败')
             })
 
       },

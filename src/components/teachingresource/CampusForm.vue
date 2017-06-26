@@ -49,22 +49,16 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="请输入电话号码"  data-validation-message="请输入电话号码" pattern="((^1([358]{1}\d{1}|70)\d{8}$)|(^(0\d{2,3}-)?\d{7,8}(-\d{3,4})?$))" required v-model="formData.phoneNo"/>
               </div>
             </div>
 
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                归属
+                区域
               </label>
-              <div class="am-u-sm-3 input-field">
+              <div class="am-u-sm-3 input-field am-u-end">
                 <select2 required name="areaTeam" v-model="formData.areaTeamId" :options="areaTeams">
-                  <option value="">请选择</option>
-                </select2>
-              </div>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 name="busTeam" v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
@@ -72,7 +66,6 @@
 
             <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
               </div>
             </div>
@@ -94,7 +87,6 @@ import conf from '../../lib/conf'
                 districtMap:{},
                 formData:{
                   areaTeamId:'',
-                  busTeamId:'',
                   province : '',
                   city : '',
                   district :''
@@ -123,13 +115,6 @@ import conf from '../../lib/conf'
             var options =  ( this.$root.config.areaTeams || [] )
             .map(function(item){
               return {value:item.areaTeamId,text:item.name}
-            })
-            return options
-          },
-          busTeams : function(){
-            var options =  ( ( this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] )  : [] )
-            .map(function(item){
-              return {value:item.busTeamId,text:item.name}
             })
             return options
           },

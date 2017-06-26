@@ -60,12 +60,12 @@
     </div>
 
     <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-        <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>审批详情
+        审批详情
     </div>
     <textarea required v-model="formData.returnResult"></textarea>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">审核</button>
       <a href="javascript:void(0)" data-am-modal-close>
         <button class="am-btn am-btn-primary">取消</button>
       </a>
@@ -142,6 +142,10 @@
         }
       },
       confirmToRefund: function () {
+        if(!this.formData.status || this.formData.status ==  0 ){
+          this.$alert('请选择审批状态')
+          return
+        }
         var _this = this
         io.post(io.apiAdminChangeStudentRefundStatus, {
             studentRefundId : _this.formData.studentRefundId ,

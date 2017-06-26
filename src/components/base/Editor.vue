@@ -53,7 +53,12 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
         },
         beforeDestroy:function(){
           if(this.editor){
-            this.editor.destroy()
+            try{
+              this.editor.destroy()
+            }catch (e){
+
+            }
+
           }
         }
     }

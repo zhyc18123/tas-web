@@ -93,6 +93,18 @@
               </div>
             </div>
 
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.status">
+                  <option value="">班级状态</option>
+                  <option value="0">未开班</option>
+                  <option value="1">已开班</option>
+                  <option value="2">已作废</option>
+                  <option value="3">已结课</option>
+                </select2>
+              </div>
+            </div>
+
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
@@ -112,6 +124,12 @@
               style="min-width: 100%">
               <el-table-column
                 fixed
+                prop="classNo"
+                label="班级编号"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                fixed
                 prop="className"
                 label="班级名称"
                 min-width="200">
@@ -125,6 +143,13 @@
                 prop="roomName"
                 label="教室"
                 min-width="100">
+              </el-table-column>
+               <el-table-column
+                label="众筹"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.classType == 0 ? "否" : "是"}}
+                </template>
               </el-table-column>
               <el-table-column
                 label="开课日期"
@@ -191,7 +216,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push('/main/enroll/class/reg/'+scope.row.classId)">报名列表</el-button>
+                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfunding/reg/')) + scope.row.classId)">报名列表</el-button>
                 </template>
               </el-table-column>
 
@@ -218,7 +243,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 5,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
@@ -277,14 +302,14 @@
       },
       periods:function(){
         return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodNo}
+          return {value: item.periodId, text: item.periodName}
         })
       }
 
     },
     methods: {
       search: function () {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

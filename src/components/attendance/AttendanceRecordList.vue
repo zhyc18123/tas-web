@@ -4,6 +4,9 @@
       <div class="widget am-cf">
         <div class="widget-head am-cf">
           <div class="widget-title  am-cf">考勤列表</div>
+          <div class="widget-function am-fr">
+            <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+          </div>
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12">
@@ -23,7 +26,7 @@
                 label="是否考勤"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status  == 0 ? '否' : '是'}}
+                  {{scope.row.attendanceStatus  == 0 ? '否' : '是'}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -60,7 +63,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small"  @click.native="showDetailWin(scope.row)">考勤</el-button>
+                  <el-button size="small"  @click.native="showDetailWin(scope.row)">{{scope.row.attendanceStatus  == 0 ? '考勤' : '修改考勤'}}</el-button>
                 </template>
               </el-table-column>
 

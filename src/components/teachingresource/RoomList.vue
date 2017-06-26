@@ -62,11 +62,13 @@
 
                 </template>
               </el-table-column>
+              <!--
               <el-table-column
                 prop="rent"
                 label="每小时"
                 min-width="100">
               </el-table-column>
+              -->
               <el-table-column
                 label="状态"
                 min-width="100">
@@ -151,13 +153,14 @@
 
       },
       search: function () {
-        this.query = {}
+        var campusId = this.$route.query.campusId
+        this.query = {campusId}
         if (!this.searchConfig.searchItem) {
           this.$alert('请选择搜索选项')
           return
         }
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
-        this.loadTableData()
+        this.loadTableData(1)
       },
       loadTableData: function (pageNo) {
         var _this = this

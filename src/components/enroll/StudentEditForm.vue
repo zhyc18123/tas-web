@@ -25,11 +25,11 @@
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
-          <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>出生日期
+          出生日期
         </label>
         <div class="am-u-sm-3 am-u-end  input-field">
           <date-picker v-model="formData.birthday" >
-            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  required >
+            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  >
           </date-picker>
         </div>
       </div>
@@ -49,8 +49,11 @@
         <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
         </label>
-        <div class="am-u-sm-9 input-field">
-          <input type="text" placeholder="请输入就读学校"  required  v-model="formData.school" >
+        <div class="am-u-sm-6 input-field">
+          <input type="text" placeholder="就读学校"  required  v-model="formData.school"  readonly>
+        </div>
+        <div class="am-u-sm-3">
+          <button type="button" class="am-btn am-btn-default" @click="$refs.selectStudentSchool.show()">选择</button>
         </div>
       </div>
 
@@ -63,6 +66,18 @@
           <select2 required v-model="formData.gradeId"  :options="grades">
             <option value="">请选择</option>
           </select2>
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          推荐人
+        </label>
+        <div class="am-u-sm-6 input-field">
+          <input type="text" placeholder="推荐人"    v-model="formData.referrerName"  readonly>
+        </div>
+        <div class="am-u-sm-3">
+          <button type="button" class="am-btn am-btn-default" @click="$refs.selectStudent.show()">选择</button>
         </div>
       </div>
 
@@ -80,7 +95,7 @@
         </label>
         <div class="am-u-sm-2 input-field">
           <select2 required v-model="guardianList[index].relationship" >
-            <option value="0">请选择</option>
+            <option value="">请选择</option>
             <option value="父亲">父亲</option>
             <option value="母亲">母亲</option>
             <option value="爷爷">爷爷</option>
@@ -115,6 +130,8 @@
         </div>
       </div>
     </fieldset>
+    <select-student-school ref="selectStudentSchool" @select="selectStudentSchool"/>
+    <select-student ref="selectStudent" @select="selectReferrer"/>
   </form>
 </template>
 
@@ -122,16 +139,24 @@
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
+  import SelectStudentSchool from '../sysmanager/SelectStudentSchool'
+  import SelectStudent from './SelectStudent'
+
   export default{
     data(){
       return{
         guardianList:[{}],
         formData:{
-          sex:''
-        }
+          sex:'',
+          school:'',
+          referrerName:''
+        },
+        studentSchoolList:[]
+
       }
     },
     props:['studentId'],
+    components:{'select-student-school' :SelectStudentSchool,'select-student':SelectStudent },
     computed:{
       grades:function(){
         return this.$root.config.grades.map(function(item){
@@ -148,7 +173,7 @@
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
               _this.formData = ret.data.student
-              _this.guardianList = ret.data.guardianList
+              _this.guardianList =  ret.data.guardianList && ret.data.guardianList.length == 0  ?  [{}] : ret.data.guardianList
             }
           },
           function(){
@@ -227,6 +252,13 @@
           return
         }
         this.guardianList.splice(index,1)
+      },
+      selectStudentSchool:function (studentSchool) {
+        this.formData.school =  studentSchool.schoolName
+      },
+      selectReferrer:function(student){
+        this.formData.referrerId = student.studentId
+        this.formData.referrerName = student.name
       }
     }
   }

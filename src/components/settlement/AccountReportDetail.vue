@@ -89,7 +89,7 @@ import Pagination from '../base/Pagination'
           return {
             tableData:[],
             total:0,
-            pageSize:10,
+            pageSize:20,
             pageNo:1,
             query:{
               startDate : util.formatDate( util.firstDayOfMonth() ),
