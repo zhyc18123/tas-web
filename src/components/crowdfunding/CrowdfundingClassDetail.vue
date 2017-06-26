@@ -112,7 +112,7 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>报名截至日期
-        </label>
+            </label>
             <div class="am-u-sm-3 am-u-end  input-field">
               <date-picker v-model="formData.endRegTime" >
                 <input type="text" class="am-form-field" placeholder="请选择报名截止日期" data-am-datepicker  >
@@ -121,8 +121,15 @@
             <span class="am-text-danger am-margin-right-xs am-text-xs tip">报名截至日期须比开课时间早三天以上</span>
           </div>
           <div class="am-form-group">
-            <label class="radio-label"><input name="" type="radio" value="1" v-model="formData.discountType"/>连续人均定价 </label>
-            <label class="radio-label"><input name="" type="radio" value="2"  v-model="formData.discountType"/>分段人均定价 </label>
+            <label class="am-u-sm-3 am-form-label">
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>定价方式
+            </label>
+            <div class="am-u-sm-9 input-field">
+              <label class="am-radio-inline"><input name="" type="radio" value="1" v-model="formData.discountType"/>连续人均定价 </label>
+              <label class="am-radio-inline"><input name="" type="radio" value="2"  v-model="formData.discountType"/>分段人均定价 </label>
+            </div>
+
+
           </div>
 
           <div  class="am-form-group" v-for="(item, index) in priceList" v-if="formData.discountType == 2">
