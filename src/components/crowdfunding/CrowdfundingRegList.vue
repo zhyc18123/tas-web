@@ -77,8 +77,8 @@
               <el-table-column
                 label="预约金支付日期"
                 min-width="150">
-                <template scope="scope">
-                  {{ scope.row.chargingStatus == 2 ?  (scope.row.depositPayDate | formatTime):'' }}
+                <template v-if="scope.row.chargingStatus == 2 " scope="scope">
+                  {{scope.row.depositPayDate | formatTime}}
                 </template>
               </el-table-column>
               <el-table-column
