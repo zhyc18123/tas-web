@@ -8,23 +8,21 @@
           </div>
       </div>
       <div class="widget-body am-fr">      
-            <div class="am-form-group">    
+            <table class="am-form-group">    
             <tr>
               <td style="width:100px; height:50px;">
                   <img height="300" width="300" :src="teachersData.avatarUrl" >
               </td>
-              <td style="width:300px; height:250px;padding-left:5%;padding-top:20%">   
-                  {{teachersData.teacherName}} </br>
-                  {{teachersData.sex == 1 ? '男' : (teachersData.sex == 2 ? '女' : '')}} </br>
-                  {{teachersData.teachGradeNames}}
-
-                  </br>
-                  {{teachersData.phoneNo}}</br>
-                  {{teachersData.areaTeamName}} </br>
-                  {{teachersData.tags}}            
+              <td class="teacher-mes">   
+                  <p class="teacher-name">{{teachersData.teacherName}} </p>
+                  <p>{{teachersData.sex == 1 ? '男' : (teachersData.sex == 2 ? '女' : '')}} </p>
+                  <p>{{teachersData.teachGradeNames}}</p>
+                  <p>{{teachersData.phoneNo}}</p>
+                  <p>{{teachersData.areaTeamName}} </p>
+                  <p>{{teachersData.tags}}  </p>          
               </td>
             </tr>      
-            </div>
+            </table>
 
         <el-table
           :data="classData"
@@ -122,15 +120,15 @@
             <input type="text" class="am-form-field" placeholder="请选择报名截止日期" data-am-datepicker  >
           </date-picker>
         </div>
-        <span class="am-text-danger am-margin-right-xs am-text-xs">报名截至日期须比开课时间早三天以上</span>
+        <span class="am-text-danger am-margin-right-xs am-text-xs tip">报名截至日期须比开课时间早三天以上</span>
       </div>
       <div class="am-form-group">
-          <label><input name="" type="radio" value="1" v-model="formData.discountType"/>连续人均定价 </label> 
-          <label><input name="" type="radio" value="2" v-model="formData.discountType"/>分段人均定价 </label> 
+          <label class="radio-label"><input name="" type="radio" value="1" v-model="formData.discountType"/>连续人均定价 </label> 
+          <label class="radio-label"><input name="" type="radio" value="2"  v-model="formData.discountType"/>分段人均定价 </label> 
       </div>
 
       <div  class="am-form-group" v-for="(item, index) in priceList" v-if="formData.discountType == 2">
-        <label class="am-u-sm-1 am-form-label">
+        <label class="am-u-sm-3 am-form-label">
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>
            <template scope="scope">
             </template>{{index == 0 ? "可开课总人数" : "总人数"}}
@@ -178,8 +176,9 @@
       </div>
 
        <div class="am-form-group">
-          <div class="am-u-sm-3 am-u-sm-centered">
+          <div class="am-u-sm-6 am-u-sm-centered">
               <button type="button" class="am-btn am-btn-primary" @click="arrangePrice">预览</button>
+          <button type="submit" class="am-btn am-btn-primary" >提交</button>
           </div>
        </div>
        <div class="am-form-group" v-if="1 == formData.discountType && continuousResult.length > 0 ">
@@ -222,11 +221,11 @@
             </div>
         </div>
 
-      <div class="am-form-group">
+      <!--<div class="am-form-group">
         <div class="am-u-sm-9 am-u-sm-push-3">
           <button type="submit" class="am-btn am-btn-primary" >提交</button>
         </div>
-      </div>
+      </div>-->
     </fieldset>
   </form>
   </div>
@@ -478,3 +477,27 @@
     }
   }
 </script>
+<style scope>
+.teacher-mes{
+  padding-left: 30px;
+}
+.teacher-mes p{
+  margin: 10px 0;
+}
+.tip{
+  position: relative;
+  top: 5px;
+}
+.radio-label{
+  margin-right: 10px !important;
+}
+.radio-label input{
+  margin-right: 5px;
+  margin-top: -5px;
+}
+.teacher-name{
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 30px !important;
+}
+</style>
