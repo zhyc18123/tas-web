@@ -115,7 +115,7 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      isMainLayout : true
     }
   },
   beforeRouteEnter (to, from, next) {
