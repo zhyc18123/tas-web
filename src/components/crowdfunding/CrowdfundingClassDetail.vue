@@ -46,8 +46,10 @@
           <el-table-column
             label="学位"
             min-width="100">
-            <template scope="scope">
-                {{scope.row.discountType == 0 ? ' - ':(scope.row.quotaMin + '-' + scope.row.quotaMax)}}
+            <template scope="scope" >
+            <span v-if="scope.row.quotaMin!==null&&scope.row.quotaMax!==null">
+              {{scope.row.quotaMin }} - {{ scope.row.quotaMax }}
+            </span> 
             </template>
           </el-table-column>
           <el-table-column
