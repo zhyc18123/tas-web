@@ -159,7 +159,7 @@
               </label>
               <div class="am-u-sm-9 input-field">
 
-                <choose v-model="formData.tags" :config="{max_selected_options: 3}">
+                <choose v-model="formData.myTags" :config="{max_selected_options: 3}">
                   <select required data-placeholder="选择老师标签" style="min-width:300px;" multiple class="chosen-select-no-results">
                     <option value=""></option>
                     <option v-for="item in tags" :value="item">{{item}}</option>
@@ -214,6 +214,7 @@ import util from '../../lib/util'
                 gradeIds:[],
                 subjectIds:[],
                 status:1,
+                myTags:[],
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },
               tags:[],
@@ -230,7 +231,7 @@ import util from '../../lib/util'
                 ret.data.gradeIds = ret.data.teachGradeIds ? ret.data.teachGradeIds.split(',') : []
                 ret.data.subjectIds = ret.data.teachSubjectIds ? ret.data.teachSubjectIds.split(','):[]
                 ret.data.joinTime = util.formatDate ( ret.data.joinTime )
-                ret.data.tags = ret.data.tags ? ret.data.tags.split(',') : []
+                ret.data.myTags = ret.data.tags ? ret.data.tags.split(',') : []
                 _this.formData = ret.data
               }
             },
@@ -284,18 +285,18 @@ import util from '../../lib/util'
             submit:function(e){
               e.preventDefault();
 
-              if(!_this.formData.teachGradeIds){
+              if(!_this.formData.gradeIds || _this.formData.gradeIds.length == 0 ){
                 _this.$alert('请选择任教年级')
                 return
               }
 
-              if(!_this.formData.teachSubjectIds){
+              if(!_this.formData.subjectIds || _this.formData.subjectIds.length == 0){
                 _this.$alert('请选择任教科目')
                 return
               }
 
 
-              if(!_this.formData.tags){
+              if(!_this.formData.myTags || _this.formData.myTags.length == 0 ){
                 _this.$alert('请选择老师标签')
                 return
               }
@@ -332,16 +333,11 @@ import util from '../../lib/util'
               })
           },
           save:function(complete){
-
-
-
-
-
             var _this = this
             var data = _this.formData
             data.teachGradeIds = data.gradeIds.join(',')
             data.teachSubjectIds = data.subjectIds.join(',')
-            data.tags = data.tags.join(',')
+            data.tags = data.myTags.join(',')
             io.post(io.apiAdminSaveOrUpdateTeacher,data,
             function(ret){
               complete.call()
@@ -351,7 +347,6 @@ import util from '../../lib/util'
               }else{
                 _this.$alert(ret.desc)
               }
-
             },
             function(){
               complete.call()
