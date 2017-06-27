@@ -308,11 +308,11 @@
             var str = ""
             for(var i = parseInt(data.quotaMin) ; i <= parseInt(data.quotaMax) ; i++)
             {
-              str = str + i +":" + Math.ceil(data.totalPrice/i) + ","
+              str = str + i +":" + Math.floor(data.totalPrice/i) + ","
             }
             str = str.substring(0, str.length -1)
-            data.lowestPrice = Math.ceil(data.totalPrice/data.quotaMax)
-            data.highestPrice = Math.ceil(data.totalPrice/data.quotaMin)
+            data.lowestPrice = Math.floor(data.totalPrice/data.quotaMax)
+            data.highestPrice = Math.floor(data.totalPrice/data.quotaMin)
           }else{
             var str = ""
             for (var i = 0; i < _this.priceList.length; i++) {
@@ -444,7 +444,7 @@
           {
             this.continuousResult.push({
               number : i ,
-              price : Math.ceil(data.totalPrice/i)
+              price : Math.floor(data.totalPrice/i)
             })
           }
         }else{
