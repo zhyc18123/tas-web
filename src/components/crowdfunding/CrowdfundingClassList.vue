@@ -120,7 +120,14 @@
                 <template scope="scope">
                   {{scope.row.discountType == 0 ? '-': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
                 </template>
-              </el-table-column>           
+              </el-table-column>  
+              <el-table-column
+                label="众筹状态"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.crowdfundingStatus == 0 ? '众筹中': ( scope.row.crowdfundingStatus == 1 ? '众筹成功' : ( scope.row.crowdfundingStatus == 2 ? '众筹失败' : ''))}}
+                </template>
+              </el-table-column>         
               <el-table-column
                 label="开班"
                 min-width="100">

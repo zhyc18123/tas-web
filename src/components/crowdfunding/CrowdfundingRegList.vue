@@ -101,7 +101,14 @@
                 <template scope="scope">
                   {{scope.row.regStatus == 0 ? '在读' : scope.row.regStatus == 1 ? '转班' : scope.row.regStatus == 2 ? '退账户' :  scope.row.regStatus == 3 ? '退班退费' :'' }}
                 </template>
-              </el-table-column>    
+              </el-table-column> 
+              <el-table-column
+                label="退款"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.refundStatus == 0 ? '未返还' : scope.row.refundStatus == 1 ? '已返还' : '' }}
+                </template>
+              </el-table-column>       
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
