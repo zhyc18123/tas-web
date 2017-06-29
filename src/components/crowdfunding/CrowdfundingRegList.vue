@@ -78,7 +78,7 @@
                 label="预约金支付日期"
                 min-width="150">
                 <template scope="scope" >
-                  <span v-if="scope.row.chargingStatus == 2 ">
+                  <span v-if="scope.row.chargingStatus == 2 || scope.row.chargingStatus ==5">
                      {{scope.row.depositPayDate | formatTime}}
                   </span> 
                 </template>
@@ -108,7 +108,7 @@
                 label="退款"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.refundStatus == 0 ? '未返还' : scope.row.refundStatus == 1 ? '已返还' : '' }}
+                  {{scope.row.refundStatus == 0 ? '退款中' : scope.row.refundStatus == 1 ? '已返还' : '' }}
                 </template>
               </el-table-column>       
             </el-table>
