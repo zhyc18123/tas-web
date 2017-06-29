@@ -79,7 +79,6 @@
                 min-width="150">
                 <template scope="scope" >
                   <span v-if="scope.row.chargingStatus == 2 ">
-                     {{scope.row.chargingStatus}}
                      {{scope.row.depositPayDate | formatTime}}
                   </span> 
                 </template>
