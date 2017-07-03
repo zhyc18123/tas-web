@@ -40,7 +40,11 @@
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
               <span class="am-input-group-btn">
               <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"
-                      @click="search"></button>
+                      @click="search">
+              </button>
+               <button type="button" class="am-btn am-btn-default am-btn-success button-export"
+                       @click="exportTeachers" ><span class="am-icon-download"></span>导出
+               </button>
             </span>
             </div>
           </div>
@@ -199,6 +203,18 @@
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
         this.loadTableData(1)
       },
+      //导出教师信息
+      exportTeachers:function(){
+        this.query = {}
+        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
+        var url = io.apiAdminExportTeachers + '?accessToken=' + io.getHeaders().accessToken;
+
+        for(var i in this.query)    {
+           url = url + '&' + i + "="+ this.query[i];
+        }
+        window.open(url)
+
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
@@ -217,3 +233,9 @@
     }
   }
 </script>
+
+<style scope>
+  .button-export{
+    margin-left: 3px !important;
+  }
+</style>
