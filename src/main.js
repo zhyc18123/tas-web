@@ -48,8 +48,8 @@ const RoomList = resolve => require(['./components/teachingresource/RoomList'], 
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
 
 const CrowdfundingClassList = resolve => require(['./components/crowdfunding/CrowdfundingClassList'], resolve)
-const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)  
-const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve) 
+const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)
+const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve)
 
 
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
@@ -73,7 +73,7 @@ const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], 
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
 const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
-                
+
 
 const AccountList = resolve => require(['./components/settlement/AccountList'], resolve)
 const AccountReportDetail = resolve => require(['./components/settlement/AccountReportDetail'], resolve)
@@ -84,6 +84,8 @@ const ProfitReportDetail = resolve => require(['./components/settlement/ProfitRe
 const AccountWithdrawalList = resolve => require(['./components/settlement/AccountWithdrawalList'], resolve)
 const WithdrawalList = resolve => require(['./components/settlement/WithdrawalList'], resolve)
 const ApplyWithdrawalForm = resolve => require(['./components/settlement/ApplyWithdrawalForm'], resolve)
+const FeeCategoryList = resolve => require(['./components/settlement/FeeCategoryList'], resolve)
+const FeeCategoryForm = resolve => require(['./components/settlement/FeeCategoryForm'], resolve)
 
 const ServiceManagerList = resolve => require([ './components/tradingService/ServiceManagerList'], resolve)
 const ServiceManagerForm = resolve => require([ './components/tradingService/ServiceManagerForm'], resolve)
@@ -218,6 +220,9 @@ const router = new VueRouter({
       {path: 'settlement/account/withdrawal/list/:mainAccountId' , component: AccountWithdrawalList },
       {path: 'settlement/account/withdrawal/apply/:mainAccountId' , component: ApplyWithdrawalForm },
       {path: 'settlement/withdrawal/list' , component: WithdrawalList },
+      {path: 'settlement/feeCategory/list',  component:  FeeCategoryList},
+      {path: 'settlement/feeCategory/add' , component: FeeCategoryForm },
+      {path: 'settlement/feeCategory/edit/:feeCategoryId' , component: FeeCategoryForm },
 
       {path: 'tradingService/service/list' , component: ServiceManagerList },
       {path: 'tradingService/service/add' , component: ServiceManagerEditForm},

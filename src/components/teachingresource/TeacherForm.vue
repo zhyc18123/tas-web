@@ -109,7 +109,7 @@
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <date-picker v-model="formData.joinTime" >
-                  <input type="text" placeholder="请选择入职日期" data-am-datepicker  required >
+                  <input type="text" placeholder="请选择入职日期" data-am-datepicker readonly required >
                 </date-picker>
               </div>
             </div>

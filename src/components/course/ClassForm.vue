@@ -17,10 +17,10 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属课程
             </label>
             <div class="am-u-sm-6 input-field">
-              <input :disabled="!editable" type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="$refs.selectCourse.show()">
+              <input :disabled="!editable" type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="selectCourse">
             </div>
             <div class="am-u-sm-3 input-field">
-              <button :disabled="!editable" type="button" class="am-btn am-btn-default" @click="$refs.selectCourse.show()">选择</button>
+              <button :disabled="!editable" type="button" class="am-btn am-btn-default" @click="selectCourse">选择</button>
             </div>
           </div>
 
@@ -78,23 +78,19 @@
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               校区
-            </label>
-            <div class="am-u-sm-6 input-field">
-              <input type="text" placeholder="校区"  v-model="formData.campusName"  readonly @click="$refs.selectCampus.show()">
-            </div>
-            <div class="am-u-sm-3 input-field">
-              <button type="button" class="am-btn am-btn-default" @click="$refs.selectCampus.show()">选择</button>
+             </label>
+            <div class="am-u-sm-3 am-u-end input-field">
+
+              <choose v-model="formData.campusId">
+                <select required data-placeholder="排课校区" style="min-width:300px;" class="chosen-select">
+                  <option value=""></option>
+                  <option v-for="item in campuses" :value="item.campusId">{{item.campusName}}</option>
+                </select>
+              </choose>
+
             </div>
           </div>
 
-          <!--<div class="am-form-group">
-            <label class="am-u-sm-3 am-form-label">
-              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>序号
-            </label>
-            <div class="am-u-sm-9 input-field">
-              <input type="text" class="am-form-field" placeholder="输入序号" required v-model="formData.no">
-            </div>
-          </div>-->
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
@@ -137,7 +133,6 @@
       </form>
     </div>
     <select-course ref="selectCourse" @ok="fillData2Class"></select-course>
-    <select-campus ref="selectCampus" :areaTeamId="formData.areaTeamId" @ok="selectCampusCallback" ></select-campus>
   </div>
 </template>
 
@@ -145,7 +140,6 @@
   import io from '../../lib/io'
   import util from '../../lib/util'
   import SelectCourse from './SelectCourse'
-  import SelectCampus from '../teachingresource/SelectCampus'
 
   export default{
     data(){
@@ -156,20 +150,22 @@
           periodId: '',
           quota: '',
           studyingFee: '',
+          campusId: '',
           campusName: ''
         },
         courseTemplateData: {},
+        campuses:[],
         editable:true
       }
     },
     components: {
-      'select-course':SelectCourse,
-      'select-campus':SelectCampus
+      'select-course':SelectCourse
     },
     watch:{
-      'formData.courseTemplateId':function(){
-        this.formData.campusId = ''
-        this.formData.campusName = ''
+      'formData.areaTeamId':function(val){
+        if(val){
+            this.loadCampusData()
+        }
       }
     },
     created: function () {
@@ -296,20 +292,41 @@
             _this.$alert('请求服务器失败')
           })
       },
+      selectCourse:function () {
+        this.$refs.selectCourse.show()
+      },
       fillData2Class: function (item) {
         this.formData.courseDescription = item.courseDescription
         this.formData.courseOutline = item.courseOutline
         this.formData.studyingFee = item.studyingFee
-        this.formData.areaTeamId = item.areaTeamId
+
         this.formData.busTeamId = item.busTeamId
         this.formData.quota = item.quota
-        this.formData.className = item.courseName;
-        this.courseTemplateData.courseName = item.courseName;
+        this.formData.className = item.courseName
+        this.courseTemplateData.courseName = item.courseName
         this.formData.courseTemplateId=item.courseTemplateId
+
+        if(this.formData.areaTeamId != item.areaTeamId ){
+          this.formData.campusId = ''
+          this.formData.campusName = ''
+        }
+        this.formData.areaTeamId = item.areaTeamId
       },
       selectCampusCallback:function(campus){
         this.formData.campusId = campus.campusId
         this.formData.campusName = campus.campusName
+      },
+      loadCampusData:function(){
+        var _this  = this
+        io.post(io.apiAdminCampusOfAreaTeam, {
+            areaTeamId : _this.formData.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.campuses = ret.data
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       }
     },
   }

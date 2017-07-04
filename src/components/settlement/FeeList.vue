@@ -14,7 +14,7 @@
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.startDate">
-                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker>
+                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
                 </date-picker>
               </div>
             </div>
@@ -22,7 +22,7 @@
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.endDate">
-                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker>
+                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
                 </date-picker>
               </div>
             </div>
@@ -48,32 +48,41 @@
               border
               stripe
               style="min-width: 100%">
-              <el-table-column
-                prop="remark"
-                label="备注"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.amount }}
-
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="时间"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.createTime | formatTime }}
-
-                </template>
-              </el-table-column>
 
               <el-table-column
                 prop="receiverMainAccountName"
                 label="收款主体"
                 min-width="200">
+              </el-table-column>
+
+              <el-table-column
+                label="金额"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.amount }}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="成本类型"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.feeCategoryName }}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                prop="remark"
+                label="备注"
+                min-width="100">
+              </el-table-column>
+
+              <el-table-column
+                label="时间"
+                min-width="200">
+                <template scope="scope">
+                  {{scope.row.createTime | formatTime }}
+                </template>
               </el-table-column>
 
 
@@ -86,6 +95,7 @@
                 </template>
               </el-table-column>
               <el-table-column
+                fixed="right"
                 label="操作"
                 width="120">
                 <template scope="scope">

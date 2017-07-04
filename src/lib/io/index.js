@@ -97,6 +97,7 @@ const io = {
 
     this.apiAdminCampusManageList = conf.baseApiPath + '/api/admin/teaching/resource/campusManageList'
     this.apiAdminCampusUseList = conf.baseApiPath + '/api/admin/teaching/resource/campusUseList'
+    this.apiAdminCampusOfAreaTeam = conf.baseApiPath + '/api/admin/teaching/resource/campusOfAreaTeam'
     this.apiAdminBaseCampusList = conf.baseApiPath + '/api/admin/teaching/resource/baseCampusList'
     this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/teaching/resource/campusDetail'
     this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
@@ -174,7 +175,7 @@ const io = {
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
 
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
-    this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
+    this.apiAdminSettlementAllMainAccountListWithoutStudent = conf.baseApiPath + '/api/admin/settlement/allMainAccountListWithoutStudent'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
     this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
     this.apiAdminSettlementFeelDetail = conf.baseApiPath + '/api/admin/settlement/feelDetail'
@@ -186,6 +187,11 @@ const io = {
     this.apiAdminSettlementWithdrawalList = conf.baseApiPath + '/api/admin/settlement/withdrawalList'
     this.apiAdminSettlementApplyWithdrawal = conf.baseApiPath + '/api/admin/settlement/applyWithdrawal'
     this.apiAdminSettlementUpdateWithdrawalStatus = conf.baseApiPath + '/api/admin/settlement/updateWithdrawalStatus'
+    this.apiAdminSettlementFeelCategoryList = conf.baseApiPath + '/api/admin/settlement/feelCategoryList'
+    this.apiAdminSettlementAllFeelCategory = conf.baseApiPath + '/api/admin/settlement/allFeelCategory'
+    this.apiAdminSettlementFeelCategoryDetail = conf.baseApiPath + '/api/admin/settlement/feelCategoryDetail'
+    this.apiAdminSettlementSaveOrUpdateFeeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateFeeCategory'
+    this.apiAdminSettlementDeleteCategoryFee = conf.baseApiPath + '/api/admin/settlement/deleteCategoryFee'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
