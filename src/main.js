@@ -48,12 +48,14 @@ const RoomList = resolve => require(['./components/teachingresource/RoomList'], 
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
 
 const CrowdfundingClassList = resolve => require(['./components/crowdfunding/CrowdfundingClassList'], resolve)
-const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)  
-const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve) 
+const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)
+const CrowdfundingRegList = resolve => require(['./components/crowdfunding/CrowdfundingRegList'], resolve)
 
 
 const CourseList = resolve => require(['./components/course/CourseList'], resolve)
 const CourseForm = resolve => require(['./components/course/CourseForm'], resolve)
+const CourseTypeList = resolve => require(['./components/course/CourseTypeList'], resolve)
+const CourseTypeForm = resolve => require(['./components/course/CourseTypeForm'], resolve)
 const ProductList = resolve => require(['./components/course/ProductList'], resolve)
 const ProductForm = resolve => require(['./components/course/ProductForm'], resolve)
 const ClassList = resolve => require(['./components/course/ClassList'], resolve)
@@ -73,7 +75,7 @@ const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], 
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
 const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
-                
+
 
 const AccountList = resolve => require(['./components/settlement/AccountList'], resolve)
 const AccountReportDetail = resolve => require(['./components/settlement/AccountReportDetail'], resolve)
@@ -180,6 +182,9 @@ const router = new VueRouter({
       {path: 'course/course/list' , component: CourseList },
       {path: 'course/course/add' , component: CourseForm },
       {path: 'course/course/edit/:courseId' , component: CourseForm },
+      {path: 'course/courseType/list' , component: CourseTypeList },
+      {path: 'course/courseType/add' , component: CourseTypeForm },
+      {path: 'course/courseType/edit/:courseTypeId/:name', component:CourseTypeForm },
       {path: 'course/product/list',  component:  ProductList},
       {path: 'product/product/add' , component: ProductForm },
       {path: 'product/product/edit/:productId' , component: ProductForm },
