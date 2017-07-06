@@ -22,11 +22,30 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.status" >
+                <option value="">状态</option>
+                <option value="0">处理中</option>
+                <option value="1">已处理</option>
+                <option value="2">已拒绝</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search" ><span class="am-icon-search"></span>查询
                 </button>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
+            <div class="am-form-group">
+              <button type="button" class="am-btn am-btn-default am-btn-success button-export"
+                      @click="exportStudentRefund" ><span class="am-icon-download"></span>导出
+              </button>
             </div>
           </div>
 
@@ -133,7 +152,8 @@
         studentRefundId: '',
         query: {
           areaTeamId : '',
-          busTeamId : ''
+          busTeamId : '',
+          status : ''
         },
       }
     },
@@ -195,9 +215,23 @@
           width: 1000,
           height: 600
         })
-      }
+      },
+
+      //导出学生退费信息
+      exportStudentRefund:function(){
+        var url = io.apiAdminExportStudentRefund + '?accessToken=' + io.getHeaders().accessToken;
+        for(var i in this.query)    {
+          url = url + '&' + i + "="+ this.query[i];
+        }
+        window.open(url)
+      },
 
     }
   }
-
 </script>
+
+<style scope>
+  .button-export{
+    margin-left: -28px;
+  }
+</style>

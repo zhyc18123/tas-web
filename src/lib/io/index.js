@@ -175,6 +175,7 @@ const io = {
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
+    this.apiAdminExportStudentRefund = conf.baseApiPath + '/api/admin/exportStudentRefund'
 
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
