@@ -91,7 +91,14 @@ import util from '../../lib/util'
                 $submitBtn.removeAttr("disabled" ,"disabled" )
               }
               if(formValidity){
-                _this.save(complete);
+                var data = _this.formData
+                data.name = data.name.trim()
+                if(data.name > 50){
+                  _this.$alert("课程类型名不要超过50个字")
+                  complete.call()
+                  return
+                }
+                _this.save(complete,data);
               }else{
                 complete.call()
               }
@@ -100,9 +107,8 @@ import util from '../../lib/util'
         },
 
         methods:{
-          save:function(complete){
+          save:function(complete,data){
             var _this = this
-            var data = _this.formData
             io.post(io.apiAdminCourseTypeSaveOrUpdate,data,
             function(ret){
               complete.call()

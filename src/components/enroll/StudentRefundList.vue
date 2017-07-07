@@ -96,7 +96,7 @@
               min-width="100">
               <template scope="scope">
                 {{scope.row.refundWay == 0 ? '支付宝' : scope.row.refundWay == 1 ? '微信' : scope.row.refundWay == 2 ? '现金' : scope.row.refundWay == 3 ? '余额账户':'银行卡转账' }}
-            </template>
+              </template>
             </el-table-column>
             <el-table-column
               prop="returnResult"
@@ -108,7 +108,7 @@
               min-width="100">
               <template scope="scope">
                 {{scope.row.status==0?'处理中':(scope.row.status==1?'已处理':'已拒绝')}}
-                </template>
+              </template>
             </el-table-column>
             <el-table-column
               fixed="right"
@@ -225,7 +225,6 @@
         }
         window.open(url)
       },
-
     }
   }
 </script>
