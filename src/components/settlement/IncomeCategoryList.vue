@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">成本类型</div>
+          <div class="widget-title  am-cf">收入类型</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -12,7 +12,7 @@
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
                   <button type="button" class="am-btn am-btn-default am-btn-success"
-                          @click="$router.push('/main/settlement/feeCategory/add')" v-if="hasPermission('add')"><span
+                          @click="$router.push('/main/settlement/incomeCategory/add')" v-if="hasPermission('add')"><span
                     class="am-icon-plus"></span>新增
                   </button>
                 </div>
@@ -43,8 +43,8 @@
                 label="操作"
                 width="150">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.isBuildIn == 1" @click.native="$router.push('/main/settlement/feeCategory/edit/'+scope.row.feeCategoryId)" v-if="hasPermission('edit')">编辑</el-button>
-                  <el-button size="small" :disabled="scope.row.isBuildIn == 1" @click.native="del(scope.row.feeCategoryId)" v-if="hasPermission('del')">删除</el-button>
+                  <el-button size="small" :disabled="scope.row.isBuildIn == 1" @click.native="$router.push('/main/settlement/incomeCategory/edit/'+scope.row.incomeCategoryId)" v-if="hasPermission('edit')">编辑</el-button>
+                  <el-button size="small" :disabled="scope.row.isBuildIn == 1" @click.native="del(scope.row.incomeCategoryId)" v-if="hasPermission('del')">删除</el-button>
                 </template>
               </el-table-column>
             </el-table>
@@ -89,7 +89,7 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminSettlementFeeCategoryList,$.extend({
+        io.post(io.apiAdminSettlementIncomeCategoryList,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
@@ -101,10 +101,10 @@
           }
         })
       },
-      del:function(feeCategoryId){
+      del:function(incomeCategoryId){
         var _this  = this
-        io.post(io.apiAdminSettlementDeleteFeeCategory,{
-            feeCategoryId : feeCategoryId
+        io.post(io.apiAdminSettlementDeleteIncomeCategory,{
+            incomeCategoryId : incomeCategoryId
         },function(ret){
           if(ret.success){
             _this.loadTableData()

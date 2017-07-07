@@ -86,6 +86,8 @@ const WithdrawalList = resolve => require(['./components/settlement/WithdrawalLi
 const ApplyWithdrawalForm = resolve => require(['./components/settlement/ApplyWithdrawalForm'], resolve)
 const FeeCategoryList = resolve => require(['./components/settlement/FeeCategoryList'], resolve)
 const FeeCategoryForm = resolve => require(['./components/settlement/FeeCategoryForm'], resolve)
+const IncomeCategoryList = resolve => require(['./components/settlement/IncomeCategoryList'], resolve)
+const IncomeCategoryForm = resolve => require(['./components/settlement/IncomeCategoryForm'], resolve)
 
 const ServiceManagerList = resolve => require([ './components/tradingService/ServiceManagerList'], resolve)
 const ServiceManagerForm = resolve => require([ './components/tradingService/ServiceManagerForm'], resolve)
@@ -125,6 +127,8 @@ const SellerRegisterList = resolve => require(['./components/platform/SellerRegi
 
 const AttendanceCourseClassList = resolve => require(['./components/attendance/AttendanceCourseClassList'], resolve)
 const AttendanceRecordList = resolve => require(['./components/attendance/AttendanceRecordList'], resolve)
+
+const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
 
 
 Vue.use(VueRouter)
@@ -223,6 +227,9 @@ const router = new VueRouter({
       {path: 'settlement/feeCategory/list',  component:  FeeCategoryList},
       {path: 'settlement/feeCategory/add' , component: FeeCategoryForm },
       {path: 'settlement/feeCategory/edit/:feeCategoryId' , component: FeeCategoryForm },
+      {path: 'settlement/incomeCategory/list',  component:  IncomeCategoryList},
+      {path: 'settlement/incomeCategory/add' , component: IncomeCategoryForm },
+      {path: 'settlement/incomeCategory/edit/:incomeCategoryId' , component: IncomeCategoryForm },
 
       {path: 'tradingService/service/list' , component: ServiceManagerList },
       {path: 'tradingService/service/add' , component: ServiceManagerEditForm},
@@ -262,7 +269,9 @@ const router = new VueRouter({
       {path: 'platform/sellerRegister/list', component:SellerRegisterList},
 
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
-      {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList }
+      {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },
+
+      {path: 'report/charge/list', component:ChargeList }
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

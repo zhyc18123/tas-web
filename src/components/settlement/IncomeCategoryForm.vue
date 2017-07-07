@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">成本类型信息</div>
+        <div class="widget-title am-fl">收入类型信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -55,10 +55,10 @@
     },
 
     created: function () {
-      var feeCategoryId = this.$params('feeCategoryId');
-      if (feeCategoryId) {
+      var incomeCategoryId = this.$params('incomeCategoryId');
+      if (incomeCategoryId) {
         var _this = this
-        io.post(io.apiAdminSettlementFeeCategoryDetail, {feeCategoryId: feeCategoryId},
+        io.post(io.apiAdminSettlementIncomeCategoryDetail, {incomeCategoryId: incomeCategoryId},
           function (ret) {
             if (ret.success) {
               _this.formData = ret.data
@@ -68,7 +68,7 @@
             _this.$alert('请求服务器失败')
           })
       }
-      this.editable = !feeCategoryId
+      this.editable = !incomeCategoryId
     },
     mounted: function () {
       var _this = this;
@@ -114,12 +114,12 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
-        io.post(io.apiAdminSettlementSaveOrUpdateFeeCategory, data,
+        io.post(io.apiAdminSettlementSaveOrUpdateIncomeCategory, data,
           function (ret) {
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/settlement/feeCategory/list')
+              _this.$router.push('/main/settlement/incomeCategory/list')
             } else {
               _this.$alert(ret.desc)
             }
