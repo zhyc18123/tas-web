@@ -94,6 +94,7 @@ const io = {
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
     this.apiAdminTeacherTags = conf.baseApiPath + '/api/admin/teaching/resource/teacherTags'
+    this.apiAdminExportTeachers = conf.baseApiPath + '/api/admin/teaching/resource/exportTeachers'
 
     this.apiAdminCampusManageList = conf.baseApiPath + '/api/admin/teaching/resource/campusManageList'
     this.apiAdminCampusUseList = conf.baseApiPath + '/api/admin/teaching/resource/campusUseList'
@@ -116,14 +117,15 @@ const io = {
     this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
     this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/classLectureList'
 
-
-
     this.apiAdminCourseTemplateManageList = conf.baseApiPath + '/api/admin/courseTemplateManageList'
     this.apiAdminCourseTemplateUseList = conf.baseApiPath + '/api/admin/courseTemplateUseList'
     this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
     this.apiAdminDeleteCourseTemplate = conf.baseApiPath + '/api/admin/deleteCourseTemplate'
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
+    this.apiAdminCourseTypeManageList = conf.baseApiPath + '/api/admin/courseTypeManageList'
+    this.apiAdminCourseTypeSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateCourseType'
+    this.apiAdminDeleteCourseType = conf.baseApiPath + '/api/admin/deleteCourseType'
 
     this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
     this.apiAdminProductManageUseList  = conf.baseApiPath + '/api/admin/productUseList'
@@ -145,6 +147,7 @@ const io = {
     this.apiAdminRearrangeTimeForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTimeForLecture'
     this.apiAdminRearrangeTeacherForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTeacherForLecture'
     this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
+    this.apiAdminExportStudentReg = conf.baseApiPath + '/api/admin/exportStudentReg'
 
     this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/crowdfundingClassMgr'
     this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'

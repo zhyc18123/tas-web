@@ -20,7 +20,7 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-2">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
@@ -40,8 +40,21 @@
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
               <span class="am-input-group-btn">
               <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"
-                      @click="search"></button>
+                      @click="search">
+              </button>
             </span>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-1">
+            <div class="am-form-group">
+                <div class="am-btn-toolbar">
+                  <div class="am-btn-group am-btn-group-xs">
+                    <button type="button" class="am-btn am-btn-default am-btn-success button-export"
+                            @click="exportTeachers" ><span class="am-icon-download"></span>导出
+                    </button>
+                  </div>
+                </div>
             </div>
           </div>
 
@@ -199,6 +212,18 @@
         this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
         this.loadTableData(1)
       },
+      //导出教师信息
+      exportTeachers:function(){
+        this.query = {}
+        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
+        var url = io.apiAdminExportTeachers + '?accessToken=' + io.getHeaders().accessToken;
+
+        for(var i in this.query)    {
+           url = url + '&' + i + "="+ this.query[i];
+        }
+        window.open(url)
+
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
@@ -217,3 +242,10 @@
     }
   }
 </script>
+
+<style scope>
+  .button-export{
+    margin-left: 3px !important;
+    font-size: 14px !important;
+  }
+</style>
