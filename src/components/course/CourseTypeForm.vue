@@ -93,7 +93,7 @@ import util from '../../lib/util'
               if(formValidity){
                 var data = _this.formData
                 data.name = data.name.trim()
-                if(data.name > 50){
+                if(data.name.length > 50){
                   _this.$alert("课程类型名不要超过50个字")
                   complete.call()
                   return
