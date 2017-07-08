@@ -46,23 +46,9 @@
                   <option value="0">誉优</option>
                   <option value="1">区域</option>
                   <option value="2">业务组</option>
-                  <option value="4">校区</option>
                 </select2>
               </div>
             </div>
-
-            <div class="am-form-group" v-if="formData.userType == 4">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>校区
-              </label>
-              <div class="am-u-sm-6 input-field">
-                <input required type="text" placeholder="校区"  v-model="formData.campusName"  readonly @click="$refs.selectCampus.show()">
-              </div>
-              <div class="am-u-sm-3 input-field">
-                <button type="button" class="am-btn am-btn-default" @click="$refs.selectCampus.show()">选择</button>
-              </div>
-            </div>
-
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -85,13 +71,11 @@
         </form>
       </div>
     </div>
-    <select-campus ref="selectCampus" @ok="selectCampusCallback" ></select-campus>
   </div>
 </template>
 
 <script>
 import io from '../../lib/io'
-import SelectCampus from '../teachingresource/SelectCampus'
     export default{
         data(){
             return{
@@ -102,9 +86,6 @@ import SelectCampus from '../teachingresource/SelectCampus'
                   campusName: ''
                 }
             }
-        },
-        components: {
-          'select-campus':SelectCampus
         },
         created:function(){
          var userId  = this.$params('userId')

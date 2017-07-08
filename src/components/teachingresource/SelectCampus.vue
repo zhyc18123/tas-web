@@ -116,8 +116,8 @@
       show:function(){
         this.loadTableData(this.pageNo);
         this.$refs.win.show({
-          width : 800,
-          height:700
+          width:1000,
+          height:600
         })
       }
     }
