@@ -69,16 +69,16 @@
                   <select data-placeholder="成本标签" style="min-width:300px;" multiple class="chosen-select-no-results">
                     <option value=""></option>
                     <optgroup label="年级">
-                      <option v-for="item in $root.config.grades" :value="item.gradeName">{{item.gradeName}}</option>
+                      <option v-for="item in $root.config.grades" :value="'grade:'+item.gradeName">{{item.gradeName}}</option>
                     </optgroup>
                     <optgroup label="科目">
-                      <option v-for="item in $root.config.subjects" :value="item.subjectName">{{item.subjectName}}</option>
+                      <option v-for="item in $root.config.subjects" :value="'subject:'+item.subjectName">{{item.subjectName}}</option>
                     </optgroup>
                     <optgroup label="课程类型">
-                      <option v-for="item in courseTypes" :value="item.name">{{item.name}}</option>
+                      <option v-for="item in courseTypes" :value="'courseType:'+item.name">{{item.name}}</option>
                     </optgroup>
                     <optgroup label="产品">
-                      <option v-for="item in products" :value="item.name">{{item.name}}</option>
+                      <option v-for="item in products" :value="'product:'+item.name">{{item.name}}</option>
                     </optgroup>
 
                   </select>
@@ -121,7 +121,7 @@ import io from '../../lib/io'
           var feeId = this.$params('feeId');
           if (feeId) {
             var _this = this
-            io.post(io.apiAdminSettlementFeelDetail, {feeId: feeId},
+            io.post(io.apiAdminSettlementFeeDetail, {feeId: feeId},
               function (ret) {
                 if (ret.success) {
                   ret.data.tags = ret.data.tags.split(',')||[]
@@ -240,7 +240,7 @@ import io from '../../lib/io'
           },
           loadFeeCategoryData: function () {
             var _this = this
-            io.post(io.apiAdminSettlementAllFeelCategory, {}, function (ret) {
+            io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {
               if (ret.success) {
                 _this.feeCategories = ret.data
               } else {
