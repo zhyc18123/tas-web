@@ -8,7 +8,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" class="am-input-lg" name="selectedTeacher" v-model="query.selectedTeacher" placeholder="请输入教师姓名"/>
+                <input type="text" class="am-input-lg"  v-model="query.teacherName" placeholder="请输入教师姓名"/>
               </div>
             </div>
 
@@ -144,8 +144,8 @@
         io.post(io.apiAdminTeacherListForClassArrangement,$.extend({
           areaTeamId:_this.courseClass.areaTeamId,
           //busTeamId:_this.courseClass.busTeamId,
-          gradeName:_this.courseClass.gradeName,
-          subjectName:_this.courseClass.subjectName,
+          teachGradeNames:_this.courseClass.gradeName,
+          teachSubjectNames:_this.courseClass.subjectName,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){

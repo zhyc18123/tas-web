@@ -14,7 +14,7 @@
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.startDate" >
-                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker :value="query.startDate" >
+                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly :value="query.startDate" >
                 </date-picker>
               </div>
             </div>
@@ -22,7 +22,7 @@
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.endDate" >
-                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker :value="query.endDate" >
+                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly :value="query.endDate" >
                 </date-picker>
               </div>
             </div>

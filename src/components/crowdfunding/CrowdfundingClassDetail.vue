@@ -49,7 +49,7 @@
             <template scope="scope" >
             <span v-if="scope.row.quotaMin!==null&&scope.row.quotaMax!==null">
               {{scope.row.quotaMin }} - {{ scope.row.quotaMax }}
-            </span> 
+            </span>
             </template>
           </el-table-column>
           <el-table-column
@@ -117,7 +117,7 @@
             </label>
             <div class="am-u-sm-3 am-u-end  input-field">
               <date-picker v-model="formData.endRegTime" >
-                <input type="text" class="am-form-field" placeholder="请选择报名截止日期" data-am-datepicker  >
+                <input type="text" class="am-form-field" placeholder="请选择报名截止日期" data-am-datepicker readonly >
               </date-picker>
             </div>
             <span class="am-text-danger am-margin-right-xs am-text-xs tip">报名截至日期须比开课时间早三天以上</span>

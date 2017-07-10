@@ -1,5 +1,5 @@
 <template>
-  <ul class="am-pagination tpl-pagination">
+  <ul class="am-pagination tpl-pagination" v-if="total != 0 ">
     <li v-if="showLeftMore"><a href="javascript:;" @click="$emit('paging' , showPages[0] - 1 )">...</a></li>
     <li v-for="n in showPages" :key="n" :class="n==pageNo ? 'am-active' :''"><a href="javascript:;" @click="$emit('paging' , n )" class="">{{n}}</a></li>
     <li v-if="showRightMore"><a href="javascript:;" @click="$emit('paging' , showPages[showPages.length - 1] + 1 )">...</a></li>

@@ -29,7 +29,7 @@
         </label>
         <div class="am-u-sm-3 am-u-end  input-field">
           <date-picker v-model="formData.birthday" >
-            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker  >
+            <input type="text" class="am-form-field" placeholder="请选择出生日期" data-am-datepicker readonly  >
           </date-picker>
         </div>
       </div>

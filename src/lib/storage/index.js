@@ -18,6 +18,12 @@ const storage = {
   },
   getCurrentUserInfo:function(){
     return store.get('currentUserInfo') || {}
+  },
+  setChargeCampus:function(chargeInfo){
+    store.set('chargeCampus-'+this.getCurrentUserInfo().userId, chargeInfo)
+  },
+  getChargeCampus:function () {
+    return store.get('chargeCampus-'+this.getCurrentUserInfo().userId)
   }
 
 

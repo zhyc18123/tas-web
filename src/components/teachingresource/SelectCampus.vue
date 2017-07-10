@@ -100,10 +100,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        if( !_this.areaTeamId ){
-            return
-        }
-        _this.query.areaTeamId = _this.areaTeamId
+        _this.query.areaTeamId = _this.areaTeamId || ''
         io.post(io.apiAdminCampusUseList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
@@ -119,8 +116,8 @@
       show:function(){
         this.loadTableData(this.pageNo);
         this.$refs.win.show({
-          width : 800,
-          height:700
+          width:1000,
+          height:600
         })
       }
     }

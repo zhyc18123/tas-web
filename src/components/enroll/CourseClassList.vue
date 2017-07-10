@@ -324,7 +324,7 @@
         }
         window.open(url)
      },
-      
+
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1

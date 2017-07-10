@@ -35,6 +35,10 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
               if(this.ok){
                 if(val && this.editor.getContent() != val ){
                   this.editor.setContent(val)
+                }else{
+                    if(!val){
+                      this.editor.setContent('')
+                    }
                 }
 
               }else{
@@ -43,6 +47,8 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
                   _this.ok = true
                   if(val){
                     _this.editor.setContent(val)
+                  }else{
+                    _this.editor.setContent('')
                   }
 
                 })
