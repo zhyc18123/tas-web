@@ -35,26 +35,25 @@
               </selected>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-input-group am-input-group-sm tpl-form-border-form cl-p">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-input-group-sm tpl-form-border-form cl-p">
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
-              <span class="am-input-group-btn">
-              <button class="am-btn  am-btn-default am-btn-success tpl-table-list-field am-icon-search" type="button"
-                      @click="search">
-              </button>
-            </span>
             </div>
           </div>
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-1">
             <div class="am-form-group">
-                <div class="am-btn-toolbar">
-                  <div class="am-btn-group am-btn-group-xs">
+              <button type="button" class="am-btn am-btn-default am-btn-success button-search"
+                      @click="search" ><span class="am-icon-search"></span>查询
+              </button>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-1">
+            <div class="am-form-group">
                     <button type="button" class="am-btn am-btn-default am-btn-success button-export"
                             @click="exportTeachers" ><span class="am-icon-download"></span>导出
                     </button>
-                  </div>
-                </div>
             </div>
           </div>
 
@@ -154,7 +153,6 @@
                           @paging="loadTableData"/>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -201,7 +199,6 @@
               }
             })
           });
-
       },
       search: function () {
         this.query = {}
@@ -222,7 +219,6 @@
            url = url + '&' + i + "="+ this.query[i];
         }
         window.open(url)
-
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -245,7 +241,10 @@
 
 <style scope>
   .button-export{
-    margin-left: 3px !important;
-    font-size: 14px !important;
+    margin-left: -38px;
+    font-size: 14px;
+  }
+  .button-search{
+    font-size: 14px;
   }
 </style>
