@@ -162,7 +162,7 @@
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="exportExcel" ><span class="am-icon-download"></span>导出excel
+                        @click="exportExcel" v-if="hasPermission('export')"><span class="am-icon-download"></span>导出excel
                 </button>
               </div>
             </div>
@@ -347,7 +347,7 @@
                 label="操作"
                 width="80">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)">日结</el-button>
+                  <el-button size="small" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
                 </template>
               </el-table-column>
             </el-table>

@@ -300,7 +300,12 @@
         this.formData.courseOutline = item.courseOutline
         this.formData.studyingFee = item.studyingFee
 
-        this.formData.busTeamId = item.busTeamId
+        if(item.busTeamId && item.busTeamId != '0'){
+          this.formData.busTeamId = item.busTeamId
+        }else{
+
+          this.formData.busTeamId = ''
+        }
         this.formData.quota = item.quota
         this.formData.className = item.courseName
         this.courseTemplateData.courseName = item.courseName

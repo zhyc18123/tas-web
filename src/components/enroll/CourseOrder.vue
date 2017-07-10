@@ -66,7 +66,7 @@
       </label>
     </div>
 
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
+    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
       收费校区：
         <input required type="text" placeholder="校区" class="am-input-sm" style="display:inline;width:300px;"  v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
         <button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectCampus.show()">选择</button>
