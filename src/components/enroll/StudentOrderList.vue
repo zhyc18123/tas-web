@@ -183,8 +183,8 @@
       printCert:function(courseOrderId){
         $('#certIframe').html('<iframe height="100%" src="./static/cert/index.html?courseOrderId='+courseOrderId+'" width="100%" frameborder="0"></iframe>')
         this.$refs.cert.show({
-          width:1000,
-          height:600
+          width:1050,
+          height:700
         })
       },
       confirmPrint:function(){
