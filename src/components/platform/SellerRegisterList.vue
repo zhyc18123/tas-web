@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-scrollable-horizontal">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">服务商注册审核管理</div>
+        <div class="widget-title am-fl">用户注册审核</div>
       </div>
 
       <div class="widget-body  am-fr">
@@ -26,6 +26,18 @@
                 </span>
             </div>
           </div>
+          <label class="am-u-sm-3 am-form-label">
+            <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>报名截至日期
+          </label>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <date-picker v-model="query.startCourseTime" >
+                <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
+              </date-picker>
+            </div>
+          </div>
+
+
         </div>
       </div>
 
