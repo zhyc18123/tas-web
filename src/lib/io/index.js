@@ -220,11 +220,11 @@ const io = {
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
-    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
+    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/service/merchantList'
     this.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
-    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/changeMerchant'
+    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/service/auditMerchant'
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
     this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'

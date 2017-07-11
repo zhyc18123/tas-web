@@ -2,7 +2,7 @@
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">商家名称：</div>
+        <div class="am-u-sm-2 am-text-right">用户名：</div>
         <div class="am-u-sm-10">{{tableData.merchantName}}</div>
       </div>
 
@@ -12,26 +12,55 @@
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">注册时间：</div>
-        <div class="am-u-sm-10">{{tableData.createTime | formatTime}}</div>
+        <div class="am-u-sm-2 am-text-right">角色：</div>
+        <div class="am-u-sm-10">{{tableData.roleType==null?'—':tableData.roleType==0?'区域':tableData.roleType==1?'业务组':'教师'}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">服务类型：</div>
-        <div class="am-u-sm-10">{{tableData.name}}</div>
+        <div class="am-u-sm-2 am-text-right">姓名：</div>
+        <div class="am-u-sm-10">{{tableData.teacherName==null?'—':tableData.teacherName}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">服务区域：</div>
-        <div class="am-u-sm-10">{{tableData.serviceArea}}</div>
+        <div class="am-u-sm-2 am-text-right">身份证：</div>
+        <div class="am-u-sm-10">{{tableData.idNo==null?'—':tableData.idNo}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">服务描述：</div>
+        <div class="am-u-sm-2 am-text-right">所属业务组：</div>
         <div class="am-u-sm-10">
-          <p>{{tableData.introduce}}</p>
+          <div>{{tableData.belongBusTeamName==null?'—':tableData.belongBusTeamName}}</div>
         </div>
       </div>
+      <div class="am-g am-text-left">
+        <div class="am-u-sm-2 am-text-right">所属区域：</div>
+        <div class="am-u-sm-10">
+          <div>{{tableData.belongAreaTeamName}}</div>
+        </div>
+      </div>
+
+      <div class="am-g am-text-left">
+        <div class="am-u-sm-2 am-text-right">申请日期：</div>
+        <div class="am-u-sm-10">
+          <div>{{tableData.createTime | formatDate}}</div>
+        </div>
+      </div>
+
+      <div class="am-g am-text-left">
+        <div class="am-u-sm-2 am-text-right">审核日期：</div>
+        <div class="am-u-sm-10">
+          <div>{{tableData.updateTime==tableData.createTime?'—':(tableData.updateTime | formatDate)}}</div>
+        </div>
+      </div>
+
+    <!--  <div class="am-g am-text-left">
+        <div class="am-u-sm-2 am-text-right">审核状态：</div>
+        <div class="am-u-sm-10">
+          <div>{{tableData.status==0?'待审核':tableData.status==1?'通过':'不通过'}}</div>
+        </div>
+      </div>-->
+
+
 
       <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">审核结果：</div>
@@ -44,7 +73,7 @@
       <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">备 &nbsp; 注：</div>
         <div class="am-u-sm-10">
-          <textarea v-model="tableData.remark"></textarea>
+          <textarea v-model="tableData.remarks"></textarea>
         </div>
       </div>
 
@@ -104,7 +133,11 @@
         var _this = this
         _this.tableData.createTime=''
         _this.tableData.updateTime=''
-        io.post(io.apiAdminCahngeServiceMerchant,$.extend({},_this.tableData),function (ret) {
+        io.post(io.apiAdminCahngeServiceMerchant,{
+            'merchantId': _this.tableData.merchantId,
+            'status': _this.tableData.status,
+            'remarks':_this.tableData.remarks
+          },function (ret) {
           if (ret.success){
             _this.$alert('审批成功')
             _this.$root.$emit('sellerRegister:new')
