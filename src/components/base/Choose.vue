@@ -29,10 +29,11 @@
         methods:{
           setSelect:function(val){
             try{
+
               var $s  = $('select' , this.$el);
               if(val instanceof Array ){
                 for(var i = 0 ; i < val.length ;i++ ){
-                  $s.find('option[value='+val[i]+']').attr('selected', true)
+                  $s.find('option[value="'+val[i]+'"]').attr('selected', true)
                 }
               }else{
                 $s.find('option[value='+val+']').attr('selected', true)

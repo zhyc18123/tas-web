@@ -50,7 +50,6 @@
               </div>
             </div>
 
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 头像
@@ -83,7 +82,8 @@ import io from '../../lib/io'
                 formData:{
                   areaTeamId:'',
                   busTeamId:'',
-                  userType:''
+                  userType:'',
+                  campusName: ''
                 }
             }
         },
@@ -167,6 +167,10 @@ import io from '../../lib/io'
           },
           uploadAvatar:function(info){
             this.formData.avatarUrl = info.url
+          },
+          selectCampusCallback:function(campus){
+            this.formData.campusId = campus.campusId
+            this.formData.campusName = campus.campusName
           }
         }
     }

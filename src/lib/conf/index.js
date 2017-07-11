@@ -17,19 +17,19 @@ export default {
 }
 
 
+
+
 /**
-
-
 //prod
 
 export default {
-  baseApiPath : 'http://119.29.5.64/yyfn-api',
+  baseApiPath : 'http://b.yuyou100.com/yyfn-api',
   basePath : 'http://b.yuyou100.com',
   qiniuCDN : 'http://static.yuyou100.com/',
-  qiniuUploadTokenApi: 'http://119.29.5.64/yyfn-api/api/qiniu/upload/token'
+  qiniuUploadTokenApi: 'http://b.yuyou100.com/yyfn-api/api/qiniu/upload/token'
 }
-
  */
+
 /*
 export default {
 

@@ -5,7 +5,7 @@
         <div class="am-form-group ">
           <div class="am-u-sm-3 input-field">
             <date-picker v-model="formData.date">
-              <input type="text" class="am-input-lg" placeholder="请选择上课日期" data-am-datepicker required>
+              <input type="text" class="am-input-lg" placeholder="请选择上课日期" data-am-datepicker readonly required>
             </date-picker>
           </div>
 

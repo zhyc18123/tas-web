@@ -297,7 +297,8 @@
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          status : 1
+          status : 1,
+          classType : 0
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total

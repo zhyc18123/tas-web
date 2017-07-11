@@ -67,8 +67,8 @@
         label="操作"
         width="320">
         <template scope="scope">
-          <el-button size="small" :disabled="scope.row.chargingStatus == 2 ||  scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
-          <el-button size="small" :disabled="scope.row.chargingStatus != 0" @click.native="cancel(scope.row.courseOrderId)">撤销</el-button>
+          <el-button size="small" :disabled="scope.row.regFrom == 1 || scope.row.chargingStatus == 2 ||  scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
+          <el-button size="small" :disabled="scope.row.regFrom == 1 || scope.row.chargingStatus != 0" @click.native="cancel(scope.row.courseOrderId)">撤销</el-button>
           <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
           <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="printCert(scope.row.courseOrderId)">打印听课证</el-button>
         </template>
@@ -183,8 +183,8 @@
       printCert:function(courseOrderId){
         $('#certIframe').html('<iframe height="100%" src="./static/cert/index.html?courseOrderId='+courseOrderId+'" width="100%" frameborder="0"></iframe>')
         this.$refs.cert.show({
-          width:1000,
-          height:600
+          width:1050,
+          height:700
         })
       },
       confirmPrint:function(){

@@ -73,7 +73,7 @@
                 label="用户角色"
                 min-width="100">
                 <template scope="scope">
-                  {{ { '0':'誉优','1':'区域','2':'业务组' }[scope.row.userType]}}
+                  {{ { '0':'誉优','1':'区域','2':'业务组','3':'老师','4':'校区' }[scope.row.userType]}}
                 </template>
               </el-table-column>
 

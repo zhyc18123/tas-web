@@ -32,7 +32,10 @@
             e.preventDefault();
             $modal.modal('close')
           })
-          $modal.appendTo('#_windowSlot')
+          if(!$modal.parent().is($('#_windowSlot'))){
+            $('#_windowSlot').append($modal)
+          }
+
           $('.am-modal-bd',$modal).height( ($('.am-modal-dialog',$modal).height() - 68  ) )
         })
 

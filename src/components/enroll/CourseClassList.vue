@@ -110,6 +110,9 @@
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
+               <button type="button" class="am-btn am-btn-default am-btn-success"
+                       @click="exportStudentReg" ><span class="am-icon-download"></span>导出
+               </button>
               </div>
             </div>
 
@@ -311,6 +314,17 @@
       search: function () {
         this.loadTableData(1)
       },
+      //导出注册信息
+      exportStudentReg:function(){
+        var _this = this
+        var url = io.apiAdminExportStudentReg + '?accessToken=' + io.getHeaders().accessToken;
+
+        for(var i in _this.query)    {
+           url = url + '&' + i + "="+ _this.query[i];
+        }
+        window.open(url)
+     },
+
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
@@ -353,3 +367,4 @@
     }
   }
 </script>
+

@@ -22,11 +22,25 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.status" >
+                <option value="">状态</option>
+                <option value="0">处理中</option>
+                <option value="1">已处理</option>
+                <option value="2">已拒绝</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search" ><span class="am-icon-search"></span>查询
                 </button>
+              <button type="button" class="am-btn am-btn-default am-btn-success"
+                      @click="exportStudentRefund" ><span class="am-icon-download"></span>导出
+              </button>
             </div>
           </div>
 
@@ -77,7 +91,7 @@
               min-width="100">
               <template scope="scope">
                 {{scope.row.refundWay == 0 ? '支付宝' : scope.row.refundWay == 1 ? '微信' : scope.row.refundWay == 2 ? '现金' : scope.row.refundWay == 3 ? '余额账户':'银行卡转账' }}
-            </template>
+              </template>
             </el-table-column>
             <el-table-column
               prop="returnResult"
@@ -89,7 +103,7 @@
               min-width="100">
               <template scope="scope">
                 {{scope.row.status==0?'处理中':(scope.row.status==1?'已处理':'已拒绝')}}
-                </template>
+              </template>
             </el-table-column>
             <el-table-column
               fixed="right"
@@ -133,7 +147,8 @@
         studentRefundId: '',
         query: {
           areaTeamId : '',
-          busTeamId : ''
+          busTeamId : '',
+          status : ''
         },
       }
     },
@@ -195,9 +210,17 @@
           width: 1000,
           height: 600
         })
-      }
+      },
 
+      //导出学生退费信息
+      exportStudentRefund:function(){
+        var url = io.apiAdminExportStudentRefund + '?accessToken=' + io.getHeaders().accessToken;
+        for(var i in this.query)    {
+          url = url + '&' + i + "="+ this.query[i];
+        }
+        window.open(url)
+      },
     }
   }
-
 </script>
+

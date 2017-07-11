@@ -94,9 +94,11 @@ const io = {
     this.apiAdminSaveOrUpdateTeacher = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateTeacher'
     this.apiAdminDelTeacher = conf.baseApiPath + '/api/admin/teaching/resource/delTeacher'
     this.apiAdminTeacherTags = conf.baseApiPath + '/api/admin/teaching/resource/teacherTags'
+    this.apiAdminExportTeachers = conf.baseApiPath + '/api/admin/teaching/resource/exportTeachers'
 
     this.apiAdminCampusManageList = conf.baseApiPath + '/api/admin/teaching/resource/campusManageList'
     this.apiAdminCampusUseList = conf.baseApiPath + '/api/admin/teaching/resource/campusUseList'
+    this.apiAdminCampusOfAreaTeam = conf.baseApiPath + '/api/admin/teaching/resource/campusOfAreaTeam'
     this.apiAdminBaseCampusList = conf.baseApiPath + '/api/admin/teaching/resource/baseCampusList'
     this.apiAdminCampusDetail = conf.baseApiPath + '/api/admin/teaching/resource/campusDetail'
     this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
@@ -115,14 +117,15 @@ const io = {
     this.apiAdminArrangeTeacher = conf.baseApiPath + '/api/admin/arrangement/arrangeTeacher'
     this.apiAdminClassTimeList = conf.baseApiPath + '/api/admin/arrangement/classLectureList'
 
-
-
     this.apiAdminCourseTemplateManageList = conf.baseApiPath + '/api/admin/courseTemplateManageList'
     this.apiAdminCourseTemplateUseList = conf.baseApiPath + '/api/admin/courseTemplateUseList'
     this.apiAdminTemplateDetailDetail = conf.baseApiPath + '/api/admin/courseTemplateDetail'
     this.apiAdminDeleteCourseTemplate = conf.baseApiPath + '/api/admin/deleteCourseTemplate'
     this.apiAdminSaveOrUpdateTemplateDetail = conf.baseApiPath + '/api/admin/saveOrUpdateCourseTemplate'
     this.apiAdminChangeCourseTypeList = conf.baseApiPath + '/api/admin/courseTypeList'
+    this.apiAdminCourseTypeManageList = conf.baseApiPath + '/api/admin/courseTypeManageList'
+    this.apiAdminCourseTypeSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateCourseType'
+    this.apiAdminDeleteCourseType = conf.baseApiPath + '/api/admin/deleteCourseType'
 
     this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
     this.apiAdminProductManageUseList  = conf.baseApiPath + '/api/admin/productUseList'
@@ -144,6 +147,7 @@ const io = {
     this.apiAdminRearrangeTimeForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTimeForLecture'
     this.apiAdminRearrangeTeacherForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTeacherForLecture'
     this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
+    this.apiAdminExportStudentReg = conf.baseApiPath + '/api/admin/exportStudentReg'
 
     this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/crowdfundingClassMgr'
     this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'
@@ -172,12 +176,13 @@ const io = {
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
+    this.apiAdminExportStudentRefund = conf.baseApiPath + '/api/admin/exportStudentRefund'
 
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
-    this.apiAdminSettlementAllMainAccountList = conf.baseApiPath + '/api/admin/settlement/allMainAccountList'
+    this.apiAdminSettlementAllMainAccountListWithoutStudent = conf.baseApiPath + '/api/admin/settlement/allMainAccountListWithoutStudent'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
-    this.apiAdminSettlementFeelList = conf.baseApiPath + '/api/admin/settlement/feelList'
-    this.apiAdminSettlementFeelDetail = conf.baseApiPath + '/api/admin/settlement/feelDetail'
+    this.apiAdminSettlementFeeList = conf.baseApiPath + '/api/admin/settlement/feeList'
+    this.apiAdminSettlementFeeDetail = conf.baseApiPath + '/api/admin/settlement/feeDetail'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'
     this.apiAdminSettlementDeleteFee = conf.baseApiPath + '/api/admin/settlement/deleteFee'
     this.apiAdminSettlementAuditingFee = conf.baseApiPath + '/api/admin/settlement/auditingFee'
@@ -186,6 +191,17 @@ const io = {
     this.apiAdminSettlementWithdrawalList = conf.baseApiPath + '/api/admin/settlement/withdrawalList'
     this.apiAdminSettlementApplyWithdrawal = conf.baseApiPath + '/api/admin/settlement/applyWithdrawal'
     this.apiAdminSettlementUpdateWithdrawalStatus = conf.baseApiPath + '/api/admin/settlement/updateWithdrawalStatus'
+    this.apiAdminSettlementFeeCategoryList = conf.baseApiPath + '/api/admin/settlement/feeCategoryList'
+    this.apiAdminSettlementAllFeeCategory = conf.baseApiPath + '/api/admin/settlement/allFeeCategory'
+    this.apiAdminSettlementFeeCategoryDetail = conf.baseApiPath + '/api/admin/settlement/feeCategoryDetail'
+    this.apiAdminSettlementSaveOrUpdateFeeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateFeeCategory'
+    this.apiAdminSettlementDeleteFeeCategory = conf.baseApiPath + '/api/admin/settlement/deleteFeeCategory'
+
+    this.apiAdminSettlementIncomeCategoryList = conf.baseApiPath + '/api/admin/settlement/incomeCategoryList'
+    this.apiAdminSettlementAllIncomeCategory = conf.baseApiPath + '/api/admin/settlement/allIncomeCategory'
+    this.apiAdminSettlementIncomeCategoryDetail = conf.baseApiPath + '/api/admin/settlement/incomeCategoryDetail'
+    this.apiAdminSettlementSaveOrUpdateIncomeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateIncomeCategory'
+    this.apiAdminSettlementDeleteIncomeCategory = conf.baseApiPath + '/api/admin/settlement/deleteIncomeCategory'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
 
@@ -238,6 +254,11 @@ const io = {
 
 
     this.apiAdminStudentMainAccount = conf.baseApiPath + '/api/admin/studentMainAccount'
+
+
+    this.apiAdminReportChargeList = conf.baseApiPath + '/api/admin/report/chargeList'
+    this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
+    this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
 
 
   },
@@ -357,6 +378,18 @@ const io = {
       $( deferred.resolve );
     }));
     $.when.apply($, $scripts).done(done)
+  },
+  downloadFile : function (url,data ) {
+    data.accessToken = this.getHeaders().accessToken
+    data = $.param(data)
+    // 把参数组装成 form的  input
+    var inputs = []
+    $.each(data.split('&'), function () {
+      var pair = this.split('=')
+      inputs.push( '<input type="hidden" name="' + pair[0] + '" value="' + pair[1] + '" />')
+    })
+    // request发送请求
+    $('<form action="' + url + '" method="post">' + inputs.join('') + '</form>').appendTo('body').submit().remove()
   }
 
 };

@@ -130,12 +130,12 @@ VueUI.install = function (Vue){
       }
     },
     created:function(){
-      if(this.query && this.$route && this.$root[this.$route.fullPath]){
+      if(this.query && this.$parent.isMainLayout && this.$route && this.$root[this.$route.fullPath]){
         Object.assign(this,this.$root[this.$route.fullPath])
       }
     },
     beforeRouteLeave (to, from, next) {
-      if(this.$data.query){
+      if(this.$parent.isMainLayout && this.$data.query){
         this.$root[from.fullPath] = this.$data
       }
       next()
