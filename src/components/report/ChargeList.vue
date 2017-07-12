@@ -233,7 +233,7 @@
               <el-table-column
                 prop="discountReason"
                 label="优惠原因"
-                min-width="100">
+                min-width="200">
               </el-table-column>
               <el-table-column
                 prop="discountAmount"
@@ -328,11 +328,6 @@
                 label="业务组"
                 min-width="100">
               </el-table-column>
-              <el-table-column
-                prop="remark"
-                label="备注"
-                min-width="200">
-              </el-table-column>
 
               <el-table-column
                 label="时间"
@@ -340,6 +335,11 @@
                 <template scope="scope">
                   {{ scope.row.createTime | formatTime }}
                 </template>
+              </el-table-column>
+              <el-table-column
+                prop="remark"
+                label="备注"
+                min-width="200">
               </el-table-column>
 
               <el-table-column
