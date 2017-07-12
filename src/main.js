@@ -62,6 +62,7 @@ const ClassList = resolve => require(['./components/course/ClassList'], resolve)
 const ClassForm = resolve => require(['./components/course/ClassForm'], resolve)
 const ClassTimeList = resolve => require(['./components/course/ClassTimeList'], resolve)
 const ClassRecommendList = resolve => require(['./components/course/ClassRecommendList'], resolve)
+const TeacherSchedule = resolve => require(['./components/course/TeacherSchedule'], resolve)
 
 
 
@@ -193,7 +194,8 @@ const router = new VueRouter({
       {path: 'course/courseType/edit/:courseTypeId/:name', component:CourseTypeForm },
       {path: 'course/product/list',  component:  ProductList},
       {path: 'product/product/add' , component: ProductForm },
-      {path: 'product/product/edit/:productId' , component: ProductForm },
+      {path: 'course/teacher/schedule' , component: TeacherSchedule },
+      {path: 'course/teacher/schedule' , component: TeacherSchedule },
 
       {path: 'course/class/list' , component: ClassList },
       {path: 'course/class/add' , component: ClassForm},

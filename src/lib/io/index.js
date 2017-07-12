@@ -261,6 +261,9 @@ const io = {
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
 
 
+    this.apiAdminScheduleCourseClassListWithTeacher = conf.baseApiPath + '/api/admin/schedule/courseClassListWithTeacher'
+
+
   },
   getHeaders : function(){
     const accessToken = Storage.getAccessToken() || '' ;
