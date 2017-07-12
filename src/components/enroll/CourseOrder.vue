@@ -144,7 +144,7 @@
 
       },
       checkDiscountAmount:function(){
-          if(this.formData.discountAmount < 0 || this.formData.discountAmount > parseInt( this.courseOrder.totalAmount) ){
+          if(this.formData.discountAmount < 0 || this.formData.discountAmount > parseFloat( this.courseOrder.totalAmount) ){
             this.formData.discountAmount = 0
           }
       },

@@ -2,7 +2,7 @@
 
 window.UEDITOR_HOME_URL = '/static/ueditor/'
 
-
+/**
 export default {
 
 
@@ -17,9 +17,9 @@ export default {
 }
 
 
+ */
 
 
-/**
 //prod
 
 export default {
@@ -28,7 +28,7 @@ export default {
   qiniuCDN : 'http://static.yuyou100.com/',
   qiniuUploadTokenApi: 'http://b.yuyou100.com/yyfn-api/api/qiniu/upload/token'
 }
- */
+
 
 /*
 export default {
