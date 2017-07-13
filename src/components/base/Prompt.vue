@@ -4,7 +4,7 @@
       <div class="am-modal-hd">{{title}}</div>
       <div class="am-modal-bd">
         {{msg}}
-        <input type="text" class="am-modal-prompt-input">
+        <input type="text" class="am-modal-prompt-input" v-model="defaultValue">
       </div>
       <div class="am-modal-footer">
         <span class="am-modal-btn" data-am-modal-cancel>取消</span>
@@ -23,15 +23,17 @@
       data: function(){
         return {
           title:'提示',
-          msg : ''
+          msg : '',
+          defaultValue:''
         }
       },
       mounted:function(){
 
       },
       methods: {
-        show: function(msg,confirm,cancel){
+        show: function(msg,defaultValue,confirm,cancel){
           this.msg  = msg
+          this.defaultValue = defaultValue
           $('#'+this.id).modal({
             relatedTarget: this,
             onConfirm: function(options) {
