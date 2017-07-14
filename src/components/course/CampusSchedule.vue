@@ -140,7 +140,10 @@
       }
     },
     created:function(){
-        this.loadCampusData()
+      this.loadCampusData()
+      if(this.query.campusId){
+          this.loadScheduleData()
+      }
     },
     mounted: function () {
 
@@ -162,7 +165,9 @@
           function (ret) {
             if (ret.success) {
 
-              _this.query.campusId = ret.data[0] ? ret.data[0].campusId : ''
+              if(!_this.query.campusId){
+                _this.query.campusId = ret.data[0] ? ret.data[0].campusId : ''
+              }
               _this.campuses = ret.data
 
             }
@@ -245,13 +250,13 @@
     border-bottom-width: 0px;
     text-align: center;
     vertical-align: middle;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .am-table > tbody > tr > td {
     text-align: center;
     vertical-align: middle;
-    font-size: 6px;
+    font-size: 12px;
   }
 
   td.left-border {

@@ -104,7 +104,6 @@ import Pagination from '../base/Pagination'
         },
         mounted:function(){
           $(window).smoothScroll()
-          console.log(this.query.startDate)
         },
         created:function(){
           this.title = {'future_income' : '预收' , 'real_income' : '收入','cost' :'成本' }[this.$params('subject')]

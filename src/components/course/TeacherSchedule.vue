@@ -10,7 +10,6 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
                 </select2>
               </div>
             </div>
@@ -144,7 +143,7 @@
       var currentPeriod = window.config.periods.filter(item => item.isCurrent == 1)[0]
       return {
         query: {
-          areaTeamId: '',
+          areaTeamId: window.config.areaTeams[0] ? window.config.areaTeams[0].areaTeamId : '',
           busTeamId: '',
           periodId: currentPeriod.periodId,
           scheduleTemplate: 0
@@ -166,13 +165,12 @@
       }
     },
     created: function () {
-
+      this.loadScheduleData()
     },
     mounted: function () {
       //this.loadCourseClassWithTeacher()
       var _this = this
       $(document.body).on('click', '.am-icon-edit', function () {
-        console.log('xxx')
         var $itemClass = $(this).parents('.class-item')
         var classId = $itemClass.data('classid')
         var courseClass = _this.courseClassMap[classId];
@@ -353,13 +351,13 @@
     border-bottom-width: 0px;
     text-align: center;
     vertical-align: middle;
-    font-size: 8px;
+    font-size: 12px;
   }
 
   .am-table > tbody > tr > td {
     text-align: center;
     vertical-align: middle;
-    font-size: 6px;
+    font-size: 12px;
   }
 
   td.time-item-wrapper {
@@ -389,6 +387,10 @@
     position: absolute;
     right: 2px;
 
+  }
+
+  .class-item .am-icon-circle{
+    cursor: move;
   }
 
   .class-item-bg-0 {
