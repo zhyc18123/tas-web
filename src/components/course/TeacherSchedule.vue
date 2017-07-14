@@ -57,8 +57,8 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group">
-                <button type="button" class="am-btn am-btn-default am-btn-success ">
-                  <span class="am-icon-save"></span>保存课表变更
+                <button type="button" class="am-btn am-btn-default am-btn-success " @click="download">
+                  <span class="am-icon-download"></span>下载课表
                 </button>
               </div>
             </div>
@@ -89,20 +89,20 @@
               </thead>
               <tbody>
               <template v-for="teacher in teacherList">
-                <tr>
-                  <td :rowspan="scheduleTemplate.times.length"> {{teacher.teacherName}} </td>
-                  <td :rowspan="scheduleTemplate.times.length"> {{{
-                    '0'
-                  :
-                    '专职', '1'
-                  :
-                    '兼职'
-                  }
-                  [teacher.jobNature] || '-'}}
+                <tr v-for="(time,n) in scheduleTemplate.times">
+                  <template v-if="n == 0">
+                    <td :rowspan="scheduleTemplate.times.length"> {{teacher.teacherName}} </td>
+                    <td :rowspan="scheduleTemplate.times.length"> {{{
+                      '0'
+                    :
+                      '专职', '1'
+                    :
+                      '兼职'
+                    }
+                    [teacher.jobNature] || '-'}}
                   </td>
-                </tr>
+                  </template>
 
-                <tr v-for="time in scheduleTemplate.times">
                   <td class="time-item-wrapper">
                     <div class="time-item">{{time}}</div>
                   </td>
@@ -218,7 +218,7 @@
       },
       loadCourseClassWithTeacher: function () {
         var _this = this
-        io.post(io.apiAdminScheduleCourseClassListWithTeacher, this.query,
+        io.post(io.apiAdminScheduleScheduleDataOfTeacher, this.query,
           function (ret) {
             if (ret.success) {
 
@@ -227,7 +227,7 @@
               var times = new Set();
               for (var cc of ret.data.courseClassList) {
                 if (cc.studyingTime) {
-                  cc.studyingTime.split(',').forEach(item => times.add(item))
+                  cc.studyingTime.split(' ').forEach(item => times.add(item))
                 }
               }
 
@@ -267,11 +267,11 @@
 
               _this.$nextTick(function () {
                 for (var cc of ret.data.courseClassList) {
-                  var teacherId = cc.teacherIds || '-'
-                  var studyingTime = cc.studyingTime || '-'
+                  var teacherId = (cc.teacherIds || '-').split(',')
+                  var studyingTime = (cc.studyingTime || '-').split(' ')
                   var col = _this.period.segments == 1 ? ( cc.week || '-') : cc.segmentNo
                   var td = document.getElementById(teacherId + '_' + studyingTime + '_' + col)
-                  $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '"><i class="am-icon-circle"></i><span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span><i class="am-icon-edit"></i></div>')
+                  $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '">'+(cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' :'')+'<span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span>'+(cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' :'')+'</div>')
 
                 }
                 _this.initTouchDnd()
@@ -331,8 +331,21 @@
         })
       },
       saveChange:function(modifyInfo){
-        console.log(modifyInfo)
+        var _this  = this
+        io.post(io.apiAdminScheduleSaveChange, modifyInfo, function (ret) {
+          if (ret.success) {
+            _this.$toast('OK')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
 
+      },
+      download:function(){
+        io.downloadFile(io.apiAdminHtml2excel,{
+          html:$('<div>').append($('table').clone()).html(),
+          downloadName:'老师课表'
+        })
       }
     }
   }

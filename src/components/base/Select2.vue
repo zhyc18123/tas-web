@@ -27,6 +27,9 @@
           })
 
         },
+        updated:function(){
+           this.setSelect(this.value)
+        },
         methods:{
           setSelect:function(val){
             var selectEl = this.$el

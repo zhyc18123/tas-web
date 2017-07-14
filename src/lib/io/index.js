@@ -261,7 +261,12 @@ const io = {
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
 
 
-    this.apiAdminScheduleCourseClassListWithTeacher = conf.baseApiPath + '/api/admin/schedule/courseClassListWithTeacher'
+    this.apiAdminScheduleScheduleDataOfTeacher = conf.baseApiPath + '/api/admin/schedule/scheduleDataOfTeacher'
+    this.apiAdminSchedulescheduleDataOfCampus = conf.baseApiPath + '/api/admin/schedule/scheduleDataOfCampus'
+    this.apiAdminScheduleSaveChange = conf.baseApiPath + '/api/admin/schedule/saveChange'
+
+
+    this.apiAdminHtml2excel = conf.baseApiPath + '/api/admin/html2excel'
 
 
   },
@@ -384,15 +389,19 @@ const io = {
   },
   downloadFile : function (url,data ) {
     data.accessToken = this.getHeaders().accessToken
-    data = $.param(data)
+    //data = $.param(data)
     // 把参数组装成 form的  input
     var inputs = []
-    $.each(data.split('&'), function () {
-      var pair = this.split('=')
-      inputs.push( '<input type="hidden" name="' + pair[0] + '" value="' + pair[1] + '" />')
-    })
+    for(var k of Object.keys(data)){
+      inputs.push( '<input type="hidden" name="' + k + '"/>')
+    }
+
     // request发送请求
-    $('<form action="' + url + '" method="post">' + inputs.join('') + '</form>').appendTo('body').submit().remove()
+    var $form = $('<form target="_blank" action="' + url + '" method="post" style="display: none">' + inputs.join('') + '</form>')
+    for(var k of Object.keys(data)){
+      $form.find('input[name='+k+']').val(data[k])
+    }
+    $form.appendTo('body').submit().remove()
   }
 
 };
