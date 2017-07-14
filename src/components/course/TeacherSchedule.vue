@@ -55,7 +55,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" v-if="courseClassList.length > 0">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success " @click="download">
                   <span class="am-icon-download"></span>下载课表
@@ -64,7 +64,7 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
+          <div class="am-u-sm-12 am-scrollable-horizontal" v-if="courseClassList.length > 0">
 
             <table class="am-table am-table-bordered am-table-radius am-table-compact am-text-nowrap">
 
@@ -171,7 +171,8 @@
     mounted: function () {
       //this.loadCourseClassWithTeacher()
       var _this = this
-      $('.am-table ').on('click', '.am-icon-edit', function () {
+      $(document.body).on('click', '.am-icon-edit', function () {
+        console.log('xxx')
         var $itemClass = $(this).parents('.class-item')
         var classId = $itemClass.data('classid')
         var courseClass = _this.courseClassMap[classId];
@@ -214,10 +215,11 @@
     },
     methods: {
       search: function () {
-        this.loadCourseClassWithTeacher()
+        this.loadScheduleData()
       },
-      loadCourseClassWithTeacher: function () {
+      loadScheduleData: function () {
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminScheduleScheduleDataOfTeacher, this.query,
           function (ret) {
             if (ret.success) {
@@ -231,12 +233,8 @@
                 }
               }
 
-              if (times.size > 0) {
-                _this.scheduleTemplate.times.forEach(item => times.add(item))
-                times = Array.from(times)
-                times.sort()
-                _this.scheduleTemplate.times = times
-              }
+              _this.scheduleTemplate.times.forEach(item => times.add(item))
+              _this.scheduleTemplate.times = Array.from(times).sort()
 
               //有未时间、未排老师课程，增加一个虚拟老师
               if (ret.data.courseClassList.filter(item => !item.teacherIds || !item.studyingTime).length > 0) {
@@ -247,19 +245,15 @@
                 })
               }
 
-              var weeks = Array.from(new Set(ret.data.courseClassList.filter(item => item.startCourseTime).map(function (item) {
+              _this.weeks = Array.from(new Set(ret.data.courseClassList.filter(item => item.startCourseTime).map(function (item) {
                 item.week = util.formatDate(item.startCourseTime, 'dddd');
                 return item.week;
-              })))
-              weeks.sort()
-              _this.weeks = weeks
+              }))).sort()
 
-              var period = window.config.periods.filter(item => item.periodId == _this.query.periodId)[0];
-              period.segments = parseInt(period.segments)
-
+              _this.period = window.config.periods.filter(item => item.periodId == _this.query.periodId)[0];
+              _this.period.segments = parseInt(_this.period.segments)
               _this.teacherList = ret.data.teacherList
               _this.courseClassList = ret.data.courseClassList
-              _this.period = period
 
               //清空
               $('.class-item-wrapper').empty()
@@ -274,11 +268,13 @@
                   $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '">'+(cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' :'')+'<span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span>'+(cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' :'')+'</div>')
 
                 }
+                _this.$hiddenLoading()
                 _this.initTouchDnd()
               })
             }
           },
           function () {
+            _this.$hiddenLoading()
             _this.$alert('请求服务器失败')
           })
       },

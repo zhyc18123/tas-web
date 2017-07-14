@@ -32,7 +32,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" v-if="courseClassList.length > 0">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success " @click="download">
                   <span class="am-icon-download"></span>下载课表
@@ -41,7 +41,7 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-scrollable-horizontal">
+          <div class="am-u-sm-12 am-scrollable-horizontal" v-if="courseClassList.length > 0">
 
             <table class="am-table am-table-bordered am-table-radius am-table-compact am-text-nowrap">
 
@@ -173,6 +173,7 @@
       },
       loadScheduleData: function () {
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminSchedulescheduleDataOfCampus, this.query,
           function (ret) {
             if (ret.success) {
@@ -200,6 +201,9 @@
               _this.levels = Array.from(new Set(ret.data.courseClassList.map(item => item.level))).sort()
               _this.grades = Array.from(new Set(ret.data.courseClassList.map(item => item.gradeName))).sort()
 
+              //清空
+              $('.class-item-wrapper').empty()
+
               _this.$nextTick(function(){
                 for (var cc of ret.data.courseClassList) {
 
@@ -214,18 +218,21 @@
                   $(td).append('<div data-classid="' + cc.classId + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '"><span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span></div>')
 
                 }
+                _this.$hiddenLoading()
               })
 
             }
           },
           function () {
+            _this.$hiddenLoading()
             _this.$alert('请求服务器失败')
           })
       },
       download:function(){
+        var _this = this
         io.downloadFile(io.apiAdminHtml2excel,{
           html:$('<div>').append($('table').clone()).html(),
-          downloadName:'校区课表'
+          downloadName:   '校区课表-'+_this.campus.campusName
         })
       }
     }
