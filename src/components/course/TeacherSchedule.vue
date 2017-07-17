@@ -117,6 +117,11 @@
 
               </template>
 
+              <tr>
+                <td>备注</td>
+                <td :colspan="3 + (period.segments == 1?weeks.length:period.segments)">#后面的数字是报名人数</td>
+              </tr>
+
 
               </tbody>
             </table>

@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.campusId" >
-                  <option value="">校区</option>
+                  <!--<option value="">校区</option>-->
                   <option v-for="item in campuses" :value="item.campusId">{{item.campusName}}</option>
                 </select2>
               </div>
@@ -73,7 +73,7 @@
 
                       <tr>
                         <td v-if="wn == 0 && ln == 0" :rowspan="levels.length * weeks.length ">{{grade}}</td>
-                        <td v-if="wn == 0" :rowspan="weeks.length ">{{level}}</td>
+                        <td class="left-border" v-if="wn == 0" :rowspan="weeks.length ">{{level}}</td>
                         <td class="left-border">{{week}}</td>
                         <td v-for="time in times" :id="grade+'_'+level+'_'+week+'_'+time"  class="class-item-wrapper"></td>
                       </tr>
@@ -103,6 +103,11 @@
                 </template>
 
               </template>
+
+              <tr>
+                <td>备注</td>
+                <td :colspan="period.segments == 1?times.length + 2 :times.length + 1">#后面的数字是报名人数</td>
+              </tr>
 
 
               </tbody>
