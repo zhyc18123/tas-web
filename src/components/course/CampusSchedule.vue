@@ -43,7 +43,7 @@
 
           <div class="am-u-sm-12 am-scrollable-horizontal" v-if="courseClassList.length > 0">
 
-            <table class="am-table am-table-bordered am-table-radius am-table-compact am-text-nowrap">
+            <table id="schedule" class="am-table am-table-bordered am-table-radius am-table-compact am-text-nowrap">
 
               <thead>
 
@@ -236,7 +236,7 @@
       download:function(){
         var _this = this
         io.downloadFile(io.apiAdminHtml2excel,{
-          html:$('<div>').append($('table').clone()).html(),
+          html:$('<div>').append($('#schedule').clone()).html(),
           downloadName:   '校区课表-'+_this.campus.campusName
         })
       }
