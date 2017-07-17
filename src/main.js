@@ -195,6 +195,7 @@ const router = new VueRouter({
       {path: 'course/courseType/edit/:courseTypeId/:name', component:CourseTypeForm },
       {path: 'course/product/list',  component:  ProductList},
       {path: 'product/product/add' , component: ProductForm },
+      {path: 'product/product/edit/:productId' , component: ProductForm },
       {path: 'course/teacher/schedule' , component: TeacherSchedule },
       {path: 'course/campus/schedule' , component: CampusSchedule },
 
