@@ -104,6 +104,14 @@ const io = {
     this.apiAdminSaveOrUpdateCampus = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateCampus'
     this.apiAdminDelCampus = conf.baseApiPath + '/api/admin/teaching/resource/delCampus'
 
+    this.apiAdminAuditCampusList=conf.baseApiPath+'/api/admin/trading/campusList'
+    this.apiAdminShowCampusDetail=conf.baseApiPath+'/api/admin/trading/campusDetail'
+    this.apiAdminAuditCampus=conf.baseApiPath+'/api/admin/trading/auditCampus'
+    this.apiAdminEditorCampus=conf.baseApiPath+'/api/admin/trading/editorCampus'
+    this.apiAdminAddCampus=conf.baseApiPath+'/api/admin/trading/addCampus'
+
+
+
     this.apiAdminRoomList = conf.baseApiPath + '/api/admin/teaching/resource/roomList'
     this.apiAdminRoomDetail = conf.baseApiPath + '/api/admin/teaching/resource/roomDetail'
     this.apiAdminSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateRoom'
@@ -220,15 +228,25 @@ const io = {
     this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
     this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
     this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
-    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/service/merchantList'
+    this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
     this.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
-    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/service/auditMerchant'
+    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/auditMerchant'
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
     this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'
     this.apiAdminCommentList = conf.baseApiPath + '/api/admin/trading/commentList'
+
+    this.apiAdminGoodList=conf.baseApiPath+'/api/admin/trading/goodPage'
+    this.apiAdminOffProduct=conf.baseApiPath+'/api/admin/trading/offProduct'
+
+    this.apiAdminDemandList=conf.baseApiPath+'/api/admin/trading/demandPage'
+    this.apiAdminOffDemand=conf.baseApiPath+'/api/admin/trading/offDemand'
+
+    this.apiAdminLeaseList=conf.baseApiPath+'/api/admin/trading/leasePage'
+    this.apiAdminOffLease=conf.baseApiPath+'/api/admin/trading/offLease'
+
 
     // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
     this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/orderItemDetail'

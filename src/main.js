@@ -44,6 +44,9 @@ const TeacherForm = resolve => require(['./components/teachingresource/TeacherFo
 const CampusList = resolve => require(['./components/teachingresource/CampusList'], resolve)
 const CampusForm = resolve => require(['./components/teachingresource/CampusForm'], resolve)
 
+const CampusAuditList = resolve => require(['./components/teachingresource/CampusAuditList'], resolve)
+
+
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
 
@@ -117,6 +120,13 @@ const RentDetail = resolve => require(['./components/buyer/RentDetail'], resolve
 const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
 const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
+
+const GoodsManagerList = resolve => require(['./components/servicemanager/GoodsManagerList'], resolve)
+const LeaseManagerList = resolve => require(['./components/servicemanager/LeaseManagerList'], resolve)
+const DemandManagerList = resolve => require(['./components/servicemanager/DemandManagerList'], resolve)
+
+
+
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
@@ -170,6 +180,9 @@ const router = new VueRouter({
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
       {path: 'sys/campus/list' , component: CampusList },
+
+      {path: 'sys/audit/campus/list' , component: CampusAuditList },
+
       {path: 'sys/campus/add' , component: CampusForm },
       {path: 'sys/campus/edit/:campusId' , component: CampusForm },
       {path: 'sys/room/list' , component: RoomList },
@@ -263,6 +276,13 @@ const router = new VueRouter({
       {path: 'buyer/rent/comment/:orderItemId', component:RentComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
+
+      {path: 'serviceManager/goods/list', component:GoodsManagerList},
+      {path: 'serviceManager/lease/list', component:LeaseManagerList},
+      {path: 'serviceManager/demand/list', component:DemandManagerList},
+
+
+
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},

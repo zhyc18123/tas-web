@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-scrollable-horizontal">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">用户注册审核</div>
+        <div class="widget-title am-fl">校区审核</div>
       </div>
 
       <div class="widget-body  am-fr">
@@ -11,10 +11,20 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
             <div class="am-form-group">
               <label class="am-u-sm-4 am-padding-top-xs ">
-                用户名:
+                校区名:
               </label>
               <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="className" v-model="query.merchantName" placeholder=""/>
+                <input type="text" name="campusName" v-model="query.campusName" placeholder=""/>
+              </div>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-form-group">
+              <label class="am-u-sm-4 am-padding-top-xs ">
+                联系人:
+              </label>
+              <div class="am-u-sm-8 am-u-end  input-field">
+                <input type="text" name="username" v-model="query.username" placeholder=""/>
               </div>
             </div>
           </div>
@@ -24,10 +34,11 @@
                 手机号:
               </label>
               <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="className" v-model="query.phoneNo" placeholder=""/>
+                <input type="text" name="userPhoneNo" v-model="query.userPhoneNo" placeholder=""/>
               </div>
             </div>
           </div>
+
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
             <div class="am-form-group">
               <label class="am-u-sm-5 am-padding-top-xs ">
@@ -89,86 +100,50 @@
             min-width="100">
           </el-table-column>
           <el-table-column
-            prop="merchantName"
-            label="用户名"
+            prop="campusName"
+            label="校区名"
             min-width="80">
           </el-table-column>
           <el-table-column
-            prop="phoneNo"
-            label="手机号"
-            min-width="100">
-          </el-table-column>
-          <el-table-column
-            label="角色"
-            align="center"
-            min-width="60">
-            <template scope="scope">
-              {{scope.row.roleType==null?'─':scope.row.roleType==1?'区域':(scope.row.status==2?'业务组':'教师')}}
-            </template>
-
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="姓名"
+            prop="username"
+            label="联系人"
             min-width="80">
-            <template scope="scope">
-              {{scope.row.teacherName==null?'─':scope.row.teacherName}}
-            </template>
-          </el-table-column>
-
-          <el-table-column
-            label="身份证"
-            align="center"
-            min-width="120">
-            <template scope="scope">
-              {{scope.row.inNo==null?'─':scope.row.teacherName}}
-            </template>
           </el-table-column>
           <el-table-column
-            label="所属业务组"
-            align="center"
+            prop="userPhoneNo"
+            label="联系人手机"
             min-width="100">
-            <template scope="scope">
-              {{scope.row.belongBusTeamName==null?'─':scope.row.roleType==1?'区域':(scope.row.status==2?'业务组':'教师')}}
-            </template>
           </el-table-column>
           <el-table-column
-            prop="belongAreaTeamName"
-            label="所属区域"
+            prop="city"
+            label="城市"
             min-width="100">
           </el-table-column>
 
+          <el-table-column
+            prop="address"
+            label="详细地址"
+            min-width="100">
+          </el-table-column>
+
+          <el-table-column
+            prop="unitPrice"
+            label="成本(元/月)"
+            min-width="100">
+          </el-table-column>
 
           <el-table-column
             label="申请日期"
-            min-width="90">
+            min-width="100">
             <template scope="scope">
-              {{scope.row.createTime | formatDate}}
-            </template>
-          </el-table-column>
-          <el-table-column
-            label="审核日期"
-            align="center"
-            min-width="90">
-            <template scope="scope">
-              {{scope.row.auditTime==null?"—":scope.row.auditTime| formatTime}}
+              {{scope.row.createTime | formatTime}}
             </template>
           </el-table-column>
 
           <el-table-column
+            prop="state"
             label="审核状态"
             min-width="100">
-            <template scope="scope">
-              {{scope.row.status==0?'未审核':scope.row.status==1?'通过':'不通过'}}
-            </template>
-          </el-table-column>
-          <el-table-column
-            align="center"
-            label="备注"
-            min-width="200">
-            <template scope="scope">
-              {{scope.row.remarks==null?'—':scope.row.remarks}}
-            </template>
           </el-table-column>
 
 
@@ -190,20 +165,54 @@
                         {{scope.row.status==0?'未审批':(scope.row.status==1?'审批通过':'审批不通过')}}
                       </template>
                     </el-table-column>-->
-          <el-table-column
+          <!--<el-table-column
             label="操作"
             width="120">
             <template scope="scope">
               <el-button size="small" :disabled="scope.row.status!=0 && scope.row.status!=2"
-                         @click.native="edit(scope.row.merchantId)">审批
+                         @click.native="edit(scope.row.merchantId)">审核
               </el-button>
+              <el-button size="small" :disabled="scope.row.status!=0 && scope.row.status!=2"
+                         @click.native="edit(scope.row.merchantId)">编辑
+              </el-button>
+              <el-button size="small" :disabled="scope.row.status!=0 && scope.row.status!=2"
+                         @click.native="edit(scope.row.merchantId)">管理教室
+              </el-button>
+            </template>
+          </el-table-column>
+        -->
+
+          <el-table-column
+            fixed="right"
+            label="操作"
+            width="120">
+            <template scope="scope">
+              <el-dropdown>
+                        <span class="el-dropdown-link">
+                          操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                        </span>
+                <el-dropdown-menu slot="dropdown">
+                  <template >
+                    <el-dropdown-item  @click.native="edit(scope.row.campusId)">审核</el-dropdown-item>
+                  </template>
+                  <template >
+                    <el-dropdown-item    @click.native="changeStatus(scope.row.classId,1)"> 编辑
+                    </el-dropdown-item>
+                    <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">管理教室
+                    </el-dropdown-item>
+                  </template>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
 
-        <window ref="sellerRegister" title="服务商注册审批">
-          <change-seller-register :merchantId="merchantId"
-                                  @changeSellerRegister="$refs.sellerRegister.close()"></change-seller-register>
+
+
+
+          <window ref="campusAudit" title="校区审批">
+          <change-campus-state :campusId="campusId"
+                                  @changeCampusState="$refs.campusAudit.close()"></change-campus-state>
         </window>
 
         <div class="am-u-lg-12 am-cf">
@@ -221,7 +230,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import ChangeSellerRegister from './ChangeSellerRegister'
+  import ChangeCampusState from './ChangeCampusState'
   export default{
     data: function () {
       return {
@@ -235,7 +244,7 @@
     },
     components: {
       Pagination,
-      'change-seller-register': ChangeSellerRegister
+      'change-campus-state': ChangeCampusState
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -243,7 +252,7 @@
     created: function () {
       this.loadTableData(this.pageNo)
       var _this = this
-      this.$root.$on('sellerRegister:new', function () {
+      this.$root.$on('campusAudit:new', function () {
         _this.pageNo = 1
         _this.loadTableData(_this.pageNo)
       })
@@ -255,7 +264,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminServiceMerchantList, $.extend({
+        io.post(io.apiAdminAuditCampusList, $.extend({
           pageSize: _this.pageSize,
           pageNo: _this.pageNo
         }, _this.query), function (ret) {
@@ -267,10 +276,10 @@
           }
         })
       },
-      edit: function (merchantId) {
+      edit: function (campusId) {
         var _this = this
-        _this.merchantId = merchantId;
-        _this.$refs.sellerRegister.show({
+        _this.campusId =campusId ;
+        _this.$refs.campusAudit.show({
           width: 1000,
           height: 600
         })
