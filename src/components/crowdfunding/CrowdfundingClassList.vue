@@ -59,7 +59,7 @@
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
-              <div class="am-form-group">
+              <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
@@ -120,14 +120,14 @@
                 <template scope="scope">
                   {{scope.row.discountType == 0 ? '-': (scope.row.discountType == 1 ? '连续优惠' : '分段优惠' ) }}
                 </template>
-              </el-table-column>  
+              </el-table-column>
               <el-table-column
                 label="众筹状态"
                 min-width="100">
                 <template scope="scope">
                   {{scope.row.crowdfundingStatus == 0 ? '众筹中': ( scope.row.crowdfundingStatus == 1 ? '众筹成功' : ( scope.row.crowdfundingStatus == 2 ? '众筹失败' : ''))}}
                 </template>
-              </el-table-column>         
+              </el-table-column>
               <el-table-column
                 label="开班"
                 min-width="100">
@@ -146,7 +146,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                           <template >
-                            <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item> 
+                            <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item>
                           </template>
                           <template >
                             <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开班
@@ -154,10 +154,10 @@
                             <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班
                             </el-dropdown-item>
                           </template>
-                          </el-dropdown-menu>     
+                          </el-dropdown-menu>
                       </el-dropdown>
                     </template>
-            </el-table-column>         
+            </el-table-column>
             </el-table>
           </div>
           <div class="am-u-lg-12 am-cf">
@@ -287,7 +287,7 @@
           }
         })
       },
-     
+
       handleSelectionChange:function (selection) {
         this.selection = selection
       },

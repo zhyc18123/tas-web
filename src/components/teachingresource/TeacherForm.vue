@@ -45,7 +45,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
               </div>
             </div>
 
@@ -111,6 +111,17 @@
                 <date-picker v-model="formData.joinTime" >
                   <input type="text" placeholder="请选择入职日期" data-am-datepicker readonly required >
                 </date-picker>
+              </div>
+            </div>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>任职性质
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.jobNature">
+                  <option value="0">专职</option>
+                  <option value="1">兼职</option>
+                </select2>
               </div>
             </div>
             <div class="am-form-group">
@@ -214,6 +225,7 @@ import util from '../../lib/util'
                 gradeIds:[],
                 subjectIds:[],
                 status:1,
+                jobNature:0,
                 myTags:[],
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },

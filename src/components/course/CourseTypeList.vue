@@ -9,7 +9,7 @@
 
         <div class="am-u-sm-12 am-form ">
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="am-form-group">
+            <div class="am-form-group am-btn-group-xs">
               <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success " @click="$router.push('/main/course/courseType/add')">
                   <span class="am-icon-plus"></span>新增课程类型
               </button>

@@ -5,17 +5,17 @@
         <div class="am-form-group ">
 
           <div class="am-u-sm-3 input-field">
-            <date-picker v-model="startDate">
-              <input type="text" class="am-input-lg" placeholder="请选择首次上课时间" data-am-datepicker readonly required>
-            </date-picker>
-          </div>
-
-          <div class="am-u-sm-3 input-field am-u-end">
             <select v-model="arrangeWay">
               <option value="arrangeByWeek">按周排</option>
               <option value="arrangeByDay">按天排</option>
             </select>
           </div>
+          <div class="am-u-sm-3 input-field am-u-end">
+            <date-picker v-model="startDate">
+              <input type="text" class="am-input-lg" placeholder="请选择首次上课时间" data-am-datepicker readonly required>
+            </date-picker>
+          </div>
+
 
         </div>
 
@@ -114,7 +114,7 @@
       return {
         query: {},
         excludeDays: '',
-        startDate: '',
+        startDate: util.formatDate(new Date().getTime()),
         arrangeWay: 'arrangeByWeek',
         weekDays: [],
         everyday:{ },
@@ -150,7 +150,12 @@
         this.everyday = { name: '每天', times: ['08:00-10:00']}
         this.arrangeResult= []
         this.excludeDays =  ''
-        this.startDate = ''
+        this.startDate = util.formatDate(new Date().getTime())
+        var _this = this
+        //自动选上
+        setTimeout(new function(){
+          $('#' + moment(_this.startDate, "YYYY-MM-DD").format('dddd')).click()
+        },100)
       },
       addTime: function (day) {
         if (day.times.length > 2) {

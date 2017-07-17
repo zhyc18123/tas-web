@@ -158,7 +158,6 @@
             for(var i = 0 ;i < this.args.teachers.length ;i++){
               for(var ii = 0 ;ii < step ;ii++ ){
                 this.tableData[index++].teacherId = this.args.teachers[i].teacherId
-                console.log(1)
                 if( index >= this.tableData.length ){
                     return
                 }

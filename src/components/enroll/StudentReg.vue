@@ -109,6 +109,8 @@
       this.$root.$on('mainAccount:change',function(){
         _this.loadMainAccount()
       })
+      //init tabs
+      $('#tabs').tabs();
     },
     mounted: function () {
 

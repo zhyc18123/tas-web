@@ -123,6 +123,7 @@ export default {
       Vue.showLoading()
     },500)
     loadConfig(function(config){
+        window.config = config
         next(function(vm){
           vm.$root.config =  config
           clearTimeout(st)

@@ -120,6 +120,13 @@
                 </template>
               </el-table-column>
               <el-table-column
+                label="任职性质"
+                min-width="100">
+                <template scope="scope">
+                  {{ {'0':'专职','1':'兼职'}[scope.row.jobNature]}}
+                </template>
+              </el-table-column>
+              <el-table-column
                 label="状态"
                 min-width="100">
                 <template scope="scope">

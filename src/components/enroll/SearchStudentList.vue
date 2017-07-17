@@ -122,13 +122,22 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
+        _this.$showLoading()
         io.post(io.apiAdminSearchStudent,$.extend({
           pageNo:_this.pageNo,
           pageSize:_this.pageSize
         },_this.query),function(ret){
+          _this.$hiddenLoading()
           if(ret.success){
             _this.total = ret.data.total
-            _this.tableData = ret.data.list;
+            _this.tableData = ret.data.list
+
+            if(_this.total == 0 ){
+                _this.$confirm('没有查询到对应的学生，是否需要新添加学员',function(){
+                  _this.$router.push('/main/enroll/student/add')
+                })
+            }
+
           }else{
             _this.$alert(ret.desc)
           }
