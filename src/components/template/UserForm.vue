@@ -100,7 +100,7 @@
                 手机号码
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="输入手机号" data-validation-message="输入正确的手机号码" pattern="^1((3|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
+                <input type="text" class="am-form-field" placeholder="输入手机号" data-validation-message="输入正确的手机号码" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
               </div>
             </div>
 
