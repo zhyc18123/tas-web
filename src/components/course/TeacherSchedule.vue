@@ -36,14 +36,14 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.scheduleTemplate">
                   <option value="">课表模板</option>
                   <option value="0">广州誉优高中</option>
                 </select2>
               </div>
-            </div>
+            </div>-->
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
@@ -88,10 +88,10 @@
               </thead>
               <tbody>
               <template v-for="teacher in teacherList">
-                <tr v-for="(time,n) in scheduleTemplate.times">
+                <tr v-for="(time,n) in times">
                   <template v-if="n == 0">
-                    <td :rowspan="scheduleTemplate.times.length"> {{teacher.teacherName}} </td>
-                    <td :rowspan="scheduleTemplate.times.length"> {{{
+                    <td :rowspan="times.length"> {{teacher.teacherName}} </td>
+                    <td :rowspan="times.length"> {{{
                       '0'
                     :
                       '专职', '1'
@@ -149,6 +149,7 @@
           scheduleTemplate: 0
         },
         weeks: [],
+        times: [],
         teacherList: [],
         courseClassList: [],
         courseClassMap: {},
@@ -231,8 +232,10 @@
                 }
               }
 
+
+
               _this.scheduleTemplate.times.forEach(item => times.add(item))
-              _this.scheduleTemplate.times = Array.from(times).sort()
+              _this.times = Array.from(times).sort()
 
               //有未时间、未排老师课程，增加一个虚拟老师
               if (ret.data.courseClassList.filter(item => !item.teacherIds || !item.studyingTime).length > 0) {
@@ -264,7 +267,6 @@
                   var col = _this.period.segments == 1 ? ( cc.week || '-') : cc.segmentNo
                   var td = document.getElementById(teacherId + '_' + studyingTime + '_' + col)
                   $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '">'+(cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' :'')+'<span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span>'+(cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' :'')+'</div>')
-
                 }
                 _this.$hiddenLoading()
                 _this.initTouchDnd()
