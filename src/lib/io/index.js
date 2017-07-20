@@ -247,6 +247,8 @@ const io = {
     this.apiAdminLeaseList=conf.baseApiPath+'/api/admin/trading/leasePage'
     this.apiAdminOffLease=conf.baseApiPath+'/api/admin/trading/offLease'
 
+    this.apiAdminOrderItemList=conf.baseApiPath+'/api/admin/trading/orderItemList'
+
 
     // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
     this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/orderItemDetail'

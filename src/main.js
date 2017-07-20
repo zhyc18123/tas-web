@@ -44,7 +44,11 @@ const TeacherForm = resolve => require(['./components/teachingresource/TeacherFo
 const CampusList = resolve => require(['./components/teachingresource/CampusList'], resolve)
 const CampusForm = resolve => require(['./components/teachingresource/CampusForm'], resolve)
 
+const CampusEditForm = resolve => require(['./components/teachingresource/CampusEditForm'], resolve)
 const CampusAuditList = resolve => require(['./components/teachingresource/CampusAuditList'], resolve)
+
+
+
 
 
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
@@ -128,6 +132,9 @@ const LeaseManagerList = resolve => require(['./components/servicemanager/LeaseM
 const DemandManagerList = resolve => require(['./components/servicemanager/DemandManagerList'], resolve)
 
 
+const OrderManagerList = resolve => require(['./components/servicemanager/OrderManagerList'], resolve)
+
+
 
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
@@ -184,6 +191,7 @@ const router = new VueRouter({
       {path: 'sys/campus/list' , component: CampusList },
 
       {path: 'sys/audit/campus/list' , component: CampusAuditList },
+      {path: 'sys/edit/campus/:campusId' , component: CampusEditForm },
 
       {path: 'sys/campus/add' , component: CampusForm },
       {path: 'sys/campus/edit/:campusId' , component: CampusForm },
@@ -285,7 +293,7 @@ const router = new VueRouter({
       {path: 'serviceManager/lease/list', component:LeaseManagerList},
       {path: 'serviceManager/demand/list', component:DemandManagerList},
 
-
+      {path: 'serviceManager/order/list', component:OrderManagerList},
 
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},

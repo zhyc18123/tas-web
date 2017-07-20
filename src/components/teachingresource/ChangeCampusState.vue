@@ -2,29 +2,34 @@
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">用户名：</div>
-        <div class="am-u-sm-10">{{tableData.merchantName}}</div>
+        <div class="am-u-sm-2 am-text-right">校区名：</div>
+        <div class="am-u-sm-10">{{tableData.campusName}}</div>
+      </div>
+      <div class="am-g am-text-left">
+        <div class="am-u-sm-2 am-text-right">联系人：</div>
+        <div class="am-u-sm-10">{{tableData.username}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">手机号码：</div>
-        <div class="am-u-sm-10">{{tableData.phoneNo}}</div>
+        <div class="am-u-sm-2 am-text-right">联系人手机：</div>
+        <div class="am-u-sm-10">{{tableData.userPhoneNo}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">角色：</div>
-        <div class="am-u-sm-10">{{tableData.roleType==null?'—':tableData.roleType==0?'区域':tableData.roleType==1?'业务组':'教师'}}</div>
+        <div class="am-u-sm-2 am-text-right">详细地址：</div>
+        <div class="am-u-sm-10">{{tableData.address}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">姓名：</div>
-        <div class="am-u-sm-10">{{tableData.teacherName==null?'—':tableData.teacherName}}</div>
+        <div class="am-u-sm-2 am-text-right">成本（元/月）：</div>
+        <div class="am-u-sm-10">{{tableData.unitPrice}}</div>
       </div>
 
       <div class="am-g am-text-left">
-        <div class="am-u-sm-2 am-text-right">身份证：</div>
-        <div class="am-u-sm-10">{{tableData.idNo==null?'—':tableData.idNo}}</div>
+        <div class="am-u-sm-2 am-text-right">申请日期：</div>
+        <div class="am-u-sm-10">{{tableData.createTime | formatTime}}</div>
       </div>
+<!--
 
       <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">所属业务组：</div>
@@ -52,6 +57,7 @@
           <div>{{tableData.updateTime==tableData.createTime?'—':(tableData.updateTime | formatDate)}}</div>
         </div>
       </div>
+-->
 
     <!--  <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">审核状态：</div>
@@ -65,8 +71,8 @@
       <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">审核结果：</div>
         <div class="am-u-sm-10">
-          <input type="radio" value="1" v-model="tableData.status">审核通过&nbsp;&nbsp;&nbsp;
-          <input type="radio" value="2" v-model="tableData.status">驳回
+          <input type="radio" value="1" v-model="tableData.state">审核通过&nbsp;&nbsp;&nbsp;
+          <input type="radio" value="2" v-model="tableData.state">驳回
         </div>
       </div>
 
@@ -101,12 +107,12 @@
         tableData:[],
       }
     },
-    props: ['merchantId'],
+    props: ['campusId'],
     created: function () {
-//      this.loadTableData(this.merchantId)
+     // this.loadTableData(this.campusId)
     },
     watch:{
-      merchantId:function (val) {
+      campusId:function (val) {
         this.loadTableData(val)
       }
     },
@@ -114,11 +120,11 @@
       $(window).smoothScroll()
     },
     methods: {
-      loadTableData: function (merchantId) {
+      loadTableData: function (campusId) {
         var _this = this
-        if(merchantId) {
-          io.post(io.apiAdminServiceMerchantDetail, {
-            merchantId: merchantId
+        if(campusId) {
+          io.post(io.apiAdminShowCampusDetail, {
+            campusId: campusId
           }, function (ret) {
             if (ret.success) {
               _this.tableData = ret.data
@@ -133,19 +139,19 @@
         var _this = this
         _this.tableData.createTime=''
         _this.tableData.updateTime=''
-        io.post(io.apiAdminCahngeServiceMerchant,{
-            'merchantId': _this.tableData.merchantId,
-            'status': _this.tableData.status,
+        io.post(io.apiAdminAuditCampus,{
+            'campusId': _this.tableData.campusId,
+            'state': _this.tableData.state,
             'remarks':_this.tableData.remarks
           },function (ret) {
           if (ret.success){
             _this.$alert('审批成功')
-            _this.$root.$emit('sellerRegister:new')
+            _this.$root.$emit('campusAudit:new')
           }else {
-            _this.$alert('审批失败')
+            _this.$alert(ret.desc)
           }
         })
-        _this.$emit('changeSellerRegister')
+        _this.$emit('changeCampusState')
       }
     }
   }

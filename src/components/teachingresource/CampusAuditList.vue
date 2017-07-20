@@ -65,7 +65,7 @@
                 审核状态:
               </label>
               <div class="am-u-sm-6 am-u-end  input-field">
-                <select2 v-model="query.status">
+                <select2 v-model="query.state">
                   <option value="">请选择</option>
                   <option value="0">待审核</option>
                   <option value="1">通过</option>
@@ -141,9 +141,12 @@
           </el-table-column>
 
           <el-table-column
-            prop="state"
+
             label="审核状态"
             min-width="100">
+            <template scope="scope">
+              {{scope.row.state==1?"通过":scope.row.state==2?"不通过":"待审核"}}
+            </template>
           </el-table-column>
 
 
@@ -193,12 +196,12 @@
                         </span>
                 <el-dropdown-menu slot="dropdown">
                   <template >
-                    <el-dropdown-item  @click.native="edit(scope.row.campusId)">审核</el-dropdown-item>
+                    <el-dropdown-item  :disabled="scope.row.state == 1" @click.native="edit(scope.row.campusId)">审核</el-dropdown-item>
                   </template>
                   <template >
-                    <el-dropdown-item    @click.native="changeStatus(scope.row.classId,1)"> 编辑
+                    <el-dropdown-item    @click.native="$router.push( '/main/sys/edit/campus/' + scope.row.campusId)"> 编辑
                     </el-dropdown-item>
-                    <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">管理教室
+                    <el-dropdown-item  :disabled="scope.row.state != 1"  @click.native="$router.push('/main/sys/room/list?campusId='+scope.row.campusId)">管理教室
                     </el-dropdown-item>
                   </template>
                 </el-dropdown-menu>
@@ -238,7 +241,7 @@
         pageNo: 1,
         pageSize: 10,
         total: 0,
-        merchantId: '',
+        campusId: '',
         query: {}
       }
     },
