@@ -134,6 +134,14 @@ const AttendanceRecordList = resolve => require(['./components/attendance/Attend
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
 
+const DiscountCategoryList = resolve => require(['./components/discount/DiscountCategoryList'], resolve)
+const DiscountCategoryForm = resolve => require(['./components/discount/DiscountCategoryForm'], resolve)
+const DiscountRuleList = resolve => require(['./components/discount/DiscountRuleList'], resolve)
+const DiscountRuleForm = resolve => require(['./components/discount/DiscountRuleForm'], resolve)
+const DiscountExclusiveRuleList = resolve => require(['./components/discount/DiscountExclusiveRuleList'], resolve)
+const DiscountExclusiveRuleForm = resolve => require(['./components/discount/DiscountExclusiveRuleForm'], resolve)
+
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -280,7 +288,21 @@ const router = new VueRouter({
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
       {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },
 
-      {path: 'report/charge/list', component:ChargeList }
+      {path: 'report/charge/list', component:ChargeList },
+
+      {path: 'discount/category/list' , component: DiscountCategoryList },
+      {path: 'discount/category/add' , component: DiscountCategoryForm},
+      {path: 'discount/category/edit/:discountCategoryId' , component: DiscountCategoryForm},
+
+      {path: 'discount/rule/list' , component: DiscountRuleList },
+      {path: 'discount/rule/add' , component: DiscountRuleForm},
+      {path: 'discount/rule/edit/:discountRuleId' , component: DiscountRuleForm},
+
+      {path: 'discount/exclusiveRule/list' , component: DiscountExclusiveRuleList },
+      {path: 'discount/exclusiveRule/add' , component: DiscountExclusiveRuleForm},
+      {path: 'discount/exclusiveRule/edit/:discountExclusiveRuleId' , component: DiscountExclusiveRuleForm},
+
+
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){
