@@ -15,7 +15,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>开关状态
               </label>
               <div class="am-u-sm-3 input-field  am-u-end">
-                <select2 required v-model="formData.discountType">
+                <select2 required v-model="formData.switchStatus">
                   <option value="">请选择开关状态</option>
                   <option value="0">关闭</option>
                   <option value="1">启用</option>
@@ -25,16 +25,16 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠计算
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>不可同时优惠
               </label>
-              <div class="am-u-sm-9 input-field  am-u-end">
-                <textarea v-model="formData.calFunction"></textarea>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <ul id="treeDemo" class="ztree"></ul>
               </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠说明
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>备注
               </label>
               <div class="am-u-sm-9 input-field  am-u-end">
                 <textarea v-model="formData.remark"></textarea>
@@ -56,27 +56,22 @@
 <script>
   import io from '../../lib/io'
   import conf from '../../lib/conf'
+
+  require('../../../static/ztree/zTreeStyle.css')
+  require('../../../static/ztree/jquery.ztree.all.min.js')
+
   export default{
     data(){
       return {
-        discountruleList: [],
-        formData: {}
+        formData: {
+          discountExclusiveRuleId: this.$params('discountExclusiveRuleId'),
+          switchStatus : 1
+        }
       }
     },
     created: function () {
-      var discountRuleId = this.$params('discountRuleId')
-      if (discountRuleId) {
-        var _this = this
-        io.post(io.apiAdminDiscountRuleDetail, {discountRuleId: discountRuleId},
-          function (ret) {
-            if (ret.success) {
-              _this.formData = ret.data
-            }
-          },
-          function () {
-            _this.$alert('请求服务器失败')
-          })
-      }
+      this.loadDiscountRule()
+      //this.loadDetail()
 
     },
     mounted: function () {
@@ -119,13 +114,29 @@
     },
     methods: {
       save: function (complete) {
+        var sNodes = this.$zTree.getCheckedNodes()
+        if (!sNodes || sNodes.length == 0) {
+          this.$alert('至少选择一项')
+          complete.call()
+          return
+        }
+
+        var exclusiveIds = []
+        for (var i = 0; i < sNodes.length; i++) {
+          var idParts = sNodes[i].id.split(':')
+          if (idParts[1] == 'r') {
+            exclusiveIds.push(idParts[0])
+          }
+        }
+
         var _this = this
-        io.post(io.apiAdminDiscountSaveOrUpdateRule, _this.formData,
+        _this.formData.exclusiveRuleIds = exclusiveIds.join(',')
+        io.post(io.apiAdminDiscountSaveOrUpdateExclusiveRule, _this.formData,
           function (ret) {
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/discount/rule/list')
+              _this.$router.push('/main/discount/exclusiveRule/list')
             } else {
               _this.$alert(ret.desc)
             }
@@ -134,7 +145,75 @@
             complete.call()
             _this.$alert('请求服务器失败')
           })
-      }
+      },
+      loadDetail: function () {
+        if (!this.formData.discountExclusiveRuleId) {
+          return
+        }
+        var _this = this
+        io.post(io.apiAdminDiscountExclusiveRuleDetail, {discountExclusiveRuleId: this.formData.discountExclusiveRuleId},
+          function (ret) {
+            if (ret.success) {
+              var ruleIds = ret.data.exclusiveRuleIds.split(',')
+              for (var i = 0; i < ruleIds.length; i++) {
+                var ruleId = ruleIds[i]
+                var node = _this.$zTree.getNodeByParam('id', ruleId + ':r' )
+                _this.$zTree.checkNode(node, true, true )
+              }
+              _this.formData = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      },
+      loadDiscountRule: function () {
+        var _this = this
+        io.post(io.apiAdminDiscountDiscountRuleTree, {},
+          function (ret) {
+            if (ret.success) {
+              function toZNodes(resourceList, pId) {
+                var nodes = [];
+                for (var i = 0; i < resourceList.length; i++) {
+                  var resource = resourceList[i]
+                  var node = {
+                    id: resource.categoryId ? resource.categoryId + ":c" : resource.ruleId + ":r",
+                    pId: pId,
+                    name: resource.name
+                  }
+
+                  if (resource.ruleList) {
+                    var ns = toZNodes(resource.ruleList, node.id)
+                    node.open = true
+                    nodes.push.apply(nodes, ns)
+                  }
+                  nodes.push(node)
+                }
+                return nodes;
+              }
+
+              var zNodes = toZNodes(ret.data);
+              _this.initZTree(zNodes)
+              _this.loadDetail()
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      },
+      initZTree: function (zNodes) {
+        this.$zTree = $.fn.zTree.init($("#treeDemo"), {
+          check: {
+            enable: true,
+            chkboxType: {"Y": "ps", "N": "ps"}
+          },
+          data: {
+            simpleData: {
+              enable: true
+            }
+          }
+        }, zNodes);
+      },
     }
   }
 

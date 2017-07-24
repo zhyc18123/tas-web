@@ -281,6 +281,7 @@ const io = {
     this.apiAdminDiscountDelExclusiveRule = conf.baseApiPath + '/api/admin/discount/delExclusiveRule'
     this.apiAdminDiscountSaveOrUpdateExclusiveRule = conf.baseApiPath + '/api/admin/discount/saveOrUpdateExclusiveRule'
     this.apiAdminDiscountAreaTeamBusTeamOrgTree = conf.baseApiPath + '/api/admin/discount/areaTeamBusTeamOrgTree'
+    this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
 
 

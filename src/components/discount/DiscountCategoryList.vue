@@ -7,41 +7,6 @@
       </div>
       <div class="widget-body  am-fr">
 
-        <div class="am-u-sm-12 am-form ">
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.areaTeamId" :options="areaTeams">
-                <option value="">区域</option>
-              </select2>
-            </div>
-          </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2 v-model="query.busTeamId" :options="busTeams">
-                <option value="">业务组</option>
-              </select2>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
-            <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="search"><span class="am-icon-search"></span>查询
-
-                </button>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-            <div class="am-form-group am-btn-group-xs">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="$router.push('/main/discount/rule/add')" v-if="hasPermission('add')"><span
-                class="am-icon-plus"></span>新增
-                </button>
-            </div>
-          </div>
-
-        </div>
 
         <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
           <div class="am-form-group">

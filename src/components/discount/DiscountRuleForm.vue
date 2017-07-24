@@ -132,7 +132,9 @@
       return {
         discountRuleList: [],
         formData: {
-          discountRuleId : this.$params('discountRuleId')
+          discountRuleId : this.$params('discountRuleId'),
+          switchStatus : 1,
+          discountType : 0
         }
       }
     },
@@ -140,7 +142,7 @@
 
       this.loadAreaTeamBusTeamTree()
       this.loadDiscountCategoryList()
-      this.loadDetail()
+      //this.loadDetail()
 
 
     },
@@ -240,7 +242,7 @@
               for (var i = 0; i < effectiveAreaBus.length; i++) {
                 var p = effectiveAreaBus[i]
                 var node = _this.$zTree.getNodeByParam('id', p.areaTeamId ? p.areaTeamId + ':a' : p.busTeamId + ':b'  )
-                _this.$zTree.checkNode(node, true, false)
+                _this.$zTree.checkNode(node, true, false )
               }
 
               _this.formData = ret.data

@@ -27,7 +27,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/discount/rule/add')" v-if="hasPermission('add')"><span
+                        @click="$router.push('/main/discount/exclusiveRule/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新增
                 </button>
               </div>
@@ -42,10 +42,11 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="name"
-                label="名称"
-                min-width="100">
+                prop="exclusiveRuleNames"
+                label="不可同时优惠"
+                min-width="300">
               </el-table-column>
+
               <el-table-column
                 label="开关状态"
                 min-width="100">
@@ -64,10 +65,10 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item v-if="hasPermission('edit')"
-                                        @click.native="$router.push('/main/discount/rule/edit/'+scope.row.discountRuleId)">
+                                        @click.native="$router.push('/main/discount/exclusiveRule/edit/'+scope.row.discountExclusiveRuleId)">
                         编辑
                       </el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.discountRuleId ,0)">
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.discountExclusiveRuleId ,0)">
                         删除
                       </el-dropdown-item>
                     </el-dropdown-menu>
@@ -128,11 +129,14 @@
       this.loadTableData(this.pageNo);
     },
     methods: {
-      del: function (discountRuleId) {
+      search:function(){
+        this.loadTableData(1)
+      },
+      del: function (discountExclusiveRuleId) {
         const _this = this;
         _this.$confirm('你确定要删除？',
           function () {
-            io.post(io.apiAdminDiscountDelRule, {discountRuleId}, function (ret) {
+            io.post(io.apiAdminDiscountDelExclusiveRule, {discountExclusiveRuleId}, function (ret) {
               if (ret.success) {
                 _this.$toast('删除成功')
                 _this.loadTableData()
@@ -145,7 +149,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminDiscountRuleList, $.extend({
+        io.post(io.apiAdminDiscountExclusiveRuleList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
