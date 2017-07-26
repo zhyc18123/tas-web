@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">优惠规则信息</div>
+        <div class="widget-title am-fl">优惠规则测试</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -10,60 +10,33 @@
       <div class="widget-body am-fr">
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
           <fieldset>
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>规则名称
+                规则名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入名称" required v-model="formData.name">
+                <input type="text" class="am-form-field" placeholder="请输入名称" required v-model="formData.name" disabled>
               </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠分类
-              </label>
-              <div class="am-u-sm-3 input-field  am-u-end">
-                <select2 required v-model="formData.categoryId">
-                  <option value="">请选择优惠分类</option>
-                  <option v-for="item in discountCategoryList" :value="item.discountCategoryId">{{item.name}}</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠方式
-              </label>
-              <div class="am-u-sm-3 input-field  am-u-end">
-                <select2 required v-model="formData.discountType">
-                  <option value="">请选择优惠方式</option>
-                  <option value="0">折扣</option>
-                  <option value="1">金额</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>状态
-              </label>
-              <div class="am-u-sm-3 input-field  am-u-end">
-                <select2 required v-model="formData.status">
-                  <option value="">请选择状态</option>
-                  <option value="0">不可用</option>
-                  <option value="1">可用</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠计算
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>测试数据
               </label>
               <div class="am-u-sm-9 input-field  am-u-end">
-                <textarea required v-model="formData.calFunction" rows="10"></textarea>
-                <span class="am-text-xs">java/groovy</span>
+                <textarea required v-model="formData.testData" rows="10"></textarea>
+                <div class="am-g am-margin-top-xs am-padding-left-xs">
+                  <div class="am-u-sm-4">
+                    <input type="text" class="am-form-field am-input-sm" placeholder="学生编号,多个道号隔开" v-model="testForm.studentNos">
+                  </div>
+                  <div class="am-u-sm-4">
+                    <input type="text" class="am-form-field am-input-sm" placeholder="班级编号,多个道号隔开" v-model="testForm.classNos" >
+                  </div>
+                  <div class="am-u-sm-4">
+                    <button type="button" class="am-btn am-btn-primary am-btn-sm" @click="fetchTestData">获取测试数据</button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -73,8 +46,8 @@
               </label>
               <div class="am-u-sm-9  am-u-end">
                 <div class="am-g am-margin-bottom-xs am-padding-left-xs" v-for="(param,index) in formData.params">
-                  <div class="am-u-sm-2 input-field">
-                    <select2 required v-model="param.type">
+                  <div class="am-u-sm-3 input-field">
+                    <select2 disabled required v-model="param.type">
                       <option value="">数据类型</option>
                       <option value="string">字符串</option>
                       <option value="int">整数</option>
@@ -82,19 +55,11 @@
                       <option value="date">日期</option>
                     </select2>
                   </div>
-                  <div class="am-u-sm-2 input-field">
-                    <input type="text" class="am-form-field" placeholder="参数名" required v-model="param.name" >
-                  </div>
                   <div class="am-u-sm-3 input-field">
+                    <input disabled="true" type="text" class="am-form-field" placeholder="参数名" required v-model="param.name" >
+                  </div>
+                  <div class="am-u-sm-3 input-field am-u-end">
                     <input type="text" class="am-form-field" placeholder="默认值" required v-model="param.value">
-                  </div>
-                  <div class="am-u-sm-2 input-field">
-                    <input type="text" class="am-form-field" placeholder="说明" required v-model="param.remark">
-                  </div>
-
-                  <div class="am-u-sm-2 am-text-left am-u-end am-padding-top-xs">
-                    <a href="javascript:;" @click="addParam"> <i class="am-icon-plus"></i></a>
-                    <a href="javascript:;" @click="delParam(index)"><i class="am-icon-remove"></i></a>
                   </div>
                 </div>
                 <span class="am-text-xs">折扣参数使用百分比，如95%</span>
@@ -102,18 +67,8 @@
             </div>
 
             <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠说明
-              </label>
-              <div class="am-u-sm-9 input-field  am-u-end">
-                <textarea required v-model="formData.remark"></textarea>
-              </div>
-            </div>
-
-            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
-
-                <button type="submit" class="am-btn am-btn-primary">提交</button>
+                <button type="submit" class="am-btn am-btn-primary">测试</button>
               </div>
             </div>
           </fieldset>
@@ -126,27 +81,22 @@
   import io from '../../lib/io'
   import util from '../../lib/util'
   import conf from '../../lib/conf'
-  import Select2 from "../base/Select2";
-
 
   export default{
-    components: {Select2}, data(){
+    data(){
       return {
         discountCategoryList: [],
         formData: {
           discountRuleId : this.$params('discountRuleId'),
-          status : 0 ,
-          discountType : 0,
-          params:[{}]
-        }
+          testData : '[]',
+          params:[{}],
+
+        },
+        testForm:{}
       }
     },
     created: function () {
-
-      this.loadDiscountCategoryList()
       this.loadDetail()
-
-
     },
     mounted: function () {
       var _this = this;
@@ -208,13 +158,13 @@
         }
 
         data.params = JSON.stringify(data.params)
-
-        io.post(io.apiAdminDiscountSaveOrUpdateRule,data,
+        io.post(io.apiAdminDiscountTestRule,data,
           function (ret) {
             complete.call()
             if (ret.success) {
-              _this.$toast('OK')
-              _this.$router.push('/main/discount/rule/list')
+              _this.$alert(ret.data)
+              //_this.$toast('OK')
+              //_this.$router.push('/main/discount/rule/list')
             } else {
               _this.$alert(ret.desc)
             }
@@ -232,39 +182,40 @@
         io.post(io.apiAdminDiscountRuleDetail, {discountRuleId: this.formData.discountRuleId},
           function (ret) {
             if (ret.success) {
-              ret.data.params = ret.data.params ? JSON.parse(ret.data.params) : [{}]
-              _this.formData = ret.data
+              _this.formData.name = ret.data.name
+              _this.formData.params = ret.data.params ? JSON.parse(ret.data.params) : [{}]
             }
           },
           function () {
             _this.$alert('请求服务器失败')
           })
       },
-      loadDiscountCategoryList: function () {
-        io.post(io.apiAdminDiscountCategoryList, {
-            pageNo: 1,
-            pageSize: 100
-          },
-          (ret) => {
-            if (ret.success) {
-              this.discountCategoryList = ret.data.list
-            } else {
-              this.$alert(ret.desc)
-            }
-          },
-          () => {
-            this.$alert('请求服务器失败')
-          })
-      },
-      addParam : function(){
-        this.formData.params.push({})
-      },
-      delParam : function(index){
-        if(this.formData.params.length <= 1){
+      fetchTestData:function(){
+        var data  = Object.assign({},this.testForm)
+        if(!data.studentNos){
+          this.$alert('请输入学生编号')
           return
         }
-        this.formData.params.splice(index,1)
-      },
+
+        if(!data.classNos){
+          this.$alert('请输入班级编号')
+          return
+        }
+
+        data.studentNos = data.studentNos.split(/ |,|，/)
+        data.classNos = data.classNos.split(/ |,|，/)
+
+        var _this = this
+        io.post(io.apiAdminDiscountTestData,data,
+          function (ret) {
+            if (ret.success) {
+              _this.formData.testData = ret.data
+            }
+          },
+          function () {
+            _this.$alert('请求服务器失败')
+          })
+      }
     }
   }
 

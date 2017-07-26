@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">优惠规则列表</div>
+          <div class="widget-title  am-cf">优惠列表</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -11,7 +11,23 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" v-model="query.name" placeholder="规则名称"/>
+                <select2 v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">区域</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.busTeamId" :options="busTeams">
+                  <option value="">业务组</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" v-model="query.name" placeholder="优惠名称"/>
               </div>
             </div>
 
@@ -27,7 +43,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/discount/rule/add')" v-if="hasPermission('add')"><span
+                        @click="$router.push('/main/discount/discount/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新增
                 </button>
               </div>
@@ -43,21 +59,21 @@
               style="min-width: 100%">
               <el-table-column
                 prop="name"
-                label="规则名称"
+                label="优惠名称"
                 min-width="100">
               </el-table-column>
-
               <el-table-column
-                prop="categoryName"
-                label="优惠分类"
-                min-width="100">
+                label="有效时间"
+                min-width="200">
+                <template scope="scope">
+                  {{scope.row.effectiveStartTime | formatDate('YYYY-MM-DD HH:mm') }} ~ {{scope.row.effectiveEndTime | formatDate('YYYY-MM-DD HH:mm') }}
+                </template>
               </el-table-column>
-
               <el-table-column
                 label="开关状态"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status == 0 ? '不可用' : '可用' }}
+                  {{scope.row.switchStatus == 0 ? '关闭' : '启用' }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -70,16 +86,11 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item v-if="hasPermission('edit')"
-                                        @click.native="$router.push('/main/discount/rule/edit/'+scope.row.discountRuleId)">
+                                        @click.native="$router.push('/main/discount/discount/edit/'+scope.row.discountId)">
                         编辑
                       </el-dropdown-item>
-
-                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.discountRuleId ,0)">
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="del(scope.row.discountId ,0)">
                         删除
-                      </el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('edit')"
-                                        @click.native="$router.push('/main/discount/rule/test/'+scope.row.discountRuleId)">
-                        测试
                       </el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
@@ -114,7 +125,7 @@
       }
     },
     components: {
-        Pagination
+      Pagination
     },
     computed: {
       areaTeams: function () {
@@ -143,11 +154,11 @@
       search:function(){
         this.loadTableData(1)
       },
-      del: function (discountRuleId) {
+      del: function (discountId) {
         const _this = this;
         _this.$confirm('你确定要删除？',
           function () {
-            io.post(io.apiAdminDiscountDelRule, {discountRuleId}, function (ret) {
+            io.post(io.apiAdminDiscountDelDiscount, {discountId}, function (ret) {
               if (ret.success) {
                 _this.$toast('删除成功')
                 _this.loadTableData()
@@ -160,7 +171,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminDiscountRuleList, $.extend({
+        io.post(io.apiAdminDiscountDiscountList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {

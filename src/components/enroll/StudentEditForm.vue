@@ -81,6 +81,20 @@
         </div>
       </div>
 
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          学生标签
+         </label>
+        <div class="am-u-sm-9  input-field">
+          <choose v-model="formData.tags">
+            <select required data-placeholder="选择学生标签" style="min-width:300px;" multiple class="chosen-select-no-results">
+              <option value=""></option>
+              <option v-for="item in tags" :value="item">{{item}}</option>
+            </select>
+          </choose>
+        </div>
+      </div>
+
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
@@ -145,8 +159,10 @@
   export default{
     data(){
       return{
+        tags:['员工子女','员工亲友子女'],
         guardianList:[{}],
         formData:{
+          tags:[],
           sex:'',
           school:'',
           referrerName:''
@@ -172,6 +188,7 @@
           function(ret){
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
+              ret.data.student.tags = ret.data.student.tags ? ret.data.student.tags.split(',') :[]
               _this.formData = ret.data.student
               _this.guardianList =  ret.data.guardianList && ret.data.guardianList.length == 0  ?  [{}] : ret.data.guardianList
             }
@@ -226,7 +243,8 @@
     methods:{
       save:function(complete){
         var _this = this
-        var data = _this.formData
+        var data = Object.assign({},_this.formData)
+        data.tags = data.tags.join(',')
         data.guardianJsonStr = JSON.stringify(this.guardianList)
         io.post(io.studentSaveOrUpdate,data ,
           function(ret){
