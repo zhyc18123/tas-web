@@ -73,6 +73,21 @@
             </div>
 
             <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属业务组
+              </label>
+              <div class="am-u-sm-9  input-field">
+                <choose v-model="formData.busTeamIds">
+                  <select required data-placeholder="选择所属业务组" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in $root.config.busTeams" :value="item.busTeamId">{{item.name}}</option>
+                  </select>
+                </choose>
+              </div>
+            </div>
+
+
+            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
               </div>
@@ -97,7 +112,9 @@ import conf from '../../lib/conf'
                   areaTeamId:'',
                   province : '',
                   city : '',
-                  district :''
+                  district :'',
+                  belongBusTeamIds:"",
+                  busTeamIds:[]
                 }
             }
         },
@@ -175,6 +192,9 @@ import conf from '../../lib/conf'
             },
             submit:function(e){
               e.preventDefault();
+
+
+
               var $submitBtn = $('button[type=submit]',e.target);
               $submitBtn.attr("disabled" ,"disabled" )
               _this.$showLoading()
@@ -195,10 +215,14 @@ import conf from '../../lib/conf'
         methods:{
           save:function(complete){
             var _this = this
+
+            _this.formData.belongBusTeamIds = data.busTeamIds.join(',')
+
             io.post(io.apiAdminSaveOrUpdateCampus,_this.formData,
             function(ret){
               complete.call()
               if(ret.success){
+                ret.data.busTeamIds = ret.data.belongBusTeamIds ? ret.data.belongBusTeamIds.split(',') : []
                 _this.$toast('OK')
                 _this.$router.push('/main/sys/campus/list')
               }else{

@@ -6,7 +6,7 @@
       </div>
 
       <div class="widget-body  am-fr">
-        <div class="am-u-sm-12 am-form">
+        <div class="am-u-sm-12 am-form search-div">
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
             <div class="am-form-group">
@@ -74,9 +74,20 @@
               </div>
             </div>
           </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-10 am-u-end">
+            <div class="am-form-group">
 
+            </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2 am-u-end">
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
+            <div class="am-form-group">
+              <button type="button" class="am-btn am-btn-default am-btn-success"
+                      @click="$router.push('/main/sys/campus/new/add')"><span class="am-icon-plus"></span>新增
+              </button>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search"><span class="am-icon-search"></span>查询
@@ -229,6 +240,17 @@
     </div>
   </div>
 </template>
+
+<style scope>
+
+  .search-div .am-form-group {
+    overflow: hidden;
+  }
+  .btn-check {
+    float: right;
+    margin-right: 46px;
+  }
+</style>
 
 <script>
   import io from '../../lib/io'

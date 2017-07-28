@@ -26,6 +26,58 @@
                 <input type="number"  class="am-form-field" placeholder="输入座位数" min="0" step="1" required v-model="formData.seatAmount">
               </div>
             </div>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本（元/月）
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="number"  class="am-form-field" placeholder="输入成本" min="0" step="1" required v-model="formData.unit">
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>起始日期
+              </label>
+              <div class="am-u-sm-3 am-u-end  input-field">
+                <date-picker v-model="formData.startDate" >
+                  <input type="text" class="am-form-field" placeholder="请选择起始日期" data-am-datepicker readonly >
+                </date-picker>
+              </div>
+
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>结束日期
+              </label>
+              <div class="am-u-sm-3 am-u-end  input-field">
+                <date-picker v-model="formData.endDate" >
+                  <input type="text" class="am-form-field" placeholder="请选择结束日期" data-am-datepicker readonly >
+                </date-picker>
+              </div>
+            </div>
+
+      <!--      <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>可用日期起
+              </label>
+
+              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.startDate">
+                <input type="text" placeholder="" data-am-datepicker readonly required>
+              </date-picker>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>可用日期止
+              </label>
+              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endDate">
+                <input type="text" placeholder="" data-am-datepicker readonly required>
+              </date-picker>
+            </div>-->
+
+
             <!--
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">

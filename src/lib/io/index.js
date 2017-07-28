@@ -232,7 +232,7 @@ const io = {
     this.apiAdminServiceProductImages = conf.baseApiPath + '/api/admin/trading/productImageList';
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
-    this.apiAdminCahngeServiceMerchant = conf.baseApiPath + '/api/admin/trading/auditMerchant'
+    this.apiAdminChangeServiceMerchant = conf.baseApiPath + '/api/admin/trading/auditMerchant'
     this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
     this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
     this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'

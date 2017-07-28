@@ -193,6 +193,8 @@ const router = new VueRouter({
       {path: 'sys/audit/campus/list' , component: CampusAuditList },
       {path: 'sys/edit/campus/:campusId' , component: CampusEditForm },
 
+      {path: 'sys/campus/new/add' , component: CampusEditForm },
+
       {path: 'sys/campus/add' , component: CampusForm },
       {path: 'sys/campus/edit/:campusId' , component: CampusForm },
       {path: 'sys/room/list' , component: RoomList },

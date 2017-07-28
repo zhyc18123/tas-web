@@ -133,7 +133,7 @@
         var _this = this
         _this.tableData.createTime=''
         _this.tableData.updateTime=''
-        io.post(io.apiAdminCahngeServiceMerchant,{
+        io.post(io.apiAdminChangeServiceMerchant,{
             'merchantId': _this.tableData.merchantId,
             'status': _this.tableData.status,
             'remarks':_this.tableData.remarks
