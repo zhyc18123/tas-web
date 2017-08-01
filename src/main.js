@@ -141,9 +141,6 @@ const DiscountRuleForm = resolve => require(['./components/discount/DiscountRule
 const DiscountList = resolve => require(['./components/discount/DiscountList'], resolve)
 const DiscountForm = resolve => require(['./components/discount/DiscountForm'], resolve)
 const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
-const DiscountExclusiveRuleList = resolve => require(['./components/discount/DiscountExclusiveRuleList'], resolve)
-const DiscountExclusiveRuleForm = resolve => require(['./components/discount/DiscountExclusiveRuleForm'], resolve)
-
 
 
 Vue.use(VueRouter)
@@ -305,10 +302,6 @@ const router = new VueRouter({
       {path: 'discount/discount/list' , component: DiscountList },
       {path: 'discount/discount/add' , component: DiscountForm},
       {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
-
-      {path: 'discount/exclusiveRule/list' , component: DiscountExclusiveRuleList },
-      {path: 'discount/exclusiveRule/add' , component: DiscountExclusiveRuleForm},
-      {path: 'discount/exclusiveRule/edit/:discountExclusiveRuleId' , component: DiscountExclusiveRuleForm},
 
 
     ],

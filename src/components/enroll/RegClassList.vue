@@ -173,12 +173,14 @@
         var studentId = this.$params('studentId')
         var _this = this
         //创建订单和注册信息
+        _this.$showLoading()
         io.post(io.apiAdminCreateOfflineOrder, {
           studentRegInfoJsonStr: JSON.stringify({
             studentId: studentId,
             regClassInfoList: regClassInfoList
           })
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
 
             //获取订单id

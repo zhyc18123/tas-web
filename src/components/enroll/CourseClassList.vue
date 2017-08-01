@@ -249,9 +249,10 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId : '',
+          areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId : '',
           productId : '',
+          periodId: window.config.periods.filter(item => item.isCurrent == 1)[0].periodId,
           status : 1
         },
         searchConfig: {},

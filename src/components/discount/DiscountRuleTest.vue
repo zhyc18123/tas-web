@@ -46,7 +46,7 @@
               </label>
               <div class="am-u-sm-9  am-u-end">
                 <div class="am-g am-margin-bottom-xs am-padding-left-xs" v-for="(param,index) in formData.params">
-                  <div class="am-u-sm-3 input-field">
+                  <div class="am-u-sm-2 input-field">
                     <select2 disabled required v-model="param.type">
                       <option value="">数据类型</option>
                       <option value="string">字符串</option>
@@ -60,6 +60,9 @@
                   </div>
                   <div class="am-u-sm-3 input-field am-u-end">
                     <input type="text" class="am-form-field" placeholder="默认值" required v-model="param.value">
+                  </div>
+                  <div class="am-u-sm-3 input-field am-u-end">
+                    <input type="text" class="am-form-field" placeholder="说明" required v-model="param.remark" disabled>
                   </div>
                 </div>
                 <span class="am-text-xs">折扣参数使用百分比，如95%</span>

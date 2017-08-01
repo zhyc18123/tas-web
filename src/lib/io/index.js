@@ -134,6 +134,7 @@ const io = {
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
     this.apiAdminBaseProductList = conf.baseApiPath + '/api/admin/baseProductList'
     this.apiAdminBaseProductListForAreaTeam = conf.baseApiPath + '/api/admin/baseProductListForAreaTeam'
+    this.apiAdminBaseCourseTemplateListForAreaTeam = conf.baseApiPath + '/api/admin/baseCourseTemplateListForAreaTeam'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
     this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
 

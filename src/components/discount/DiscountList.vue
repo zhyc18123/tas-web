@@ -19,14 +19,6 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2 v-model="query.busTeamId" :options="busTeams">
-                  <option value="">业务组</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
                 <input type="text" v-model="query.name" placeholder="优惠名称"/>
               </div>
             </div>
@@ -60,11 +52,17 @@
               <el-table-column
                 prop="name"
                 label="优惠名称"
+                fixed="left"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="areaTeamName"
+                label="所属区域"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 label="有效时间"
-                min-width="200">
+                min-width="250">
                 <template scope="scope">
                   {{scope.row.effectiveStartTime | formatDate('YYYY-MM-DD HH:mm') }} ~ {{scope.row.effectiveEndTime | formatDate('YYYY-MM-DD HH:mm') }}
                 </template>
@@ -73,11 +71,21 @@
                 label="开关状态"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.switchStatus == 0 ? '关闭' : '启用' }}
+                  {{ scope.row.switchStatus == 0 ? '关闭' : '启用' }}
                 </template>
               </el-table-column>
               <el-table-column
+                label="不和其他叠加"
+                min-width="600">
+                <template scope="scope">
+                    <el-tag type="warring" v-for="name in scope.row.exclusiveDiscountNames">{{name}}</el-tag>
+                </template>
+              </el-table-column>
+
+
+              <el-table-column
                 label="操作"
+                fixed="right"
                 width="120">
                 <template scope="scope">
                   <el-dropdown>
@@ -119,8 +127,7 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId :'',
-          busTeamId :''
+          areaTeamId :''
         }
       }
     },
@@ -177,7 +184,14 @@
         }, _this.query), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.tableData = ret.data.list.map(item =>{
+              if(item.exclusiveDiscountNames){
+                item.exclusiveDiscountNames = item.exclusiveDiscountNames.split(',')
+              }else{
+                item.exclusiveDiscountNames = []
+              }
+              return item
+            })
           } else {
             _this.$alert(ret.desc)
           }
@@ -186,3 +200,10 @@
     }
   }
 </script>
+
+<style>
+  .el-tag+.el-tag {
+    margin-left: 10px;
+    margin-top: 5px;
+  }
+</style>

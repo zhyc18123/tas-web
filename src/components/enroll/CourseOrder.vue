@@ -14,7 +14,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="item in tableData.regDetailVos" :key="">
+          <tr v-for="item in tableData.regDetailVos">
             <td>{{item.courseClass.className}}</td>
             <td>{{item.courseClass.gradeName}}</td>
             <td>{{item.courseClass.startCourseTime | formatDate}}</td>
@@ -27,49 +27,80 @@
         </table>
       </div>
 
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      总计金额：<span class="am-text-danger">{{courseOrder.totalAmount}}</span>￥ 优惠金额：<span class="am-text-danger">{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span>￥ 应缴金额：<span class="am-text-danger">{{courseOrder.payableAmount}}</span>￥
-    </div>
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      已缴金额：<span class="am-text-danger">{{courseOrder.paidAmount}}</span>￥ 欠费金额：<span class="am-text-danger">{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span>￥
-    </div>
+    <div class="am-u-sm-12 am-scrollable-horizontal">
+      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
 
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus == 0 ">
-      优惠金额：
-      <input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount" style="display:inline;width:100px;" @change="checkDiscountAmount"/>
-      优惠原因：
-      <input type="text" class="am-input-sm"  v-model="formData.discountReason" style="display:inline;width:200px;" />
-    </div>
+        <colgroup>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+        </colgroup>
+        <tbody>
+        <tr>
+          <td>优惠详情</td>
+          <td colspan="5" v-html="discountDetail"></td>
+        </tr>
+        <tr>
+          <td>总计金额</td>
+          <td><span class="am-text-danger">{{courseOrder.totalAmount}}</span>￥</td>
+          <td>优惠金额</td>
+          <td><span class="am-text-danger">{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span>￥</td>
+          <td>应缴金额</td>
+          <td><span class="am-text-danger">{{courseOrder.payableAmount}}</span>￥</td>
+        </tr>
+        <tr>
+          <td>已缴金额</td>
+          <td><span class="am-text-danger">{{courseOrder.paidAmount}}</span>￥</td>
+          <td>欠费金额</td>
+          <td><span class="am-text-danger">{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span>￥</td>
+          <td colspan="2"></td>
+        </tr>
+        <tr v-if="courseOrder.chargingStatus == 0 ">
+          <td>特殊优惠</td>
+          <td><input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount"  @change="checkDiscountAmount"/></td>
+          <td>优惠原因</td>
+          <td><input type="text" class="am-input-sm"  v-model="formData.discountReason"  /></td>
+          <td colspan="2"></td>
+        </tr>
+        <tr v-if="courseOrder.chargingStatus != 2 ">
+          <td>缴费金额</td>
+          <td><input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" @change="check"/></td>
+          <td colspan="4"></td>
+        </tr>
+        <tr v-if="courseOrder.chargingStatus != 2 ">
+          <td>支付方式</td>
+          <td colspan="5">
+            <label class="am-radio-inline">
+              <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="1" name="payWay" v-model="formData.payWay"> 刷卡
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="2" name="payWay" v-model="formData.payWay"> 转账
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="3" name="payWay" v-model="formData.payWay"> 账户余额
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="4" name="payWay" v-model="formData.payWay"> 微信／支付宝
+            </label>
+          </td>
+        </tr>
 
+        <tr v-if="courseOrder.chargingStatus != 2 ">
+          <td>收费校区</td>
+          <td colspan="5">
+            <input required type="text" placeholder="校区" class="am-input-sm" style="display:inline;width:300px;"  v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
+            <button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectCampus.show()">选择</button>
+          </td>
 
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      缴费金额：<input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" style="display:inline;width:100px;" @change="check"/>￥
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      支付方式：
-      <label class="am-radio-inline">
-        <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="1" name="payWay" v-model="formData.payWay"> 刷卡
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="2" name="payWay" v-model="formData.payWay"> 转账
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="3" name="payWay" v-model="formData.payWay"> 账户余额
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="4" name="payWay" v-model="formData.payWay"> 微信／支付宝
-      </label>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="courseOrder.chargingStatus != 2 ">
-      收费校区：
-        <input required type="text" placeholder="校区" class="am-input-sm" style="display:inline;width:300px;"  v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
-        <button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectCampus.show()">选择</button>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
 
@@ -108,7 +139,8 @@
           chargeCampusName: chargeCampus?chargeCampus.campusName : '',
         },
         courseOrder: { },
-        payQRCodeUrl : ''
+        payQRCodeUrl : '',
+        discountDetail:'无'
 
       }
     },
@@ -128,8 +160,7 @@
         this.formData.discountAmount = 0
       },
       'formData.discountAmount':function(val){
-        this.courseOrder.payableAmount = this.courseOrder.totalAmount -  val
-        this.formData.payAmount = util.formatNumber((this.courseOrder.payableAmount) - (this.courseOrder.paidAmount),2 )
+        this.formData.payAmount = util.formatNumber((this.courseOrder.payableAmount -  val) - (this.courseOrder.paidAmount),2 )
       }
     },
     mounted: function () {
@@ -159,6 +190,21 @@
                 _this.formData.payWay = 0
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
+
+                if( ret.data.courseOrder.discountDetail ){
+                  let discountDetail  = JSON.parse(ret.data.courseOrder.discountDetail)
+                  let discountDetailArr = []
+                  for(var reg of ret.data.regDetailVos){
+                    let  d = discountDetail[reg.courseClass.classId]
+                    if(d){
+                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+'))
+                    }
+                  }
+                  _this.discountDetail = discountDetailArr.join('<br/>')
+                }else{
+                  _this.discountDetail = '无'
+                }
+
               } else {
                 _this.$alert(ret.desc)
               }

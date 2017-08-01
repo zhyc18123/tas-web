@@ -26,7 +26,7 @@
               <div class="am-u-sm-3 input-field  am-u-end">
                 <select2 required v-model="formData.categoryId">
                   <option value="">请选择优惠分类</option>
-                  <option v-for="item in discountCategoryList" :value="item.discountCategoryId">{{item.name}}</option>
+                  <option v-for="item in discountCategoryList" :value="item.discountCategoryId" >{{item.name}}</option>
                 </select2>
               </div>
             </div>
@@ -82,17 +82,17 @@
                       <option value="date">日期</option>
                     </select2>
                   </div>
-                  <div class="am-u-sm-2 input-field">
+                  <div class="am-u-sm-3 input-field">
                     <input type="text" class="am-form-field" placeholder="参数名" required v-model="param.name" >
                   </div>
                   <div class="am-u-sm-3 input-field">
                     <input type="text" class="am-form-field" placeholder="默认值" required v-model="param.value">
                   </div>
-                  <div class="am-u-sm-2 input-field">
+                  <div class="am-u-sm-3 input-field">
                     <input type="text" class="am-form-field" placeholder="说明" required v-model="param.remark">
                   </div>
 
-                  <div class="am-u-sm-2 am-text-left am-u-end am-padding-top-xs">
+                  <div class="am-u-sm-1 am-text-left am-u-end am-padding-top-xs">
                     <a href="javascript:;" @click="addParam"> <i class="am-icon-plus"></i></a>
                     <a href="javascript:;" @click="delParam(index)"><i class="am-icon-remove"></i></a>
                   </div>
