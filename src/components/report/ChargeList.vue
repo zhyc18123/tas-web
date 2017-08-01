@@ -433,10 +433,12 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
+        _this.$showLoading()
         io.post(io.apiAdminReportChargeList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
