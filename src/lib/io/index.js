@@ -107,15 +107,22 @@ const io = {
     this.apiAdminAuditCampusList=conf.baseApiPath+'/api/admin/trading/campusList'
     this.apiAdminShowCampusDetail=conf.baseApiPath+'/api/admin/trading/campusDetail'
     this.apiAdminAuditCampus=conf.baseApiPath+'/api/admin/trading/auditCampus'
-    this.apiAdminEditorCampus=conf.baseApiPath+'/api/admin/trading/editorCampus'
-    this.apiAdminAddCampus=conf.baseApiPath+'/api/admin/trading/addCampus'
 
-
+    this.apiAdminAddOrUpdateCampus=conf.baseApiPath+'/api/admin/trading/addOrUpdateCampus'
+    this.apiAdminOwnTeam=conf.baseApiPath+'/api/admin/trading/ownTeam'
+    this.apiAdminOwnPayMainAccountList=conf.baseApiPath+'/api/admin/trading/ownMainCount'
 
     this.apiAdminRoomList = conf.baseApiPath + '/api/admin/teaching/resource/roomList'
     this.apiAdminRoomDetail = conf.baseApiPath + '/api/admin/teaching/resource/roomDetail'
     this.apiAdminSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/teaching/resource/saveOrUpdateRoom'
     this.apiAdminDelRoom = conf.baseApiPath + '/api/admin/teaching/resource/delRoom'
+
+    this.apiAdminTradingRoomList = conf.baseApiPath + '/api/admin/trading/roomList'
+    this.apiAdminTradingRoomDetail = conf.baseApiPath + '/api/admin/trading/roomDetail'
+    this.apiAdminTradingSaveOrUpdateRoom = conf.baseApiPath + '/api/admin/trading/saveOrUpdateRoom'
+    this.apiAdminTradingDelRoom = conf.baseApiPath + '/api/admin/trading/delRoom'
+
+
 
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
@@ -239,13 +246,18 @@ const io = {
     this.apiAdminCommentList = conf.baseApiPath + '/api/admin/trading/commentList'
 
     this.apiAdminGoodList=conf.baseApiPath+'/api/admin/trading/goodPage'
-    this.apiAdminOffProduct=conf.baseApiPath+'/api/admin/trading/offProduct'
+    this.apiAdminOffGood=conf.baseApiPath+'/api/admin/trading/offGood'
+    this.apiAdminDeleteGood=conf.baseApiPath+'/api/admin/trading/deleteGood'
 
     this.apiAdminDemandList=conf.baseApiPath+'/api/admin/trading/demandPage'
     this.apiAdminOffDemand=conf.baseApiPath+'/api/admin/trading/offDemand'
+    this.apiAdminDeleteDemand=conf.baseApiPath+'/api/admin/trading/deleteDemand'
+
 
     this.apiAdminLeaseList=conf.baseApiPath+'/api/admin/trading/leasePage'
     this.apiAdminOffLease=conf.baseApiPath+'/api/admin/trading/offLease'
+    this.apiAdminDeleteLease=conf.baseApiPath+'/api/admin/trading/deleteLease'
+
 
     this.apiAdminOrderItemList=conf.baseApiPath+'/api/admin/trading/orderItemList'
 

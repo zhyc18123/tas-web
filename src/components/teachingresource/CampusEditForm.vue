@@ -46,22 +46,31 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系人称呼
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <input type="text" class="am-form-field" placeholder="请输入联系人称呼"  required v-model="formData.contactName"/>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
                 <input type="text" class="am-form-field" placeholder="请输入电话号码"  data-validation-message="请输入电话号码" pattern="((^1([358]{1}\d{1}|70)\d{8}$)|(^(0\d{2,3}-)?\d{7,8}(-\d{3,4})?$))" required v-model="formData.phoneNo"/>
               </div>
             </div>
-            <div class="am-form-group">
+         <!--   <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本/月
               </label>
               <div class="am-u-sm-9 input-field">
                 <input type="text" class="am-form-field" placeholder="请输入成本"  data-validation-message="请输入成本"  required v-model="formData.unit"/>
               </div>
-            </div>
+            </div>-->
 
-            <div class="am-form-group">
+         <!--   <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 区域
               </label>
@@ -70,18 +79,32 @@
                   <option value="">请选择</option>
                 </select2>
               </div>
+            </div>-->
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属单位
+              </label>
+              <div class="am-u-sm-9  input-field">
+                <choose v-model="formData.teamIds">
+                  <select required data-placeholder="选择所属单位" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in teamList" :value="item.teamId">{{item.teamName}}</option>
+                  </select>
+                </choose>
+              </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属业务组
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>付款主体
               </label>
-              <div class="am-u-sm-9  input-field">
-                <choose v-model="formData.busTeamIds">
-                  <select required data-placeholder="选择所属业务组" style="min-width:300px;" multiple class="chosen-select-no-results">
-                    <option value=""></option>
-                    <option v-for="item in $root.config.busTeams" :value="item.busTeamId">{{item.name}}</option>
-                  </select>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <choose v-model="formData.payMainAccountId">
+                  <select2 required >
+                    <option value="">请选择</option>
+                    <option v-for="item in payMainAccountList" :value="item.mainAccountId">{{item.name}}</option>
+                  </select2>
                 </choose>
               </div>
             </div>
@@ -113,19 +136,46 @@ import conf from '../../lib/conf'
                   province : '',
                   city : '',
                   district :'',
-                  belongBusTeamIds:"",
-                  busTeamIds:[]
-                }
+                  belongTeamIds:"",
+                  teamIds:[],
+                },
+                teamList:[],
+                payMainAccountList:[]
             }
         },
         created:function(){
+          var _this = this
+          io.post(io.apiAdminOwnTeam,{},
+            function(ret){
+              if(ret.success){
+                _this.teamList = ret.data
+
+              }
+            },
+            function(){
+              _this.$alert('请求服务器失败')
+            })
+          io.post(io.apiAdminOwnPayMainAccountList,{},
+            function(ret){
+              if(ret.success){
+                _this.payMainAccountList = ret.data
+
+              }
+            },
+            function(){
+              _this.$alert('请求服务器失败')
+            })
+
+
+
          var campusId  = this.$params('campusId')
          if(campusId){
-          var _this = this
+
           io.post(io.apiAdminShowCampusDetail,{ campusId : campusId },
             function(ret){
               if(ret.success){
                 _this.formData = ret.data
+                ret.data.teamIds = ret.data.belongTeamIds ? ret.data.belongTeamIds.split(',') : []
               }
             },
             function(){
@@ -216,15 +266,14 @@ import conf from '../../lib/conf'
           save:function(complete){
             var _this = this
 
-            _this.formData.belongBusTeamIds = data.busTeamIds.join(',')
+            _this.formData.belongTeamIds = _this.formData.teamIds.join(',')
 
-            io.post(io.apiAdminSaveOrUpdateCampus,_this.formData,
+            io.post(io.apiAdminAddOrUpdateCampus,_this.formData,
             function(ret){
               complete.call()
               if(ret.success){
-                ret.data.busTeamIds = ret.data.belongBusTeamIds ? ret.data.belongBusTeamIds.split(',') : []
                 _this.$toast('OK')
-                _this.$router.push('/main/sys/campus/list')
+                _this.$router.push('/main/sys/audit/campus/list')
               }else{
                 _this.$alert(ret.desc)
               }
@@ -240,7 +289,7 @@ import conf from '../../lib/conf'
           },
           loadLocation:function(){
             var _this = this
-            $.getJSON(conf.basePath + '/static/location/data.json',function(ret){
+            $.getJSON('/static/location/data.json',function(ret){
               _this.location  = ret
 
               for(var i =0 ; i < ret.length ; i++ ){

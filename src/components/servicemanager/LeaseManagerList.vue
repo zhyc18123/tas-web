@@ -87,9 +87,11 @@
             <el-table-column prop="roomName" label="名称" min-width="100"></el-table-column>
 
             <el-table-column label="日期" min-width="100">
-              <template scope="scope">{{scope.row.start | formatDate}} 至 {{scope.row.end |formatDate}}</template>
+              <template   scope="scope" >
+              <pre>{{scope.row.allTimeStr}}</pre>
+              </template>
             </el-table-column>
-            <el-table-column label="按天" min-width="50">
+           <!-- <el-table-column label="按天" min-width="50">
               <template scope="scope">{{scope.row.weekNum==0?'日':scope.row.weekNum==1?'一':scope.row.weekNum==2?'二':scope.row.weekNum==3?'三':scope.row.weekNum==4?'四':scope.row.weekNum==5?'五':scope.row.weekNum==6?'六':'-'}}</template>
             </el-table-column>
             <el-table-column label="时间段" min-width="100">
@@ -103,7 +105,7 @@
             </el-table-column>
             <el-table-column label="总价" min-width="100">
               <template scope="scope">{{scope.row.totalPrice}}</template>
-            </el-table-column>
+            </el-table-column>-->
             <el-table-column label="用户名" min-width="100">
               <template scope="scope">{{scope.row.sellerName}}</template>
             </el-table-column>
@@ -128,7 +130,8 @@
                                       @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
                       编辑
                     </el-dropdown-item>
-                    <el-dropdown-item @click.native="offLease(scope.row.leaseId)">下架</el-dropdown-item>
+                    <el-dropdown-item @click.native="offLease(scope.row.productId)">下架</el-dropdown-item>
+                    <el-dropdown-item @click.native="deleteLease(scope.row.leaseId)">删除</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>
@@ -171,7 +174,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 3,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',
@@ -196,11 +199,14 @@
       })
     },
     methods: {
-      offLease: function (leaseId) {
+      check:function (test) {
+        alert(test)
+      },
+      offLease: function (productId) {
         var _this = this;
         _this.$confirm("确认下架吗",
           function () {
-            io.post(io.apiAdminOffLease, {leaseId: leaseId}, function (ret) {
+            io.post(io.apiAdminOffLease, {productId: productId}, function (ret) {
               if (ret.success) {
                 _this.$toast("下架成功")
                 _this.loadTableData()
@@ -210,6 +216,21 @@
             })
           });
       },
+      deleteLease: function (productId) {
+        var _this = this;
+        _this.$confirm("确认删除吗",
+          function () {
+            io.post(io.apiAdminDeleteLease, {productId: productId}, function (ret) {
+              if (ret.success) {
+                _this.$toast("删除成功")
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
+
 
       search: function () {
         this.loadTableData()
@@ -256,3 +277,10 @@
     }
   }
 </script>
+
+<style scope lang="less">
+  pre {
+    background-color:transparent;
+    border: none;
+  }
+</style>

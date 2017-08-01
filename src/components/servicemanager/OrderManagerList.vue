@@ -271,7 +271,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 3,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',

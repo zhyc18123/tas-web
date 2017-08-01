@@ -120,7 +120,8 @@
                                       @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
                       编辑
                     </el-dropdown-item>
-                    <el-dropdown-item @click.native="offGood(scope.row.productId)">下架</el-dropdown-item>
+                    <el-dropdown-item @click.native="offDemand(scope.row.productId)">下架</el-dropdown-item>
+                    <el-dropdown-item @click.native="deleteDemand(scope.row.productId)">删除</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>
@@ -163,7 +164,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 3,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',
@@ -188,13 +189,28 @@
       })
     },
     methods: {
-      offGood: function (productId) {
+      offDemand: function (productId) {
         var _this = this;
         _this.$confirm("确认下架吗",
           function () {
             io.post(io.apiAdminOffDemand, {productId: productId}, function (ret) {
               if (ret.success) {
                 _this.$toast("下架成功")
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
+
+      deleteDemand: function (productId) {
+        var _this = this;
+        _this.$confirm("确认删除吗",
+          function () {
+            io.post(io.apiAdminDeleteDemand, {productId: productId}, function (ret) {
+              if (ret.success) {
+                _this.$toast("删除成功")
                 _this.loadTableData()
               } else {
                 _this.$alert(ret.desc)

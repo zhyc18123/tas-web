@@ -212,7 +212,7 @@
                   <template >
                     <el-dropdown-item    @click.native="$router.push( '/main/sys/edit/campus/' + scope.row.campusId)"> 编辑
                     </el-dropdown-item>
-                    <el-dropdown-item  :disabled="scope.row.state != 1"  @click.native="$router.push('/main/sys/room/list?campusId='+scope.row.campusId)">管理教室
+                    <el-dropdown-item  :disabled="scope.row.state != 1"  @click.native="$router.push('/main/sys/room/new/list?campusId='+scope.row.campusId)">管理教室
                     </el-dropdown-item>
                   </template>
                 </el-dropdown-menu>

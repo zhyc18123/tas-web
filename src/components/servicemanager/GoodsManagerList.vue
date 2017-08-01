@@ -118,6 +118,7 @@
                       编辑
                     </el-dropdown-item>
                     <el-dropdown-item @click.native="offGood(scope.row.productId)">下架</el-dropdown-item>
+                    <el-dropdown-item @click.native="deleteGood(scope.row.productId)">删除</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>
@@ -160,7 +161,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 3,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId: '',
@@ -189,9 +190,23 @@
         var _this = this;
         _this.$confirm("确认下架吗",
           function () {
-            io.post(io.apiAdminOffProduct, {productId: productId}, function (ret) {
+            io.post(io.apiAdminOffGood, {productId: productId}, function (ret) {
               if (ret.success) {
                 _this.$toast("下架成功")
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
+      deleteGood: function (productId) {
+        var _this = this;
+        _this.$confirm("确认删除吗",
+          function () {
+            io.post(io.apiAdminDeleteGood, {productId: productId}, function (ret) {
+              if (ret.success) {
+                _this.$toast("删除成功")
                 _this.loadTableData()
               } else {
                 _this.$alert(ret.desc)
