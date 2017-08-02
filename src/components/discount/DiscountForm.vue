@@ -27,7 +27,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>优惠说明
               </label>
               <div class="am-u-sm-9 input-field  am-u-end">
-                <textarea required v-model="formData.remark"></textarea>
+                <textarea required v-model="formData.remark" readonly></textarea>
               </div>
             </div>
 

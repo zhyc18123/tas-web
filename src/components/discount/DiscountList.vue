@@ -19,6 +19,15 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
+                <select2 v-model="query.categoryId" >
+                  <option value="">优惠分类</option>
+                  <option v-for="item in discountCategoryList" :value="item.discountCategoryId" >{{item.name}}</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
                 <input type="text" v-model="query.name" placeholder="优惠名称"/>
               </div>
             </div>
@@ -106,6 +115,13 @@
               </el-table-column>
             </el-table>
           </div>
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -128,7 +144,8 @@
         pageNo: 1,
         query: {
           areaTeamId :''
-        }
+        },
+        discountCategoryList: [],
       }
     },
     components: {
@@ -156,6 +173,7 @@
     },
     created: function () {
       this.loadTableData(this.pageNo);
+      this.loadDiscountCategoryList()
     },
     methods: {
       search:function(){
@@ -196,7 +214,23 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      loadDiscountCategoryList: function () {
+        io.post(io.apiAdminDiscountCategoryList, {
+            pageNo: 1,
+            pageSize: 100
+          },
+          (ret) => {
+            if (ret.success) {
+              this.discountCategoryList = ret.data.list
+            } else {
+              this.$alert(ret.desc)
+            }
+          },
+          () => {
+            this.$alert('请求服务器失败')
+          })
+      },
     }
   }
 </script>
