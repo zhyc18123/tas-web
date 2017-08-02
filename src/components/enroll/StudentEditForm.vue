@@ -40,7 +40,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生手机
         </label>
         <div class="am-u-sm-9 input-field">
-          <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
         </div>
       </div>
 
@@ -129,7 +129,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系电话
         </label>
         <div class="am-u-sm-2  input-field">
-          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
         </div>
         <div class="am-u-sm-1 input-field">
           <a href="javascript:;" @click="addGuardian"> <i class="am-icon-plus"></i></a>
