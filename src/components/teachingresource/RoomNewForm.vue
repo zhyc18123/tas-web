@@ -26,6 +26,19 @@
                 <input type="number"  class="am-form-field" placeholder="输入座位数" min="0" step="1" required v-model="formData.seatAmount">
               </div>
             </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>是否多媒体教室
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.isMultimedia">
+                  <option value="0">否</option>
+                  <option value="1">是</option>
+                </select2>
+              </div>
+            </div>
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本（元/年）
@@ -47,9 +60,13 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本（元/周）
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入周成本" min="0" step="1" required v-model="formData.weekCost">
+                <input type="number"  class="am-form-field" placeholder="输入11周成本" min="0" step="1" required v-model="formData.weekCost">
               </div>
             </div>
+
+
+
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>暑假（7.1 ~8.31）(元/小时)

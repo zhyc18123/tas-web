@@ -81,7 +81,7 @@
               </div>
             </div>-->
 
-            <div class="am-form-group">
+         <!--   <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属单位
               </label>
@@ -93,7 +93,7 @@
                   </select>
                 </choose>
               </div>
-            </div>
+            </div>-->
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -138,6 +138,7 @@ import conf from '../../lib/conf'
                   district :'',
                   belongTeamIds:"",
                   teamIds:[],
+                  payMainAccountId:""
                 },
                 teamList:[],
                 payMainAccountList:[]
@@ -145,7 +146,7 @@ import conf from '../../lib/conf'
         },
         created:function(){
           var _this = this
-          io.post(io.apiAdminOwnTeam,{},
+         /* io.post(io.apiAdminOwnTeam,{},
             function(ret){
               if(ret.success){
                 _this.teamList = ret.data
@@ -154,7 +155,7 @@ import conf from '../../lib/conf'
             },
             function(){
               _this.$alert('请求服务器失败')
-            })
+            })*/
           io.post(io.apiAdminOwnPayMainAccountList,{},
             function(ret){
               if(ret.success){
@@ -266,7 +267,7 @@ import conf from '../../lib/conf'
           save:function(complete){
             var _this = this
 
-            _this.formData.belongTeamIds = _this.formData.teamIds.join(',')
+            _this.formData.belongTeamIds = _this.formData.payMainAccountId
 
             io.post(io.apiAdminAddOrUpdateCampus,_this.formData,
             function(ret){

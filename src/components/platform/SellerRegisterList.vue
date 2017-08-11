@@ -103,7 +103,7 @@
             align="center"
             min-width="60">
             <template scope="scope">
-              {{scope.row.roleType==null?'─':scope.row.roleType==1?'区域':(scope.row.status==2?'业务组':'教师')}}
+              {{scope.row.roleType==null?'─':scope.row.roleType==1?'区域':(scope.row.roleType==2?'业务组':'教师')}}
             </template>
 
           </el-table-column>
@@ -129,7 +129,7 @@
             align="center"
             min-width="100">
             <template scope="scope">
-              {{scope.row.belongBusTeamName==null?'─':scope.row.roleType==1?'区域':(scope.row.status==2?'业务组':'教师')}}
+              {{scope.row.belongBusTeamName==null?'─':scope.row.belongBusTeamName}}
             </template>
           </el-table-column>
           <el-table-column
@@ -151,7 +151,7 @@
             align="center"
             min-width="90">
             <template scope="scope">
-              {{scope.row.auditTime==null?"—":scope.row.auditTime| formatTime}}
+              {{scope.row.auditTime==null?'-':scope.row.auditTime| formatTime}}
             </template>
           </el-table-column>
 
