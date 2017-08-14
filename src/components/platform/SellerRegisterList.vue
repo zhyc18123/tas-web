@@ -151,7 +151,7 @@
             align="center"
             min-width="90">
             <template scope="scope">
-              {{scope.row.auditTime==null?'-':scope.row.auditTime| formatTime}}
+              {{ scope.row.auditTime |  formatTime}}
             </template>
           </el-table-column>
 
