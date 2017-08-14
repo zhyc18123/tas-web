@@ -63,7 +63,7 @@
                                         @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
                         编辑
                       </el-dropdown-item>
-                      <el-dropdown-item @click.native="deleteCategory(scope.row.categoryId)">删除</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('del')" @click.native="deleteCategory(scope.row.categoryId)"   >删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

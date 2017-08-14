@@ -82,7 +82,7 @@
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
             <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success"
+              <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
                       @click="$router.push('/main/sys/campus/new/add')"><span class="am-icon-plus"></span>新增
               </button>
             </div>
@@ -207,12 +207,12 @@
                         </span>
                 <el-dropdown-menu slot="dropdown">
                   <template >
-                    <el-dropdown-item  :disabled="scope.row.state == 1" @click.native="edit(scope.row.campusId)">审核</el-dropdown-item>
+                    <el-dropdown-item  v-if="hasPermission('audit')" :disabled="scope.row.state == 1" @click.native="edit(scope.row.campusId)">审核</el-dropdown-item>
                   </template>
                   <template >
-                    <el-dropdown-item    @click.native="$router.push( '/main/sys/edit/campus/' + scope.row.campusId)"> 编辑
+                    <el-dropdown-item  v-if="hasPermission('edit')"  @click.native="$router.push( '/main/sys/edit/campus/' + scope.row.campusId)"> 编辑
                     </el-dropdown-item>
-                    <el-dropdown-item  :disabled="scope.row.state != 1"  @click.native="$router.push('/main/sys/room/new/list?campusId='+scope.row.campusId)">管理教室
+                    <el-dropdown-item v-if="hasPermission('room')" :disabled="scope.row.state != 1"  @click.native="$router.push('/main/sys/room/new/list?campusId='+scope.row.campusId)">管理教室
                     </el-dropdown-item>
                   </template>
                 </el-dropdown-menu>

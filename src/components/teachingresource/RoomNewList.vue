@@ -14,7 +14,7 @@
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success"
+                  <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
                           @click="$router.push('/main/sys/room/new/add?campusId=' + query.campusId)"
                          ><span class="am-icon-plus"></span>新增
                   </button>
@@ -86,9 +86,9 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item @click.native="$router.push('/main/sys/room/new/edit/'+scope.row.roomId)">编辑
+                      <el-dropdown-item v-if="hasPermission('edit')" @click.native="$router.push('/main/sys/room/new/edit/'+scope.row.roomId)">编辑
                       </el-dropdown-item>
-                      <el-dropdown-item  @click.native="del(scope.row.roomId)">删除</el-dropdown-item>
+                      <el-dropdown-item  v-if="hasPermission('del')" @click.native="del(scope.row.roomId)">删除</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

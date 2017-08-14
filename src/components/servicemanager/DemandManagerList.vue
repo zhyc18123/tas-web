@@ -116,12 +116,12 @@
                 <el-dropdown>
                   <span class="el-dropdown-link">操作菜单<i class="el-icon-caret-bottom el-icon--right"></i></span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item v-if="hasPermission('edit')"
+                   <!-- <el-dropdown-item v-if="hasPermission('edit')"
                                       @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
                       编辑
-                    </el-dropdown-item>
-                    <el-dropdown-item @click.native="offDemand(scope.row.productId)">下架</el-dropdown-item>
-                    <el-dropdown-item @click.native="deleteDemand(scope.row.productId)">删除</el-dropdown-item>
+                    </el-dropdown-item>-->
+                    <el-dropdown-item v-if="hasPermission('off')" @click.native="offDemand(scope.row.productId)">下架</el-dropdown-item>
+                    <el-dropdown-item v-if="hasPermission('del')" @click.native="deleteDemand(scope.row.productId)">删除</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>

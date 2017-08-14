@@ -194,7 +194,7 @@
             label="操作"
             width="120">
             <template scope="scope">
-              <el-button size="small" :disabled="scope.row.status!=0 && scope.row.status!=2"
+              <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0 && scope.row.status!=2"
                          @click.native="edit(scope.row.merchantId)">审批
               </el-button>
             </template>
