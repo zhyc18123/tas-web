@@ -229,6 +229,10 @@ const io = {
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
     this.apiAdminGetChildCategory = conf.baseApiPath + '/api/admin/trading/getChildCategory'
     this.apiAdminGetCategory = conf.baseApiPath + '/api/admin/trading/getCategoryMessage'
+
+    this.apiAdminGetCategoryByType = conf.baseApiPath + '/api/admin/trading/findServiceCategoryTreeVoByType'
+
+
     this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
     this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
 
