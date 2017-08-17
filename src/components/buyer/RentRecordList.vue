@@ -3,27 +3,27 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">租赁记录</div>
+          <div class="widget-title  am-cf">课室记录</div>
         </div>
 
         <div class="am-u-sm-12">
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的商品</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的供应</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/buyer/buyService/list')">我购买的服务</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我租赁的记录</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我课室的记录</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
           </div>
         </div>
 
@@ -74,9 +74,9 @@
           <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
             <thead>
             <tr>
-              <th class="am-u-sm-4 am-text-center">租赁商品名称</th>
+              <th class="am-u-sm-4 am-text-center">课室供应名称</th>
               <th class="am-u-sm-1 am-text-center">单价</th>
-              <th class="am-u-sm-1 am-text-center">租赁时长</th>
+              <th class="am-u-sm-1 am-text-center">课室时长</th>
               <th class="am-u-sm-3 am-text-center">时间段</th>
               <th class="am-u-sm-1 am-text-center">实付款</th>
               <th class="am-u-sm-1 am-text-center">订单交易状态</th>

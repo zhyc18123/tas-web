@@ -22,7 +22,7 @@
           <tbody>
           <tr>
             <td>购买类型：</td>
-            <td>租赁</td>
+            <td>课室</td>
             <td>订单编号：</td>
             <td>{{tableData.sn}}</td>
           </tr>
@@ -54,7 +54,7 @@
 
                   <div class="am-u-sm-4 am-text-left">
                     <div class="am-g am-g-fixed">
-                      <span>商品名称：</span>
+                      <span>供应名称：</span>
                       <span>
                       {{item.productName}}
                     </span>

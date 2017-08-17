@@ -15,11 +15,11 @@
                 所属服务类型:
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 v-model="formData.type" >
+                <select2  disabled v-model="formData.type" >
                   <option value="">请选择</option>
-                  <option value="0">商品</option>
-                  <option value="2">租赁</option>
-                  <option value="3">需求</option>
+                  <option value="0">供应</option>
+                  <option value="2">课室</option>
+                  <option value="3">課室</option>
                 </select2>
               </div>
             </div>
@@ -28,8 +28,8 @@
                 可选择父分类：
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required  v-model="formData.parentId" :options="serviceCategorys" >
-                  <option value="请选择">请选择</option>
+                <select2  disabled required  v-model="formData.parentId" :options="serviceCategorys" >
+                  <option value=" ">请选择</option>
                 </select2>
               </div>
             </div>
@@ -288,6 +288,7 @@
 
       loadServiceCategoryByType:function() {
         var _this = this
+        _this.serviceCategorys=[]
         io.post(io.apiAdminGetCategoryByType, {type:_this.formData.type}, function (ret) {
           if (ret.success) {
             function getLengthByLevel(level) {
@@ -301,6 +302,10 @@
             function toList(categoryList) {
               for (var i = 0; i < categoryList.length; i++) {
                 var serviceCategory = categoryList[i]
+
+                if(_this.formData.categoryId==serviceCategory.value){
+                    continue;
+                }
                 var minCategory = {
                   value: serviceCategory.value,
                   text: getLengthByLevel(serviceCategory.level)+serviceCategory.label
@@ -312,7 +317,7 @@
               }
             }
             toList(ret.data)
-            console.log(_this.serviceCategorys)
+           // console.log(_this.serviceCategorys)
 
 
           } else {

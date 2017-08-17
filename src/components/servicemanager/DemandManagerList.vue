@@ -8,22 +8,22 @@
 
         <div class="am-u-sm-3">
           <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">商品</a>
+            <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
           </div>
           <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">租赁</a>
+            <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
           </div>
           <div class="am-u-sm-4">
             <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
           </div>
           <!--   <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+               <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
              </div>
              <div class="am-u-sm-2">
                <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
              </div>
              <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+               <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
              </div>-->
         </div>
 
@@ -86,9 +86,9 @@
           <el-table :data="tableData" border stripe style="min-width: 100%">
             <el-table-column prop="productName" label="名称" min-width="100"></el-table-column>
             <el-table-column label="需求分类" min-width="100">
-              <template scope="scope">{{scope.row.type==0?"商品":scope.row.type==2?"租赁":"需求"}}</template>
+              <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
             </el-table-column>
-            <!--<el-table-column label="商品价格" min-width="100">-->
+            <!--<el-table-column label="供应价格" min-width="100">-->
               <!--<template scope="scope">{{scope.row.unitPrice}}</template>-->
             <!--</el-table-column>-->
             <!--<el-table-column label="单位" min-width="100">-->
@@ -136,7 +136,7 @@
                         @paging="loadTableData"/>
           </div>
         </div>
-        <window ref="productRefund" title="商品退费申请">
+        <window ref="productRefund" title="供应退费申请">
           <order-item-refund :orderItemId="orderItemId"
                              @refundApply="$refs.productRefund.close()"></order-item-refund>
         </window>

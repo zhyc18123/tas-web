@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-cf">商品列表</div>
+          <div class="widget-title am-cf">供应列表</div>
         </div>
         <div class="widget-body am-fr">
           <div class="am-u-sm-12 am-form ">
@@ -20,7 +20,7 @@
               <div class="am-form-group tpl-table-list-select">
                 <div class="am-form-group">
                   <select2  required v-model="query.categoryId" :options="category">
-                    <option value="">商品分类</option>
+                    <option value="">供应分类</option>
                   </select2>
                 </div>
               </div>
@@ -29,7 +29,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-input-group am-input-group-lg tpl-form-border-form cl-p">
                 <input type="text" class="am-input-lg am-form-field" name="productName" v-model="query.productName"
-                       placeholder="请输入商品名称"/>
+                       placeholder="请输入供应名称"/>
                 <span class="am-input-group-btn">
                   <button class="am-btn am-btn-default am-btn-success tpl-table-list-field am-icon-search"
                           type="button" @click="search"></button>
@@ -41,8 +41,8 @@
           <div class="am-u-sm-12">
             <el-table :data="tableData" border stripe style="min-width: 100%">
               <el-table-column fixed type="index" label="序号" min-width="100"></el-table-column>
-              <el-table-column prop="productName" label="商品名称" min-width="100"></el-table-column>
-              <el-table-column prop="categoryName" label="商品分类" min-width="100"></el-table-column>
+              <el-table-column prop="productName" label="供应名称" min-width="100"></el-table-column>
+              <el-table-column prop="categoryName" label="供应分类" min-width="100"></el-table-column>
               <el-table-column prop="price" label="价格" min-width="100"></el-table-column>
               <el-table-column prop="unit" label="单位" min-width="100"></el-table-column>
               <el-table-column prop="username" label="操作人" min-width="100"></el-table-column>

@@ -23,8 +23,8 @@
                   <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
                     <option></option>
                     <option value="">所属分类</option>
-                    <option value="0">商品</option>
-                    <option value="2">租赁</option>
+                    <option value="0">供应</option>
+                    <option value="2">课室</option>
                     <option value="3">需求</option>
                   </select>
                 </selected>
@@ -45,8 +45,17 @@
             <el-table :data="tableData" border stripe style="min-width: 100%">
               <el-table-column prop="name" label="分类名称" min-width="100"></el-table-column>
               <el-table-column label="所属分类" min-width="100">
-                <template scope="scope">{{scope.row.type==0?"商品":scope.row.type==2?"租赁":"需求"}}</template>
+                <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
               </el-table-column>
+
+              <el-table-column label="层级" min-width="100">
+                <template scope="scope">{{scope.row.level}}</template>
+              </el-table-column>
+
+              <el-table-column label="父分类" min-width="100">
+                <template scope="scope">{{scope.row.parentName}}</template>
+              </el-table-column>
+
               <el-table-column label="成本类型" min-width="100">
                 <template scope="scope">{{scope.row.feeCategoryName}}</template>
               </el-table-column>
@@ -63,7 +72,7 @@
                                         @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
                         编辑
                       </el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('del')" @click.native="deleteCategory(scope.row.categoryId)"   >删除</el-dropdown-item>
+                      <!--<el-dropdown-item v-if="hasPermission('del')" @click.native="deleteCategory(scope.row.categoryId)"   >删除</el-dropdown-item>-->
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>

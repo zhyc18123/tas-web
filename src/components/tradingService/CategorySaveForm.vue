@@ -18,8 +18,8 @@
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 v-model="formData.type" required>
                   <option value="">请选择</option>
-                  <option value="0">商品</option>
-                  <option value="2">租赁</option>
+                  <option value="0">供应</option>
+                  <option value="2">课室</option>
                   <option value="3">需求</option>
                 </select2>
               </div>
@@ -31,7 +31,7 @@
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required  v-model="formData.parentId" :options="serviceCategorys" >
-                  <option value="请选择">请选择</option>
+                  <option value=" ">请选择</option>
                 </select2>
               </div>
             </div>
@@ -298,6 +298,7 @@
       },
       loadServiceCategoryByType:function() {
         var _this = this
+        _this.serviceCategorys=[];
         io.post(io.apiAdminGetCategoryByType, {type:_this.formData.type}, function (ret) {
           if (ret.success) {
              function getLengthByLevel(level) {
