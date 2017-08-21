@@ -139,6 +139,14 @@ const AttendanceRecordList = resolve => require(['./components/attendance/Attend
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
 
+const DiscountCategoryList = resolve => require(['./components/discount/DiscountCategoryList'], resolve)
+const DiscountCategoryForm = resolve => require(['./components/discount/DiscountCategoryForm'], resolve)
+const DiscountRuleList = resolve => require(['./components/discount/DiscountRuleList'], resolve)
+const DiscountRuleForm = resolve => require(['./components/discount/DiscountRuleForm'], resolve)
+const DiscountList = resolve => require(['./components/discount/DiscountList'], resolve)
+const DiscountForm = resolve => require(['./components/discount/DiscountForm'], resolve)
+const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -270,7 +278,22 @@ const router = new VueRouter({
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
       {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },
 
-      {path: 'report/charge/list', component:ChargeList }
+      {path: 'report/charge/list', component:ChargeList },
+
+      {path: 'discount/category/list' , component: DiscountCategoryList },
+      {path: 'discount/category/add' , component: DiscountCategoryForm},
+      {path: 'discount/category/edit/:discountCategoryId' , component: DiscountCategoryForm},
+
+      {path: 'discount/rule/list' , component: DiscountRuleList },
+      {path: 'discount/rule/add' , component: DiscountRuleForm},
+      {path: 'discount/rule/edit/:discountRuleId' , component: DiscountRuleForm},
+      {path: 'discount/rule/test/:discountRuleId' , component: DiscountRuleTest},
+
+      {path: 'discount/discount/list' , component: DiscountList },
+      {path: 'discount/discount/add' , component: DiscountForm},
+      {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
+
+
     ],
     beforeEnter:function(to, from, next){
       if(!storage.getLogin()){

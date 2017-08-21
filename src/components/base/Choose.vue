@@ -14,6 +14,12 @@
         props:['value' ,'config'],
         mounted:function(){
           this.initChoose()
+          //修正标签页内宽度不正确问题
+          var $container = $('.chosen-container',this.$el )
+          var width  = $container.width()
+          if(width == 0 ){
+            $container.css("width" ,'100%')
+          }
         },
         watch:{
           value:function(val){

@@ -149,6 +149,7 @@ const io = {
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
     this.apiAdminBaseProductList = conf.baseApiPath + '/api/admin/baseProductList'
     this.apiAdminBaseProductListForAreaTeam = conf.baseApiPath + '/api/admin/baseProductListForAreaTeam'
+    this.apiAdminBaseCourseTemplateListForAreaTeam = conf.baseApiPath + '/api/admin/baseCourseTemplateListForAreaTeam'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
     this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
 
@@ -302,6 +303,32 @@ const io = {
 
 
     this.apiAdminHtml2excel = conf.baseApiPath + '/api/admin/html2excel'
+
+    this.apiAdminDiscountCategoryList = conf.baseApiPath + '/api/admin/discount/categoryList'
+    this.apiAdminDiscountCategoryDetail = conf.baseApiPath + '/api/admin/discount/categoryDetail'
+    this.apiAdminDiscountDelCategory = conf.baseApiPath + '/api/admin/discount/delCategory'
+    this.apiAdminDiscountSaveOrUpdateCategory = conf.baseApiPath + '/api/admin/discount/saveOrUpdateCategory'
+    this.apiAdminDiscountRuleList = conf.baseApiPath + '/api/admin/discount/ruleList'
+    this.apiAdminDiscountRuleDetail = conf.baseApiPath + '/api/admin/discount/ruleDetail'
+    this.apiAdminDiscountDelRule = conf.baseApiPath + '/api/admin/discount/delRule'
+    this.apiAdminDiscountSaveOrUpdateRule = conf.baseApiPath + '/api/admin/discount/saveOrUpdateRule'
+    this.apiAdminDiscountDiscountList = conf.baseApiPath + '/api/admin/discount/discountList'
+    this.apiAdminDiscountDiscountDetail = conf.baseApiPath + '/api/admin/discount/discountDetail'
+    this.apiAdminDiscountDelDiscount = conf.baseApiPath + '/api/admin/discount/delDiscount'
+    this.apiAdminDiscountSaveOrUpdateDiscount = conf.baseApiPath + '/api/admin/discount/saveOrUpdateDiscount'
+    this.apiAdminDiscountTestRule = conf.baseApiPath + '/api/admin/discount/testRule'
+    this.apiAdminDiscountTestData = conf.baseApiPath + '/api/admin/discount/testData'
+    this.apiAdminDiscountExclusiveRuleList = conf.baseApiPath + '/api/admin/discount/exclusiveRuleList'
+    this.apiAdminDiscountExclusiveRuleDetail = conf.baseApiPath + '/api/admin/discount/exclusiveRuleDetail'
+    this.apiAdminDiscountDelExclusiveRule = conf.baseApiPath + '/api/admin/discount/delExclusiveRule'
+    this.apiAdminDiscountSaveOrUpdateExclusiveRule = conf.baseApiPath + '/api/admin/discount/saveOrUpdateExclusiveRule'
+    this.apiAdminDiscountAreaTeamBusTeamOrgTree = conf.baseApiPath + '/api/admin/discount/areaTeamBusTeamOrgTree'
+    this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
+
+
+
+
+
 
 
   },

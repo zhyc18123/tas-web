@@ -40,7 +40,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学生手机
         </label>
         <div class="am-u-sm-9 input-field">
-          <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" placeholder="请输入手机号"  required  v-model="formData.phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
         </div>
       </div>
 
@@ -81,6 +81,20 @@
         </div>
       </div>
 
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          学生标签
+         </label>
+        <div class="am-u-sm-9  input-field">
+          <choose v-model="formData.tags">
+            <select required data-placeholder="选择学生标签" style="min-width:300px;" multiple class="chosen-select-no-results">
+              <option value=""></option>
+              <option v-for="item in tags" :value="item">{{item}}</option>
+            </select>
+          </choose>
+        </div>
+      </div>
+
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
@@ -115,7 +129,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系电话
         </label>
         <div class="am-u-sm-2  input-field">
-          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|8){1}\d{1}|70)\d{8}$" >
+          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
         </div>
         <div class="am-u-sm-1 input-field">
           <a href="javascript:;" @click="addGuardian"> <i class="am-icon-plus"></i></a>
@@ -145,8 +159,10 @@
   export default{
     data(){
       return{
+        tags:['员工子女','员工亲友子女'],
         guardianList:[{}],
         formData:{
+          tags:[],
           sex:'',
           school:'',
           referrerName:''
@@ -172,6 +188,7 @@
           function(ret){
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
+              ret.data.student.tags = ret.data.student.tags ? ret.data.student.tags.split(',') :[]
               _this.formData = ret.data.student
               _this.guardianList =  ret.data.guardianList && ret.data.guardianList.length == 0  ?  [{}] : ret.data.guardianList
             }
@@ -226,7 +243,8 @@
     methods:{
       save:function(complete){
         var _this = this
-        var data = _this.formData
+        var data = Object.assign({},_this.formData)
+        data.tags = data.tags.join(',')
         data.guardianJsonStr = JSON.stringify(this.guardianList)
         io.post(io.studentSaveOrUpdate,data ,
           function(ret){
