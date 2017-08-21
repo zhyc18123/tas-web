@@ -228,7 +228,7 @@
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/tradingService/category/list')
+              _this.$router.push('/main/serviceManager/category/list')
             } else {
               _this.$alert(ret.desc)
             }
