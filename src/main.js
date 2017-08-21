@@ -103,50 +103,35 @@ const FeeCategoryForm = resolve => require(['./components/settlement/FeeCategory
 const IncomeCategoryList = resolve => require(['./components/settlement/IncomeCategoryList'], resolve)
 const IncomeCategoryForm = resolve => require(['./components/settlement/IncomeCategoryForm'], resolve)
 
-const ServiceManagerList = resolve => require([ './components/tradingService/ServiceManagerList'], resolve)
-const ServiceManagerForm = resolve => require([ './components/tradingService/ServiceManagerForm'], resolve)
-const ServiceManagerEditForm = resolve => require([ './components/tradingService/ServiceManagerForm'], resolve)
-const CategoryList = resolve => require([ './components/tradingService/CategoryList'], resolve)
-const CategoryEditForm = resolve => require([ './components/tradingService/CategoryEditForm'], resolve)
-const CategorySaveForm = resolve => require([ './components/tradingService/CategorySaveForm'], resolve)
-const ProductTradingList = resolve => require([ './components/tradingService/ProductTradingList'], resolve)
-const ProductRefundList = resolve => require([ './components/tradingService/ProductRefundList'], resolve)
-const ProductRefundEditForm = resolve => require([ './components/tradingService/ProductRefundEditForm'], resolve)
-const ProductTradingForm = resolve => require([ './components/tradingService/ProductTradingForm'], resolve)
-const ServiceRentList = resolve => require([ './components/tradingService/ServiceRentList'], resolve)
-const ServiceRentForm = resolve => require([ './components/tradingService/ServiceRentForm'], resolve)
-
-const BuyServiceList = resolve => require(['./components/buyer/BuyServiceList'], resolve)
-const BuyCommodityList = resolve => require(['./components/buyer/BuyCommodityList'], resolve)
-const RentRecordList = resolve => require(['./components/buyer/RentRecordList'], resolve)
-const RentRoomTimeList = resolve => require(['./components/buyer/RentRoomTimeList'], resolve)
-const ProductComment = resolve => require(['./components/buyer/ProductComment'], resolve)
-const ServiceComment = resolve => require(['./components/buyer/ServiceComment'], resolve)
-const RentComment = resolve => require(['./components/buyer/RentComment'], resolve)
-const ProductOrderItemDetail = resolve => require(['./components/buyer/ProductOrderItemDetail'], resolve)
-const ServiceOrderItemDetail = resolve => require(['./components/buyer/ServiceOrderItemDetail'], resolve)
-const RentDetail = resolve => require(['./components/buyer/RentDetail'], resolve)
-const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
-const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
 
+
+
+
+
+
+
+
+const SellerRegisterList = resolve => require(['./components/servicemanager/SellerRegisterList'], resolve)
 const GoodsManagerList = resolve => require(['./components/servicemanager/GoodsManagerList'], resolve)
 const LeaseManagerList = resolve => require(['./components/servicemanager/LeaseManagerList'], resolve)
 const DemandManagerList = resolve => require(['./components/servicemanager/DemandManagerList'], resolve)
-
-
 const OrderManagerList = resolve => require(['./components/servicemanager/OrderManagerList'], resolve)
 
+const CategoryList = resolve => require([ './components/servicemanager/CategoryList'], resolve)
+const CategoryEditForm = resolve => require([ './components/servicemanager/CategoryEditForm'], resolve)
+const CategorySaveForm = resolve => require([ './components/servicemanager/CategorySaveForm'], resolve)
 
 
-const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
+
+/*const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
 const SellerServiceDetail = resolve => require(['./components/seller/SellerServiceDetail'], resolve)
 const SellerLeaseOrderList = resolve => require(['./components/seller/SellerLeaseOrderList'], resolve)
-const SellerLeaseDetail = resolve => require(['./components/seller/SellerLeaseDetail'], resolve)
+const SellerLeaseDetail = resolve => require(['./components/seller/SellerLeaseDetail'], resolve)*/
 
-const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)
+/*const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)*/
 
 
 const AttendanceCourseClassList = resolve => require(['./components/attendance/AttendanceCourseClassList'], resolve)
@@ -195,7 +180,6 @@ const router = new VueRouter({
 
       {path: 'sys/audit/campus/list' , component: CampusAuditList },
       {path: 'sys/edit/campus/:campusId' , component: CampusEditForm },
-
       {path: 'sys/campus/new/add' , component: CampusEditForm },
 
       {path: 'sys/campus/add' , component: CampusForm },
@@ -272,49 +256,16 @@ const router = new VueRouter({
       {path: 'settlement/incomeCategory/add' , component: IncomeCategoryForm },
       {path: 'settlement/incomeCategory/edit/:incomeCategoryId' , component: IncomeCategoryForm },
 
-      {path: 'tradingService/service/list' , component: ServiceManagerList },
-      {path: 'tradingService/service/add' , component: ServiceManagerEditForm},
-      {path: 'tradingService/service/edit/:productId' , component: ServiceManagerForm },
-      {path: 'tradingService/category/list' , component: CategoryList },
-      {path: 'tradingService/category/add' , component: CategorySaveForm},
-      {path: 'tradingService/category/edit/:categoryId' , component: CategoryEditForm },
-      {path: 'tradingService/product/list' , component: ProductTradingList },
-      {path: 'tradingService/product/add' , component: ProductTradingForm},
-      {path: 'tradingService/product/edit/:productId' , component: ProductTradingForm },
-      {path: 'tradingService/productRefund/list' , component: ProductRefundList },
-      {path: 'tradingService/productRefund/edit' , component: ProductRefundEditForm },
-      {path: 'tradingService/rent/list' , component: ServiceRentList },
-      {path: 'tradingService/rent/add' , component: ServiceRentForm},
-      {path: 'tradingService/rent/edit/:productId' , component: ServiceRentForm},
 
-      {path: 'buyer/buyCommodity/list', component:BuyCommodityList},
-      {path: 'buyer/buyService/list', component:BuyServiceList},
-      {path: 'buyer/rentRecord/list', component:RentRecordList},
-      {path: 'buyer/rentRoomTime/list', component:RentRoomTimeList},
-      {path: 'buyer/productOrderItem/detail/:orderId', component:ProductOrderItemDetail},
-      {path: 'buyer/ServiceOrderItem/detail/:orderId', component:ServiceOrderItemDetail},
-      {path: 'buyer/rent/detail/:orderId', component:RentDetail},
-      {path: 'buyer/productOrderItem/comment/:orderItemId', component:ProductComment},
-      {path: 'buyer/ServiceOrderItem/comment/:orderItemId', component:ServiceComment},
-      {path: 'buyer/rent/comment/:orderItemId', component:RentComment},
-      {path: 'buyer/address/list/', component:AddressList},
-      {path: 'buyer/address/add/', component:AddressForm},
+      {path: 'serviceManager/category/list' , component: CategoryList },
+      {path: 'serviceManager/category/add' , component: CategorySaveForm},
+      {path: 'serviceManager/category/edit/:categoryId' , component: CategoryEditForm },
 
       {path: 'serviceManager/goods/list', component:GoodsManagerList},
       {path: 'serviceManager/lease/list', component:LeaseManagerList},
       {path: 'serviceManager/demand/list', component:DemandManagerList},
-
       {path: 'serviceManager/order/list', component:OrderManagerList},
-
-
-      {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
-      {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},
-      {path: 'seller/sellerProduct/detail/:orderItemId', component:SellerProductDetail},
-      {path: 'seller/sellerService/detail/:orderId', component:SellerServiceDetail},
-      {path: 'seller/leaseRecord/list/', component:SellerLeaseOrderList},
-      {path: 'seller/leaseRecord/detail/:orderItemId', component:SellerLeaseDetail},
-
-      {path: 'platform/sellerRegister/list', component:SellerRegisterList},
+      {path: 'serviceManager/sellerRegister/list', component:SellerRegisterList},
 
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
       {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },

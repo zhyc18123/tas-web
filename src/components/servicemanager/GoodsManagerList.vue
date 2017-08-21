@@ -154,7 +154,6 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import OrderItemRefundForm from '../buyer/OrderItemRefundForm'
 
   export default{
     data: function () {
@@ -173,7 +172,7 @@
     },
     components: {
       Pagination,
-      'order-item-refund': OrderItemRefundForm
+      //'order-item-refund': OrderItemRefundForm
     },
     mounted: function () {
       $(window).smoothScroll()

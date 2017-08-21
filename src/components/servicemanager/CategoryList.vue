@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/tradingService/category/add')" v-if="hasPermission('add')"><span
+                        @click="$router.push('/main/serviceManager/category/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新增
                 </button>
               </div>
@@ -69,7 +69,7 @@
                     <span class="el-dropdown-link">操作菜单<i class="el-icon-caret-bottom el-icon--right"></i></span>
                     <el-dropdown-menu slot="dropdown">
                       <el-dropdown-item v-if="hasPermission('edit')"
-                                        @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
+                                        @click.native="$router.push('/main/serviceManager/category/edit/'+scope.row.categoryId)">
                         编辑
                       </el-dropdown-item>
                       <!--<el-dropdown-item v-if="hasPermission('del')" @click.native="deleteCategory(scope.row.categoryId)"   >删除</el-dropdown-item>-->
