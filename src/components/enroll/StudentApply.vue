@@ -7,7 +7,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <select2 v-model="query.areaTeamId" :options="areaTeams">
-                <option value="">区域</option>
+                <option value="" disabled>区域</option>
               </select2>
             </div>
           </div>
@@ -222,19 +222,32 @@
         query: {
           areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId: '',
+          courseTemplateId:'',
           productId: '',
-          periodId: window.config.periods.filter(item => item.isCurrent == 1)[0].periodId
+          periodId: ''
 
         },
         products: [],
         courses: [],
         searchConfig: {},
-        courseOrderId: ''
+        courseOrderId: '',
+        periods:[]
       }
     },
     components: {
       Pagination,
       'course-order': CourseOrder
+    },
+    watch:{
+      'query.areaTeamId':function(){
+        this.query.busTeamId =  ''
+        this.query.productId = ''
+        this.query.courseTemplateId = ''
+        this.query.periodId = ''
+        this.loadProductData()
+        this.loadCourseData()
+        this.loadPeriodData()
+      }
     },
     computed: {
 
@@ -263,19 +276,18 @@
           return {value: item.subjectId, text: item.subjectName}
         })
       },
-      periods: function () {
-        return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName}
-        })
-      }
     },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
+      this.$once('period.loaded',()=>{
+        this.loadTableData()
+      })
       this.loadTableData()
       this.loadProductData()
       this.loadCourseData()
+      this.loadPeriodData()
     },
     methods: {
       check:function(item){
@@ -295,12 +307,14 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
+        _this.$showLoading()
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           status : 1,
           classType : 0
         }, _this.query), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             for (var i = 0; i < ret.data.list.length; i++) {
@@ -316,7 +330,9 @@
       },
       loadProductData: function () {
         var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+        io.post(io.apiAdminBaseProductListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.products = ret.data.map(function (item) {
               return {value: item.productId, text: item.name}
@@ -328,11 +344,29 @@
       },
       loadCourseData: function () {
         var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
+        io.post(io.apiAdminBaseCourseListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.courses = ret.data.map(function (item) {
               return {value: item.courseTemplateId, text: item.courseName}
             })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName }
+            })
+            _this.query.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.$emit('period.loaded')
           } else {
             _this.$alert(ret.desc)
           }

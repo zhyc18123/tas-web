@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
+                  <option value="" disabled>区域</option>
                 </select2>
               </div>
             </div>
@@ -179,24 +179,36 @@
       return {
         tabIndex: 0,
         query: {
-          areaTeamId : '',
+          areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId : '',
           productId : '',
           status : 1 ,
+          periodId : '',
         },
         searchConfig: {},
         products:[],
-        courses:[]
+        courses:[],
+        periods:[],
       }
     },
     components:{'list':RecommendList},
     mounted: function () {
       $(window).smoothScroll()
     },
+    watch:{
+      'query.areaTeamId':function(){
+        this.query.busTeamId =  ''
+        this.query.productId = ''
+        this.query.periodId = ''
+        this.loadProductData()
+        this.loadCourseData()
+        this.loadPeriodData()
+      }
+    },
     created: function () {
       this.loadProductData()
       this.loadCourseData()
-
+      this.loadPeriodData()
     },
     computed: {
       areaTeams: function () {
@@ -224,11 +236,6 @@
           return {value: item.subjectId, text: item.subjectName}
         })
       },
-      periods:function(){
-        return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodName}
-        })
-      }
 
     },
     methods: {
@@ -240,7 +247,9 @@
       },
       loadProductData: function () {
         var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+        io.post(io.apiAdminBaseProductListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.products = ret.data.map(function (item) {
               return {value: item.productId, text: item.name}
@@ -252,7 +261,9 @@
       },
       loadCourseData: function () {
         var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
+        io.post(io.apiAdminBaseCourseListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.courses = ret.data.map(function (item) {
               return {value: item.courseTemplateId, text: item.courseName}
@@ -261,7 +272,21 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName }
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
 
     }
   }

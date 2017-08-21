@@ -7,10 +7,19 @@
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="" disabled>区域</option>
+                </select2>
+              </div>
+            </div>
+
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.campusId" >
-                  <!--<option value="">校区</option>-->
+                  <option value="" disabled>校区</option>
                   <option v-for="item in campuses" :value="item.campusId">{{item.campusName}}</option>
                 </select2>
               </div>
@@ -18,7 +27,9 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2 v-model="query.periodId" :options="periods">
+                <select2 v-model="query.periodId">
+                  <option value="" disabled>期数</option>
+                  <option v-for="item in periods" :value="item.periodId">{{item.periodName}}</option>
                 </select2>
               </div>
             </div>
@@ -126,11 +137,11 @@
 
   export default{
     data: function () {
-      var currentPeriod = window.config.periods.filter(item => item.isCurrent == 1)[0]
       return {
         query: {
+          areaTeamId: window.config.areaTeams[0] ? window.config.areaTeams[0].areaTeamId : '',
           campusId: '',
-          periodId: currentPeriod.periodId
+          periodId: ''
         },
         segmentList: [],
         courseClassList: [],
@@ -140,12 +151,21 @@
         times:[],
         weeks:[],
         levels:[],
-        grades:[]
-
+        grades:[],
+        periods:[],
+      }
+    },
+    watch:{
+      'query.areaTeamId':function(){
+        this.query.campusId = ''
+        this.query.periodId = ''
+        this.loadCampusData()
+        this.loadPeriodData()
       }
     },
     created:function(){
       this.loadCampusData()
+      this.loadPeriodData()
       if(this.query.campusId){
           this.loadScheduleData()
       }
@@ -154,11 +174,13 @@
 
     },
     computed: {
-      periods: function () {
-        return window.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName}
-        })
-      }
+      areaTeams: function () {
+        var options = ( window.config.areaTeams || [] )
+          .map(function (item) {
+            return {value: item.areaTeamId, text: item.name}
+          })
+        return options
+      },
     },
     methods: {
       search: function () {
@@ -166,7 +188,9 @@
       },
       loadCampusData:function(){
         var _this = this
-        io.post(io.apiAdminBaseCampusList, {},
+        io.post(io.apiAdminBaseCampusList, {
+          areaTeamId : this.query.areaTeamId
+          },
           function (ret) {
             if (ret.success) {
 
@@ -187,7 +211,7 @@
         io.post(io.apiAdminSchedulescheduleDataOfCampus, this.query,
           function (ret) {
             if (ret.success) {
-              _this.period = window.config.periods.filter(item => item.periodId == _this.query.periodId)[0];
+              _this.period = _this.periods.filter(item => item.periodId == _this.query.periodId)[0];
               _this.period.segments = parseInt(_this.period.segments)
 
               _this.campus = _this.campuses.filter(item => item.campusId == _this.query.campusId)[0]
@@ -244,7 +268,21 @@
           html:$('<div>').append($('#schedule').clone()).html(),
           downloadName:   '校区课表-'+_this.campus.campusName
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data
+            _this.query.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.$emit('period.loaded')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 </script>

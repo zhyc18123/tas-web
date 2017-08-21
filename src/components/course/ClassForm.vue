@@ -49,8 +49,9 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数
             </label>
             <div class="am-u-sm-3 am-u-end input-field">
-              <select2 :disabled="!editable" required v-model="formData.periodId" :options="periods">
+              <select2 :disabled="!editable" required v-model="formData.periodId" >
                 <option value="">请选择</option>
+                <option v-for="item in periods" :value="item.periodId">{{item.periodName}}</option>
               </select2>
             </div>
           </div>
@@ -148,6 +149,7 @@
           areaTeamId: '',
           busTeamId: '',
           periodId: '',
+          segmentNo: '',
           quota: '',
           studyingFee: '',
           campusId: '',
@@ -155,7 +157,9 @@
         },
         courseTemplateData: {},
         campuses:[],
-        editable:true
+        editable:true,
+        periods:[],
+        segments:[],
       }
     },
     components: {
@@ -165,7 +169,15 @@
       'formData.areaTeamId':function(val){
         if(val){
             this.loadCampusData()
+            this.loadPeriodData()
         }
+      },
+      'periods':'calSegment',
+      'formData.periodId':function(n,o){
+        if(o){
+          this.formData.segmentNo = ''
+        }
+        this.calSegment()
       }
     },
     created: function () {
@@ -201,28 +213,6 @@
           })
         return options
       },
-      periods: function () {
-        return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName}
-        })
-      },
-      segments: function () {
-        if(!this.formData.periodId){
-          return []
-        }
-        var segments = 0 ;
-        for(var i = 0 ;i < this.$root.config.periods.length ;i++ ){
-          if(this.$root.config.periods[i].periodId == this.formData.periodId ){
-            segments = this.$root.config.periods[i].segments
-            break
-          }
-        }
-        var ret = [] ;
-        for(var i = 1 ;i <= segments ;i++  ){
-          ret.push({value: i , text: i })
-        }
-        return ret
-      }
     },
     mounted: function () {
       var _this = this;
@@ -273,6 +263,28 @@
       });
     },
     methods: {
+      calSegment:function(){
+
+        if(!this.formData.periodId){
+          this.segments = []
+          return
+        }
+
+        var segments = 0 ;
+
+        for(var i = 0 ;i < this.periods.length ;i++ ){
+          if(this.periods[i].periodId == this.formData.periodId ){
+            segments = this.periods[i].segments
+            break
+          }
+        }
+
+        var ret = [] ;
+        for(var i = 1 ;i <= segments ;i++  ){
+          ret.push({value: i , text: i })
+        }
+        this.segments = ret
+      },
       save: function (complete) {
         var _this = this
         var data = _this.formData;
@@ -314,6 +326,7 @@
         if(this.formData.areaTeamId != item.areaTeamId ){
           this.formData.campusId = ''
           this.formData.campusName = ''
+          this.formData.periodId = ''
         }
         this.formData.areaTeamId = item.areaTeamId
       },
@@ -332,7 +345,19 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : _this.formData.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     },
   }
 </script>

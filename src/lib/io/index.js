@@ -76,6 +76,7 @@ const io = {
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
     this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
+    this.apiAdminPeriodListForAreaTeam = conf.baseApiPath + '/api/admin/periodListForAreaTeam'
 
     this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
     this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'
@@ -143,7 +144,6 @@ const io = {
     this.apiAdminDeleteCourseType = conf.baseApiPath + '/api/admin/deleteCourseType'
 
     this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
-    this.apiAdminProductManageUseList  = conf.baseApiPath + '/api/admin/productUseList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
     this.apiAdminDeleteProduct = conf.baseApiPath + '/api/admin/deleteProduct'
     this.apiAdminProductSaveOrUpdate  = conf.baseApiPath  + '/api/admin/saveOrUpdateProduct'
@@ -151,6 +151,7 @@ const io = {
     this.apiAdminBaseProductListForAreaTeam = conf.baseApiPath + '/api/admin/baseProductListForAreaTeam'
     this.apiAdminBaseCourseTemplateListForAreaTeam = conf.baseApiPath + '/api/admin/baseCourseTemplateListForAreaTeam'
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
+    this.apiAdminBaseCourseListForAreaTeam = conf.baseApiPath + '/api/admin/baseCourseListForAreaTeam'
     this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'

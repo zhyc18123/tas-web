@@ -7,17 +7,30 @@
         </div>
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
-            <div class="am-form-group">
-              <div class="am-btn-toolbar">
-                <div class="am-btn-group am-btn-group-xs">
-                  <button type="button" class="am-btn am-btn-default am-btn-success"
-                          @click="$router.push('/main/sys/period/add')" v-if="hasPermission('add')"><span
-                    class="am-icon-plus"></span>新增
-                  </button>
-                </div>
+          <div class="am-u-sm-12 am-form ">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.areaTeamId" :options="areaTeams">
+                </select2>
               </div>
             </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+              <div class="am-form-group">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="search" ><span class="am-icon-search"></span>查询
+                </button>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+              <div class="am-form-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="$router.push('/main/sys/period/add')" v-if="hasPermission('add')"><span
+                  class="am-icon-plus"></span>新增
+                </button>
+              </div>
+            </div>
+
           </div>
 
           <div class="am-u-sm-12">
@@ -88,7 +101,9 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        query: {},
+        query: {
+          areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
+        },
         searchConfig: {}
       }
     },
@@ -98,10 +113,22 @@
     mounted: function () {
       $(window).smoothScroll()
     },
+    computed: {
+      areaTeams: function () {
+        var options = ( this.$root.config.areaTeams || [] )
+          .map(function (item) {
+            return {value: item.areaTeamId, text: item.name}
+          })
+        return options
+      }
+    },
     created: function () {
       this.loadTableData(this.pageNo);
     },
     methods: {
+      search:function(){
+        this.loadTableData(1)
+      },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
