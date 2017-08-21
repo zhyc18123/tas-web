@@ -168,7 +168,7 @@
                 <choose v-model="formData.periodIds">
                   <select  data-placeholder="选择期" style="min-width:300px;" multiple class="chosen-select-no-results">
                     <option value=""></option>
-                    <option v-for="item in $root.config.periods" :value="item.periodId">{{item.periodName}}</option>
+                    <option v-for="item in periods" :value="item.periodId">{{item.periodName}}</option>
                   </select>
                 </choose>
               </div>
@@ -241,6 +241,7 @@
         discountRuleList: [],
         productList:[],
         templateCourseList:[],
+        periods:[],
         formData: {
           discountId: this.$params('discountId'),
           discountRuleId: '',
@@ -266,28 +267,29 @@
     },
     watch: {
       'formData.discountRuleId': function (val, oVal) {
-        if (val) {
-          var rule = this.discountRuleList.filter(item => item.discountRuleId == val)[0]
-          if (this.formData._discountRuleId) {
-            delete this.formData._discountRuleId
-          } else {
+        if (val ){
+          if(this.formData._discountId ){
+            delete this.formData._discountId
+          }else{
+            var rule = this.discountRuleList.filter(item => item.discountRuleId == val)[0]
             this.formData.params = JSON.parse(rule.params)
             this.formData.name = rule.name
             this.formData.remark = rule.remark
           }
 
         }
+
       },
-      'formData.areaTeamId':function(){
-        if (this.formData._areaTeamId) {
-          delete this.formData._areaTeamId
-        } else {
+      'formData.areaTeamId':function(val, oVal){
+        if (oVal){
           this.formData.productIds = []
           this.formData.courseTemplateIds = []
           this.formData.busTeamIds = []
+          this.formData.periodIds=[]
         }
         this.loadProductData()
         this.loadTemplateCourseData()
+        this.loadPeriodData()
 
       }
     },
@@ -420,8 +422,7 @@
               ret.data.exclusiveDiscountIds  = ret.data.exclusiveDiscountIds ? ret.data.exclusiveDiscountIds.split(',') : []
               ret.data.exclusiveDiscountNames  = ret.data.exclusiveDiscountNames ? ret.data.exclusiveDiscountNames.split(',') : []
               ret.data.params = JSON.parse(ret.data.params)
-              ret.data._discountRuleId = true
-              ret.data._areaTeamId = true
+              ret.data._discountId = true
               _this.formData = ret.data
 
             }
@@ -493,7 +494,19 @@
           this.formData.exclusiveDiscountNames.push(item.name)
 
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.formData.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 
