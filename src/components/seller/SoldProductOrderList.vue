@@ -3,27 +3,27 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">商家商品订单</div>
+          <div class="widget-title  am-cf">商家供应订单</div>
         </div>
 
         <div class="am-u-sm-12">
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的商品</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的供应</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/buyer/buyService/list')">我购买的服务</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我租赁的记录</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我课室的记录</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
           </div>
         </div>
 
@@ -49,7 +49,7 @@
                   <option value="1">完成交易</option>
                   <option value="2">已发货</option>
                   <option value="3">买家确认</option>
-                  <option value="4">退款中的商品</option>
+                  <option value="4">退款中的供应</option>
                   <option value="5">已评价</option>
                 </select2>
               </div>
@@ -76,7 +76,7 @@
               <th class="am-u-sm-1">单价</th>
               <th class="am-u-sm-1">数量</th>
               <th class="am-u-sm-2">实付款</th>
-              <th class="am-u-sm-2">商品交易状态</th>
+              <th class="am-u-sm-2">供应交易状态</th>
               <th class="am-u-sm-2">操作</th>
             </tr>
             </thead>
@@ -129,12 +129,12 @@
             </div>
           </div>
 
-          <window ref="productRefundApproval" title="商品退费申请审批">
+          <window ref="productRefundApproval" title="供应退费申请审批">
             <product-refund :orderItemId="orderItemId"
                             @productApproval="$refs.productRefundApproval.close()"></product-refund>
           </window>
 
-          <window ref="changeItemStatus" title="设置商品交易状态">
+          <window ref="changeItemStatus" title="设置供应交易状态">
             <item-status :orderItemId="orderItemId" @changeStatus="$refs.changeItemStatus.close()"></item-status>
           </window>
         </div>

@@ -44,8 +44,18 @@ const TeacherForm = resolve => require(['./components/teachingresource/TeacherFo
 const CampusList = resolve => require(['./components/teachingresource/CampusList'], resolve)
 const CampusForm = resolve => require(['./components/teachingresource/CampusForm'], resolve)
 
+const CampusEditForm = resolve => require(['./components/teachingresource/CampusEditForm'], resolve)
+const CampusAuditList = resolve => require(['./components/teachingresource/CampusAuditList'], resolve)
+
+
+
+
+
 const RoomList = resolve => require(['./components/teachingresource/RoomList'], resolve)
 const RoomForm = resolve => require(['./components/teachingresource/RoomForm'], resolve)
+
+const RoomNewList = resolve => require(['./components/teachingresource/RoomNewList'], resolve)
+const RoomNewForm = resolve => require(['./components/teachingresource/RoomNewForm'], resolve)
 
 const CrowdfundingClassList = resolve => require(['./components/crowdfunding/CrowdfundingClassList'], resolve)
 const CrowdfundingClassDetail = resolve => require(['./components/crowdfunding/CrowdfundingClassDetail'], resolve)
@@ -119,6 +129,16 @@ const RentDetail = resolve => require(['./components/buyer/RentDetail'], resolve
 const AddressList = resolve => require(['./components/buyer/AddressList'], resolve)
 const AddressForm = resolve => require(['./components/buyer/AddressForm'], resolve)
 
+
+const GoodsManagerList = resolve => require(['./components/servicemanager/GoodsManagerList'], resolve)
+const LeaseManagerList = resolve => require(['./components/servicemanager/LeaseManagerList'], resolve)
+const DemandManagerList = resolve => require(['./components/servicemanager/DemandManagerList'], resolve)
+
+
+const OrderManagerList = resolve => require(['./components/servicemanager/OrderManagerList'], resolve)
+
+
+
 const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
 const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
 const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
@@ -180,11 +200,23 @@ const router = new VueRouter({
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
       {path: 'sys/campus/list' , component: CampusList },
+
+      {path: 'sys/audit/campus/list' , component: CampusAuditList },
+      {path: 'sys/edit/campus/:campusId' , component: CampusEditForm },
+
+      {path: 'sys/campus/new/add' , component: CampusEditForm },
+
       {path: 'sys/campus/add' , component: CampusForm },
       {path: 'sys/campus/edit/:campusId' , component: CampusForm },
       {path: 'sys/room/list' , component: RoomList },
       {path: 'sys/room/add' , component: RoomForm },
       {path: 'sys/room/edit/:roomId' , component: RoomForm },
+
+      {path: 'sys/room/new/list' , component: RoomNewList },
+      {path: 'sys/room/new/add' , component: RoomNewForm },
+      {path: 'sys/room/new/edit/:roomId' , component: RoomNewForm },
+
+
       {path: 'sys/student/school/list' , component: StudentSchoolList },
       {path: 'sys/student/school/add' , component: StudentSchoolForm },
       {path: 'sys/student/school/edit/:studentSchoolId' , component: StudentSchoolForm },
@@ -275,6 +307,13 @@ const router = new VueRouter({
       {path: 'buyer/rent/comment/:orderItemId', component:RentComment},
       {path: 'buyer/address/list/', component:AddressList},
       {path: 'buyer/address/add/', component:AddressForm},
+
+      {path: 'serviceManager/goods/list', component:GoodsManagerList},
+      {path: 'serviceManager/lease/list', component:LeaseManagerList},
+      {path: 'serviceManager/demand/list', component:DemandManagerList},
+
+      {path: 'serviceManager/order/list', component:OrderManagerList},
+
 
       {path: 'seller/soldProductOrder/list', component:SoldProductOrderList},
       {path: 'seller/soldServiceOrder/list', component:SoldServiceOrderList},

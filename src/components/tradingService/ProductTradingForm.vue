@@ -10,7 +10,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品分类
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>供应分类
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2 required v-model="formData.categoryId" :options="category">
@@ -21,19 +21,19 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品名称
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>供应名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品名称" required v-model="formData.productName">
+                <input type="text" class="am-form-field" placeholder="请输入供应名称" required v-model="formData.productName">
               </div>
             </div>
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>商品价格
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>供应价格
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品价格" required v-model="formData.price">
+                <input type="text" class="am-form-field" placeholder="请输入供应价格" required v-model="formData.price">
               </div>
             </div>
 
@@ -42,7 +42,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs"></span>单位
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入商品单位" required v-model="formData.unit">
+                <input type="text" class="am-form-field" placeholder="请输入供应单位" required v-model="formData.unit">
               </div>
             </div>
 
@@ -64,7 +64,7 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                商品描述
+                供应描述
               </label>
               <div class="am-u-sm-9 input-field">
                 <editor v-model="formData.content"></editor>

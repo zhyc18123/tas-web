@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-scrollable-horizontal">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-cf">商品产品退费管理</div>
+        <div class="widget-title am-cf">供应产品退费管理</div>
       </div>
       <div class="widget-body  am-fr">
         <div class="am-u-sm-12 am-form">
@@ -11,9 +11,9 @@
               <div class="am-form-group">
                 <select2 v-model="formData.type">
                   <option value="">所有</option>
-                  <option value="0">商品退费</option>
+                  <option value="0">供应退费</option>
                   <option value="1">服务退费</option>
-                  <option value="2">租赁退费</option>
+                  <option value="2">课室退费</option>
                 </select2>
               </div>
             </div>
@@ -35,13 +35,13 @@
           <el-table :data="tableData" border stripe style="min-width: 100%">
             <el-table-column fixed type="index" label="序号" min-width="100"></el-table-column>
             <el-table-column prop="userName" label="买家姓名" min-width="100"></el-table-column>
-            <el-table-column prop="productName" label="退货商品名称" min-width="100"></el-table-column>
+            <el-table-column prop="productName" label="退货供应名称" min-width="100"></el-table-column>
             <el-table-column label="类型" min-width="100">
-              <template scope="scope">{{scope.row.type == 0?'商品':(scope.row.type==1?'服务':'租赁')}}</template>
+              <template scope="scope">{{scope.row.type == 0?'供应':(scope.row.type==1?'服务':'课室')}}</template>
             </el-table-column>
-            <el-table-column prop="quantity" label="商品数量" min-width="100"></el-table-column>
-            <el-table-column prop="rentSpan" label="租赁时长" min-width="100"></el-table-column>
-            <el-table-column label="租赁时间" min-width="100">
+            <el-table-column prop="quantity" label="供应数量" min-width="100"></el-table-column>
+            <el-table-column prop="rentSpan" label="课室时长" min-width="100"></el-table-column>
+            <el-table-column label="课室时间" min-width="100">
               <template scope="scope">
                 {{scope.row.startDate}}~{{scope.row.endDate}} {{scope.row.startTime}}-{{scope.row.endTime}}
               </template>

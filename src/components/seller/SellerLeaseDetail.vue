@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-fl">租赁订单信息</div>
+          <div class="widget-title am-fl">课室订单信息</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
@@ -23,7 +23,7 @@
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-hover">
           <tbody>
           <tr>
-            <td>购买类型：租赁</td>
+            <td>购买类型：课室</td>
             <td>订单编号：{{order.sn}}</td>
           </tr>
           <tr>

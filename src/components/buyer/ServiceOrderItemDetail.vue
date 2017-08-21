@@ -57,7 +57,7 @@
 
                 <div class="am-u-sm-4 am-text-left">
                   <div class="am-u-sm-12">
-                    <span>商品名称：</span>
+                    <span>供应名称：</span>
                     <span>
                       {{item.productName}}
                     </span>

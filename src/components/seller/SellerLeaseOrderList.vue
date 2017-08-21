@@ -3,27 +3,27 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">商家租赁订单</div>
+          <div class="widget-title  am-cf">商家课室订单</div>
         </div>
 
         <div class="am-u-sm-12">
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的商品</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/buyCommodity/list')">我购买的供应</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/buyer/buyService/list')">我购买的服务</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我租赁的记录</a>
+            <a href="javascript:;" @click="$router.push('/main/buyer/rentRecord/list')">我课室的记录</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户商品订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
           </div>
           <div class="am-u-sm-2">
             <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
           </div>
           <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户租赁订单</a>
+            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
           </div>
         </div>
 
@@ -73,12 +73,12 @@
           <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
             <thead>
             <tr>
-              <th class="am-u-sm-4 am-text-center">租赁名称</th>
+              <th class="am-u-sm-4 am-text-center">课室名称</th>
               <th class="am-u-sm-1">单价</th>
-              <th class="am-u-sm-1">租赁时长</th>
+              <th class="am-u-sm-1">课室时长</th>
               <th class="am-u-sm-3 am-text-center">租用时间</th>
               <th class="am-u-sm-1">实付款</th>
-              <th class="am-u-sm-1">商品交易状态</th>
+              <th class="am-u-sm-1">供应交易状态</th>
               <th class="am-u-sm-1">操作</th>
             </tr>
             </thead>
@@ -134,12 +134,12 @@
             </div>
           </div>
 
-          <window ref="leaseRefundApproval" title="租赁退费申请审批">
+          <window ref="leaseRefundApproval" title="课室退费申请审批">
             <lease-refund :orderItemId="orderItemId"
                           @productApproval="$refs.leaseRefundApproval.close()"></lease-refund>
           </window>
 
-          <window ref="changeLeaseStatus" title="设置租赁交易状态">
+          <window ref="changeLeaseStatus" title="设置课室交易状态">
             <lease-status :orderItemId="orderItemId" @changeStatus="$refs.changeLeaseStatus.close()"></lease-status>
           </window>
         </div>
