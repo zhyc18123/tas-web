@@ -10,7 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
+                  <option value="" disabled>区域</option>
                 </select2>
               </div>
             </div>
@@ -184,7 +184,8 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId : '',
+          areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
+          courseTemplateId:'',
           busTeamId : '',
           productId : '',
         },
@@ -193,18 +194,25 @@
         courses:[],
         courseClass :{},
         selection:[],
+        periods:[],
       }
     },
     components: {
       Pagination,
+    },
+    watch:{
+      'query.areaTeamId':function(){
+        this.query.busTeamId =  ''
+        this.query.periodId = ''
+        this.loadPeriodData()
+      }
     },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
       this.loadTableData(this.pageNo)
-      this.loadProductData()
-      this.loadCourseData()
+      this.loadPeriodData()
       var _this = this
       this.$root.$on('courseClass:new',function(){
         _this.pageNo = 1
@@ -237,11 +245,6 @@
           return {value: item.subjectId, text: item.subjectName}
         })
       },
-      periods:function(){
-        return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodName}
-        })
-      }
 
     },
     methods: {
@@ -263,24 +266,14 @@
           }
         })
       },
-      loadProductData: function () {
+      loadPeriodData: function () {
         var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadCourseData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
-          if (ret.success) {
-            _this.courses = ret.data.map(function (item) {
-              return {value: item.courseTemplateId, text: item.courseName}
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName }
             })
           } else {
             _this.$alert(ret.desc)

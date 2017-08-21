@@ -10,6 +10,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="" disabled>区域</option>
                 </select2>
               </div>
             </div>
@@ -31,7 +32,8 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2 v-model="query.periodId" :options="periods">
+                <select2 v-model="query.periodId">
+                  <option v-for="item in periods" :value="item.periodId">{{item.periodName}}</option>
                 </select2>
               </div>
             </div>
@@ -145,12 +147,11 @@
 
   export default{
     data: function () {
-      var currentPeriod = window.config.periods.filter(item => item.isCurrent == 1)[0]
       return {
         query: {
           areaTeamId: window.config.areaTeams[0] ? window.config.areaTeams[0].areaTeamId : '',
           busTeamId: '',
-          periodId: currentPeriod.periodId,
+          periodId: '',
           scheduleTemplate: 0
         },
         weeks: [],
@@ -160,7 +161,8 @@
         courseClassMap: {},
         modifyCourseClassMap: {},
         scheduleTemplate: scheduleTemplates[0],
-        period: {}
+        period: {},
+        periods:[],
       }
     },
     watch: {
@@ -168,10 +170,18 @@
         this.courseClassMap = {}
         this.modifyCourseClassMap = {}
         val.forEach(item => this.courseClassMap[item.classId] = item)
+      },
+      'query.areaTeamId':function(){
+        this.query.periodId = ''
+        this.loadPeriodData()
       }
     },
     created: function () {
-      this.loadScheduleData()
+      this.$once('period.loaded',()=>{
+        this.loadScheduleData()
+      })
+      //this.loadScheduleData()
+      this.loadPeriodData()
     },
     mounted: function () {
       //this.loadCourseClassWithTeacher()
@@ -209,11 +219,6 @@
       subjects: function () {
         return window.config.subjects.map(function (item) {
           return {value: item.subjectId, text: item.subjectName}
-        })
-      },
-      periods: function () {
-        return window.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName}
         })
       }
     },
@@ -256,7 +261,7 @@
                 return item.week;
               }))).sort()
 
-              _this.period = window.config.periods.filter(item => item.periodId == _this.query.periodId)[0];
+              _this.period = _this.periods.filter(item => item.periodId == _this.query.periodId)[0];
               _this.period.segments = parseInt(_this.period.segments)
               _this.teacherList = ret.data.teacherList
               _this.courseClassList = ret.data.courseClassList
@@ -347,7 +352,21 @@
           html:$('<div>').append($('#schedule').clone()).html(),
           downloadName:'老师课表'
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data
+            _this.query.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.$emit('period.loaded')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 </script>

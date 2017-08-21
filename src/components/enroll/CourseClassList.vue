@@ -9,14 +9,14 @@
           <div class="am-u-sm-12 am-form ">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
+                <select2 v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="" disabled>区域</option>
                 </select2>
               </div>
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.busTeamId" :options="busTeams">
+                <select2 v-model="query.busTeamId" :options="busTeams">
                   <option value="">业务组</option>
                 </select2>
               </div>
@@ -24,14 +24,14 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
+                <select2 v-model="query.productId" :options="products">
                   <option value="">产品</option>
                 </select2>
               </div>
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2 required  v-model="query.season"  >
+                <select2 required v-model="query.season">
                   <option value="">季节</option>
                   <option value="春季班">春季班</option>
                   <option value="暑期班">暑期班</option>
@@ -43,7 +43,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.courseTemplateId" :options="courses">
+                <select2 v-model="query.courseTemplateId" :options="courses">
                   <option value="">课程</option>
                 </select2>
               </div>
@@ -51,7 +51,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.periodId" :options="periods">
+                <select2 v-model="query.periodId" :options="periods">
                   <option value="">期数</option>
                 </select2>
               </div>
@@ -59,7 +59,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.gradeId" :options="grades">
+                <select2 v-model="query.gradeId" :options="grades">
                   <option value="">年级</option>
                 </select2>
               </div>
@@ -67,7 +67,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.subjectId" :options="subjects">
+                <select2 v-model="query.subjectId" :options="subjects">
                   <option value="">科目</option>
                 </select2>
               </div>
@@ -87,15 +87,15 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <date-picker v-model="query.startCourseTime" >
-                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
+                <date-picker v-model="query.startCourseTime">
+                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required>
                 </date-picker>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.status">
+                <select2 v-model="query.status">
                   <option value="">班级状态</option>
                   <option value="0">未开班</option>
                   <option value="1">已开班</option>
@@ -108,11 +108,11 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="search" ><span class="am-icon-search"></span>查询
+                        @click="search"><span class="am-icon-search"></span>查询
                 </button>
-               <button type="button" class="am-btn am-btn-default am-btn-success"
-                       @click="exportStudentReg" ><span class="am-icon-download"></span>导出
-               </button>
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="exportStudentReg"><span class="am-icon-download"></span>导出
+                </button>
               </div>
             </div>
 
@@ -147,7 +147,7 @@
                 label="教室"
                 min-width="100">
               </el-table-column>
-               <el-table-column
+              <el-table-column
                 label="众筹"
                 min-width="100">
                 <template scope="scope">
@@ -219,7 +219,10 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfunding/reg/')) + scope.row.classId)">报名列表</el-button>
+                  <el-button size="small" :disabled="scope.row.status == 0"
+                             @click.native="$router.push((scope.row.classType == 0 ? ('/main/enroll/class/reg/'):('/main/enroll/crowdfunding/reg/')) + scope.row.classId)">
+                    报名列表
+                  </el-button>
                 </template>
               </el-table-column>
 
@@ -241,7 +244,7 @@
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
 
-  export default{
+  export default {
     data: function () {
       return {
         tableData: [],
@@ -249,31 +252,48 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
-          busTeamId : '',
-          productId : '',
-          periodId: window.config.periods.filter(item => item.isCurrent == 1)[0].periodId,
-          status : 1
+          areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '',
+          busTeamId: '',
+          courseTemplateId: '',
+          productId: '',
+          periodId: '',
+          status: 1
         },
         searchConfig: {},
-        products:[],
-        courses:[],
-        courseClass :{},
-        selection:[]
+        products: [],
+        courses: [],
+        courseClass: {},
+        selection: [],
+        periods:[]
       }
     },
     components: {
       Pagination
     },
+    watch:{
+      'query.areaTeamId':function(){
+        this.query.busTeamId =  ''
+        this.query.productId = ''
+        this.query.courseTemplateId = ''
+        this.query.periodId = ''
+        this.loadProductData()
+        this.loadCourseData()
+        this.loadPeriodData()
+      }
+    },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo)
+      this.$once('period.load',()=>{
+        this.loadTableData(this.pageNo)
+      })
+
       this.loadProductData()
       this.loadCourseData()
+      this.loadPeriodData()
       var _this = this
-      this.$root.$on('courseClass:new',function(){
+      this.$root.$on('courseClass:new', function () {
         _this.pageNo = 1
         _this.loadTableData(_this.pageNo)
       })
@@ -295,20 +315,15 @@
         return options
       },
       grades: function () {
-        return this.$root.config.grades.map(function(item){
+        return this.$root.config.grades.map(function (item) {
           return {value: item.gradeId, text: item.gradeName}
         })
       },
       subjects: function () {
-        return this.$root.config.subjects.map(function(item){
+        return this.$root.config.subjects.map(function (item) {
           return {value: item.subjectId, text: item.subjectName}
         })
       },
-      periods:function(){
-        return this.$root.config.periods.map(function(item){
-          return {value: item.periodId, text: item.periodName}
-        })
-      }
 
     },
     methods: {
@@ -316,15 +331,15 @@
         this.loadTableData(1)
       },
       //导出注册信息
-      exportStudentReg:function(){
+      exportStudentReg: function () {
         var _this = this
         var url = io.apiAdminExportStudentReg + '?accessToken=' + io.getHeaders().accessToken;
 
-        for(var i in _this.query)    {
-           url = url + '&' + i + "="+ _this.query[i];
+        for (var i in _this.query) {
+          url = url + '&' + i + "=" + _this.query[i];
         }
         window.open(url)
-     },
+      },
 
       loadTableData: function (pageNo) {
         var _this = this
@@ -343,7 +358,9 @@
       },
       loadProductData: function () {
         var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
+        io.post(io.apiAdminBaseProductListForAreaTeam, {
+          areaTeamId: this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.products = ret.data.map(function (item) {
               return {value: item.productId, text: item.name}
@@ -355,7 +372,9 @@
       },
       loadCourseData: function () {
         var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
+        io.post(io.apiAdminBaseCourseListForAreaTeam, {
+          areaTeamId: this.query.areaTeamId
+        }, function (ret) {
           if (ret.success) {
             _this.courses = ret.data.map(function (item) {
               return {value: item.courseTemplateId, text: item.courseName}
@@ -364,7 +383,23 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId: this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName}
+            })
+            _this.query.periodId = ret.data.filter(item => item.isCurrent == 1)[0].periodId
+            _this.$emit('period.loaded')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
     }
   }
 </script>

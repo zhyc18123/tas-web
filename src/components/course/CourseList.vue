@@ -187,7 +187,7 @@ import Pagination from '../base/Pagination'
             pageSize:10,
             pageNo:1,
             query:{
-              areaTeamId : '',
+              areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
               busTeamId : '',
               productId : ''
             },
@@ -197,6 +197,13 @@ import Pagination from '../base/Pagination'
         components: {
           Pagination
         },
+      watch:{
+        'query.areaTeamId':function(){
+          this.query.busTeamId =  ''
+          this.query.productId = ''
+          this.loadProductData()
+        }
+      },
         mounted:function(){
           $(window).smoothScroll()
         },
@@ -254,7 +261,9 @@ import Pagination from '../base/Pagination'
           },
           loadProductData: function () {
             var _this = this
-            io.post(io.apiAdminBaseProductList, {}, function (ret) {
+            io.post(io.apiAdminBaseProductListForAreaTeam, {
+              areaTeamId : this.query.areaTeamId
+            }, function (ret) {
               if (ret.success) {
                 _this.products = ret.data.map(function (item) {
                   return {value: item.productId, text: item.name}
