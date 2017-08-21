@@ -87,7 +87,7 @@
 
         </div>
 
-        <div class="am-u-sm-12" v-if="tableData&&tableData.length>0">
+        <div class="am-u-sm-12" >
           <el-table
             :data="tableData"
             border
@@ -220,9 +220,10 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId: '',
+          areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId: '',
           productId: '',
+          periodId: window.config.periods.filter(item => item.isCurrent == 1)[0].periodId
 
         },
         products: [],

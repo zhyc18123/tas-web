@@ -1,8 +1,8 @@
 <template>
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">用户信息</div>
+        <div class="widget-title am-fl">优惠分类信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -12,52 +12,10 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>用户名
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>名称
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入用户名" required v-model="formData.username">
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>姓名
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text"  class="am-form-field" placeholder="请输入姓名" required v-model="formData.realName">
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入手机号码"  data-validation-message="请输入正确的手机号码" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" required v-model="formData.phoneNo"/>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>用户角色
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required v-model="formData.userType" >
-                  <option value="">请选择</option>
-                  <option value="0">誉优</option>
-                  <option value="1">区域</option>
-                  <option value="2">业务组</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                头像
-              </label>
-              <div class="am-u-sm-9 am-form-file input-field">
-                <file-upload extensions="jpg,png" @uploaded="uploadAvatar">
-                  <img class="am-margin-top am-radius" :src="formData.avatarUrl" style="width:168px;height:168px">
-                </file-upload>
+                <input type="text" class="am-form-field" placeholder="请输入名称" required v-model="formData.name">
               </div>
             </div>
 
@@ -67,31 +25,27 @@
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
               </div>
             </div>
-            </fieldset>
+          </fieldset>
         </form>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import io from '../../lib/io'
+import conf from '../../lib/conf'
     export default{
         data(){
             return{
                 formData:{
-                  areaTeamId:'',
-                  busTeamId:'',
-                  userType:'',
-                  campusName: ''
                 }
             }
         },
         created:function(){
-         var userId  = this.$params('userId')
-         if(userId){
+         var discountCategoryId  = this.$params('discountCategoryId')
+         if(discountCategoryId){
           var _this = this
-          io.post(io.apiAdminSysUserDetail,{ userId : userId },
+          io.post(io.apiAdminDiscountCategoryDetail,{ discountCategoryId : discountCategoryId },
             function(ret){
               if(ret.success){
                 _this.formData = ret.data
@@ -102,14 +56,10 @@ import io from '../../lib/io'
           })
          }
 
-
         },
         mounted:function(){
           var _this = this ;
           $('#' + this.id ).validator({
-            validate:function(validity){
-
-            },
             onValid: function(validity) {
               $(validity.field).closest('.input-field').find('.am-alert').hide();
             },
@@ -135,6 +85,7 @@ import io from '../../lib/io'
               var formValidity = this.isFormValid();
               var complete = function(){
                 _this.$hiddenLoading()
+                _this.$root.$emit('reloadConfig')
                 $submitBtn.removeAttr("disabled" ,"disabled" )
               }
               if(formValidity){
@@ -145,33 +96,25 @@ import io from '../../lib/io'
             }
           });
         },
-
         methods:{
           save:function(complete){
             var _this = this
-            io.post(io.apiAdminSaveOrUpdateSysUser,_this.formData,
+            io.post(io.apiAdminDiscountSaveOrUpdateCategory,_this.formData,
             function(ret){
               complete.call()
               if(ret.success){
                 _this.$toast('OK')
-                _this.$router.push('/main/sys/user/list')
+                _this.$router.push('/main/discount/category/list')
               }else{
                 _this.$alert(ret.desc)
               }
-
             },
             function(){
               complete.call()
               _this.$alert('请求服务器失败')
             })
-          },
-          uploadAvatar:function(info){
-            this.formData.avatarUrl = info.url
-          },
-          selectCampusCallback:function(campus){
-            this.formData.campusId = campus.campusId
-            this.formData.campusName = campus.campusName
           }
         }
     }
+
 </script>
