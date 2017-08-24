@@ -60,7 +60,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本（元/周）
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入11周成本" min="0" step="1" required v-model="formData.weekCost">
+                <input type="number"  class="am-form-field" placeholder="输入周成本" min="0" step="1" required v-model="formData.weekCost">
               </div>
             </div>
 
