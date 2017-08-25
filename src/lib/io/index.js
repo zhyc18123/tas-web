@@ -290,6 +290,11 @@ const io = {
     this.apiAdminDiscountAreaTeamBusTeamOrgTree = conf.baseApiPath + '/api/admin/discount/areaTeamBusTeamOrgTree'
     this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
+    this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
+    this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
+    this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
+    this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
+
 
 
 

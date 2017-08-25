@@ -28,7 +28,10 @@ import {
   Tag,
   Rate,
   Steps,
-  Step
+  Step,
+  Input,
+  Tabs,
+  TabPane,
 } from 'element-ui'
 
 var VueUI = function(){
@@ -118,6 +121,9 @@ VueUI.install = function (Vue){
   Vue.component(Rate.name,Rate)
   Vue.component(Steps.name,Steps)
   Vue.component(Step.name,Step)
+  Vue.component(Tabs.name,Tabs)
+  Vue.component(Input.name,Input)
+  Vue.component(TabPane.name,TabPane)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )
