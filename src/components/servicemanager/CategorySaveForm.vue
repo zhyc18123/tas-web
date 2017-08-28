@@ -12,28 +12,29 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>
                 所属服务类型:
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2  disabled v-model="formData.type" >
+                <select2 v-model="formData.type" required>
                   <option value="">请选择</option>
                   <option value="0">供应</option>
                   <option value="2">课室</option>
-                  <option value="3">課室</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                可选择父分类：
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2  disabled required  v-model="formData.parentId" :options="serviceCategorys" >
-                  <option value=" ">请选择</option>
+                  <option value="3">需求</option>
                 </select2>
               </div>
             </div>
 
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                 可选择父分类：
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required  v-model="formData.parentId" :options="serviceCategorys" >
+                  <option value=" ">请选择</option>
+                </select2>
+              </div>
+            </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类名称
@@ -44,17 +45,19 @@
             </div>
 
 
+
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本类型
               </label>
               <div class="am-u-sm-3  input-field am-u-end">
-                <choose v-model="formData.feeCategoryId">
-                  <select 　　data-placeholder="成本类型" style="min-width:300px;" class="chosen-select-deselect"  >
+              <!--  <choose v-model="formData.feeCategoryId">-->
+                  <select 　 v-model="formData.feeCategoryId"　data-placeholder="成本类型" style="min-width:300px;" class="chosen-select-deselect"  required>
                     <option value=""></option>
                     <option v-for="item in feeCategories" :value="item.feeCategoryId">{{item.name}}</option>
                   </select>
-                </choose>
+              <!--  </choose>-->
               </div>
             </div>
 
@@ -63,15 +66,18 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs" >*</span>收入类型
               </label>
               <div class="am-u-sm-3  input-field am-u-end">
-                <choose v-model="formData.incomeCategoryId">
-                  <select 　data-placeholder="收入类型" style="min-width:300px;" class="chosen-select-deselect" >
+              <!--  <choose v-model="formData.incomeCategoryId">-->
+                  <select v-model="formData.incomeCategoryId"　data-placeholder="收入类型" style="min-width:300px;" class="chosen-select-deselect" required>
                     <option value=""></option>
                     <option v-for="item in incomeCategories" :value="item.incomeCategoryId">{{item.name}}</option>
                   </select>
-                </choose>
+               <!-- </choose>-->
               </div>
             </div>
-          <!--  <div class="am-form-group">
+
+
+
+            <!--<div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性1
               </label>
@@ -103,7 +109,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性4
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入分类名属性" v-model="formData.attribute4">
+                <input type="text" class="am-form-field" placeholder="请输入分类属性" v-model="formData.attribute4">
               </div>
             </div>
 
@@ -139,7 +145,7 @@
         formData: {
           categoryId:'',
           name:'',
-          type:''
+          type:'',
         },
         category: [],
         feeCategories:[],
@@ -162,7 +168,7 @@
             _this.$alert('请求服务器失败')
           })
       }
-      this.loadCategoryData();
+      //this.loadCategoryData();
       this.loadFeeCategoryData();
       this.loadIncomeCategoryData();
 
@@ -172,6 +178,8 @@
         this.loadServiceCategoryByType();
       }
     },
+
+
     mounted: function () {
       var _this = this;
       $('#' + this.id).validator({
@@ -215,20 +223,23 @@
     methods: {
       save: function (complete) {
         var _this = this
-        var _categoryId = _this.$params('categoryId');
-        var _parentId;
-        if(_categoryId != _this.formData.categoryId) {
-          _parentId = _this.formData.categoryId;
-          _this.formData.categoryId = _categoryId;
-          _this.formData.parentId = _parentId;
-        }
         var data = _this.formData
-        io.post(io.apiAdminEditCategory, data,
+        if(!this.formData.feeCategoryId){
+          complete.call()
+          this.$alert('请选择成本类型')
+          return
+        }
+        if(!this.formData.incomeCategoryId){
+          complete.call()
+          this.$alert('请选择收入类型')
+          return
+        }
+        io.post(io.apiAdminSaveCategory, data,
           function (ret) {
             complete.call()
             if (ret.success) {
               _this.$toast('OK')
-              _this.$router.push('/main/tradingService/category/list')
+              _this.$router.push('/main/serviceManager/category/list')
             } else {
               _this.$alert(ret.desc)
             }
@@ -239,18 +250,6 @@
             _this.$alert('请求服务器失败')
           })
       },
- /*     loadCategoryData:function() {
-        var _this = this
-        io.post(io.apiAdminGetCategory, {}, function (ret) {
-          if (ret.success) {
-            _this.category = ret.data.map(function (item) {
-              return {value: item.categoryId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },*/
       loadIncomeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllIncomeCategory, {}, function (ret) {
@@ -285,27 +284,34 @@
           }
         })
       },
-
+      loadCategoryData:function() {
+        var _this = this
+        io.post(io.apiAdminGetCategory, {}, function (ret) {
+          if (ret.success) {
+            _this.category = ret.data.map(function (item) {
+              return {value: item.categoryId, text: item.name}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       loadServiceCategoryByType:function() {
         var _this = this
-        _this.serviceCategorys=[]
+        _this.serviceCategorys=[];
         io.post(io.apiAdminGetCategoryByType, {type:_this.formData.type}, function (ret) {
           if (ret.success) {
-            function getLengthByLevel(level) {
-              var length="";
-              level=parseInt(level);
-              for(var i=1;i<level;i++){
-                length=length+"-"
-              }
-              return length;
-            }
+             function getLengthByLevel(level) {
+                 var length="";
+                 level=parseInt(level);
+                 for(var i=1;i<level;i++){
+                     length=length+"-"
+                 }
+                 return length;
+             }
             function toList(categoryList) {
               for (var i = 0; i < categoryList.length; i++) {
                 var serviceCategory = categoryList[i]
-
-                if(_this.formData.categoryId==serviceCategory.value){
-                    continue;
-                }
                 var minCategory = {
                   value: serviceCategory.value,
                   text: getLengthByLevel(serviceCategory.level)+serviceCategory.label
@@ -317,7 +323,7 @@
               }
             }
             toList(ret.data)
-           // console.log(_this.serviceCategorys)
+            console.log(_this.serviceCategorys)
 
 
           } else {
