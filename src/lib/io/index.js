@@ -194,6 +194,7 @@ const io = {
     this.apiAdminSettlementUpdateWithdrawalStatus = conf.baseApiPath + '/api/admin/settlement/updateWithdrawalStatus'
     this.apiAdminSettlementFeeCategoryList = conf.baseApiPath + '/api/admin/settlement/feeCategoryList'
     this.apiAdminSettlementAllFeeCategory = conf.baseApiPath + '/api/admin/settlement/allFeeCategory'
+    this.apiAdminSettlementFeeCategoryTreeMap = conf.baseApiPath + '/api/admin/settlement/feeCategoryTreeMap'
     this.apiAdminSettlementFeeCategoryDetail = conf.baseApiPath + '/api/admin/settlement/feeCategoryDetail'
     this.apiAdminSettlementSaveOrUpdateFeeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateFeeCategory'
     this.apiAdminSettlementDeleteFeeCategory = conf.baseApiPath + '/api/admin/settlement/deleteFeeCategory'
@@ -294,6 +295,7 @@ const io = {
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
+    this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
 
 
 

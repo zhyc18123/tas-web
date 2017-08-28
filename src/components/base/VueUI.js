@@ -32,6 +32,9 @@ import {
   Input,
   Tabs,
   TabPane,
+  Cascader,
+  Checkbox,
+  CheckboxGroup
 } from 'element-ui'
 
 var VueUI = function(){
@@ -124,6 +127,9 @@ VueUI.install = function (Vue){
   Vue.component(Tabs.name,Tabs)
   Vue.component(Input.name,Input)
   Vue.component(TabPane.name,TabPane)
+  Vue.component(Cascader.name,Cascader)
+  Vue.component(Checkbox.name,Checkbox)
+  Vue.component(CheckboxGroup.name,CheckboxGroup)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )
