@@ -14,9 +14,7 @@
               <div class="am-u-sm-24 am-u-md-24 am-u-lg-24">
                 <div class="am-form-group datepicker">
                   <date-picker v-model="year" >
-                    <span><<</span>
                     <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-                    <span>>></span>
                   </date-picker>
                 </div>
               </div>
@@ -38,7 +36,7 @@
                       :label="item + '月'">
                       <template scope="scope">
                         <div size="small" @click.native="handleSave">
-                          <el-input :disabled="item < currentMonth + 2 || year < currentYear" v-model="scope.row['month' + item]"></el-input>
+                          <el-input :disabled="(item < currentMonth + 2 && year == currentYear)|| year < currentYear" v-model="scope.row['month' + item]"></el-input>
                         </div>
                       </template>
                     </el-table-column>

@@ -34,7 +34,10 @@ import {
   TabPane,
   Cascader,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Radio,
+  Select,
+  Option
 } from 'element-ui'
 
 var VueUI = function(){
@@ -130,6 +133,9 @@ VueUI.install = function (Vue){
   Vue.component(Cascader.name,Cascader)
   Vue.component(Checkbox.name,Checkbox)
   Vue.component(CheckboxGroup.name,CheckboxGroup)
+  Vue.component(Radio.name,Radio)
+  Vue.component(Select.name,Select)
+  Vue.component(Option.name,Option)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )
