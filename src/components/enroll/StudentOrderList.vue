@@ -23,7 +23,7 @@
         label="缴费时间"
         min-width="200">
         <template scope="scope">
-          {{scope.row.createTime | formatTime}}
+          {{scope.row.updateTime | formatTime}}
         </template>
       </el-table-column>
       <el-table-column
