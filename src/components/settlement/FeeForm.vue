@@ -105,6 +105,7 @@
 
 <script>
 import io from '../../lib/io'
+import moment from 'moment'
 
     export default{
       data(){
@@ -136,8 +137,22 @@ import io from '../../lib/io'
             io.post(io.apiAdminSettlementFeeDetail, {feeId: feeId},
               function (ret) {
                 if (ret.success) {
-                  ret.data.tags = ret.data.tags.split(',')||[]
                   _this.formData = ret.data
+                  _this.needShareTime = ret.data.needShareTime === '1'
+                  _this.needMultMainBody = ret.data.needMultMainBody === '1'
+                  if(_this.formData.shareStart && _this.formData.shareEnd) {
+                      debugger
+                    _this.formData.shareStart = moment(parseInt(_this.formData.shareStart)).format('YYYY-MM-DD')
+                    _this.formData.shareEnd = moment(parseInt(_this.formData.shareEnd)).format('YYYY-MM-DD')
+                  }
+                  if (_this.formData.shareMainAccountIds) {
+                    _this.checkList = _this.formData.shareMainAccountIds.split(',')
+                  }
+                  if (_this.formData.parentFeeCategoryId) {
+                    _this.feeCategory = [_this.formData.parentFeeCategoryId, _this.formData.feeCategoryId]
+                  } else {
+                    _this.feeCategory = [_this.formData.feeCategoryId]
+                  }
                 }
               },
               function () {
@@ -146,7 +161,6 @@ import io from '../../lib/io'
           }
           this.loadMainAccountList()
           this.getOwnMainCount()
-//          this.loadCourseTypeData()
           this.loadProductData()
           this.loadFeeCategoryData()
         },
@@ -250,10 +264,8 @@ import io from '../../lib/io'
             }
 
             var _this = this
-            var submitData = Object.assign({} , _this.formData )
-            submitData.tags = submitData.tags.join(',')
 
-            io.post(io.apiAdminSettlementSaveFee,submitData,
+            io.post(io.apiAdminSettlementSaveFee,_this.formData,
             function(ret){
               complete.call()
               if(ret.success){
