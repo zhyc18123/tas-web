@@ -147,6 +147,13 @@ const DiscountList = resolve => require(['./components/discount/DiscountList'], 
 const DiscountForm = resolve => require(['./components/discount/DiscountForm'], resolve)
 const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
 
+const BusinessStatisticsList = resolve => require(['./components/operating/BusinessStatisticsList'], resolve)
+const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
+const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
+const TargetSetList = resolve => require(['./components/operating/TargetSetList'], resolve)
+const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
+const InputProductIncome = resolve => require(['./components/operating/InputProductIncome'], resolve)
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -292,6 +299,13 @@ const router = new VueRouter({
       {path: 'discount/discount/list' , component: DiscountList },
       {path: 'discount/discount/add' , component: DiscountForm},
       {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
+
+      {path: 'operating/businessStatistics/list' , component: BusinessStatisticsList},
+      {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
+      {path: 'operating/dataAnalysis/list' , component: DataAnalysisList},
+      {path: 'operating/targetSet/list' , component: TargetSetList},
+      {path: 'operating/targetSet/inputMainIncome' , component: InputMainIncome},
+      {path: 'operating/targetSet/inputProductIncome' , component: InputProductIncome},
 
 
     ],

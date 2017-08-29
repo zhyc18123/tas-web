@@ -28,7 +28,16 @@ import {
   Tag,
   Rate,
   Steps,
-  Step
+  Step,
+  Input,
+  Tabs,
+  TabPane,
+  Cascader,
+  Checkbox,
+  CheckboxGroup,
+  Radio,
+  Select,
+  Option
 } from 'element-ui'
 
 var VueUI = function(){
@@ -118,6 +127,15 @@ VueUI.install = function (Vue){
   Vue.component(Rate.name,Rate)
   Vue.component(Steps.name,Steps)
   Vue.component(Step.name,Step)
+  Vue.component(Tabs.name,Tabs)
+  Vue.component(Input.name,Input)
+  Vue.component(TabPane.name,TabPane)
+  Vue.component(Cascader.name,Cascader)
+  Vue.component(Checkbox.name,Checkbox)
+  Vue.component(CheckboxGroup.name,CheckboxGroup)
+  Vue.component(Radio.name,Radio)
+  Vue.component(Select.name,Select)
+  Vue.component(Option.name,Option)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )
