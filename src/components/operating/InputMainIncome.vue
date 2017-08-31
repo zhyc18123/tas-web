@@ -27,6 +27,7 @@
                     style="min-width: 100%">
                     <el-table-column
                       prop="name"
+                      fixed
                       label="主体/营收（万元）/月份"
                       min-width="190">
                     </el-table-column>
@@ -42,6 +43,7 @@
                     </el-table-column>
                     <el-table-column
                       label="操作"
+                      fixed="right"
                       width="100">
                       <template scope="scope">
                         <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
@@ -72,6 +74,7 @@
                     style="min-width: 100%">
                     <el-table-column
                       prop="name"
+                      fixed
                       label="主体/利润（万元）/月份"
                       min-width="190">
                     </el-table-column>
@@ -87,6 +90,7 @@
                     </el-table-column>
                     <el-table-column
                       label="操作"
+                      fixed="right"
                       width="100">
                       <template scope="scope">
                         <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
