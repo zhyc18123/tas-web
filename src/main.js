@@ -222,7 +222,8 @@ const router = new VueRouter({
 
       {path: 'enroll/student/reg/:studentId' , component: StudentReg },
 
-      {path: 'enroll/student/reg/list' , component: StudentRegList },
+      {path: 'enroll/student/reg/query/list' , component: StudentRegList },
+
       {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
