@@ -280,11 +280,11 @@
     methods: {
       check:function(item){
         var start = item.completedLectureAmount + 1
-        if(item.startAmount < start || item.startAmount > item.lectureAmount ){
+        if(parseInt(item.startAmount) < parseInt(start) || parseInt(item.startAmount) > parseInt(item.lectureAmount) ){
           item.startAmount = start
         }
 
-        if( item.endAmount < 0 || item.endAmount > item.lectureAmount ){
+        if( parseInt(item.endAmount) < 0 || parseInt(item.endAmount) > parseInt(item.lectureAmount) ){
           item.endAmount = item.lectureAmount
         }
 
