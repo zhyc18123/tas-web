@@ -85,7 +85,7 @@ const ClassHistoryList = resolve => require([ './components/enroll/ClassHistoryL
 const StudentRefundList = resolve => require([ './components/enroll/StudentRefundList'], resolve)
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
-const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
+//const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
 
 
@@ -242,10 +242,8 @@ const router = new VueRouter({
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
-      {path: 'enroll/student/reg/:studentId' , component: StudentReg },
 
-      {path: 'enroll/class/list' , component: CourseClassList },
-      {path: 'enroll/class/reg/:classId' , component: StudentRegList },
+      {path: 'enroll/student/reg/list' , component: StudentRegList },
       {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},

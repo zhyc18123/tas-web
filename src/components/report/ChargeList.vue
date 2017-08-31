@@ -189,6 +189,18 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
+                prop="orderId"
+                label="订单状态"
+                min-width="100">
+                <template scope="scope">
+                  {{ {
+                  '0':{'0': '未缴费', '1': '欠费', '2': '已缴费'},
+                  '2':{'0': '未处理', '1': '已审核', '2': '已拒绝'},
+                  '3':{'0': '未缴费', '1': '欠费', '2': '已缴费','3':'-','4':'撤销','5':'退款'},
+                  '4':{'0': '未缴费', '1': '欠费', '2': '已缴费','3':'-','4':'撤销','5':'退款'} }[scope.row.busType][scope.row.orderStatus] || '' }}
+                </template>
+              </el-table-column>
+              <el-table-column
                 prop="year"
                 label="年份"
                 min-width="100">
@@ -224,6 +236,11 @@
                 <template scope="scope">
                   {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
                 </template>
+              </el-table-column>
+              <el-table-column
+                prop="payableAmount"
+                label="应缴金额"
+                min-width="100">
               </el-table-column>
               <el-table-column
                 prop="paidAmount"
@@ -333,7 +350,7 @@
                 label="时间"
                 min-width="200">
                 <template scope="scope">
-                  {{ scope.row.updateTime | formatTime }}
+                  {{ scope.row.createTime | formatTime }}
                 </template>
               </el-table-column>
               <el-table-column
