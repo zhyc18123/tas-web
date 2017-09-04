@@ -184,35 +184,45 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="orderId"
-                label="订单号"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="orderId"
-                label="订单状态"
-                min-width="100">
+                label="时间"
+                min-width="180">
                 <template scope="scope">
-                  {{ {
-                  '0':{'0': '未缴费', '1': '欠费', '2': '已缴费'},
-                  '2':{'0': '未处理', '1': '已审核', '2': '已拒绝'},
-                  '3':{'0': '未缴费', '1': '欠费', '2': '已缴费','3':'-','4':'撤销','5':'退款'},
-                  '4':{'0': '未缴费', '1': '欠费', '2': '已缴费','3':'-','4':'撤销','5':'退款'} }[scope.row.busType][scope.row.orderStatus] || '' }}
+                  {{ scope.row.updateTime | formatTime }}
                 </template>
-              </el-table-column>
-              <el-table-column
-                prop="year"
-                label="年份"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="season"
-                label="季节"
-                min-width="100">
               </el-table-column>
               <el-table-column
                 prop="studentName"
                 label="学生姓名"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="paidAmount"
+                label="实缴金额"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="discountAmount"
+                label="优惠金额"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="discountReason"
+                label="优惠原因"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                prop="historyOwingAmount"
+                label="历史欠费金额"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="newOwingAmount"
+                label="最新欠费金额"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="refundAmount"
+                label="实退金额"
                 min-width="100">
               </el-table-column>
               <el-table-column
@@ -231,6 +241,16 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
+                prop="year"
+                label="年份"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="season"
+                label="季节"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
                 label="支付方式"
                 min-width="100">
                 <template scope="scope">
@@ -238,39 +258,9 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="payableAmount"
-                label="应缴金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="paidAmount"
-                label="实缴金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="discountReason"
-                label="优惠原因"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="discountAmount"
-                label="优惠金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="historyOwingAmount"
-                label="历史欠费金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="newOwingAmount"
-                label="最新欠费金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="refundAmount"
-                label="实退金额"
-                min-width="100">
+                prop="orderId"
+                label="订单号"
+                min-width="180">
               </el-table-column>
               <el-table-column
                 prop="regCampus"
@@ -345,14 +335,6 @@
                 label="业务组"
                 min-width="100">
               </el-table-column>
-
-              <el-table-column
-                label="时间"
-                min-width="200">
-                <template scope="scope">
-                  {{ scope.row.createTime | formatTime }}
-                </template>
-              </el-table-column>
               <el-table-column
                 prop="remark"
                 label="备注"
@@ -393,7 +375,7 @@
       return {
         tableData: [],
         total: 0,
-        pageSize: 50,
+        pageSize: 10,
         pageNo: 1,
         query: {
           areaTeamId : '',
@@ -505,7 +487,7 @@
         })
       },
       exportExcel:function(){
-          io.downloadFile(io.apiAdminReportExportCharge,this.query)
+        io.downloadFile(io.apiAdminReportExportCharge,this.query)
       }
     }
   }

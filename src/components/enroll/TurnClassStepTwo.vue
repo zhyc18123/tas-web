@@ -212,11 +212,11 @@
     },
     methods: {
       check: function (item) {
-        if (item.startAmount <= 0 || item.startAmount > item.lectureAmount) {
+        if (parseInt( item.startAmount ) <= 0 || parseInt( item.startAmount ) > parseInt( item.lectureAmount ) ) {
           item.startAmount = 1
         }
 
-        if (item.endAmount < 0 || item.endAmount > item.lectureAmount) {
+        if (parseInt( item.endAmount ) < 0 || parseInt( item.endAmount ) > parseInt( item.lectureAmount ) ) {
           item.endAmount = item.lectureAmount
         }
 
