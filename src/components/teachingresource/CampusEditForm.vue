@@ -100,10 +100,10 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>付款主体
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <choose v-model="formData.payMainAccountId">
+                <choose v-model="formData.areaTeamId">
                   <select2 required >
                     <option value="">请选择</option>
-                    <option v-for="item in payMainAccountList" :value="item.mainAccountId">{{item.name}}</option>
+                    <option v-for="item in this.$root.config.areaTeams" :value="item.areaTeamId">{{item.name}}</option>
                   </select2>
                 </choose>
               </div>
