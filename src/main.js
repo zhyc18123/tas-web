@@ -85,7 +85,7 @@ const ClassHistoryList = resolve => require([ './components/enroll/ClassHistoryL
 const StudentRefundList = resolve => require([ './components/enroll/StudentRefundList'], resolve)
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
-const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
+//const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
 
 
@@ -146,6 +146,16 @@ const DiscountRuleForm = resolve => require(['./components/discount/DiscountRule
 const DiscountList = resolve => require(['./components/discount/DiscountList'], resolve)
 const DiscountForm = resolve => require(['./components/discount/DiscountForm'], resolve)
 const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
+
+const BusinessStatisticsList = resolve => require(['./components/operating/BusinessStatisticsList'], resolve)
+const BusinessCostList = resolve => require(['./components/operating/BusinessCostList'], resolve)
+const BusinessCostDetail = resolve => require(['./components/operating/BusinessCostDetail'], resolve)
+const TeachReward = resolve => require(['./components/operating/TeachReward'], resolve)
+const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
+const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
+const TargetSetList = resolve => require(['./components/operating/TargetSetList'], resolve)
+const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
+const InputProductIncome = resolve => require(['./components/operating/InputProductIncome'], resolve)
 
 
 Vue.use(VueRouter)
@@ -235,10 +245,8 @@ const router = new VueRouter({
       {path: 'enroll/student/reg' , component: StudentReg },
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
-      {path: 'enroll/student/reg/:studentId' , component: StudentReg },
 
-      {path: 'enroll/class/list' , component: CourseClassList },
-      {path: 'enroll/class/reg/:classId' , component: StudentRegList },
+      {path: 'enroll/student/reg/list' , component: StudentRegList },
       {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
@@ -292,6 +300,16 @@ const router = new VueRouter({
       {path: 'discount/discount/list' , component: DiscountList },
       {path: 'discount/discount/add' , component: DiscountForm},
       {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
+
+      {path: 'operating/businessStatistics/list' , component: BusinessStatisticsList},
+      {path: 'operating/businessStatistics/costList' , component: BusinessCostList},
+      {path: 'operating/businessStatistics/costDetail' , component: BusinessCostDetail},
+      {path: 'operating/businessStatistics/teachReward' , component: TeachReward},
+      {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
+      {path: 'operating/dataAnalysis/list' , component: DataAnalysisList},
+      {path: 'operating/targetSet/list' , component: TargetSetList},
+      {path: 'operating/targetSet/inputMainIncome' , component: InputMainIncome},
+      {path: 'operating/targetSet/inputProductIncome' , component: InputProductIncome},
 
 
     ],
