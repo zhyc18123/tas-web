@@ -36,6 +36,8 @@ const StudentSchoolList = resolve => require(['./components/sysmanager/StudentSc
 const StudentSchoolForm = resolve => require(['./components/sysmanager/StudentSchoolForm'], resolve)
 const ClassRemunerationList = resolve => require(['./components/sysmanager/ClassRemunerationList'], resolve)
 const ClassRemunerationForm = resolve => require(['./components/sysmanager/ClassRemunerationForm'], resolve)
+const CusIdList = resolve => require(['./components/sysmanager/CusIdList'], resolve)
+const CusIdForm = resolve => require(['./components/sysmanager/CusIdForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -210,6 +212,8 @@ const router = new VueRouter({
       {path: 'sys/room/new/add' , component: RoomNewForm },
       {path: 'sys/room/new/edit/:roomId' , component: RoomNewForm },
 
+      {path: 'sys/cusId/list' , component: CusIdList },
+      {path: 'sys/cusId/edit/:campusId' , component: CusIdForm },
 
       {path: 'sys/student/school/list' , component: StudentSchoolList },
       {path: 'sys/student/school/add' , component: StudentSchoolForm },
@@ -246,7 +250,10 @@ const router = new VueRouter({
       {path: 'enroll/student/add' , component: StudentForm },
       {path: 'enroll/student/edit/:studentId' , component: StudentForm },
 
-      {path: 'enroll/student/reg/list' , component: StudentRegList },
+      {path: 'enroll/student/reg/:studentId' , component: StudentReg },
+
+      {path: 'enroll/student/reg/query/list' , component: StudentRegList },
+
       {path: 'enroll/crowdfunding/reg/:classId' , component: CrowdfundingRegList },
 
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},

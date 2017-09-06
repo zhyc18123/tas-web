@@ -19,7 +19,7 @@ const router = new VueRouter({
     path: '/pay',
     component : { template: '<router-view></router-view>' },
     children:[
-      {path:'course/order/:courseOrderId',component : PayCourseOrder },
+      {path:'course/order/:requestPayId',component : PayCourseOrder },
       {path:'success',component : PaySuccess }
     ]
   }]
