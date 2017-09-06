@@ -212,7 +212,12 @@
         }
       },
       showQRCode:function(){
-          this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(conf.basePath + '/m/index.html#/pay/course/order/' +this.courseOrder.courseOrderId)+'" />')
+          var url = conf.basePath + '/m/index.html#/pay/course/order/' + this.requestPayId
+          console.log('二维码地址:' + url )
+          this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(url)+'" />')
+      },
+      showBarCode:function(){
+        this.$dialog('请用post机扫码','<img src="'+io.apiBarcodeEncode + "?content=" + this.requestPayId +'" />')
       },
       selectCampusCallback:function(campus){
         this.formData.chargeCampusId = campus.campusId
@@ -244,15 +249,18 @@
           io.post(io.apiAdminConfirmPayOrder, $.extend({}, _this.formData), function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {
-
+              _this.requestPayId = ret.data
               if(_this.formData.payWay == 4 ){
                 _this.showQRCode()
+                _this.queryPayResult()
+              }else if(_this.formData.payWay == 1 ){
+                _this.showBarCode()
+                _this.queryPayResult()
               }else{
                 _this.$alert("缴费成功")
               }
 
               _this.$root.$emit('order:new')
-              _this.$root.$emit('class:new')
               _this.$emit('paySuccess')
 
             } else {
@@ -262,10 +270,44 @@
           })
         })
 
+      },
+      queryPayResult:function(){
+        var _this  = this
+        function checkWorker(){
+
+          if(!_this.requestPayId){
+            return
+          }
+
+          $.ajax({
+            url: io.apiAdminQueryPayResult,
+            type: 'POST',
+            data: {requestPayId : _this.requestPayId , accessToken : io.getHeaders().accessToken  },
+            dataType: 'text',
+            timeout : 30000,
+            success: function (data) {
+              if(data == 'Y'){
+                alert('支付成功')
+                _this.$root.$emit('order:new')
+                _this.$emit('paySuccess')
+              }else{
+                checkWorker()
+              }
+            },
+            error: function (xhr, status, error) {
+              checkWorker()
+            }
+          })
+        }
+        checkWorker()
       }
 
 
+    },
+    beforeDestroy:function(){
+      delete this.requestPayId
     }
+
   }
 
 

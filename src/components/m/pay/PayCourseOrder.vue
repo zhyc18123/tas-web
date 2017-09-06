@@ -151,7 +151,7 @@
     data(){
       return {
         payMethod: '',
-        courseOrderId :'',
+        requestPayId :'',
         orderDetail : { courseOrder : {} , regDetailVos :[]}
 
       }
@@ -188,9 +188,9 @@
           this.payMethod = 'alipay_wap'
         }
 
-        var courseOrderId  = this.$params('courseOrderId')
-        if(courseOrderId){
-            this.courseOrderId = courseOrderId
+        var requestPayId  = this.$params('requestPayId')
+        if(requestPayId){
+            this.requestPayId = requestPayId
             this.loadCourseOrderDetail();
         }
 
@@ -206,7 +206,7 @@
 
       loadCourseOrderDetail:function(){
           var _this  = this
-          io.post(io.apiAdminCourseOrderDetail,{ courseOrderId : this.courseOrderId },
+          io.post(io.apiAdminCourseOrderDetailByRequestPayId,{ requestPayId : this.requestPayId },
             function(ret){
               if(ret.success){
                 _this.orderDetail = ret.data
@@ -220,7 +220,7 @@
         var extra = null ;
         var channel  = this.payMethod
         var amount  = this.orderDetail.courseOrder.payableAmount - this.orderDetail.courseOrder.paidAmount ;
-        var busId = this.orderDetail.courseOrder.courseOrderId
+        var busId = this.requestPayId
         if(channel == 'alipay_wap'){
           extra = {
             success_url : conf.basePath + "/m/index.html#/pay/success",

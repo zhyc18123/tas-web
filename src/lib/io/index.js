@@ -29,6 +29,7 @@ const io = {
     this.userList = conf.baseApiPath + '/api?method=userList'
 
     this.apiQrcodeEncode = conf.baseApiPath + '/api/qrcode/encode'
+    this.apiBarcodeEncode = conf.baseApiPath + '/api/barcode/encode'
     this.apiPayPreparePay = conf.baseApiPath + '/api/pay/preparePay'
 
     this.apiAdminLogin = conf.baseApiPath + '/api/admin/login'
@@ -181,8 +182,10 @@ const io = {
     this.apiAdminCancelCourseOrder = conf.baseApiPath + '/api/admin/cancelCourseOrder'
     this.apiAdminStudentReadClassList = conf.baseApiPath + '/api/admin/studentReadClassList'
     this.apiAdminCourseOrderDetail = conf.baseApiPath + '/api/admin/courseOrderDetail'
+    this.apiAdminCourseOrderDetailByRequestPayId = conf.baseApiPath + '/api/admin/courseOrderDetailByRequestPayId'
     this.apiAdminStudentClassCertDetail = conf.baseApiPath + '/api/admin/studentClassCertDetail'
     this.apiAdminConfirmPayOrder= conf.baseApiPath + '/api/admin/confirmPayOrder'
+    this.apiAdminQueryPayResult= conf.baseApiPath + '/api/admin/queryPayResult'
     // this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
     this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
     this.apiAdminShowNewClassDetail = conf.baseApiPath + '/api/admin/showNewClass'
@@ -332,6 +335,11 @@ const io = {
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
+
+
+    this.apiAdminAllinPayCusIdConfigList = conf.baseApiPath + '/api/admin/allinPayCusIdConfigList'
+    this.apiAdminAllinPayCusIdConfig = conf.baseApiPath + '/api/admin/allinPayCusIdConfig'
+    this.apiAdminSaveAllinPayCusIdConfig = conf.baseApiPath + '/api/admin/saveAllinPayCusIdConfig'
 
 
 
