@@ -300,6 +300,8 @@ const io = {
     this.apiAdminReportChargeList = conf.baseApiPath + '/api/admin/report/chargeList'
     this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
+    this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'
+    this.apiAdminReportExportConsumeAggregation = conf.baseApiPath + '/api/admin/report/exportConsumeAggregation'
 
 
     this.apiAdminScheduleScheduleDataOfTeacher = conf.baseApiPath + '/api/admin/schedule/scheduleDataOfTeacher'
