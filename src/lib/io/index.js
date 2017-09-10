@@ -192,6 +192,7 @@ const io = {
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
     this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
     this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
+    this.apiAdminQueryAttendOfStudent = conf.baseApiPath + '/api/admin/queryAttendOfStudent'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'

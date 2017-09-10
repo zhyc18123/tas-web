@@ -6,98 +6,99 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td>{{formData.periodName}}</td>
+          <td>{{classInfo.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td>{{formData.busTeamName}}</td>
+          <td>{{classInfo.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td>{{formData.className}}</td>
+          <td>{{classInfo.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">班级编号：</td>
-          <td>{{formData.classId}}</td>
+          <td>{{classInfo.classId}}</td>
           <td class="bgColor">任课老师：</td>
-          <td>{{formData.teacherNames}}</td>
+          <td>{{classInfo.teacherNames}}</td>
           <td class="bgColor">教室：</td>
-          <td>{{formData.roomName}}</td>
+          <td>{{classInfo.roomName}}</td>
         </tr>
         <tr>
           <td class="bgColor">开课日期：</td>
-          <td>{{formData.startCourseTime | formatDate}}</td>
+          <td>{{classInfo.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td>{{formData.lectureAmount}}</td>
+          <td>{{classInfo.lectureAmount}}</td>
           <td class="bgColor">已交金额：</td>
-          <td>{{formData.payAmount}}</td>
+          <td>{{classInfo.payAmount}}</td>
         </tr>
         </tbody>
       </table>
 
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-        <label class="bold-font">
-          当前剩余讲次：第<span>{{ formData.completedLectureAmount < formData.startAmount  ? formData.startAmount : 1 + formData.completedLectureAmount }}</span>讲次~第<span>{{formData.endAmount}}</span>讲次
-        </label>
-        <div class="bold-font am-text-left am-margin-top-sm ">
-          申请讲次：第
-          <label>
-          <select2 v-model="formData.startAmount">
-            <option v-for="no in formData.lectureNos" :value="no">{{no}}</option>
-          </select2>
-        </label>
-          讲~第
-          <span>{{formData.endAmount}}</span>
-          讲
-          <label class="bold-font red">应退学费金额：￥
-            <span>{{formData.remaining}}</span>
-        </label>
-        </div>
-      </div>
+      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
 
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">转班原因</div>
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-        <label class="am-radio-inline">
-          <input type="radio" value="不开班" name="reason" v-model="formData.description"> 不开班
-        </label>
-        <label class="am-checkbox-inline">
-          <input type="radio" value="搬家或家庭原因" name="reason" v-model="formData.description"> 搬家或家庭原因
-        </label>
-        <label class="am-checkbox-inline">
-          <input type="radio" value="与原校时间冲突" name="reason" v-model="formData.description"> 与原校时间冲突
-        </label>
-        <label class="am-checkbox-inline">
-          <input type="radio" value="学生不愿上" name="reason" v-model="formData.description"> 学生不愿上
-        </label>
-        <label class="am-checkbox-inline">
-          <input type="radio" value="其他" name="reason" v-model="formData.description"> 其他
-        </label>
-      </div>
+        <colgroup>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+        </colgroup>
+        <tbody>
+
+        <tr>
+          <td>申请退费讲次</td>
+          <td colspan="7">
+            <template v-for="(item,index) in availableRefundLectures">
+              <label  class="am-checkbox-inline">
+                <input type="checkbox" :value="item.lectureNo" name="refundLectureNo" v-model="formData.refundLecture"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
+              </label>
+              <br v-if="( index + 1 ) % 7 == 0" >
+            </template>
+
+          </td>
+        </tr>
+
+        <tr>
+          <td>退费金额</td>
+          <td colspan="7">
+            <span class="am-text-danger">{{remaining | formatNumber(2)}}</span>￥
+          </td>
+        </tr>
+
+        <tr>
+          <td>退费方式</td>
+          <td colspan="7">
+            <label class="am-checkbox-inline">
+              <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
+            </label>
+          </td>
+        </tr>
+
+        <template v-if="formData.refundWay == 4 ">
+        <tr>
+          <td>转账银行</td>
+          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankName"></td>
+          <td>开户城市</td>
+          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankCity"></td>
+        </tr>
+
+        <tr>
+          <td>姓名</td>
+          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardUser"></td>
+          <td>转账账号</td>
+          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardNo"></td>
+        </tr>
+        </template>
+
+        </tbody>
+      </table>
     </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">退费方式</div>
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      <label class="am-checkbox-inline">
-        <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
-      </label>
-      <label class="am-checkbox-inline">
-        <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
-      </label>
-    </div>
-
-    <template v-if="formData.refundWay == 4 ">
-      <div class="am-u-sm-12 am-g am-g-collapse am-text-left am-margin-top-sm">
-        <div class="am-u-sm-1 am-margin-top-xs am-text-right">转账银行</div>
-        <div class="am-u-sm-2"><input type="text" v-model="formData.bankName"></div>
-        <div class="am-u-sm-1 am-margin-top-xs am-text-right">开户城市</div>
-        <div class="am-u-sm-2"><input type="text" v-model="formData.bankCity"></div>
-        <div class="am-u-sm-1 am-margin-top-xs am-text-right">姓名</div>
-        <div class="am-u-sm-2"><input type="text" v-model="formData.cardUser"></div>
-        <div class="am-u-sm-1 am-margin-top-xs am-text-right">转账账号</div>
-        <div class="am-u-sm-2 am-u-end"><input type="text" v-model="formData.cardNo"></div>
-      </div>
-    </template>
-
-
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
       <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
       <a href="javascript:void(0)" data-am-modal-close>
@@ -132,24 +133,28 @@
           bankCity: '',
           cardUser: '',
           cardNo: '',
-          startAmount: 0,
-          remaining: 0,
-          lectureNos: [],
-          completedLectureAmount: 0
+          description:'',
+          refundLecture:[]
         },
+        classInfo:{
+          totalAmount:0,
+          regLectureAmount:0
+        },
+        remaining: 0,
+        availableRefundLectures: [],
       }
     },
     props: ['regId'],
-    created: function () {
-      if (this.regId) {
-        this.loadClassMessageData(this.regId)
-      }
-    },
     watch: {
       regId: function (val) {
+        if(!val){
+          return
+        }
+        this.reset()
         this.loadClassMessageData(val)
+        this.loadAttend(val)
       },
-      'formData.startAmount': function () {
+      'formData.refundLecture': function () {
         this.calRemaining()
       }
 
@@ -158,34 +163,46 @@
       $(window).smoothScroll()
     },
     methods: {
+      reset:function(){
+        this.formData.refundWay =  2
+        this.formData.bankName = ''
+        this.formData.bankCity = ''
+        this.formData.cardUser = ''
+        this.formData.cardNo ='',
+        this.formData.refundLecture = [] ,
+        this.formData.description = '与原校时间冲突'
+      },
       loadClassMessageData: function (regId) {
         var _this = this
-        if (regId) {
-          io.post(io.apiAdminShowClassMessage, {regId: regId},
-            function (ret) {
-              if (ret.success) {
-                ret.data.startAmount = parseInt(ret.data.startAmount)
-                ret.data.endAmount = parseInt(ret.data.endAmount)
-                ret.data.lectureAmount = parseInt(ret.data.lectureAmount)
-                ret.data.completedLectureAmount = parseInt(ret.data.completedLectureAmount)
-                ret.data.regLectureAmount = (ret.data.endAmount - ret.data.startAmount) + 1
-                ret.data.startAmount =  Math.max(ret.data.startAmount,ret.data.completedLectureAmount + 1)
-                _this.formData = $.extend({}, _this.formData, ret.data)
-                _this.formData.regId = regId
-                _this.formData.description = '与原校时间冲突'
-                var lectureNos = []
-                for (var no = _this.formData.startAmount; no <= _this.formData.endAmount; no++) {
-                  lectureNos.push(no)
-                }
-                _this.formData.lectureNos = lectureNos
-              } else {
-                _this.$alert(ret.desc)
-              }
-            })
-        }
+        io.post(io.apiAdminShowClassMessage, {regId: regId},
+          function (ret) {
+            if (ret.success) {
+              ret.data.startAmount = parseInt(ret.data.startAmount)
+              ret.data.endAmount = parseInt(ret.data.endAmount)
+              ret.data.lectureAmount = parseInt(ret.data.lectureAmount)
+              ret.data.regLectureAmount = (ret.data.endAmount - ret.data.startAmount) + 1
+              ret.data.startAmount =  Math.max(ret.data.startAmount,ret.data.completedLectureAmount + 1)
+              _this.classInfo = ret.data
+              _this.formData.regId = regId
+
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
+      },
+      loadAttend: function (regId) {
+        var _this = this
+        io.post(io.apiAdminQueryAttendOfStudent, {regId: regId},
+          function (ret) {
+            if (ret.success) {
+              _this.availableRefundLectures = ret.data
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
       },
       calRemaining: function () {
-        this.formData.remaining = math.round(math.mul((this.formData.endAmount - this.formData.startAmount + 1), math.div(this.formData.totalAmount, this.formData.regLectureAmount)), 2)
+        this.remaining = math.mul(this.formData.refundLecture.length , math.div(this.classInfo.totalAmount, this.classInfo.regLectureAmount)) || '0'
       },
       confirmToRefund: function () {
         var _this = this
@@ -215,18 +232,26 @@
           }
 
         }
+
+        if(_this.formData.refundLecture.length == 0 ){
+          this.$alert('请选择退费讲次')
+          return
+        }
+        var data = _this.$data.formData
+        data.refundLecture = data.refundLecture.join(',')
         _this.$showLoading()
-        io.post(io.apiAdminSaveOrupdateStudentRefund, $.extend({}, _this.formData),
+        io.post(io.apiAdminSaveOrupdateStudentRefund,data,
           function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {
               _this.$alert('已接受退款申请')
               _this.$root.$emit('class:new')
+              _this.$emit('arrangementSuccess')
             } else {
               _this.$alert(ret.desc || '申请失败')
             }
           })
-        _this.$emit('arrangementSuccess')
+
       }
     }
   }

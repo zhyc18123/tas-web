@@ -1,7 +1,6 @@
 <template>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">退费信息</div>
       <table width="100%" class="am-table am-table-bordered am-table-compact ">
         <tbody>
         <tr>
@@ -22,50 +21,56 @@
           <td class="bgColor">操作人：</td>
           <td>{{tableData.createUserName}}</td>
         </tr>
+        <tr>
+          <td class="bgColor">退费方式:</td>
+          <td colspan="3" class="am-text-danger">{{ {'2':'现金' ,'3':'余额账户','4':'银行卡转账'}[tableData.refundWay] || '未知' }}</td>
+        </tr>
+        <template v-if="tableData.refundWay==4">
+          <tr>
+            <td class="bgColor">转账银行:</td>
+            <td>
+              {{tableData.bankName}}
+            </td>
+            <td class="bgColor">银行开户城市:</td>
+            <td>
+              {{tableData.bankCity}}
+            </td>
+          </tr>
+          <tr>
+            <td class="bgColor">账号姓名:</td>
+            <td>
+              {{tableData.cardUser}}
+            </td>
+            <td class="bgColor">转账账号:</td>
+            <td>
+              {{tableData.cardNo}}
+            </td>
+          </tr>
+        </template>
+
+        <tr>
+          <td class="bgColor">审批状态:</td>
+          <td colspan="3">
+            <label class="am-checkbox-inline">
+              <input type="radio" v-model="formData.status" value="1" name="status">同意
+            </label>
+            <label class="am-checkbox-inline">
+              <input type="radio" v-model="formData.status" value="2" name="status">拒绝
+            </label>
+          </td>
+        </tr>
+        <tr>
+          <td class="bgColor">审批意见:</td>
+          <td colspan="3">
+            <textarea required v-model="formData.returnResult"></textarea>
+          </td>
+        </tr>
         </tbody>
       </table>
-
     </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-      退费方式:
-        <span class="red" v-if="tableData.refundWay==2">现金</span>
-        <span class="red"v-if="tableData.refundWay==3">余额账户</span>
-        <span class="red" v-if="tableData.refundWay==4">银行卡转账</span>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm" v-if="tableData.refundWay==4">
-      <label class="am-radio-inline">
-        转账银行<input type="text" v-model="tableData.bankName">
-      </label>
-      <label class="am-checkbox-inline">
-        银行开户城市<input type="text" v-model="tableData.bankCity">
-      </label>
-      <label class="am-checkbox-inline">
-        姓名<input type="text" v-model="tableData.cardUser">
-      </label>
-      <label class="am-checkbox-inline">
-        转账账号<input type="text" v-model="tableData.cardNo">
-      </label>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">审批状态</div>
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm">
-      <label class="am-checkbox-inline">
-        同意<input type="radio" v-model="formData.status" value="1" name="status">
-      </label>
-      <label class="am-checkbox-inline">
-        拒绝<input type="radio" v-model="formData.status" value="2" name="status">
-      </label>
-    </div>
-
-    <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">
-        审批详情
-    </div>
-    <textarea required v-model="formData.returnResult"></textarea>
 
     <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">审核</button>
+      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
       <a href="javascript:void(0)" data-am-modal-close>
         <button class="am-btn am-btn-primary">取消</button>
       </a>
@@ -86,6 +91,11 @@
   .red{
     color: red;
   }
+
+  .am-u-sm-12 tr{
+    text-align: left;
+  }
+
 </style>
 
 <script>
@@ -102,13 +112,11 @@
     },
     components: {},
     props: ['studentRefundId'],
-    created: function () {
-      if (this.studentRefundId) {
-        this.loadStudentRefudnDetailData(this.studentRefundId)
-      }
-    },
     watch: {
       studentRefundId: function (val) {
+        if(!val){
+          return
+        }
         this.loadStudentRefudnDetailData(val)
       }
     },
@@ -147,12 +155,14 @@
           return
         }
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminChangeStudentRefundStatus, {
             studentRefundId : _this.formData.studentRefundId ,
             status : _this.formData.status,
             returnResult : _this.formData.returnResult
           },
           function (ret) {
+            _this.$hiddenLoading()
             if (ret.success) {
               _this.$alert('审批成功')
               _this.$emit('changeStudentRefund')
