@@ -335,6 +335,7 @@ const io = {
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
+    this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
