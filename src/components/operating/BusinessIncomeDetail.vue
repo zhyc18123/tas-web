@@ -46,24 +46,18 @@
               </el-table-column>
               <el-table-column
                 prop="name"
-                label="成本名称"
+                label="备注"
                 min-width="190">
               </el-table-column>
               <el-table-column
-                prop="totalAmount"
+                prop="price"
                 label="金额（元）"
                 min-width="190">
               </el-table-column>
-              <!--教师成本 todo-->
               <el-table-column
-                label="操作"
-                width="100">
-                <template scope="scope">
-                  <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
-                       scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
-                       '&endDate=' + endDate" tag="a">明细</router-link>
-                </template>
+                prop="price"
+                label="发生日期/时间段"
+                min-width="190">
               </el-table-column>
             </el-table>
           </div>
@@ -80,12 +74,12 @@
   export default{
     data:function(){
       return {
-        name: '',
-        detailType: '0',
+      	name: '',
+        detailType: '6',
         mainAccountId: '',
         startDate: '',
         endDate: '',
-        feeCategoryId: '',
+        incomeCategoryId: '',
         tableData:[
           {
             index: 0,
@@ -105,31 +99,29 @@
       this.mainAccountId = this.$route.query.mainAccountId
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
-      this.feeCategoryId = this.$route.query.feeCategoryId
+      this.incomeCategoryId = this.$route.query.incomeCategoryId
       this.loadTableData();
     },
     methods:{
       handleSearch() {
-        this.loadTableData()
+      	this.loadTableData()
       },
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.costDetail,{
+        io.post(io.incomeDetail,{
           detailType: this.detailType,
           mainAccountId: this.mainAccountId,
           startDate: this.startDate,
           endDate: this.endDate,
-          feeCategoryId: this.feeCategoryId,
+          incomeCategoryId: this.incomeCategoryId,
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-            if (_this.detailType == 0) {
+          	if (_this.detailType == 6) {
               _this.tableData = ret.data.changeRecordList
-            } else if (_this.detailType == 1) {
-              _this.tableData = ret.data.categoryMainAccountVoList
-            } else if(_this.detailType == 2) {
-              _this.tableData = ret.data.teacherClassCostVoList
+            } else if (_this.detailType == 7) {
+              _this.tableData = ret.data.classIncomeVoList
             }
 
           }else{

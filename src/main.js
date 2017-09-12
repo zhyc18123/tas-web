@@ -151,8 +151,10 @@ const DiscountForm = resolve => require(['./components/discount/DiscountForm'], 
 const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
 
 const BusinessStatisticsList = resolve => require(['./components/operating/BusinessStatisticsList'], resolve)
-const BusinessCostList = resolve => require(['./components/operating/BusinessCostList'], resolve)
+const BusinessCostIncomeList = resolve => require(['./components/operating/BusinessCostIncomeList'], resolve)
 const BusinessCostDetail = resolve => require(['./components/operating/BusinessCostDetail'], resolve)
+const SubDetail = resolve => require(['./components/operating/SubDetail'], resolve)
+const BusinessIncomeDetail = resolve => require(['./components/operating/BusinessIncomeDetail'], resolve)
 const TeachReward = resolve => require(['./components/operating/TeachReward'], resolve)
 const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
@@ -311,8 +313,10 @@ const router = new VueRouter({
       {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
 
       {path: 'operating/businessStatistics/list' , component: BusinessStatisticsList},
-      {path: 'operating/businessStatistics/costList' , component: BusinessCostList},
+      {path: 'operating/businessStatistics/costIncomeList' , component: BusinessCostIncomeList},
       {path: 'operating/businessStatistics/costDetail' , component: BusinessCostDetail},
+      {path: 'operating/businessStatistics/subDetail' , component: SubDetail},
+      {path: 'operating/businessStatistics/incomeDetail' , component: BusinessIncomeDetail},
       {path: 'operating/businessStatistics/teachReward' , component: TeachReward},
       {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
       {path: 'operating/dataAnalysis/list' , component: DataAnalysisList},

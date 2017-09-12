@@ -45,24 +45,22 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="name"
-                label="成本名称"
+                prop="remark"
+                label="备注"
                 min-width="190">
               </el-table-column>
               <el-table-column
-                prop="totalAmount"
+                prop="amount"
                 label="金额（元）"
                 min-width="190">
               </el-table-column>
-              <!--教师成本 todo-->
               <el-table-column
-                label="操作"
-                width="100">
+                label="发生日期/时间段"
+                min-width="190">
                 <template scope="scope">
-                  <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
-                       scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
-                       '&endDate=' + endDate" tag="a">明细</router-link>
+                  <div>
+                    {{scope.row.createTime | formatDate}}
+                  </div>
                 </template>
               </el-table-column>
             </el-table>

@@ -334,6 +334,11 @@ const io = {
     this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
+    this.findMainAccountCostAndIncome = conf.baseApiPath + '/api/admin/analyze/findMainAccountCostAndIncome'
+    this.findIncomeByAllCategory = conf.baseApiPath + '/api/admin/analyze/findIncomeByAllCategory'
+    this.findCostByAllCategory = conf.baseApiPath + '/api/admin/analyze/findCostByAllCategory'
+    this.incomeDetail = conf.baseApiPath + '/api/admin/analyze/incomeDetail'
+    this.costDetail = conf.baseApiPath + '/api/admin/analyze/costDetail'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
     this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
