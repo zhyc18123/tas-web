@@ -192,6 +192,7 @@ const io = {
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
     this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
     this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
+    this.apiAdminQueryAttendOfStudent = conf.baseApiPath + '/api/admin/queryAttendOfStudent'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
@@ -300,6 +301,8 @@ const io = {
     this.apiAdminReportChargeList = conf.baseApiPath + '/api/admin/report/chargeList'
     this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
+    this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'
+    this.apiAdminReportExportConsumeAggregation = conf.baseApiPath + '/api/admin/report/exportConsumeAggregation'
 
 
     this.apiAdminScheduleScheduleDataOfTeacher = conf.baseApiPath + '/api/admin/schedule/scheduleDataOfTeacher'
@@ -331,7 +334,13 @@ const io = {
     this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
+    this.findMainAccountCostAndIncome = conf.baseApiPath + '/api/admin/analyze/findMainAccountCostAndIncome'
+    this.findIncomeByAllCategory = conf.baseApiPath + '/api/admin/analyze/findIncomeByAllCategory'
+    this.findCostByAllCategory = conf.baseApiPath + '/api/admin/analyze/findCostByAllCategory'
+    this.incomeDetail = conf.baseApiPath + '/api/admin/analyze/incomeDetail'
+    this.costDetail = conf.baseApiPath + '/api/admin/analyze/costDetail'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
+    this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'

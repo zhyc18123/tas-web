@@ -12,7 +12,7 @@
           <fieldset>
             <div class="am-form-group tpl-table-list-select">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>可选父分类
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>可选父分类
               </label>
               <el-select class="am-u-sm-3 input-field" style="float: left;" v-model="formData.parentFeeCategoryId" placeholder="请选择">
                 <el-option
