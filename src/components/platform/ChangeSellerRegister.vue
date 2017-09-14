@@ -13,7 +13,7 @@
 
       <div class="am-g am-text-left">
         <div class="am-u-sm-2 am-text-right">角色：</div>
-        <div class="am-u-sm-10">{{tableData.roleType==null?'—':tableData.roleType==0?'区域':tableData.roleType==1?'业务组':'教师'}}</div>
+        <div class="am-u-sm-10">{{tableData.roleType==null?'—':tableData.roleType==1?'区域':tableData.roleType==2?'业务组':'教师'}}</div>
       </div>
 
       <div class="am-g am-text-left">
