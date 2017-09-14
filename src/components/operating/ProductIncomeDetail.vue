@@ -11,10 +11,10 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
+              <choose style="float: left" class="main-account-select" v-model="productStatistics">
                 <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
                   <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                  <option v-for="item in mainAccounts" :value="item.productStatistics">{{item.name}}</option>
                 </select>
               </choose>
               <div class="am-u-md-2">
@@ -176,9 +176,9 @@
   export default{
     data:function(){
       return {
-      	name: '',
+        name: '',
         detailType: '6',
-        mainAccountId: '',
+        productStatistics: '',
         mainAccounts: [],
         startDate: '',
         endDate: '',
@@ -199,7 +199,7 @@
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
-      this.mainAccountId = this.$route.query.mainAccountId
+      this.productStatistics = this.$route.query.productStatistics
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.incomeCategoryId = this.$route.query.incomeCategoryId
@@ -217,21 +217,21 @@
         })
       },
       handleSearch() {
-      	this.loadTableData()
+        this.loadTableData()
       },
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
         io.post(io.incomeDetail,{
           detailType: this.detailType,
-          mainAccountId: this.mainAccountId,
+          productStatistics: this.productStatistics,
           startDate: this.startDate,
           endDate: this.endDate,
           incomeCategoryId: this.incomeCategoryId,
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-          	if (_this.detailType == 6) {
+            if (_this.detailType == 6) {
               _this.tableData = ret.data.changeRecordList
             } else if (_this.detailType == 7) {
               _this.tableData = ret.data.classIncomeVoList

@@ -5,15 +5,15 @@
         <div class="widget-head am-cf">
           <div class="widget-title am-fl">{{name}} - 成本营收列表</div>
           <div class="widget-function am-fr">
-            <button type="button" class="am-btn am-btn-default" @click="$router.push('/main/operating/businessStatistics/list')">返回</button>
+            <button type="button" class="am-btn am-btn-default" @click="$router.push('/main/operating/productStatistics/list')">返回</button>
           </div>
         </div>
         <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
           <div class="am-u-sm-12">
-            <choose class="main-account-select" v-model="mainAccountId">
+            <choose class="main-account-select" v-model="productId">
               <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
                 <option value=""></option>
-                <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                <option v-for="item in products" :value="item.productId">{{item.name}}</option>
               </select>
             </choose>
             <div class="am-u-md-2">
@@ -67,9 +67,9 @@
                       label="操作"
                       width="100">
                       <template scope="scope">
-                        <router-link :to="'/main/operating/businessStatistics/costDetail?detailType=' +
+                        <router-link :to="'/main/operating/productStatistics/costDetail?detailType=' +
                        scope.row.detailType + '&name=' + scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
+                       '&productId=' + productId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">详情</router-link>
                       </template>
                     </el-table-column>
@@ -112,9 +112,9 @@
                       label="操作"
                       width="100">
                       <template scope="scope">
-                        <router-link :to="'/main/operating/businessStatistics/incomeDetail?detailType=' +
+                        <router-link :to="'/main/operating/productStatistics/incomeDetail?detailType=' +
                        scope.row.detailType + '&name=' + scope.row.name+ '&incomeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
+                       '&productId=' + productId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">详情</router-link>
                       </template>
                     </el-table-column>
@@ -139,8 +139,8 @@
       return {
         feeCategories: [],
         name: '',
-        mainAccountId: '',
-        mainAccounts: '',
+        productId: '',
+        products: '',
         startDate:　'',
         endDate: '',
         formData: {
@@ -167,13 +167,13 @@
       $(window).smoothScroll()
     },
     created:function(){
-    	debugger
+      debugger
       this.name = this.$route.query.name
-      this.mainAccountId = this.$route.query.mainAccountId
+      this.productId = this.$route.query.productId
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.activeName = this.$route.query.activeName || 'cost'
-      this.loadMainAccountList();
+      this.loadProductsList();
       this.loadTableData();
       this.loadTableData2();
     },
@@ -189,11 +189,11 @@
         this.loadTableData()
         this.loadTableData2()
       },
-      loadMainAccountList:function(){
+      loadProductsList:function(){
         var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
+        io.post(io.apiAdminBaseProductList,{},function(ret){
           if(ret.success){
-            _this.mainAccounts = ret.data.list;
+            _this.products = ret.data;
           }else{
             _this.$alert(ret.desc)
           }
@@ -202,8 +202,8 @@
       loadTableData2:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.findIncomeByAllCategory,{
-          mainAccountId: _this.mainAccountId,
+        io.post(io.productIncomeList,{
+          productId: _this.productId,
           startDate: _this.startDate,
           endDate: _this.endDate,
         },function(ret){
@@ -218,8 +218,8 @@
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.findCostByAllCategory,{
-          mainAccountId: _this.mainAccountId,
+        io.post(io.productStatisticsByCategory,{
+          productId: _this.productId,
           startDate: _this.startDate,
           endDate: _this.endDate,
         },function(ret){

@@ -155,6 +155,9 @@ const BusinessCostIncomeList = resolve => require(['./components/operating/Busin
 const BusinessCostDetail = resolve => require(['./components/operating/BusinessCostDetail'], resolve)
 const SubDetail = resolve => require(['./components/operating/SubDetail'], resolve)
 const BusinessIncomeDetail = resolve => require(['./components/operating/BusinessIncomeDetail'], resolve)
+const ProductCostIncomeList = resolve => require(['./components/operating/ProductCostIncomeList'], resolve)
+const ProductCostDetail = resolve => require(['./components/operating/ProductCostDetail'], resolve)
+const ProductIncomeDetail = resolve => require(['./components/operating/ProductIncomeDetail'], resolve)
 const TeachReward = resolve => require(['./components/operating/TeachReward'], resolve)
 const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
 const BasicData = resolve => require(['./components/operating/BasicData'], resolve)
@@ -322,6 +325,9 @@ const router = new VueRouter({
       {path: 'operating/businessStatistics/incomeDetail' , component: BusinessIncomeDetail},
       {path: 'operating/businessStatistics/teachReward' , component: TeachReward},
       {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
+      {path: 'operating/productStatistics/costIncomeList' , component: ProductCostIncomeList},
+      {path: 'operating/productStatistics/costDetail' , component: ProductCostDetail},
+      {path: 'operating/productStatistics/incomeDetail' , component: ProductIncomeDetail},
       {
         path: 'operating/dataAnalysis/list' ,
         component: DataAnalysisList,

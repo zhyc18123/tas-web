@@ -11,6 +11,12 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
+              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
+                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
+                  <option value=""></option>
+                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                </select>
+              </choose>
               <div class="am-u-md-2">
                 <div class="am-form-group">
                   <date-picker v-model="startDate">
@@ -31,7 +37,7 @@
               </button>
             </div>
           </div>
-          <div class="am-u-sm-12">
+          <div v-if="detailType !== '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
@@ -53,6 +59,11 @@
                 prop="totalAmount"
                 label="金额（元）"
                 min-width="190">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.totalAmount | formatNumber(2)}}
+                  </div>
+                </template>
               </el-table-column>
               <!--教师成本 todo-->
               <el-table-column
@@ -63,6 +74,44 @@
                        scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">明细</router-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div v-if="detailType === '0'" class="am-u-sm-12">
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                label="序号"
+                min-width="190">
+                <template scope="scope">
+                  {{scope.$index}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="remark"
+                label="备注"
+                min-width="190">
+              </el-table-column>
+              <el-table-column
+                prop="amount"
+                label="金额（元）">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.amount | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="发生日期/时间段"
+                min-width="190">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.createTime | formatDate}}
+                  </div>
                 </template>
               </el-table-column>
             </el-table>
@@ -83,6 +132,7 @@
         name: '',
         detailType: '0',
         mainAccountId: '',
+        mainAccounts: [],
         startDate: '',
         endDate: '',
         feeCategoryId: '',
@@ -106,11 +156,22 @@
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
+      this.loadMainAccountList();
       this.loadTableData();
     },
     methods:{
       handleSearch() {
         this.loadTableData()
+      },
+      loadMainAccountList:function(){
+        var _this = this
+        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
+          if(ret.success){
+            _this.mainAccounts = ret.data.list;
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData:function(){
         var _this = this;
@@ -126,7 +187,7 @@
           if(ret.success){
             if (_this.detailType == 0) {
               _this.tableData = ret.data.changeRecordList
-            } else if (_this.detailType == 1) {
+            } else if (_this.detailType == 1 ||_this.detailType == 3) {
               _this.tableData = ret.data.categoryMainAccountVoList
             } else if(_this.detailType == 2) {
               _this.tableData = ret.data.teacherClassCostVoList

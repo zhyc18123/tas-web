@@ -11,6 +11,12 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
+              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
+                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
+                  <option value=""></option>
+                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                </select>
+              </choose>
               <div class="am-u-md-2">
                 <div class="am-form-group">
                   <date-picker v-model="startDate">
@@ -31,7 +37,7 @@
               </button>
             </div>
           </div>
-          <div class="am-u-sm-12">
+          <div v-if="detailType !== '2'" class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
@@ -53,6 +59,11 @@
                 prop="amount"
                 label="金额（元）"
                 min-width="190">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.amount | formatNumber(2)}}
+                  </div>
+                </template>
               </el-table-column>
               <el-table-column
                 label="发生日期/时间段"
@@ -60,6 +71,78 @@
                 <template scope="scope">
                   <div>
                     {{scope.row.createTime | formatDate}}
+                  </div>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div v-if="detailType === '2'" class="am-u-sm-12">
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                label="序号">
+                <template scope="scope">
+                  {{scope.$index}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="teacherName"
+                label="名字">
+              </el-table-column>
+              <el-table-column
+                prop="phoneNo"
+                label="电话">
+              </el-table-column>
+              <el-table-column
+                prop="idNo"
+                label="身份证">
+              </el-table-column>
+              <el-table-column
+                prop="className"
+                label="班级名称">
+              </el-table-column>
+              <el-table-column
+                prop="areaTeamName"
+                label="区域">
+              </el-table-column>
+              <el-table-column
+                prop="busTeamName"
+                label="业务组">
+              </el-table-column>
+              <el-table-column
+                prop="lectureNo"
+                label="讲次">
+              </el-table-column>
+              <el-table-column
+                prop="classRemuneration"
+                label="课酬/课时（元）">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.classRemuneration | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="classHour"
+                label="总课时">
+              </el-table-column>
+              <el-table-column
+                prop="totalClassRemuneration"
+                label="总课酬（元）">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.totalClassRemuneration | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="结算时间">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.settlementDate | formatDate}}
                   </div>
                 </template>
               </el-table-column>
@@ -81,6 +164,7 @@
         name: '',
         detailType: '0',
         mainAccountId: '',
+        mainAccounts: [],
         startDate: '',
         endDate: '',
         feeCategoryId: '',
@@ -107,6 +191,16 @@
       this.loadTableData();
     },
     methods:{
+      loadMainAccountList:function(){
+        var _this = this
+        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
+          if(ret.success){
+            _this.mainAccounts = ret.data.list;
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       handleSearch() {
         this.loadTableData()
       },

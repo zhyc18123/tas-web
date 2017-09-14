@@ -11,10 +11,10 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
+              <choose style="float: left" class="main-account-select" v-model="productId">
                 <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
                   <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                  <option v-for="item in mainAccounts" :value="item.productId">{{item.name}}</option>
                 </select>
               </choose>
               <div class="am-u-md-2">
@@ -24,6 +24,7 @@
                   </date-picker>
                 </div>
               </div>
+
               <div class="am-u-md-2" style="float: left">
                 <div class="am-form-group">
                   <date-picker v-model="endDate">
@@ -36,7 +37,48 @@
               </button>
             </div>
           </div>
-          <div v-if="detailType === '6'" class="am-u-sm-12">
+          <div v-if="detailType !== '0'" class="am-u-sm-12">
+            <el-table
+              :data="tableData"
+              border
+              stripe
+              style="min-width: 100%">
+              <el-table-column
+                label="序号"
+                min-width="190">
+                <template scope="scope">
+                  {{scope.$index}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="name"
+                label="成本名称"
+                min-width="190">
+              </el-table-column>
+              <el-table-column
+                prop="totalAmount"
+                label="金额（元）"
+                min-width="190">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.totalAmount | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <!--教师成本 todo-->
+              <el-table-column
+                label="操作"
+                width="100">
+                <template scope="scope">
+                  <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
+                       scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
+                       '&productId=' + productId + '&startDate=' + startDate +
+                       '&endDate=' + endDate" tag="a">明细</router-link>
+                </template>
+              </el-table-column>
+            </el-table>
+          </div>
+          <div v-if="detailType === '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
@@ -74,95 +116,6 @@
               </el-table-column>
             </el-table>
           </div>
-          <div v-if="detailType === '7'" class="am-u-sm-12">
-            <el-table
-              :data="tableData"
-              border
-              stripe
-              style="min-width: 100%">
-              <el-table-column
-                label="序号">
-                <template scope="scope">
-                  {{scope.$index}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="className"
-                label="班级名称">
-              </el-table-column>
-              <el-table-column
-                label="学费(元)">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.studyingFee | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="lectureAmount"
-                label="总讲次">
-              </el-table-column>
-              <el-table-column
-                prop="happernLectureAmount"
-                label="发生讲次">
-              </el-table-column>
-              <el-table-column
-                prop="regAmount"
-                label="报名人数">
-              </el-table-column>
-              <el-table-column
-                prop="areaTeamName"
-                label="区域">
-              </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                label="业务组">
-              </el-table-column>
-              <el-table-column
-                label="总退费（元）">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.totalRefundAmount | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="营收(元)">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.totalIncomeAmount | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
-          <div v-if="detailType === '8'" class="am-u-sm-12">
-            <el-table
-              :data="tableData"
-              border
-              stripe
-              style="min-width: 100%">
-              <el-table-column
-                label="序号">
-                <template scope="scope">
-                  {{scope.$index}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="name"
-                label="成本名称"
-                min-width="190">
-              </el-table-column>
-              <el-table-column
-                label="金额（元）">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.totalAmount | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-            </el-table>
-          </div>
         </div>
       </div>
     </div>
@@ -176,13 +129,13 @@
   export default{
     data:function(){
       return {
-      	name: '',
-        detailType: '6',
-        mainAccountId: '',
+        name: '',
+        detailType: '0',
+        productId: '',
         mainAccounts: [],
         startDate: '',
         endDate: '',
-        incomeCategoryId: '',
+        feeCategoryId: '',
         tableData:[
           {
             index: 0,
@@ -199,13 +152,17 @@
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
-      this.mainAccountId = this.$route.query.mainAccountId
+      this.productId = this.$route.query.productId
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
-      this.incomeCategoryId = this.$route.query.incomeCategoryId
+      this.feeCategoryId = this.$route.query.feeCategoryId
+      this.loadMainAccountList();
       this.loadTableData();
     },
     methods:{
+      handleSearch() {
+        this.loadTableData()
+      },
       loadMainAccountList:function(){
         var _this = this
         io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
@@ -216,27 +173,24 @@
           }
         })
       },
-      handleSearch() {
-      	this.loadTableData()
-      },
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.incomeDetail,{
+        io.post(io.productCostDetail,{
           detailType: this.detailType,
-          mainAccountId: this.mainAccountId,
+          productId: this.productId,
           startDate: this.startDate,
           endDate: this.endDate,
-          incomeCategoryId: this.incomeCategoryId,
+          feeCategoryId: this.feeCategoryId,
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-          	if (_this.detailType == 6) {
+            if (_this.detailType == 0) {
               _this.tableData = ret.data.changeRecordList
-            } else if (_this.detailType == 7) {
-              _this.tableData = ret.data.classIncomeVoList
-            } else if (_this.detailType == 8) {
-              _this.tableData = ret.data.categoryMainAccountVoList
+            } else if (_this.detailType == 1 ||_this.detailType == 3) {
+              _this.tableData = ret.data.productCostByCategoryVoList
+            } else if(_this.detailType == 2) {
+              _this.tableData = ret.data.teacherClassCostVoList
             }
 
           }else{
