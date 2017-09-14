@@ -157,6 +157,9 @@ const SubDetail = resolve => require(['./components/operating/SubDetail'], resol
 const BusinessIncomeDetail = resolve => require(['./components/operating/BusinessIncomeDetail'], resolve)
 const TeachReward = resolve => require(['./components/operating/TeachReward'], resolve)
 const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
+const BasicData = resolve => require(['./components/operating/BasicData'], resolve)
+const ProblemWarning = resolve => require(['./components/operating/ProblemWarning'], resolve)
+const FullClassRate = resolve => require(['./components/operating/FullClassRate'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
 const TargetSetList = resolve => require(['./components/operating/TargetSetList'], resolve)
 const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
@@ -319,7 +322,15 @@ const router = new VueRouter({
       {path: 'operating/businessStatistics/incomeDetail' , component: BusinessIncomeDetail},
       {path: 'operating/businessStatistics/teachReward' , component: TeachReward},
       {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
-      {path: 'operating/dataAnalysis/list' , component: DataAnalysisList},
+      {
+        path: 'operating/dataAnalysis/list' ,
+        component: DataAnalysisList,
+        children: [
+          {path: 'basicData' , component: BasicData},
+          {path: 'problemWarning' , component: ProblemWarning},
+          {path: 'fullClassRate' , component: FullClassRate},
+        ]
+      },
       {path: 'operating/targetSet/list' , component: TargetSetList},
       {path: 'operating/targetSet/inputMainIncome' , component: InputMainIncome},
       {path: 'operating/targetSet/inputProductIncome' , component: InputProductIncome},
