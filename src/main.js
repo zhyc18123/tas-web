@@ -38,6 +38,8 @@ const ClassRemunerationList = resolve => require(['./components/sysmanager/Class
 const ClassRemunerationForm = resolve => require(['./components/sysmanager/ClassRemunerationForm'], resolve)
 const CusIdList = resolve => require(['./components/sysmanager/CusIdList'], resolve)
 const CusIdForm = resolve => require(['./components/sysmanager/CusIdForm'], resolve)
+const SummerWinter = resolve => require(['./components/sysmanager/SummerWinter'], resolve)
+const SummerWinterForm = resolve => require(['./components/sysmanager/SummerWinterForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -235,6 +237,8 @@ const router = new VueRouter({
       {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
       {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
       {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
+      {path: 'sys/vacation/setting' , component: SummerWinter },
+      {path: 'sys/vacation/add' , component: SummerWinterForm },
 
       {path: 'crowdfunding/list', component: CrowdfundingClassList },
       {path: 'crowdfunding/edit/:classId' , component: CrowdfundingClassDetail},

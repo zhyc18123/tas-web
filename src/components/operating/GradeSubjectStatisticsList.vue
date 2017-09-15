@@ -111,7 +111,7 @@
                 width="100">
                 <template scope="scope">
                   <router-link :to="'/main/operating/gradeSubjectStatistics/costIncomeList?gradeId=' +
-                     scope.row.gradeId + '&subjectId=' + scope.row.subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName +
+                     scope.row.gradeId + '&subjectId=' + scope.row.subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + formData.areaTeamId +
                       '&startDate=' + formData.startDate+ '&endDate=' + formData.endDate + '&activeName=cost'" tag="a">详情</router-link>
                 </template>
               </el-table-column>

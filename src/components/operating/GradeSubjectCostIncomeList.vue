@@ -186,7 +186,7 @@
         productId: '',
         areaTeams: '',
         formData: {
-          areaTeamId: '564701030634225664',
+          areaTeamId: '',
           gradeId: '',
           subjectId: '',
           startDate: '',
@@ -218,6 +218,7 @@
       this.formData.subjectId = this.$route.query.subjectId
       this.formData.startDate = this.$route.query.startDate
       this.formData.endDate = this.$route.query.endDate
+      this.formData.areaTeamId = this.$route.query.areaTeamId
       this.activeName = this.$route.query.activeName || 'cost'
       this.getAreaTeamList();
       this.loadTableData();
@@ -252,6 +253,9 @@
       },
       loadTableData2:function(){
         var _this = this;
+        if(!this.formData.areaTeamId){
+        	return
+        }
         _this.$showLoading()
         io.post(io.gradeAndSubjectIncome,_this.formData,function(ret){
           _this.$hiddenLoading()
@@ -264,6 +268,9 @@
       },
       loadTableData:function(){
         var _this = this;
+        if(!this.formData.areaTeamId){
+        	return
+        }
         _this.$showLoading()
         io.post(io.gradeAndSubjectAllCategoryDetail,_this.formData,function(ret){
           _this.$hiddenLoading()
