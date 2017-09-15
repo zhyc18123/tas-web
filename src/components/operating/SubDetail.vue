@@ -11,10 +11,16 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
+              <choose v-if="mainAccountId" style="float: left" class="main-account-select" v-model="mainAccountId">
                 <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
                   <option value=""></option>
                   <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
+                </select>
+              </choose>
+              <choose v-if="productId" style="float: left" class="main-account-select" v-model="productId">
+                <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
+                  <option value=""></option>
+                  <option v-for="item in products" :value="item.productId">{{item.name}}</option>
                 </select>
               </choose>
               <div class="am-u-md-2">
@@ -165,6 +171,7 @@
         detailType: '0',
         mainAccountId: '',
         mainAccounts: [],
+        products: [],
         startDate: '',
         endDate: '',
         feeCategoryId: '',
@@ -185,10 +192,17 @@
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
       this.mainAccountId = this.$route.query.mainAccountId
+      this.productId = this.$route.query.productId
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
-      this.loadTableData();
+      if(this.mainAccountId) {
+        this.loadTableData();
+        this.loadMainAccountList();
+      } else if (this.productId) {
+        this.loadProductsList();
+        this.loadProductTableData();
+      }
     },
     methods:{
       loadMainAccountList:function(){
@@ -196,6 +210,16 @@
         io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
           if(ret.success){
             _this.mainAccounts = ret.data.list;
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadProductsList:function(){
+        var _this = this
+        io.post(io.apiAdminBaseProductList,{},function(ret){
+          if(ret.success){
+            _this.products = ret.data;
           }else{
             _this.$alert(ret.desc)
           }
@@ -220,6 +244,31 @@
               _this.tableData = ret.data.changeRecordList
             } else if (_this.detailType == 1) {
               _this.tableData = ret.data.categoryMainAccountVoList
+            } else if(_this.detailType == 2) {
+              _this.tableData = ret.data.teacherClassCostVoList
+            }
+
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadProductTableData:function(){
+        var _this = this;
+        _this.$showLoading()
+        io.post(io.productCostDetail,{
+          detailType: this.detailType,
+          productId: this.productId,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          feeCategoryId: this.feeCategoryId,
+        },function(ret){
+          _this.$hiddenLoading()
+          if(ret.success){
+            if (_this.detailType == 0) {
+              _this.tableData = ret.data.changeRecordList
+            } else if (_this.detailType == 1 ||_this.detailType == 3) {
+              _this.tableData = ret.data.productCostByCategoryVoList
             } else if(_this.detailType == 2) {
               _this.tableData = ret.data.teacherClassCostVoList
             }

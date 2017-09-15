@@ -11,7 +11,7 @@
         <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
           <div class="am-u-sm-12">
             <choose class="main-account-select" v-model="productId">
-              <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
+              <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
                 <option value=""></option>
                 <option v-for="item in products" :value="item.productId">{{item.name}}</option>
               </select>
@@ -67,7 +67,7 @@
                       label="操作"
                       width="100">
                       <template scope="scope">
-                        <router-link :to="'/main/operating/productStatistics/costDetail?detailType=' +
+                        <router-link v-if="scope.row.detailType === '1' || scope.row.detailType === '2'" :to="'/main/operating/productStatistics/costDetail?detailType=' +
                        scope.row.detailType + '&name=' + scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&productId=' + productId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">详情</router-link>
@@ -87,35 +87,51 @@
                     stripe
                     style="min-width: 100%">
                     <el-table-column
-                      label="序号"
-                      min-width="190">
-                      <template scope="scope">
-                        {{scope.$index}}
-                      </template>
+                      prop="className"
+                      label="班级名称">
                     </el-table-column>
                     <el-table-column
-                      prop="name"
-                      label="成本名称"
-                      min-width="190">
-                    </el-table-column>
-                    <el-table-column
-                      prop="totalAmount"
-                      label="金额（元）"
-                      min-width="190">
+                      label="学费（元）">
                       <template scope="scope">
                         <div>
-                          {{scope.row.totalAmount | formatNumber(2)}}
+                          {{scope.row.studyingFee | formatNumber(2)}}
                         </div>
                       </template>
                     </el-table-column>
                     <el-table-column
-                      label="操作"
-                      width="100">
+                      prop="lectureAmount"
+                      label="总讲次">
+                    </el-table-column>
+                    <el-table-column
+                      prop="happernLectureAmount"
+                      label="发生讲次">
+                    </el-table-column>
+                    <el-table-column
+                      prop="regAmount"
+                      label="报名人数">
+                    </el-table-column>
+                    <el-table-column
+                      prop="gradeName"
+                      label="年级">
+                    </el-table-column>
+                    <el-table-column
+                      prop="subjectName"
+                      label="科目">
+                    </el-table-column>
+                    <el-table-column
+                      label="总退费（元）">
                       <template scope="scope">
-                        <router-link :to="'/main/operating/productStatistics/incomeDetail?detailType=' +
-                       scope.row.detailType + '&name=' + scope.row.name+ '&incomeCategoryId=' + scope.row.categoryId+
-                       '&productId=' + productId + '&startDate=' + startDate +
-                       '&endDate=' + endDate" tag="a">详情</router-link>
+                        <div>
+                          {{scope.row.totalRefundAmount | formatNumber(2)}}
+                        </div>
+                      </template>
+                    </el-table-column>
+                    <el-table-column
+                      label="营收(元)">
+                      <template scope="scope">
+                        <div>
+                          {{scope.row.totalIncomeAmount | formatNumber(2)}}
+                        </div>
                       </template>
                     </el-table-column>
                   </el-table>

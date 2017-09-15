@@ -12,9 +12,9 @@
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
               <choose style="float: left" class="main-account-select" v-model="productId">
-                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
+                <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
                   <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.productId">{{item.name}}</option>
+                  <option v-for="item in products" :value="item.productId">{{item.name}}</option>
                 </select>
               </choose>
               <div class="am-u-md-2">
@@ -132,7 +132,7 @@
         name: '',
         detailType: '0',
         productId: '',
-        mainAccounts: [],
+        products: [],
         startDate: '',
         endDate: '',
         feeCategoryId: '',
@@ -156,18 +156,18 @@
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
-      this.loadMainAccountList();
+      this.loadProductsList();
       this.loadTableData();
     },
     methods:{
       handleSearch() {
         this.loadTableData()
       },
-      loadMainAccountList:function(){
+      loadProductsList:function(){
         var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
+        io.post(io.apiAdminBaseProductList,{},function(ret){
           if(ret.success){
-            _this.mainAccounts = ret.data.list;
+            _this.products = ret.data;
           }else{
             _this.$alert(ret.desc)
           }
