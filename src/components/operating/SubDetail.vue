@@ -23,6 +23,26 @@
                   <option v-for="item in products" :value="item.productId">{{item.name}}</option>
                 </select>
               </choose>
+              <div v-if="gradeId" style="float: left">
+                <el-select v-model="gradeId" placeholder="请选择年级">
+                  <el-option
+                    v-for="item in grades"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
+              <div v-if="subjectId" style="float: left">
+                <el-select v-model="subjectId" placeholder="请选择科目">
+                  <el-option
+                    v-for="item in subjects"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
               <div class="am-u-md-2">
                 <div class="am-form-group">
                   <date-picker v-model="startDate">
@@ -174,7 +194,10 @@
         products: [],
         startDate: '',
         endDate: '',
+        areaTeamId: '',
         feeCategoryId: '',
+        gradeId: '',
+        subjectId: '',
         tableData:[
           {
             index: 0,
@@ -188,11 +211,26 @@
     mounted:function(){
       $(window).smoothScroll()
     },
+    computed: {
+      grades () {
+        return this.$root.config.grades.map(function(item){
+          return {value: item.gradeId, label: item.gradeName}
+        })
+      },
+      subjects () {
+        return this.$root.config.subjects.map(function(item){
+          return {value: item.subjectId, label: item.subjectName}
+        })
+      }
+    },
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
       this.mainAccountId = this.$route.query.mainAccountId
       this.productId = this.$route.query.productId
+      this.gradeId = this.$route.query.gradeId
+      this.areaTeamId = this.$route.query.areaTeamId
+      this.subjectId = this.$route.query.subjectId
       this.startDate = this.$route.query.startDate
       this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
@@ -202,6 +240,8 @@
       } else if (this.productId) {
         this.loadProductsList();
         this.loadProductTableData();
+      } else if (this.gradeId && this.subjectId) {
+        this.loadGradeSubjectTableData();
       }
     },
     methods:{
@@ -259,6 +299,33 @@
         io.post(io.productCostDetail,{
           detailType: this.detailType,
           productId: this.productId,
+          startDate: this.startDate,
+          endDate: this.endDate,
+          feeCategoryId: this.feeCategoryId,
+        },function(ret){
+          _this.$hiddenLoading()
+          if(ret.success){
+            if (_this.detailType == 0) {
+              _this.tableData = ret.data.changeRecordList
+            } else if (_this.detailType == 1 ||_this.detailType == 3) {
+              _this.tableData = ret.data.productCostByCategoryVoList
+            } else if(_this.detailType == 2) {
+              _this.tableData = ret.data.teacherClassCostVoList
+            }
+
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadGradeSubjectTableData:function(){
+        var _this = this;
+        _this.$showLoading()
+        io.post(io.gradeAndSubjectDetail,{
+          detailType: this.detailType,
+          gradeId: this.gradeId,
+          areaTeamId: this.areaTeamId,
+          subjectId: this.subjectId,
           startDate: this.startDate,
           endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,

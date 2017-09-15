@@ -168,6 +168,11 @@ const TargetSetList = resolve => require(['./components/operating/TargetSetList'
 const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
 const InputProductIncome = resolve => require(['./components/operating/InputProductIncome'], resolve)
 
+const GradeSubjectStatisticsList = resolve => require(['./components/operating/GradeSubjectStatisticsList'], resolve)
+const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
+const GradeSubjectCostDetail = resolve => require(['./components/operating/GradeSubjectCostDetail'], resolve)
+const GradeSubjectIncomeDetail = resolve => require(['./components/operating/GradeSubjectIncomeDetail'], resolve)
+
 
 Vue.use(VueRouter)
 Vue.use(VueUI)
@@ -328,6 +333,11 @@ const router = new VueRouter({
       {path: 'operating/productStatistics/costIncomeList' , component: ProductCostIncomeList},
       {path: 'operating/productStatistics/costDetail' , component: ProductCostDetail},
       {path: 'operating/productStatistics/incomeDetail' , component: ProductIncomeDetail},
+      {path: 'operating/gradeSubjectStatistics/list' , component: GradeSubjectStatisticsList},
+      {path: 'operating/gradeSubjectStatistics/costIncomeList' , component: GradeSubjectCostIncomeList},
+      {path: 'operating/gradeSubjectStatistics/costDetail' , component: GradeSubjectCostDetail},
+      {path: 'operating/gradeSubjectStatistics/incomeDetail' , component: GradeSubjectIncomeDetail},
+      {path: 'operating/gradeSubjectStatistics/subDetail' , component: SubDetail},
       {
         path: 'operating/dataAnalysis/list' ,
         component: DataAnalysisList,
