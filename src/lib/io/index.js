@@ -356,6 +356,7 @@ const io = {
     this.findSummerWinterList = conf.baseApiPath + '/api/admin/findSummerWinterList'
     this.deleteSummerWinter = conf.baseApiPath + '/api/admin/deleteSummerWinter'
     this.saveOrUpdateSummerWinter = conf.baseApiPath + '/api/admin/saveOrUpdateSummerWinter'
+    this.findSummerWinterByCampusId = conf.baseApiPath + '/api/admin/findSummerWinterByCampusId'
     this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'

@@ -51,8 +51,11 @@
           <el-table-column
             label="营收完成率">
             <template scope="scope">
-              <div>
+              <div v-if="scope.row.targetIncome">
                 {{Number(scope.row.income) ===0 ? 0 :Number(scope.row.income)/Number(scope.row.targetIncome)*100 | formatNumber(2)}}%
+              </div>
+              <div v-else>
+                -
               </div>
             </template>
           </el-table-column>
@@ -77,8 +80,11 @@
           <el-table-column
             label="利润完成率">
             <template scope="scope">
-              <div>
+              <div v-if="scope.row.targetProfits">
                 {{Number(scope.row.profits) ===0 ? 0 :Number(scope.row.profits)/Number(scope.row.targetProfits)*100 | formatNumber(2)}}%
+              </div>
+              <div v-else>
+                -
               </div>
             </template>
           </el-table-column>
@@ -115,8 +121,11 @@
           <el-table-column
             label="营收完成率">
             <template scope="scope">
-              <div>
+              <div v-if="scope.row.targetIncome">
                 {{Number(scope.row.income) ===0 ? 0 :Number(scope.row.income)/Number(scope.row.targetIncome)*100 | formatNumber(2)}}%
+              </div>
+              <div v-else>
+                -
               </div>
             </template>
           </el-table-column>
@@ -141,8 +150,11 @@
           <el-table-column
             label="利润完成率">
             <template scope="scope">
-              <div>
+              <div v-if="scope.row.targetProfits">
                 {{Number(scope.row.profits) ===0 ? 0 :Number(scope.row.profits)/Number(scope.row.targetProfits)*100 | formatNumber(2)}}%
+              </div>
+              <div v-else>
+                -
               </div>
             </template>
           </el-table-column>

@@ -14,7 +14,7 @@
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>请选择年份
               </label>
-              <div class="am-u-sm-6 am-u-end input-field">
+              <div class="am-u-sm-3 am-u-end input-field">
                 <date-picker v-model="formData.year" >
                   <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
                 </date-picker>

@@ -12,6 +12,16 @@
           <fieldset>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>年份
+              </label>
+              <div class="am-u-sm-6 am-u-end input-field">
+                <date-picker v-model="year" >
+                  <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
+                </date-picker>
+              </div>
+            </div>
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>教室名
               </label>
               <div class="am-u-sm-9 input-field">
@@ -41,58 +51,50 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>暑假（7.1 ~8.31）(元/小时)
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>暑假
+                （{{formData.summerStartDate}} ~{{formData.summerEndDate}}）
               </label>
-              <div class="am-u-sm-9 input-field">
+              <div class="am-u-sm-6 input-field">
                 <input type="number"  class="am-form-field" placeholder="输入暑假成本" min="0" step="1" required v-model="formData.summerCost">
               </div>
-            </div>
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>寒假（1.15 ~2.15）（元/小时）
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入寒假成本" min="0" step="1" required v-model="formData.winterCost">
+              <div class="am-u-sm-3 input-field am-u-end">
+                元/小时
               </div>
             </div>
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>工作日高峰期(周一~周五，8:00~18:00)（元/小时）
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>寒假
+                （{{formData.winterStartDate}} ~{{formData.winterEndDate}}）
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入工作日高峰期成本" min="0" step="1" required v-model="formData.workingPeakCost">
+              <div class="am-u-sm-6 input-field">
+                <input type="number"  class="am-form-field" placeholder="输入暑假成本" min="0" step="1" required v-model="formData.winterCost">
+              </div>
+              <div class="am-u-sm-3 input-field am-u-end">
+                元/小时
               </div>
             </div>
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>非工作日高峰期（元/小时）
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>周末（周六周日）
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入非工作日高峰期成本" min="0" step="1" required v-model="formData.workingNoPeakCost">
+              <div class="am-u-sm-6 input-field">
+                <input type="number"  class="am-form-field" placeholder="输入周末成本" min="0" step="1" required v-model="formData.weekendCost">
+              </div>
+              <div class="am-u-sm-3 input-field am-u-end">
+                元/小时
               </div>
             </div>
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>周末高峰期（周六~周日，8:00~18:00）（元/小时）
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>非周末（周一至周五）
               </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入周末高峰期成本" min="0" step="1" required v-model="formData.weekendPeakCost">
+              <div class="am-u-sm-6 input-field">
+                <input type="number"  class="am-form-field" placeholder="输入非周末成本" min="0" step="1" required v-model="formData.workingCost">
+              </div>
+              <div class="am-u-sm-3 input-field am-u-end">
+                元/小时
               </div>
             </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>周末非高峰期（元/小时）
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入周末非高峰期成本" min="0" step="1" required v-model="formData.weekendNoPeakCost">
-              </div>
-            </div>
-
-
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 状态
@@ -121,24 +123,44 @@
 
 <script>
 import io from '../../lib/io'
+import moment from 'moment'
     export default{
         data(){
-            var campusId  = this.$route.query.campusId
             return{
+                year : moment().years(),
                 formData:{
                   status : '1',
-                  campusId : campusId
+                  seatAmount : '1',
+                  year : '2018',
+                  roomId : '',
+                  roomName : '',
+                  campusId : '',
+                  isMultimedia : '1',
+                  summerStartDate : '',
+                  summerEndDate : '',
+                  winterStartDate : '',
+                  winterEndDate : '',
+                  summerCost : '',
+                  winterCost : '',
+                  workingCost : '',
+                  weekendCost : '',
+                  summerWinterDateId : '',
                 }
             }
         },
         created:function(){
-         var roomId  = this.$params('roomId')
-         if(roomId){
+          this.formData.campusId  = this.$route.query.campusId
+          this.formData.roomId  = this.$route.query.roomId
+          if(this.formData.campusId && !this.formData.roomId) {
+            this.findSummerWinter()
+          }
+          if(this.formData.roomId){
           var _this = this
-          io.post(io.apiAdminTradingRoomDetail,{ roomId : roomId },
+          io.post(io.apiAdminTradingRoomDetail,{ roomId : this.formData.roomId },
             function(ret){
               if(ret.success){
                 _this.formData = ret.data
+                _this.findSummerWinter()
               }
             },
             function(){
@@ -148,6 +170,11 @@ import io from '../../lib/io'
 
 
         },
+      watch: {
+        year() {
+          this.findSummerWinter()
+        }
+      },
         mounted:function(){
           var _this = this ;
           $('#' + this.id ).validator({
@@ -208,6 +235,38 @@ import io from '../../lib/io'
               complete.call()
               _this.$alert('请求服务器失败')
             })
+          },
+          findSummerWinter() {
+            var _this = this
+            io.post(io.findSummerWinterByCampusId,{
+//                todo campusId: _this.formData.campusId,
+                campusId: '592165907283836928',
+                year: _this.year,
+                roomId: _this.formData.roomId,
+              },
+              function(ret){
+                if(ret.success){
+                  if(!ret.data.summerWinterDateId) {
+                    _this.$confirm('该课室所属区域于'+_this.year+'年没有设置寒暑假时间',
+                      function () {
+                        _this.$router.push('/main/sys/vacation/setting')
+                      });
+                  } else {
+                    ret.data.summerStartDate = moment(Number(ret.data.summerStartDate)).format('YYYY-MM-DD')
+                    ret.data.summerEndDate = moment(Number(ret.data.summerEndDate)).format('YYYY-MM-DD')
+                    ret.data.winterStartDate = moment(Number(ret.data.winterStartDate)).format('YYYY-MM-DD')
+                    ret.data.winterEndDate = moment(Number(ret.data.winterEndDate)).format('YYYY-MM-DD')
+                    _this.formData = Object.assign({}, _this.formData, ret.data)
+                  }
+                }else{
+                  _this.$alert(ret.desc)
+                }
+
+              },
+              function(){
+                complete.call()
+                _this.$alert('请求服务器失败')
+              })
           },
           uploadAvatar:function(info){
             this.formData.avatarUrl = info.url

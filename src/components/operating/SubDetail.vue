@@ -266,7 +266,13 @@
         })
       },
       handleSearch() {
-        this.loadTableData()
+        if(this.mainAccountId) {
+          this.loadTableData();
+        } else if (this.productId) {
+          this.loadProductTableData();
+        } else if (this.gradeId && this.subjectId) {
+          this.loadGradeSubjectTableData();
+        }
       },
       loadTableData:function(){
         var _this = this;
