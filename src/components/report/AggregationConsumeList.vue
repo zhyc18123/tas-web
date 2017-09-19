@@ -222,6 +222,19 @@
               </el-table-column>
 
               <el-table-column
+                prop="refundClassTimeOfThis"
+                label="本周期退费课时"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="本周期退费金额"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.refundAmountOfThis | formatNumber(2)}}
+                </template>
+              </el-table-column>
+
+              <el-table-column
                 prop="remainClassTimeOfAfterThis"
                 label="期末剩余课时"
                 min-width="100">

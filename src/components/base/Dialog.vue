@@ -29,6 +29,9 @@
           this.title = title
           this.content  = content
           $('#'+this.id).modal('open')
+        },
+        close: function(){
+          $('#'+this.id).modal('close')
         }
       }
     }

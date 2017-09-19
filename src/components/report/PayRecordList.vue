@@ -3,85 +3,32 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">消耗统计</div>
+          <div class="widget-title  am-cf">支付流水</div>
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.year">
-                  <option value="">年份</option>
-                  <option value="2017">2017</option>
-                  <option value="2018">2018</option>
+                <select2  v-model="query.payWay">
+                  <option value="">支付类型</option>
+                  <option value="0">现金</option>
+                  <option value="1">刷卡</option>
+                  <option value="2">转账</option>
+                  <option value="3">账户</option>
+                  <option value="4">在线支付</option>
                 </select2>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.busTeamId" :options="busTeams">
-                  <option value="">业务组</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
-                  <option value="">产品</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.season"  >
-                  <option value="">季节</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.gradeId" :options="grades">
-                  <option value="">年级</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.subjectId" :options="subjects">
-                  <option value="">科目</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" v-model="query.courseName" placeholder="请输入课程名称"/>
+                <input type="text" v-model="query.operator" placeholder="请输操作人"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <input type="text"  v-model="query.className" placeholder="请输入班级名称"/>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text"  v-model="query.campusName" placeholder="请输校区"/>
               </div>
             </div>
 
@@ -107,7 +54,7 @@
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="exportExcel" v-if="hasPermission('export_consume_aggregation_list')"><span class="am-icon-download"></span>导出excel
+                        @click="exportExcel" v-if="hasPermission('export_pay_record_list')"><span class="am-icon-download"></span>导出excel
                 </button>
               </div>
             </div>
@@ -122,153 +69,90 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                label="统计开始日期"
-                min-width="150">
+                prop="courseOrderId"
+                label="订单编号"
+                min-width="200">
+              </el-table-column>
+              <el-table-column
+                label="post流水号"
+                min-width="200">
                 <template scope="scope">
-                  {{scope.row.startDate | formatDate}}
+                  {{scope.row.payInfoExt.traceNo}}
                 </template>
               </el-table-column>
               <el-table-column
-                label="统计结束日期"
-                min-width="150">
+                label="支付状态"
+                min-width="100">
                 <template scope="scope">
-                  {{scope.row.endDate | formatDate}}
+                  支付成功
                 </template>
               </el-table-column>
+
               <el-table-column
-                prop="year"
-                label="年份"
+                label="支付类型"
                 min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="season"
-                label="季节"
-                min-width="100">
+                <template scope="scope">
+                  {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'在线支付','5':'预付金'}[scope.row.payWay] }}
+                </template>
               </el-table-column>
 
               <el-table-column
-                prop="studentName"
-                label="学生姓名"
+                label="支付方式"
                 min-width="100">
+                <template scope="scope">
+                  {{ {'VSP001':'银行卡','VSP501':'微信支付','VSP511':'支付宝支付'}[scope.row.payInfoExt.trxCode] || scope.row.payInfoExt.trxCode  }}
+                </template>
               </el-table-column>
 
               <el-table-column
-                prop="studentNo"
-                label="学生编号"
+                prop="amount"
+                label="支付金额"
                 min-width="150">
               </el-table-column>
               <el-table-column
                 prop="studentGradeName"
-                label="就读年级"
-                min-width="100">
+                label="支付时间"
+                min-width="200">
+                <template scope="scope">
+                  {{ scope.row.createTime | formatTime }}
+                </template>
               </el-table-column>
 
+              <el-table-column
+                label="商户号"
+                min-width="200">
+                <template scope="scope">
+                  {{ scope.row.payInfoExt.cusId  }}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="POS终端号"
+                min-width="200">
+                <template scope="scope">
+                  {{ scope.row.payInfoExt.termId  }}
+                </template>
+              </el-table-column>
               <el-table-column
                 prop="campusName"
-                label="报读校区"
-                min-width="200">
-              </el-table-column>
-
-              <el-table-column
-                prop="className"
-                label="报读班级"
+                label="收费校区"
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="gradeName"
-                label="年级"
+                prop="operator"
+                label="操作人"
                 min-width="100">
               </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                label="科目"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="remainClassTimeOfBeforeThis"
-                label="期初课时数"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="期初金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.remainAmountOfBeforeThis | formatNumber(2)}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="boughtClassTimeOfThis"
-                label="本周期购买课时"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="本周期实际缴费金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.paidAmountOfThis | formatNumber(2)}}
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="consumeClassTimeOfThis"
-                label="本周期消耗课时"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="本周期消耗金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.consumeAmountOfThis | formatNumber(2)}}
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                prop="refundClassTimeOfThis"
-                label="本周期退费课时"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="本周期退费金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.refundAmountOfThis | formatNumber(2)}}
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                prop="remainClassTimeOfAfterThis"
-                label="期末剩余课时"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="remainAmountOfAfterThis"
-                label="期末剩余金额"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.remainAmountOfAfterThis | formatNumber(2)}}
-                </template>
-              </el-table-column>
-              <!--<el-table-column
-                prop="courseName"
-                label="课程"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="productName"
-                label="产品"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="areaTeamName"
-                label="区域"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                label="业务组"
-                min-width="100">
-              </el-table-column>-->
 
             </el-table>
+          </div>
+
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
           </div>
 
         </div>
@@ -280,54 +164,29 @@
 <script>
   import io from '../../lib/io'
   import util from '../../lib/util'
+  import Pagination from '../base/Pagination'
 
   export default{
     data: function () {
       return {
         tableData: [],
+        total: 0,
+        pageSize: 10,
+        pageNo: 1,
         query: {
-          areaTeamId : '',
-          busTeamId : '',
-          productId : '',
           startDate : util.formatDate( util.firstDayOfMonth() ),
           endDate : util.formatDate( util.endDayOfMonth() )
         },
-        products:[]
       }
+    },
+    components: {
+      Pagination
     },
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
       this.loadTableData(this.pageNo)
-      this.loadProductData()
-    },
-    computed: {
-      areaTeams: function () {
-        var options = ( this.$root.config.areaTeams || [] )
-          .map(function (item) {
-            return {value: item.areaTeamId, text: item.name}
-          })
-        return options
-      },
-      busTeams: function () {
-        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
-          .map(function (item) {
-            return {value: item.busTeamId, text: item.name}
-          })
-        this.query.busTeamId = ''
-        return options
-      },
-      grades: function () {
-        return this.$root.config.grades.map(function(item){
-          return {value: item.gradeId, text: item.gradeName}
-        })
-      },
-      subjects: function () {
-        return this.$root.config.subjects.map(function(item){
-          return {value: item.subjectId, text: item.subjectName}
-        })
-      }
     },
     methods: {
       search: function () {
@@ -337,36 +196,16 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
-        io.post(io.apiAdminReportAggregateConsumeList, $.extend({
+        io.post(io.apiAdminReportPayRecordList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
-            _this.tableData = ret.data
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadProductData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseProductList, {}, function (ret) {
-          if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadCourseData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
-          if (ret.success) {
-            _this.courses = ret.data.map(function (item) {
-              return {value: item.courseTemplateId, text: item.courseName}
+            _this.total = ret.data.total
+            _this.tableData = ret.data.list.map( (item ) => {
+              item.payInfoExt  = item.payInfoExt ? JSON.parse(item.payInfoExt) : {}
+              return item
             })
           } else {
             _this.$alert(ret.desc)
@@ -374,7 +213,7 @@
         })
       },
       exportExcel:function(){
-        io.downloadFile(io.apiAdminReportExportConsumeAggregation,this.query)
+        io.downloadFile(io.apiAdminReportExportPayRecordList,this.query)
       }
     }
   }

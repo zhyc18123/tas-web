@@ -141,6 +141,7 @@ const AttendanceRecordList = resolve => require(['./components/attendance/Attend
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
 const AggregationConsumeList = resolve => require(['./components/report/AggregationConsumeList'], resolve)
+const PayRecordList = resolve => require(['./components/report/PayRecordList'], resolve)
 
 const DiscountCategoryList = resolve => require(['./components/discount/DiscountCategoryList'], resolve)
 const DiscountCategoryForm = resolve => require(['./components/discount/DiscountCategoryForm'], resolve)
@@ -296,6 +297,7 @@ const router = new VueRouter({
 
       {path: 'report/charge/list', component:ChargeList },
       {path: 'report/consumeAggregation/list', component:AggregationConsumeList },
+      {path: 'report/payRecord/list', component:PayRecordList },
 
       {path: 'discount/category/list' , component: DiscountCategoryList },
       {path: 'discount/category/add' , component: DiscountCategoryForm},

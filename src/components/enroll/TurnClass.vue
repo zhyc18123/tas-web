@@ -1,6 +1,8 @@
 <template>
-  <component v-bind:is="currentStep" :regId="regId" @goStep="goStep" :args="args" @completed="$emit('completed')">
-  </component>
+  <window ref="win" title="转班">
+    <component v-bind:is="currentStep" :regId="regId" @goStep="goStep" :args="args" @completed="$emit('completed');$refs.win.close()">
+    </component>
+  </window>
 </template>
 
 <script>
@@ -9,34 +11,37 @@
   import TurnClassStepOne from  './TurnClassStepOne'
   import TurnClassStepTwo from  './TurnClassStepTwo'
   import TurnClassStepThree from './TurnClassStepThree'
+  import Window from "../base/Window.vue";
 
   export default{
     data: function () {
       return {
         currentStep : 'step-one',
-        args : {}
+        args : {},
+        regId:''
       }
     },
     components:{
+      Window,
       'step-one': TurnClassStepOne,
       'step-two' :TurnClassStepTwo,
       'step-three':TurnClassStepThree
     },
-
-    props: ['regId'],
     watch:{
       regId : function () {
         //选择其他重置回第一步
-          this.currentStep = 'step-one'
       }
-    },
-    mounted: function () {
-      $(window).smoothScroll()
     },
     methods:{
       goStep:function (which,data) {
-          this.currentStep = which
-          this.args = data || {}
+        this.args[this.currentStep] = data || {}
+        this.currentStep = which
+      },
+      show:function(){
+        this.currentStep = 'step-one'
+        this.$refs.win.show({
+          width: 1200
+        })
       }
     }
   }

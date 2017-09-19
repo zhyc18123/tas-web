@@ -37,11 +37,12 @@
 
         </div>
 
-        <div class="am-u-sm-12" v-if="tableData&&tableData.length>0">
+        <div class="am-u-sm-12">
           <el-table
             :data="tableData"
             border
             stripe
+            height="300"
             style="min-width: 100%">
             <el-table-column
               fixed
@@ -79,9 +80,11 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="endAmount"
               label="结束讲数"
               min-width="100">
+              <template scope="scope">
+                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.endAmount" @change="check(scope.row)"/>
+              </template>
             </el-table-column>
             <el-table-column
               prop="gradeName"
@@ -141,7 +144,6 @@
         </div>
       </div>
 
-
       <div class="am-u-lg-12 am-cf">
 
         <div class="am-fr">
@@ -149,10 +151,10 @@
         </div>
       </div>
 
-      <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-        <button type="button" class="am-btn am-btn-primary" @click="back">上一步</button>
-      </div>
+    </div>
 
+    <div class="am-u-sm-12 am-text-center">
+      <button type="button" class="am-btn am-btn-primary" @click="back">上一步</button>
     </div>
 
 
@@ -167,25 +169,29 @@
   export default{
     data: function () {
       return {
-        studentId: '',
         tableData: [],
         total: 0,
         pageSize: 10,
         pageNo: 1,
         query: {
-          status : 1
+          status : 1,
+          gradeId:'',
+          subjectId:''
         },
-        courses: [],
-        courseOrderId: '',
+        srcClass:{}
       }
     },
     props: ['args', 'regId'],
     components: {
       Pagination,
     },
-    watch: {
-      args: function () {
-      }
+    created:function(){
+      this.srcClass = this.args['step-one'].srcClass
+      this.query.areaTeamId  = this.srcClass.areaTeamId
+      this.query.periodId  = this.srcClass.periodId
+      this.query.gradeId  = this.srcClass.gradeId
+      this.query.subjectId  = this.srcClass.subjectId
+      this.loadTableData(1)
     },
     computed: {
       grades: function () {
@@ -198,17 +204,6 @@
           return {value: item.subjectId, text: item.subjectName}
         })
       },
-      periods: function () {
-        return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName }
-        })
-      }
-    },
-    mounted: function () {
-      $(window).smoothScroll()
-    },
-    created: function () {
-      this.loadCourseData()
     },
     methods: {
       check: function (item) {
@@ -230,9 +225,6 @@
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
-          status: 1,
-          busTeamId : _this.args.refundClass.busTeamId,
-          periodId : _this.args.refundClass.periodId
         }, _this.query), function (ret) {
 
           if (ret.success) {
@@ -242,17 +234,16 @@
 
             for (var i = 0; i < ret.data.list.length; i++) {
 
-              ret.data.list[i].startAmount = parseInt(_this.args.refundClass.studyAmount) + 1
-              ret.data.list[i].endAmount = _this.args.refundClass.endAmount
-              ret.data.list[i].regId = _this.regId
+              ret.data.list[i].completedLectureAmount = parseInt(ret.data.list[i].completedLectureAmount)
+              ret.data.list[i].startAmount = ret.data.list[i].completedLectureAmount + 1
+              ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
 
-              if (( _this.args.refundClass.studyingFee == ret.data.list[i].studyingFee) && ( _this.args.refundClass.lectureAmount == ret.data.list[i].lectureAmount)) {
+              if (( _this.srcClass.studyingFee == ret.data.list[i].studyingFee) && ( _this.srcClass.lectureAmount == ret.data.list[i].lectureAmount)) {
                 ret.data.list[i].allow = true
               } else {
                 ret.data.list[i].allow = false
               }
-
-              if(ret.data.list[i].classId != _this.args.refundClass.classId ){//过滤
+              if(ret.data.list[i].classId != _this.srcClass.classId ){//过滤
                 courseList.push(ret.data.list[i])
               }
             }
@@ -262,20 +253,8 @@
           }
         })
       },
-      loadCourseData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseCourseList, {}, function (ret) {
-          if (ret.success) {
-            _this.courses = ret.data.map(function (item) {
-              return {value: item.courseTemplateId, text: item.courseName}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
       confirm: function (item) {
-        this.$emit('goStep', 'step-three', { newClass: item, refundClass : this.args.refundClass })
+        this.$emit('goStep', 'step-three', item )
       },
       back: function () {
         this.$emit('goStep', 'step-one' )

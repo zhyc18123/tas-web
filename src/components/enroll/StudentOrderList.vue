@@ -81,7 +81,7 @@
 
     <window ref="cert" title="听课证">
 
-      <div style="height:95%" id="certIframe">
+      <div style="height:750px;" id="certIframe">
 
       </div>
 

@@ -140,16 +140,19 @@
       },
       del:function(productId){
         var _this  = this
-        io.post(io.apiAdminDeleteProduct,{
+        _this.$confirm('确定是否删除' , function(){
+          io.post(io.apiAdminDeleteProduct,{
             productId : productId
-        },function(ret){
-          if(ret.success){
-            _this.loadTableData()
-            _this.$alert('删除成功')
-          }else{
-            _this.$alert(ret.desc)
-          }
+          },function(ret){
+            if(ret.success){
+              _this.loadTableData()
+              _this.$alert('删除成功')
+            }else{
+              _this.$alert(ret.desc)
+            }
+          })
         })
+
       }
     }
   }

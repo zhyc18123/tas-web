@@ -4,19 +4,26 @@
       <div class="am-modal-hd">{{title}}
         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
       </div>
-      <div class="am-modal-bd am-cf am-scrollable-vertical" style="border-bottom-width: 0 ;">
+      <div class="am-modal-bd am-cf" style="border-bottom: 0px solid #dedede" >
         <slot></slot>
         <slot name="body"></slot>
       </div>
-      <!--<div class="am-modal-footer am-cf" v-if="$slots.footer">
+      <div class="am-modal-footer am-cf" v-if="$slots.footer">
         <slot name="footer">
 
         </slot>
-      </div>-->
+      </div>
     </div>
   </div>
 </template>
 <style scoped>
+
+  .am-modal-footer{
+    height: 48px ;
+    border-top: 1px solid #dedede;
+    border-collapse: unset ;
+    padding-top: 4px ;
+  }
 
 </style>
 <script>
@@ -36,7 +43,7 @@
             $('#_windowSlot').append($modal)
           }
 
-          $('.am-modal-bd',$modal).height( ($('.am-modal-dialog',$modal).height() - 68  ) )
+          //$('.am-modal-bd',$modal).height( ($('.am-modal-dialog',$modal).height() - 68  ) )
         })
 
         $modal.on('closed.modal.amui',function(){
@@ -48,6 +55,7 @@
       methods: {
         show: function(option){
           option = option || {}
+          delete option.height
           option.closeViaDimmer = false
           option.closeOnConfirm = false
           //option.dimmer = false

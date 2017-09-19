@@ -95,10 +95,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <window ref="first" title="转班" @close="regId=''">
-      <turn-class :regId="regId" @completed="$refs.first.close()"></turn-class>
-    </window>
 
+    <turn-class ref="turnClass" @completed="loadDataTable"></turn-class>
 
     <window ref="studentRefund" title="退费申请">
       <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close();$root.$emit('mainAccount:change')"></student-refund>
@@ -130,10 +128,6 @@
     },
     created: function () {
       this.loadDataTable()
-      var _this = this
-      this.$root.$on('class:new', function () {
-        _this.loadDataTable()
-      })
     },
     methods: {
       loadDataTable: function () {
@@ -145,19 +139,14 @@
         }, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data
-
           } else {
             _this.$alert(ret.desc || '处理失败')
           }
         })
       },
       turnClass: function (regId) {
-        var _this = this
-        _this.regId = regId
-        _this.$refs.first.show({
-          width: 1200,
-          height: 600,
-        })
+        this.$refs.turnClass.regId = regId
+        this.$refs.turnClass.show()
       },
       studentRefund: function (regId) {
         var _this = this;

@@ -129,7 +129,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="开班"
+                label="开启报名"
                 min-width="100">
                 <template scope="scope">
                   {{scope.row.status == 0 ? '否': ( scope.row.status == 1 ? '是' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
@@ -149,9 +149,9 @@
                             <el-dropdown-item  @click.native="$router.push( '/main/crowdfunding/edit/' + scope.row.classId)">众筹定价</el-dropdown-item>
                           </template>
                           <template >
-                            <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开班
+                            <el-dropdown-item  :disabled="scope.row.status != 0 || scope.row.discountType == 0"  @click.native="changeStatus(scope.row.classId,1)"> 开启报名
                             </el-dropdown-item>
-                            <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">取消开班
+                            <el-dropdown-item  :disabled="scope.row.status != 1"  @click.native="changeStatus(scope.row.classId,0)">暂停报名
                             </el-dropdown-item>
                           </template>
                           </el-dropdown-menu>

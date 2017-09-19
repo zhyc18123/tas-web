@@ -1,5 +1,5 @@
 <template>
-  <window ref="win" title="选择校区">
+  <window ref="win" title="选择班主任">
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <div class="widget-body am-fr" style="padding: 0px ;">
@@ -8,7 +8,7 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <input type="text"   v-model="query.campusName" placeholder="请输入校区名称"/>
+              <input type="text"   v-model="query.teacherName" placeholder="请输入姓名"/>
             </div>
           </div>
 
@@ -30,21 +30,53 @@
             style="min-width: 100%">
             <el-table-column
               fixed
-              prop="campusName"
-              label="校区名"
+              prop="teacherName"
+              label="姓名"
               min-width="100">
             </el-table-column>
             <el-table-column
-              label="地址"
+              prop="idNo"
+              label="身份证号码"
+              min-width="200">
+            </el-table-column>
+            <el-table-column
+              label="性别"
               min-width="100">
               <template scope="scope">
-                {{scope.row.address }}
-                </template>
+                {{scope.row.sex == 1 ? '男' : '女' }}
+              </template>
             </el-table-column>
             <el-table-column
               prop="phoneNo"
-              label="联系电话"
+              label="电话号码"
+              min-width="150">
+            </el-table-column>
+            <el-table-column
+              prop="teachGradeNames"
+              label="任教年级"
               min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="teachSubjectNames"
+              label="任教科目"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="areaTeamName"
+              label="所在区域"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="busTeamName"
+              label="人事关系"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              label="任职性质"
+              min-width="100">
+              <template scope="scope">
+                {{ {'0':'专职','1':'兼职'}[scope.row.jobNature]}}
+              </template>
             </el-table-column>
             <el-table-column
               fixed="right"
@@ -80,18 +112,22 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        query: {campusName:''}
+        query: {teacherName:'',areaTeamId:''}
       }
     },
-    props:['areaTeamId'],
     components: {
       Pagination
     },
     mounted: function () {
       $(window).smoothScroll()
     },
-    created: function () {
+    watch:{
+      'query.areaTeamId' :function(){
+        this.tableData=[]
+        this.total =  0
+        this.pageNo = 1
 
+      }
     },
     methods: {
       search: function () {
@@ -100,8 +136,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        _this.query.areaTeamId = _this.areaTeamId || ''
-        io.post(io.apiAdminCampusUseList, $.extend({
+        io.post(io.apiAdminSeniorList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query), function (ret) {

@@ -28,7 +28,7 @@
       </div>
 
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+      <table width="100%" class="am-table am-table-bordered am-table-compact am-text-nowrap">
 
         <colgroup>
           <col width="100"/>
@@ -40,38 +40,38 @@
         </colgroup>
         <tbody>
         <tr>
-          <td>优惠详情</td>
+          <td class="bgColor">优惠详情</td>
           <td colspan="5" v-html="discountDetail"></td>
         </tr>
         <tr>
-          <td>总计金额</td>
+          <td class="bgColor">总计金额</td>
           <td><span class="am-text-danger">{{courseOrder.totalAmount}}</span>￥</td>
-          <td>优惠金额</td>
+          <td class="bgColor">优惠金额</td>
           <td><span class="am-text-danger">{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span>￥</td>
-          <td>应缴金额</td>
+          <td class="bgColor">应缴金额</td>
           <td><span class="am-text-danger">{{courseOrder.payableAmount}}</span>￥</td>
         </tr>
         <tr>
-          <td>已缴金额</td>
+          <td class="bgColor">已缴金额</td>
           <td><span class="am-text-danger">{{courseOrder.paidAmount}}</span>￥</td>
-          <td>欠费金额</td>
+          <td class="bgColor">欠费金额</td>
           <td><span class="am-text-danger">{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span>￥</td>
           <td colspan="2"></td>
         </tr>
         <tr v-if="courseOrder.chargingStatus == 0 ">
-          <td>特殊优惠</td>
+          <td class="bgColor">特殊优惠</td>
           <td><input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount"  @change="checkDiscountAmount"/></td>
-          <td>优惠原因</td>
+          <td class="bgColor">优惠原因</td>
           <td><input type="text" class="am-input-sm"  v-model="formData.discountReason"  /></td>
           <td colspan="2"></td>
         </tr>
         <tr v-if="courseOrder.chargingStatus != 2 ">
-          <td>缴费金额</td>
+          <td class="bgColor">缴费金额</td>
           <td><input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" @change="check"/></td>
           <td colspan="4"></td>
         </tr>
         <tr v-if="courseOrder.chargingStatus != 2 ">
-          <td>支付方式</td>
+          <td class="bgColor">支付方式</td>
           <td colspan="5">
             <label class="am-radio-inline">
               <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
@@ -92,7 +92,7 @@
         </tr>
 
         <tr v-if="courseOrder.chargingStatus != 2 ">
-          <td>收费校区</td>
+          <td class="bgColor">收费校区</td>
           <td colspan="5">
             <input required type="text" placeholder="校区" class="am-input-sm" style="display:inline;width:300px;"  v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
             <button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectCampus.show()">选择</button>
@@ -113,6 +113,15 @@
   </form>
 
 </template>
+
+<style scoped>
+
+
+  .bgColor {
+    background-color: #eee;
+    text-align: center;
+  }
+</style>
 
 
 <script>
@@ -287,9 +296,10 @@
             timeout : 30000,
             success: function (data) {
               if(data == 'Y'){
-                alert('支付成功')
                 _this.$root.$emit('order:new')
                 _this.$emit('paySuccess')
+                _this.$closeDialog()
+                _this.$alert('支付成功')
               }else{
                 checkWorker()
               }

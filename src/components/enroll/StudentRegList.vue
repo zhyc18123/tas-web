@@ -226,9 +226,9 @@
         query: {
           areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '',
           busTeamId: '',
-          productId: '',
           periodId: '',
         },
+        periods:[],
         searchConfig: {},
       }
     },
@@ -263,11 +263,6 @@
           })
         this.query.busTeamId = ''
         return options
-      },
-      periods: function () {
-        return this.$root.config.periods.map(function (item) {
-          return {value: item.periodId, text: item.periodName}
-        })
       }
     },
     methods: {
