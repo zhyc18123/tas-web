@@ -1,5 +1,5 @@
 <template>
-  <div class="m-business-cost-detail">
+  <div class="m-gradeSubject-statistics">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
@@ -11,15 +11,39 @@
         <div class="widget-body">
           <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
             <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
-                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
-                </select>
-              </choose>
+              <div style="float: left">
+                <el-select v-model="formData.areaTeamId" placeholder="请选择区域">
+                  <el-option
+                    v-for="item in areaTeams"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
+              <div style="float: left">
+                <el-select v-model="formData.gradeId" placeholder="请选择年级">
+                  <el-option
+                    v-for="item in grades"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
+              <div style="float: left">
+                <el-select v-model="formData.subjectId" placeholder="请选择科目">
+                  <el-option
+                    v-for="item in subjects"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </div>
               <div class="am-u-md-2">
                 <div class="am-form-group">
-                  <date-picker v-model="startDate">
+                  <date-picker v-model="formData.startDate">
                     <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
                   </date-picker>
                 </div>
@@ -27,7 +51,7 @@
 
               <div class="am-u-md-2" style="float: left">
                 <div class="am-form-group">
-                  <date-picker v-model="endDate">
+                  <date-picker v-model="formData.endDate">
                     <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
                   </date-picker>
                 </div>
@@ -37,7 +61,7 @@
               </button>
             </div>
           </div>
-          <div v-if="detailType !== '0'" class="am-u-sm-12">
+          <div v-if="formData.detailType !== '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
@@ -70,15 +94,15 @@
                 label="操作"
                 width="100">
                 <template scope="scope">
-                  <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
-                       scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
-                       '&endDate=' + endDate" tag="a">明细</router-link>
+                  <router-link v-if="formData.detailType === '1'" :to="'/main/operating/gradeSubjectStatistics/subDetail?detailType=' +
+                       scope.row.detailType + '&name=' + name +'-'+ scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
+                       '&gradeId=' + formData.gradeId +'&subjectId=' + formData.subjectId + '&startDate=' + formData.startDate +
+                       '&endDate=' + formData.endDate + '&areaTeamId=' + formData.areaTeamId" tag="a">明细</router-link>
                 </template>
               </el-table-column>
             </el-table>
           </div>
-          <div v-if="detailType === '0'" class="am-u-sm-12">
+          <div v-if="formData.detailType === '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
               border
@@ -130,44 +154,59 @@
     data:function(){
       return {
         name: '',
-        detailType: '0',
-        mainAccountId: '',
-        mainAccounts: [],
-        startDate: '',
-        endDate: '',
-        feeCategoryId: '',
-        tableData:[
-          {
-            index: 0,
-            name: '兼职',
-            price: 100,
-            to: '01',
-          }
-        ],
+        areaTeams: [],
+        formData: {
+          areaTeamId: '564701030634225664',
+          gradeId: '',
+          subjectId: '',
+          startDate: '',
+          endDate: '',
+          feeCategoryId: '',
+          detailType: '0',
+        },
+        tableData:[],
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    computed: {
+      grades () {
+        return this.$root.config.grades.map(function(item){
+          return {value: item.gradeId, label: item.gradeName}
+        })
+      },
+      subjects () {
+        return this.$root.config.subjects.map(function(item){
+          return {value: item.subjectId, label: item.subjectName}
+        })
+      }
+    },
     created:function(){
       this.name = this.$route.query.name
-      this.detailType = this.$route.query.detailType
-      this.mainAccountId = this.$route.query.mainAccountId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
-      this.feeCategoryId = this.$route.query.feeCategoryId
-      this.loadMainAccountList();
+      this.formData.detailType = this.$route.query.detailType
+      this.formData.gradeId = this.$route.query.gradeId
+      this.formData.subjectId = this.$route.query.subjectId
+      this.formData.startDate = this.$route.query.startDate
+      this.formData.endDate = this.$route.query.endDate
+      this.formData.feeCategoryId = this.$route.query.feeCategoryId
+      this.getAreaTeamList();
       this.loadTableData();
     },
     methods:{
       handleSearch() {
         this.loadTableData()
       },
-      loadMainAccountList:function(){
-        var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
+      getAreaTeamList: function () {
+        var _this = this;
+        io.post(io.apiAdminAreaTeamList,{
+        },function(ret){
           if(ret.success){
-            _this.mainAccounts = ret.data.list;
+            _this.areaTeams = []
+            ret.data.list.map(function (item) {
+              _this.areaTeams.push({value: item.areaTeamId, label: item.name})
+            })
+            _this.areaTeamId = _this.areaTeams[0].value
           }else{
             _this.$alert(ret.desc)
           }
@@ -176,20 +215,14 @@
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.costDetail,{
-          detailType: this.detailType,
-          mainAccountId: this.mainAccountId,
-          startDate: this.startDate,
-          endDate: this.endDate,
-          feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        io.post(io.gradeAndSubjectDetail,_this.formData,function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-            if (_this.detailType == 0) {
+            if (_this.formData.detailType == 0) {
               _this.tableData = ret.data.changeRecordList
-            } else if (_this.detailType == 1 ||_this.detailType == 3) {
-              _this.tableData = ret.data.categoryMainAccountVoList
-            } else if(_this.detailType == 2) {
+            } else if (_this.formData.detailType == 1 ||_this.formData.detailType == 3) {
+              _this.tableData = ret.data.gradeAndSubjectCostByCategoryVoList
+            } else if(_this.formData.detailType == 2) {
               _this.tableData = ret.data.teacherClassCostVoList
             }
 
@@ -203,9 +236,15 @@
 </script>
 
 <style lang="less">
-  .m-business-cost-detail{
+  .m-gradeSubject-statistics{
     .el-tabs__header {
       margin-top: 20px;
+    }
+    .el-select {
+      width: 160px;
+    }
+    .el-select:first-child {
+      margin-right: 10px;
     }
     .am-u-sm-5 {
       margin-bottom: 1.5rem;

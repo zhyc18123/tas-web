@@ -38,6 +38,8 @@ const ClassRemunerationList = resolve => require(['./components/sysmanager/Class
 const ClassRemunerationForm = resolve => require(['./components/sysmanager/ClassRemunerationForm'], resolve)
 const CusIdList = resolve => require(['./components/sysmanager/CusIdList'], resolve)
 const CusIdForm = resolve => require(['./components/sysmanager/CusIdForm'], resolve)
+const SummerWinter = resolve => require(['./components/sysmanager/SummerWinter'], resolve)
+const SummerWinterForm = resolve => require(['./components/sysmanager/SummerWinterForm'], resolve)
 
 
 const TeacherList = resolve => require(['./components/teachingresource/TeacherList'], resolve)
@@ -152,14 +154,27 @@ const DiscountForm = resolve => require(['./components/discount/DiscountForm'], 
 const DiscountRuleTest = resolve => require(['./components/discount/DiscountRuleTest'], resolve)
 
 const BusinessStatisticsList = resolve => require(['./components/operating/BusinessStatisticsList'], resolve)
-const BusinessCostList = resolve => require(['./components/operating/BusinessCostList'], resolve)
+const BusinessCostIncomeList = resolve => require(['./components/operating/BusinessCostIncomeList'], resolve)
 const BusinessCostDetail = resolve => require(['./components/operating/BusinessCostDetail'], resolve)
+const SubDetail = resolve => require(['./components/operating/SubDetail'], resolve)
+const BusinessIncomeDetail = resolve => require(['./components/operating/BusinessIncomeDetail'], resolve)
+const ProductCostIncomeList = resolve => require(['./components/operating/ProductCostIncomeList'], resolve)
+const ProductCostDetail = resolve => require(['./components/operating/ProductCostDetail'], resolve)
+const ProductIncomeDetail = resolve => require(['./components/operating/ProductIncomeDetail'], resolve)
 const TeachReward = resolve => require(['./components/operating/TeachReward'], resolve)
 const ProductStatisticsList = resolve => require(['./components/operating/ProductStatisticsList'], resolve)
+const BasicData = resolve => require(['./components/operating/BasicData'], resolve)
+const ProblemWarning = resolve => require(['./components/operating/ProblemWarning'], resolve)
+const FullClassRate = resolve => require(['./components/operating/FullClassRate'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
 const TargetSetList = resolve => require(['./components/operating/TargetSetList'], resolve)
 const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
 const InputProductIncome = resolve => require(['./components/operating/InputProductIncome'], resolve)
+
+const GradeSubjectStatisticsList = resolve => require(['./components/operating/GradeSubjectStatisticsList'], resolve)
+const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
+const GradeSubjectCostDetail = resolve => require(['./components/operating/GradeSubjectCostDetail'], resolve)
+const GradeSubjectIncomeDetail = resolve => require(['./components/operating/GradeSubjectIncomeDetail'], resolve)
 
 
 Vue.use(VueRouter)
@@ -223,6 +238,8 @@ const router = new VueRouter({
       {path: 'sys/class/remuneration/list' , component: ClassRemunerationList },
       {path: 'sys/class/remuneration/add' , component: ClassRemunerationForm },
       {path: 'sys/class/remuneration/edit/:classRemunerationId' , component: ClassRemunerationForm },
+      {path: 'sys/vacation/setting' , component: SummerWinter },
+      {path: 'sys/vacation/add' , component: SummerWinterForm },
 
       {path: 'crowdfunding/list', component: CrowdfundingClassList },
       {path: 'crowdfunding/edit/:classId' , component: CrowdfundingClassDetail},
@@ -313,11 +330,29 @@ const router = new VueRouter({
       {path: 'discount/discount/edit/:discountId' , component: DiscountForm},
 
       {path: 'operating/businessStatistics/list' , component: BusinessStatisticsList},
-      {path: 'operating/businessStatistics/costList' , component: BusinessCostList},
+      {path: 'operating/businessStatistics/costIncomeList' , component: BusinessCostIncomeList},
       {path: 'operating/businessStatistics/costDetail' , component: BusinessCostDetail},
+      {path: 'operating/businessStatistics/subDetail' , component: SubDetail},
+      {path: 'operating/businessStatistics/incomeDetail' , component: BusinessIncomeDetail},
       {path: 'operating/businessStatistics/teachReward' , component: TeachReward},
       {path: 'operating/productStatistics/list' , component: ProductStatisticsList},
-      {path: 'operating/dataAnalysis/list' , component: DataAnalysisList},
+      {path: 'operating/productStatistics/costIncomeList' , component: ProductCostIncomeList},
+      {path: 'operating/productStatistics/costDetail' , component: ProductCostDetail},
+      {path: 'operating/productStatistics/incomeDetail' , component: ProductIncomeDetail},
+      {path: 'operating/gradeSubjectStatistics/list' , component: GradeSubjectStatisticsList},
+      {path: 'operating/gradeSubjectStatistics/costIncomeList' , component: GradeSubjectCostIncomeList},
+      {path: 'operating/gradeSubjectStatistics/costDetail' , component: GradeSubjectCostDetail},
+      {path: 'operating/gradeSubjectStatistics/incomeDetail' , component: GradeSubjectIncomeDetail},
+      {path: 'operating/gradeSubjectStatistics/subDetail' , component: SubDetail},
+      {
+        path: 'operating/dataAnalysis/list' ,
+        component: DataAnalysisList,
+        children: [
+          {path: 'basicData' , component: BasicData},
+          {path: 'problemWarning' , component: ProblemWarning},
+          {path: 'fullClassRate' , component: FullClassRate},
+        ]
+      },
       {path: 'operating/targetSet/list' , component: TargetSetList},
       {path: 'operating/targetSet/inputMainIncome' , component: InputMainIncome},
       {path: 'operating/targetSet/inputProductIncome' , component: InputProductIncome},

@@ -37,9 +37,11 @@ import {
   CheckboxGroup,
   Radio,
   Select,
-  Option
+  Option,
+  ButtonGroup,
+  MenuItem,
+  Menu,
 } from 'element-ui'
-
 var VueUI = function(){
 
 }
@@ -140,6 +142,10 @@ VueUI.install = function (Vue){
   Vue.component(Radio.name,Radio)
   Vue.component(Select.name,Select)
   Vue.component(Option.name,Option)
+  Vue.component(ButtonGroup.name,ButtonGroup)
+  Vue.component(MenuItem.name,MenuItem)
+  Vue.component(Menu.name,Menu)
+  // Vue.component(ElDatePicker.name,ElDatePicker)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )
