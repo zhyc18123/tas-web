@@ -137,7 +137,7 @@
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.prodcutStatisticsList,this.formData,function(ret){
+        io.post(io.productStatisticsList,this.formData,function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data
