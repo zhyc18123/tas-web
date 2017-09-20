@@ -29,6 +29,7 @@
                 :data="tableData"
                 border
                 stripe
+                height="400"
                 style="min-width: 100%">
                 <el-table-column
                   fixed

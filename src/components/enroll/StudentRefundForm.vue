@@ -3,6 +3,14 @@
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">班级信息</div>
       <table width="100%" class="am-table am-table-bordered am-table-compact ">
+        <colgroup>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+          <col width="100"/>
+        </colgroup>
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
@@ -31,7 +39,7 @@
         </tbody>
       </table>
 
-      <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+      <table width="100%" class="am-table am-table-bordered am-table-compact am-text-nowrap">
 
         <colgroup>
           <col width="100"/>
@@ -46,27 +54,27 @@
         <tbody>
 
         <tr>
-          <td>申请退费讲次</td>
+          <td class="bgColor">申请退费讲次</td>
           <td colspan="7">
             <template v-for="(item,index) in availableRefundLectures">
               <label  class="am-checkbox-inline">
                 <input type="checkbox" :value="item.lectureNo" name="refundLectureNo" v-model="formData.refundLecture"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
               </label>
-              <br v-if="( index + 1 ) % 7 == 0" >
+              <br v-if="( index + 1 ) % 6 == 0" >
             </template>
 
           </td>
         </tr>
 
         <tr>
-          <td>退费金额</td>
+          <td class="bgColor">退费金额</td>
           <td colspan="7">
             <span class="am-text-danger">{{remaining | formatNumber(2)}}</span>￥
           </td>
         </tr>
 
         <tr>
-          <td>退费方式</td>
+          <td class="bgColor">退费方式</td>
           <td colspan="7">
             <label class="am-checkbox-inline">
               <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
@@ -82,16 +90,16 @@
 
         <template v-if="formData.refundWay == 4 ">
         <tr>
-          <td>转账银行</td>
+          <td class="bgColor">转账银行</td>
           <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankName"></td>
-          <td>开户城市</td>
+          <td class="bgColor">开户城市</td>
           <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankCity"></td>
         </tr>
 
         <tr>
-          <td>姓名</td>
+          <td class="bgColor">姓名</td>
           <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardUser"></td>
-          <td>转账账号</td>
+          <td class="bgColor">转账账号</td>
           <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardNo"></td>
         </tr>
         </template>
@@ -109,7 +117,7 @@
   </form>
 
 </template>
-<style>
+<style scoped>
   .bold-font {
     font-weight: bold;
   }
@@ -237,7 +245,7 @@
           this.$alert('请选择退费讲次')
           return
         }
-        var data = _this.$data.formData
+        var data = JSON.parse(JSON.stringify(_this.$data.formData))
         data.refundLecture = data.refundLecture.join(',')
         _this.$showLoading()
         io.post(io.apiAdminSaveOrupdateStudentRefund,data,

@@ -77,8 +77,8 @@
               <div class="am-form-group">
                 <select2  v-model="query.status">
                   <option value="">班级状态</option>
-                  <option value="0">未开班</option>
-                  <option value="1">已开班</option>
+                  <option value="0">初始化</option>
+                  <option value="1">报名中</option>
                   <option value="2">已作废</option>
                   <option value="3">已结课</option>
                 </select2>
@@ -149,9 +149,13 @@
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>新建班级
                 </button>
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="setupSenior" v-if="hasPermission('edit')"><span
+                  class="am-icon-plus"></span>设置班主任
+                </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
                         @click="batchChangeStatus(1)" ><span
-                  class="am-icon-plus"></span>开班
+                  class="am-icon-plus"></span>开启报名
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('invalid')"
                         @click="batchChangeStatus(2)" ><span
@@ -203,7 +207,7 @@
                 label="状态"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                  {{scope.row.status == 0 ? '初始化': ( scope.row.status == 1 ? '报名中' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
                 </template>
               </el-table-column>
 
@@ -283,7 +287,7 @@
                 label="状态"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.status == 0 ? '未开班': ( scope.row.status == 1 ? '已开班' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
+                  {{scope.row.status == 0 ? '初始化': ( scope.row.status == 1 ? '报名中' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
                 </template>
               </el-table-column>
               <el-table-column
@@ -329,8 +333,8 @@
                       <el-dropdown-item v-if="hasPermission('edit')"  @click.native="$router.push('/main/course/class/edit/'+scope.row.classId)">编辑</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('arrange_view')"  @click.native="$router.push('/main/course/class/time/'+scope.row.classId)">查看排课</el-dropdown-item>
 
-                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,1)">开班</el-dropdown-item>
-                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,0)">取消开班</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 0 || scope.row.isArrangeTime == 0 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,1)">开启报名</el-dropdown-item>
+                      <el-dropdown-item v-if="hasPermission('open')" :disabled="scope.row.status != 1 || scope.row.classType != 0"  @click.native="changeStatus(scope.row.classId,0)">暂停报名</el-dropdown-item>
 
                       <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType != 0 ||scope.row.isArrangeTime == 0 || scope.row.isArrangeTeacher == 0 || scope.row.status != 0"  @click.native="changeClassType(scope.row.classId,1)">众筹</el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('edit')" :disabled="scope.row.classType == 0 || scope.row.status !=0 "  @click.native="changeClassType(scope.row.classId,0)">取消众筹</el-dropdown-item>
@@ -365,6 +369,8 @@
     <window ref="teacherArrangement" title="排老师" @close="courseClass={}">
       <teacher-arrangement :courseClass = courseClass @arrangementSuccess="$refs.teacherArrangement.close();loadTableData()"></teacher-arrangement>
     </window>
+
+    <select-senior ref="selectSenior" @ok="updateSenior"></select-senior>
   </div>
 </template>
 <script>
@@ -373,6 +379,7 @@
   import RoomArrangement from './RoomArrangement'
   import TeacherArrangement from './TeacherArrangement'
   import TimeArrangement from './TimeArrangement'
+  import SelectSenior from './SelectSenior'
 
   export default{
     data: function () {
@@ -401,6 +408,7 @@
       'room-arrangement':RoomArrangement,
       'teacher-arrangement':TeacherArrangement,
       'time-arragngement':TimeArrangement,
+      'select-senior':SelectSenior,
     },
     mounted: function () {
       $(window).smoothScroll()
@@ -609,7 +617,7 @@
             }
 
             if(status  == 1 && this.selection[i].isArrangeTime == 0 ){
-              this.$alert('【'+this.selection[i].className+'】未排时间，无法开班')
+              this.$alert('【'+this.selection[i].className+'】未排时间，无法开启报名')
               return
             }
         }
@@ -676,6 +684,48 @@
       },
       handleSelectionChange:function (selection) {
         this.selection = selection
+      },
+      setupSenior:function () {
+        if(this.selection.length == 0 ){
+          this.$alert('请选择记录')
+          return
+        }
+
+        var areaTeamIds = new Set();
+        for(var i =0 ;i < this.selection.length ;i++ ){
+          areaTeamIds.add(this.selection[i].areaTeamId)
+        }
+
+        if(areaTeamIds.size > 1 ){
+          this.$alert('不能同时选择多个区域的课程')
+          return
+        }
+
+        var classIds = this.selection.map(function (item) {
+          return item.classId
+        })
+
+        this.classIds = classIds
+        var areaTeamId = areaTeamIds.values().next().value
+        this.$refs.selectSenior.query.areaTeamId = areaTeamId
+        this.$refs.selectSenior.show()
+      },
+      updateSenior:function(teacher){
+        var _this = this
+        _this.$showLoading()
+
+        io.post(io.apiAdminSetupClassSenior, {
+          teacherId:teacher.teacherId,
+          classIds : _this.classIds
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       }
     }
   }

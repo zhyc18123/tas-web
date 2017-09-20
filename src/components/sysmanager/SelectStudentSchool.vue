@@ -29,6 +29,7 @@
                 :data="tableData"
                 border
                 stripe
+                height="400"
                 style="min-width: 100%">
                 <el-table-column
                   prop="schoolName"
@@ -90,12 +91,6 @@
     },
     components: {
       Window, Pagination
-    },
-    mounted: function () {
-      $(window).smoothScroll()
-    },
-    created: function () {
-      //this.loadTableData(this.pageNo);
     },
     methods: {
       search:function(){

@@ -99,8 +99,8 @@
           label="操作"
           width="150">
           <template scope="scope">
-            <el-button size="small" @click.native="cancel(scope.row.classId)">撤销</el-button>
             <el-button size="small" @click.native="pay(scope.row.classId ,scope.row.startAmount,scope.row.endAmount)">缴费</el-button>
+            <el-button size="small" @click.native="cancel(scope.row.classId)">撤销</el-button>
           </template>
         </el-table-column>
       </el-table>

@@ -48,9 +48,6 @@ import conf from '../../lib/conf'
     export default{
         data(){
             return{
-                location:[],
-                cityMap:{},
-                districtMap:{},
                 formData:{
                   campusId:'',
                   campusName : '',

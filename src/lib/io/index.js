@@ -166,6 +166,8 @@ const io = {
     this.apiAdminRearrangeTeacherForLecture = conf.baseApiPath + '/api/admin/arrangement/rearrangeTeacherForLecture'
     this.apiAdminChangeClassType = conf.baseApiPath + '/api/admin/changeClassType'
     this.apiAdminExportStudentReg = conf.baseApiPath + '/api/admin/exportStudentReg'
+    this.apiAdminSeniorList = conf.baseApiPath + '/api/admin/seniorList'
+    this.apiAdminSetupClassSenior = conf.baseApiPath + '/api/admin/setupClassSenior'
 
     this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/crowdfundingClassMgr'
     this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'
@@ -186,9 +188,8 @@ const io = {
     this.apiAdminStudentClassCertDetail = conf.baseApiPath + '/api/admin/studentClassCertDetail'
     this.apiAdminConfirmPayOrder= conf.baseApiPath + '/api/admin/confirmPayOrder'
     this.apiAdminQueryPayResult= conf.baseApiPath + '/api/admin/queryPayResult'
-    // this.apiAdminStudentRefundForm = conf.baseApiPath + '/api/admin/studentRefund'
-    this.apiAdminShowOldClassDetail = conf.baseApiPath + '/api/admin/showOldClass'
-    this.apiAdminShowNewClassDetail = conf.baseApiPath + '/api/admin/showNewClass'
+
+    this.apiAdminStudentRegDetail = conf.baseApiPath + '/api/admin/studentRegDetail'
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
     this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
     this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
@@ -272,23 +273,6 @@ const io = {
     this.apiAdminOrderItemList=conf.baseApiPath+'/api/admin/trading/orderItemList'
 
 
-    // this.apiAdminShippingAddressDetail = conf.baseApiPath + '/api/admin/trading/shippingAddressById'
-    this.apiAdminOrderItemDetail = conf.baseApiPath + '/api/admin/trading/orderItemDetail'
-    this.apiAdminSaveOrUpdateProductRefund = conf.baseApiPath + '/api/admin/trading/saveOrUpdateProductRefund'
-    this.apiAdminProductRefundList = conf.baseApiPath + '/api/admin/trading/productRefundList'
-    this.apiAdminProductRefundDetail = conf.baseApiPath + '/api/admin/trading/productRefundDetail'
-    this.apiAdminSellProductOrderList = conf.baseApiPath + '/api/admin/trading/sellProductOrderList'
-
-    // this.apiAdminSellOrderDetail = conf.baseApiPath + '/api/admin/trading/OrderItemDetail'
-    this.apiAdminchangeSellOrderItemStatus = conf.baseApiPath + '/api/admin/trading/updateOrderItemStatus'
-    this.apiAdminSaveOrUpdateAddress = conf.baseApiPath + '/api/admin/trading/saveOrUpdateShippingAddress'
-    this.apiAdminAddressList = conf.baseApiPath + '/api/admin/trading/shippingAddressList'
-    this.apiAdminDelAddress = conf.baseApiPath + '/api/admin/trading/delShippingAddress'
-    this.apiAdminGetOrderItemRefundDetail = conf.baseApiPath + '/api/admin/trading/getOrderItemRefund'
-    this.apiAdminRentRoomList = conf.baseApiPath + '/api/admin/trading/rentRoomList'
-
-    this.apiAdminRoomListOfCampus = conf.baseApiPath + '/api/admin/trading/roomListOfCampus'
-
     this.apiAdminAttendanceCourseClassList = conf.baseApiPath + '/api/admin/attendance/courseClassList'
     this.apiAdminAttendanceAttendanceRecordList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordList'
     this.apiAdminAttendanceAttendanceRecordDetailList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordDetailList'
@@ -303,6 +287,8 @@ const io = {
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
     this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'
     this.apiAdminReportExportConsumeAggregation = conf.baseApiPath + '/api/admin/report/exportConsumeAggregation'
+    this.apiAdminReportPayRecordList = conf.baseApiPath + '/api/admin/report/payRecordList'
+    this.apiAdminReportExportPayRecordList = conf.baseApiPath + '/api/admin/report/exportPayRecordList'
 
 
     this.apiAdminScheduleScheduleDataOfTeacher = conf.baseApiPath + '/api/admin/schedule/scheduleDataOfTeacher'

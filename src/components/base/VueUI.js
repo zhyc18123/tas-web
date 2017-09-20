@@ -89,6 +89,10 @@ VueUI.install = function (Vue){
     getInstance(Dialog,'dialog').show(title,content)
   }
 
+  Vue.dialog = Vue.prototype.$closeDialog = function (title,content){
+    getInstance(Dialog,'dialog').close()
+  }
+
   Vue.confirm = Vue.prototype.$confirm = function (msg,confirm,cancel){
     getInstanceNoCache(Confirm).show(msg,confirm,cancel)
   }
