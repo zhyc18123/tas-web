@@ -76,6 +76,7 @@
               :data="tableData"
               border
               stripe
+              height="400"
               style="min-width: 100%">
               <el-table-column
                 fixed
@@ -184,9 +185,6 @@
         this.loadProductData()
       }
     },
-    created: function () {
-
-    },
     computed: {
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
@@ -253,7 +251,7 @@
         this.loadTableData(this.pageNo)
         this.loadProductData()
         this.$refs.win.show({
-          width: 800,
+          width: 1000,
           height: 600
         })
       }

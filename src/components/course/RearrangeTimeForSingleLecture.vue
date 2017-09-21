@@ -1,4 +1,5 @@
 <template>
+  <window ref="win" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲时间'" >
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
     <div class="widget am-cf">
       <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
@@ -26,6 +27,7 @@
       </form>
     </div>
   </div>
+  </window>
 
 </template>
 
@@ -41,17 +43,9 @@
           date :'',
           time :'',
           updateAfterLecture : false
-        }
+        },
+        classLecture:{}
       }
-    },
-    props: ['classLecture'],
-    watch:{
-      classLecture:function(){
-        this.init()
-      }
-    },
-    created:function(){
-       this.init()
     },
     methods: {
       init:function(){
@@ -67,11 +61,16 @@
             updateAfterLecture : this.formData.updateAfterLecture
           },function(ret){
               if(ret.success){
-                  _this.$emit('ok')
+                _this.$emit('ok')
+                _this.$refs.win.close()
               }else{
                   _this.$alert(ret.desc ||  '处理失败')
               }
           })
+      },
+      show:function(){
+        this.init()
+        this.$refs.win.show({width:1000})
       }
 
     }

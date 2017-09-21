@@ -115,8 +115,6 @@
         refund: '',
         studentId: '',
         tableData: [],
-        regId: '',
-        classId: ''
       }
     },
     components: {
@@ -125,6 +123,12 @@
     },
     created: function () {
       this.loadDataTable()
+      this.$root.$on('order:new',()=>{
+        this.loadTableData()
+      })
+      this.$root.$on('order:pay:success',()=>{
+        this.loadTableData()
+      })
     },
     methods: {
       loadDataTable: function () {

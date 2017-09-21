@@ -112,37 +112,27 @@
         formData: { studentRefundId : '' },
       }
     },
-    watch: {
-      'formData.studentRefundId': function (val) {
-        if(!val){
-          return
-        }
-        this.loadStudentRefundDetailData(val)
-      }
-    },
     methods: {
-      loadStudentRefundDetailData: function (studentRefundId) {
+      loadStudentRefundDetailData: function () {
         var _this = this
-        if (studentRefundId != null) {
-          io.post(io.apiAdminStudentRefundDetail, {studentRefundId: studentRefundId},
-            function (ret) {
-              if (ret.success) {
-                if (ret.data.status == null) {
-                  _this.formData.status = 0
-                }else {
-                  _this.formData.status = ret.data.status
-                }
-                _this.formData.studentName = ret.data.studentName
-                _this.formData.classId = ret.data.classId
-                _this.formData.className = ret.data.className
-                _this.formData.studentId = ret.data.studentId
-                _this.formData.returnResult = ret.data.returnResult
-                _this.tableData = ret.data
-              } else {
-                _this.$alert(ret.desc)
+        io.post(io.apiAdminStudentRefundDetail, {studentRefundId: _this.formData.studentRefundId},
+          function (ret) {
+            if (ret.success) {
+              if (ret.data.status == null) {
+                _this.formData.status = 0
+              }else {
+                _this.formData.status = ret.data.status
               }
-            })
-        }
+              _this.formData.studentName = ret.data.studentName
+              _this.formData.classId = ret.data.classId
+              _this.formData.className = ret.data.className
+              _this.formData.studentId = ret.data.studentId
+              _this.formData.returnResult = ret.data.returnResult
+              _this.tableData = ret.data
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
       },
       confirmToRefund: function () {
         if(!this.formData.status || this.formData.status ==  0 ){
@@ -173,6 +163,7 @@
         this.$refs.win.show({
           width: 1000
         })
+        this.loadStudentRefundDetailData()
       }
     }
   }

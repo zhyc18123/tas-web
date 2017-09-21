@@ -57,14 +57,8 @@
         </div>
       </div>
     </div>
-
-    <window ref="rearrangeTime" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲时间'" @close="courseClass=null">
-      <rearrange-time v-if="!!classLecture" :classLecture="classLecture" @ok="$refs.rearrangeTime.close();loadTableData()"></rearrange-time>
-    </window>
-
-    <window ref="rearrangeTeacher" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲老师'" @close="courseClass=null">
-      <rearrange-teacher v-if="!!classLecture&&!!courseClass" :courseClass="courseClass" :classLecture="classLecture" @ok="$refs.rearrangeTeacher.close();loadTableData()"></rearrange-teacher>
-    </window>
+    <rearrange-time ref="rearrangeTime" @ok="loadTableData()"></rearrange-time>
+    <rearrange-teacher ref="rearrangeTeacher" @ok="loadTableData()"></rearrange-teacher>
 
   </div>
 </template>
@@ -81,8 +75,6 @@
         query: {
           classId : this.$params('classId')
         },
-        courseClass:null,
-        classLecture:null
       }
     },
     components:{ 'rearrange-time' :  RearrangeTimeForSingleLecture,'rearrange-teacher' :  RearrangeTeacherForSingleLecture },
@@ -94,11 +86,8 @@
     },
     methods: {
       rearrangeTime:function(classLecture){
-        this.classLecture = classLecture
-        this.$refs.rearrangeTime.show({
-          width : 1000,
-          height: 230
-        })
+        this.$refs.rearrangeTime.classLecture = classLecture
+        this.$refs.rearrangeTime.show()
       },
       rearrangeTeacher:function(classLecture){
 
@@ -106,12 +95,9 @@
         io.post(io.apiAdminCourseClassBaseDetail, { classId : classLecture.classId },
           function (ret) {
             if (ret.success) {
-              _this.courseClass = ret.data
-              _this.classLecture = classLecture
-              _this.$refs.rearrangeTeacher.show({
-                width : 1000,
-                height: 500
-              })
+              _this.$refs.rearrangeTeacher.courseClass = ret.data
+              _this.$refs.rearrangeTeacher.classLecture = classLecture
+              _this.$refs.rearrangeTeacher.show()
             }
           },
           function () {

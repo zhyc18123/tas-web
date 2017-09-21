@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <window ref="win" title="排课室">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-body  am-fr">
@@ -34,6 +34,7 @@
               :data="tableData"
               border
               stripe
+              height="400"
               style="min-width: 100%">
               <el-table-column type="expand">
                 <template scope="scope">
@@ -81,7 +82,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </window>
 </template>
 
 <script>
@@ -99,33 +100,11 @@
         pageSize:10,
         pageNo:1,
         query:{ },
-        campus:[]
+        campus:[],
+        courseClass:{}
       }
     },
-    props: ['courseClass'],
     components: { Pagination ,'calendar':Calendar },
-    watch:{
-      'courseClass.classId':function () {
-        this.tableData = []
-        if(this.courseClass.classId){
-          this.loadCampus()
-          this.query = {
-            areaTeamId : this.courseClass.areaTeamId ,
-            campusId : this.courseClass.campusId
-          }
-          this.loadTableData()
-        }
-      }
-    },
-    mounted:function(){
-      $(window).smoothScroll()
-    },
-    created:function(){
-      if (this.courseClass.classId) {
-        this.loadTableData(this.pageNo)
-        this.loadCampus()
-      }
-    },
     methods:{
       search:function(){
         this.loadTableData(this.pageNo)
@@ -153,7 +132,8 @@
             _this.$hiddenLoading()
             if (ret.success) {
               _this.$toast('OK');
-              _this.$emit('arrangementSuccess');
+              _this.$emit('completed');
+              _this.$refs.win.close()
             } else {
               _this.$alert(ret.desc)
             }
@@ -174,8 +154,19 @@
               _this.$alert(ret.desc)
             }
           })
+      },
+      show:function(){
+        this.tableData = []
+        this.query = {
+          areaTeamId : this.courseClass.areaTeamId ,
+          campusId : this.courseClass.campusId
+        }
+        this.loadCampus()
+        this.loadTableData()
+        this.$refs.win.show({width:1000})
       }
-    }
+    },
+
   }
 </script>
 

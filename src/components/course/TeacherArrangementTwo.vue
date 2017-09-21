@@ -19,7 +19,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-scrollable-horizontal am-margin-top-sm">
+            <div class="am-u-sm-12 am-scrollable-horizontal am-margin-top-sm" style="min-height: 230px;">
               <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
                 <thead>
                 <tr>
@@ -85,7 +85,7 @@
       this.loadTableData();
     },
     watch: {
-      'courseClassclassId': function () {
+      'courseClass.classId': function () {
         this.loadTableData();
       }
     },

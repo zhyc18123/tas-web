@@ -1,6 +1,8 @@
 <template>
-  <component v-bind:is="currentStep" :courseClass="courseClass" @goStep="goStep" @completed="completed" :args="args">
-  </component>
+  <window ref="win" title="排老师">
+    <component v-bind:is="currentStep" :courseClass="courseClass" @goStep="goStep" @completed="completed" :args="args">
+    </component>
+  </window>
 </template>
 
 <script>
@@ -13,23 +15,13 @@
     data: function () {
       return {
         currentStep : 'step-one',
-        args : {}
+        args : {},
+        courseClass:{}
       }
     },
     components:{
       'step-one': TeacherArrangementOne,
       'step-two' :TeacherArrangementTwo
-    },
-
-    props: ['courseClass'],
-    watch:{
-      'courseClass.classId' : function () {
-        //选择其他重置回第一步
-          this.currentStep = 'step-one'
-      }
-    },
-    mounted: function () {
-      $(window).smoothScroll()
     },
     methods:{
       goStep:function (which,data) {
@@ -37,7 +29,12 @@
           this.args = data || {}
       },
       completed:function () {
-        this.$emit('arrangementSuccess')
+        this.$emit('completed')
+        this.$refs.win.close()
+      },
+      show:function(){
+        this.currentStep = 'step-one'
+        this.$refs.win.show( { width : 1000 } )
       }
     }
   }

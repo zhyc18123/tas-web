@@ -358,18 +358,9 @@
       </div>
     </div>
 
-    <window ref="timeArrangement" title="排时间" @close="courseClass={}">
-      <time-arragngement :courseClass = courseClass @arrangementSuccess="$refs.timeArrangement.close();loadTableData()"></time-arragngement>
-    </window>
-
-    <window ref="roomArrangement" title="排课室" @close="courseClass={}">
-      <room-arrangement :courseClass = courseClass @arrangementSuccess="$refs.roomArrangement.close();loadTableData()"></room-arrangement>
-    </window>
-
-    <window ref="teacherArrangement" title="排老师" @close="courseClass={}">
-      <teacher-arrangement :courseClass = courseClass @arrangementSuccess="$refs.teacherArrangement.close();loadTableData()"></teacher-arrangement>
-    </window>
-
+    <time-arragngement ref="timeArrangement" @completed="loadTableData()"></time-arragngement>
+    <room-arrangement ref="roomArrangement" @completed="loadTableData()" ></room-arrangement>
+    <teacher-arrangement ref="teacherArrangement" @completed="loadTableData()"></teacher-arrangement>
     <select-senior ref="selectSenior" @ok="updateSenior"></select-senior>
   </div>
 </template>
@@ -399,7 +390,6 @@
         products:[],
         courses:[],
         periods:[],
-        courseClass :{},
         selection:[]
       }
     },
@@ -418,11 +408,6 @@
       this.loadProductData()
       this.loadCourseData()
       this.loadPeriodData()
-      var _this = this
-      this.$root.$on('courseClass:new',function(){
-        _this.pageNo = 1
-        _this.loadTableData(_this.pageNo)
-      })
     },
     computed: {
       areaTeams: function () {
@@ -525,12 +510,8 @@
       },
       //排课
       arrangeTime:function (courseClass) {
-        //弹窗
-        this.courseClass = courseClass
-        this.$refs.timeArrangement.show({
-          width:1000,
-          height:700
-        })
+        this.$refs.timeArrangement.courseClass =courseClass
+        this.$refs.timeArrangement.show()
       },
       rearrangeTime:function (courseClass) {
         var _this = this
@@ -549,16 +530,12 @@
 
       },
       arrangeRoom:function (courseClass) {
-
         if(courseClass.isArrangeTime !=  1 ){
           this.$alert('请先排时间')
           return
         }
-        this.courseClass = courseClass
-        this.$refs.roomArrangement.show({
-          width : 1000,
-          height: 500
-        });
+        this.$refs.roomArrangement.courseClass = courseClass
+        this.$refs.roomArrangement.show()
       },
       rearrangeRoom:function (courseClass) {
         var _this = this
@@ -582,11 +559,8 @@
           this.$alert('请先排时间')
           return
         }
-        this.courseClass = courseClass
-        this.$refs.teacherArrangement.show({
-          width : 1000,
-          height: 700
-        });
+        this.$refs.teacherArrangement.courseClass = courseClass
+        this.$refs.teacherArrangement.show()
       },
       rearrangeTeacher:function (courseClass) {
         var _this = this

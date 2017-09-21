@@ -112,9 +112,7 @@
     <div class="am-u-sm-12 am-margin-top-sm">
       <button type="button" class="am-btn am-btn-success am-radius" @click="batchPay">批量缴费</button>
     </div>
-    <window ref="order" title="缴费">
-      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close()"></course-order>
-    </window>
+    <course-order ref="courseOrder"></course-order>
   </div>
 
 
@@ -130,7 +128,6 @@
   export default{
     data: function () {
       return {
-        courseOrderId: '',
         studentId: '',
         selection:[]
       }
@@ -183,20 +180,11 @@
           _this.$hiddenLoading()
           if (ret.success) {
 
-            //获取订单id
-            var courseOrderId = ret.data.courseOrderId
-            _this.courseOrderId = courseOrderId
-            //_this 指的是vue实例
-            //this 指的是jquery 实例
-            //窗口调整大小
-            _this.$refs.order.show({
-              width: 1000,
-              height: 600,
-            })
+            _this.$refs.courseOrder.courseOrderId = ret.data.courseOrderId
+            _this.$refs.courseOrder.show()
 
             //通过实践通知订单组件重新加载数据
             _this.$root.$emit('order:new')
-            _this.$root.$emit('class:new')
 
             var classIds = regClassInfoList.map(function (item) {
               return item.classId

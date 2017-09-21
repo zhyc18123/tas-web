@@ -75,9 +75,8 @@
       </el-table-column>
     </el-table>
 
-    <window ref="order" title="订单详情">
-      <course-order :courseOrderId="courseOrderId" @paySuccess="$refs.order.close();courseOrderId='';$root.$emit('mainAccount:change')" ></course-order>
-    </window>
+
+    <course-order ref="courseOrder" @completed="loadTableData(1)" ></course-order>
 
     <window ref="cert" title="听课证">
 
@@ -115,7 +114,6 @@
         pageSize: 10,
         pageNo: 1,
         studentId:'',
-        courseOrderId: '',
       }
 
     },
@@ -128,10 +126,11 @@
     },
     created:function () {
       this.loadTableData(this.pageNo)
-      var _this = this
-      this.$root.$on('order:new',function(){
-        _this.pageNo = 1
-        _this.loadTableData(_this.pageNo)
+      this.$root.$on('order:new',()=>{
+        this.loadTableData(1)
+      })
+      this.$root.$on('order:pay:success',()=>{
+        this.loadTableData()
       })
       window._apiAdminStudentClassCertDetail = io.apiAdminStudentClassCertDetail + '?accessToken='+io.getHeaders().accessToken
     },
@@ -156,12 +155,8 @@
         })
       },
       showDetail(courseOrderId){
-        var _this = this
-        _this.courseOrderId = courseOrderId
-        _this.$refs.order.show({
-          width:1000,
-          height:600
-        })
+        this.$refs.courseOrder.courseOrderId = courseOrderId
+        this.$refs.courseOrder.show()
       },
       cancel(courseOrderId){
         var _this = this

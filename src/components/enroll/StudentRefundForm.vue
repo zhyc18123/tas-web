@@ -150,18 +150,9 @@
       }
     },
     watch: {
-      regId: function (val) {
-        if(!val){
-          return
-        }
-        this.reset()
-        this.loadClassMessageData(val)
-        this.loadAttend(val)
-      },
       'formData.refundLecture': function () {
         this.calRemaining()
       }
-
     },
     methods: {
       reset:function(){
@@ -173,9 +164,9 @@
         this.formData.refundLecture = [] ,
         this.formData.description = '与原校时间冲突'
       },
-      loadClassMessageData: function (regId) {
+      loadClassMessageData: function () {
         var _this = this
-        io.post(io.apiAdminStudentRegDetail, {regId: regId},
+        io.post(io.apiAdminStudentRegDetail, {regId: _this.regId},
           function (ret) {
             if (ret.success) {
               ret.data.studentReg.startAmount = parseInt(ret.data.studentReg.startAmount)
@@ -183,15 +174,15 @@
               ret.data.studentReg.regLectureAmount = (ret.data.studentReg.endAmount - ret.data.studentReg.startAmount) + 1
               ret.data.courseClass.lectureAmount = parseInt(ret.data.courseClass.lectureAmount)
               _this.studentRegDetail = ret.data
-              _this.formData.regId = regId
+              _this.formData.regId = _this.regId
             } else {
               _this.$alert(ret.desc)
             }
           })
       },
-      loadAttend: function (regId) {
+      loadAttend: function () {
         var _this = this
-        io.post(io.apiAdminQueryAttendOfStudent, {regId: regId},
+        io.post(io.apiAdminQueryAttendOfStudent, {regId: this.regId},
           function (ret) {
             if (ret.success) {
               _this.availableRefundLectures = ret.data
@@ -256,6 +247,9 @@
         this.$refs.win.show({
           width: 1000
         })
+        this.reset()
+        this.loadClassMessageData()
+        this.loadAttend()
       }
     }
   }
