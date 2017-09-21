@@ -11,7 +11,6 @@
   import TurnClassStepOne from  './TurnClassStepOne'
   import TurnClassStepTwo from  './TurnClassStepTwo'
   import TurnClassStepThree from './TurnClassStepThree'
-  import Window from "../base/Window.vue";
 
   export default{
     data: function () {
@@ -22,7 +21,6 @@
       }
     },
     components:{
-      Window,
       'step-one': TurnClassStepOne,
       'step-two' :TurnClassStepTwo,
       'step-three':TurnClassStepThree

@@ -192,11 +192,11 @@ const io = {
     this.apiAdminStudentRegDetail = conf.baseApiPath + '/api/admin/studentRegDetail'
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
     this.apiAdminStudentRefundList = conf.baseApiPath + '/api/admin/showStudentRefundList'
-    this.apiAdminShowClassMessage = conf.baseApiPath + '/api/admin/showClassMessage'
     this.apiAdminQueryAttendOfStudent = conf.baseApiPath + '/api/admin/queryAttendOfStudent'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
+    this.apiAdminChangeStudentPayStatus = conf.baseApiPath + '/api/admin/changeStudentPayStatus'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
     this.apiAdminExportStudentRefund = conf.baseApiPath + '/api/admin/exportStudentRefund'
 

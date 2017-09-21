@@ -4,28 +4,14 @@
       <div class="am-modal-hd">{{title}}
         <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
       </div>
-      <div class="am-modal-bd am-cf" style="border-bottom: 0px solid #dedede" >
+      <div class="am-modal-bd am-cf" style="border-bottom: 0px solid #dedede">
         <slot></slot>
         <slot name="body"></slot>
-      </div>
-      <div class="am-modal-footer am-cf" v-if="$slots.footer">
-        <slot name="footer">
-
-        </slot>
       </div>
     </div>
   </div>
 </template>
-<style scoped>
 
-  .am-modal-footer{
-    height: 48px ;
-    border-top: 1px solid #dedede;
-    border-collapse: unset ;
-    padding-top: 4px ;
-  }
-
-</style>
 <script>
 
     export default {

@@ -1,5 +1,5 @@
 <template>
-  <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
+  <window ref="win" title="退费申请">
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">班级信息</div>
       <table width="100%" class="am-table am-table-bordered am-table-compact ">
@@ -14,27 +14,27 @@
         <tbody>
         <tr>
           <td class="bgColor">期数：</td>
-          <td>{{classInfo.periodName}}</td>
+          <td>{{studentRegDetail.courseClass.periodName}}</td>
           <td class="bgColor">业务组：</td>
-          <td>{{classInfo.busTeamName}}</td>
+          <td>{{studentRegDetail.courseClass.busTeamName}}</td>
           <td class="bgColor">班级名称：</td>
-          <td>{{classInfo.className}}</td>
+          <td>{{studentRegDetail.courseClass.className}}</td>
         </tr>
         <tr>
           <td class="bgColor">班级编号：</td>
-          <td>{{classInfo.classId}}</td>
+          <td>{{studentRegDetail.courseClass.classNo}}</td>
           <td class="bgColor">任课老师：</td>
-          <td>{{classInfo.teacherNames}}</td>
+          <td>{{studentRegDetail.courseClass.teacherNames}}</td>
           <td class="bgColor">教室：</td>
-          <td>{{classInfo.roomName}}</td>
+          <td>{{studentRegDetail.courseClass.roomName}}</td>
         </tr>
         <tr>
           <td class="bgColor">开课日期：</td>
-          <td>{{classInfo.startCourseTime | formatDate}}</td>
+          <td>{{studentRegDetail.courseClass.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td>{{classInfo.lectureAmount}}</td>
+          <td>{{studentRegDetail.studentReg.regLectureAmount}}</td>
           <td class="bgColor">已交金额：</td>
-          <td>{{classInfo.payAmount}}</td>
+          <td>{{studentRegDetail.studentReg.payAmount}}</td>
         </tr>
         </tbody>
       </table>
@@ -113,8 +113,7 @@
         <button class="am-btn am-btn-primary">取消</button>
       </a>
     </div>
-
-  </form>
+  </window>
 
 </template>
 <style scoped>
@@ -144,15 +143,12 @@
           description:'',
           refundLecture:[]
         },
-        classInfo:{
-          totalAmount:0,
-          regLectureAmount:0
-        },
+        studentRegDetail:{studentReg:{},courseClass:{}},
         remaining: 0,
         availableRefundLectures: [],
+        regId:''
       }
     },
-    props: ['regId'],
     watch: {
       regId: function (val) {
         if(!val){
@@ -167,9 +163,6 @@
       }
 
     },
-    mounted: function () {
-      $(window).smoothScroll()
-    },
     methods: {
       reset:function(){
         this.formData.refundWay =  2
@@ -182,17 +175,15 @@
       },
       loadClassMessageData: function (regId) {
         var _this = this
-        io.post(io.apiAdminShowClassMessage, {regId: regId},
+        io.post(io.apiAdminStudentRegDetail, {regId: regId},
           function (ret) {
             if (ret.success) {
-              ret.data.startAmount = parseInt(ret.data.startAmount)
-              ret.data.endAmount = parseInt(ret.data.endAmount)
-              ret.data.lectureAmount = parseInt(ret.data.lectureAmount)
-              ret.data.regLectureAmount = (ret.data.endAmount - ret.data.startAmount) + 1
-              ret.data.startAmount =  Math.max(ret.data.startAmount,ret.data.completedLectureAmount + 1)
-              _this.classInfo = ret.data
+              ret.data.studentReg.startAmount = parseInt(ret.data.studentReg.startAmount)
+              ret.data.studentReg.endAmount = parseInt(ret.data.studentReg.endAmount)
+              ret.data.studentReg.regLectureAmount = (ret.data.studentReg.endAmount - ret.data.studentReg.startAmount) + 1
+              ret.data.courseClass.lectureAmount = parseInt(ret.data.courseClass.lectureAmount)
+              _this.studentRegDetail = ret.data
               _this.formData.regId = regId
-
             } else {
               _this.$alert(ret.desc)
             }
@@ -210,7 +201,7 @@
           })
       },
       calRemaining: function () {
-        this.remaining = math.mul(this.formData.refundLecture.length , math.div(this.classInfo.totalAmount, this.classInfo.regLectureAmount)) || '0'
+        this.remaining = this.formData.refundLecture.length == 0 ? 0 : math.mul(this.formData.refundLecture.length , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
       },
       confirmToRefund: function () {
         var _this = this
@@ -253,13 +244,18 @@
             _this.$hiddenLoading()
             if (ret.success) {
               _this.$alert('已接受退款申请')
-              _this.$root.$emit('class:new')
-              _this.$emit('arrangementSuccess')
+              _this.$refs.win.close()
+              _this.$emit('completed')
             } else {
               _this.$alert(ret.desc || '申请失败')
             }
           })
 
+      },
+      show:function(){
+        this.$refs.win.show({
+          width: 1000
+        })
       }
     }
   }
