@@ -1,5 +1,5 @@
 
-require('amazeui/dist/css/amazeui.css')
+//require('amazeui/dist/css/amazeui.css')
 require('amazeui')
 require('./assets/css/app.css')
 import Vue from 'vue'

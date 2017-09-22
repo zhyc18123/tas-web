@@ -148,7 +148,7 @@
 
 
 
-        <change-student-refund ref="changeStudentRefund" @completed="loadTableData(1)"></change-student-refund>
+        <change-student-refund ref="changeStudentRefund" @completed="loadTableData()"></change-student-refund>
 
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
@@ -242,7 +242,7 @@
           },  (ret) => {
             if (ret.success) {
               this.$toast('处理成功')
-              this.loadTableData(1)
+              this.loadTableData()
             } else {
               this.$alert(ret.desc)
             }

@@ -17,7 +17,7 @@
               <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所属课程
             </label>
             <div class="am-u-sm-6 input-field">
-              <input :disabled="!editable" type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="selectCourse">
+              <input id="courseName" :disabled="!editable" type="text" placeholder="所属课程"  required  v-model="courseTemplateData.courseName"  readonly @click="selectCourse">
             </div>
             <div class="am-u-sm-3 input-field">
               <button :disabled="!editable" type="button" class="am-btn am-btn-default" @click="selectCourse">选择</button>
@@ -329,6 +329,9 @@
           this.formData.periodId = ''
         }
         this.formData.areaTeamId = item.areaTeamId
+        this.$nextTick(()=>{
+          $('#courseName').trigger('change')
+        })
       },
       selectCampusCallback:function(campus){
         this.formData.campusId = campus.campusId
