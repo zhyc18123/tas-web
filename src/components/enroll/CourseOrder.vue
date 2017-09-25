@@ -142,7 +142,7 @@
       return {
         tableData: [],
         formData: {
-          payWay: '',
+          payWay: 1,
           payAmount: '',
           courseOrderId: '',
           discountAmount:0,
@@ -188,7 +188,7 @@
               if (ret.success) {
                 _this.tableData = ret.data;
                 _this.formData.payAmount = util.formatNumber((ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount),2 )
-                _this.formData.payWay = 0
+                _this.formData.payWay = 1
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
 
@@ -198,7 +198,7 @@
                   for(var reg of ret.data.regDetailVos){
                     let  d = discountDetail[reg.courseClass.classId]
                     if(d){
-                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+'))
+                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/|\d*/g,''))
                     }
                   }
                   _this.discountDetail = discountDetailArr.join('<br/>')

@@ -84,6 +84,13 @@
                 </template>
               </el-table-column>
               <el-table-column
+                label="支持退费"
+                min-width="100">
+                <template scope="scope">
+                  {{ scope.row.supportRefund == 0 ? '不支持' : '支持' }}
+                </template>
+              </el-table-column>
+              <el-table-column
                 label="不和其他叠加"
                 min-width="600">
                 <template scope="scope">
