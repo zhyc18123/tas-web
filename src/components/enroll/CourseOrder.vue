@@ -1,4 +1,5 @@
 <template>
+  <window ref="win" title="订单详情">
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
       <div class="am-u-sm-12 am-scrollable-horizontal">
         <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
@@ -111,6 +112,7 @@
     <select-campus ref="selectCampus" @ok="selectCampusCallback" ></select-campus>
 
   </form>
+  </window>
 
 </template>
 
@@ -140,7 +142,7 @@
       return {
         tableData: [],
         formData: {
-          payWay: '',
+          payWay: 1,
           payAmount: '',
           courseOrderId: '',
           discountAmount:0,
@@ -149,25 +151,15 @@
         },
         courseOrder: { },
         payQRCodeUrl : '',
-        discountDetail:'无'
+        discountDetail:'无',
+        courseOrderId:''
 
       }
     },
     components: {
       'select-campus':SelectCampus
     },
-    props: ['courseOrderId'],
-    created: function () {
-      if (this.courseOrderId) {
-        this.loadCourseOrderDetail(this.courseOrderId)
-        this.formData.discountAmount = 0
-      }
-    },
     watch: {
-      courseOrderId: function (val) {
-        this.loadCourseOrderDetail(val)
-        this.formData.discountAmount = 0
-      },
       'formData.discountAmount':function(val){
         this.formData.payAmount = util.formatNumber((this.courseOrder.payableAmount -  val) - (this.courseOrder.paidAmount),2 )
       }
@@ -196,7 +188,7 @@
               if (ret.success) {
                 _this.tableData = ret.data;
                 _this.formData.payAmount = util.formatNumber((ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount),2 )
-                _this.formData.payWay = 0
+                _this.formData.payWay = 1
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.courseOrder = ret.data.courseOrder
 
@@ -206,7 +198,7 @@
                   for(var reg of ret.data.regDetailVos){
                     let  d = discountDetail[reg.courseClass.classId]
                     if(d){
-                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+'))
+                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/|\d*/g,''))
                     }
                   }
                   _this.discountDetail = discountDetailArr.join('<br/>')
@@ -223,10 +215,10 @@
       showQRCode:function(){
           var url = conf.basePath + '/m/index.html#/pay/course/order/' + this.requestPayId
           console.log('二维码地址:' + url )
-          this.$dialog('请用微信或支付宝扫二维码','<img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(url)+'" />')
+          this.$dialog('请用微信或支付宝扫二维码','<div style="min-height: 300px;"><img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(url)+'" /></div>')
       },
       showBarCode:function(){
-        this.$dialog('请用post机扫码','<img src="'+io.apiBarcodeEncode + "?content=" + this.requestPayId +'" />')
+        this.$dialog('请用post机扫码','<div style="min-height: 150px;"><img src="'+io.apiBarcodeEncode + "?content=" + this.requestPayId +'" /></div>')
       },
       selectCampusCallback:function(campus){
         this.formData.chargeCampusId = campus.campusId
@@ -268,9 +260,9 @@
               }else{
                 _this.$alert("缴费成功")
               }
-
               _this.$root.$emit('order:new')
-              _this.$emit('paySuccess')
+              _this.$emit('completed')
+              _this.$refs.win.close()
 
             } else {
               _this.$alert( ret.desc || "缴费失败")
@@ -296,8 +288,7 @@
             timeout : 30000,
             success: function (data) {
               if(data == 'Y'){
-                _this.$root.$emit('order:new')
-                _this.$emit('paySuccess')
+                _this.$root.$emit('order:pay:success')
                 _this.$closeDialog()
                 _this.$alert('支付成功')
               }else{
@@ -310,6 +301,13 @@
           })
         }
         checkWorker()
+      },
+      show:function(){
+        this.$refs.win.show(
+          {width:1000}
+        )
+        this.loadCourseOrderDetail(this.courseOrderId)
+        this.formData.discountAmount = 0
       }
 
 

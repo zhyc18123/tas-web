@@ -97,10 +97,7 @@
     </el-table>
 
     <turn-class ref="turnClass" @completed="loadDataTable"></turn-class>
-
-    <window ref="studentRefund" title="退费申请">
-      <student-refund :regId="regId" @arrangementSuccess="$refs.studentRefund.close();$root.$emit('mainAccount:change')"></student-refund>
-    </window>
+    <student-refund ref="studentRefund" @completed="loadDataTable"></student-refund>
 
   </div>
 </template>
@@ -118,8 +115,6 @@
         refund: '',
         studentId: '',
         tableData: [],
-        regId: '',
-        classId: ''
       }
     },
     components: {
@@ -128,6 +123,12 @@
     },
     created: function () {
       this.loadDataTable()
+      this.$root.$on('order:new',()=>{
+        this.loadTableData()
+      })
+      this.$root.$on('order:pay:success',()=>{
+        this.loadTableData()
+      })
     },
     methods: {
       loadDataTable: function () {
@@ -149,12 +150,8 @@
         this.$refs.turnClass.show()
       },
       studentRefund: function (regId) {
-        var _this = this;
-        _this.regId = regId;
-        _this.$refs.studentRefund.show({
-          width: 1000,
-          height: 700,
-        })
+        this.$refs.studentRefund.regId = regId
+        this.$refs.studentRefund.show()
       }
     }
   }

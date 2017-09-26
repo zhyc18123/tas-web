@@ -1,6 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-    <div class="widget am-cf">
+  <window ref="win" title="排时间">
       <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
         <div class="am-form-group ">
 
@@ -98,8 +97,7 @@
         </div>
 
       </form>
-    </div>
-  </div>
+  </window>
 
 </template>
 
@@ -118,23 +116,19 @@
         arrangeWay: 'arrangeByWeek',
         weekDays: [],
         everyday:{ },
-        arrangeResult: []
+        arrangeResult: [],
+        courseClass:{}
       }
     },
-    props: ['courseClass','classId', 'lectureAmount'],
     watch: {
       startDate: function (val) {
         if (this.arrangeWay == 'arrangeByWeek' && val) {
           $('#' + moment(val, "YYYY-MM-DD").format('dddd')).click()
         }
       },
-      'courseClass.classId' : function(){
-        this.init()
-      }
     },
     created:function(){
        moment.locale('zh-cn')
-       this.init()
     },
     methods: {
       init:function(){
@@ -151,11 +145,13 @@
         this.arrangeResult= []
         this.excludeDays =  ''
         this.startDate = util.formatDate(new Date().getTime())
-        var _this = this
+        var dayOfStartDate = moment(this.startDate, "YYYY-MM-DD").format('dddd')
+        this.weekDays.filter((item)=>item.id == dayOfStartDate )[0].selected = true
+        //var _this = this
         //自动选上
-        setTimeout(new function(){
+        /*this.$nextTick(()=>{
           $('#' + moment(_this.startDate, "YYYY-MM-DD").format('dddd')).click()
-        },100)
+        })*/
       },
       addTime: function (day) {
         if (day.times.length > 2) {
@@ -270,16 +266,25 @@
       },
       save:function(){
           var _this  = this
+          _this.$showLoading()
           io.post(io.apiAdminSaveArrangeClassTimeResult,{
             classId : this.courseClass.classId ,
             resultJsonStr : JSON.stringify(this.arrangeResult)
           },function(ret){
+              _this.$hiddenLoading()
               if(ret.success){
-                  _this.$emit('arrangementSuccess')
+                  _this.$emit('completed')
+                  _this.$refs.win.close()
               }else{
                   _this.$alert(ret.desc ||  '处理失败')
               }
           })
+      },
+      show:function(){
+        this.$refs.win.show({
+          width:1000
+        })
+        this.init()
       }
 
     },

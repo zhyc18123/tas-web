@@ -239,8 +239,7 @@ import moment from 'moment'
           findSummerWinter() {
             var _this = this
             io.post(io.findSummerWinterByCampusId,{
-//                todo campusId: _this.formData.campusId,
-                campusId: '592165907283836928',
+                campusId: _this.formData.campusId,
                 year: _this.year,
                 roomId: _this.formData.roomId,
               },

@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <window ref="win" :title="'重新排第'+(classLecture ? classLecture.lectureNo : '')+'讲老师'">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-body  am-fr">
@@ -33,6 +33,7 @@
               :data="tableData"
               border
               stripe
+              height="400"
               style="min-width: 100%">
               <el-table-column type="expand">
                 <template scope="scope">
@@ -80,7 +81,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </window>
 </template>
 
 <script>
@@ -97,25 +98,13 @@
         pageSize:10,
         pageNo:1,
         query:{},
-        selectedTeacher:[]
-      }
-    },
-    props: ['courseClass','classLecture'],
-    watch:{
-      classLecture : function () {
-        this.loadTableData()
+        selectedTeacher:[],
+        courseClass:{},
+        classLecture:{},
       }
     },
     components: {
       Pagination,'calendar' :Calendar
-    },
-    mounted:function(){
-      $(window).smoothScroll();
-    },
-    created:function(){
-      this.loadTableData()
-    },
-    destroyed:function () {
     },
     methods:{
       search:function(){
@@ -149,10 +138,15 @@
         },function(ret){
           if(ret.success){
             _this.$emit('ok')
+            _this.$refs.win.close()
           }else{
             _this.$alert(ret.desc ||  '处理失败')
           }
         })
+      },
+      show:function(){
+        this.$refs.win.show({width:1000})
+        this.loadTableData()
       }
     }
   }

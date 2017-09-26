@@ -24,14 +24,36 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <input type="text"  v-model="query.studentName" placeholder="学生姓名"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <input type="text"  v-model="query.className" placeholder="班级名称"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2  v-model="query.status" >
-                <option value="">状态</option>
+                <option value="">处理状态</option>
                 <option value="0">处理中</option>
                 <option value="1">已处理</option>
                 <option value="2">已拒绝</option>
               </select2>
             </div>
           </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.payStatus" >
+                <option value="">支付状态</option>
+                <option value="0">未支付</option>
+                <option value="1">已支付</option>
+              </select2>
+            </div>
+          </div>
+
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
@@ -99,28 +121,34 @@
               min-width="100">
             </el-table-column>
             <el-table-column
-              label="状态"
+              label="处理状态"
               min-width="100">
               <template scope="scope">
-                {{scope.row.status==0?'处理中':(scope.row.status==1?'已处理':'已拒绝')}}
+                {{ {'0':'处理中','1':'已处理','2':'已拒绝' }[scope.row.status] }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="支付状态"
+              min-width="100">
+              <template scope="scope">
+                {{ {'0':'未支付','1':'已支付' }[scope.row.payStatus] }}
               </template>
             </el-table-column>
             <el-table-column
               fixed="right"
               label="操作"
-              width="120">
+              width="150">
               <template scope="scope">
                 <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">审核</el-button>
+                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.studentRefundId)">支付</el-button>
               </template>
             </el-table-column>
           </el-table>
         </div>
 
 
-        <window ref="studentRefund" title="退费审批">
-          <change-student-refund :studentRefundId="studentRefundId"
-                                 @changeStudentRefund="$refs.studentRefund.close()"></change-student-refund>
-        </window>
+
+        <change-student-refund ref="changeStudentRefund" @completed="loadTableData()"></change-student-refund>
 
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
@@ -144,7 +172,6 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        studentRefundId: '',
         query: {
           areaTeamId : '',
           busTeamId : '',
@@ -204,21 +231,27 @@
         })
       },
       editRefund: function (studentRefundId) {
-        var _this = this
-        _this.studentRefundId = studentRefundId
-        _this.$refs.studentRefund.show({
-          width: 1000,
-          height: 600
-        })
+        this.$refs.changeStudentRefund.formData.studentRefundId = studentRefundId
+        this.$refs.changeStudentRefund.show()
       },
 
+      changePayStatus:function(studentRefundId){
+        this.$confirm('确定更改支付状态',()=>{
+          io.post(io.apiAdminChangeStudentPayStatus,{
+            studentRefundId : studentRefundId
+          },  (ret) => {
+            if (ret.success) {
+              this.$toast('处理成功')
+              this.loadTableData()
+            } else {
+              this.$alert(ret.desc)
+            }
+          })
+        })
+      },
       //导出学生退费信息
       exportStudentRefund:function(){
-        var url = io.apiAdminExportStudentRefund + '?accessToken=' + io.getHeaders().accessToken;
-        for(var i in this.query)    {
-          url = url + '&' + i + "="+ this.query[i];
-        }
-        window.open(url)
+        io.downloadFile(io.apiAdminExportStudentRefund , this.query )
       },
     }
   }

@@ -33,6 +33,7 @@
               :data="tableData"
               border
               stripe
+              height="400"
               style="min-width: 100%">
               <el-table-column type="expand">
                 <template scope="scope">
@@ -110,7 +111,7 @@
         pageSize:10,
         pageNo:1,
         query:{},
-        selectedTeacher:[]
+        selectedTeacher:[],
       }
     },
     props: ['courseClass'],
@@ -123,9 +124,6 @@
     },
     components: {
       Pagination,'calendar' :Calendar
-    },
-    mounted:function(){
-      $(window).smoothScroll();
     },
     created:function(){
       if(this.courseClass.classId ){

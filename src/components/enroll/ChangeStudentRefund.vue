@@ -1,4 +1,5 @@
 <template>
+  <window ref="win" title="退费审批">
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <table width="100%" class="am-table am-table-bordered am-table-compact ">
@@ -77,6 +78,7 @@
     </div>
 
   </form>
+  </window>
 
 </template>
 <style>
@@ -107,47 +109,30 @@
     data: function () {
       return {
         tableData: [],
-        formData: {},
+        formData: { studentRefundId : '' },
       }
     },
-    components: {},
-    props: ['studentRefundId'],
-    watch: {
-      studentRefundId: function (val) {
-        if(!val){
-          return
-        }
-        this.loadStudentRefudnDetailData(val)
-      }
-    },
-    mounted: function () {
-      $(window).smoothScroll()
-    },
-    computed: {},
     methods: {
-      loadStudentRefudnDetailData: function (studentRefundId) {
+      loadStudentRefundDetailData: function () {
         var _this = this
-        if (studentRefundId != null) {
-          io.post(io.apiAdminStudentRefundDetail, {studentRefundId: studentRefundId},
-            function (ret) {
-              if (ret.success) {
-                if (ret.data.status == null) {
-                  _this.formData.status = 0
-                }else {
-                  _this.formData.status = ret.data.status
-                }
-                _this.formData.studentRefundId = ret.data.studentRefundId
-                _this.formData.studentName = ret.data.studentName
-                _this.formData.classId = ret.data.classId
-                _this.formData.className = ret.data.className
-                _this.formData.studentId = ret.data.studentId
-                _this.formData.returnResult = ret.data.returnResult
-                _this.tableData = ret.data
-              } else {
-                _this.$alert(ret.desc)
+        io.post(io.apiAdminStudentRefundDetail, {studentRefundId: _this.formData.studentRefundId},
+          function (ret) {
+            if (ret.success) {
+              if (ret.data.status == null) {
+                _this.formData.status = 0
+              }else {
+                _this.formData.status = ret.data.status
               }
-            })
-        }
+              _this.formData.studentName = ret.data.studentName
+              _this.formData.classId = ret.data.classId
+              _this.formData.className = ret.data.className
+              _this.formData.studentId = ret.data.studentId
+              _this.formData.returnResult = ret.data.returnResult
+              _this.tableData = ret.data
+            } else {
+              _this.$alert(ret.desc)
+            }
+          })
       },
       confirmToRefund: function () {
         if(!this.formData.status || this.formData.status ==  0 ){
@@ -164,15 +149,21 @@
           function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {
-              _this.$alert('审批成功')
-              _this.$emit('changeStudentRefund')
-              _this.$root.$emit('studentRefundList:new')
+              _this.$toast('处理成功')
+              _this.$emit('completed')
+              _this.$refs.win.close()
             } else {
               _this.$alert('审批失败')
             }
           })
 
 
+      },
+      show:function(){
+        this.$refs.win.show({
+          width: 1000
+        })
+        this.loadStudentRefundDetailData()
       }
     }
   }

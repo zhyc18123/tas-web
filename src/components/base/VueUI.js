@@ -9,13 +9,17 @@ import AMPrompt from './Prompt'
 import AMToast from './Toast.vue'
 import DatePicker from './DatePicker'
 import Selected from './Selected'
-import FileUpload from './FileUpload'
-import Editor from './Editor'
+//import FileUpload from './FileUpload'
+//import Editor from './Editor'
+const FileUpload = resolve => require([ './FileUpload'], resolve)
+const Editor = resolve => require([ './Editor'], resolve)
 import Window from './Window'
 import Select2 from './Select2'
-import DateTimePicker from './DateTimePicker'
+//import DateTimePicker from './DateTimePicker'
+const DateTimePicker = resolve => require([ './DateTimePicker'], resolve)
 import TimePicker from './TimePicker'
-import Choose from './Choose'
+//import Choose from './Choose'
+const Choose = resolve => require([ './Choose'], resolve)
 
 
 import {
