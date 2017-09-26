@@ -93,6 +93,19 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>职能
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 required v-model="formData.accessType">
+                  <option value="0">任课老师</option>
+                  <option value="1">班主任</option>
+                </select2>
+              </div>
+            </div>
+
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 人事关系
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
@@ -227,6 +240,7 @@ import util from '../../lib/util'
                 status:1,
                 jobNature:0,
                 myTags:[],
+                accessType:'',
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },
               tags:[],
