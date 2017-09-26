@@ -10,12 +10,25 @@
       <div class="widget-body am-fr">
         <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id">
           <fieldset>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>所在区域
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 :disabled="!editable" required v-model="formData.areaTeamId" :options="areaTeams" >
+                  <option value="">请选择</option>
+                </select2>
+
+              </div>
+            </div>
+
             <div class="am-form-group am-form-select">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input  type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
+                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
               </div>
             </div>
             <div class="am-form-group am-form-select">
@@ -91,6 +104,15 @@ import util from '../../lib/util'
                 })
             }
             this.segmentList = sl
+          }
+        },
+        computed:{
+          areaTeams : function(){
+            var options =  ( this.$root.config.areaTeams || [] )
+              .map(function(item){
+                return {value:item.areaTeamId,text:item.name}
+              })
+            return options
           }
         },
         created:function(){

@@ -198,7 +198,7 @@
                   for(var reg of ret.data.regDetailVos){
                     let  d = discountDetail[reg.courseClass.classId]
                     if(d){
-                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/|\d*/g,''))
+                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/\|\d*/g,''))
                     }
                   }
                   _this.discountDetail = discountDetailArr.join('<br/>')
