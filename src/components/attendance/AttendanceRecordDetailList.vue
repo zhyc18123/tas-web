@@ -91,7 +91,7 @@
           }))
         }, function (ret) {
           if (ret.success) {
-            _this.$alert('保存成功')
+            _this.$toast('保存成功')
             _this.$emit('completed')
           } else {
             _this.$alert(ret.desc)
