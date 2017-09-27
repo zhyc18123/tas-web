@@ -75,6 +75,7 @@ const io = {
 
     this.apiAdminPeriodList = conf.baseApiPath + '/api/admin/periodList'
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
+    this.apiAdminBeforePeriods = conf.baseApiPath + '/api/admin/beforePeriodList'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
     this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
     this.apiAdminPeriodListForAreaTeam = conf.baseApiPath + '/api/admin/periodListForAreaTeam'

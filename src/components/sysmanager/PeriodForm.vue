@@ -23,6 +23,37 @@
               </div>
             </div>
 
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>顺期来源
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.sequentialPeriodIds">
+                  <select required data-placeholder="选择顺期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
+                  </select>
+                </choose>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>跨期来源
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.stepPeriodIds">
+                  <select required data-placeholder="选择跨期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
+                  </select>
+                </choose>
+              </div>
+            </div>
+
+
+
+
             <div class="am-form-group am-form-select">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
@@ -87,14 +118,34 @@ import util from '../../lib/util'
         data(){
             return{
               formData:{
-                segments: 1
+                segments: 1,
+                sequentialPeriodIds:'',
+                areaTeamId:'',
+                stepPeriodIds:''
 
               },
               segmentList:[{}],
-              editable:true
+              editable:true,
+              periodId : '',
+              beforePeriods:[],
             }
         },
         watch:{
+          'formData.areaTeamId':function (val) {
+              var _this = this
+            if (this.formData.areaTeamId==null){
+                  return;
+            }
+            io.post(io.apiAdminBeforePeriods,{ periodId : this.periodId,areaTeamId: this.formData.areaTeamId },
+              function(ret){
+                if(ret.success){
+                  _this.beforePeriods=ret.data
+                }
+              },
+              function(){
+                _this.$alert('请求服务器失败')
+              })
+          },
           'formData.segments':function(val){
             var sl = [] ;
             for(var i = 0 ; i < val ; i++ ){
@@ -116,12 +167,14 @@ import util from '../../lib/util'
           }
         },
         created:function(){
-         var periodId  = this.$params('periodId')
-         if(periodId){
           var _this = this
-          io.post(io.apiAdminPeriodDetail,{ periodId : periodId },
+           this.periodId = this.$params('periodId')
+         if(this.periodId){
+          io.post(io.apiAdminPeriodDetail,{ periodId : this.periodId },
             function(ret){
               if(ret.success){
+                ret.data.sequentialPeriodIds = ret.data.sequentialPeriodIds ? ret.data.sequentialPeriodIds.split(','):[]
+                ret.data.stepPeriodIds = ret.data.stepPeriodIds ? ret.data.stepPeriodIds.split(','):[]
                 _this.formData = ret.data
                 for(var i = 0 ; i < ret.data.segmentList.length ;i++ ){
                   ret.data.segmentList[i].startDate = util.formatDate(ret.data.segmentList[i].startDate)
@@ -135,7 +188,7 @@ import util from '../../lib/util'
           })
          }
 
-         this.editable = !periodId
+         this.editable = !this.periodId
 
 
         },
@@ -182,6 +235,8 @@ import util from '../../lib/util'
         methods:{
           save:function(complete){
             var _this = this
+            _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds.join(',')
+            _this.formData.stepPeriodIds = _this.formData.stepPeriodIds.join(',')
             _this.formData.segmentList = JSON.stringify(this.segmentList)
             io.post(io.apiAdminSaveOrUpdatePeriod,_this.formData,
             function(ret){
