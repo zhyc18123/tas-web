@@ -32,7 +32,15 @@
           <td class="bgColor">开课日期：</td>
           <td>{{studentRegDetail.courseClass.startCourseTime | formatDate}}</td>
           <td class="bgColor">报读总讲次：</td>
-          <td>{{studentRegDetail.studentReg.regLectureAmount}}</td>
+          <td >{{studentRegDetail.studentReg.regLectureAmount}}</td>
+          <td colspan="2"></td>
+
+        </tr>
+        <tr>
+          <td class="bgColor">原价：</td>
+          <td>{{studentRegDetail.studentReg.srcTotalAmount}}</td>
+          <td class="bgColor">金额：</td>
+          <td>{{studentRegDetail.studentReg.totalAmount}}</td>
           <td class="bgColor">已交金额：</td>
           <td>{{studentRegDetail.studentReg.payAmount}}</td>
         </tr>
@@ -54,11 +62,11 @@
         <tbody>
 
         <tr>
-          <td class="bgColor">申请退费讲次</td>
+          <td class="bgColor">从哪一讲退</td>
           <td colspan="7">
             <template v-for="(item,index) in availableRefundLectures">
               <label  class="am-checkbox-inline">
-                <input type="checkbox" :value="item.lectureNo" name="refundLectureNo" v-model="formData.refundLecture"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
+                <input type="radio" :value="item.lectureNo" name="refundLectureFromNo" v-model="formData.refundLectureFrom"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
               </label>
               <br v-if="( index + 1 ) % 6 == 0" >
             </template>
@@ -69,7 +77,7 @@
         <tr>
           <td class="bgColor">退费金额</td>
           <td colspan="7">
-            <span class="am-text-danger">{{remaining | formatNumber(2)}}</span>￥
+            <span class="am-text-danger">{{remaining }}</span>￥
           </td>
         </tr>
 
@@ -141,7 +149,7 @@
           cardUser: '',
           cardNo: '',
           description:'',
-          refundLecture:[]
+          refundLectureFrom:''
         },
         studentRegDetail:{studentReg:{},courseClass:{}},
         remaining: 0,
@@ -150,7 +158,7 @@
       }
     },
     watch: {
-      'formData.refundLecture': function () {
+      'formData.refundLectureFrom': function () {
         this.calRemaining()
       }
     },
@@ -161,7 +169,7 @@
         this.formData.bankCity = ''
         this.formData.cardUser = ''
         this.formData.cardNo ='',
-        this.formData.refundLecture = [] ,
+        this.formData.refundLectureFrom = '' ,
         this.formData.description = '与原校时间冲突'
       },
       loadClassMessageData: function () {
@@ -192,7 +200,22 @@
           })
       },
       calRemaining: function () {
-        this.remaining = this.formData.refundLecture.length == 0 ? 0 : math.mul(this.formData.refundLecture.length , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
+        if(this.formData.refundLectureFrom == '' ){
+          this.remaining = 0
+          return
+        }
+        this.remaining = '计算中' ;
+        io.post(io.apiAdminCalRefundAmount,{
+          regId : this.studentRegDetail.studentReg.regId ,
+          refundLectureAmount : this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1
+          },
+          (ret) =>{
+            if (ret.success) {
+              this.remaining = math.round(new Number( ret.data ) ,2)
+            } else {
+              this.remaining = '计算失败'
+            }
+          })
       },
       confirmToRefund: function () {
         var _this = this
@@ -223,14 +246,13 @@
 
         }
 
-        if(_this.formData.refundLecture.length == 0 ){
+        if(_this.formData.refundLectureFrom.length == 0 ){
           this.$alert('请选择退费讲次')
           return
         }
-        var data = JSON.parse(JSON.stringify(_this.$data.formData))
-        data.refundLecture = data.refundLecture.join(',')
+
         _this.$showLoading()
-        io.post(io.apiAdminSaveOrupdateStudentRefund,data,
+        io.post(io.apiAdminSaveOrupdateStudentRefund,_this.$data.formData,
           function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {

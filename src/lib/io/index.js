@@ -195,6 +195,7 @@ const io = {
     this.apiAdminQueryAttendOfStudent = conf.baseApiPath + '/api/admin/queryAttendOfStudent'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
+    this.apiAdminCalRefundAmount = conf.baseApiPath + '/api/admin/calRefundAmount'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
     this.apiAdminChangeStudentPayStatus = conf.baseApiPath + '/api/admin/changeStudentPayStatus'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
