@@ -167,9 +167,10 @@ const BasicData = resolve => require(['./components/operating/BasicData'], resol
 const ProblemWarning = resolve => require(['./components/operating/ProblemWarning'], resolve)
 const FullClassRate = resolve => require(['./components/operating/FullClassRate'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
-const TargetSetList = resolve => require(['./components/operating/TargetSetList'], resolve)
-const InputMainIncome = resolve => require(['./components/operating/InputMainIncome'], resolve)
-const InputProductIncome = resolve => require(['./components/operating/InputProductIncome'], resolve)
+const TargetSet = resolve => require(['./components/operating/TargetSet'], resolve)
+const TeacherTarget = resolve => require(['./components/operating/TeacherTarget'], resolve)
+const ProductTarget = resolve => require(['./components/operating/ProductTarget'], resolve)
+const MainAccountTarget = resolve => require(['./components/operating/MainAccountTarget'], resolve)
 
 const GradeSubjectStatisticsList = resolve => require(['./components/operating/GradeSubjectStatisticsList'], resolve)
 const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
@@ -353,9 +354,10 @@ const router = new VueRouter({
           {path: 'fullClassRate' , component: FullClassRate},
         ]
       },
-      {path: 'operating/targetSet/list' , component: TargetSetList},
-      {path: 'operating/targetSet/inputMainIncome' , component: InputMainIncome},
-      {path: 'operating/targetSet/inputProductIncome' , component: InputProductIncome},
+      {path: 'operating/targetSet' , component: TargetSet},
+      {path: 'operating/targetSet/mainAccountTarget' , component: MainAccountTarget},
+      {path: 'operating/targetSet/productTarget' , component: ProductTarget},
+      {path: 'operating/targetSet/teacherTarget' , component: TeacherTarget},
 
 
     ],

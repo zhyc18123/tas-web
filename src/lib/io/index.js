@@ -75,6 +75,7 @@ const io = {
 
     this.apiAdminPeriodList = conf.baseApiPath + '/api/admin/periodList'
     this.apiAdminPeriodDetail = conf.baseApiPath + '/api/admin/periodDetail'
+    this.apiAdminBeforePeriods = conf.baseApiPath + '/api/admin/beforePeriodList'
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
     this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
     this.apiAdminPeriodListForAreaTeam = conf.baseApiPath + '/api/admin/periodListForAreaTeam'
@@ -321,6 +322,7 @@ const io = {
     this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
+    this.teacherTargetList = conf.baseApiPath + '/api/admin/analyze/teacherTargetList'
     this.findMainAccountCostAndIncome = conf.baseApiPath + '/api/admin/analyze/findMainAccountCostAndIncome'
     this.findIncomeByAllCategory = conf.baseApiPath + '/api/admin/analyze/findIncomeByAllCategory'
     this.findCostByAllCategory = conf.baseApiPath + '/api/admin/analyze/findCostByAllCategory'
@@ -347,6 +349,7 @@ const io = {
     this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
+    this.saveTeacherTarget = conf.baseApiPath + '/api/admin/analyze/saveTeacherTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
 
 

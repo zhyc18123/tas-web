@@ -3,23 +3,31 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-fl">主体收入目标</div>
+          <div class="widget-title am-fl">产品线收入目标</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
         </div>
-        <el-tabs v-model="activeName" type="card">
+        <div class="am-u-sm-24 am-u-md-24 am-u-lg-24 am-form-group toolbar">
+          <el-select @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择">
+            <el-option
+              v-for="item in areaTeams"
+              :key="item.areaTeamId"
+              :label="item.name"
+              :value="item.areaTeamId">
+            </el-option>
+          </el-select>
+          <div class="datepicker">
+            <date-picker v-model="year" >
+              <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
+            </date-picker>
+          </div>
+          <el-input placeholder="产品名称" v-model="productName"></el-input>
+          <el-button @click="search" type="success">搜索</el-button>
+        </div>
+        <el-tabs style="clear: both" v-model="activeName" type="card">
           <el-tab-pane label="营收" name="first">
             <div>
-              <div class="am-u-sm-24 am-u-md-24 am-u-lg-24">
-                <div class="am-form-group datepicker">
-                  <date-picker v-model="year" >
-                    <span>-</span>
-                    <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-                    <span>-</span>
-                  </date-picker>
-                </div>
-              </div>
               <div v-show="!empty" class="widget-body  am-fr">
                 <div class="am-u-sm-12">
                   <el-table
@@ -28,24 +36,25 @@
                     stripe
                     style="min-width: 100%">
                     <el-table-column
-                      prop="mainAccountName"
-                      fixed
-                      label="主体/营收（万元）/月份"
+                      prop="productName"
+                      align="center"
+                      label="产品线/营收（万元）/月份"
                       min-width="190">
                     </el-table-column>
                     <el-table-column
                       class="month"
+                      align="center"
                       v-for="(item,index) in periods"
                       :label="item.periodName">
                       <template scope="scope">
-                        <div size="small">
-                          <el-input v-model="scope.row.list[index].targetPrice"></el-input>
+                        <div v-if="scope.row.productTargetList[index]" size="small">
+                          <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
                         </div>
                       </template>
                     </el-table-column>
                     <el-table-column
                       label="操作"
-                      fixed="right"
+                      align="center"
                       width="100">
                       <template scope="scope">
                         <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
@@ -53,23 +62,19 @@
                     </el-table-column>
                   </el-table>
                 </div>
+                <div class="am-u-lg-12 am-cf">
+                  <div class="am-fr">
+                    <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
+                  </div>
+                </div>
               </div>
-              <div v-show="empty">当前年份：{{year}}，还没有设置期数。
+              <div v-show="empty">当前年份：{{year2}}，还没有设置期数。
                 <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="利润" name="second">
             <div>
-              <div class="am-u-sm-24 am-u-md-24 am-u-lg-24">
-                <div class="am-form-group datepicker">
-                  <date-picker v-model="year2" >
-                    <span>-</span>
-                    <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-                    <span>-</span>
-                  </date-picker>
-                </div>
-              </div>
               <div v-show="!empty2" class="widget-body  am-fr">
                 <div class="am-u-sm-12">
                   <el-table
@@ -78,30 +83,35 @@
                     stripe
                     style="min-width: 100%">
                     <el-table-column
-                      prop="mainAccountName"
-                      fixed
-                      label="主体/利润（万元）/月份"
+                      prop="productName"
+                      align="center"
+                      label="产品线/利润（万元）/月份"
                       min-width="190">
                     </el-table-column>
                     <el-table-column
                       class="month"
+                      align="center"
                       v-for="(item,index) in periods"
                       :label="item.periodName">
                       <template scope="scope">
                         <div size="small">
-                          <el-input v-model="scope.row.list[index].targetPrice"></el-input>
+                          <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
                         </div>
                       </template>
                     </el-table-column>
                     <el-table-column
                       label="操作"
-                      fixed="right"
                       width="100">
                       <template scope="scope">
                         <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
                       </template>
                     </el-table-column>
                   </el-table>
+                </div>
+                <div class="am-u-lg-12 am-cf">
+                  <div class="am-fr">
+                    <pagination v-bind:total="total2" v-bind:pageNo="pageNo2" v-bind:pageSize="pageSize2" @paging="loadTableData" />
+                  </div>
                 </div>
               </div>
               <div v-show="empty2">当前年份：{{year2}}，还没有设置期数。
@@ -118,57 +128,86 @@
 
 <script>
   import io from '../../lib/io'
+  import Pagination from '../base/Pagination'
   import moment from 'moment'
   export default{
     data:function(){
       return {
+        areaTeamId: '',
+        productName: '',
         tableData:[],
         tableData2:[],
         periods: [],
         activeName: 'first',
-        areaTeamId: '',
         areaTeamName: '',
         year: moment().year(),
         year2: moment().year(),
         targetType: 0,
+        pageNo: 0,
+        pageNo2: 0,
+        pageSize: 10,
+        pageSize2: 10,
+        total: 0,
+        total2: 0,
+        name: '',
+        name2: '',
         empty: false,
         empty2: false,
       }
+    },
+    components: {
+      Pagination
     },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
-      this.areaTeamId = this.$route.query.areaTeamId
-      this.areaTeamName = this.$route.query.areaTeamName
+      if (window.config.areaTeams) {
+        this.areaTeamId = window.config.areaTeams[0].areaTeamId
+        if (window.config.groupBusTeams) {
+          this.busTeamId = window.config.groupBusTeams[this.areaTeamId][0].busTeamId
+        }
+      }
       this.loadPeriodByYear();
+    },
+    computed: {
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
+      }
     },
     watch: {
       year(newVal) {
-          if (newVal) {
-            this.loadPeriodByYear();
-          }
+        if (newVal) {
+          this.loadPeriodByYear()
+        }
       },
       year2(newVal) {
-          if (newVal) {
-            this.loadPeriodByYear();
-          }
+        if (newVal) {
+          this.loadPeriodByYear()
+        }
       },
       activeName(newVal) {
         newVal === 'first' ? this.targetType = 0 : this.targetType = 1
         if (newVal === 'second') {
-            this.loadTableData()
+          this.loadTableData()
         }
       }
     },
     methods:{
+      handleAreaTeamIdChange() {
+        this.busTeamId = ''
+      },
+      search:function(){
+        this.loadPeriodByYear()
+      },
       handleSave(list) {
         var _this = this,
           data = {},
-          mainAccountTargetVoJson = JSON.stringify(list.list);
-        data = Object.assign({}, list, {mainAccountTargetVoJson: mainAccountTargetVoJson})
+          productTargetVoJson = JSON.stringify(list.productTargetList);
+        debugger
+        data = Object.assign({}, list, {productTargetVoJson: productTargetVoJson})
         _this.$showLoading()
-        io.post(io.saveOrUpdateMainAccountTarget,data,function(ret){
+        io.post(io.saveOrUpdateProductTarget,data,function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.$alert('保存成功')
@@ -211,27 +250,35 @@
           }
         })
       },
-      loadTableData:function(){
+      loadTableData:function(pageNo){
         var _this = this,
           year;
         _this.$showLoading()
         if (_this.targetType === 0) {
-          year = this.year
+          pageNo = pageNo || this.pageNo || 1
         } else {
-          year = this.year2
+          pageNo = pageNo || this.pageNo2 || 1
         }
-        io.post(io.mainAccountTargetList,{
+        var query = {
           areaTeamId: this.areaTeamId,
-          year: year,
+          year: this.year,
           targetType: this.targetType,
-        },function(ret){
+          name: this.productName,
+          pageNo: pageNo
+        }
+        io.post(io.productTargetList,$.extend({
+          pageNo:1,
+          pageSize:10
+        },query),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-              if (_this.targetType === 0) {
-                _this.tableData = ret.data
-              } else {
-                _this.tableData2 = ret.data
-              }
+            if (_this.targetType === 0) {
+              _this.tableData = ret.data.list
+              _this.total = ret.data.total
+            } else {
+              _this.tableData2 = ret.data.list
+              _this.total2 = ret.data.total
+            }
           }else{
             _this.$alert(ret.desc)
           }
@@ -246,11 +293,20 @@
     .el-tabs__header {
       margin-top: 20px;
     }
+    .toolbar {
+      margin-top: 15px;
+      padding-left: 0;
+      .el-input {
+        width: 160px;
+      }
+    }
     .datepicker {
-      margin: 0 auto;
-      width: 300px;
+      /*margin: 0 auto;*/
+      display: inline-block;
       input {
         text-align: center;
+        height: 36px;
+        border: 1px solid #bfcbd9;
       }
     }
     .el-table .cell, .el-table th>div{
