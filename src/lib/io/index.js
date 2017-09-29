@@ -321,6 +321,7 @@ const io = {
     this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
+    this.teacherTargetList = conf.baseApiPath + '/api/admin/analyze/teacherTargetList'
     this.findMainAccountCostAndIncome = conf.baseApiPath + '/api/admin/analyze/findMainAccountCostAndIncome'
     this.findIncomeByAllCategory = conf.baseApiPath + '/api/admin/analyze/findIncomeByAllCategory'
     this.findCostByAllCategory = conf.baseApiPath + '/api/admin/analyze/findCostByAllCategory'
@@ -347,6 +348,7 @@ const io = {
     this.periodByYearAndAreaTeamId = conf.baseApiPath + '/api/admin/analyze/periodByYearAndAreaTeamId'
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
+    this.saveTeacherTarget = conf.baseApiPath + '/api/admin/analyze/saveTeacherTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
 
 
