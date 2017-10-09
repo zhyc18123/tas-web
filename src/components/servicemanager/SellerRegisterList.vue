@@ -86,7 +86,7 @@
             fixed
             type="index"
             label="序号"
-            min-width="100">
+            width="80">
           </el-table-column>
           <el-table-column
             prop="merchantName"

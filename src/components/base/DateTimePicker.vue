@@ -23,6 +23,7 @@
         },
         mounted:function(){
           var _this = this
+          $('[data-am-datetimepicker]',this.$el ).val(this.value)
           $('[data-am-datetimepicker]',this.$el ).datetimepicker({format: this.format}).on('dp.change',function(){
              _this.$emit('input',$(this).val())
           })

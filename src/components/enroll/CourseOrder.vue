@@ -46,17 +46,17 @@
         </tr>
         <tr>
           <td class="bgColor">总计金额</td>
-          <td><span class="am-text-danger">{{courseOrder.totalAmount}}</span>￥</td>
+          <td><span class="am-text-danger">￥{{courseOrder.totalAmount}}</span></td>
           <td class="bgColor">优惠金额</td>
-          <td><span class="am-text-danger">{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span>￥</td>
+          <td><span class="am-text-danger">￥{{ ( courseOrder.totalAmount - courseOrder.payableAmount) | formatNumber(2)}}</span></td>
           <td class="bgColor">应缴金额</td>
-          <td><span class="am-text-danger">{{courseOrder.payableAmount}}</span>￥</td>
+          <td><span class="am-text-danger">￥{{courseOrder.payableAmount}}</span></td>
         </tr>
         <tr>
           <td class="bgColor">已缴金额</td>
-          <td><span class="am-text-danger">{{courseOrder.paidAmount}}</span>￥</td>
+          <td><span class="am-text-danger">￥{{courseOrder.paidAmount}}</span></td>
           <td class="bgColor">欠费金额</td>
-          <td><span class="am-text-danger">{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span>￥</td>
+          <td><span class="am-text-danger">￥{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span></td>
           <td colspan="2"></td>
         </tr>
         <tr v-if="courseOrder.chargingStatus == 0 ">

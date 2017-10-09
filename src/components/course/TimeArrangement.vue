@@ -114,7 +114,7 @@
         excludeDays: '',
         startDate: util.formatDate(new Date().getTime()),
         arrangeWay: 'arrangeByWeek',
-        weekDays: [{id: '星期一', selected: false, name: '星期一', times: ['08:00-10:00']}],
+        weekDays: [],
         everyday:{ },
         arrangeResult: [],
         courseClass:{}
