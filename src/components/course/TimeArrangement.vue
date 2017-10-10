@@ -234,8 +234,10 @@
                     this.$alert('错误时间段：' + selectedDays[ii].times[iii] )
                     return
                   }
+                  console.log(iii)
                   this.arrangeResult.push({
                     date : date ,
+                    lectureNo : iii,
                     time : selectedDays[ii].times[iii]
                   })
                   if (this.arrangeResult.length >= this.courseClass.lectureAmount) {

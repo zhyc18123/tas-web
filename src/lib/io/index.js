@@ -128,7 +128,9 @@ const io = {
 
 
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
+    this.apiAdminRoomListForArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
+    this.saveOrUpdateArrangementRoom = conf.baseApiPath + '/api/admin/arrangement/saveOrUpdateArrangementRoom'
     this.apiAdminRoomTimeList = conf.baseApiPath + '/api/admin/arrangement/roomTimeList'
     this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassLectureList'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
