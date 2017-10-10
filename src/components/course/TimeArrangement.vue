@@ -266,6 +266,7 @@
                 }
                 this.arrangeResult.push({
                   date : date ,
+                  lectureNo : ii,
                   time : this.everyday.times[ii]
                 })
                 if (this.arrangeResult.length == this.courseClass.lectureAmount) {

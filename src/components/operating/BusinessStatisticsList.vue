@@ -43,7 +43,7 @@
                 </el-table-column>
                 <el-table-column
                   prop="cost"
-                  label="成本（万）"
+                  label="成本（元）"
                   min-width="190">
                   <template scope="scope">
                     <div>
