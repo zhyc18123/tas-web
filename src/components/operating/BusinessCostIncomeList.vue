@@ -62,6 +62,11 @@
                       prop="totalAmount"
                       label="金额（元）"
                       min-width="190">
+                      <template scope="scope">
+                        <div>
+                          {{scope.row.totalAmount | formatNumber(2)}}
+                        </div>
+                      </template>
                     </el-table-column>
                     <el-table-column
                       label="操作"

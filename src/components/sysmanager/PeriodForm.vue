@@ -59,7 +59,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
+                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.periodNo">
               </div>
             </div>
             <div class="am-form-group am-form-select">
@@ -75,7 +75,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段数
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input  type="number" class="am-form-field" min="1" step="1" placeholder="请输段数" required v-model="formData.segments">
+                <input  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.segments">
               </div>
             </div>
 

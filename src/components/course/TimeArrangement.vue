@@ -234,7 +234,6 @@
                     this.$alert('错误时间段：' + selectedDays[ii].times[iii] )
                     return
                   }
-                  console.log(iii)
                   this.arrangeResult.push({
                     date : date ,
                     lectureNo : iii,
