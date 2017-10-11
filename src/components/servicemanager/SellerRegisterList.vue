@@ -121,7 +121,7 @@
             align="center"
             min-width="120">
             <template scope="scope">
-              {{scope.row.inNo==null?'─':scope.row.teacherName}}
+              {{scope.row.idNo==null?'─':scope.row.idNo}}
             </template>
           </el-table-column>
           <el-table-column

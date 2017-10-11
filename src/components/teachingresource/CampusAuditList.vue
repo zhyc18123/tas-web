@@ -137,11 +137,11 @@
             min-width="100">
           </el-table-column>
 
-          <el-table-column
+        <!--  <el-table-column
             prop="unitPrice"
             label="成本(元/月)"
             min-width="100">
-          </el-table-column>
+          </el-table-column>-->
 
           <el-table-column
             label="申请日期"

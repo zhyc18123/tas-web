@@ -142,7 +142,7 @@
             _this.$alert('审批成功')
             _this.$root.$emit('sellerRegister:new')
           }else {
-            _this.$alert('审批失败')
+            _this.$alert(ret.desc)
           }
         })
         _this.$emit('changeSellerRegister')
