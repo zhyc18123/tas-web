@@ -159,7 +159,7 @@
             label="审核状态"
             min-width="100">
             <template scope="scope">
-              {{scope.row.status==0?'未审核':scope.row.status==1?'通过':'不通过'}}
+              {{scope.row.status==0?'待审核':scope.row.status==1?'通过':'不通过'}}
             </template>
           </el-table-column>
           <el-table-column
