@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">期次信息</div>
+        <div class="widget-title am-fl">期数信息</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -54,14 +54,14 @@
 
 
 
-            <div class="am-form-group am-form-select">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
-              </label>
-              <div class="am-u-sm-3 input-field am-u-end">
-                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.periodNo">
-              </div>
-            </div>
+            <!--<div class="am-form-group am-form-select">-->
+              <!--<label class="am-u-sm-3 am-form-label">-->
+                <!--<span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数-->
+              <!--</label>-->
+              <!--<div class="am-u-sm-3 input-field am-u-end">-->
+                <!--<input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.periodNo">-->
+              <!--</div>-->
+            <!--</div>-->
             <div class="am-form-group am-form-select">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期名
@@ -235,8 +235,10 @@ import util from '../../lib/util'
         methods:{
           save:function(complete){
             var _this = this
-            _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds.length > 0 ?  _this.formData.sequentialPeriodIds.join(',') : ''
-            _this.formData.stepPeriodIds = _this.formData.stepPeriodIds.length > 0 ?  _this.formData.stepPeriodIds.join(',') : ''
+            _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds && _this.formData.sequentialPeriodIds.length > 0 ?
+              _this.formData.sequentialPeriodIds.join(',') : ''
+            _this.formData.stepPeriodIds = _this.formData.stepPeriodIds && _this.formData.stepPeriodIds.length > 0 ?
+              _this.formData.stepPeriodIds.join(',') : ''
             _this.formData.segmentList = JSON.stringify(this.segmentList)
             io.post(io.apiAdminSaveOrUpdatePeriod,_this.formData,
             function(ret){

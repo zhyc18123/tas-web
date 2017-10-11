@@ -35,6 +35,9 @@
               <el-menu-item index="/main/operating/dataAnalysis/list/fullClassRate">
                 <router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>
               </el-menu-item>
+              <el-menu-item index="/main/operating/dataAnalysis/list/subjectCompleteRate">
+                <router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>
+              </el-menu-item>
             </el-menu>
             <router-view :areaTeamId="areaTeamId"></router-view>
           </div>

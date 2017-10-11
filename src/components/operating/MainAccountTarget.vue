@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title am-fl">班主任目标</div>
+          <div class="widget-title am-fl">业务组目标</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
@@ -59,7 +59,7 @@
                     <div class="list" size="small" v-for="(item,index) in scope.row.list">
                       <span class="target-name" v-if="item.type === '0'">-</span>
                       <span v-else class="target-name">{{item.targetName}}</span>
-                      <el-input type="number" :style="{width: targetInputWidth}" class="target-number" v-for="i in item.list" v-model="i.targetNum"></el-input>
+                      <el-input  :style="{width: targetInputWidth}" class="target-number" v-for="i in item.list" v-model="i.targetNum"></el-input>
                       <div class="save-btn">
                         <el-button size="small" @click.native="handleSave(scope.row, index)">保存</el-button>
                       </div>
