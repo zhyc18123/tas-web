@@ -29,17 +29,6 @@
                 </select2>
               </div>
             </div>
-           <!-- <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.season"  >
-                  <option value="">季节</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>-->
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">

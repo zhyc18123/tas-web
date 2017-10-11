@@ -98,7 +98,7 @@
               </el-table-column>
               <el-table-column
                 prop="profits"
-                label="利润（万）"
+                label="利润（元）"
                 min-width="190">
                 <template scope="scope">
                   <div>

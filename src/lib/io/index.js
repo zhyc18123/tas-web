@@ -128,7 +128,9 @@ const io = {
 
 
     this.apiAdminRoomListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForClassArrangement'
+    this.apiAdminRoomListForArrangement = conf.baseApiPath + '/api/admin/arrangement/roomListForArrangement'
     this.apiAdminArrangeRoom = conf.baseApiPath + '/api/admin/arrangement/arrangementRoom'
+    this.saveOrUpdateArrangementRoom = conf.baseApiPath + '/api/admin/arrangement/saveOrUpdateArrangementRoom'
     this.apiAdminRoomTimeList = conf.baseApiPath + '/api/admin/arrangement/roomTimeList'
     this.apiAdminTeacherClassTimeList = conf.baseApiPath + '/api/admin/arrangement/teacherClassLectureList'
     this.apiAdminTeacherListForClassArrangement = conf.baseApiPath + '/api/admin/arrangement/teacherListForArrangement'
@@ -490,11 +492,13 @@ const io = {
       inputs.push( '<input type="hidden" name="' + k + '"/>')
     }
 
+    debugger
     // request发送请求
     var $form = $('<form target="_blank" action="' + url + '" method="post" style="display: none">' + inputs.join('') + '</form>')
     for(var k of Object.keys(data)){
       $form.find('input[name='+k+']').val(data[k])
     }
+    console.log(data)
     $form.appendTo('body').submit().remove()
   }
 

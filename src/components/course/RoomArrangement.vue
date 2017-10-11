@@ -112,9 +112,9 @@
       loadTableData:function(pageNo){
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminRoomListForClassArrangement,$.extend({
+        io.post(io.apiAdminRoomListForArrangement,$.extend({
           pageNo:_this.pageNo,
-          pageSize:_this.pageSize
+          pageSize:_this.pageSize,
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
@@ -127,7 +127,7 @@
       confirmArrangeRoom:function (roomId) {
         var _this = this;
         _this.$showLoading()
-        io.post(io.apiAdminArrangeRoom, {classId: this.courseClass.classId, roomId: roomId},
+        io.post(io.saveOrUpdateArrangementRoom, {classId: this.courseClass.classId, roomId: roomId},
           function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {
@@ -157,8 +157,9 @@
       },
       show:function(){
         this.tableData = []
+        debugger
         this.query = {
-          areaTeamId : this.courseClass.areaTeamId ,
+          classId: this.courseClass.classId,
           campusId : this.courseClass.campusId
         }
         this.loadCampus()

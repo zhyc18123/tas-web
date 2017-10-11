@@ -9,8 +9,9 @@
               <option value="arrangeByDay">按天排</option>
             </select>
           </div>
-          <div class="am-u-sm-3 input-field am-u-end">
-            <date-picker v-model="startDate">
+          <div class="am-u-sm-5 input-field am-u-end">
+            <span>首次上课时间：</span>
+            <date-picker style="display: inline-block" v-model="startDate">
               <input type="text" class="am-input-lg" placeholder="请选择首次上课时间" data-am-datepicker readonly required>
             </date-picker>
           </div>
@@ -23,7 +24,8 @@
         <div class="am-form-group am-g-collapse" v-if="arrangeWay=='arrangeByWeek'" v-for="(day, dayIndex ) in weekDays">
 
           <div class="am-u-sm-1 input-field am-margin-top-xs">
-            <label><input :id="day.id" :value="true" type="checkbox" v-model="weekDays[dayIndex].selected"/>{{day.name}}</label>
+            <label><input :id="day.id" :value="true" type="checkbox" :disabled="weekDays[dayIndex].disabled"
+                          v-model="weekDays[dayIndex].selected"/>{{day.name}}</label>
           </div>
           <template v-for="(time , timeIndex) in day.times">
             <div class="am-u-sm-1 input-field">
@@ -112,6 +114,7 @@
       return {
         query: {},
         excludeDays: '',
+        selectedIndex: 0,
         startDate: util.formatDate(new Date().getTime()),
         arrangeWay: 'arrangeByWeek',
         weekDays: [],
@@ -122,8 +125,19 @@
     },
     watch: {
       startDate: function (val) {
+      	let _this = this
         if (this.arrangeWay == 'arrangeByWeek' && val) {
-          $('#' + moment(val, "YYYY-MM-DD").format('dddd')).click()
+          _this.weekDays.map((day) => {
+          	if (day.id === moment(val, "YYYY-MM-DD").format('dddd')) {
+          		day.disabled = true
+          		day.selected = true
+            } else {
+          		if (day.disabled === true) {
+          			day.selected = false
+              }
+          		day.disabled = false
+            }
+          })
         }
       },
     },
@@ -132,21 +146,30 @@
     },
     methods: {
       init:function(){
+      	let _this = this
         this.weekDays = [
-          {id: '星期一', selected: false, name: '星期一', times: ['08:00-10:00']},
-          {id: '星期二', selected: false, name: '星期二', times: ['08:00-10:00']},
-          {id: '星期三', selected: false, name: '星期三', times: ['08:00-10:00']},
-          {id: '星期四', selected: false, name: '星期四', times: ['08:00-10:00']},
-          {id: '星期五', selected: false, name: '星期五', times: ['08:00-10:00']},
-          {id: '星期六', selected: false, name: '星期六', times: ['08:00-10:00']},
-          {id: '星期日', selected: false, name: '星期日', times: ['08:00-10:00']},
+          {id: '星期一', selected: false, disabled: false, name: '星期一', times: ['08:00-10:00']},
+          {id: '星期二', selected: false, disabled: false, name: '星期二', times: ['08:00-10:00']},
+          {id: '星期三', selected: false, disabled: false, name: '星期三', times: ['08:00-10:00']},
+          {id: '星期四', selected: false, disabled: false, name: '星期四', times: ['08:00-10:00']},
+          {id: '星期五', selected: false, disabled: false, name: '星期五', times: ['08:00-10:00']},
+          {id: '星期六', selected: false, disabled: false, name: '星期六', times: ['08:00-10:00']},
+          {id: '星期日', selected: false, disabled: false, name: '星期日', times: ['08:00-10:00']},
         ]
         this.everyday = { name: '每天', times: ['08:00-10:00']}
         this.arrangeResult= []
         this.excludeDays =  ''
         this.startDate = util.formatDate(new Date().getTime())
         var dayOfStartDate = moment(this.startDate, "YYYY-MM-DD").format('dddd')
-        this.weekDays.filter((item)=>item.id == dayOfStartDate )[0].selected = true
+//        this.weekDays.filter((item)=>item.id == dayOfStartDate )[0].selected = true
+//        this.weekDays.filter((item)=>item.id == dayOfStartDate )[0].disabled = true
+        this.weekDays.map((val, index) => {
+        	if (val.id == dayOfStartDate) {
+        		val.selected = true
+        		val.disabled = true
+            _this.selectedIndex = index
+          }
+        })
         //var _this = this
         //自动选上
         /*this.$nextTick(()=>{
@@ -175,25 +198,20 @@
 
 
         if (this.arrangeWay == 'arrangeByWeek') {
-
-
-          var startDateWeek = moment(this.startDate, "YYYY-MM-DD").format('dddd') ;
-          if( !$('#' + startDateWeek).prop('checked')){
-              this.$alert('请选上' + startDateWeek )
-              return ;
-          }
-
-
+          var startIndex = 0
           var selectedDays = []
-          for (var i = 0; i < this.weekDays.length; i++) {
-            if (this.weekDays[i].selected) {
+          for (var i = this.selectedIndex; i < this.selectedIndex + 7; i++) {
+            var j = i > 6 ? 0 : i
+            if (this.weekDays[j].selected) {
+              if (this.weekDays[j].disabled === true) {
+                startIndex = j
+              }
               selectedDays.push({
-                times: this.weekDays[i].times
+                times: this.weekDays[j].times,
+                index: j,
               })
             }
           }
-
-
 
           if(selectedDays.length == 0 ){
             this.$alert('至少选择一天')
@@ -203,7 +221,9 @@
             var start = moment(this.startDate, "YYYY-MM-DD")
             for (var i = 0; ; i++) {
               for (var ii = 0; ii < selectedDays.length; ii++) {
-                var currentDay = moment(start).add( i * 7 +  ii , 'days')
+                var toStartIndex = selectedDays[ii].index - startIndex
+                toStartIndex = toStartIndex < 0 ? toStartIndex + 7 : toStartIndex
+                var currentDay = moment(start).add( i * 7 +  toStartIndex , 'days')
                 var date = currentDay.format("YYYY-MM-DD")
                 if(this.inExcludeDay(date)){
                     continue
@@ -216,6 +236,7 @@
                   }
                   this.arrangeResult.push({
                     date : date ,
+                    lectureNo : iii,
                     time : selectedDays[ii].times[iii]
                   })
                   if (this.arrangeResult.length >= this.courseClass.lectureAmount) {
@@ -244,6 +265,7 @@
                 }
                 this.arrangeResult.push({
                   date : date ,
+                  lectureNo : ii,
                   time : this.everyday.times[ii]
                 })
                 if (this.arrangeResult.length == this.courseClass.lectureAmount) {

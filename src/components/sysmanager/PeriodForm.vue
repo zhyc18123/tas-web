@@ -25,11 +25,11 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>顺期来源
+                <span class=" am-margin-right-xs am-text-xs"></span>顺期来源
               </label>
               <div class="am-u-sm-9 input-field">
                 <choose v-model="formData.sequentialPeriodIds">
-                  <select required data-placeholder="选择顺期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                  <select data-placeholder="选择顺期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
                     <option value=""></option>
                     <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
                   </select>
@@ -39,11 +39,11 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>跨期来源
+                <span class=" am-margin-right-xs am-text-xs"></span>跨期来源
               </label>
               <div class="am-u-sm-9 input-field">
                 <choose v-model="formData.stepPeriodIds">
-                  <select required data-placeholder="选择跨期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                  <select data-placeholder="选择跨期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
                     <option value=""></option>
                     <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
                   </select>
@@ -59,7 +59,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期次
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="请输期次" required v-model="formData.periodNo">
+                <input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.periodNo">
               </div>
             </div>
             <div class="am-form-group am-form-select">
@@ -75,7 +75,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>段数
               </label>
               <div class="am-u-sm-3 input-field am-u-end">
-                <input  type="number" class="am-form-field" min="1" step="1" placeholder="请输段数" required v-model="formData.segments">
+                <input  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.segments">
               </div>
             </div>
 
@@ -235,8 +235,8 @@ import util from '../../lib/util'
         methods:{
           save:function(complete){
             var _this = this
-            _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds.join(',')
-            _this.formData.stepPeriodIds = _this.formData.stepPeriodIds.join(',')
+            _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds.length > 0 ?  _this.formData.sequentialPeriodIds.join(',') : ''
+            _this.formData.stepPeriodIds = _this.formData.stepPeriodIds.length > 0 ?  _this.formData.stepPeriodIds.join(',') : ''
             _this.formData.segmentList = JSON.stringify(this.segmentList)
             io.post(io.apiAdminSaveOrUpdatePeriod,_this.formData,
             function(ret){

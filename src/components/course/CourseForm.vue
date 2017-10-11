@@ -85,21 +85,6 @@
               </div>
             </div>
 
-        <!--    <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>季节
-              </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required  v-model="formData.season"  >
-                  <option value="">请选择</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>-->
-
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>层级
