@@ -500,7 +500,7 @@
       },
       handleSelectDiscount:function(discountList){
         discountList.forEach(item => {
-          if(this.formData.exclusiveDiscountIds.includes(item.discountId) || this.formData.discountId == item.discountId  ){
+          if(this.formData.exclusiveDiscountIds.filter((val) => val == item.discountId).length > 0 || this.formData.discountId == item.discountId  ){
             return
           }
 

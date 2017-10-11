@@ -269,6 +269,7 @@
     .el-table {
       .target {
         /*border-bottom: none;*/
+        height: auto;
         .cell {
           padding: 0;
           height: 100%;

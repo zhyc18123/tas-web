@@ -177,9 +177,9 @@
       }
     },
     created: function () {
-      this.$once('period.loaded',()=>{
-        this.loadScheduleData()
-      })
+//      this.$once('period.loaded',()=>{
+//        this.loadScheduleData()
+//      })
       //this.loadScheduleData()
       this.loadPeriodData()
     },
@@ -187,6 +187,7 @@
       //this.loadCourseClassWithTeacher()
       var _this = this
       $(document.body).on('click', '.am-icon-edit', function () {
+      	debugger
         var $itemClass = $(this).parents('.class-item')
         var classId = $itemClass.data('classid')
         var courseClass = _this.courseClassMap[classId];
@@ -199,6 +200,9 @@
         })
       })
 
+      this.$once('period.loaded',()=>{
+        this.loadScheduleData()
+      })
     },
     computed: {
       areaTeams: function () {
@@ -294,6 +298,8 @@
         $('.class-item').draggable({
           handle: '.am-icon-circle'
         })
+        console.log($('.class-item-wrapper'))
+
         $('.class-item-wrapper').droppable({
           hoverClass: 'hover',
           accept: function (el) {
