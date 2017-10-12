@@ -33,7 +33,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>金额
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="请输入金额" required min="0" step="0.01" v-model="formData.amount">
+                <input type="number"  class="am-form-field" placeholder="" required min="0" step="0.01" v-model="formData.amount">
               </div>
             </div>
 

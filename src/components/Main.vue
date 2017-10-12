@@ -1,5 +1,5 @@
 <template>
-  <div class="am-g tpl-g">
+  <div class="am-g tpl-g m-main">
     <!-- 头部 -->
     <main-header/>
 
@@ -115,7 +115,8 @@ export default {
   },
   data () {
     return {
-      isMainLayout : true
+      isMainLayout : true,
+      isIndex : false,
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -132,6 +133,7 @@ export default {
     })
   },
   created:function(){
+  	this.isIndex = this.$route.path === '/main/index'
     this.refreshUserInfo()
   },
   mounted:function(){

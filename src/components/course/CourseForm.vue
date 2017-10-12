@@ -106,7 +106,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>讲数
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入讲数"  required min="1" step="1"  v-model="formData.lectureAmount" >
+                <input type="number" placeholder=""  required min="1" step="1"  v-model="formData.lectureAmount" >
               </div>
             </div>
 
@@ -115,7 +115,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每一讲时长(分钟)
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入时长"  required min="1" step="1"  v-model="formData.lectureDuration" >
+                <input type="number" placeholder=""  required min="1" step="1"  v-model="formData.lectureDuration" >
               </div>
             </div>
 
@@ -124,7 +124,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学位数
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学位数"  required min="1" step="1" v-model="formData.quota" >
+                <input type="number" placeholder=""  required min="1" step="1" v-model="formData.quota" >
               </div>
             </div>
             <div class="am-form-group">
@@ -132,7 +132,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>学费
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <input type="number" placeholder="输入学费"  required min="0" step="0.01"  v-model="formData.studyingFee" >
+                <input type="number" placeholder=""  required min="0" step="0.01"  v-model="formData.studyingFee" >
               </div>
             </div>
 

@@ -111,11 +111,6 @@
               min-width="100">
             </el-table-column>
             <el-table-column
-              prop="season"
-              label="季节"
-              min-width="100">
-            </el-table-column>
-            <el-table-column
               prop="level"
               label="层次"
               min-width="100">

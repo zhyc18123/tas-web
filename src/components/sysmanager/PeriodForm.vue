@@ -248,6 +248,8 @@ import util from '../../lib/util'
                 _this.$router.push('/main/sys/period/list')
               }else{
                 _this.$alert(ret.desc)
+                _this.formData.sequentialPeriodIds = _this.formData.sequentialPeriodIds ? _this.formData.sequentialPeriodIds.split(','):[]
+                _this.formData.stepPeriodIds = _this.formData.stepPeriodIds ? _this.formData.stepPeriodIds.split(','):[]
               }
 
             },

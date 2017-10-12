@@ -1228,3 +1228,13 @@ ol.am-breadcrumb{
 .am-form select:hover, .am-form textarea:hover, .am-form-field {
   border-color: #8391a5;
 }
+
+/*input number 去掉上下箭头*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button{
+  -webkit-appearance: none !important;
+  margin: 0;
+}
+input[type="number"]{
+  -moz-appearance:textfield;
+}

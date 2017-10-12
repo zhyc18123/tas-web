@@ -99,11 +99,14 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
+                <span style="color: red;font-size: 12px;margin-left: 20px;">
+                  * 已开班的班辅课需要排好教师和教室才能进行考勤！
+                </span>
               </div>
             </div>
 

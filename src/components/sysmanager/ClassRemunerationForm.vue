@@ -55,7 +55,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>课酬(1课时)
             </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number" class="am-form-field" placeholder="输入课酬(1课时)" min="0" step="0.01" required v-model="formData.amount">
+                <input type="number" class="am-form-field" placeholder="" min="0" step="0.01" required v-model="formData.amount">
               </div>
             </div>
 

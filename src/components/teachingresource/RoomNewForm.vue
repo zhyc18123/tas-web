@@ -33,7 +33,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>座位数
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入座位数" min="0" step="1" required v-model="formData.seatAmount">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.seatAmount">
               </div>
             </div>
 
@@ -55,7 +55,7 @@
                 （{{formData.summerStartDate}} ~{{formData.summerEndDate}}）
               </label>
               <div class="am-u-sm-6 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入暑假成本" min="0" step="1" required v-model="formData.summerCost">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.summerCost">
               </div>
               <div class="am-u-sm-3 input-field am-u-end">
                 元/小时
@@ -67,7 +67,7 @@
                 （{{formData.winterStartDate}} ~{{formData.winterEndDate}}）
               </label>
               <div class="am-u-sm-6 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入暑假成本" min="0" step="1" required v-model="formData.winterCost">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.winterCost">
               </div>
               <div class="am-u-sm-3 input-field am-u-end">
                 元/小时
@@ -78,7 +78,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>周末（周六周日）
               </label>
               <div class="am-u-sm-6 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入周末成本" min="0" step="1" required v-model="formData.weekendCost">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.weekendCost">
               </div>
               <div class="am-u-sm-3 input-field am-u-end">
                 元/小时
@@ -89,7 +89,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>非周末（周一至周五）
               </label>
               <div class="am-u-sm-6 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入非周末成本" min="0" step="1" required v-model="formData.workingCost">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.workingCost">
               </div>
               <div class="am-u-sm-3 input-field am-u-end">
                 元/小时

@@ -142,6 +142,8 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   .left-sidebar {
+    border-right: 1px solid #e9ecf3;
+    width: 241px;
     .sidebar-nav-link {
       .sidebar-nav-sub-title{
         border-bottom: 1px solid #e9ecf3;

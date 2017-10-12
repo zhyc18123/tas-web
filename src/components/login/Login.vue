@@ -117,7 +117,7 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
                 })
                 storage.setCurrentUserInfo(ret.data.user)
                 storage.setAccessToken(ret.data.accessToken)
-                _this.$router.push('/main/index')
+                _this.$router.push('/index')
               }else{
                 _this.checkNeedCaptcha()
                 _this.$alert(ret.desc ||  '登录失败' )

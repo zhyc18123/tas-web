@@ -51,7 +51,7 @@
                 年龄
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number" name="age" class="am-form-field" placeholder="输入年龄  18-120" min="18" max="120" required v-model="formData.age"/>
+                <input type="number" name="age" class="am-form-field" placeholder="  18-120" min="18" max="120" required v-model="formData.age"/>
               </div>
             </div>
 

@@ -23,7 +23,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>座位数
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入座位数" min="0" step="1" required v-model="formData.seatAmount">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.seatAmount">
               </div>
             </div>
             <div class="am-form-group">
@@ -31,7 +31,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本（元/月）
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入成本" min="0" step="1" required v-model="formData.unit">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.unit">
               </div>
             </div>
 
@@ -84,7 +84,7 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>每小时租金
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="number"  class="am-form-field" placeholder="输入租金" min="0" step="1" required v-model="formData.rent">
+                <input type="number"  class="am-form-field" placeholder="" min="0" step="1" required v-model="formData.rent">
               </div>
             </div>
             -->

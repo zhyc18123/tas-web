@@ -60,7 +60,7 @@
                   <template scope="scope">
                     <div class="list" size="small" v-for="(item,index) in scope.row.list">
                       <span class="target-name">{{item.targetName}}</span>
-                      <el-input type="number" :style="{width: targetInputWidth}" class="target-number" v-for="i in item.list" v-model="i.targetNum"></el-input>
+                      <el-input :style="{width: targetInputWidth}" class="target-number" v-for="i in item.list" v-model="i.targetNum"></el-input>
                       <div class="save-btn">
                         <el-button size="small" @click.native="handleSave(scope.row, index)">保存</el-button>
                       </div>

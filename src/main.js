@@ -14,6 +14,7 @@ import VueUI from './components/base/VueUI'
 
 
 const Main = resolve => require(['./components/Main'], resolve)
+const Index = resolve => require(['./components/Index'], resolve)
 const NotFound = resolve => require(['./components/error/NotFound'], resolve)
 const Login = resolve => require(['./components/login/Login'], resolve)
 const Enroll = resolve => require(['./components/login/Enroll'], resolve)
@@ -184,7 +185,7 @@ Vue.use(VueRouter)
 Vue.use(VueUI)
 Vue.use(VueResource)
 
-const Index = { template: '<div>欢迎来到誉优综合业务管理平台</div>' }
+// const Index = { template: '<div><img src="./assets/img/bg-00.jpg" /></div>' }
 
 
 const router = new VueRouter({
@@ -192,7 +193,6 @@ const router = new VueRouter({
     path: '/main',
     component: Main,
     children:[
-      {path: 'index' , component: Index },
       {path: 'sys/user/profile' , component: UserProfile },
       {path: 'sys/user/list' , component: UserList },
       {path: 'sys/user/add' , component: UserForm },
@@ -372,7 +372,9 @@ const router = new VueRouter({
       }
 
     }
-  },{
+  }, {
+      path: '/index' , component: Index
+    },{
     path: '/login',
     component: Login
   },{
