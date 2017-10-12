@@ -69,7 +69,9 @@
       setTimeout(function () {
         _this.$root.$emit('sidebar.click', _this.pathMap[_this.$route.path])
         $('.sidebar-nav-sub-title').each(function () {
-          this.innerText.trim() === _this.pathMap[_this.$route.path][0].name ? $(this).trigger('click'): $.noop()
+          if( _this.pathMap[_this.$route.path] &&  _this.pathMap[_this.$route.path].length > 0) {
+            this.innerText.trim() === _this.pathMap[_this.$route.path][0].name ? $(this).trigger('click'): $.noop()
+          }
           _this.activePath = _this.$route.path
         })
       })
@@ -111,7 +113,6 @@
 //        return className
 //      },
       go: function () {
-      	debugger
         var item = arguments[arguments.length - 1]
         if (item.path) {
           this.$root.$emit('sidebar.click', arguments)
@@ -145,7 +146,7 @@
       .sidebar-nav-sub-title{
         border-bottom: 1px solid #e9ecf3;
         color: #666666;
-        padding: 11px 22px;
+        padding: 11px 14px 11px 22px;
       }
       .sidebar-nav-sub {
         .sidebar-nav-link {
@@ -182,9 +183,11 @@
       .am-icon-angle-double-down {
         color: #fff;
         font-size: 18px;
+        line-height: 23px;
       }
       .sidebar-nav-sub-ico-rotate {
         color: #3bb4f2;
+        line-height: 23px;
       }
       .sidebar-nav-link-logo {
         fill: #3bb4f2;

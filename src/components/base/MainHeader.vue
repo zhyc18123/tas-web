@@ -18,7 +18,7 @@
         <ul>
           <!-- 欢迎语 -->
           <li class="am-text-sm ">
-            <img class="am-circle" :src="avatarUrl" alt="" style="width: 30px;height: 30px ;margin-top: -8px;">
+            <img class="am-circle" :src="avatarUrl" alt="" style="width: 38px;height: 38px ;margin-top: -8px;border: 1px solid #7ce6eb">
           </li>
           <li class="am-text-sm tpl-header-navbar-welcome">
             <a href="javascript:;">欢迎你, <span>{{name}}</span> </a>
@@ -133,12 +133,14 @@
           <!-- 退出 -->
           <li class="am-text-sm">
             <a href="javascript:;" @click="$router.push('/main/sys/user/profile')">
-              <span class="am-icon-pencil"></span> 账号设置
+              <span class="am-icon-pencil"></span>
+              账号设置
             </a>
           </li>
           <li class="am-text-sm">
             <a href="javascript:;" @click="signOut">
-              <span class="am-icon-sign-out"></span> 退出
+              <span class="am-icon-sign-out"></span>
+              退出
             </a>
           </li>
         </ul>
@@ -193,6 +195,7 @@ export default {
       background: linear-gradient(to right, #009fd7 , #01c8c1);
       height: 60px;
       line-height: 60px;
+      padding-right: 5px;
 
       .tpl-header-switch-button {
         background: #7fcfeb;
@@ -206,7 +209,7 @@ export default {
       .tpl-header-navbar{
         a {
           color: #fff;
-
+          padding: 0 23px;
         }
       }
     }
