@@ -61,7 +61,7 @@
                   <option value="">缴费状态</option>
                   <option value="0">未缴费</option>
                   <option value="1">欠费</option>
-                  <option value="3">已缴费</option>
+                  <option value="2">已缴费</option>
                 </select2>
               </div>
             </div>
