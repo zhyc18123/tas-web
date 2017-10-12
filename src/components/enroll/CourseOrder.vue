@@ -86,9 +86,9 @@
             <label class="am-checkbox-inline">
               <input type="radio" value="3" name="payWay" v-model="formData.payWay"> 账户余额
             </label>
-            <label class="am-checkbox-inline">
+            <!--<label class="am-checkbox-inline">
               <input type="radio" value="4" name="payWay" v-model="formData.payWay"> 微信／支付宝
-            </label>
+            </label>-->
           </td>
         </tr>
 
