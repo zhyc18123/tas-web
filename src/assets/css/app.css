@@ -1202,3 +1202,29 @@ ol.am-breadcrumb{
      normalize.css 中也包含这行 */
   overflow: hidden;
 }
+
+.am-btn-success {
+  color: #fff;
+  background-color: #01c8c0;
+  border: none;
+  border-radius: 4px;
+}
+
+.am-btn-success:hover {
+  background-color: #11d2ca;
+}
+
+.am-form input[type=number], .am-form input[type=search], .am-form input[type=text],
+.am-form input[type=password], .am-form input[type=datetime], .am-form input[type=datetime-local],
+.am-form input[type=date], .am-form input[type=month], .am-form input[type=time], .am-form input[type=week],
+.am-form input[type=email],
+.am-form input[type=url], .am-form input[type=tel], .am-form input[type=color],
+.am-form select, .am-form textarea, .am-form-field {
+  border: 1px solid #d6dce9;
+  border-radius: 4px;
+}
+.am-form input[type=number]:hover, .am-form input[type=search]:hover, .am-form input[type=text]:hover,
+.am-form input[type=password]:hover,
+.am-form select:hover, .am-form textarea:hover, .am-form-field {
+  border-color: #8391a5;
+}
