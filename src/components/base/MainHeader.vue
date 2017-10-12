@@ -1,8 +1,8 @@
 <template>
-  <header>
+  <header class="m-header">
     <!-- logo -->
     <div class="am-fl tpl-header-logo">
-      <a href="javascript:;"><img src="../../assets/logo.jpg" alt=""></a>
+      <a href="javascript:;"><img src="../../assets/logo.svg" alt=""></a>
     </div>
     <!-- 右侧内容 -->
     <div class="tpl-header-fluid">
@@ -18,7 +18,7 @@
         <ul>
           <!-- 欢迎语 -->
           <li class="am-text-sm ">
-            <img class="am-circle" :src="avatarUrl" alt="" style="width: 30px;height: 30px ;margin-top: 10px;">
+            <img class="am-circle" :src="avatarUrl" alt="" style="width: 30px;height: 30px ;margin-top: -8px;">
           </li>
           <li class="am-text-sm tpl-header-navbar-welcome">
             <a href="javascript:;">欢迎你, <span>{{name}}</span> </a>
@@ -181,6 +181,34 @@ export default {
 
 </script>
 
-<style scoped>
+<style lang="less" scoped>
+  .m-header {
+    .tpl-header-logo {
+      height: 60px;
+      img {
+        width: 132px;
+      }
+    }
+    .tpl-header-fluid {
+      background: linear-gradient(to right, #009fd7 , #01c8c1);
+      height: 60px;
+      line-height: 60px;
 
+      .tpl-header-switch-button {
+        background: #7fcfeb;
+        color: #fff;
+        font-size: 28px;
+        line-height: 59px;
+        line-height: 57px\0;
+        border-right: 1px solid #e9ecf3;
+        border-left: 1px solid #eee;
+      }
+      .tpl-header-navbar{
+        a {
+          color: #fff;
+
+        }
+      }
+    }
+  }
 </style>

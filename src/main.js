@@ -2,6 +2,7 @@
 //require('amazeui/dist/css/amazeui.css')
 require('amazeui')
 require('./assets/css/app.css')
+require('./assets/iconfont/iconfont')
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
