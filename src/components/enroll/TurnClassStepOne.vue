@@ -45,7 +45,7 @@
             <option v-for="n in changeClass.regLectureAmount" :value="n">{{n}}</option>
           </select></td>
           <td class="bgColor">剩余金额：</td>
-          <td colspan="3"><span class="am-text-danger">{{changeClass.remainingAmount}}￥</span></td>
+          <td colspan="3"><span class="am-text-danger">￥{{changeClass.remainingAmount}}</span></td>
         </tr>
         <tr>
           <td class="bgColor">转班原因:</td>

@@ -127,8 +127,9 @@
       startDate: function (val) {
       	let _this = this
         if (this.arrangeWay == 'arrangeByWeek' && val) {
-          _this.weekDays.map((day) => {
+          _this.weekDays.map((day, index) => {
           	if (day.id === moment(val, "YYYY-MM-DD").format('dddd')) {
+              _this.selectedIndex = index
           		day.disabled = true
           		day.selected = true
             } else {
@@ -201,7 +202,7 @@
           var startIndex = 0
           var selectedDays = []
           for (var i = this.selectedIndex; i < this.selectedIndex + 7; i++) {
-            var j = i > 6 ? 0 : i
+            var j = i > 6 ? i-7 : i
             if (this.weekDays[j].selected) {
               if (this.weekDays[j].disabled === true) {
                 startIndex = j
@@ -213,6 +214,7 @@
             }
           }
 
+          debugger
           if(selectedDays.length == 0 ){
             this.$alert('至少选择一天')
             return

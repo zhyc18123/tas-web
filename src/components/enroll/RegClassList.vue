@@ -152,19 +152,19 @@
     methods: {
 
       batchPay: function () {
-
+        let _this = this
         if(this.selection.length == 0 ){
           this.$alert('至少选择一个班')
         }else{
           this.createOrder(this.selection.map(function(item){
-              return {
+            _this.cancel(item.classId)
+            return {
                 classId: item.classId ,
                 startAmount: item.startAmount,
                 endAmount: item.endAmount ,
               }
           }))
         }
-
       },
       createOrder: function (regClassInfoList) {
         var studentId = this.$params('studentId')
@@ -202,6 +202,7 @@
       },
       pay: function (classId, startAmount, endAmount) {
         this.createOrder([{classId, startAmount, endAmount}])
+        this.cancel(classId)
       },
       cancel: function (classId) {
         for (var i = 0; i < this.$root.courseShoppingCart.length; i++) {
