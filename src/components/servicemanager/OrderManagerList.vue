@@ -198,12 +198,16 @@
               <template scope="scope">{{scope.row.paidAmount }}</template>
             </el-table-column>
 
+            <el-table-column label="支付时间" min-width="100">
+              <template scope="scope">{{scope.row.payTime | formatTime}}</template>
+            </el-table-column>
+
             <el-table-column label="申请退款时间" min-width="100">
               <template scope="scope">{{scope.row.refundTime | formatTime}}</template>
             </el-table-column>
 
             <el-table-column label="付款状态" min-width="100">
-              <template scope="scope">{{scope.row.chargingStatus==2? "已付款":"未付款"}}</template>
+              <template scope="scope">{{scope.row.chargingStatus==2? "已付款":scope.row.chargingStatus==5?"已退款":scope.row.chargingStatus==6?"退款中":"未付款"}}</template>
             </el-table-column>
 
             <el-table-column label="订单状态" min-width="100">
