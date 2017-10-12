@@ -93,6 +93,14 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                label="报名时间"
+                min-width="150">
+                <template scope="scope">
+                  {{scope.row.courseClass.createTime | formatTime}}
+                </template>
+              </el-table-column>
+
+              <el-table-column
                 prop="studentReg.className"
                 label="班级名称"
                 min-width="200">
