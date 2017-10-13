@@ -2,7 +2,9 @@
   <header class="m-header">
     <!-- logo -->
     <div class="am-fl tpl-header-logo">
-      <a href="javascript:;"><img src="../../assets/logo.svg" alt=""></a>
+      <router-link to="/index" tag="a">
+        <img src="../../assets/logo.svg" alt="">
+      </router-link>
     </div>
     <!-- 右侧内容 -->
     <div class="tpl-header-fluid">
@@ -189,6 +191,7 @@ export default {
       height: 60px;
       img {
         width: 132px;
+        height: 48px;
       }
     }
     .tpl-header-fluid {

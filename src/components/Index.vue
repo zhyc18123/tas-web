@@ -7,10 +7,13 @@
     <left-sidebar/>
 
     <!-- 内容区域 -->
-    <div class="tpl-content-wrapper">
+    <div class="tpl-content-wrapper" v-bind:style="{ minHeight: contentHeight + 'px'}">
       <div  class="m-index">
-        <div class="welcome"></div>
-        <div class="main-bg">
+        <div class="bg">
+          <div class="main-bg-1"></div>
+          <div class="main-bg-2"></div>
+        </div>
+        <div class="info">
           <div class="bg-text"></div>
         </div>
       </div>
@@ -113,6 +116,7 @@
       return {
         isMainLayout : true,
         isIndex : false,
+        contentHeight : 922,
       }
     },
     beforeRouteEnter (to, from, next) {
@@ -134,6 +138,10 @@
     },
     mounted:function(){
       var _this = this
+      debugger
+      $(document).ready(function(){
+        _this.contentHeight = $(window).height() - 60
+      })
       this.$root.$on('reloadConfig',function(){
         loadConfig(function(config){
           _this.$root.config =  config
@@ -164,15 +172,14 @@
   .m-index {
     width: 100%;
     height: 100%;
-    .main-bg {
+    .info {
       width: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      background: #FFF;
       height: 100%;
-      background: url("../assets/img/bg-06.jpg") center center no-repeat  fixed;
-      background-size: cover;
+      /*background: url("../assets/img/bg-06.jpg") center center no-repeat  fixed;*/
+      /*background-size: cover;*/
     }
     .bg-text {
       z-index: 100;
@@ -183,6 +190,26 @@
       left: 0;
       background: url("../assets/img/bg-05.png") center 38% no-repeat;
       width: 100%;
+    }
+    .bg {
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #FFF;
+      height: 100%;
+      /*background: url("../assets/img/bg-06.jpg") center center no-repeat  fixed;*/
+      /*background-size: cover;*/
+    }
+    .main-bg-1 {
+      background: url("../assets/img/bg-01.jpg") top no-repeat;
+      background-size: 100%;
+      height: 67%;
+    }
+    .main-bg-2 {
+      background: url("../assets/img/bg-02.png") 0 bottom no-repeat;
+      background-size: 100%;
+      height: 33%;
     }
   }
 </style>

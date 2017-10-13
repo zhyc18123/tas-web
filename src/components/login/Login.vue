@@ -59,15 +59,13 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
           }
         },
         created:function(){
-          var loginInfo  = storage.getLogin()
-          if(loginInfo){
-            this.rememberMe = loginInfo.rememberMe
-            if(this.rememberMe == true ){
-              this.formData.username = loginInfo.username
-              this.formData.password = PASSWORD_PLACEHOLDER
-              this.localPassword = loginInfo.password
-              this.formData.captchaCode = loginInfo.captchaCode
-            }
+          var info  = storage.getRememberMe()
+          if(info && info.username && info.password){
+            this.formData.username = info.username
+            this.formData.password = PASSWORD_PLACEHOLDER
+            this.localPassword = info.password
+          } else {
+            this.formData.password = ''
           }
         },
         methods:{
@@ -116,6 +114,11 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
                   loginAt : new Date().getTime()
                 })
                 storage.setCurrentUserInfo(ret.data.user)
+                if(_this.rememberMe === true) {
+                  storage.setRememberMe(ret.data.user)
+                } else {
+                  storage.setRememberMe(null)
+                }
                 storage.setAccessToken(ret.data.accessToken)
                 _this.$router.push('/index')
               }else{

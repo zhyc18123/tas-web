@@ -39,6 +39,7 @@
               <el-table
                 :data="tableData"
                 border
+                ref="table"
                 stripe
                 style="min-width: 100%">
                 <el-table-column
@@ -116,7 +117,7 @@
     },
     computed: {
       targetInputWidth: function () {
-        return 100 / (this.periods.length + 3) + '%'
+        return (this.$refs.table.$el.clientWidth - 104 - 60 - 110) / this.periods.length + 'px'
       },
       areaTeams: function () {
         return this.$root.config.areaTeams || []
@@ -151,7 +152,7 @@
             'periodName': true
           },
           'style': {
-          	'width': '10%',
+          	'width': '110px',
           	'display': 'inline-block'
           }
         }, ['类型'])]
@@ -162,7 +163,6 @@
             },
             'style': {
               'width': this.targetInputWidth,
-              'margin': '0 0.5%',
               'display': 'inline-block'
             }
           }, [val.periodName]))
@@ -172,7 +172,7 @@
             'periodName': true
           },
           'style': {
-            'width': '8%',
+            'width': '60px',
             'display': 'inline-block'
           }
         }, ['操作'])])
@@ -274,6 +274,7 @@
     .el-table {
       .target {
         /*border-bottom: none;*/
+        height: auto;
         .cell {
           padding: 0;
           height: 100%;
@@ -285,18 +286,18 @@
           .teacher-name {
           }
           .target-name {
-            width: 10%;
+            width: 110px;
             display: inline-block;
           }
           .save-btn {
-            width: 8%;
+            width: 50px;
             display: inline-block;
-            padding: 0 10px;
+            /*padding: 0 10px;*/
           }
           .target-number {
             display: inline-block;
             width: 10%;
-            margin: 0 0.5%;
+            /*margin: 0 0.5%;*/
           }
         }
       }

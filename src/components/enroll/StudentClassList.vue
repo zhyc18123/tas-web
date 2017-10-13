@@ -122,12 +122,14 @@
       'student-refund': StudentRefundForm,
     },
     created: function () {
+    	let _this = this
       this.loadDataTable()
+      debugger
       this.$root.$on('order:new',()=>{
-        this.loadTableData()
+        _this.loadDataTable()
       })
       this.$root.$on('order:pay:success',()=>{
-        this.loadTableData()
+        _this.loadDataTable()
       })
     },
     methods: {

@@ -1207,11 +1207,18 @@ ol.am-breadcrumb{
   color: #fff;
   background-color: #01c8c0;
   border: none;
+  outline: 0;
   border-radius: 4px;
 }
-
-.am-btn-success:hover {
+.am-btn-success:active {
   background-color: #11d2ca;
+  border: none;
+  outline: 0;
+}
+.am-btn-success:focus, .am-btn-success:hover {
+  background-color: #11d2ca;
+  border: none;
+  outline: 0;
 }
 
 .am-form input[type=number], .am-form input[type=search], .am-form input[type=text],
@@ -1222,6 +1229,8 @@ ol.am-breadcrumb{
 .am-form select, .am-form textarea, .am-form-field {
   border: 1px solid #d6dce9;
   border-radius: 4px;
+  font-size: 14px;
+  color: #666;
 }
 .am-form input[type=number]:hover, .am-form input[type=search]:hover, .am-form input[type=text]:hover,
 .am-form input[type=password]:hover,
@@ -1237,4 +1246,14 @@ input::-webkit-inner-spin-button{
 }
 input[type="number"]{
   -moz-appearance:textfield;
+}
+
+.theme-white .widget-title {
+  font-size: 16px;
+  color: #5a79a8;
+}
+
+label {
+  font-size: 14px;
+  font-weight: normal;
 }
