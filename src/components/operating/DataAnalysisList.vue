@@ -7,13 +7,16 @@
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group tpl-table-list-select">
-                <div class="am-form-group">
-                  <select2  required v-model="areaTeamId" :options="areaTeams">
-                    <option value="">请选择区域</option>
-                  </select2>
-                </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="padding-left: 0">
+              <div class="am-form-group">
+                <el-select v-model="areaTeamId" placeholder="请选择">
+                  <el-option
+                    v-for="item in areaTeams"
+                    :key="item.areaTeamId"
+                    :label="item.name"
+                    :value="item.areaTeamId">
+                  </el-option>
+                </el-select>
               </div>
             </div>
             <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">-->
@@ -55,7 +58,6 @@
       return {
         activeIndex: '/main/operating/dataAnalysis/list/basicData',
         areaTeamId : '',
-        areaTeams : [],
       }
     },
     mounted:function(){
@@ -64,7 +66,15 @@
       // 基于准备好的dom，初始化echarts实例
     },
     created:function(){
-      this.getAreaTeamList();
+      if (window.config.areaTeams) {
+        this.areaTeamId = window.config.areaTeams[0].areaTeamId
+      }
+//      this.getAreaTeamList();
+    },
+    computed: {
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
+      },
     },
     methods:{
       search:function(){

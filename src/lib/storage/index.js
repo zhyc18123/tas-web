@@ -19,6 +19,12 @@ const storage = {
   getCurrentUserInfo:function(){
     return store.get('currentUserInfo') || {}
   },
+  setRememberMe:function(info){
+    store.set("rememberMe" , info );
+  },
+  getRememberMe:function(){
+    return store.get('rememberMe') || {}
+  },
   setChargeCampus:function(chargeInfo){
     store.set('chargeCampus-'+this.getCurrentUserInfo().userId, chargeInfo)
   },

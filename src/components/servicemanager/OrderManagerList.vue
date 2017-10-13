@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-seller-register-list">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">

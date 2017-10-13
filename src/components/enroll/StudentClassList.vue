@@ -124,14 +124,12 @@
     created: function () {
     	let _this = this
       this.loadDataTable()
+      debugger
       this.$root.$on('order:new',()=>{
-        console.log(1)
-
-        _this.loadTableData()
+        _this.loadDataTable()
       })
       this.$root.$on('order:pay:success',()=>{
-        console.log(2)
-        _this.loadTableData()
+        _this.loadDataTable()
       })
     },
     methods: {

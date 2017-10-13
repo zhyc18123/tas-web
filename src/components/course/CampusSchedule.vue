@@ -125,6 +125,7 @@
             </table>
 
           </div>
+          <div v-else="" class="am-u-sm-12 am-scrollable-horizontal">无数据</div>
 
         </div>
       </div>
@@ -207,6 +208,10 @@
       },
       loadScheduleData: function () {
         var _this = this
+        if(!this.query.campusId) {
+        	this.$alert('请选择校区')
+        	return false
+        }
         _this.$showLoading()
         io.post(io.apiAdminSchedulescheduleDataOfCampus, this.query,
           function (ret) {
