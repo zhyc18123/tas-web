@@ -9,11 +9,11 @@
             <input type="text" class="tpl-form-input"  placeholder="请输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
           </div>
           <div class="am-form-group">
-            <input type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
+            <input @keyup.enter="login" type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
           </div>
           <div class="am-form-group am-g-collapse" v-if="showCaptchaCode">
             <div class="am-u-sm-8">
-              <input type="text" class="tpl-form-input"  placeholder="请输入验证码" v-model="formData.captchaCode" >
+              <input @keyup.enter="login" type="text" class="tpl-form-input"  placeholder="请输入验证码" v-model="formData.captchaCode" >
             </div>
             <div class="am-u-sm-4 tpl-captcha-code">
               <img :src="captchaCodeUrl" @click="refreshCaptchaCode"/>

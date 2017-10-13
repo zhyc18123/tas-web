@@ -27,23 +27,23 @@
               <!--</div>-->
             <!--</div>-->
           </div>
-          <div class="am-u-sm-12 am-form-group">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
-              <el-menu-item index="/main/operating/dataAnalysis/list/basicData">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/problemWarning">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/problemWarning">财务预警</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/fullClassRate">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/subjectCompleteRate">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>
-              </el-menu-item>
-            </el-menu>
-            <router-view :areaTeamId="areaTeamId"></router-view>
-          </div>
+          <!--<div class="am-u-sm-12 am-form-group">-->
+            <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">-->
+              <!--<el-menu-item  v-if="hasPermission('basicData')"index="/main/operating/dataAnalysis/list/basicData?type=basic" >-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item  v-if="hasPermission('problemWarning')" index="/main/operating/dataAnalysis/list/basicData?type=problemWarning">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/problemWarning">财务预警</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item v-if="hasPermission('fullClassRate')"  index="/main/operating/dataAnalysis/list/basicData?type=fullClassRate">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item v-if="hasPermission('subjectCompleteRate')" index="/main/operating/dataAnalysis/list/basicData?type=subjectCompleteRate">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>-->
+              <!--</el-menu-item>-->
+            <!--</el-menu>-->
+            <!--<router-view :areaTeamId="areaTeamId"></router-view>-->
+          <!--</div>-->
         </div>
       </div>
     </div>

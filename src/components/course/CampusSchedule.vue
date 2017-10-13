@@ -158,6 +158,7 @@
     },
     watch:{
       'query.areaTeamId':function(){
+      	console.log(1)
         this.query.campusId = ''
         this.query.periodId = ''
         this.loadCampusData()
@@ -185,7 +186,11 @@
     },
     methods: {
       search: function () {
-        this.loadScheduleData()
+        if(!this.query.campusId) {
+          this.$alert('请选择校区')
+        } else {
+          this.loadScheduleData()
+        }
       },
       loadCampusData:function(){
         var _this = this
@@ -197,6 +202,7 @@
 
               if(!_this.query.campusId){
                 _this.query.campusId = ret.data[0] ? ret.data[0].campusId : ''
+                _this.loadScheduleData()
               }
               _this.campuses = ret.data
 
@@ -209,7 +215,6 @@
       loadScheduleData: function () {
         var _this = this
         if(!this.query.campusId) {
-        	this.$alert('请选择校区')
         	return false
         }
         _this.$showLoading()

@@ -1209,6 +1209,7 @@ ol.am-breadcrumb{
   border: none;
   outline: 0;
   border-radius: 4px;
+  font-size: 14px;
 }
 .am-btn-success:active {
   background-color: #11d2ca;
@@ -1229,7 +1230,7 @@ ol.am-breadcrumb{
 .am-form select, .am-form textarea, .am-form-field {
   border: 1px solid #d6dce9;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 14px!important;
   color: #666;
 }
 .am-form input[type=number]:hover, .am-form input[type=search]:hover, .am-form input[type=text]:hover,

@@ -20,7 +20,10 @@
         <ul>
           <!-- 欢迎语 -->
           <li class="am-text-sm ">
-            <img class="am-circle" :src="avatarUrl" alt="" style="width: 38px;height: 38px ;margin-top: -8px;border: 1px solid #7ce6eb">
+            <img v-if="avatarUrl" class="am-circle" :src="avatarUrl" alt="" style="width: 38px;height: 38px ;margin-top: -8px;border: 1px solid #7ce6eb">
+            <svg v-else class="icon" aria-hidden="true" style="font-size: 38px;vertical-align: -0.32em;">
+              <use xlink:href="#icon-avatar-in-pie"></use>
+            </svg>
           </li>
           <li class="am-text-sm tpl-header-navbar-welcome">
             <a href="javascript:;">欢迎你, <span>{{name}}</span> </a>
@@ -160,7 +163,10 @@ export default {
   name: 'main-header',
   data:function(){
     var userInfo = storage.getCurrentUserInfo()
-    return {name:userInfo.realName,avatarUrl: userInfo.avatarUrl || require('../../assets/img/user04.png')}
+    return {
+    	name:userInfo.realName,
+      avatarUrl: userInfo.avatarUrl || ''
+    }
   },
   created:function(){
     this.$root.$on('userInfoChange',function(userInfo){
