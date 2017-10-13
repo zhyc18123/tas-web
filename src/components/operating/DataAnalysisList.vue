@@ -27,7 +27,7 @@
               <!--</div>-->
             <!--</div>-->
           </div>
-          <!--<div class="am-u-sm-12 am-form-group">-->
+          <div class="am-u-sm-12 am-form-group">
             <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">-->
               <!--<el-menu-item  v-if="hasPermission('basicData')"index="/main/operating/dataAnalysis/list/basicData?type=basic" >-->
                 <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>-->
@@ -42,8 +42,8 @@
                 <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>-->
               <!--</el-menu-item>-->
             <!--</el-menu>-->
-            <!--<router-view :areaTeamId="areaTeamId"></router-view>-->
-          <!--</div>-->
+            <router-view :areaTeamId="areaTeamId"></router-view>
+          </div>
         </div>
       </div>
     </div>
