@@ -297,16 +297,16 @@
         $('.class-item').draggable({
           handle: '.am-icon-circle'
         })
-        console.log($('.class-item-wrapper'))
-
+        console.log('item',$('.class-item-wrapper'))
         $('.class-item-wrapper').droppable({
           hoverClass: 'hover',
           accept: function (el) {
+            console.log(el)
             var col = el.data('col')
-            return col == $(this).data('col')
+            // return col == $(this).data('col')
+            return true
           },
           receiveHandler: function (ui) {
-
             var $this = $(this)
             var id = $this.attr('id').split('_')
             var teacherId = id[0];
@@ -336,6 +336,7 @@
               courseClass.studyingTime = time
             }
             $classItem.addClass('class-item-modify')
+            console.log('dfd',$classItem,$this)
             $classItem.appendTo($this)
             _this.saveChange(modifyInfo)
           }

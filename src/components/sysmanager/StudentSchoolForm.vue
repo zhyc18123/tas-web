@@ -12,16 +12,16 @@
           <fieldset>
 
             <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
+              <label class="am-u-sm-2 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>校名
               </label>
-              <div class="am-u-sm-9 input-field">
+              <div class="am-u-sm-10 input-field">
                 <input type="text"  class="am-form-field" placeholder="请输入校名" required v-model="formData.schoolName">
               </div>
             </div>
 
             <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
+              <label class="am-u-sm-2 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>地址
               </label>
               <div class="am-u-sm-3 input-field">
@@ -41,13 +41,13 @@
               </div>
             </div>
             <div class="am-form-group">
-              <div class="am-u-sm-9 am-u-sm-push-3 input-field">
+              <div class="am-u-sm-10 am-u-sm-push-2 input-field">
                 <input type="text"  class="am-form-field" placeholder="请输入详细地址" required v-model="formData.address">
               </div>
             </div>
 
             <div class="am-form-group">
-              <div class="am-u-sm-9 am-u-sm-push-3">
+              <div class="am-u-sm-10 am-u-sm-push-2">
 
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
               </div>
