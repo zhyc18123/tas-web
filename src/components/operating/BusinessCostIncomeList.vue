@@ -172,7 +172,6 @@
       $(window).smoothScroll()
     },
     created:function(){
-    	debugger
       this.name = this.$route.query.name
       this.mainAccountId = this.$route.query.mainAccountId
       this.startDate = this.$route.query.startDate

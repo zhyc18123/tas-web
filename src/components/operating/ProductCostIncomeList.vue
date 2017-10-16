@@ -187,7 +187,6 @@
       $(window).smoothScroll()
     },
     created:function(){
-      debugger
       this.name = this.$route.query.name
       this.productId = this.$route.query.productId
       this.startDate = this.$route.query.startDate

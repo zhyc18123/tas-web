@@ -187,7 +187,6 @@
       //this.loadCourseClassWithTeacher()
       var _this = this
       $(document.body).on('click', '.am-icon-edit', function () {
-      	debugger
         var $itemClass = $(this).parents('.class-item')
         var classId = $itemClass.data('classid')
         var courseClass = _this.courseClassMap[classId];

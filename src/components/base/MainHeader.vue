@@ -200,6 +200,9 @@ export default {
         height: 48px;
       }
     }
+    .tpl-header-switch-button {
+      cursor: pointer;
+    }
     .tpl-header-fluid {
       background: linear-gradient(to right, #009fd7 , #01c8c1);
       height: 60px;
@@ -211,10 +214,15 @@ export default {
         color: #fff;
         font-size: 28px;
         line-height: 59px;
-        line-height: 57px\0;
         border-right: 1px solid #e9ecf3;
         border-left: 1px solid #eee;
       }
+      .ie10 {
+        .tpl-header-switch-button{
+          line-height: 57px;
+        }
+      }
+
       .tpl-header-navbar{
         a {
           color: #fff;

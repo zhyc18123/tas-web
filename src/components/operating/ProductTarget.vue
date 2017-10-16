@@ -204,7 +204,6 @@
         var _this = this,
           data = {},
           productTargetVoJson = JSON.stringify(list.productTargetList);
-        debugger
         data = Object.assign({}, list, {productTargetVoJson: productTargetVoJson})
         _this.$showLoading()
         io.post(io.saveOrUpdateProductTarget,data,function(ret){

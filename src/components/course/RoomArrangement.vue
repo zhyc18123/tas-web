@@ -157,7 +157,6 @@
       },
       show:function(){
         this.tableData = []
-        debugger
         this.query = {
           classId: this.courseClass.classId,
           campusId : this.courseClass.campusId

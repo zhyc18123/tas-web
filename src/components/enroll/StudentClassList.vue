@@ -124,7 +124,6 @@
     created: function () {
     	let _this = this
       this.loadDataTable()
-      debugger
       this.$root.$on('order:new',()=>{
         _this.loadDataTable()
       })

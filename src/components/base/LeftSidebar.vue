@@ -107,7 +107,6 @@
     methods: {
 //      getClassName: function (item,e) {
 //        var className = ''
-//        debugger
 //        this.pathMap[this.$route.path][0].name == item.name ? className = 'active ' : className= ''
 //        item.subMenus?className += 'sidebar-nav-sub-title':className += ''
 //        return className

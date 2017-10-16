@@ -214,7 +214,6 @@
             }
           }
 
-          debugger
           if(selectedDays.length == 0 ){
             this.$alert('至少选择一天')
             return

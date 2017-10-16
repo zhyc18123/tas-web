@@ -138,7 +138,6 @@
     },
     mounted:function(){
       var _this = this
-      debugger
       $(document).ready(function(){
         _this.contentHeight = $(window).height() - 60
       })

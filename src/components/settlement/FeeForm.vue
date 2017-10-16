@@ -141,7 +141,6 @@ import moment from 'moment'
                   _this.needShareTime = ret.data.needShareTime === '1'
                   _this.needMultMainBody = ret.data.needMultMainBody === '1'
                   if(_this.formData.shareStart && _this.formData.shareEnd) {
-                      debugger
                     _this.formData.shareStart = moment(parseInt(_this.formData.shareStart)).format('YYYY-MM-DD')
                     _this.formData.shareEnd = moment(parseInt(_this.formData.shareEnd)).format('YYYY-MM-DD')
                   }
