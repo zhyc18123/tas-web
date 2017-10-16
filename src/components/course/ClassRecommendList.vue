@@ -137,6 +137,7 @@
               <div class="am-form-group">
                 <date-picker v-model="query.startCourseTime" >
                   <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
+                  <span>取消</span>
                 </date-picker>
               </div>
             </div>
