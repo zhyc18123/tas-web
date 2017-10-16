@@ -1315,3 +1315,9 @@ select::-ms-expand { display: none; }
   background-color: #9f9f9f;
   -webkit-border-radius: 4px;
 }
+.widget-body {
+  padding: 13px 7px;
+}
+.widget-body>[class*=am-u-]:first-child {
+  /*padding-left: 0;*/
+}
