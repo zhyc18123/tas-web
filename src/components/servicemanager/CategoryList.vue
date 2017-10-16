@@ -59,9 +59,9 @@
               <el-table-column label="成本类型" min-width="100">
                 <template scope="scope">{{scope.row.feeCategoryName}}</template>
               </el-table-column>
-              <el-table-column label="收入类型" min-width="100">
+           <!--   <el-table-column label="收入类型" min-width="100">
                 <template scope="scope">{{scope.row.incomeCategoryName}}</template>
-              </el-table-column>
+              </el-table-column>-->
 
               <el-table-column label="操作" width="120">
                 <template scope="scope">

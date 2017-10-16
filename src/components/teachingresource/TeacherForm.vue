@@ -109,7 +109,7 @@
                 人事关系
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2 :disabled="!editable"  v-model="formData.busTeamId" :options="busTeams" >
+                <select2   v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
