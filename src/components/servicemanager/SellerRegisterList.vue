@@ -1,5 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-scrollable-horizontal">
+  <div class="m-seller-register-list am-u-sm-12 am-scrollable-horizontal">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">用户注册审核</div>
@@ -10,27 +10,17 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                用户名:
-              </label>
-              <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="className" v-model="query.merchantName" placeholder=""/>
-              </div>
+                <el-input placeholder="用户名" type="text" name="className" v-model="query.merchantName" ></el-input>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                手机号:
-              </label>
-              <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="className" v-model="query.phoneNo" placeholder=""/>
-              </div>
+                <el-input type="text" name="className" v-model="query.phoneNo" placeholder="手机号"></el-input>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-5 am-padding-top-xs ">
+              <label class="am-u-sm-4 am-padding-top-xs ">
                 申请日期:
               </label>
               <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginTime">
@@ -38,9 +28,9 @@
               </date-picker>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
+              <label class="am-u-sm-2 am-padding-top-xs ">
                 到
               </label>
               <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endTime">
@@ -48,9 +38,9 @@
               </date-picker>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-5 am-padding-top-xs ">
+              <label class="am-u-sm-4 am-padding-top-xs ">
                 审核状态:
               </label>
               <div class="am-u-sm-6 am-u-end  input-field">
@@ -65,7 +55,7 @@
           </div>
 
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2 am-u-end">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search"><span class="am-icon-search"></span>查询
@@ -280,5 +270,25 @@
   }
 
 </script>
+<style lang="less" scoped>
+  .m-seller-register-list {
+    label {
+      font-size: 14px;
+      font-weight: normal;
+    }
+    input，.el-input {
+      width: 180px!important;
+    }
+    .input-field{
+      padding-left: 0;
+    }
+    .am-u-lg-2 {
+      width: 180px;
+    }
+    .am-u-lg-3 {
+      width: 300px;
+    }
+  }
+</style>
 
 

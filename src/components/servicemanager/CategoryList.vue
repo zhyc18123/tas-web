@@ -20,7 +20,7 @@
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group tpl-table-list-select">
                 <selected v-model="query.type">
-                  <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
+                  <select data-am-selected="{btnSize: 'sm'}" placeholder="所属分类">
                     <option></option>
                     <option value="">所属分类</option>
                     <option value="0">供应</option>

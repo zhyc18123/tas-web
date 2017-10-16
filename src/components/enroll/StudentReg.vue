@@ -75,6 +75,29 @@
     text-align: center !important;
   }
 </style>
+<style scoped>
+  .am-nav-tabs {
+    background-color: #eef1f6;
+  }
+  .am-tabs-bd {
+    border-color: #dfe6ec;
+  }
+  .am-nav-tabs>li>a {
+    color: #666;
+    font-size: 14px;
+  }
+  .am-nav-tabs>li.am-active>a{
+    color: #0e90d2;
+  }
+  .am-nav>li>a:hover{
+    background-color: #eef1f6;
+    color: #333333;
+  }
+  .am-nav-tabs>li.am-active>a:hover{
+    background-color: #fff;
+    color: #0e90d2;
+  }
+</style>
 
 <script>
   import io from '../../lib/io'

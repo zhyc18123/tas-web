@@ -69,6 +69,14 @@
                 label="姓名"
                 min-width="100">
               </el-table-column>
+              <el-table-column
+                label="职能"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.accessType == 0 ? '任课老师' : '班主任' }}
+                </template>
+              </el-table-column>
+
 
               <el-table-column
                 prop="idNo"

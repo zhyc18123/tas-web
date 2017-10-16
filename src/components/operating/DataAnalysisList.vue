@@ -7,13 +7,16 @@
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group tpl-table-list-select">
-                <div class="am-form-group">
-                  <select2  required v-model="areaTeamId" :options="areaTeams">
-                    <option value="">请选择区域</option>
-                  </select2>
-                </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="padding-left: 0">
+              <div class="am-form-group">
+                <el-select v-model="areaTeamId" placeholder="请选择">
+                  <el-option
+                    v-for="item in areaTeams"
+                    :key="item.areaTeamId"
+                    :label="item.name"
+                    :value="item.areaTeamId">
+                  </el-option>
+                </el-select>
               </div>
             </div>
             <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">-->
@@ -25,20 +28,20 @@
             <!--</div>-->
           </div>
           <div class="am-u-sm-12 am-form-group">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">
-              <el-menu-item index="/main/operating/dataAnalysis/list/basicData">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/problemWarning">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/problemWarning">财务预警</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/fullClassRate">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>
-              </el-menu-item>
-              <el-menu-item index="/main/operating/dataAnalysis/list/subjectCompleteRate">
-                <router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>
-              </el-menu-item>
-            </el-menu>
+            <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">-->
+              <!--<el-menu-item  v-if="hasPermission('basicData')"index="/main/operating/dataAnalysis/list/basicData?type=basic" >-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item  v-if="hasPermission('problemWarning')" index="/main/operating/dataAnalysis/list/basicData?type=problemWarning">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/problemWarning">财务预警</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item v-if="hasPermission('fullClassRate')"  index="/main/operating/dataAnalysis/list/basicData?type=fullClassRate">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>-->
+              <!--</el-menu-item>-->
+              <!--<el-menu-item v-if="hasPermission('subjectCompleteRate')" index="/main/operating/dataAnalysis/list/basicData?type=subjectCompleteRate">-->
+                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>-->
+              <!--</el-menu-item>-->
+            <!--</el-menu>-->
             <router-view :areaTeamId="areaTeamId"></router-view>
           </div>
         </div>
@@ -55,7 +58,6 @@
       return {
         activeIndex: '/main/operating/dataAnalysis/list/basicData',
         areaTeamId : '',
-        areaTeams : [],
       }
     },
     mounted:function(){
@@ -64,7 +66,15 @@
       // 基于准备好的dom，初始化echarts实例
     },
     created:function(){
-      this.getAreaTeamList();
+      if (window.config.areaTeams) {
+        this.areaTeamId = window.config.areaTeams[0].areaTeamId
+      }
+//      this.getAreaTeamList();
+    },
+    computed: {
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
+      },
     },
     methods:{
       search:function(){

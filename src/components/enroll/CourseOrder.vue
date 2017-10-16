@@ -260,9 +260,9 @@
               }else{
                 _this.$alert("缴费成功")
               }
+              _this.$refs.win.close()
               _this.$root.$emit('order:new')
               _this.$emit('completed')
-              _this.$refs.win.close()
 
             } else {
               _this.$alert( ret.desc || "缴费失败")

@@ -4,7 +4,7 @@
       <div class="head-opt">
         <el-button-group>
           <el-button @click="active = 1" :class="{'el-button el-button--primary': active === 1}">业务组</el-button>
-          <el-button @click="active = 0" :class="{'el-button el-button--primary': active === 0}">产品线</el-button>
+          <el-button v-if="hasPermission('warningProduct')" @click="active = 0" :class="{'el-button el-button--primary': active === 0}">产品线</el-button>
         </el-button-group>
         <date-picker v-model="year" >
           <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >

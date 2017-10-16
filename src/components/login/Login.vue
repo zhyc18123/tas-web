@@ -9,11 +9,11 @@
             <input type="text" class="tpl-form-input"  placeholder="请输入账号" v-model="formData.username" @blur="checkNeedCaptcha">
           </div>
           <div class="am-form-group">
-            <input type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
+            <input @keyup.enter="login" type="password" class="tpl-form-input"  placeholder="请输入密码" v-model="formData.password" >
           </div>
           <div class="am-form-group am-g-collapse" v-if="showCaptchaCode">
             <div class="am-u-sm-8">
-              <input type="text" class="tpl-form-input"  placeholder="请输入验证码" v-model="formData.captchaCode" >
+              <input @keyup.enter="login" type="text" class="tpl-form-input"  placeholder="请输入验证码" v-model="formData.captchaCode" >
             </div>
             <div class="am-u-sm-4 tpl-captcha-code">
               <img :src="captchaCodeUrl" @click="refreshCaptchaCode"/>
@@ -59,15 +59,13 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
           }
         },
         created:function(){
-          var loginInfo  = storage.getLogin()
-          if(loginInfo){
-            this.rememberMe = loginInfo.rememberMe
-            if(this.rememberMe == true ){
-              this.formData.username = loginInfo.username
-              this.formData.password = PASSWORD_PLACEHOLDER
-              this.localPassword = loginInfo.password
-              this.formData.captchaCode = loginInfo.captchaCode
-            }
+          var info  = storage.getRememberMe()
+          if(info && info.username && info.password){
+            this.formData.username = info.username
+            this.formData.password = PASSWORD_PLACEHOLDER
+            this.localPassword = info.password
+          } else {
+            this.formData.password = ''
           }
         },
         methods:{
@@ -116,6 +114,11 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
                   loginAt : new Date().getTime()
                 })
                 storage.setCurrentUserInfo(ret.data.user)
+                if(_this.rememberMe === true) {
+                  storage.setRememberMe(ret.data.user)
+                } else {
+                  storage.setRememberMe(null)
+                }
                 storage.setAccessToken(ret.data.accessToken)
                 _this.$router.push('/index')
               }else{
