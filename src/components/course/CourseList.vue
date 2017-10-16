@@ -72,7 +72,9 @@
                 <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.ms-excel" style="display: none">
                 <span class="am-icon-cloud-upload"></span>批量导入</button>
 
-              <a href="http://static.yuyou100.com/course_tempalet_v6.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success "><span class="am-icon-download"></span>下载模板</a>
+              <a href="http://static.yuyou100.com/course_tempalet_v6.xls?attname=课程导入模板.xls" class="am-btn am-btn-default am-btn-success ">
+                <span class="am-icon-download"></span>下载模板
+              </a>
             </div>
           </div>
 
@@ -264,7 +266,9 @@ import Pagination from '../base/Pagination'
             var _this = this;
             var formData = new FormData();
             formData.append("file",document.getElementById('uploadFile').files[0]);
+            _this.$showLoading()
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
+              _this.$hiddenLoading()
               if (ret.ok && ret.data.success){
                 $("#courseTemplateFile").val("");
                 document.location.reload()

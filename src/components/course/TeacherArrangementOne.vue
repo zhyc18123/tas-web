@@ -81,7 +81,9 @@
           <div class="am-g am-text-left">
             <label class="am-u-sm-2">已选老师：</label>
             <div class="am-u-sm-10 am-u-sm-pull-1 am-u-end">
-              <button class="am-btn am-btn-default am-btn-sm am-margin-left-xs" v-for="(item, index) in selectedTeacher ">{{item.teacherName}}<i @click="delTeacher(index)" class="am-icon-remove"></i></button>
+              <div class="am-btn am-btn-default am-btn-sm am-margin-left-xs" v-for="(item, index) in selectedTeacher ">
+                {{item.teacherName}}<i @click="delTeacher(index)" class="am-icon-remove"></i>
+              </div>
             </div>
           </div>
 

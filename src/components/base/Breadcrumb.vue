@@ -28,3 +28,29 @@
         }
     }
 </script>
+<style lang="less" scoped>
+  .am-breadcrumb {
+    padding-top: 5px;
+    padding-bottom: 15px;
+    padding-left: 26px;
+    font-size: 12px;
+    &>li [class*=am-icon-]:before {
+      font-size: 14px;
+    }
+     &>li+li:before {
+      content: "\f105";
+       color: #666666;
+    }
+    &>li a{
+      color: #666;
+      cursor: default;
+    }
+    &>li:last-child a{
+      color: #0090c3;
+      cursor: pointer;
+    }
+    .am-icon-home:before {
+      color: #4db3ff;
+    }
+  }
+</style>
