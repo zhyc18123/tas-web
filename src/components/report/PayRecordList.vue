@@ -40,7 +40,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
               <div class="am-form-group">
                 <date-picker v-model="query.endDate" >
                   <input type="text" placeholder="请选择结束日期" data-am-datepicker readonly required >

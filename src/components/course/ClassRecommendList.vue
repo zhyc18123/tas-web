@@ -110,7 +110,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
               <div class="am-form-group">
                 <input type="text" name="className" v-model="query.className" placeholder="请输入班级名称"/>
               </div>

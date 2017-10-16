@@ -111,7 +111,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
               <div class="am-form-group">
                 <input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>
               </div>
