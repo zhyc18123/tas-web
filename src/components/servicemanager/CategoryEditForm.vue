@@ -58,7 +58,7 @@
               </div>
             </div>
 
-            <div class="am-form-group">
+      <!--      <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs" >*</span>收入类型
               </label>
@@ -70,7 +70,7 @@
                   </select>
                 </choose>
               </div>
-            </div>
+            </div>-->
           <!--  <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类属性1
@@ -164,7 +164,7 @@
       }
       this.loadCategoryData();
       this.loadFeeCategoryData();
-      this.loadIncomeCategoryData();
+      //this.loadIncomeCategoryData();
 
     },
     watch:{
@@ -251,7 +251,7 @@
           }
         })
       },*/
-      loadIncomeCategoryData: function () {
+     /* loadIncomeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllIncomeCategory, {}, function (ret) {
           if (ret.success) {
@@ -260,7 +260,7 @@
             _this.$alert(ret.desc)
           }
         })
-      },
+      },*/
       loadFeeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {

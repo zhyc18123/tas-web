@@ -61,19 +61,19 @@
               </div>
             </div>
 
-            <div class="am-form-group">
+        <!--    <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs" >*</span>收入类型
               </label>
               <div class="am-u-sm-3  input-field am-u-end">
-              <!--  <choose v-model="formData.incomeCategoryId">-->
+              &lt;!&ndash;  <choose v-model="formData.incomeCategoryId">&ndash;&gt;
                   <select v-model="formData.incomeCategoryId"　data-placeholder="收入类型" style="min-width:300px;" class="chosen-select-deselect" required>
                     <option value=""></option>
                     <option v-for="item in incomeCategories" :value="item.incomeCategoryId">{{item.name}}</option>
                   </select>
-               <!-- </choose>-->
+               &lt;!&ndash; </choose>&ndash;&gt;
               </div>
-            </div>
+            </div>-->
 
 
 
@@ -170,7 +170,7 @@
       }
       //this.loadCategoryData();
       this.loadFeeCategoryData();
-      this.loadIncomeCategoryData();
+      //this.loadIncomeCategoryData();
 
     },
     watch:{
@@ -229,11 +229,7 @@
           this.$alert('请选择成本类型')
           return
         }
-        if(!this.formData.incomeCategoryId){
-          complete.call()
-          this.$alert('请选择收入类型')
-          return
-        }
+
         io.post(io.apiAdminSaveCategory, data,
           function (ret) {
             complete.call()
@@ -250,7 +246,7 @@
             _this.$alert('请求服务器失败')
           })
       },
-      loadIncomeCategoryData: function () {
+  /*    loadIncomeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllIncomeCategory, {}, function (ret) {
           if (ret.success) {
@@ -259,7 +255,7 @@
             _this.$alert(ret.desc)
           }
         })
-      },
+      },*/
       loadFeeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {
