@@ -49,12 +49,11 @@
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本类型
               </label>
               <div class="am-u-sm-3  input-field am-u-end">
-                <choose v-model="formData.feeCategoryId">
-                  <select 　　data-placeholder="成本类型" style="min-width:300px;" class="chosen-select-deselect"  >
-                    <option value=""></option>
-                    <option v-for="item in feeCategories" :value="item.feeCategoryId">{{item.name}}</option>
-                  </select>
-                </choose>
+                <el-cascader
+                  :options="feeCategories"
+                  v-model="feeCategory"
+                  @change="handleChange">
+                </el-cascader>
               </div>
             </div>
 
@@ -144,7 +143,8 @@
         category: [],
         feeCategories:[],
         incomeCategories:[],
-        serviceCategorys:[]
+        serviceCategorys:[],
+        feeCategory:[]
       }
     },
 
@@ -157,6 +157,12 @@
             if (ret.success) {
               _this.formData = ret.data
             }
+            if (_this.formData.parentFeeCategoryId) {
+              _this.feeCategory = [_this.formData.parentFeeCategoryId, _this.formData.feeCategoryId]
+            } else {
+              _this.feeCategory = [_this.formData.feeCategoryId]
+            }
+
           },
           function () {
             _this.$alert('请求服务器失败')
@@ -222,6 +228,14 @@
           _this.formData.categoryId = _categoryId;
           _this.formData.parentId = _parentId;
         }
+        if(!this.feeCategory){
+          complete.call()
+          this.$alert('请选择成本类型')
+          return
+        } else {
+          this.formData.feeCategoryId = this.feeCategory[this.feeCategory.length -1]
+        }
+
         var data = _this.formData
         io.post(io.apiAdminEditCategory, data,
           function (ret) {
@@ -263,7 +277,7 @@
       },*/
       loadFeeCategoryData: function () {
         var _this = this
-        io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {
+        io.post(io.apiAdminSettlementFeeCategoryTreeMap, {}, function (ret) {
           if (ret.success) {
             _this.feeCategories = ret.data
           } else {
