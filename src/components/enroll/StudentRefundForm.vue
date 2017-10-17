@@ -96,6 +96,18 @@
           </td>
         </tr>
 
+        <tr>
+          <td class="bgColor">退费原因</td>
+          <td colspan="7">
+
+              <input  class="refundWidth"   v-model="formData.description">
+
+          </td>
+        </tr>
+
+
+
+
         <template v-if="formData.refundWay == 4 ">
         <tr>
           <td class="bgColor">转账银行</td>
@@ -132,6 +144,9 @@
   .bgColor {
     background-color: #eee;
     text-align: center;
+  }
+  .refundWidth {
+     width: 50%;
   }
 </style>
 
