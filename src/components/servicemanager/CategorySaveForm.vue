@@ -47,19 +47,33 @@
 
 
 
+          <!--  <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本类型
+              </label>
+              <div class="am-u-sm-3  input-field am-u-end">
+              &lt;!&ndash;  <choose v-model="formData.feeCategoryId">&ndash;&gt;
+                  <select 　 v-model="formData.feeCategoryId"　data-placeholder="成本类型" style="min-width:300px;" class="chosen-select-deselect"  required>
+                    <option value=""></option>
+                    <option v-for="item in feeCategories" :value="item.feeCategoryId">{{item.name}}</option>
+                  </select>
+              &lt;!&ndash;  </choose>&ndash;&gt;
+              </div>
+            </div>-->
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本类型
               </label>
               <div class="am-u-sm-3  input-field am-u-end">
-              <!--  <choose v-model="formData.feeCategoryId">-->
-                  <select 　 v-model="formData.feeCategoryId"　data-placeholder="成本类型" style="min-width:300px;" class="chosen-select-deselect"  required>
-                    <option value=""></option>
-                    <option v-for="item in feeCategories" :value="item.feeCategoryId">{{item.name}}</option>
-                  </select>
-              <!--  </choose>-->
+                <el-cascader
+                  :options="feeCategories"
+                  v-model="feeCategory"
+                  @change="handleChange">
+                </el-cascader>
               </div>
             </div>
+
 
         <!--    <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
@@ -150,7 +164,8 @@
         category: [],
         feeCategories:[],
         incomeCategories:[],
-        serviceCategorys:[]
+        serviceCategorys:[],
+        feeCategory:[]
       }
     },
 
@@ -224,11 +239,21 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
+        if(!this.feeCategory){
+          complete.call()
+          this.$alert('请选择成本类型')
+          return
+        } else {
+          this.formData.feeCategoryId = this.feeCategory[this.feeCategory.length -1]
+        }
         if(!this.formData.feeCategoryId){
           complete.call()
           this.$alert('请选择成本类型')
           return
         }
+
+
+
 
         io.post(io.apiAdminSaveCategory, data,
           function (ret) {
@@ -256,7 +281,7 @@
           }
         })
       },*/
-      loadFeeCategoryData: function () {
+    /*  loadFeeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {
           if (ret.success) {
@@ -265,8 +290,17 @@
             _this.$alert(ret.desc)
           }
         })
+      },*/
+      loadFeeCategoryData: function () {
+        var _this = this
+        io.post(io.apiAdminSettlementFeeCategoryTreeMap, {}, function (ret) {
+          if (ret.success) {
+            _this.feeCategories = ret.data
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
-
 
       loadCategoryData:function() {
         var _this = this
