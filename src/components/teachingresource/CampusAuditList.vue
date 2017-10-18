@@ -108,7 +108,7 @@
             fixed
             type="index"
             label="序号"
-            min-width="100">
+            width="60">
           </el-table-column>
           <el-table-column
             prop="campusName"

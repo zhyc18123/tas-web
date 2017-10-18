@@ -6,58 +6,7 @@
           <div class="widget-title am-fl">年级科目统计</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-form-group" style="line-height: 38px;">
-            <div class="am-u-sm-12">
-              <div style="float: left">
-                <el-select v-model="formData.areaTeamId" placeholder="请选择区域">
-                  <el-option
-                    v-for="item in areaTeams"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div style="float: left">
-                <el-select v-model="formData.gradeId" placeholder="请选择年级">
-                  <el-option
-                    v-for="item in grades"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div style="float: left">
-                <el-select v-model="formData.subjectId" placeholder="请选择科目">
-                  <el-option
-                    v-for="item in subjects"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="am-u-md-2">
-                <div class="am-form-group">
-                  <date-picker v-model="formData.startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-
-              <div class="am-u-md-2" style="float: left">
-                <div class="am-form-group">
-                  <date-picker v-model="formData.endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
         </div>
         <div class="am-form-group">
           <div class="am-u-sm-12">
@@ -111,8 +60,8 @@
                 width="100">
                 <template scope="scope">
                   <router-link :to="'/main/operating/gradeSubjectStatistics/costIncomeList?gradeId=' +
-                     scope.row.gradeId + '&subjectId=' + scope.row.subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + formData.areaTeamId +
-                      '&startDate=' + formData.startDate+ '&endDate=' + formData.endDate + '&activeName=cost'" tag="a">详情</router-link>
+                     gradeId + '&subjectId=' + subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + areaTeamId +
+                      '&startDate=' + startDate+ '&endDate=' + endDate + '&activeName=cost'" tag="a">详情</router-link>
                 </template>
               </el-table-column>
             </el-table>
@@ -125,77 +74,58 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         formData: {
-          startDate: moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD'),
-          endDate: moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD'),
-          areaTeamId: '',
-          gradeId: '31',
+          gradeId: '',
           subjectId: '',
+          areaTeamId: '',
+          startDate: '',
+          endDate: '',
         },
         areaTeams: '',
-        tableData: [
-          {
-            name: '广州区域',
-            cost: '',
-            income: '',
-            profits: '',
-          }
-        ],
+        tableData: [],
       }
     },
-//    components: {
-//      Pagination
-//    },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
-      this.getAreaTeamList();
-      this.loadTableData();
     },
     computed: {
-      grades () {
-        return [{value: '', label: '全部'}].concat(
-          this.$root.config.grades.map(function(item){
-            return {value: item.gradeId, label: item.gradeName}
-          })
-        )
+      gradeId: function () {
+        return this.$refs.toolbar.gradeId
       },
-      subjects () {
-        return [{value: '', label: '全部'}].concat(
-          this.$root.config.subjects.map(function(item){
-            return {value: item.subjectId, label: item.subjectName}
-          })
-        )
+      subjectId: function () {
+        return this.$refs.toolbar.subjectId
+      },
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
       }
     },
+    components: {
+    	Toolbar
+    },
     methods:{
-      handleSearch() {
-        this.loadTableData()
+      handleSearch(data) {
+        this.loadTableData(data)
       },
-      getAreaTeamList: function () {
-        var _this = this;
-        io.post(io.apiAdminAreaTeamList,{
-        },function(ret){
-          if(ret.success){
-            _this.areaTeams = []
-            ret.data.list.map(function (item) {
-              _this.areaTeams.push({value: item.areaTeamId, label: item.name})
-            })
-            _this.areaTeamId = _this.areaTeams[0].value
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+      initList(data) {
+        this.loadTableData(data);
       },
-      loadTableData:function(){
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.areaTeamGradeAndSubjectStatistics,this.formData,function(ret){
+        io.post(io.areaTeamGradeAndSubjectStatistics,Object.assign({},_this.formData,data),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data

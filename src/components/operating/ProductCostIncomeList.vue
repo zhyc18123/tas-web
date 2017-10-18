@@ -8,34 +8,7 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.push('/main/operating/productStatistics/list')">返回</button>
           </div>
         </div>
-        <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
-          <div class="am-u-sm-12">
-            <choose class="main-account-select" v-model="productId">
-              <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
-                <option value=""></option>
-                <option v-for="item in products" :value="item.productId">{{item.name}}</option>
-              </select>
-            </choose>
-            <div class="am-u-md-2">
-              <div class="am-form-group">
-                <date-picker v-model="startDate">
-                  <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                </date-picker>
-              </div>
-            </div>
-
-            <div class="am-u-md-2" style="float: left">
-              <div class="am-form-group">
-                <date-picker v-model="endDate">
-                  <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                </date-picker>
-              </div>
-            </div>
-            <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-              <span class="am-icon-search"></span>搜索
-            </button>
-          </div>
-        </div>
+        <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
         <div style="clear: both">
           <el-tabs v-model="activeName" @tab-click="handleTabClick"  type="card">
             <el-tab-pane label="成本" name="cost">
@@ -153,48 +126,44 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         feeCategories: [],
         name: '',
-        productId: '',
-        products: '',
-        startDate:　'',
-        endDate: '',
         formData: {
           feeCategoryId: ''
         },
-        tableData:[
-          {
-            name: '校园成本',
-            totalAmount: 100,
-            to: '01',
-          }
-        ],
-        tableData2:[
-          {
-            name: '校园成本',
-            totalAmount: 200,
-            to: '01',
-          }
-        ],
+        tableData:[],
+        tableData2:[],
         activeName: 'cost',
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    components: {
+      Toolbar
+    },
     created:function(){
       this.name = this.$route.query.name
-      this.productId = this.$route.query.productId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
       this.activeName = this.$route.query.activeName || 'cost'
-      this.loadProductsList();
-      this.loadTableData();
-      this.loadTableData2();
+    },
+    computed: {
+      productId: function () {
+        return this.$refs.toolbar.productId
+      },
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
+      }
     },
     methods:{
       handleTabClick(val) {
@@ -204,28 +173,18 @@
           this.$router.push(this.$route.fullPath.replace('&activeName=income','&activeName=cost'))
         }
       },
-      handleSearch() {
-        this.loadTableData()
-        this.loadTableData2()
+      handleSearch(data) {
+        this.loadTableData(data)
+        this.loadTableData2(data)
       },
-      loadProductsList:function(){
-        var _this = this
-        io.post(io.apiAdminBaseProductList,{},function(ret){
-          if(ret.success){
-            _this.products = ret.data;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+      initList(data) {
+        this.loadTableData(data);
+        this.loadTableData2(data)
       },
-      loadTableData2:function(){
+      loadTableData2:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.productIncomeList,{
-          productId: _this.productId,
-          startDate: _this.startDate,
-          endDate: _this.endDate,
-        },function(ret){
+        io.post(io.productIncomeList,data,function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData2 = ret.data
@@ -234,14 +193,10 @@
           }
         })
       },
-      loadTableData:function(){
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.productStatisticsByCategory,{
-          productId: _this.productId,
-          startDate: _this.startDate,
-          endDate: _this.endDate,
-        },function(ret){
+        io.post(io.productStatisticsByCategory,data,function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data

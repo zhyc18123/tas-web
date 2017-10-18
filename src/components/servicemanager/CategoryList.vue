@@ -57,7 +57,7 @@
               </el-table-column>
 
               <el-table-column label="成本类型" min-width="100">
-                <template scope="scope">{{scope.row.feeCategoryName}}</template>
+                <template scope="scope">{{(scope.row.parentFeeCategoryName==null?"":scope.row.parentFeeCategoryName+"/")+scope.row.feeCategoryName}}</template>
               </el-table-column>
            <!--   <el-table-column label="收入类型" min-width="100">
                 <template scope="scope">{{scope.row.incomeCategoryName}}</template>

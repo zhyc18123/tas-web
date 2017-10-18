@@ -342,6 +342,7 @@ const router = new VueRouter({
       {path: 'operating/productStatistics/costIncomeList' , component: ProductCostIncomeList},
       {path: 'operating/productStatistics/costDetail' , component: ProductCostDetail},
       {path: 'operating/productStatistics/incomeDetail' , component: ProductIncomeDetail},
+      {path: 'operating/productStatistics/subDetail' , component: SubDetail},
       {path: 'operating/gradeSubjectStatistics/list' , component: GradeSubjectStatisticsList},
       {path: 'operating/gradeSubjectStatistics/costIncomeList' , component: GradeSubjectCostIncomeList},
       {path: 'operating/gradeSubjectStatistics/costDetail' , component: GradeSubjectCostDetail},

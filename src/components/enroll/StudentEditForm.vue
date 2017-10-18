@@ -50,7 +50,7 @@
           <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>就读学校
         </label>
         <div class="am-u-sm-6 input-field">
-          <input type="text" placeholder="就读学校"  required  v-model="formData.school"  readonly>
+          <input ref="schoolInput" type="text" placeholder="就读学校"  required  v-model="formData.school"  readonly>
         </div>
         <div class="am-u-sm-3">
           <button type="button" class="am-btn am-btn-default" @click="$refs.selectStudentSchool.show()">选择</button>
@@ -200,6 +200,7 @@
     },
     mounted:function(){
       var _this = this ;
+      debugger
       $('#' + this.id ).validator({
         validate:function(validity){
 
@@ -273,6 +274,7 @@
       },
       selectStudentSchool:function (studentSchool) {
         this.formData.school =  studentSchool.schoolName
+        $(this.$refs.schoolInput).removeClass('am-field-error').closest('.input-field').find('.am-alert').hide();
       },
       selectReferrer:function(student){
         this.formData.referrerId = student.studentId

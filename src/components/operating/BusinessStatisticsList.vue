@@ -75,8 +75,9 @@
                   label="操作"
                   width="100">
                   <template scope="scope">
-                    <router-link :to="'/main/operating/businessStatistics/costIncomeList?mainAccountId=' +
-                     scope.row.mainAcoountId + '&name=' + scope.row.name + '&startDate=' + formData.startDate+
+                    <router-link :to="'/main/operating/businessStatistics/costIncomeList?busTeamId=' +
+                     scope.row.mainAcoountId+ '&areaTeamId=' +scope.row.parentMainAccountId +
+                      '&name=' + scope.row.name + '&startDate=' + formData.startDate+
                      '&endDate=' + formData.endDate + '&activeName=cost'" tag="a">详情</router-link>
                   </template>
                 </el-table-column>

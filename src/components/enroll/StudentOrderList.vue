@@ -109,6 +109,7 @@
   export default{
     data : function () {
       return{
+        courseOrderId: '',
         tableData:[],
         total: 0,
         pageSize: 10,
@@ -176,6 +177,7 @@
 
       },
       printCert:function(courseOrderId){
+        this.courseOrderId = courseOrderId
         $('#certIframe').html('<iframe height="100%" src="./static/cert/index.html?courseOrderId='+courseOrderId+'" width="100%" frameborder="0"></iframe>')
         this.$refs.cert.show({
           width:1050,
@@ -184,8 +186,18 @@
       },
       confirmPrint:function(){
         var frame = $("#certIframe iframe")[0];
-        frame.contentWindow.focus()
-        frame.contentWindow.print();
+        var _this = this;
+        io.post(io.apiAdminStudentClassCertDetail,{
+          courseOrderId:this.courseOrderId
+        },function(ret){
+          if(ret.success){
+            frame.contentWindow.focus()
+            frame.contentWindow.print(ret.data);
+            _this.$refs.cert.close()
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
       }
 
 
