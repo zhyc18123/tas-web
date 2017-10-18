@@ -3,6 +3,11 @@
 <head>
     <title>誉优品学</title>
     <link rel="stylesheet" href="css/common.css">
+  <script language="javascript" src="./js/CLodopFuncs.js"></script>
+  <script language="javascript" src="./js/LodopFuncs.js"></script>
+    <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+      <embed id="LODOP_EM" type="application/x-print-lodop"  width=0 height=0 />
+    </object>
   <style>
 
     @media print {
@@ -22,33 +27,28 @@
 
 <body>
     <div class="J_printArea">
-        <div class="p_background"><img src="images/background.png" alt=""></div>
         <div class="p_foreground">
             <div class="f_left">
 
                 <div class="l_header clearfix">
-                    <div class="h_left"><img src="images/logo.png" alt=""></div>
 
                     <div class="h_right">
                         <div class="r_type">
-                            <span>报名方式：</span> <span id="regFrom"></span>
+                             <span id="regFrom"></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="l_certificate">
                     <div class="c_txt">
-                        <img src="images/certificate.png" alt="">
                     </div>
                 </div>
 
                 <div class="l_voucher">
                     <div class="v_item">
-                        <div class="i_title">学生编号：</div>
                         <div class="i_txt" id="studentNo"></div>
                     </div>
                     <div class="v_item ml160">
-                        <div class="i_title">学生姓名：</div>
                         <div class="i_txt" id="studentName"></div>
                     </div>
                 </div>
@@ -57,13 +57,13 @@
                     <table>
                         <thead>
                             <tr>
-                                <td><div><img src="images/dot_blue.png" /><span>校区</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>年级</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>班别</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>课室</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>起止讲数</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>上课时间</span></div></td>
-                                <td><div><img src="images/dot_blue.png" /><span>上课日期</span></div></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         </thead>
                         <tbody id ="courseList">
@@ -83,13 +83,11 @@
                 <div class="l_details clearfix">
                     <div class="d_left">
                         <div class="l_item">
-                            <div class="i_title">校区地址：</div>
                             <div class="i_txt" id="campusName"></div>
                         </div>
                     </div>
                     <div class="d_right">
                         <div class="r_item">
-                            <div class="i_title">联系电话：</div>
                             <div class="i_txt" id="campusPhoneNo">
                                 <span></span>
                             </div>
@@ -103,20 +101,15 @@
                     <div class="r_left">
                         <div class="l_list">
                             <div class="l_item">
-                                <div class="i_title">操作员：</div>
                                 <div class="i_txt" id="principal"></div>
                             </div>
                             <div class="l_item">
-                                <div class="i_title">打印日期：</div>
                                 <div class="i_txt" id="now"></div>
                             </div>
                         </div>
-                        <div class="l_tips">温馨提示：请同学们自行保管好财物及交通工具，校区不负保管责任。</div>
                     </div>
                     <div class="r_right">
                         <div class="r_qrcode">
-                            <img src="images/qrcode.png" alt="" />
-                            <p>誉优品学公众号</p>
                         </div>
                     </div>
                 </div>
@@ -126,34 +119,27 @@
 
             </div>
             <div class="f_right">
-                <div class="r_title">收款凭证</div>
                 <div class="r_list">
                     <div class="l_item">
-                        <div class="i_title">学生编号：</div>
                         <div class="i_txt" id="studentNo2"></div>
                     </div>
                     <div class="l_item">
-                        <div class="i_title">总金额：</div>
                         <div class="i_txt" id="totalAmount"></div>
                     </div>
 
                     <div class="l_item">
-                        <div class="i_title">优惠金额：</div>
                         <div class="i_txt" id="discountAmount"></div>
                     </div>
 
                     <div class="l_item">
-                        <div class="i_title">应收金额：</div>
                         <div class="i_txt" id="payableAmount"></div>
                     </div>
 
                     <div class="l_item">
-                        <div class="i_title">已付款金额：</div>
                         <div class="i_txt" id="paidAmount"></div>
                     </div>
 
                     <div class="l_item">
-                        <div class="i_title">欠费金额：</div>
                         <div class="i_txt" id="owingAmount"></div>
                     </div>
 
@@ -164,7 +150,6 @@
                         <div class="i_txt"></div>
                     </div>-->
                     <div class="l_item">
-                        <div class="i_title">缴费日期：</div>
                         <div class="i_txt" id="courseOrderUpdate"></div>
                     </div>
                 </div>
@@ -177,7 +162,7 @@
     <script src="https://cdn.bootcss.com/moment.js/2.18.0/moment.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.18.0/locale/zh-cn.js"></script>
     <script>
-
+      var LODOP
       function getQueryString (name){
         var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
         if(r) {
@@ -194,8 +179,81 @@
         return moment(time).format(format || 'YYYY-MM-DD')
       }
 
-      function fillData(data){
+      function print(data) {
+      	debugger
+        CreatePrintPage(data)
+        LODOP.PRINT();
+      }
 
+      function CreatePrintPage(data) {
+      	debugger
+        LODOP = getLodop();
+        LODOP.SET_PRINT_PAGESIZE (2, 0, 0,"A5");
+        var totalAmount= data.courseOrder.totalAmount,
+          discountAmount= data.courseOrder.totalAmount - data.courseOrder.payableAmount,
+          payableAmount= data.courseOrder.payableAmount,
+          paidAmount= data.courseOrder.paidAmount,
+          owingAmount= data.courseOrder.payableAmount - data.courseOrder.paidAmount,
+          courseOrderUpdate= formatDate ( data.courseOrder.updateTime),
+          principal= data.principal,
+          operateDate= moment().format('YYYY-MM-DD H:mm:ss'),
+          regFrom= data.courseOrder.regFrom == 0 ? '线下' :'线上',
+          studentNo= data.student.studentNo,
+          studentName= data.student.name,
+          address= data.campus.address,
+          operator= data.principal,
+          phoneNo = data.campus.phoneNo;
+          campusPhoneNo= data.campus.phoneNo;
+        LODOP.ADD_PRINT_TEXT(35,280,130,25,"报名方式：" + regFrom);//报名方式
+        LODOP.ADD_PRINT_TEXT(108,39,130,25,"欠费金额：" + owingAmount);//欠费金额
+        //学生编号
+        LODOP.ADD_PRINT_TEXT(110,239,90,25,studentNo);//Top、Left、Width、Height
+        //学生姓名
+        LODOP.ADD_PRINT_TEXT(108,440,100,25,studentName);
+        LODOP.ADD_PRINT_TEXT(75,700,70,25,studentNo);//学生编号
+        LODOP.ADD_PRINT_TEXT(115,700,70,25,studentName);//学生姓名
+        LODOP.ADD_PRINT_TEXT(145,700,70,25,totalAmount);//总金额
+        LODOP.ADD_PRINT_TEXT(190,700,70,25,discountAmount);//优惠金额
+        LODOP.ADD_PRINT_TEXT(270,700,70,25,payableAmount);//实收金额
+        LODOP.ADD_PRINT_TEXT(235,700,70,25,0.00);//使用账户金额
+        LODOP.ADD_PRINT_TEXT(325,700,70,25,0.00);//现金金额
+        LODOP.ADD_PRINT_TEXT(365,700,70,25,0.00);//pos
+        LODOP.ADD_PRINT_TEXT(405,700,70,25,0.00);//代金券
+        LODOP.ADD_PRINT_TEXT(465,700,70,25,operateDate); // 操作时间
+        LODOP.ADD_PRINT_TEXT(452,700,70,25,operator); // 操作人员
+        //LODOP.ADD_PRINT_TEXT(502,700,70,25,"报名方式：前台报名");//报名方式
+        //20161104 新增收费金额
+        LODOP.ADD_PRINT_TEXT(85,39,130,25,"收费金额：" + paidAmount);//收费金额
+        var totalRM = "0.0" || 0.00;
+        LODOP.ADD_PRINT_TEXT(85,149,130,25,"已退金额：" + totalRM);//已退金额
+
+        for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
+          var c  = data.regDetailVos[i]
+          LODOP.ADD_PRINT_TEXT(165+30*i,17,72,80,c.courseClass.campusName);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,84,50,80,c.courseClass.gradeName);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,115,150,80, c.courseClass.className);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,270,50,80,c.courseClass.roomName);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,345,80,80,c.studentReg.startAmount+"—"+c.studentReg.endAmount);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.classDateTip + ' ' + c.courseClass.studyingTime);
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+          LODOP.ADD_PRINT_TEXT(165+30*i,530,200,80,formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ) );//报名日期(星期)
+          LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+        }
+
+        LODOP.ADD_PRINT_TEXT(385,115,310,30,address);
+        LODOP.ADD_PRINT_TEXT(420,115,310,30,phoneNo);
+        LODOP.ADD_PRINT_TEXT(445,100,310,30,operator);//todo 操作员
+        LODOP.ADD_PRINT_TEXT(465,100,240,30,operateDate);//todo 打印日期
+        LODOP.PREVIEW();
+      };
+
+      function fillData(data){
+        var LODOP=getLodop();
         function str(s){
           return s ? s : ''
         }
@@ -246,6 +304,20 @@
       })
 
 
+    </script>
+    <script language="javascript" type="text/javascript">
+      function CheckIsInstall() {
+        try{
+          if (LODOP.VERSION) {
+            if (LODOP.CVERSION)
+              alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
+            else
+              alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION);
+
+          };
+        }catch(err){
+        }
+      };
     </script>
 
 
