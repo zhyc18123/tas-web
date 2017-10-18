@@ -9,33 +9,7 @@
           </div>
         </div>
         <div class="widget-body">
-          <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
-            <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="productStatistics">
-                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.productStatistics">{{item.name}}</option>
-                </select>
-              </choose>
-              <div class="am-u-md-2">
-                <div class="am-form-group">
-                  <date-picker v-model="startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <div class="am-u-md-2" style="float: left">
-                <div class="am-form-group">
-                  <date-picker v-model="endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
           <div v-if="detailType === '6'" class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -172,63 +146,59 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         name: '',
-        detailType: '6',
+        detailType: '',
         productStatistics: '',
-        mainAccounts: [],
-        startDate: '',
-        endDate: '',
         incomeCategoryId: '',
-        tableData:[
-          {
-            index: 0,
-            name: '兼职',
-            price: 100,
-            to: '01',
-          }
-        ],
+        tableData:[],
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    components: {
+      Toolbar
+    },
+    computed: {
+      productId: function () {
+        return this.$refs.toolbar.productId
+      },
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
+      }
+    },
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
       this.productStatistics = this.$route.query.productStatistics
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
       this.incomeCategoryId = this.$route.query.incomeCategoryId
-      this.loadTableData();
     },
     methods:{
-      loadMainAccountList:function(){
-        var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
-          if(ret.success){
-            _this.mainAccounts = ret.data.list;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+      initList(data) {
+        this.loadTableData(data);
       },
-      handleSearch() {
-        this.loadTableData()
+      handleSearch(data) {
+        this.loadTableData(data)
       },
-      loadTableData:function(){
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.incomeDetail,{
+        io.post(io.incomeDetail,Object.assign({},{
           detailType: this.detailType,
           productStatistics: this.productStatistics,
-          startDate: this.startDate,
-          endDate: this.endDate,
           incomeCategoryId: this.incomeCategoryId,
-        },function(ret){
+        },data),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 6) {

@@ -297,7 +297,6 @@
         $('.class-item').draggable({
           handle: '.am-icon-circle'
         })
-        console.log('item',$('.class-item-wrapper'))
         $('.class-item-wrapper').droppable({
           hoverClass: 'hover',
           accept: function (el) {

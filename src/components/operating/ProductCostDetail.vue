@@ -9,34 +9,7 @@
           </div>
         </div>
         <div class="widget-body">
-          <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
-            <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="productId">
-                <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in products" :value="item.productId">{{item.name}}</option>
-                </select>
-              </choose>
-              <div class="am-u-md-2">
-                <div class="am-form-group">
-                  <date-picker v-model="startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-
-              <div class="am-u-md-2" style="float: left">
-                <div class="am-form-group">
-                  <date-picker v-model="endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
           <div v-if="detailType !== '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -70,7 +43,7 @@
                 label="操作"
                 width="100">
                 <template scope="scope">
-                  <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
+                  <router-link v-if="detailType === '1'" :to="'/main/operating/productStatistics/subDetail?detailType=' +
                        scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&productId=' + productId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">明细</router-link>
@@ -125,64 +98,56 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         name: '',
         detailType: '0',
-        productId: '',
-        products: [],
-        startDate: '',
-        endDate: '',
         feeCategoryId: '',
-        tableData:[
-          {
-            index: 0,
-            name: '兼职',
-            price: 100,
-            to: '01',
-          }
-        ],
+        tableData:[],
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    components: {
+      Toolbar
+    },
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
-      this.productId = this.$route.query.productId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
-      this.loadProductsList();
-      this.loadTableData();
+    },
+    computed: {
+      productId: function () {
+        return this.$refs.toolbar.productId
+      },
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
+      }
     },
     methods:{
-      handleSearch() {
-        this.loadTableData()
+      initList(data) {
+        this.loadTableData(data);
       },
-      loadProductsList:function(){
-        var _this = this
-        io.post(io.apiAdminBaseProductList,{},function(ret){
-          if(ret.success){
-            _this.products = ret.data;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+      handleSearch(data) {
+        this.loadTableData(data)
       },
-      loadTableData:function(){
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.productCostDetail,{
+        io.post(io.productCostDetail,Object.assign({},{
           detailType: this.detailType,
-          productId: this.productId,
-          startDate: this.startDate,
-          endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        },data),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 0) {

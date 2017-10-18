@@ -1203,7 +1203,7 @@ ol.am-breadcrumb{
   overflow: hidden;
 }
 
-.am-btn-success {
+.am-btn-success,.el-button--success {
   color: #fff;
   background-color: #01c8c0;
   border: none;
@@ -1211,7 +1211,8 @@ ol.am-breadcrumb{
   border-radius: 4px;
   font-size: 14px;
 }
-.am-btn-success:focus, .am-btn-success:hover, .am-btn-success:active {
+.am-btn-success:focus,.el-button--success:focus, .am-btn-success:hover,.el-button--success:hover,
+.am-btn-success:active ,.el-button--success:active {
   background-color: #11d2ca;
   border: none;
   outline: 0;

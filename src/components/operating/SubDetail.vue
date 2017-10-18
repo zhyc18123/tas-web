@@ -9,60 +9,7 @@
           </div>
         </div>
         <div class="widget-body">
-          <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
-            <div class="am-u-sm-12">
-              <choose v-if="mainAccountId" style="float: left" class="main-account-select" v-model="mainAccountId">
-                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
-                </select>
-              </choose>
-              <choose v-if="productId" style="float: left" class="main-account-select" v-model="productId">
-                <select required data-placeholder="产品线名称" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in products" :value="item.productId">{{item.name}}</option>
-                </select>
-              </choose>
-              <div v-if="gradeId" style="float: left">
-                <el-select v-model="gradeId" placeholder="请选择年级">
-                  <el-option
-                    v-for="item in grades"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div v-if="subjectId" style="float: left">
-                <el-select v-model="subjectId" placeholder="请选择科目">
-                  <el-option
-                    v-for="item in subjects"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value">
-                  </el-option>
-                </el-select>
-              </div>
-              <div class="am-u-md-2">
-                <div class="am-form-group">
-                  <date-picker v-model="startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-
-              <div class="am-u-md-2" style="float: left">
-                <div class="am-form-group">
-                  <date-picker v-model="endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
           <div v-if="detailType !== '2'" class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -183,107 +130,72 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         name: '',
         detailType: '0',
-        mainAccountId: '',
-        mainAccounts: [],
-        products: [],
-        startDate: '',
-        endDate: '',
-        areaTeamId: '',
         feeCategoryId: '',
-        gradeId: '',
-        subjectId: '',
-        tableData:[
-          {
-            index: 0,
-            name: '兼职',
-            price: 100,
-            to: '01',
-          }
-        ],
+        tableData:[],
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    components: {Toolbar},
     computed: {
-      grades () {
-        return this.$root.config.grades.map(function(item){
-          return {value: item.gradeId, label: item.gradeName}
-        })
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
       },
-      subjects () {
-        return this.$root.config.subjects.map(function(item){
-          return {value: item.subjectId, label: item.subjectName}
-        })
+      busTeamId: function () {
+        return this.$refs.toolbar.busTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
+      },
+      gradeId: function () {
+        return this.$refs.toolbar.gradeId
+      },
+      subjectId: function () {
+        return this.$refs.toolbar.subjectId
       }
     },
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
-      this.mainAccountId = this.$route.query.mainAccountId
-      this.productId = this.$route.query.productId
-      this.gradeId = this.$route.query.gradeId
-      this.areaTeamId = this.$route.query.areaTeamId
-      this.subjectId = this.$route.query.subjectId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
-      if(this.mainAccountId) {
-        this.loadTableData();
-        this.loadMainAccountList();
-      } else if (this.productId) {
-        this.loadProductsList();
-        this.loadProductTableData();
-      } else if (this.gradeId && this.subjectId) {
-        this.loadGradeSubjectTableData();
-      }
     },
     methods:{
-      loadMainAccountList:function(){
-        var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
-          if(ret.success){
-            _this.mainAccounts = ret.data.list;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadProductsList:function(){
-        var _this = this
-        io.post(io.apiAdminBaseProductList,{},function(ret){
-          if(ret.success){
-            _this.products = ret.data;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      handleSearch() {
-        if(this.mainAccountId) {
-          this.loadTableData();
-        } else if (this.productId) {
-          this.loadProductTableData();
-        } else if (this.gradeId && this.subjectId) {
-          this.loadGradeSubjectTableData();
+      initList(data) {
+        if(data.mainAccountId) {
+          this.loadTableData(data);
+        } else if (data.productId) {
+          this.loadProductTableData(data);
+        } else if (data.gradeId && data.subjectId) {
+          this.loadGradeSubjectTableData(data);
         }
       },
-      loadTableData:function(){
+      handleSearch(data) {
+        if(data.mainAccountId) {
+          this.loadTableData(data);
+        } else if (data.productId) {
+          this.loadProductTableData(data);
+        } else if (data.gradeId && data.subjectId) {
+          this.loadGradeSubjectTableData(data);
+        }
+      },
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.costDetail,{
+        io.post(io.costDetail,Object.assign({},data,{
           detailType: this.detailType,
-          mainAccountId: this.mainAccountId,
-          startDate: this.startDate,
-          endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 0) {
@@ -299,16 +211,13 @@
           }
         })
       },
-      loadProductTableData:function(){
+      loadProductTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.productCostDetail,{
+        io.post(io.productCostDetail,Object.assign({},data,{
           detailType: this.detailType,
-          productId: this.productId,
-          startDate: this.startDate,
-          endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 0) {
@@ -324,18 +233,13 @@
           }
         })
       },
-      loadGradeSubjectTableData:function(){
+      loadGradeSubjectTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.gradeAndSubjectDetail,{
+        io.post(io.gradeAndSubjectDetail,Object.assign({},data,{
           detailType: this.detailType,
-          gradeId: this.gradeId,
-          areaTeamId: this.areaTeamId,
-          subjectId: this.subjectId,
-          startDate: this.startDate,
-          endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 0) {

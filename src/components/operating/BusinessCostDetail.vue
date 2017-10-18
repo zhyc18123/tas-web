@@ -9,34 +9,7 @@
           </div>
         </div>
         <div class="widget-body">
-          <div class="am-form-group" style="line-height: 33px;margin-top: 13px;">
-            <div class="am-u-sm-12">
-              <choose style="float: left" class="main-account-select" v-model="mainAccountId">
-                <select required data-placeholder="主体" style="min-width:200px;" class="chosen-select">
-                  <option value=""></option>
-                  <option v-for="item in mainAccounts" :value="item.mainAccountId">{{item.name}}</option>
-                </select>
-              </choose>
-              <div class="am-u-md-2">
-                <div class="am-form-group">
-                  <date-picker v-model="startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-
-              <div class="am-u-md-2" style="float: left">
-                <div class="am-form-group">
-                  <date-picker v-model="endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
           <div v-if="detailType !== '0'" class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -65,14 +38,13 @@
                   </div>
                 </template>
               </el-table-column>
-              <!--教师成本 todo-->
               <el-table-column
                 label="操作"
                 width="100">
                 <template scope="scope">
                   <router-link v-if="detailType === '1'" :to="'/main/operating/businessStatistics/subDetail?detailType=' +
                        scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
-                       '&mainAccountId=' + mainAccountId + '&startDate=' + startDate +
+                       '&areaTeamId=' + areaTeamId + '&busTeamId=' + busTeamId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">明细</router-link>
                 </template>
               </el-table-column>
@@ -125,64 +97,54 @@
 
 <script>
   import io from '../../lib/io'
+  import Toolbar from './Toolbar.vue'
   import moment from 'moment'
   export default{
     data:function(){
       return {
         name: '',
         detailType: '0',
-        mainAccountId: '',
-        mainAccounts: [],
-        startDate: '',
-        endDate: '',
         feeCategoryId: '',
-        tableData:[
-          {
-            index: 0,
-            name: '兼职',
-            price: 100,
-            to: '01',
-          }
-        ],
+        tableData:[],
       }
     },
     mounted:function(){
       $(window).smoothScroll()
     },
+    components: {Toolbar},
     created:function(){
       this.name = this.$route.query.name
       this.detailType = this.$route.query.detailType
-      this.mainAccountId = this.$route.query.mainAccountId
-      this.startDate = this.$route.query.startDate
-      this.endDate = this.$route.query.endDate
       this.feeCategoryId = this.$route.query.feeCategoryId
-      this.loadMainAccountList();
-      this.loadTableData();
+    },
+    computed: {
+      areaTeamId: function () {
+        return this.$refs.toolbar.areaTeamId
+      },
+      busTeamId: function () {
+        return this.$refs.toolbar.busTeamId
+      },
+      startDate: function () {
+        return this.$refs.toolbar.startDate
+      },
+      endDate: function () {
+        return this.$refs.toolbar.endDate
+      }
     },
     methods:{
-      handleSearch() {
-        this.loadTableData()
+      handleSearch(data) {
+        this.loadTableData(data)
       },
-      loadMainAccountList:function(){
-        var _this = this
-        io.post(io.apiAdminSettlementMainAccountList,{},function(ret){
-          if(ret.success){
-            _this.mainAccounts = ret.data.list;
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+      initList(data) {
+        this.loadTableData(data);
       },
-      loadTableData:function(){
+      loadTableData:function(data){
         var _this = this;
         _this.$showLoading()
-        io.post(io.costDetail,{
+        io.post(io.costDetail,Object.assign({},data,{
           detailType: this.detailType,
-          mainAccountId: this.mainAccountId,
-          startDate: this.startDate,
-          endDate: this.endDate,
           feeCategoryId: this.feeCategoryId,
-        },function(ret){
+        }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             if (_this.detailType == 0) {
@@ -195,6 +157,7 @@
 
           }else{
             _this.$alert(ret.desc)
+            _this.$hiddenLoading()
           }
         })
       }
