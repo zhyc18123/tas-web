@@ -81,20 +81,6 @@
         </div>
       </div>
 
-      <div class="am-form-group">
-        <label class="am-u-sm-3 am-form-label">
-          学生标签
-         </label>
-        <div class="am-u-sm-9  input-field">
-          <choose v-model="formData.tags">
-            <select required data-placeholder="选择学生标签" style="min-width:300px;" multiple class="chosen-select-no-results">
-              <option value=""></option>
-              <option v-for="item in tags" :value="item">{{item}}</option>
-            </select>
-          </choose>
-        </div>
-      </div>
-
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
