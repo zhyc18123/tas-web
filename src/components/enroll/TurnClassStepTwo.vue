@@ -222,6 +222,7 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
+        debugger
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,

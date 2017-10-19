@@ -192,10 +192,17 @@
         if(!data.areaTeamId){
         	return
         }
+        if(!data.subjectId){
+          this.$alert('科目为必选！')
+          return
+        }
         _this.$showLoading()
         io.post(io.gradeAndSubjectIncome,Object.assign({},_this.formData,data),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
+          	if (_this.$root.config.subjects.filter(item => item.subjectId === data.subjectId)) {
+              _this.name = _this.$root.config.subjects.filter(item => item.subjectId === data.subjectId)[0].subjectName
+            }
             _this.tableData2 = ret.data
           }else{
             _this.$alert(ret.desc)
@@ -205,6 +212,10 @@
       loadTableData:function(data){
         var _this = this;
         if(!data.areaTeamId){
+          return
+        }
+        if(!data.subjectId){
+          this.$alert('科目为必选！')
         	return
         }
         _this.$showLoading()

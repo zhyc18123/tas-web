@@ -196,6 +196,13 @@
       },
       loadTableData:function(data){
         var _this = this;
+        if(!data.areaTeamId){
+          return
+        }
+        if(!data.subjectId){
+          this.$alert('科目为必选！')
+          return
+        }
         _this.$showLoading()
         io.post(io.incomeDetail,Object.assign({},data,{
           detailType: _this.detailType,
@@ -204,6 +211,9 @@
         }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
+            if (_this.$root.config.subjects.filter(item => item.subjectId === data.subjectId) &&  _this.name.split('-')[1]) {
+              _this.name = _this.$root.config.subjects.filter(item => item.subjectId === data.subjectId)[0].subjectName + '-' + _this.name.split('-')[1]
+            }
             if (_this.detailType == 6) {
               _this.tableData = ret.data.changeRecordList
             } else if (_this.detailType == 7) {

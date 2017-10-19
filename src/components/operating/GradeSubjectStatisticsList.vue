@@ -60,7 +60,7 @@
                 width="100">
                 <template scope="scope">
                   <router-link :to="'/main/operating/gradeSubjectStatistics/costIncomeList?gradeId=' +
-                     gradeId + '&subjectId=' + subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + areaTeamId +
+                     scope.row.gradeId + '&subjectId=' + scope.row.subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + areaTeamId +
                       '&startDate=' + startDate+ '&endDate=' + endDate + '&activeName=cost'" tag="a">详情</router-link>
                 </template>
               </el-table-column>

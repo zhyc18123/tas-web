@@ -32,25 +32,36 @@
 
                 <div class="l_header clearfix">
 
-                    <div class="h_right">
+                    <div class="h_center">
                         <div class="r_type">
-                             <span id="regFrom"></span>
+                          报名方式：<span id="regFrom"></span>
                         </div>
                     </div>
                 </div>
 
-                <div class="l_certificate">
-                    <div class="c_txt">
-                    </div>
+              <div class="l_voucher" style="margin-top: 0px;margin-bottom: -24px;">
+                <div class="v_item">
+                  <div class="c_txt">
+                    <div class="i_txt">收费金额：<span id="totalAmount2"></span></div>
+                  </div>
                 </div>
+                <div class="v_item ml50">
+                  <div class="i_txt">已退金额：<span id="">0.00</span></div>
+                </div>
+              </div>
 
                 <div class="l_voucher">
                     <div class="v_item">
-                        <div class="i_txt" id="studentNo"></div>
+                      <span>欠费金额：</span>
+                        <div id="owingAmount2" class="i_txt">
+                        </div>
                     </div>
                     <div class="v_item ml160">
-                        <div class="i_txt" id="studentName"></div>
+                        <div class="i_txt" id="studentNo"></div>
                     </div>
+                  <div class="v_item ml160">
+                    <div class="i_txt" id="studentName"></div>
+                  </div>
                 </div>
 
                 <div class="l_table">
@@ -80,24 +91,24 @@
                     </table>
                 </div>
 
-                <div class="l_details clearfix">
+                <div class="l_details clearfix m-left80">
                     <div class="d_left">
                         <div class="l_item">
                             <div class="i_txt" id="campusName"></div>
                         </div>
                     </div>
-                    <div class="d_right">
-                        <div class="r_item">
-                            <div class="i_txt" id="campusPhoneNo">
-                                <span></span>
-                            </div>
-                        </div>
+                </div>
+              <div class="clearfix  m-left80">
+                    <div class="d_left">
+                      <div class="i_txt" id="campusPhoneNo">
+                        <span></span>
+                      </div>
                     </div>
                 </div>
 
 
 
-                <div class="l_remarks clearfix">
+                <div class="l_remarks clearfix m-left80">
                     <div class="r_left">
                         <div class="l_list">
                             <div class="l_item">
@@ -124,6 +135,9 @@
                         <div class="i_txt" id="studentNo2"></div>
                     </div>
                     <div class="l_item">
+                      <div class="i_txt" id="studentName2"></div>
+                    </div>
+                    <div class="l_item">
                         <div class="i_txt" id="totalAmount"></div>
                     </div>
 
@@ -132,25 +146,25 @@
                     </div>
 
                     <div class="l_item">
+                        <div class="i_txt" >0</div>
+                    </div>
+
+                    <div class="l_item">
                         <div class="i_txt" id="payableAmount"></div>
                     </div>
 
-                    <div class="l_item">
-                        <div class="i_txt" id="paidAmount"></div>
-                    </div>
-
-                    <div class="l_item">
-                        <div class="i_txt" id="owingAmount"></div>
-                    </div>
+                    <!--<div class="l_item">-->
+                        <!--<div class="i_txt" id="paidAmount"></div>-->
+                    <!--</div>-->
 
                 </div>
                 <div class="r_remarksList">
-                    <!--<div class="l_item">
-                        <div class="i_title">操作员：</div>
-                        <div class="i_txt"></div>
-                    </div>-->
                     <div class="l_item">
-                        <div class="i_txt" id="courseOrderUpdate"></div>
+                        <div class="i_title" id="principal2"></div>
+                        <div class="i_txt"></div>
+                    </div>
+                    <div class="l_item">
+                        <div class="i_txt" id="now2"></div>
                     </div>
                 </div>
 
@@ -195,7 +209,6 @@
           paidAmount= data.courseOrder.paidAmount,
           owingAmount= data.courseOrder.payableAmount - data.courseOrder.paidAmount,
           courseOrderUpdate= formatDate ( data.courseOrder.updateTime),
-          principal= data.principal,
           operateDate= moment().format('YYYY-MM-DD H:mm:ss'),
           regFrom= data.courseOrder.regFrom == 0 ? '线下' :'线上',
           studentNo= data.student.studentNo,
@@ -205,7 +218,7 @@
           phoneNo = data.campus.phoneNo;
           campusPhoneNo= data.campus.phoneNo;
         LODOP.ADD_PRINT_TEXT(35,280,130,25,"报名方式：" + regFrom);//报名方式
-        LODOP.ADD_PRINT_TEXT(108,39,130,25,"欠费金额：" + owingAmount);//欠费金额
+        LODOP.ADD_PRINT_TEXT(108,39,130,25,"欠费金额：" + owingAmount.toFixed(2));//欠费金额
         //学生编号
         LODOP.ADD_PRINT_TEXT(110,239,90,25,studentNo);//Top、Left、Width、Height
         //学生姓名
@@ -215,17 +228,16 @@
         LODOP.ADD_PRINT_TEXT(145,700,70,25,totalAmount);//总金额
         LODOP.ADD_PRINT_TEXT(190,700,70,25,discountAmount);//优惠金额
         LODOP.ADD_PRINT_TEXT(270,700,70,25,payableAmount);//实收金额
-        LODOP.ADD_PRINT_TEXT(235,700,70,25,0.00);//使用账户金额
-        LODOP.ADD_PRINT_TEXT(325,700,70,25,0.00);//现金金额
-        LODOP.ADD_PRINT_TEXT(365,700,70,25,0.00);//pos
-        LODOP.ADD_PRINT_TEXT(405,700,70,25,0.00);//代金券
+//        LODOP.ADD_PRINT_TEXT(235,700,70,25,0.00);//使用账户金额
+//        LODOP.ADD_PRINT_TEXT(325,700,70,25,0.00);//现金金额
+//        LODOP.ADD_PRINT_TEXT(365,700,70,25,0.00);//pos
+//        LODOP.ADD_PRINT_TEXT(405,700,70,25,0.00);//代金券
         LODOP.ADD_PRINT_TEXT(465,700,70,25,operateDate); // 操作时间
         LODOP.ADD_PRINT_TEXT(452,700,70,25,operator); // 操作人员
         //LODOP.ADD_PRINT_TEXT(502,700,70,25,"报名方式：前台报名");//报名方式
         //20161104 新增收费金额
         LODOP.ADD_PRINT_TEXT(85,39,130,25,"收费金额：" + paidAmount);//收费金额
-        var totalRM = "0.0" || 0.00;
-        LODOP.ADD_PRINT_TEXT(85,149,130,25,"已退金额：" + totalRM);//已退金额
+        LODOP.ADD_PRINT_TEXT(85,149,130,25,"已退金额：" + 0.00);//已退金额
 
         for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
           var c  = data.regDetailVos[i]
@@ -239,7 +251,7 @@
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
           LODOP.ADD_PRINT_TEXT(165+30*i,345,80,80,c.studentReg.startAmount+"—"+c.studentReg.endAmount);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
-          LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.classDateTip + ' ' + c.courseClass.studyingTime);
+          LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.studyingTime);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
           LODOP.ADD_PRINT_TEXT(165+30*i,530,200,80,formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ) );//报名日期(星期)
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
@@ -249,7 +261,7 @@
         LODOP.ADD_PRINT_TEXT(420,115,310,30,phoneNo);
         LODOP.ADD_PRINT_TEXT(445,100,310,30,operator);//todo 操作员
         LODOP.ADD_PRINT_TEXT(465,100,240,30,operateDate);//todo 打印日期
-        LODOP.PREVIEW();
+//        LODOP.PREVIEW();
       };
 
       function fillData(data){
@@ -267,14 +279,16 @@
         document.getElementById('courseList').innerHTML = courseListHtml
 
         document.getElementById('totalAmount').innerHTML = data.courseOrder.totalAmount
+        document.getElementById('totalAmount2').innerHTML = data.courseOrder.totalAmount
         document.getElementById('discountAmount').innerHTML = data.courseOrder.totalAmount - data.courseOrder.payableAmount
         document.getElementById('payableAmount').innerHTML = data.courseOrder.payableAmount
-        document.getElementById('paidAmount').innerHTML = data.courseOrder.paidAmount
-        document.getElementById('owingAmount').innerHTML = data.courseOrder.payableAmount - data.courseOrder.paidAmount
-        document.getElementById('courseOrderUpdate').innerHTML = formatDate ( data.courseOrder.updateTime)
+//        document.getElementById('paidAmount').innerHTML = data.courseOrder.paidAmount
+        document.getElementById('owingAmount2').innerHTML = data.courseOrder.payableAmount - data.courseOrder.paidAmount
 
         document.getElementById('principal').innerHTML = data.principal
+        document.getElementById('principal2').innerHTML = data.principal
         document.getElementById('now').innerHTML = moment().format('YYYY-MM-DD H:mm:ss')
+        document.getElementById('now2').innerHTML = moment().format('YYYY-MM-DD H:mm:ss')
 
 
         document.getElementById('regFrom').innerHTML = data.courseOrder.regFrom == 0 ? '线下' :'线上'

@@ -80,7 +80,7 @@
 
     <window ref="cert" title="听课证">
 
-      <div style="height:750px;" id="certIframe">
+      <div style="height:608px;" id="certIframe">
 
       </div>
 
@@ -180,7 +180,7 @@
         this.courseOrderId = courseOrderId
         $('#certIframe').html('<iframe height="100%" src="./static/cert/index.html?courseOrderId='+courseOrderId+'" width="100%" frameborder="0"></iframe>')
         this.$refs.cert.show({
-          width:1050,
+          width:810,
           height:700
         })
       },
