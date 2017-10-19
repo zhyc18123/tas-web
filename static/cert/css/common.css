@@ -21,16 +21,18 @@ body { background-color: #eee; }
 .fz28 { font-size: 28px !important; }
 .ml20 { margin-left: 20px !important; }
 .ml40 { margin-left: 40px !important; }
+.ml50 { margin-left: 50px !important; }
 .ml160 { margin-left: 160px !important; }
 
 .J_printArea {
   position: relative;
   margin: 0 auto;
-  width: 1000px;
-  height: 677px;
+  width: 768px;
+  height: 533px;
   background-color: #fff;
   overflow: hidden;
   color: #333;
+  border: 1px dashed #ddd;
   font-family: 宋体;
 }
 
@@ -50,13 +52,15 @@ body { background-color: #eee; }
   left: 0;
   top: 0;
   width: 100%;
+  font-size: 8px!important;
 }
 
 .J_printArea .p_foreground .f_left {
   float: left;
   padding: 10px 20px;
-  width: 760px;
-  height: 750px;
+  width: 680px;
+  height: 533px;
+  box-sizing: border-box;
 }
 
 .J_printArea .p_foreground .f_left .l_header {
@@ -71,17 +75,17 @@ body { background-color: #eee; }
   vertical-align: top;
 }
 
-.J_printArea .p_foreground .f_left .l_header .h_right {
-  float: right;
+.J_printArea .p_foreground .f_left .l_header .h_center {
+  text-align: center;
   height: 80px;
   line-height: 80px;
 }
 
-.J_printArea .p_foreground .f_left .l_header .h_right .r_type {
+.J_printArea .p_foreground .f_left .l_header .h_center .r_type {
   font-size: 12px;
 }
 
-.J_printArea .p_foreground .f_left .l_header .h_right .r_type span {
+.J_printArea .p_foreground .f_left .l_header .h_center .r_type span {
   font-size: 12px;
 }
 
@@ -230,7 +234,7 @@ body { background-color: #eee; }
 
 .J_printArea .p_foreground .f_left .l_table table {
   width: 100%;
-  height: 300px;
+  height: 217px;
   text-align: center;
 }
 
@@ -280,10 +284,8 @@ body { background-color: #eee; }
 
 .J_printArea .p_foreground .f_right {
   float: right;
-  padding-left: 30px;
-  width: 166px;
-  height: 750px;
-  border-left: 2px dashed #ddd;
+  width: 81px;
+  height: 533px;
 }
 
 .J_printArea .p_foreground .f_right .r_title {
@@ -293,7 +295,7 @@ body { background-color: #eee; }
 }
 
 .J_printArea .p_foreground .f_right .r_list {
-  margin-top: 30px;
+  margin-top: 90px;
 }
 
 .J_printArea .p_foreground .f_right .r_list .l_item {
@@ -301,7 +303,6 @@ body { background-color: #eee; }
 }
 
 .J_printArea .p_foreground .f_right .r_list .l_item .i_title {
-  font-weight: bold;
   font-size: 12px;
 }
 
@@ -311,19 +312,21 @@ body { background-color: #eee; }
 }
 
 .J_printArea .p_foreground .f_right .r_remarksList {
-  margin-top: 60px;
+  margin-top: 174px;
 }
 
 .J_printArea .p_foreground .f_right .r_remarksList .l_item {
-  margin-top: 20px;
+  /*margin-top: 20px;*/
 }
 
 .J_printArea .p_foreground .f_right .r_remarksList .l_item .i_title {
-  font-weight: bold;
   font-size: 12px;
 }
 
 .J_printArea .p_foreground .f_right .r_remarksList .l_item .i_txt {
   margin-top: 10px;
   font-size: 12px;
+}
+.J_printArea .m-left80{
+  margin-left: 80px;
 }
