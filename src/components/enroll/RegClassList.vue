@@ -157,7 +157,6 @@
           this.$alert('至少选择一个班')
         }else{
           this.createOrder(this.selection.map(function(item){
-            _this.cancel(item.classId)
             return {
                 classId: item.classId ,
                 startAmount: item.startAmount,
@@ -179,13 +178,6 @@
         }, function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
-
-            _this.$refs.courseOrder.courseOrderId = ret.data.courseOrderId
-            _this.$refs.courseOrder.show()
-
-            //通过实践通知订单组件重新加载数据
-            _this.$root.$emit('order:new')
-
             var classIds = regClassInfoList.map(function (item) {
               return item.classId
             })
@@ -193,6 +185,11 @@
             for (var i = 0; i < classIds.length; i++) {
               _this.cancel(classIds[i])
             }
+            _this.$refs.courseOrder.courseOrderId = ret.data.courseOrderId
+            _this.$refs.courseOrder.show()
+
+            //通过实践通知订单组件重新加载数据
+            _this.$root.$emit('order:new')
 
           } else {
             //失败也要通知
@@ -202,7 +199,6 @@
       },
       pay: function (classId, startAmount, endAmount) {
         this.createOrder([{classId, startAmount, endAmount}])
-        this.cancel(classId)
       },
       cancel: function (classId) {
         for (var i = 0; i < this.$root.courseShoppingCart.length; i++) {

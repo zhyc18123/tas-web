@@ -268,7 +268,7 @@
           this.$dialog('请用微信或支付宝扫二维码','<div style="min-height: 300px;"><img src="'+io.apiQrcodeEncode + "?content=" + encodeURIComponent(url)+'" /></div>')
       },
       showBarCode:function(){
-        this.$dialog('请用post机扫码','<div style="min-height: 150px;"><img src="'+io.apiBarcodeEncode + "?content=" + this.requestPayId +'" /></div>')
+        this.$dialog('请用pos机扫码','<div style="min-height: 150px;"><img src="'+io.apiBarcodeEncode + "?content=" + this.requestPayId +'" /></div>')
       },
       selectCampusCallback:function(campus){
         this.formData.chargeCampusId = campus.campusId
