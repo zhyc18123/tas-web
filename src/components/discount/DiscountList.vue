@@ -78,16 +78,9 @@
               </el-table-column>
               <el-table-column
                 label="开关状态"
-                min-width="100">
+                min-width="250">
                 <template scope="scope">
                   {{ scope.row.switchStatus == 0 ? '关闭' : '启用' }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="支持退费"
-                min-width="100">
-                <template scope="scope">
-                  {{ scope.row.supportRefund == 0 ? '不支持' : '支持' }}
                 </template>
               </el-table-column>
               <el-table-column

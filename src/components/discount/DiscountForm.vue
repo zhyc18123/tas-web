@@ -85,19 +85,6 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>支持退费
-              </label>
-              <div class="am-u-sm-3 input-field  am-u-end">
-                <select2 required v-model="formData.supportRefund">
-                  <option value="">请选择是否支持退费</option>
-                  <option value="0">不支持</option>
-                  <option value="1">支持</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>生效开始时间
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
@@ -267,7 +254,6 @@
           subjectIds:[],
           name: '',
           switchStatus: 1,
-          supportRefund:0,
           discountType: 0,
           params: [{}],
           exclusiveDiscountIds:[],

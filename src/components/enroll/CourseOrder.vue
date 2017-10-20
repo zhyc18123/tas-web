@@ -15,7 +15,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="item in tableData.regDetailVos">
+          <tr v-for="item in regDetails">
             <td>{{item.courseClass.className}}</td>
             <td>{{item.courseClass.gradeName}}</td>
             <td>{{item.courseClass.startCourseTime | formatDate}}</td>
@@ -29,7 +29,7 @@
       </div>
 
     <div class="am-u-sm-12 am-scrollable-horizontal">
-      <table width="100%" class="am-table am-table-bordered am-table-compact am-text-nowrap">
+      <table width="100%" class="am-table am-table-bordered am-table-compact">
 
         <colgroup>
           <col width="100"/>
@@ -40,9 +40,13 @@
           <col width="100"/>
         </colgroup>
         <tbody>
-        <tr>
-          <td class="bgColor">优惠详情</td>
-          <td colspan="5" v-html="discountDetail"></td>
+        <tr v-if="courseOrder.chargingStatus == 0 ">
+          <td class="bgColor">优惠申请</td>
+          <td colspan="5">
+            <label v-for="item in discounts">
+              <input type="radio" :value="item.discountId" name="discount" v-model="formData.discountId"> {{item.name}}
+            </label>
+          </td>
         </tr>
         <tr>
           <td class="bgColor">总计金额</td>
@@ -70,6 +74,10 @@
           <td class="bgColor">缴费金额</td>
           <td><input type="number" step="0.01" min="1" class="am-input-sm"  v-model="formData.payAmount" @change="check"/></td>
           <td colspan="4"></td>
+        </tr>
+        <tr>
+          <td class="bgColor">优惠详情</td>
+          <td colspan="5" v-html="discountDetail"></td>
         </tr>
         <tr v-if="courseOrder.chargingStatus != 2 ">
           <td class="bgColor">支付方式</td>
@@ -140,9 +148,11 @@
 
       let chargeCampus  = storage.getChargeCampus();
       return {
-        tableData: [],
+        regDetails : [],
+        discounts:[],
         formData: {
           payWay: 1,
+          discountId:'',
           payAmount: '',
           courseOrderId: '',
           discountAmount:0,
@@ -162,6 +172,11 @@
     watch: {
       'formData.discountAmount':function(val){
         this.formData.payAmount = util.formatNumber((this.courseOrder.payableAmount -  val) - (this.courseOrder.paidAmount),2 )
+      },
+      'formData.discountId':function(val){
+        if(val){
+          this.recalculateCourseOrderDiscount()
+        }
       }
     },
     mounted: function () {
@@ -186,30 +201,65 @@
           io.post(io.apiAdminCourseOrderDetail, {courseOrderId: courseOrderId},
             function (ret) {
               if (ret.success) {
-                _this.tableData = ret.data;
-                _this.formData.payAmount = util.formatNumber((ret.data.courseOrder.payableAmount) - (ret.data.courseOrder.paidAmount),2 )
+                _this.regDetails = ret.data.regDetailVos
                 _this.formData.payWay = 1
+                _this.formData.discountId = ''
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
-                _this.courseOrder = ret.data.courseOrder
-
-                if( ret.data.courseOrder.discountDetail ){
-                  let discountDetail  = JSON.parse(ret.data.courseOrder.discountDetail)
-                  let discountDetailArr = []
-                  for(var reg of ret.data.regDetailVos){
-                    let  d = discountDetail[reg.courseClass.classId]
-                    if(d){
-                      discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/\|\d*/g,''))
-                    }
-                  }
-                  _this.discountDetail = discountDetailArr.join('<br/>')
-                }else{
-                  _this.discountDetail = '无'
-                }
-
+                _this.beforeRenderOrder(ret.data.courseOrder,ret.data.regDetailVos)
+                _this.loadDiscountOfPolicy(ret.data.regDetailVos[0].courseClass.areaTeamId)
               } else {
                 _this.$alert(ret.desc)
               }
             })
+        }
+      },
+      recalculateCourseOrderDiscount: function () {
+        var _this = this
+        var st = setTimeout(function(){
+          _this.$showLoading()
+        },1000)
+        io.post(io.apiAdminRecalculateCourseOrderDiscount, {courseOrderId: _this.formData.courseOrderId ,discountId : _this.formData.discountId},
+          function (ret) {
+            clearTimeout(st)
+            _this.$hiddenLoading()
+            if (ret.success) {
+              _this.beforeRenderOrder(ret.data,_this.regDetails)
+            } else {
+              _this.formData.discountId = ''
+              _this.$alert('重新计算优惠失败')
+            }
+          })
+      },
+      loadDiscountOfPolicy:function(areaTeamId){
+        var _this  = this
+        io.post(io.apiAdminDiscountListOfPolicy, {areaTeamId},
+          function (ret) {
+            if (ret.success) {
+              ret.data.push({
+                discountId: -1,
+                name : '无'
+              })
+              _this.discounts = ret.data
+            } else {
+              _this.$alert(ret.desc || '加载政策优惠失败')
+            }
+          })
+      },
+      beforeRenderOrder:function(courseOrder,regDetails ){
+        this.courseOrder = courseOrder
+        this.formData.payAmount = util.formatNumber((courseOrder.payableAmount) - ( courseOrder.paidAmount),2 )
+        if(courseOrder.discountDetail ){
+          let discountDetail  = JSON.parse(courseOrder.discountDetail)
+          let discountDetailArr = []
+          for(var reg of regDetails){
+            let  d = discountDetail[reg.courseClass.classId]
+            if(d){
+              discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/\|\d*/g,''))
+            }
+          }
+          this.discountDetail = discountDetailArr.join('<br/>')
+        }else{
+          this.discountDetail = '无'
         }
       },
       showQRCode:function(){
