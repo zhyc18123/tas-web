@@ -167,6 +167,14 @@
               </div>
             </div>
 
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+              <div class="am-form-group am-btn-group-xs">
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="batchDailyCheck" v-if="hasPermission('daily_check')">批量日结
+                </button>
+              </div>
+            </div>
+
 
           </div>
 
@@ -175,7 +183,12 @@
               :data="tableData"
               border
               stripe
+              @selection-change="handleSelectionChange"
               style="min-width: 100%">
+              <el-table-column
+                type="selection"
+                width="55">
+              </el-table-column>
               <el-table-column
                 label="业务类型"
                 min-width="100">
@@ -385,7 +398,8 @@
           endDate: util.formatDate(new Date().getTime())
         },
         searchConfig: {},
-        products:[]
+        products:[],
+        selection:[]
       }
     },
     components: {
@@ -474,7 +488,33 @@
         var _this = this
         _this.$showLoading()
         io.post(io.apiAdminReportChangeChargeDailyStatus, {
-          chargeId: item.chargeId  ,
+          chargeIds: [item.chargeId]  ,
+          dailyStatus : 1
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      batchDailyCheck:function(){
+
+        var chargeIds = this.selection.map(function (item) {
+          return item.chargeId
+        })
+
+        if( !chargeIds || chargeIds.length == 0 ){
+          this.$alert('请选择纪录')
+          return
+        }
+
+        var _this = this
+        _this.$showLoading()
+        io.post(io.apiAdminReportChangeChargeDailyStatus, {
+          chargeIds: chargeIds  ,
           dailyStatus : 1
         }, function (ret) {
           _this.$hiddenLoading()
@@ -488,7 +528,10 @@
       },
       exportExcel:function(){
         io.downloadFile(io.apiAdminReportExportCharge,this.query)
-      }
+      },
+      handleSelectionChange:function (selection) {
+        this.selection = selection
+      },
     }
   }
 </script>
