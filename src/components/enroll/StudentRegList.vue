@@ -205,6 +205,22 @@
                 label="操作人"
                 min-width="100">
               </el-table-column>
+              <el-table-column
+                align="center"
+                fixed="right"
+                label="操作"
+                width="150">
+                <template scope="scope">
+                  <el-dropdown v-if="scope.row.attendanceStatus == 0">
+                    <span class="el-dropdown-link">
+                      操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item  :disabled="!scope.row.classDate"  @click.native="rearrangeTime(scope.row)">修改班主任</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
 
             </el-table>
           </div>
