@@ -200,7 +200,6 @@ const io = {
     this.apiAdminQueryAttendOfStudent = conf.baseApiPath + '/api/admin/queryAttendOfStudent'
     this.apiAdminSaveOrupdateStudentRefund = conf.baseApiPath + '/api/admin/saveStudentRefundClass'
     this.apiAdminStudentRefundDetail = conf.baseApiPath + '/api/admin/studentRefundDetail'
-    this.apiAdminCalRefundAmount = conf.baseApiPath + '/api/admin/calRefundAmount'
     this.apiAdminChangeStudentRefundStatus = conf.baseApiPath + '/api/admin/changeStudentRefundStatus'
     this.apiAdminChangeStudentPayStatus = conf.baseApiPath + '/api/admin/changeStudentPayStatus'
     this.apiAdminStudentRegList = conf.baseApiPath+ '/api/admin/studentRegList'
@@ -220,14 +219,12 @@ const io = {
     this.apiAdminSettlementApplyWithdrawal = conf.baseApiPath + '/api/admin/settlement/applyWithdrawal'
     this.apiAdminSettlementUpdateWithdrawalStatus = conf.baseApiPath + '/api/admin/settlement/updateWithdrawalStatus'
     this.apiAdminSettlementFeeCategoryList = conf.baseApiPath + '/api/admin/settlement/feeCategoryList'
-    this.apiAdminSettlementAllFeeCategory = conf.baseApiPath + '/api/admin/settlement/allFeeCategory'
     this.apiAdminSettlementFeeCategoryTreeMap = conf.baseApiPath + '/api/admin/settlement/feeCategoryTreeMap'
     this.apiAdminSettlementFeeCategoryDetail = conf.baseApiPath + '/api/admin/settlement/feeCategoryDetail'
     this.apiAdminSettlementSaveOrUpdateFeeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateFeeCategory'
     this.apiAdminSettlementDeleteFeeCategory = conf.baseApiPath + '/api/admin/settlement/deleteFeeCategory'
 
     this.apiAdminSettlementIncomeCategoryList = conf.baseApiPath + '/api/admin/settlement/incomeCategoryList'
-    this.apiAdminSettlementAllIncomeCategory = conf.baseApiPath + '/api/admin/settlement/allIncomeCategory'
     this.apiAdminSettlementIncomeCategoryDetail = conf.baseApiPath + '/api/admin/settlement/incomeCategoryDetail'
     this.apiAdminSettlementSaveOrUpdateIncomeCategory = conf.baseApiPath + '/api/admin/settlement/saveOrUpdateIncomeCategory'
     this.apiAdminSettlementDeleteIncomeCategory = conf.baseApiPath + '/api/admin/settlement/deleteIncomeCategory'
@@ -241,26 +238,14 @@ const io = {
     this.apiAdminCategoryDetail = conf.baseApiPath + '/api/admin/trading/getCategory'
     this.apiAdminCategoryList = conf.baseApiPath + '/api/admin/trading/showCategory'
     this.apiAdminDeleteCategory = conf.baseApiPath + '/api/admin/trading/deleteCategory'
-    this.apiAdminGetChildCategory = conf.baseApiPath + '/api/admin/trading/getChildCategory'
     this.apiAdminGetCategory = conf.baseApiPath + '/api/admin/trading/getCategoryMessage'
 
     this.apiAdminGetCategoryByType = conf.baseApiPath + '/api/admin/trading/findServiceCategoryTreeVoByType'
 
-
-    this.apiAdminGetAllCategoryDetail = conf.baseApiPath + '/api/admin/trading/getAllCategory'
-    this.apiAdminSaveServiceProduct = conf.baseApiPath + '/api/admin/trading/saveServiceProduct'
-
-    this.apiAdminServiceProductList = conf.baseApiPath + '/api/admin/trading/showServiceProduct'
-    this.apiAdminDeleteServiceProduct = conf.baseApiPath + '/api/admin/trading/deleteServiceProduct'
-    this.apiAdminServiceProductDetail = conf.baseApiPath + '/api/admin/trading/getServiceProduct'
     this.apiAdminServiceMerchantList = conf.baseApiPath + '/api/admin/trading/merchantList'
 
     this.apiAdminServiceMerchantDetail = conf.baseApiPath + '/api/admin/trading/merchantDetail'
     this.apiAdminChangeServiceMerchant = conf.baseApiPath + '/api/admin/trading/auditMerchant'
-    this.apiAdminProductOrderList = conf.baseApiPath + '/api/admin/trading/productOrderList'
-    this.apiAdminProductOrderDetail = conf.baseApiPath + '/api/admin/trading/productOrderDetail'
-    this.apiAdminAddComment = conf.baseApiPath + '/api/admin/trading/addProductComment'
-    this.apiAdminCommentList = conf.baseApiPath + '/api/admin/trading/commentList'
 
     this.apiAdminGoodList=conf.baseApiPath+'/api/admin/trading/goodPage'
     this.apiAdminOffGood=conf.baseApiPath+'/api/admin/trading/offGood'
@@ -318,12 +303,6 @@ const io = {
     this.apiAdminDiscountSaveOrUpdateDiscount = conf.baseApiPath + '/api/admin/discount/saveOrUpdateDiscount'
     this.apiAdminDiscountTestRule = conf.baseApiPath + '/api/admin/discount/testRule'
     this.apiAdminDiscountTestData = conf.baseApiPath + '/api/admin/discount/testData'
-    this.apiAdminDiscountExclusiveRuleList = conf.baseApiPath + '/api/admin/discount/exclusiveRuleList'
-    this.apiAdminDiscountExclusiveRuleDetail = conf.baseApiPath + '/api/admin/discount/exclusiveRuleDetail'
-    this.apiAdminDiscountDelExclusiveRule = conf.baseApiPath + '/api/admin/discount/delExclusiveRule'
-    this.apiAdminDiscountSaveOrUpdateExclusiveRule = conf.baseApiPath + '/api/admin/discount/saveOrUpdateExclusiveRule'
-    this.apiAdminDiscountAreaTeamBusTeamOrgTree = conf.baseApiPath + '/api/admin/discount/areaTeamBusTeamOrgTree'
-    this.apiAdminDiscountDiscountRuleTree = conf.baseApiPath + '/api/admin/discount/discountRuleTree'
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
     this.teacherTargetList = conf.baseApiPath + '/api/admin/analyze/teacherTargetList'

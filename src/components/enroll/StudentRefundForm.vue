@@ -1,5 +1,6 @@
 <template>
   <window ref="win" title="退费申请">
+    <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
     <div class="am-u-sm-12 am-scrollable-horizontal">
       <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">班级信息</div>
       <table width="100%" class="am-table am-table-bordered am-table-compact ">
@@ -75,7 +76,7 @@
         </tr>
 
         <tr>
-          <td class="bgColor">退费金额</td>
+          <td class="bgColor">应退金额</td>
           <td colspan="7">
             <span class="am-text-danger">{{remaining }}</span>￥
           </td>
@@ -97,11 +98,18 @@
         </tr>
 
         <tr>
+          <td class="bgColor">确认退款金额</td>
+          <td>
+            <input type="number"  class="am-input-sm"   v-model="formData.finalRefundAmount" min="0" @change="checkFinalRefundAmount">
+          </td>
+          <td colspan="6">
+          </td>
+        </tr>
+
+        <tr>
           <td class="bgColor">退费原因</td>
           <td colspan="7">
-
-              <input  class="refundWidth"   v-model="formData.description">
-
+              <input type="text"  class="am-input-sm refundWidth"   v-model="formData.description">
           </td>
         </tr>
 
@@ -133,6 +141,7 @@
         <button class="am-btn am-btn-primary">取消</button>
       </a>
     </div>
+    </form>
   </window>
 
 </template>
@@ -164,6 +173,7 @@
           cardUser: '',
           cardNo: '',
           description:'',
+          finalRefundAmount : 0,
           refundLectureFrom:''
         },
         studentRegDetail:{studentReg:{},courseClass:{}},
@@ -215,22 +225,13 @@
           })
       },
       calRemaining: function () {
-        if(this.formData.refundLectureFrom == '' ){
-          this.remaining = 0
-          return
+        this.remaining = !this.formData.refundLectureFrom ? 0 : math.mul( this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1  , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
+        this.formData.finalRefundAmount = this.remaining
+      },
+      checkFinalRefundAmount:function(){
+        if(this.formData.finalRefundAmount <=0 || this.formData.finalRefundAmount > this.remaining  ){
+          this.formData.finalRefundAmount = this.remaining
         }
-        this.remaining = '计算中' ;
-        io.post(io.apiAdminCalRefundAmount,{
-          regId : this.studentRegDetail.studentReg.regId ,
-          refundLectureAmount : this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1
-          },
-          (ret) =>{
-            if (ret.success) {
-              this.remaining = math.round(new Number( ret.data ) ,2)
-            } else {
-              this.remaining = '计算失败'
-            }
-          })
       },
       confirmToRefund: function () {
         var _this = this
