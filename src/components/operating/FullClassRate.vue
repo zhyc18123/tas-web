@@ -57,7 +57,7 @@
           <el-table-column
             label="操作">
             <template scope="scope">
-              <el-button @click="handleClick(scope)" :disabled="disabledBtn === scope.$index" type="primary">
+              <el-button @click="handleClick(scope)"  :type="disabledBtn === scope.$index ? 'default':'primary'">
                 查看详情>>
               </el-button>
             </template>

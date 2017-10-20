@@ -463,6 +463,10 @@
       },
       loadProductData: function () {
         var _this = this
+        if (!this.query.areaTeamId) {
+        	this.$alert('请选择区域！')
+          return
+        }
         io.post(io.apiAdminBaseProductListForAreaTeam, {
           areaTeamId : this.query.areaTeamId
         }, function (ret) {

@@ -103,16 +103,19 @@
       },
       del:function(incomeCategoryId){
         var _this  = this
-        io.post(io.apiAdminSettlementDeleteIncomeCategory,{
-            incomeCategoryId : incomeCategoryId
-        },function(ret){
-          if(ret.success){
-            _this.loadTableData()
-            _this.$alert('删除成功')
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
+        _this.$confirm("确认删除吗",
+          function () {
+            io.post(io.apiAdminSettlementDeleteIncomeCategory,{
+              incomeCategoryId : incomeCategoryId
+            },function(ret){
+              if(ret.success){
+                _this.loadTableData()
+                _this.$alert('删除成功')
+              }else{
+                _this.$alert(ret.desc)
+              }
+            })
+          });
       }
     }
   }

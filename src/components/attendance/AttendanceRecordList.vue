@@ -23,6 +23,14 @@
               </el-table-column>
               <el-table-column
                 fixed
+                label="上课时间"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.classDate | formatDate}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                fixed
                 label="是否考勤"
                 min-width="100">
                 <template scope="scope">
