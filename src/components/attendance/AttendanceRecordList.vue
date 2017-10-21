@@ -24,9 +24,9 @@
               <el-table-column
                 fixed
                 label="上课时间"
-                min-width="100">
+                min-width="200">
                 <template scope="scope">
-                  {{scope.row.classDate | formatDate}}
+                  {{scope.row.classTime | formatTime }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -80,9 +80,8 @@
         </div>
       </div>
     </div>
-    <window ref="detailWin" title="考勤">
-      <detail-list :attendanceRecord="attendanceRecord" @completed="loadTableData();$refs.detailWin.close()"></detail-list>
-    </window>
+
+    <detail-list ref="attendanceRecordDetail" :attendanceRecord="attendanceRecord" @completed="loadTableData();$refs.detailWin.close()"></detail-list>
   </div>
 </template>
 <script>
@@ -117,11 +116,8 @@
         })
       },
       showDetailWin:function(attendanceRecord){
-        this.attendanceRecord = attendanceRecord
-        this.$refs.detailWin.show({
-          width : 800,
-          height : 500
-        })
+        this.$refs.attendanceRecordDetail.attendanceRecord =  attendanceRecord
+        this.$refs.attendanceRecordDetail.show()
       }
     }
   }

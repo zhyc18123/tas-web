@@ -7,6 +7,14 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2  v-model="query.busTeamId" :options="busTeams">
+                <option value="">业务组</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2 v-model="query.gradeId" :options="grades">
                 <option value="">年级</option>
               </select2>
@@ -70,21 +78,6 @@
               prop="studyingFee"
               label="学费"
               min-width="100">
-            </el-table-column>
-            <el-table-column
-              label="开始讲数"
-              min-width="100">
-              <template scope="scope">
-                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.startAmount"
-                       @change="check(scope.row)"/>
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="结束讲数"
-              min-width="100">
-              <template scope="scope">
-                <input type="number" class="am-form-field am-input-sm" v-model="scope.row.endAmount" @change="check(scope.row)"/>
-              </template>
             </el-table-column>
             <el-table-column
               prop="gradeName"
@@ -175,10 +168,11 @@
         pageNo: 1,
         query: {
           status : 1,
+          areaTeamId:'',
           gradeId:'',
           subjectId:''
         },
-        srcClass:{}
+        originClass:{}
       }
     },
     props: ['args', 'regId'],
@@ -186,11 +180,12 @@
       Pagination,
     },
     created:function(){
-      this.srcClass = this.args['step-one'].srcClass
-      this.query.areaTeamId  = this.srcClass.areaTeamId
-      this.query.periodId  = this.srcClass.periodId
-      this.query.gradeId  = this.srcClass.gradeId
-      this.query.subjectId  = this.srcClass.subjectId
+      console.log('fff')
+      this.originClass = this.args['step-one'].originClass
+      this.query.areaTeamId  = this.originClass.courseClass.areaTeamId
+      this.query.periodId  = this.originClass.courseClass.periodId
+      this.query.gradeId  = this.originClass.courseClass.gradeId
+      this.query.subjectId  = this.originClass.courseClass.subjectId
       this.loadTableData(1)
     },
     computed: {
@@ -204,18 +199,16 @@
           return {value: item.subjectId, text: item.subjectName}
         })
       },
+      busTeams: function () {
+        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
+          .map(function (item) {
+            return {value: item.busTeamId, text: item.name}
+          })
+        this.query.busTeamId = ''
+        return options
+      },
     },
     methods: {
-      check: function (item) {
-        if (parseInt( item.startAmount ) <= 0 || parseInt( item.startAmount ) > parseInt( item.lectureAmount ) ) {
-          item.startAmount = 1
-        }
-
-        if (parseInt( item.endAmount ) < 0 || parseInt( item.endAmount ) > parseInt( item.lectureAmount ) ) {
-          item.endAmount = item.lectureAmount
-        }
-
-      },
       search: function () {
         this.loadTableData(1)
       },
@@ -239,12 +232,12 @@
               ret.data.list[i].startAmount = ret.data.list[i].completedLectureAmount + 1
               ret.data.list[i].endAmount = ret.data.list[i].lectureAmount;
 
-              if (( _this.srcClass.studyingFee == ret.data.list[i].studyingFee) && ( _this.srcClass.lectureAmount == ret.data.list[i].lectureAmount)) {
+              if ( parseInt( ret.data.list[i].regAmount) < parseInt( ret.data.list[i].quota )   ) {
                 ret.data.list[i].allow = true
               } else {
                 ret.data.list[i].allow = false
               }
-              if(ret.data.list[i].classId != _this.srcClass.classId ){//过滤
+              if(ret.data.list[i].classId != _this.originClass.classId ){//过滤
                 courseList.push(ret.data.list[i])
               }
             }
@@ -255,7 +248,7 @@
         })
       },
       confirm: function (item) {
-        this.$emit('goStep', 'step-three', item )
+        this.$emit('goStep', 'step-three', { selectClass :  item , originClass : this.originClass  })
       },
       back: function () {
         this.$emit('goStep', 'step-one' )

@@ -86,9 +86,9 @@
       <el-table-column
         fixed="right"
         label="操作"
-        width="180">
+        width="200">
         <template scope="scope">
-          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 " @click.native="turnClass(scope.row.studentReg.regId)">转班</el-button>
+          <el-button size="small"  @click.native="shiftClass(scope.row.studentReg.regId)">临时调班</el-button>
           <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.courseClass.progressStatus == 2 || scope.row.studentReg.refundStatus == 1 "
                      @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
           </el-button>
@@ -97,6 +97,7 @@
     </el-table>
 
     <turn-class ref="turnClass" @completed="loadDataTable"></turn-class>
+    <shift-class ref="shiftClass" @completed="loadDataTable"></shift-class>
     <student-refund ref="studentRefund" @completed="loadDataTable"></student-refund>
 
   </div>
@@ -107,6 +108,7 @@
 
   import Pagination from '../base/Pagination'
   import TurnClass from './TurnClass'
+  import ShiftClass from './ShiftClass'
   import StudentRefundForm from './StudentRefundForm'
 
   export default{
@@ -119,6 +121,7 @@
     },
     components: {
       'turn-class': TurnClass,
+      'shift-class': ShiftClass,
       'student-refund': StudentRefundForm,
     },
     created: function () {
@@ -149,6 +152,10 @@
       turnClass: function (regId) {
         this.$refs.turnClass.regId = regId
         this.$refs.turnClass.show()
+      },
+      shiftClass: function (regId) {
+        this.$refs.shiftClass.regId = regId
+        this.$refs.shiftClass.show()
       },
       studentRefund: function (regId) {
         this.$refs.studentRefund.regId = regId

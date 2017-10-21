@@ -186,7 +186,7 @@
     },
     mounted:function(){
       var _this = this ;
-      debugger
+
       $('#' + this.id ).validator({
         validate:function(validity){
 
