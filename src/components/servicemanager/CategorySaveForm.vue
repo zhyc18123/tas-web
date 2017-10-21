@@ -25,16 +25,23 @@
               </div>
             </div>
 
+
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                 可选择父分类：
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>可选择父分类：
               </label>
-              <div class="am-u-sm-3 am-u-end input-field">
-                <select2 required  v-model="formData.parentId" :options="serviceCategorys" >
-                  <option value=" ">请选择</option>
-                </select2>
+              <div class="am-u-sm-3  input-field am-u-end">
+                <el-cascader
+                  filterable=""
+                  change-on-select
+                  :options="serviceCategorys"
+                  v-model="formData.parentIds"
+                  >
+                </el-cascader>
               </div>
             </div>
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>分类名称
@@ -61,6 +68,9 @@
               </div>
             </div>-->
 
+
+
+
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>成本类型
@@ -69,7 +79,7 @@
                 <el-cascader
                   :options="feeCategories"
                   v-model="feeCategory"
-                  @change="handleChange">
+                 >
                 </el-cascader>
               </div>
             </div>
@@ -160,11 +170,12 @@
           categoryId:'',
           name:'',
           type:'',
+          parentIds:[]
         },
         category: [],
         feeCategories:[],
         incomeCategories:[],
-        serviceCategorys:[],
+        serviceCategorys: [],
         feeCategory:[]
       }
     },
@@ -239,6 +250,9 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
+        if(data.parentIds.length>0){
+            data.parentId=data.parentIds[data.parentIds.length-1]
+        }
         if(!this.feeCategory){
           complete.call()
           this.$alert('请选择成本类型')
@@ -251,9 +265,6 @@
           this.$alert('请选择成本类型')
           return
         }
-
-
-
 
         io.post(io.apiAdminSaveCategory, data,
           function (ret) {
@@ -271,26 +282,7 @@
             _this.$alert('请求服务器失败')
           })
       },
-  /*    loadIncomeCategoryData: function () {
-        var _this = this
-        io.post(io.apiAdminSettlementAllIncomeCategory, {}, function (ret) {
-          if (ret.success) {
-            _this.incomeCategories = ret.data
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },*/
-    /*  loadFeeCategoryData: function () {
-        var _this = this
-        io.post(io.apiAdminSettlementAllFeeCategory, {}, function (ret) {
-          if (ret.success) {
-            _this.feeCategories = ret.data
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },*/
+
       loadFeeCategoryData: function () {
         var _this = this
         io.post(io.apiAdminSettlementFeeCategoryTreeMap, {}, function (ret) {
@@ -331,31 +323,7 @@
         _this.serviceCategorys=[];
         io.post(io.apiAdminGetCategoryByType, {type:_this.formData.type}, function (ret) {
           if (ret.success) {
-             function getLengthByLevel(level) {
-                 var length="";
-                 level=parseInt(level);
-                 for(var i=1;i<level;i++){
-                     length=length+"-"
-                 }
-                 return length;
-             }
-            function toList(categoryList) {
-              for (var i = 0; i < categoryList.length; i++) {
-                var serviceCategory = categoryList[i]
-                var minCategory = {
-                  value: serviceCategory.value,
-                  text: getLengthByLevel(serviceCategory.level)+serviceCategory.label
-                }
-                _this.serviceCategorys.push(minCategory)
-                if (serviceCategory.children) {
-                  toList(serviceCategory.children)
-                }
-              }
-            }
-            toList(ret.data)
-            console.log(_this.serviceCategorys)
-
-
+            _this.serviceCategorys=ret.data
           } else {
             _this.$alert(ret.desc)
           }

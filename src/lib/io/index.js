@@ -171,7 +171,7 @@ const io = {
     this.apiAdminExportStudentReg = conf.baseApiPath + '/api/admin/exportStudentReg'
     this.apiAdminSeniorList = conf.baseApiPath + '/api/admin/seniorList'
     this.apiAdminSetupClassSenior = conf.baseApiPath + '/api/admin/setupClassSenior'
-
+    this.apiAdminSetupStudentRegSenior = conf.baseApiPath + '/api/admin/setupStudentRegSenior'
     this.apiAdminCrowdfundingClassList = conf.baseApiPath + '/api/admin/crowdfundingClassMgr'
     this.apiAdminCrowdfundingClassRegList = conf.baseApiPath + '/api/admin/crowdfundingClassRegList'
     this.apiAdminCrowdfundingClassEdit = conf.baseApiPath + '/api/admin/crowdfundingClassDetail'
