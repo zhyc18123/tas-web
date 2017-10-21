@@ -93,6 +93,19 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                fixed
+                prop="studentReg.seniorName"
+                label="班主任"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                fixed
+                prop="studentReg.operator"
+                label="操作人"
+                min-width="100">
+              </el-table-column>
+
+              <el-table-column
                 label="报名时间"
                 min-width="150">
                 <template scope="scope">
@@ -211,12 +224,12 @@
                 label="操作"
                 width="150">
                 <template scope="scope">
-                  <el-dropdown v-if="scope.row.attendanceStatus == 0">
+                  <el-dropdown >
                     <span class="el-dropdown-link">
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item  :disabled="!scope.row.classDate"  @click.native="rearrangeTime(scope.row)">修改班主任</el-dropdown-item>
+                      <el-dropdown-item   @click.native="setupSenior(scope.row.studentReg)">修改班主任</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
@@ -234,12 +247,13 @@
         </div>
       </div>
     </div>
+    <select-senior ref="selectSenior" @ok="updateSenior"></select-senior>
   </div>
 </template>
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-
+  import SelectSenior from '../course/SelectSenior'
   export default {
     data: function () {
       return {
@@ -252,12 +266,14 @@
           busTeamId: '',
           periodId: '',
         },
+        regId:'',
         periods:[],
         searchConfig: {},
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'select-senior':SelectSenior,
     },
     watch:{
       'query.areaTeamId':function(){
@@ -308,6 +324,48 @@
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      setupSenior:function (studentReg) {
+
+
+       /* var areaTeamIds = new Set();
+        for(var i =0 ;i < this.selection.length ;i++ ){
+          areaTeamIds.add(this.selection[i].areaTeamId)
+        }
+
+        if(areaTeamIds.size > 1 ){
+          this.$alert('不能同时选择多个区域的课程')
+          return
+        }
+
+        var classIds = this.selection.map(function (item) {
+          return item.classId
+        })
+
+        this.classIds = classIds
+        var areaTeamId = areaTeamIds.values().next().value
+        this.$refs.selectSenior.query.areaTeamId = areaTeamId*/
+        var areaTeamId=studentReg.areaTeamId
+        this.regId=studentReg.regId
+        this.$refs.selectSenior.query.areaTeamId = areaTeamId
+        this.$refs.selectSenior.show()
+
+      },
+      updateSenior: function (teacher) {
+        var _this = this
+        _this.$showLoading()
+        io.post(io.apiAdminSetupStudentRegSenior, {
+          teacherId:teacher.teacherId,
+          regId : _this.regId
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$alert('处理成功')
           } else {
             _this.$alert(ret.desc)
           }
