@@ -84,11 +84,6 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="authenticationCode"
-                label="识别码"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
                 label="性别"
                 min-width="100">
                 <template scope="scope">

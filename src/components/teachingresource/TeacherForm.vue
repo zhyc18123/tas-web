@@ -42,6 +42,18 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>Email
+              </label>
+              <div class="am-u-sm-6 input-field">
+                <input :disabled="!canEditEmail" type="text"  class="am-form-field" placeholder="请输入电子邮件地" required pattern="^[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?$" v-model="formData.email">
+              </div>
+              <div class="am-u-sm-3">
+                <span class="am-text-sm">生成系统登陆用户名</span>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>电话号码
               </label>
               <div class="am-u-sm-9 input-field">
@@ -244,7 +256,8 @@ import util from '../../lib/util'
                 avatarUrl:'http://static.yuyou100.com/t_avatar.gif'
               },
               tags:[],
-              editable:true
+              editable:true,
+              canEditEmail : true
             }
         },
         created:function(){
@@ -259,6 +272,7 @@ import util from '../../lib/util'
                 ret.data.joinTime = util.formatDate ( ret.data.joinTime )
                 ret.data.myTags = ret.data.tags ? ret.data.tags.split(',') : []
                 _this.formData = ret.data
+                _this.canEditEmail = !ret.data.email
               }
             },
             function(){
