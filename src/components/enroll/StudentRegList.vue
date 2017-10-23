@@ -331,24 +331,6 @@
       },
       setupSenior:function (studentReg) {
 
-
-       /* var areaTeamIds = new Set();
-        for(var i =0 ;i < this.selection.length ;i++ ){
-          areaTeamIds.add(this.selection[i].areaTeamId)
-        }
-
-        if(areaTeamIds.size > 1 ){
-          this.$alert('不能同时选择多个区域的课程')
-          return
-        }
-
-        var classIds = this.selection.map(function (item) {
-          return item.classId
-        })
-
-        this.classIds = classIds
-        var areaTeamId = areaTeamIds.values().next().value
-        this.$refs.selectSenior.query.areaTeamId = areaTeamId*/
         var areaTeamId=studentReg.areaTeamId
         this.regId=studentReg.regId
         this.$refs.selectSenior.query.areaTeamId = areaTeamId

@@ -27,6 +27,11 @@
         </template>
       </el-table-column>
       <el-table-column
+        prop="counselorName"
+        label="咨询师"
+        min-width="100">
+      </el-table-column>
+      <el-table-column
         prop="totalAmount"
         label="总金额"
         min-width="100">

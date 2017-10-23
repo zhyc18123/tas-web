@@ -105,8 +105,10 @@ const PASSWORD_PLACEHOLDER = '****************' // 16
               $submitBtn.removeAttr("disabled")
               if(ret.success){
 
+                  debugger
                 storage.setLogin({
                   username:_this.formData.username,
+                  realName:ret.data.user.realName,
                   password:password,
                   rememberMe : _this.rememberMe,
                   userId : ret.data.user.userId ,
