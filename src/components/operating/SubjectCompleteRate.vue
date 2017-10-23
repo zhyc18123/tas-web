@@ -59,9 +59,9 @@
           </el-table-column>
           <el-table-column
             label="新生科数完成率">
-            <template scope="scope">
-              <div>{{scope.row.realNewStudentNum === '0' ? '0%' : parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum)}}</div>
-            </template>
+      <!--      <template scope="scope">
+              <div>{{Number(scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum === '0' ? '0%' : parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum) | formatNumber(2))*100}}%</div>
+            </template>-->
           </el-table-column>
           <el-table-column
             prop="realOldStudentNum"
@@ -73,9 +73,9 @@
           </el-table-column>
           <el-table-column
             label="老生科数完成率">
-            <template scope="scope">
-              <div>{{scope.row.realOldStudentNum === '0' ? '0%' : parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum)}}</div>
-            </template>
+            <!--<template scope="scope">
+              <div>{{Number(scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum === '0' ? '0%' : parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum) |formatNumber(2))*100}}%</div>
+            </template>-->
           </el-table-column>
           <el-table-column
             prop="nowPeriodNum"
@@ -86,11 +86,13 @@
             label="顺期科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="顺期续读率">
+        <!--    <template scope="scope">
+              <div>{{Number(scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum) |formatNumber(2))*100}}%</div>
+            </template>-->
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="targetSequentialNum"
             label="目标顺期续读率">
           </el-table-column>
           <el-table-column
@@ -98,8 +100,10 @@
             label="跨期科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="跨期续读率">
+        <!--    <template scope="scope">
+              <div>{{Number(scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum)|formatNumber(2))*100}}%</div>
+            </template>-->
           </el-table-column>
           <el-table-column
             prop="targetStepNum"
@@ -116,59 +120,67 @@
           stripe
           style="min-width: 100%">
           <el-table-column
-            prop="name"
+            prop="seniorName"
             label="班主任">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="realNewStudentNum"
             label="实际新生科数">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="targetNewStudentNum"
             label="目标新生科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="新生科数完成率">
+            <template scope="scope">
+              <div>{{scope.row.realNewStudentNum ==null || scope.row.realNewStudentNum === '0' ? '0%' : parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum)}}</div>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="realOldStudentNum"
             label="实际老生科数">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="targetOldSudentNum"
             label="目标老生科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="老生科数完成率">
+            <template scope="scope">
+              <div>{{scope.row.realOldStudentNum ==null || scope.row.realOldStudentNum === '0' ? '0%' : parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum)}}</div>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="nowPeriodNum"
             label="本期科数">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="sequentialNum"
             label="顺期科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="顺期续读率">
+            <template scope="scope">
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum)}}</div>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="targetSequentialNum"
             label="目标顺期续读率">
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="stepNum"
             label="跨期科数">
           </el-table-column>
           <el-table-column
-            prop="name"
             label="跨期续读率">
+            <template scope="scope">
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum)}}</div>
+            </template>
           </el-table-column>
           <el-table-column
-            prop="name"
+            prop="targetStepNum"
             label="目标跨期续读率">
           </el-table-column>
         </el-table>
@@ -265,15 +277,22 @@
       },
       getSeniorComletionRate:function(){
         var _this = this;
-        if(!this.areaTeamId || !this.periodId){
+        if(!this.areaTeamId){
+          this.$alert('请选择区域')
+          return
+        }
+        if(!this.periodId){
           this.$alert('请选择期数')
-
+          return
+        }
+        if(!this.busTeamId ){
+          this.$alert('请选择业务组')
           return
         }
         _this.$showLoading()
         io.post(io.seniorComletionRate,{
           areaTeamId:_this.areaTeamId,
-          busTeamId:_this.busTeamId || _this.areaTeamId,
+          busTeamId:_this.busTeamId,
           pageNo:_this.pageNo,
           pageSize:_this.pageSize,
           periodId: _this.periodId
@@ -288,16 +307,23 @@
       },
       getGradeCompletionRate:function(){
         var _this = this;
-        if(!this.areaTeamId || !this.periodId){
+        if(!this.areaTeamId){
+          this.$alert('请选择区域')
+          return
+        }
+        if(!this.periodId){
           this.$alert('请选择期数')
-
+          return
+        }
+        if(!this.busTeamId ){
+          this.$alert('请选择业务组')
           return
         }
         _this.$showLoading()
         io.post(io.gradeCompletionRate,{
           sectionId:_this.sectionId,
           areaTeamId:_this.areaTeamId,
-          busTeamId:_this.busTeamId || _this.areaTeamId,
+          busTeamId:_this.busTeamId ,
           periodId: _this.periodId
         },function(ret){
           if(ret.success){
