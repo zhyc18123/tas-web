@@ -6,10 +6,10 @@
           <div class="widget-title  am-cf">数据分析</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-u-sm-12 am-form ">
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="padding-left: 0">
+          <div class="am-u-sm-12">
+            <div class="am-u-sm-12" style="padding-left: 0;margin-bottom: 20px;">
               <div class="am-form-group">
-                <el-select v-model="areaTeamId" placeholder="请选择">
+                <el-select size="small" @change="handleAreaTeamIdChange" v-model="areaTeamId" class="am-u-md-2" placeholder="请选择区域">
                   <el-option
                     v-for="item in areaTeams"
                     :key="item.areaTeamId"
@@ -17,6 +17,15 @@
                     :value="item.areaTeamId">
                   </el-option>
                 </el-select>
+                <!--<el-select v-if="showBusTeam" size="small" class="am-u-md-2 am-u-end"-->
+                           <!--:disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">-->
+                  <!--<el-option-->
+                    <!--v-for="item in busTeams"-->
+                    <!--:key="item.busTeamId"-->
+                    <!--:label="item.name"-->
+                    <!--:value="item.busTeamId">-->
+                  <!--</el-option>-->
+                <!--</el-select>-->
               </div>
             </div>
             <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">-->
@@ -42,7 +51,7 @@
                 <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>-->
               <!--</el-menu-item>-->
             <!--</el-menu>-->
-            <router-view :areaTeamId="areaTeamId"></router-view>
+            <router-view :areaTeamId="areaTeamId" :busTeamId="busTeamId"></router-view>
           </div>
         </div>
       </div>
@@ -58,6 +67,8 @@
       return {
         activeIndex: '/main/operating/dataAnalysis/list/basicData',
         areaTeamId : '',
+        busTeamId : '',
+        showBusTeam : false,
       }
     },
     mounted:function(){
@@ -69,14 +80,21 @@
       if (window.config.areaTeams) {
         this.areaTeamId = window.config.areaTeams[0].areaTeamId
       }
+      this.showBusTeam = this.$route.path.indexOf('subjectCompleteRate') > 0
 //      this.getAreaTeamList();
     },
     computed: {
       areaTeams: function () {
         return this.$root.config.areaTeams || []
       },
+      busTeams: function () {
+        return ( ( this.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.areaTeamId] || [] ) : [] )
+      },
     },
     methods:{
+      handleAreaTeamIdChange() {
+      	this.busTeamId = ''
+      },
       search:function(){
         this.getBusinessCaseOfAreaTeam()
       },
