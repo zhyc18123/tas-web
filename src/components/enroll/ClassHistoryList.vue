@@ -5,7 +5,7 @@
         <div class="am-form-group">
           <label ><input  type="radio" name="regStatus" value=""  v-model="regStatus">全部班级</label>
           <label ><input  type="radio" name="regStatus" value="0" v-model="regStatus">在读班级</label>
-          <label ><input  type="radio" name="regStatus" value="1" v-model="regStatus">转出班级</label>
+          <!--<label ><input  type="radio" name="regStatus" value="1" v-model="regStatus">转出班级</label>-->
           <label ><input  type="radio" name="regStatus" value="3" v-model="regStatus">退费班级</label>
 
         </div>
