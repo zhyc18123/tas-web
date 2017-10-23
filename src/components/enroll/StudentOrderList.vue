@@ -29,7 +29,7 @@
       <el-table-column
         prop="counselorName"
         label="咨询师"
-        min-width="100">
+        min-width="80">
       </el-table-column>
       <el-table-column
         prop="totalAmount"
