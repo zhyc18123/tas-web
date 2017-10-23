@@ -59,9 +59,10 @@
           </el-table-column>
           <el-table-column
             label="新生科数完成率">
-      <!--      <template scope="scope">
-              <div>{{Number(scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum === '0' ? '0%' : parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum) | formatNumber(2))*100}}%</div>
-            </template>-->
+            <template scope="scope">
+              <div>{{scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum === '0' ? '0%' :
+                (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 | formatNumber(2)}}%</div>
+            </template>
           </el-table-column>
           <el-table-column
             prop="realOldStudentNum"
@@ -73,9 +74,10 @@
           </el-table-column>
           <el-table-column
             label="老生科数完成率">
-            <!--<template scope="scope">
-              <div>{{Number(scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum === '0' ? '0%' : parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum) |formatNumber(2))*100}}%</div>
-            </template>-->
+            <template scope="scope">
+              <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum === '0' ? '0%' :
+                (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 | formatNumber(2)}}%</div>
+            </template>
           </el-table-column>
           <el-table-column
             prop="nowPeriodNum"
@@ -87,9 +89,10 @@
           </el-table-column>
           <el-table-column
             label="顺期续读率">
-        <!--    <template scope="scope">
-              <div>{{Number(scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum) |formatNumber(2))*100}}%</div>
-            </template>-->
+            <template scope="scope">
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+                (parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum))*100 | formatNumber(2)}}%</div>
+            </template>
           </el-table-column>
           <el-table-column
             prop="targetSequentialNum"
@@ -101,9 +104,10 @@
           </el-table-column>
           <el-table-column
             label="跨期续读率">
-        <!--    <template scope="scope">
-              <div>{{Number(scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum)|formatNumber(2))*100}}%</div>
-            </template>-->
+            <template scope="scope">
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+                (parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum))*100 |formatNumber(2)}}%</div>
+            </template>
           </el-table-column>
           <el-table-column
             prop="targetStepNum"
@@ -134,7 +138,8 @@
           <el-table-column
             label="新生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realNewStudentNum ==null || scope.row.realNewStudentNum === '0' ? '0%' : parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum)}}</div>
+              <div>{{scope.row.realNewStudentNum ==null ||scope.row.targetNewStudentNum ==null || scope.row.realNewStudentNum === '0' ? '0%' :
+                (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -148,7 +153,8 @@
           <el-table-column
             label="老生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realOldStudentNum ==null || scope.row.realOldStudentNum === '0' ? '0%' : parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum)}}</div>
+              <div>{{scope.row.realOldStudentNum ==null ||scope.row.targetOldSudentNum ==null || scope.row.realOldStudentNum === '0' ? '0%' :
+                (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -162,7 +168,8 @@
           <el-table-column
             label="顺期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum)}}</div>
+              <div>{{scope.row.nowPeriodNum ==null ||scope.row.sequentialNum ==null || scope.row.sequentialNum === '0' ? '0%' :
+                (parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -176,7 +183,8 @@
           <el-table-column
             label="跨期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' : parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum)}}</div>
+              <div>{{scope.row.nowPeriodNum ==null ||scope.row.stepNum ==null || scope.row.stepNum === '0' ? '0%' :
+                (parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -233,11 +241,11 @@
       	this.busTeamId = ''
         this.loadPeriodByYear()
       },
-      year(newVal) {
-        if (newVal) {
-          this.loadPeriodByYear()
-        }
-      },
+//      year(newVal) {
+//        if (newVal) {
+//          this.loadPeriodByYear()
+//        }
+//      },
     },
     computed: {
       busTeams: function () {
