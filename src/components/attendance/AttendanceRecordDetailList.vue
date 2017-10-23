@@ -35,7 +35,7 @@
             </div>
           </td>
           <td>
-            <el-button size="small"  @click.native="shiftClass(item.regId ,item.attendClassRecordId )" :disabled="item.shiftStatus != 0 || ( item.isAttendance == 1 && item.attendanceStatus == 0)">临时调班</el-button>
+            <el-button size="small"  @click.native="shiftClass(item.regId ,item.attendClassRecordId )" :disabled="item.shiftStatus != 0 || ( item.isAttendance == 1 && (item.attendanceStatus == 0 || item.attendanceStatus == 2))">临时调班</el-button>
           </td>
         </tr>
 
@@ -91,6 +91,7 @@
       },
       save: function () {
         var _this = this
+        _this.$showLoading()
         io.post(io.apiAdminAttendanceSaveAttendanceRecordDetail, {
           classLectureId: this.attendanceRecord.classLectureId,
           details: JSON.stringify(this.tableData.map(function (item) {
@@ -100,6 +101,7 @@
             }
           }))
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.$toast('保存成功')
             _this.$emit('completed')

@@ -81,7 +81,7 @@
       </div>
     </div>
 
-    <detail-list ref="attendanceRecordDetail" :attendanceRecord="attendanceRecord" @completed="loadTableData();$refs.detailWin.close()"></detail-list>
+    <detail-list ref="attendanceRecordDetail" :attendanceRecord="attendanceRecord" @completed="loadTableData()"></detail-list>
   </div>
 </template>
 <script>
