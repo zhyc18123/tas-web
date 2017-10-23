@@ -108,6 +108,15 @@
           </td>
 
         </tr>
+
+        <tr  v-if="courseOrder.chargingStatus != 2 ">
+          <td class="bgColor">咨询师</td>
+          <td colspan="5">
+            <input required type="text" placeholder="咨询师" class="am-input-sm" style="display:inline;width:300px;"  v-model="formData.counselorName"  readonly @click="setupSenior()">
+            <button type="button" class="am-btn am-btn-default am-btn-sm"  @click="setupSenior()">选择</button>
+          </td>
+        </tr>
+
         </tbody>
       </table>
     </div>
@@ -118,7 +127,7 @@
     </div>
 
     <select-campus ref="selectCampus" @ok="selectCampusCallback" ></select-campus>
-
+    <select-senior ref="selectSenior" @ok="updateSenior"></select-senior>
   </form>
   </window>
 
@@ -142,6 +151,7 @@
 
   import Pagination from '../base/Pagination'
   import SelectCampus from '../teachingresource/SelectCampus'
+  import SelectSenior from '../course/SelectSenior'
 
   export default{
     data: function () {
@@ -158,16 +168,20 @@
           discountAmount:0,
           chargeCampusId: chargeCampus?chargeCampus.campusId : '' ,
           chargeCampusName: chargeCampus?chargeCampus.campusName : '',
+          counselorName:storage.getLogin().realName,
+          counselorId:storage.getLogin().userId
         },
         courseOrder: { },
         payQRCodeUrl : '',
         discountDetail:'无',
-        courseOrderId:''
+        courseOrderId:'',
+        areaTeamId:''
 
       }
     },
     components: {
-      'select-campus':SelectCampus
+      'select-campus':SelectCampus,
+      'select-senior':SelectSenior
     },
     watch: {
       'formData.discountAmount':function(val){
@@ -183,6 +197,18 @@
       $(window).smoothScroll()
     },
     methods: {
+
+      setupSenior:function () {
+
+        this.$refs.selectSenior.query.areaTeamId = this.areaTeamId
+        this.$refs.selectSenior.show()
+      },
+      updateSenior: function (teacher) {
+        var _this = this
+        _this.formData.counselorName=teacher.teacherName
+        _this.formData.counselorId=teacher.teacherId
+
+      },
       check:function(){
 
         if(this.formData.payAmount <= 0 || this.formData.payAmount > ( this.courseOrder.payableAmount - this.courseOrder.paidAmount )){
@@ -207,6 +233,7 @@
                 _this.formData.courseOrderId = ret.data.courseOrder.courseOrderId
                 _this.beforeRenderOrder(ret.data.courseOrder,ret.data.regDetailVos)
                 _this.loadDiscountOfPolicy(ret.data.regDetailVos[0].courseClass.areaTeamId)
+                _this.areaTeamId=ret.data.regDetailVos[0].courseClass.areaTeamId;
               } else {
                 _this.$alert(ret.desc)
               }
