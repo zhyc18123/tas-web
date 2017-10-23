@@ -196,7 +196,7 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0 || scope.row.regAmount == 0 " @click.native="$router.push('/main/attendance/attendance/record/'+scope.row.classId)">考勤</el-button>
+                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push('/main/attendance/attendance/record/'+scope.row.classId)">考勤</el-button>
                 </template>
               </el-table-column>
 
