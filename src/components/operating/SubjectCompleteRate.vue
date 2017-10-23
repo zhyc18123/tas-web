@@ -1,5 +1,14 @@
 <template>
   <div class="subject-complete">
+    <el-select style="position: absolute;top: -50px;left: 176px;" size="small" class="am-u-md-2 am-u-end"
+               :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
+      <el-option
+        v-for="item in busTeams"
+        :key="item.busTeamId"
+        :label="item.name"
+        :value="item.busTeamId">
+      </el-option>
+    </el-select>
     <div class="content">
       <div class="head-opt">
         <el-button-group>
@@ -170,15 +179,14 @@
 <script>
   import io from '../../lib/io'
   import moment from 'moment'
-  import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 
   export default{
-    components: {ElButton},
     data:function(){
       return {
         periodId: '',
         periods: [],
         pageNo: 1,
+        busTeamId: '',
         pageSize: 10,
         sectionId: 3,
         year: moment().years(),
@@ -207,17 +215,21 @@
         ]
       }
     },
-    props: ['areaTeamId', 'busTeamId'],
+    props: ['areaTeamId'],
     watch: {
       areaTeamId(newVal) {
+      	this.busTeamId = ''
         this.loadPeriodByYear()
-        this.getSeniorComletionRate()
-        this.getGradeCompletionRate()
       },
       year(newVal) {
         if (newVal) {
           this.loadPeriodByYear()
         }
+      },
+    },
+    computed: {
+      busTeams: function () {
+        return ( ( this.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.areaTeamId] || [] ) : [] )
       },
     },
     mounted:function(){

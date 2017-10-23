@@ -17,15 +17,15 @@
                     :value="item.areaTeamId">
                   </el-option>
                 </el-select>
-                <el-select v-if="showBusTeam" size="small" class="am-u-md-2 am-u-end"
-                           :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
-                  <el-option
-                    v-for="item in busTeams"
-                    :key="item.busTeamId"
-                    :label="item.name"
-                    :value="item.busTeamId">
-                  </el-option>
-                </el-select>
+                <!--<el-select v-if="showBusTeam" size="small" class="am-u-md-2 am-u-end"-->
+                           <!--:disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">-->
+                  <!--<el-option-->
+                    <!--v-for="item in busTeams"-->
+                    <!--:key="item.busTeamId"-->
+                    <!--:label="item.name"-->
+                    <!--:value="item.busTeamId">-->
+                  <!--</el-option>-->
+                <!--</el-select>-->
               </div>
             </div>
             <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">-->
