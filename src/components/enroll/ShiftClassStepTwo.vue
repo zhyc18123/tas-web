@@ -180,7 +180,6 @@
       Pagination,
     },
     created:function(){
-      console.log('fff')
       this.originClass = this.args['step-one'].originClass
       this.query.areaTeamId  = this.originClass.courseClass.areaTeamId
       this.query.periodId  = this.originClass.courseClass.periodId

@@ -94,6 +94,12 @@
       }
     },
     props: ['regId', 'args'],
+    created:function(){
+      if(this.regId){
+        this.loadTableData(this.regId)
+        this.loadAttend(this.regId)
+      }
+    },
     watch: {
       regId: function (val) {
         if(val){
