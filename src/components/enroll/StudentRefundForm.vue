@@ -256,7 +256,7 @@
           }
 
           if(!/^\d{16}|\d{19}$/.test( this.formData.cardNo )){
-            this.$alert('请确认转账账号是16或19')
+            this.$alert('请确认转账账号是16或19位')
             return
           }
 
