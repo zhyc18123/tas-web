@@ -114,8 +114,11 @@
             </el-table-column>
             <el-table-column
               prop="level"
-              label="层次"
+              label="层级"
               min-width="100">
+              <template scope="scope">
+                {{{ '1':'①不区分', '2':'②尖端','3': '③状元', '4':'④尖子','5':'⑤提高','6':'⑥竞赛','7':'⑦集训队'}[scope.row.level] }}
+              </template>
             </el-table-column>
             <el-table-column
               prop="areaTeamName"
@@ -268,13 +271,12 @@ import Pagination from '../base/Pagination'
             formData.append("file",document.getElementById('uploadFile').files[0]);
             _this.$showLoading()
             io.postMitiFile(io.importCourseExcel,formData,function (ret) {
+              $('#uploadFile').val(null)
               _this.$hiddenLoading()
               if (ret.ok && ret.data.success){
-                $("#courseTemplateFile").val("");
-                document.location.reload()
+                _this.loadTableData(1)
               } else {
                 alert(ret.data.desc || "上传失败");
-                document.location.reload()
               }
 
             })
