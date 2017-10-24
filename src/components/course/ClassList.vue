@@ -160,6 +160,17 @@
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
                   class="am-icon-plus"></span>快速排班
                 </button>-->
+
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        v-if="hasPermission('add')" @click="prepareUpload">
+                  <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
+                  <span class="am-icon-cloud-upload"></span>批量导入
+                </button>
+
+                <a href="http://static.yuyou100.com/%E7%8F%AD%E7%BA%A7%E5%AF%BC%E5%85%A5%E6%A8%A1%E7%89%88v_1.xlsx?attname=班级导入模板.xlsx" class="am-btn am-btn-default am-btn-success ">
+                  <span class="am-icon-download"></span>下载模板
+                </a>
+
               </div>
             </div>
 
@@ -699,7 +710,26 @@
             _this.$alert(ret.desc)
           }
         })
-      }
+      },
+      prepareUpload:function(){
+        $('#uploadFile').click()
+      },
+      uploadExcel:function() {
+        var _this = this;
+        var formData = new FormData();
+        formData.append("file",document.getElementById('uploadFile').files[0]);
+        _this.$showLoading()
+        io.postMitiFile(io.importCourseClassImport,formData,function (ret) {
+          $('#uploadFile').val(null)
+          _this.$hiddenLoading()
+          if (ret.ok && ret.data.success){
+            this.loadTableData(1)
+          } else {
+            alert(ret.data.desc || "上传失败");
+          }
+
+        })
+      },
     }
   }
 </script>

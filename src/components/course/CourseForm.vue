@@ -92,11 +92,13 @@
               <div class="am-u-sm-3 am-u-end input-field">
                 <select2  :disabled="!editable" required  v-model="formData.level"  >
                   <option value="">请选择</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
+                  <option value="1">①不区分</option>
+                  <option value="2">②尖端</option>
+                  <option value="3">③状元</option>
+                  <option value="4">④尖子</option>
+                  <option value="5">⑤提高</option>
+                  <option value="6">⑥竞赛</option>
+                  <option value="7">⑦集训队</option>
                 </select2>
               </div>
             </div>

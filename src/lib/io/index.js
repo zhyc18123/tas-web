@@ -231,6 +231,7 @@ const io = {
     this.apiAdminSettlementDeleteIncomeCategory = conf.baseApiPath + '/api/admin/settlement/deleteIncomeCategory'
 
     this.importCourseExcel= conf.baseApiPath + '/api/admin/courseTemplateImport'
+    this.importCourseClassImport= conf.baseApiPath + '/api/admin/courseClassImport'
 
     this.apiAdminClassHistoryList = conf.baseApiPath + '/api/admin/classHistoryList'
 
@@ -454,7 +455,7 @@ const io = {
     });
   },
   postMitiFile:function (url,data,success) {
-    Vue.http.post(io.importCourseExcel+"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+    Vue.http.post(url +"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
       if (success) success(data);
     })
   },
