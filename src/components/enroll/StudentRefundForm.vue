@@ -272,7 +272,12 @@
           function (ret) {
             _this.$hiddenLoading()
             if (ret.success) {
-              _this.$alert('已接受退款申请')
+                if (_this.formData.refundWay==3){
+                  _this.$alert('退费成功')
+                }else {
+                  _this.$alert('已接受退款申请')
+                }
+
               _this.$refs.win.close()
               _this.$emit('completed')
             } else {
