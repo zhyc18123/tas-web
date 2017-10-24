@@ -95,7 +95,7 @@
               </el-table-column>
               <el-table-column
                 prop="level"
-                label="层次"
+                label="层级"
                 min-width="100">
               </el-table-column>
               <el-table-column

@@ -62,7 +62,7 @@
                 <tr><th :colspan="3+times.length"> {{campus.campusName}}({{period.periodName}})</th></tr>
                 <tr>
                   <th>年级</th>
-                  <th>层次</th>
+                  <th>层级</th>
                   <th>时间</th>
                   <th v-for="time in times">{{time}}</th>
                 </tr>
