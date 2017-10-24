@@ -723,7 +723,7 @@
           $('#uploadFile').val(null)
           _this.$hiddenLoading()
           if (ret.ok && ret.data.success){
-            this.loadTableData(1)
+            _this.loadTableData(1)
           } else {
             alert(ret.data.desc || "上传失败");
           }
