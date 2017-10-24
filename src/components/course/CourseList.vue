@@ -274,6 +274,7 @@ import Pagination from '../base/Pagination'
               $('#uploadFile').val(null)
               _this.$hiddenLoading()
               if (ret.ok && ret.data.success){
+                _this.loadTableData(1)
               } else {
                 alert(ret.data.desc || "上传失败");
               }
