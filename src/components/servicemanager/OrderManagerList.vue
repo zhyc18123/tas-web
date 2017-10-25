@@ -52,112 +52,75 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  名称:
-                </label>
-                <div class="am-u-sm-8 am-u-end  input-field">
-                  <input type="text" name="productName" v-model="query.productName" placeholder=""/>
-                </div>
+                <el-input type="text" name="productName" v-model="query.productName" placeholder="名称"></el-input>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  订单类别:
-                </label>
-                <div class="am-u-sm-6 am-u-end  input-field">
-                  <select2 v-model="query.type">
-                    <option value="">请选择</option>
-                    <option value="0">供应</option>
-                    <option value="2">课室</option>
-                  </select2>
-                </div>
+                <select2 placeholder="订单类别" v-model="query.type">
+                  <option value="">请选择</option>
+                  <option value="0">供应</option>
+                  <option value="2">课室</option>
+                </select2>
               </div>
             </div>
 
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  支付时间:
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginPayTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
-                </date-picker>
-              </div>
-            </div>
-
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  到
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endPayTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
-                </date-picker>
-              </div>
-            </div>
-
-
-
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  申请退款时间:
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginRefundTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
-                </date-picker>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  到
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endRefundTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
+                <date-picker v-model="query.beginPayTime">
+                  <input type="text" placeholder="支付时间-开始" data-am-datepicker readonly required>
                 </date-picker>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  付款状态:
-                </label>
-                <div class="am-u-sm-6 am-u-end  input-field">
-                  <select2 v-model="query.chargingStatus">
-                    <option value="">请选择</option>
-                    <option value="0">未付款</option>
-                    <option value="2">已付款</option>
-                    <option value="5">已退款</option>
-                    <option value="6">申请退款中</option>
-                  </select2>
-                </div>
+                <date-picker v-model="query.endPayTime">
+                  <input type="text" placeholder="支付时间-结束" data-am-datepicker readonly required>
+                </date-picker>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
+              <div class="am-form-group">
+                <date-picker v-model="query.beginRefundTime">
+                  <input type="text" placeholder="申请退款时间-开始" data-am-datepicker readonly required>
+                </date-picker>
+              </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <date-picker v-model="query.endRefundTime">
+                  <input type="text" placeholder="申请退款时间-结束" data-am-datepicker readonly required>
+                </date-picker>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 placeholder="付款状态" v-model="query.chargingStatus">
+                  <option value="">请选择</option>
+                  <option value="0">未付款</option>
+                  <option value="2">已付款</option>
+                  <option value="5">已退款</option>
+                  <option value="6">申请退款中</option>
+                </select2>
               </div>
             </div>
 
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  订单状态:
-                </label>
-                <div class="am-u-sm-6 am-u-end  input-field">
-                  <select2 v-model="query.orderStatus">
-                    <option value="">请选择</option>
-                    <option value="0">未付款</option>
-                    <option value="2">已付款</option>
-                    <option value="5">已退款</option>
-                    <option value="6">退款中</option>
-                    <option value="7">已发货</option>
-                    <option value="8">已收货</option>
-                  </select2>
-                </div>
+                <select2 placeholder="订单状态" v-model="query.orderStatus">
+                  <option value="">请选择</option>
+                  <option value="0">未付款</option>
+                  <option value="2">已付款</option>
+                  <option value="5">已退款</option>
+                  <option value="6">退款中</option>
+                  <option value="7">已发货</option>
+                  <option value="8">已收货</option>
+                </select2>
               </div>
             </div>
 
@@ -240,14 +203,8 @@
                         @paging="loadTableData"/>
           </div>
         </div>
-        <window ref="productRefund" title="供应退费申请">
-          <order-item-refund :orderItemId="orderItemId"
-                             @refundApply="$refs.productRefund.close()"></order-item-refund>
-        </window>
       </div>
     </div>
-  </div>
-  </div>
   </div>
 </template>
 

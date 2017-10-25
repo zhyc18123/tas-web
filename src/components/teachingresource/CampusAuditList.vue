@@ -8,86 +8,54 @@
       <div class="widget-body  am-fr">
         <div class="am-u-sm-12 am-form search-div">
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                校区名:
-              </label>
-              <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="campusName" v-model="query.campusName" placeholder=""/>
-              </div>
+              <el-input type="text" name="campusName" v-model="query.campusName" placeholder="校区名"></el-input>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                联系人:
-              </label>
-              <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="username" v-model="query.username" placeholder=""/>
-              </div>
+                <el-input type="text" name="username" v-model="query.username" placeholder="联系人"></el-input>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                手机号:
-              </label>
-              <div class="am-u-sm-8 am-u-end  input-field">
-                <input type="text" name="userPhoneNo" v-model="query.userPhoneNo" placeholder=""/>
-              </div>
+                <el-input type="text" name="userPhoneNo" v-model="query.userPhoneNo" placeholder="手机号"></el-input>
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-5 am-padding-top-xs ">
-                申请日期:
-              </label>
-              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginTime">
-                <input type="text" placeholder="" data-am-datepicker readonly required>
+              <date-picker class="" v-model="query.beginTime">
+                <input type="text" placeholder="开始时间" data-am-datepicker readonly required>
               </date-picker>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                到
-              </label>
-              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endTime">
-                <input type="text" placeholder="" data-am-datepicker readonly required>
+              <date-picker class="" v-model="query.endTime">
+                <input type="text" placeholder="结束时间" data-am-datepicker readonly required>
               </date-picker>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-5 am-padding-top-xs ">
-                审核状态:
-              </label>
-              <div class="am-u-sm-6 am-u-end  input-field">
-                <select2 v-model="query.state">
-                  <option value="">请选择</option>
-                  <option value="0">待审核</option>
-                  <option value="1">通过</option>
-                  <option value="2">不通过</option>
-                </select2>
-              </div>
+              <select2 v-model="query.state" placeholder="审核状态">
+                <option value="">请选择</option>
+                <option value="0">待审核</option>
+                <option value="1">通过</option>
+                <option value="2">不通过</option>
+              </select2>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-10 am-u-end">
-            <div class="am-form-group">
-
-            </div>
-
-          </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
+          <div style="float:left;padding-left: 10px;padding-right: 10px;">
             <div class="am-form-group">
               <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
                       @click="$router.push('/main/sys/campus/new/add')"><span class="am-icon-plus"></span>新增
               </button>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-1 am-u-end">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search"><span class="am-icon-search"></span>查询

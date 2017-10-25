@@ -6,14 +6,14 @@
           <div class="widget-title  am-cf">管理需求</div>
         </div>
 
-        <div class="am-u-sm-3">
+        <div class="am-u-sm-3 service-manager-nav">
           <div class="am-u-sm-4">
             <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
           </div>
           <div class="am-u-sm-4">
             <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
           </div>
-          <div class="am-u-sm-4">
+          <div class="am-u-sm-4 active">
             <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
           </div>
           <!--   <div class="am-u-sm-2">
@@ -30,49 +30,33 @@
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form">
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  用户名:
-                </label>
-                <div class="am-u-sm-8 am-u-end  input-field">
-                  <input type="text" name="className" v-model="query.sellerName" placeholder=""/>
-                </div>
+                <input type="text" name="className" v-model="query.sellerName" placeholder="用户名"/>
               </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  手机号:
-                </label>
-                <div class="am-u-sm-8 am-u-end  input-field">
-                  <input type="text" name="className" v-model="query.sellerPhoneNo" placeholder=""/>
-                </div>
+                <input type="text" name="className" v-model="query.sellerPhoneNo" placeholder="手机号"/>
               </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-5 am-padding-top-xs ">
-                  发布时间:
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
+                <date-picker v-model="query.beginTime">
+                  <input type="text" placeholder="开始时间" data-am-datepicker readonly required>
                 </date-picker>
               </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <label class="am-u-sm-4 am-padding-top-xs ">
-                  到
-                </label>
-                <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endTime">
-                  <input type="text" placeholder="" data-am-datepicker readonly required>
+                <date-picker v-model="query.endTime">
+                  <input type="text" placeholder="结束时间" data-am-datepicker readonly required>
                 </date-picker>
               </div>
             </div>
 
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-2 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search"><span class="am-icon-search"></span>查询
@@ -136,14 +120,8 @@
                         @paging="loadTableData"/>
           </div>
         </div>
-        <window ref="productRefund" title="供应退费申请">
-          <order-item-refund :orderItemId="orderItemId"
-                             @refundApply="$refs.productRefund.close()"></order-item-refund>
-        </window>
       </div>
     </div>
-  </div>
-  </div>
   </div>
 </template>
 
@@ -264,3 +242,30 @@
     }
   }
 </script>
+<style lang="less">
+  .service-manager-nav {
+    margin: 10px 0 10px 12px;
+    background: #eef1f6;
+    font-size: 14px;
+    padding: 0;
+    border: 1px solid #dfe6ec;
+    .am-u-sm-4 {
+      text-align: center;
+      padding: 5px;
+    }
+    .active {
+      background-color: #ffffff;
+
+      a {
+        color: #4db3ff;
+      }
+    }
+    a {
+      color: #666666;
+      display: block;
+      &:hover {
+        color: #333333;
+      }
+    }
+  }
+</style>
