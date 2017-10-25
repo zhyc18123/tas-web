@@ -42,7 +42,6 @@
         <el-table
           :data="gradeCompletionRate"
           border
-          show-summary
           empty-text="请选择期数"
           stripe
           style="min-width: 100%">
@@ -61,7 +60,8 @@
           <el-table-column
             label="新生科数完成率">
             <template scope="scope">
-              <div>20%</div>
+              <div>{{scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum === '0' ? '0%' :
+                (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -120,7 +120,6 @@
         <el-table
           :data="seniorComletionRate"
           border
-          show-summary
           empty-text="请选择期数"
           stripe
           style="min-width: 100%">
@@ -308,6 +307,34 @@
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
+            let summary = {
+              seniorName : "总计",
+              realNewStudentNum: 0,
+              targetNewStudentNum: 0,
+              realOldStudentNum: 0,
+              targetOldSudentNum: 0,
+              nowPeriodNum: 0,
+              sequentialNum: 0,
+              targetSequentialNum: 0,
+              stepNum: 0,
+              targetStepNum: 0,
+            }
+            if (ret.data.length > 0) {
+              ret.data.map((val) => {
+                summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
+                summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
+                summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)
+                summary.targetOldSudentNum += (val.targetOldSudentNum ? Number(val.targetOldSudentNum): 0)
+                summary.nowPeriodNum += (val.nowPeriodNum ? Number(val.nowPeriodNum): 0)
+                summary.sequentialNum += (val.sequentialNum ? Number(val.sequentialNum): 0)
+                summary.targetSequentialNum += (val.targetSequentialNum ? Number((val.targetSequentialNum).split('%')[0]): 0)
+                summary.stepNum += (val.stepNum ? Number(val.stepNum): 0)
+                summary.targetStepNum += (val.targetStepNum ? Number((val.targetStepNum).split('%')[0]): 0)
+              })
+              summary.targetSequentialNum = summary.targetSequentialNum + '%'
+              summary.targetStepNum = summary.targetStepNum + '%'
+              ret.data.push(summary)
+            }
             _this.seniorComletionRate = ret.data.list
           }else{
             _this.$alert(ret.desc)
@@ -337,6 +364,34 @@
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
+            let summary = {
+              gradeName : "总计",
+              realNewStudentNum: 0,
+              targetNewStudentNum: 0,
+              realOldStudentNum: 0,
+              targetOldSudentNum: 0,
+              nowPeriodNum: 0,
+              sequentialNum: 0,
+              targetSequentialNum: 0,
+              stepNum: 0,
+              targetStepNum: 0,
+            }
+            if (ret.data.length > 0) {
+              ret.data.map((val) => {
+                summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
+                summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
+                summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)
+                summary.targetOldSudentNum += (val.targetOldSudentNum ? Number(val.targetOldSudentNum): 0)
+                summary.nowPeriodNum += (val.nowPeriodNum ? Number(val.nowPeriodNum): 0)
+                summary.sequentialNum += (val.sequentialNum ? Number(val.sequentialNum): 0)
+                summary.targetSequentialNum += (val.targetSequentialNum ? Number((val.targetSequentialNum).split('%')[0]): 0)
+                summary.stepNum += (val.stepNum ? Number(val.stepNum): 0)
+                summary.targetStepNum += (val.targetStepNum ? Number((val.targetStepNum).split('%')[0]): 0)
+              })
+              summary.targetSequentialNum = summary.targetSequentialNum + '%'
+              summary.targetStepNum = summary.targetStepNum + '%'
+              ret.data.push(summary)
+            }
             _this.gradeCompletionRate = ret.data
           }else{
             _this.$alert(ret.desc)
@@ -362,8 +417,8 @@
       }
       .head-opt {
         text-align: center;
-        height: 36px;
-        line-height: 36px;
+        /*height: 36px;*/
+        /*line-height: 36px;*/
         /*width: 650px;*/
         margin: 0 auto 20px;
         &>div {
