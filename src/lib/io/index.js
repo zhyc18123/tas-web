@@ -457,7 +457,7 @@ const io = {
     });
   },
   postMitiFile:function (url,data,success) {
-    Vue.http.post(url +"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+    Vue.http.post(url +"?accessToken="+this.getHeaders().accessToken,data ,{timeout : 0 }).then(data=>{
       if (success) success(data);
     })
   },
