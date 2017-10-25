@@ -26,16 +26,20 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <date-picker class="" v-model="query.beginTime">
-                <input type="text" placeholder="开始时间" data-am-datepicker readonly required>
-              </date-picker>
+              <el-date-picker
+                v-model="query.beginTime"
+                type="date"
+                placeholder="开始时间">
+              </el-date-picker>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
             <div class="am-form-group">
-              <date-picker class="" v-model="query.endTime">
-                <input type="text" placeholder="结束时间" data-am-datepicker readonly required>
-              </date-picker>
+              <el-date-picker
+                v-model="query.endTime"
+                type="date"
+                placeholder="结束时间">
+              </el-date-picker>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
@@ -222,6 +226,7 @@
 
 <script>
   import io from '../../lib/io'
+  import moment from 'moment'
   import Pagination from '../base/Pagination'
   import ChangeCampusState from './ChangeCampusState'
   export default{
@@ -260,7 +265,10 @@
         io.post(io.apiAdminAuditCampusList, $.extend({
           pageSize: _this.pageSize,
           pageNo: _this.pageNo
-        }, _this.query), function (ret) {
+        }, _this.query, {
+            beginTime: moment(this.query.beginTime).format('YYYY-MM-DD'),
+            endTime: moment(this.query.endTime).format('YYYY-MM-DD')
+        }), function (ret) {
           if (ret.success) {
             _this.tableData = ret.data.list
             _this.total = ret.data.total

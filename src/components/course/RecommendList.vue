@@ -123,6 +123,7 @@
 </template>
 <script>
   import io from '../../lib/io'
+  import moment from 'moment'
   import Pagination from '../base/Pagination'
 
 
@@ -153,7 +154,7 @@
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           isRecommend : _this.isRecommend
-        }, _this.query), function (ret) {
+        }, _this.query, {startCourseTime: moment(this.query.startCourseTime).format('YYYY-MM-DD')}), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list

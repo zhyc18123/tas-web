@@ -1326,6 +1326,6 @@ html::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
   padding-right: 35px!important;
   height: 30px!important;
 }
-input {
-  height: 30px!important;
+.el-date-editor.el-input {
+  width: 100%;
 }

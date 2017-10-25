@@ -12,12 +12,15 @@
     <div class="content">
       <div class="head-opt">
         <el-button-group>
-          <el-button @click="active = 1" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
-          <el-button @click="active = 0" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
+          <el-button @click="active = 1" size="small" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
+          <el-button @click="active = 0" size="small" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
         </el-button-group>
-        <date-picker v-model="year" >
-          <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-        </date-picker>
+        <el-date-picker
+          style="width: 193px"
+          v-model="year"
+          type="year"
+          placeholder="请选择年份">
+        </el-date-picker>
         <div>
           <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
@@ -209,7 +212,7 @@
         busTeamId: '',
         pageSize: 10,
         sectionId: 3,
-        year: moment().years(),
+        year: moment(),
         active: 1,
         seniorComletionRate:[],
         gradeCompletionRate:[],
@@ -240,6 +243,11 @@
       areaTeamId(newVal) {
         this.busTeamId = ''
         this.loadPeriodByYear()
+      },
+      year(newVal) {
+        if (newVal) {
+          this.loadPeriodByYear()
+        }
       },
       active(newVal) {
         if (newVal === 0) {
@@ -274,7 +282,7 @@
         }
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: moment(this.year).format("YYYY"),
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
