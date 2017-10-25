@@ -142,6 +142,7 @@ const SellerLeaseDetail = resolve => require(['./components/seller/SellerLeaseDe
 
 const AttendanceCourseClassList = resolve => require(['./components/attendance/AttendanceCourseClassList'], resolve)
 const AttendanceRecordList = resolve => require(['./components/attendance/AttendanceRecordList'], resolve)
+const QueryAttendanceList = resolve => require(['./components/attendance/QueryAttendanceList'], resolve)
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
 const AggregationConsumeList = resolve => require(['./components/report/AggregationConsumeList'], resolve)
@@ -314,6 +315,7 @@ const router = new VueRouter({
 
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
       {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },
+      {path: 'attendance/attendanceQuery/list', component:QueryAttendanceList },
 
       {path: 'report/charge/list', component:ChargeList },
       {path: 'report/consumeAggregation/list', component:AggregationConsumeList },
