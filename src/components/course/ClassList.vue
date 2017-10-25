@@ -727,8 +727,9 @@
           _this.$hiddenLoading()
           if (ret.ok && ret.data.success){
             _this.loadTableData(1)
+            _this.$alert('导入成功');
           } else {
-            alert(ret.data.desc || "上传失败");
+            _this.$alert(ret.data.desc || "上传失败");
           }
 
         })

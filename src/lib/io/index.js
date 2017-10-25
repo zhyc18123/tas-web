@@ -270,6 +270,8 @@ const io = {
     this.apiAdminAttendanceAttendanceRecordList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordList'
     this.apiAdminAttendanceAttendanceRecordDetailList = conf.baseApiPath + '/api/admin/attendance/attendanceRecordDetailList'
     this.apiAdminAttendanceSaveAttendanceRecordDetail = conf.baseApiPath + '/api/admin/attendance/saveAttendanceRecordDetail'
+    this.apiAdminAttendanceAttendClassRecordDetailList = conf.baseApiPath + '/api/admin/attendance/attendClassRecordDetailList'
+    this.apiAdminAttendanceExportAttendClassRecordDetail = conf.baseApiPath + '/api/admin/attendance/exportAttendClassRecordDetail'
 
 
     this.apiAdminStudentMainAccount = conf.baseApiPath + '/api/admin/studentMainAccount'
@@ -455,7 +457,7 @@ const io = {
     });
   },
   postMitiFile:function (url,data,success) {
-    Vue.http.post(url +"?accessToken="+this.getHeaders().accessToken,data).then(data=>{
+    Vue.http.post(url +"?accessToken="+this.getHeaders().accessToken,data ,{timeout : 0 }).then(data=>{
       if (success) success(data);
     })
   },
