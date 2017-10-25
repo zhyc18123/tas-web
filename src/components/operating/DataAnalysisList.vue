@@ -7,9 +7,9 @@
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12">
-            <div class="am-u-sm-12" style="padding-left: 0;margin-bottom: 20px;">
+            <div class="am-u-sm-12" style="padding-left: 0;margin-bottom: 10px;">
               <div class="am-form-group">
-                <el-select size="small" @change="handleAreaTeamIdChange" v-model="areaTeamId" class="am-u-md-2" placeholder="请选择区域">
+                <el-select size="small" @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择区域">
                   <el-option
                     v-for="item in areaTeams"
                     :key="item.areaTeamId"

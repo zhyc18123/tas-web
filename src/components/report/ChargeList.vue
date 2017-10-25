@@ -142,17 +142,21 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <date-picker v-model="query.startDate" >
-                  <input type="text" placeholder="请选择开始日期" data-am-datepicker readonly required >
-                </date-picker>
+                <el-date-picker
+                  v-model="query.startDate"
+                  type="date"
+                  placeholder="请选择开始日期">
+                </el-date-picker>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <date-picker v-model="query.endDate" >
-                  <input type="text" placeholder="请选择结束日期" data-am-datepicker readonly required >
-                </date-picker>
+                <el-date-picker
+                  v-model="query.endDate"
+                  type="date"
+                  placeholder="请选择结束日期">
+                </el-date-picker>
               </div>
             </div>
 
@@ -380,6 +384,7 @@
 </template>
 <script>
   import io from '../../lib/io'
+  import moment from 'moment'
   import util from '../../lib/util'
   import Pagination from '../base/Pagination'
 
@@ -450,7 +455,10 @@
         io.post(io.apiAdminReportChargeList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+        }, _this.query, {
+          startDate: moment(this.query.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.query.endDate).format('YYYY-MM-DD')
+        }), function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
@@ -527,7 +535,10 @@
         })
       },
       exportExcel:function(){
-        io.downloadFile(io.apiAdminReportExportCharge,this.query)
+        io.downloadFile(io.apiAdminReportExportCharge,$.extend(this.query, {
+          startDate: moment(this.query.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.query.endDate).format('YYYY-MM-DD')
+        }))
       },
       handleSelectionChange:function (selection) {
         this.selection = selection

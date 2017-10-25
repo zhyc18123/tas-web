@@ -255,9 +255,9 @@
       }
       .head-opt {
         text-align: center;
-        height: 36px;
-        line-height: 36px;
-        width: 550px;
+        /*height: 36px;*/
+        /*line-height: 36px;*/
+        /*width: 550px;*/
         margin: 0 auto 20px;
         &>div {
           display: inline-block;

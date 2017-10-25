@@ -35,11 +35,11 @@
               label="姓名"
               min-width="100">
             </el-table-column>
-            <el-table-column
-              prop="idNo"
-              label="身份证号码"
-              min-width="200">
-            </el-table-column>
+            <!--<el-table-column-->
+              <!--prop="idNo"-->
+              <!--label="身份证号码"-->
+              <!--min-width="200">-->
+            <!--</el-table-column>-->
             <el-table-column
               label="性别"
               min-width="100">

@@ -7,7 +7,7 @@ import ADialog from './Dialog'
 import AMConfirm from './Confirm'
 import AMPrompt from './Prompt'
 import AMToast from './Toast.vue'
-import DatePicker from './DatePicker'
+import AMDatePicker from './DatePicker'
 import Selected from './Selected'
 //import FileUpload from './FileUpload'
 //import Editor from './Editor'
@@ -45,6 +45,7 @@ import {
   ButtonGroup,
   MenuItem,
   Menu,
+  DatePicker
 } from 'element-ui'
 var VueUI = function(){
 
@@ -118,7 +119,7 @@ VueUI.install = function (Vue){
     return this.$router.currentRoute.params[name] ;
   }
 
-  Vue.component('date-picker',DatePicker)
+  Vue.component('date-picker',AMDatePicker)
   Vue.component('selected',Selected)
   Vue.component('file-upload',FileUpload)
   Vue.component('editor',Editor)
@@ -149,7 +150,7 @@ VueUI.install = function (Vue){
   Vue.component(ButtonGroup.name,ButtonGroup)
   Vue.component(MenuItem.name,MenuItem)
   Vue.component(Menu.name,Menu)
-  // Vue.component(ElDatePicker.name,ElDatePicker)
+  Vue.component(DatePicker.name,DatePicker)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )

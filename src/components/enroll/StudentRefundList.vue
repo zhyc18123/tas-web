@@ -34,7 +34,7 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both;">
             <div class="am-form-group">
               <select2  v-model="query.status" >
                 <option value="">处理状态</option>
@@ -55,11 +55,11 @@
           </div>
 
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search" ><span class="am-icon-search"></span>查询
-                </button>
+              </button>
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="exportStudentRefund" ><span class="am-icon-download"></span>导出
               </button>
@@ -91,7 +91,7 @@
               min-width="200">
               <template scope="scope">
                 {{scope.row.createTime | formatTime }}
-            </template>
+              </template>
             </el-table-column>
             <el-table-column
               prop="refundLecture"

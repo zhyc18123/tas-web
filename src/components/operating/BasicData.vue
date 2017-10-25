@@ -345,9 +345,9 @@
       margin-bottom: 30px;
       .head-opt {
         text-align: center;
-        height: 36px;
-        line-height: 36px;
-        width: 500px;
+        /*height: 36px;*/
+        /*line-height: 36px;*/
+        /*width: 500px;*/
         margin: 0 auto;
         margin-bottom: 30px;
         .el-button-group {
@@ -384,9 +384,9 @@
       }
       .head-opt {
         text-align: center;
-        height: 36px;
-        line-height: 36px;
-        width: 500px;
+        /*height: 36px;*/
+        /*line-height: 36px;*/
+        /*width: 500px;*/
         margin: 0 auto;
 
       }

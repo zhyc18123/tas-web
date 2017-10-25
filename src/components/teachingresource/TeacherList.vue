@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="sys-teacher-list">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
@@ -249,12 +249,17 @@
   }
 </script>
 
-<style scope>
-  .button-export{
-    margin-left: -38px;
-    font-size: 14px;
-  }
-  .button-search{
-    font-size: 14px;
+<style lang="less">
+  .sys-teacher-list {
+    .button-export{
+      margin-left: -38px;
+      font-size: 14px;
+    }
+    .button-search{
+      font-size: 14px;
+    }
+    .am-selected {
+      width: 100%;
+    }
   }
 </style>

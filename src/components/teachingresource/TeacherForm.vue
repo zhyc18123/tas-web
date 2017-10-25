@@ -130,11 +130,11 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>入职日期
+                入职日期
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
                 <date-picker v-model="formData.joinTime" >
-                  <input type="text" placeholder="请选择入职日期" data-am-datepicker readonly required >
+                  <input type="text" placeholder="请选择入职日期" data-am-datepicker readonly  >
                 </date-picker>
               </div>
             </div>
@@ -207,10 +207,10 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>老师签名
+                老师签名
               </label>
               <div class="am-u-sm-9 input-field">
-                <input type="text" class="am-form-field" placeholder="请输入签名"  maxlength="100" required v-model="formData.signature"/>
+                <input type="text" class="am-form-field" placeholder="请输入签名"  maxlength="100"  v-model="formData.signature"/>
               </div>
             </div>
 

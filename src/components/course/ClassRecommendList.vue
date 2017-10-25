@@ -124,9 +124,11 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <date-picker v-model="query.startCourseTime" >
-                  <input type="text" placeholder="请选择开课日期" data-am-datepicker readonly required >
-                </date-picker>
+                <el-date-picker
+                  v-model="query.startCourseTime"
+                  type="date"
+                  placeholder="请选择开课日期">
+                </el-date-picker>
               </div>
             </div>
 

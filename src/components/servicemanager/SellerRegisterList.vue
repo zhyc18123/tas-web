@@ -8,49 +8,38 @@
       <div class="widget-body  am-fr">
         <div class="am-u-sm-12 am-form">
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-                <el-input placeholder="用户名" type="text" name="className" v-model="query.merchantName" ></el-input>
+                <el-input placeholder="用户名" size="small" type="text" name="className" v-model="query.merchantName" ></el-input>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
                 <el-input type="text" name="className" v-model="query.phoneNo" placeholder="手机号"></el-input>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                申请日期:
-              </label>
-              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.beginTime">
-                <input type="text" placeholder="" data-am-datepicker readonly required>
+              <date-picker v-model="query.beginTime">
+                <input type="text" placeholder="开始时间" data-am-datepicker readonly required>
               </date-picker>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-2 am-padding-top-xs ">
-                到
-              </label>
-              <date-picker class="am-u-sm-7 am-u-end  input-field" v-model="query.endTime">
-                <input type="text" placeholder="" data-am-datepicker readonly required>
+              <date-picker v-model="query.endTime">
+                <input type="text" placeholder="结束时间" data-am-datepicker readonly required>
               </date-picker>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <label class="am-u-sm-4 am-padding-top-xs ">
-                审核状态:
-              </label>
-              <div class="am-u-sm-6 am-u-end  input-field">
-                <select2 v-model="query.status">
-                  <option value="">请选择</option>
-                  <option value="0">待审核</option>
-                  <option value="1">通过</option>
-                  <option value="2">不通过</option>
-                </select2>
-              </div>
+              <select2 placeholder="审核状态" v-model="query.status">
+                <option value="">请选择</option>
+                <option value="0">待审核</option>
+                <option value="1">通过</option>
+                <option value="2">不通过</option>
+              </select2>
             </div>
           </div>
 

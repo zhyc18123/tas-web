@@ -1,6 +1,6 @@
 <template>
   <div class="subject-complete">
-    <el-select style="position: absolute;top: -50px;left: 176px;" size="small" class="am-u-md-2 am-u-end"
+    <el-select style="position: absolute;top: -57px;left: 207px;" size="small"
                :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
       <el-option
         v-for="item in busTeams"
@@ -12,14 +12,17 @@
     <div class="content">
       <div class="head-opt">
         <el-button-group>
-          <el-button @click="active = 1" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
-          <el-button @click="active = 0" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
+          <el-button @click="active = 1" size="small" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
+          <el-button @click="active = 0" size="small" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
         </el-button-group>
-        <date-picker v-model="year" >
-          <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-        </date-picker>
+        <el-date-picker
+          style="width: 193px"
+          v-model="year"
+          type="year"
+          placeholder="请选择年份">
+        </el-date-picker>
         <div>
-          <el-select @change="getSeniorComletionRate();getGradeCompletionRate();" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
+          <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
               v-for="item in periods"
               :key="item.periodId"
@@ -27,7 +30,7 @@
               :value="item.periodId">
             </el-option>
           </el-select>
-          <el-select @change="getGradeCompletionRate();" v-show="active === 1" v-model="sectionId" placeholder="请选择年级">
+          <el-select v-show="active === 1" v-model="sectionId" placeholder="请选择年级">
             <el-option
               v-for="item in sections"
               :key="item.sectionId"
@@ -209,7 +212,7 @@
         busTeamId: '',
         pageSize: 10,
         sectionId: 3,
-        year: moment().years(),
+        year: moment(),
         active: 1,
         seniorComletionRate:[],
         gradeCompletionRate:[],
@@ -238,14 +241,19 @@
     props: ['areaTeamId'],
     watch: {
       areaTeamId(newVal) {
-      	this.busTeamId = ''
+        this.busTeamId = ''
         this.loadPeriodByYear()
       },
-//      year(newVal) {
-//        if (newVal) {
-//          this.loadPeriodByYear()
-//        }
-//      },
+      year(newVal) {
+        if (newVal) {
+          this.loadPeriodByYear()
+        }
+      },
+      active(newVal) {
+        if (newVal === 0) {
+          this.getSeniorComletionRate()
+        }
+      },
     },
     computed: {
       busTeams: function () {
@@ -261,7 +269,7 @@
     },
     methods:{
       handleFind() {
-      	if(this.active === 0) {
+        if(this.active === 0) {
           this.getSeniorComletionRate()
         } else {
           this.getGradeCompletionRate()
@@ -274,7 +282,7 @@
         }
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: moment(this.year).format("YYYY"),
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
@@ -307,6 +315,34 @@
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
+            let summary = {
+              seniorName : "总计",
+              realNewStudentNum: 0,
+              targetNewStudentNum: 0,
+              realOldStudentNum: 0,
+              targetOldSudentNum: 0,
+              nowPeriodNum: 0,
+              sequentialNum: 0,
+              targetSequentialNum: 0,
+              stepNum: 0,
+              targetStepNum: 0,
+            }
+            if (ret.data.length > 0) {
+              ret.data.map((val) => {
+                summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
+                summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
+                summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)
+                summary.targetOldSudentNum += (val.targetOldSudentNum ? Number(val.targetOldSudentNum): 0)
+                summary.nowPeriodNum += (val.nowPeriodNum ? Number(val.nowPeriodNum): 0)
+                summary.sequentialNum += (val.sequentialNum ? Number(val.sequentialNum): 0)
+                summary.targetSequentialNum += (val.targetSequentialNum ? Number((val.targetSequentialNum).split('%')[0]): 0)
+                summary.stepNum += (val.stepNum ? Number(val.stepNum): 0)
+                summary.targetStepNum += (val.targetStepNum ? Number((val.targetStepNum).split('%')[0]): 0)
+              })
+              summary.targetSequentialNum = summary.targetSequentialNum + '%'
+              summary.targetStepNum = summary.targetStepNum + '%'
+              ret.data.push(summary)
+            }
             _this.seniorComletionRate = ret.data.list
           }else{
             _this.$alert(ret.desc)
@@ -336,6 +372,34 @@
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
+            let summary = {
+              gradeName : "总计",
+              realNewStudentNum: 0,
+              targetNewStudentNum: 0,
+              realOldStudentNum: 0,
+              targetOldSudentNum: 0,
+              nowPeriodNum: 0,
+              sequentialNum: 0,
+              targetSequentialNum: 0,
+              stepNum: 0,
+              targetStepNum: 0,
+            }
+            if (ret.data.length > 0) {
+              ret.data.map((val) => {
+                summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
+                summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
+                summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)
+                summary.targetOldSudentNum += (val.targetOldSudentNum ? Number(val.targetOldSudentNum): 0)
+                summary.nowPeriodNum += (val.nowPeriodNum ? Number(val.nowPeriodNum): 0)
+                summary.sequentialNum += (val.sequentialNum ? Number(val.sequentialNum): 0)
+                summary.targetSequentialNum += (val.targetSequentialNum ? Number((val.targetSequentialNum).split('%')[0]): 0)
+                summary.stepNum += (val.stepNum ? Number(val.stepNum): 0)
+                summary.targetStepNum += (val.targetStepNum ? Number((val.targetStepNum).split('%')[0]): 0)
+              })
+              summary.targetSequentialNum = summary.targetSequentialNum + '%'
+              summary.targetStepNum = summary.targetStepNum + '%'
+              ret.data.push(summary)
+            }
             _this.gradeCompletionRate = ret.data
           }else{
             _this.$alert(ret.desc)
@@ -361,8 +425,8 @@
       }
       .head-opt {
         text-align: center;
-        height: 36px;
-        line-height: 36px;
+        /*height: 36px;*/
+        /*line-height: 36px;*/
         /*width: 650px;*/
         margin: 0 auto 20px;
         &>div {
