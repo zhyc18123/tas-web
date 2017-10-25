@@ -154,7 +154,7 @@
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           isRecommend : _this.isRecommend
-        }, _this.query, {startCourseTime: moment(this.query.startCourseTime).format('YYYY-MM-DD')}), function (ret) {
+        }, _this.query, {startCourseTime: this.query.startCourseTime ? moment(this.query.startCourseTime).format('YYYY-MM-DD') : ''}), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list

@@ -6,21 +6,25 @@
           <div class="widget-title am-fl">业务组统计</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-form-group" style="line-height: 38px;">
+          <div class="am-form-group">
             <div class="am-u-sm-12">
-              <div class="am-u-md-2">
+              <div class="am-u-md-3">
                 <div class="am-form-group">
-                  <date-picker v-model="formData.startDate">
-                    <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-                  </date-picker>
+                  <el-date-picker
+                    v-model="formData.startDate"
+                    type="date"
+                    placeholder="开始日期">
+                  </el-date-picker>
                 </div>
               </div>
 
-              <div class="am-u-md-2" style="float: left">
+              <div class="am-u-md-3">
                 <div class="am-form-group">
-                  <date-picker v-model="formData.endDate">
-                    <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-                  </date-picker>
+                  <el-date-picker
+                    v-model="formData.endDate"
+                    type="date"
+                    placeholder="结束日期">
+                  </el-date-picker>
                 </div>
               </div>
                 <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
@@ -77,8 +81,8 @@
                   <template scope="scope">
                     <router-link :to="'/main/operating/businessStatistics/costIncomeList?busTeamId=' +
                      scope.row.mainAcoountId+ '&areaTeamId=' +scope.row.parentMainAccountId +
-                      '&name=' + scope.row.name + '&startDate=' + formData.startDate+
-                     '&endDate=' + formData.endDate + '&activeName=cost'" tag="a">详情</router-link>
+                      '&name=' + scope.row.name + '&startDate=' +formatStartDate+
+                     '&endDate=' + formatEndDate + '&activeName=cost'" tag="a">详情</router-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -111,9 +115,14 @@
         ],
       }
     },
-//    components: {
-//      Pagination
-//    },
+    computed: {
+    	formatStartDate() {
+    		return moment(this.formData.startDate).format('YYYY-MM-DD')
+      },
+      formatEndDate() {
+    		return moment(this.formData.endDate).format('YYYY-MM-DD')
+      },
+    },
     mounted:function(){
       $(window).smoothScroll()
     },
@@ -138,7 +147,10 @@
       loadTableData:function(){
         var _this = this;
         _this.$showLoading()
-        io.post(io.findMainAccountCostAndIncome,this.formData,function(ret){
+        io.post(io.findMainAccountCostAndIncome,Object.assign({},this.formData, {
+        	  startDate: this.formatStartDate,
+            endDate: this.formatEndDate
+          }),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data

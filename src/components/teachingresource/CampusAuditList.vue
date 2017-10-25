@@ -266,8 +266,8 @@
           pageSize: _this.pageSize,
           pageNo: _this.pageNo
         }, _this.query, {
-            beginTime: moment(this.query.beginTime).format('YYYY-MM-DD'),
-            endTime: moment(this.query.endTime).format('YYYY-MM-DD')
+            beginTime: this.query.beginTime? moment(this.query.beginTime).format('YYYY-MM-DD'): '',
+            endTime: this.query.endTime? moment(this.query.endTime).format('YYYY-MM-DD'): ''
         }), function (ret) {
           if (ret.success) {
             _this.tableData = ret.data.list

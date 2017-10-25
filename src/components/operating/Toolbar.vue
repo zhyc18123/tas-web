@@ -45,17 +45,21 @@
       </el-select>
       <div class="am-u-md-2">
         <div class="am-form-group">
-          <date-picker v-model="startDate">
-            <input type="text" class="am-form-field" placeholder="开始日期" data-am-datepicker readonly>
-          </date-picker>
+          <el-date-picker
+            v-model="startDate"
+            type="date"
+            placeholder="开始日期">
+          </el-date-picker>
         </div>
       </div>
 
       <div class="am-u-md-2" style="float: left">
         <div class="am-form-group">
-          <date-picker v-model="endDate">
-            <input type="text" class="am-form-field" placeholder="结束日期" data-am-datepicker readonly>
-          </date-picker>
+          <el-date-picker
+            v-model="endDate"
+            type="date"
+            placeholder="结束日期">
+          </el-date-picker>
         </div>
       </div>
       <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
@@ -119,14 +123,14 @@
       if(this.type === 'business') {
         this.$emit('initList', {
           mainAccountId: this.mainAccountId,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          startDate: moment(this.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.endDate).format('YYYY-MM-DD'),
         })
       } else if (this.type === 'product') {
         this.$emit('initList', {
           productId: this.productId,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          startDate: moment(this.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.endDate).format('YYYY-MM-DD'),
         })
       } else if (this.type === 'gradeSubject') {
     		this.areaTeamId = this.areaTeamId ? this.areaTeamId : window.config.areaTeams[0].areaTeamId
@@ -134,8 +138,8 @@
           gradeId: this.gradeId,
           subjectId: this.subjectId,
           areaTeamId: this.areaTeamId,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          startDate: moment(this.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.endDate).format('YYYY-MM-DD'),
         })
       }
     },
@@ -175,22 +179,22 @@
         if(this.type === 'business') {
           this.$emit('handleSearch', {
             mainAccountId: this.mainAccountId,
-            startDate: this.startDate,
-            endDate: this.endDate,
+            startDate: moment(this.startDate).format('YYYY-MM-DD'),
+            endDate: moment(this.endDate).format('YYYY-MM-DD'),
           })
         } else if (this.type === 'product') {
           this.$emit('handleSearch', {
             productId: this.productId,
-            startDate: this.startDate,
-            endDate: this.endDate,
+            startDate: moment(this.startDate).format('YYYY-MM-DD'),
+            endDate: moment(this.endDate).format('YYYY-MM-DD'),
           })
         } else if (this.type === 'gradeSubject') {
           this.$emit('handleSearch', {
             gradeId: this.gradeId,
             subjectId: this.subjectId,
             areaTeamId: this.areaTeamId,
-            startDate: this.startDate,
-            endDate: this.endDate,
+            startDate: moment(this.startDate).format('YYYY-MM-DD'),
+            endDate: moment(this.endDate).format('YYYY-MM-DD'),
           })
         }
       },

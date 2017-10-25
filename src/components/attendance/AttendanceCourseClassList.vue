@@ -90,7 +90,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end" style="clear: both">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -218,6 +218,7 @@
 </template>
 <script>
   import io from '../../lib/io'
+  import moment from 'moment'
   import Pagination from '../base/Pagination'
 
   export default{
@@ -310,7 +311,9 @@
         io.post(io.apiAdminAttendanceCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+        }, Object.assign({},_this.query, {
+          startCourseTime: this.query.startCourseTime ? moment(this.query.startCourseTime).format('YYYY-MM-DD') : ''
+        })), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list

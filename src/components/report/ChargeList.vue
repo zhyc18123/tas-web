@@ -456,8 +456,8 @@
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, _this.query, {
-          startDate: moment(this.query.startDate).format('YYYY-MM-DD'),
-          endDate: moment(this.query.endDate).format('YYYY-MM-DD')
+          startDate: this.query.startDate ? moment(this.query.startDate).format('YYYY-MM-DD') : '',
+          endDate: this.query.endDate ? moment(this.query.endDate).format('YYYY-MM-DD') : ''
         }), function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {

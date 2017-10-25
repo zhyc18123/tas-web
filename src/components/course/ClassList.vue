@@ -466,7 +466,7 @@
         io.post(io.apiAdminCourseClassList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
-        }, _this.query, {startCourseTime: moment(this.query.startCourseTime).format('YYYY-MM-DD')}), function (ret) {
+        }, _this.query, {startCourseTime: this.query.startCourseTime? moment(this.query.startCourseTime).format('YYYY-MM-DD'): ''}), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
