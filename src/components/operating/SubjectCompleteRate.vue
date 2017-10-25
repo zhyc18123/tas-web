@@ -1,6 +1,6 @@
 <template>
   <div class="subject-complete">
-    <el-select style="position: absolute;top: -50px;left: 176px;" size="small" class="am-u-md-2 am-u-end"
+    <el-select style="position: absolute;top: -57px;left: 207px;" size="small"
                :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
       <el-option
         v-for="item in busTeams"
@@ -19,7 +19,7 @@
           <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
         </date-picker>
         <div>
-          <el-select @change="getSeniorComletionRate();getGradeCompletionRate();" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
+          <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
               v-for="item in periods"
               :key="item.periodId"
@@ -27,7 +27,7 @@
               :value="item.periodId">
             </el-option>
           </el-select>
-          <el-select @change="getGradeCompletionRate();" v-show="active === 1" v-model="sectionId" placeholder="请选择年级">
+          <el-select v-show="active === 1" v-model="sectionId" placeholder="请选择年级">
             <el-option
               v-for="item in sections"
               :key="item.sectionId"
@@ -42,6 +42,7 @@
         <el-table
           :data="gradeCompletionRate"
           border
+          show-summary
           empty-text="请选择期数"
           stripe
           style="min-width: 100%">
@@ -60,8 +61,7 @@
           <el-table-column
             label="新生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum === '0' ? '0%' :
-                (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 | formatNumber(2)}}%</div>
+              <div>20%</div>
             </template>
           </el-table-column>
           <el-table-column
@@ -120,6 +120,7 @@
         <el-table
           :data="seniorComletionRate"
           border
+          show-summary
           empty-text="请选择期数"
           stripe
           style="min-width: 100%">
@@ -238,14 +239,14 @@
     props: ['areaTeamId'],
     watch: {
       areaTeamId(newVal) {
-      	this.busTeamId = ''
+        this.busTeamId = ''
         this.loadPeriodByYear()
       },
-//      year(newVal) {
-//        if (newVal) {
-//          this.loadPeriodByYear()
-//        }
-//      },
+      active(newVal) {
+        if (newVal === 0) {
+          this.getSeniorComletionRate()
+        }
+      },
     },
     computed: {
       busTeams: function () {
@@ -261,7 +262,7 @@
     },
     methods:{
       handleFind() {
-      	if(this.active === 0) {
+        if(this.active === 0) {
           this.getSeniorComletionRate()
         } else {
           this.getGradeCompletionRate()

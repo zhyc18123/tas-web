@@ -36,7 +36,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both;">
               <div class="am-form-group">
                 <input type="text" name="teacherNames" v-model="query.studentName" placeholder="请输入学生姓名"/>
               </div>
@@ -173,7 +173,7 @@
                 label="报读讲数"
                 min-width="100">
                 <template scope="scope">
-                {{scope.row.studentReg.startAmount}}~{{scope.row.studentReg.endAmount}}
+                  {{scope.row.studentReg.startAmount}}~{{scope.row.studentReg.endAmount}}
                 </template>
               </el-table-column>
 
@@ -182,7 +182,7 @@
                 label="应缴金额"
                 min-width="100">
                 <template scope="scope">
-                {{scope.row.studentReg.totalAmount}}
+                  {{scope.row.studentReg.totalAmount}}
                 </template>
               </el-table-column>
 
@@ -191,7 +191,7 @@
                 label="已缴金额"
                 min-width="100">
                 <template scope="scope">
-                {{scope.row.studentReg.payAmount}}
+                  {{scope.row.studentReg.payAmount}}
                 </template>
               </el-table-column>
 
@@ -200,7 +200,7 @@
                 label="报名状态"
                 min-width="100">
                 <template scope="scope">
-                {{{'0': '在读', '1': '转班', '2': '退账户', '3': '退班退费', '4': '无效'}[scope.row.studentReg.regStatus]}}
+                  {{{'0': '在读', '1': '转班', '2': '退账户', '3': '退班退费', '4': '无效'}[scope.row.studentReg.regStatus]}}
                 </template>
               </el-table-column>
 
@@ -209,7 +209,7 @@
                 label="缴费状态"
                 min-width="100">
                 <template scope="scope">
-                {{{'0': '未缴费', '1': '欠费', '2': '已缴费'}[scope.row.studentReg.chargingStatus]}}
+                  {{{'0': '未缴费', '1': '欠费', '2': '已缴费'}[scope.row.studentReg.chargingStatus]}}
                 </template>
               </el-table-column>
 

@@ -1,146 +1,146 @@
 <template>
   <window ref="win" title="退费申请">
     <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
-    <div class="am-u-sm-12 am-scrollable-horizontal">
-      <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">班级信息</div>
-      <table width="100%" class="am-table am-table-bordered am-table-compact ">
-        <colgroup>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-        </colgroup>
-        <tbody>
-        <tr>
-          <td class="bgColor">期数：</td>
-          <td>{{studentRegDetail.courseClass.periodName}}</td>
-          <td class="bgColor">业务组：</td>
-          <td>{{studentRegDetail.courseClass.busTeamName}}</td>
-          <td class="bgColor">班级名称：</td>
-          <td>{{studentRegDetail.courseClass.className}}</td>
-        </tr>
-        <tr>
-          <td class="bgColor">班级编号：</td>
-          <td>{{studentRegDetail.courseClass.classNo}}</td>
-          <td class="bgColor">任课老师：</td>
-          <td>{{studentRegDetail.courseClass.teacherNames}}</td>
-          <td class="bgColor">教室：</td>
-          <td>{{studentRegDetail.courseClass.roomName}}</td>
-        </tr>
-        <tr>
-          <td class="bgColor">开课日期：</td>
-          <td>{{studentRegDetail.courseClass.startCourseTime | formatDate}}</td>
-          <td class="bgColor">报读总讲次：</td>
-          <td >{{studentRegDetail.studentReg.regLectureAmount}}</td>
-          <td colspan="2"></td>
+      <div class="am-u-sm-12 am-scrollable-horizontal">
+        <div class="am-u-sm-12 am-text-left am-margin-top-sm bold-font">班级信息</div>
+        <table width="100%" class="am-table am-table-bordered am-table-compact ">
+          <colgroup>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+          </colgroup>
+          <tbody>
+          <tr>
+            <td class="bgColor">期数：</td>
+            <td>{{studentRegDetail.courseClass.periodName}}</td>
+            <td class="bgColor">业务组：</td>
+            <td>{{studentRegDetail.courseClass.busTeamName}}</td>
+            <td class="bgColor">班级名称：</td>
+            <td>{{studentRegDetail.courseClass.className}}</td>
+          </tr>
+          <tr>
+            <td class="bgColor">班级编号：</td>
+            <td>{{studentRegDetail.courseClass.classNo}}</td>
+            <td class="bgColor">任课老师：</td>
+            <td>{{studentRegDetail.courseClass.teacherNames}}</td>
+            <td class="bgColor">教室：</td>
+            <td>{{studentRegDetail.courseClass.roomName}}</td>
+          </tr>
+          <tr>
+            <td class="bgColor">开课日期：</td>
+            <td>{{studentRegDetail.courseClass.startCourseTime | formatDate}}</td>
+            <td class="bgColor">报读总讲次：</td>
+            <td >{{studentRegDetail.studentReg.regLectureAmount}}</td>
+            <td colspan="2"></td>
 
-        </tr>
-        <tr>
-          <td class="bgColor">原价：</td>
-          <td>{{studentRegDetail.studentReg.srcTotalAmount}}</td>
-          <td class="bgColor">金额：</td>
-          <td>{{studentRegDetail.studentReg.totalAmount}}</td>
-          <td class="bgColor">已交金额：</td>
-          <td>{{studentRegDetail.studentReg.payAmount}}</td>
-        </tr>
-        </tbody>
-      </table>
+          </tr>
+          <tr>
+            <td class="bgColor">原价：</td>
+            <td>{{studentRegDetail.studentReg.srcTotalAmount}}</td>
+            <td class="bgColor">金额：</td>
+            <td>{{studentRegDetail.studentReg.totalAmount}}</td>
+            <td class="bgColor">已交金额：</td>
+            <td>{{studentRegDetail.studentReg.payAmount}}</td>
+          </tr>
+          </tbody>
+        </table>
 
-      <table width="100%" class="am-table am-table-bordered am-table-compact am-text-nowrap">
+        <table width="100%" class="am-table am-table-bordered am-table-compact am-text-nowrap">
 
-        <colgroup>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-          <col width="100"/>
-        </colgroup>
-        <tbody>
+          <colgroup>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+            <col width="100"/>
+          </colgroup>
+          <tbody>
 
-        <tr>
-          <td class="bgColor">从哪一讲退</td>
-          <td colspan="7">
-            <template v-for="(item,index) in availableRefundLectures">
-              <label  class="am-checkbox-inline">
-                <input type="radio" :value="item.lectureNo" name="refundLectureFromNo" v-model="formData.refundLectureFrom"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
+          <tr>
+            <td class="bgColor">从哪一讲退</td>
+            <td colspan="7">
+              <template v-for="(item,index) in availableRefundLectures">
+                <label  class="am-checkbox-inline">
+                  <input type="radio" :value="item.lectureNo" name="refundLectureFromNo" v-model="formData.refundLectureFrom"> 第{{item.lectureNo}}讲<span class="am-text-danger">({{ { '0':'出勤', '1':'缺勤', '2':'迟到', '3':'请假' }[item.attendanceStatus] || '未考勤' }})</span>
+                </label>
+                <br v-if="( index + 1 ) % 6 == 0" >
+              </template>
+
+            </td>
+          </tr>
+
+          <tr>
+            <td class="bgColor">应退金额</td>
+            <td colspan="7">
+              <span class="am-text-danger">￥{{remaining | formatNumber(2)}}</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="bgColor">退费方式</td>
+            <td colspan="7">
+              <label class="am-checkbox-inline">
+                <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
               </label>
-              <br v-if="( index + 1 ) % 6 == 0" >
-            </template>
+              <label class="am-checkbox-inline">
+                <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
+              </label>
+              <label class="am-checkbox-inline">
+                <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
+              </label>
+            </td>
+          </tr>
 
-          </td>
-        </tr>
+          <tr>
+            <td class="bgColor">确认退款金额</td>
+            <td>
+              <input type="number"  class="am-input-sm"   v-model="formData.finalRefundAmount" min="0" @change="checkFinalRefundAmount">
+            </td>
+            <td colspan="6">
+            </td>
+          </tr>
 
-        <tr>
-          <td class="bgColor">应退金额</td>
-          <td colspan="7">
-            <span class="am-text-danger">{{remaining }}</span>￥
-          </td>
-        </tr>
-
-        <tr>
-          <td class="bgColor">退费方式</td>
-          <td colspan="7">
-            <label class="am-checkbox-inline">
-              <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
-            </label>
-            <label class="am-checkbox-inline">
-              <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
-            </label>
-            <label class="am-checkbox-inline">
-              <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
-            </label>
-          </td>
-        </tr>
-
-        <tr>
-          <td class="bgColor">确认退款金额</td>
-          <td>
-            <input type="number"  class="am-input-sm"   v-model="formData.finalRefundAmount" min="0" @change="checkFinalRefundAmount">
-          </td>
-          <td colspan="6">
-          </td>
-        </tr>
-
-        <tr>
-          <td class="bgColor">退费原因</td>
-          <td colspan="7">
+          <tr>
+            <td class="bgColor">退费原因</td>
+            <td colspan="7">
               <input type="text"  class="am-input-sm refundWidth"   v-model="formData.description">
-          </td>
-        </tr>
+            </td>
+          </tr>
 
 
 
 
-        <template v-if="formData.refundWay == 4 ">
-        <tr>
-          <td class="bgColor">转账银行</td>
-          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankName"></td>
-          <td class="bgColor">开户城市</td>
-          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankCity"></td>
-        </tr>
+          <template v-if="formData.refundWay == 4 ">
+            <tr>
+              <td class="bgColor">转账银行</td>
+              <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankName"></td>
+              <td class="bgColor">开户城市</td>
+              <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.bankCity"></td>
+            </tr>
 
-        <tr>
-          <td class="bgColor">姓名</td>
-          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardUser"></td>
-          <td class="bgColor">转账账号</td>
-          <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardNo"></td>
-        </tr>
-        </template>
+            <tr>
+              <td class="bgColor">姓名</td>
+              <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardUser"></td>
+              <td class="bgColor">转账账号</td>
+              <td colspan="2"><input type="text" class="am-input-sm" v-model="formData.cardNo"></td>
+            </tr>
+          </template>
 
-        </tbody>
-      </table>
-    </div>
-    <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-      <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
-      <a href="javascript:void(0)" data-am-modal-close>
-        <button class="am-btn am-btn-primary">取消</button>
-      </a>
-    </div>
+          </tbody>
+        </table>
+      </div>
+      <div class="am-u-sm-12 am-text-center am-margin-top-lg">
+        <button type="button" class="am-btn am-btn-primary" @click="confirmToRefund">确定</button>
+        <a href="javascript:void(0)" data-am-modal-close>
+          <button class="am-btn am-btn-primary">取消</button>
+        </a>
+      </div>
     </form>
   </window>
 
@@ -155,7 +155,7 @@
     text-align: center;
   }
   .refundWidth {
-     width: 50%;
+    width: 50%;
   }
 </style>
 
@@ -173,7 +173,7 @@
           cardUser: '',
           cardNo: '',
           description:'',
-          finalRefundAmount : 0,
+          finalRefundAmount : 0.00,
           refundLectureFrom:''
         },
         studentRegDetail:{studentReg:{},courseClass:{}},
@@ -226,11 +226,11 @@
       },
       calRemaining: function () {
         this.remaining = !this.formData.refundLectureFrom ? 0 : math.mul( this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1  , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
-        this.formData.finalRefundAmount = this.remaining
+        this.formData.finalRefundAmount = this.remaining.toFixed(2)
       },
       checkFinalRefundAmount:function(){
         if(this.formData.finalRefundAmount <=0 || this.formData.finalRefundAmount > this.remaining  ){
-          this.formData.finalRefundAmount = this.remaining
+          this.formData.finalRefundAmount = this.remaining.toFixed(2)
         }
       },
       confirmToRefund: function () {
