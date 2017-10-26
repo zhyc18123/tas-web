@@ -55,7 +55,7 @@
                 <el-date-picker
                   v-model="query.classDate"
                   type="date"
-                  placeholder="请选择开课日期">
+                  placeholder="上课日期">
                 </el-date-picker>
               </div>
             </div>
