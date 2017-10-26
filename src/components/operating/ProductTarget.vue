@@ -18,12 +18,14 @@
             </el-option>
           </el-select>
           <div class="datepicker">
-            <date-picker v-model="year" >
-              <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-            </date-picker>
+            <el-date-picker
+              v-model="year"
+              type="year"
+              placeholder="选择年">
+            </el-date-picker>
           </div>
           <el-input placeholder="产品名称" v-model="productName"></el-input>
-          <el-button @click="search" type="success">搜索</el-button>
+          <el-button size="small" @click="search" type="success">搜索</el-button>
         </div>
         <el-tabs style="clear: both" v-model="activeName" type="card">
           <el-tab-pane label="营收" name="first">
@@ -68,14 +70,14 @@
                   </div>
                 </div>
               </div>
-              <div v-show="empty">当前年份：{{year2}}，还没有设置期数。
+              <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
                 <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
               </div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="利润" name="second">
             <div>
-              <div v-show="!empty2" class="widget-body  am-fr">
+              <div v-show="!empty" class="widget-body  am-fr">
                 <div class="am-u-sm-12">
                   <el-table
                     :data="tableData2"
@@ -114,7 +116,7 @@
                   </div>
                 </div>
               </div>
-              <div v-show="empty2">当前年份：{{year2}}，还没有设置期数。
+              <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
                 <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
               </div>
             </div>
@@ -140,8 +142,7 @@
         periods: [],
         activeName: 'first',
         areaTeamName: '',
-        year: moment().year(),
-        year2: moment().year(),
+        year: moment().format('YYYY'),
         targetType: 0,
         pageNo: 0,
         pageNo2: 0,
@@ -152,7 +153,6 @@
         name: '',
         name2: '',
         empty: false,
-        empty2: false,
       }
     },
     components: {
@@ -177,11 +177,6 @@
     },
     watch: {
       year(newVal) {
-        if (newVal) {
-          this.loadPeriodByYear()
-        }
-      },
-      year2(newVal) {
         if (newVal) {
           this.loadPeriodByYear()
         }
@@ -217,31 +212,18 @@
         })
       },
       loadPeriodByYear: function () {
-        var _this = this,
-          year;
-        if (_this.targetType === 0) {
-          year = this.year
-        } else {
-          year = this.year2
-        }
+        var _this = this
+
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
         },function(ret){
           if(ret.success){
             if (ret.data.length === 0) {
-              if (_this.targetType === 0) {
                 _this.empty = true
-              } else {
-                _this.empty2 = true
-              }
             } else {
               _this.periods = ret.data
-              if (_this.targetType === 0) {
-                _this.empty = false
-              } else {
-                _this.empty2 = false
-              }
+              _this.empty = false
               _this.loadTableData();
             }
           }else{
@@ -260,7 +242,7 @@
         }
         var query = {
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
           targetType: this.targetType,
           name: this.productName,
           pageNo: pageNo
@@ -279,7 +261,9 @@
               _this.total2 = ret.data.total
             }
           }else{
-            _this.$alert(ret.desc)
+            if (ret.desc === '查不到期数请设置') {
+              _this.empty = true
+            }
           }
         })
       }

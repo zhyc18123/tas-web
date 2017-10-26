@@ -2,9 +2,11 @@
   <div class="full-class-rate">
     <div class="content">
       <div class="head-opt">
-        <date-picker v-model="year" >
-          <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-        </date-picker>
+        <el-date-picker
+          v-model="year"
+          type="year"
+          placeholder="选择年">
+        </el-date-picker>
         <div>
           <el-select @change="handleSelectChange" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
@@ -114,7 +116,7 @@
         productName: '',
         periods: [],
         disabledBtn: 0,
-        year: moment().years(),
+        year: moment().format('YYYY'),
         productFullClassRateList:[],
         classFullRateList:[],
         gradeFullClassRateList:[],
@@ -189,7 +191,7 @@
         }
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
@@ -285,6 +287,9 @@
         }
         input {
           height: 36px;
+        }
+        .el-date-editor--year {
+          width: 193px;
         }
       }
     }

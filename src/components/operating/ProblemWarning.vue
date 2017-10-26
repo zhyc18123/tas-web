@@ -3,12 +3,14 @@
     <div class="content">
       <div class="head-opt">
         <el-button-group>
-          <el-button @click="active = 1" :class="{'el-button el-button--primary': active === 1}">业务组</el-button>
-          <el-button v-if="hasPermission('warningProduct')" @click="active = 0" :class="{'el-button el-button--primary': active === 0}">产品线</el-button>
+          <el-button size="small" @click="active = 1" :class="{'el-button el-button--primary': active === 1}">业务组</el-button>
+          <el-button size="small" v-if="hasPermission('warningProduct')" @click="active = 0" :class="{'el-button el-button--primary': active === 0}">产品线</el-button>
         </el-button-group>
-        <date-picker v-model="year" >
-          <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-        </date-picker>
+        <el-date-picker
+          v-model="year"
+          type="year"
+          placeholder="选择年">
+        </el-date-picker>
         <div>
           <el-select @change="getWarningOfAreaTeam" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择">
             <el-option
@@ -172,7 +174,7 @@
       return {
         periodId: '',
         periods: [],
-        year: moment().years(),
+        year: moment().format('YYYY'),
         active: 1,
         productCostAndIncomeVoList:[],
         mainAccountCostAndIncomeList:[],
@@ -208,7 +210,7 @@
         }
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
@@ -255,15 +257,15 @@
       }
       .head-opt {
         text-align: center;
-        /*height: 36px;*/
-        /*line-height: 36px;*/
-        /*width: 550px;*/
         margin: 0 auto 20px;
         &>div {
           display: inline-block;
         }
         input {
           height: 36px;
+        }
+        .el-date-editor--year {
+          width: 193px;
         }
       }
     }

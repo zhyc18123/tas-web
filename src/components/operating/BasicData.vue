@@ -3,14 +3,16 @@
     <div class="month-analysis-box">
       <div class="head-opt">
         <el-button-group>
-          <el-button @click="activeMonth = 1" :class="{'el-button el-button--primary': activeMonth === 1}">业务组</el-button>
-          <el-button @click="activeMonth = 0" :class="{'el-button el-button--primary': activeMonth === 0}">产品线</el-button>
+          <el-button size="small" @click="activeMonth = 1" :class="{'el-button el-button--primary': activeMonth === 1}">业务组</el-button>
+          <el-button size="small" @click="activeMonth = 0" :class="{'el-button el-button--primary': activeMonth === 0}">产品线</el-button>
         </el-button-group>
-        <date-picker class="date-pick-month" v-model="month" >
-          <input type="text" placeholder="请选择日期"
-                 data-am-datepicker="{format: 'yyyy-mm', viewMode: 'months', minViewMode: 'months'}"  required >
-        </date-picker>
-        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+        <el-date-picker
+          class="date-pick-month"
+          v-model="month"
+          type="month"
+          placeholder="选择月">
+        </el-date-picker>
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end" style="text-align: left;">
           <div class="am-form-group">
             <button type="button" class="am-btn am-btn-default am-btn-success"
                     @click="search" ><span class="am-icon-search"></span>查询
@@ -20,11 +22,11 @@
       </div>
       <div class="content" style="clear: both">
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-          <div class="title">{{month}}{{activeMonth ===0 ?  '产品线' : '业务组'}}营收情况</div>
+          <div class="title">{{formatMonth}}{{activeMonth ===0 ?  '产品线' : '业务组'}}营收情况</div>
           <div  style="height:400px;" id="data-analysis"></div>
         </div>
         <div class="am-u-sm-12 am-u-md-12 am-u-lg-6">
-          <div class="title">{{month}}{{activeMonth ===0 ?  '产品线' : '业务组'}}利润情况</div>
+          <div class="title">{{formatMonth}}{{activeMonth ===0 ?  '产品线' : '业务组'}}利润情况</div>
           <div  style="height:400px;" id="data-analysis1"></div>
         </div>
       </div>
@@ -32,8 +34,8 @@
     <div class="year-analysis-box">
       <div class="head-opt">
         <el-button-group>
-          <el-button @click="activeYear = 1" :class="{'el-button el-button--primary': activeYear === 1}">业务组</el-button>
-          <el-button @click="activeYear = 0" :class="{'el-button el-button--primary': activeYear === 0}">产品线</el-button>
+          <el-button size="small" @click="activeYear = 1" :class="{'el-button el-button--primary': activeYear === 1}">业务组</el-button>
+          <el-button size="small" @click="activeYear = 0" :class="{'el-button el-button--primary': activeYear === 0}">产品线</el-button>
         </el-button-group>
       </div>
       <div class="title">
@@ -51,11 +53,10 @@
   import ProblemWarning from './ProblemWarning.vue'
   import BasicData from './BasicData.vue'
 
-
   export default{
     data:function(){
       return {
-        month: '2017-03',
+        month: moment().format('YYYY-MM'),
         activeMonth: 1,
         activeYear: 1,
         yearData:{},
@@ -236,6 +237,11 @@
         this.formatMonthData(this.monthData)
       }
     },
+    computed: {
+    	formatMonth() {
+    		return this.month ? moment(this.month).format('YYYY-MM'): '';
+      }
+    },
     mounted:function(){
       $(window).smoothScroll()
     },
@@ -256,7 +262,7 @@
         _this.$showLoading()
         io.post(io.incomeProfitsOfAreaTeam,{
           areaTeamId:_this.areaTeamId,
-          date: _this.month
+          date: _this.formatMonth
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
@@ -356,6 +362,7 @@
         }
         .date-pick-month {
           float: left;
+          width: 193px;
           input {
             height: 34px;
           }
