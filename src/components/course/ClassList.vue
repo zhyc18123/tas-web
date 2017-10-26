@@ -40,7 +40,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.periodId" :options="periods">
+                <select2 :disabled="periods.length === 0"  v-model="query.periodId" :options="periods">
                   <option value="">期数</option>
                 </select2>
               </div>
@@ -517,7 +517,8 @@
               return {value: item.periodId, text: item.periodName }
             })
           } else {
-            _this.$alert(ret.desc)
+            console.log(ret.desc)
+            _this.periods = []
           }
         })
       },
@@ -535,6 +536,9 @@
           }, function (ret) {
             if (ret.success) {
               _this.arrangeTime(courseClass)
+              courseClass.isArrangeTime = '0'
+              courseClass.isArrangeRoom = '0'
+              courseClass.isArrangeTeacher = '0'
             } else {
               _this.$alert(ret.desc)
             }
@@ -559,6 +563,7 @@
           }, function (ret) {
             if (ret.success) {
               _this.arrangeRoom(courseClass)
+              courseClass.isArrangeRoom = '0'
             } else {
               _this.$alert(ret.desc)
             }
@@ -584,6 +589,7 @@
           }, function (ret) {
             if (ret.success) {
               _this.arrangeTeacher(courseClass)
+              courseClass.isArrangeTeacher = '0'
             } else {
               _this.$alert(ret.desc)
             }
