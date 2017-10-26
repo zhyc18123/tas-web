@@ -215,7 +215,7 @@
         </div>
       </div>
     </div>
-    <detail-list ref="attendanceRecordDetail" :attendanceRecord="attendanceRecord" @completed="loadTableData()"></detail-list>
+    <detail-list ref="attendanceRecordDetail" @completed="loadTableData()"></detail-list>
   </div>
 </template>
 <script>
