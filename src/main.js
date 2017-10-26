@@ -91,7 +91,6 @@ const ClassHistoryList = resolve => require([ './components/enroll/ClassHistoryL
 const StudentRefundList = resolve => require([ './components/enroll/StudentRefundList'], resolve)
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
-//const CourseClassList = resolve => require(['./components/enroll/CourseClassList.vue'], resolve)
 
 
 
@@ -129,19 +128,7 @@ const CategoryEditForm = resolve => require([ './components/servicemanager/Categ
 const CategorySaveForm = resolve => require([ './components/servicemanager/CategorySaveForm'], resolve)
 
 
-
-/*const SoldProductOrderList = resolve => require(['./components/seller/SoldProductOrderList'], resolve)
-const SoldServiceOrderList = resolve => require(['./components/seller/SoldServiceOrderList'], resolve)
-const SellerProductDetail = resolve => require(['./components/seller/SellerProductDetail'], resolve)
-const SellerServiceDetail = resolve => require(['./components/seller/SellerServiceDetail'], resolve)
-const SellerLeaseOrderList = resolve => require(['./components/seller/SellerLeaseOrderList'], resolve)
-const SellerLeaseDetail = resolve => require(['./components/seller/SellerLeaseDetail'], resolve)*/
-
-/*const SellerRegisterList = resolve => require(['./components/platform/SellerRegisterList'], resolve)*/
-
-
 const AttendanceCourseClassList = resolve => require(['./components/attendance/AttendanceCourseClassList'], resolve)
-const AttendanceRecordList = resolve => require(['./components/attendance/AttendanceRecordList'], resolve)
 const QueryAttendanceList = resolve => require(['./components/attendance/QueryAttendanceList'], resolve)
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
@@ -314,7 +301,6 @@ const router = new VueRouter({
       {path: 'serviceManager/sellerRegister/list', component:SellerRegisterList},
 
       {path: 'attendance/attendance/list', component:AttendanceCourseClassList },
-      {path: 'attendance/attendance/record/:classId', component:AttendanceRecordList },
       {path: 'attendance/attendanceQuery/list', component:QueryAttendanceList },
 
       {path: 'report/charge/list', component:ChargeList },
