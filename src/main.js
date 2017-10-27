@@ -34,6 +34,7 @@ const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], 
 const BusTeamForm = resolve => require(['./components/sysmanager/BusTeamForm'], resolve)
 const PeriodList = resolve => require(['./components/sysmanager/PeriodList'], resolve)
 const PeriodForm = resolve => require(['./components/sysmanager/PeriodForm'], resolve)
+const ContinueApplySet = resolve => require(['./components/sysmanager/ContinueApplySet'], resolve)
 const StudentSchoolList = resolve => require(['./components/sysmanager/StudentSchoolList'], resolve)
 const StudentSchoolForm = resolve => require(['./components/sysmanager/StudentSchoolForm'], resolve)
 const ClassRemunerationList = resolve => require(['./components/sysmanager/ClassRemunerationList'], resolve)
@@ -201,6 +202,7 @@ const router = new VueRouter({
       {path: 'sys/period/list' , component: PeriodList },
       {path: 'sys/period/add' , component: PeriodForm },
       {path: 'sys/period/edit/:periodId' , component: PeriodForm },
+      {path: 'sys/period/continueApplySet/:periodId' , component: ContinueApplySet },
       {path: 'sys/teacher/list' , component: TeacherList },
       {path: 'sys/teacher/add' , component: TeacherForm },
       {path: 'sys/teacher/edit/:teacherId' , component: TeacherForm },
