@@ -448,6 +448,10 @@
             })
           }
         }else{
+            if(JSON.stringify(this.priceList[0]) == "{}"){
+              this.$alert("不能缺少分段价格定价")
+              return
+            }
             for (var i = 0; i < this.priceList.length; i++) {
               this.segmentResult.push({
                 number: this.priceList[i]["number"],
