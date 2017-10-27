@@ -81,6 +81,41 @@
         </div>
       </div>
 
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          地址
+        </label>
+        <div class="am-u-sm-3 input-field">
+          <select2  v-model="formData.province" :options="provinces" @input="formData.city='';formData.district=''">
+            <option value="">请选择省份</option>
+          </select2>
+        </div>
+        <div class="am-u-sm-3 input-field">
+          <select2 :required="!!formData.province" v-model="formData.city" :options="cities" @input="formData.district=''">
+            <option  value="">请选择城市</option>
+          </select2>
+        </div>
+        <div class="am-u-sm-3 input-field">
+          <select2 :required="!!formData.province"  v-model="formData.district" :options="districts">
+            <option value="">请选区(县)</option>
+          </select2>
+        </div>
+      </div>
+      <div class="am-form-group">
+        <div class="am-u-sm-9 am-u-sm-push-3 input-field">
+          <input :required="!!formData.province" type="text"  class="am-form-field" placeholder="请输入详细地址"  v-model="formData.address">
+        </div>
+      </div>
+
+      <div class="am-form-group">
+        <label class="am-u-sm-3 am-form-label">
+          备注
+        </label>
+        <div class="am-u-sm-9">
+          <textarea v-model="formData.remark" rows="3" maxlength="200"></textarea>
+        </div>
+      </div>
+
 
       <div class="am-form-group">
         <label class="am-u-sm-3 am-form-label">
@@ -91,10 +126,10 @@
 
       <div class="am-form-group" v-for="(item, index) in guardianList">
         <label class="am-u-sm-1 am-form-label">
-          <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>关系
+          关系
         </label>
         <div class="am-u-sm-2 input-field">
-          <select2 required v-model="guardianList[index].relationship" >
+          <select2  v-model="guardianList[index].relationship" >
             <option value="">请选择</option>
             <option value="父亲">父亲</option>
             <option value="母亲">母亲</option>
@@ -106,16 +141,16 @@
 
 
         <label class="am-u-sm-2 am-form-label">
-          <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>监护人姓名
+          监护人姓名
         </label>
         <div class="am-u-sm-2 input-field">
-          <input type="text" class="am-form-field" required placeholder="请输入姓名" v-model="guardianList[index].name" >
+          <input  :required="!!guardianList[index].relationship" type="text" class="am-form-field"  placeholder="请输入姓名" v-model="guardianList[index].name" >
         </div>
         <label class="am-u-sm-2 am-form-label">
-          <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>联系电话
+          联系电话
         </label>
         <div class="am-u-sm-2  input-field">
-          <input type="text" class="am-form-field" required placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
+          <input :required="!!guardianList[index].relationship" type="text" class="am-form-field"  placeholder="请输入联系电话" v-model="guardianList[index].phoneNo" pattern="^1((3|4|5|7|8){1}\d{1}|70)\d{8}$" >
         </div>
         <div class="am-u-sm-1 input-field">
           <a href="javascript:;" @click="addGuardian"> <i class="am-icon-plus"></i></a>
@@ -138,6 +173,7 @@
 
 <script>
   import io from '../../lib/io'
+  import conf from '../../lib/conf'
   import util from '../../lib/util'
   import SelectStudentSchool from '../sysmanager/SelectStudentSchool'
   import SelectStudent from './SelectStudent'
@@ -145,15 +181,20 @@
   export default{
     data(){
       return{
-        tags:['员工子女','员工亲友子女'],
         guardianList:[{}],
         formData:{
-          tags:[],
           sex:'',
           school:'',
-          referrerName:''
+          referrerName:'',
+          areaTeamId:'',
+          province : '',
+          city : '',
+          district :''
         },
-        studentSchoolList:[]
+        studentSchoolList:[],
+        location:[],
+        cityMap:{},
+        districtMap:{},
 
       }
     },
@@ -163,6 +204,29 @@
       grades:function(){
         return this.$root.config.grades.map(function(item){
           return {value:item.gradeId,text:item.gradeName}
+        })
+      },
+      provinces:function(){
+        return this.location.map(function(item){
+          return {value:item.n,text:item.n}
+        })
+      },
+      cities:function(){
+        var cities  = this.formData.province && this.cityMap[this.formData.province]
+        if( !cities ){
+          return []
+        }
+        return cities.map(function(item){
+          return {value:item.n,text:item.n}
+        })
+      },
+      districts:function(){
+        var districts = this.formData.city && this.districtMap[ this.formData.province + this.formData.city]
+        if(!districts){
+          return []
+        }
+        return districts.map(function(item){
+          return {value:item.n,text:item.n}
         })
       }
     },
@@ -174,8 +238,20 @@
           function(ret){
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
-              ret.data.student.tags = ret.data.student.tags ? ret.data.student.tags.split(',') :[]
+
+              if(ret.data.student.location ){
+                let locations = ret.data.student.location.split(' ')
+                ret.data.student.province =  locations[0]
+                ret.data.student.city =  locations[1]
+                ret.data.student.district =  locations[2]
+              }else{
+                ret.data.student.province =  ''
+                ret.data.student.city =  ''
+                ret.data.student.district =  ''
+              }
+
               _this.formData = ret.data.student
+              console.log(_this.formData )
               _this.guardianList =  ret.data.guardianList && ret.data.guardianList.length == 0  ?  [{}] : ret.data.guardianList
             }
           },
@@ -183,6 +259,7 @@
             _this.$alert('请求服务器失败')
           })
       }
+      this.loadLocation()
     },
     mounted:function(){
       var _this = this ;
@@ -230,9 +307,12 @@
     methods:{
       save:function(complete){
         var _this = this
-        var data = Object.assign({},_this.formData)
-        data.tags = data.tags.join(',')
+        var data = _this.formData
         data.guardianJsonStr = JSON.stringify(this.guardianList)
+        if(_this.formData.province){
+          data.location  = _this.formData.province + ' ' + _this.formData.city + ' ' + _this.formData.district
+        }
+
         io.post(io.studentSaveOrUpdate,data ,
           function(ret){
             complete.call()
@@ -265,6 +345,18 @@
       selectReferrer:function(student){
         this.formData.referrerId = student.studentId
         this.formData.referrerName = student.name
+      },
+      loadLocation:function(){
+        var _this = this
+        $.getJSON(conf.basePath + '/static/location/data.json',function(ret){
+          _this.location  = ret
+          for(var i =0 ; i < ret.length ; i++ ){
+            _this.cityMap[ret[i].n] = ret[i].s
+            for(var ii = 0 ; ii < ret[i].s.length ;ii++ ){
+              _this.districtMap[ ret[i].n + ret[i].s[ii].n ] = ret[i].s[ii].s
+            }
+          }
+        })
       }
     }
   }
