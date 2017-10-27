@@ -80,7 +80,7 @@
                       label="总讲次">
                     </el-table-column>
                     <el-table-column
-                      prop="happernLectureAmount"
+                      prop="happenLectureAmount"
                       label="发生讲次">
                     </el-table-column>
                     <el-table-column
