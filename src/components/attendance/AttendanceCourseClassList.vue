@@ -22,21 +22,6 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
-                  <option value="">产品</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.courseTemplateId" :options="courses">
-                  <option value="">课程</option>
-                </select2>
-              </div>
-            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -46,21 +31,6 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.gradeId" :options="grades">
-                  <option value="">年级</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.subjectId" :options="subjects">
-                  <option value="">科目</option>
-                </select2>
-              </div>
-            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -70,34 +40,58 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
               <div class="am-form-group">
-                <input type="text" name="className" v-model="query.className" placeholder="请输入班级名称"/>
+                <input type="text" name="className" v-model="query.className" placeholder="班级名称"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" name="teacherNames" v-model="query.teacherNames" placeholder="请输入教师姓名"/>
+                <input type="text" name="teacherName" v-model="query.teacherName" placeholder="任课老师姓名"/>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <el-date-picker
-                  v-model="query.startCourseTime"
+                  v-model="query.classDate"
                   type="date"
-                  placeholder="请选择开课日期">
+                  placeholder="上课日期">
                 </el-date-picker>
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end" style="clear: both">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.timeSegment">
+                  <option value="">上课时间</option>
+                  <option value="00:00-08:00">00:00-08:00</option>
+                  <option value="08:00-10:00">08:00-10:00</option>
+                  <option value="10:00-12:00">10:00-12:00</option>
+                  <option value="12:00-14:00">12:00-14:00</option>
+                  <option value="14:00-16:00">14:00-16:00</option>
+                  <option value="16:00-18:00">16:00-18:00</option>
+                  <option value="18:00-20:00">18:00-20:00</option>
+                  <option value="20:00-22:00">20:00-22:00</option>
+                  <option value="22:00-24:00">22:00-24:00</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.attendanceStatus">
+                  <option value="">是否考勤</option>
+                  <option value="0">未考勤</option>
+                  <option value="1">已考勤</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
-                <span style="color: red;font-size: 12px;margin-left: 20px;">
-                  * 已开班的班辅课需要排好教师和教室才能进行考勤！
-                </span>
               </div>
             </div>
 
@@ -123,82 +117,89 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                fixed
+                prop="periodName"
+                label="期名"
+                min-width="120">
+              </el-table-column>
+              <el-table-column
                 prop="campusName"
                 label="校区"
                 min-width="200">
               </el-table-column>
+
               <el-table-column
-                prop="roomName"
-                label="教室"
-                min-width="100">
+                prop="lectureNo"
+                label="讲次"
+                min-width="70">
               </el-table-column>
               <el-table-column
-                label="开课日期"
+                label="上课日期"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.startCourseTime | formatDate}}
+                  {{scope.row.classDate | formatDate }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="studyingTime"
                 label="上课时间"
                 min-width="150">
-              </el-table-column>
-              <el-table-column
-                label="已上/总讲次"
-                min-width="100">
                 <template scope="scope">
-                  {{scope.row.completedLectureAmount}}/{{scope.row.lectureAmount}}
+                  {{scope.row.startTime }}-{{scope.row.endTime }}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="regAmount"
-                label="已报人数"
+                label="是否考勤"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.attendanceStatus  == 0 ? '否' : '是'}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="totalAmount"
+                label="总人数"
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="quota"
-                label="学位数"
+                prop="attendanceAmount"
+                label="出勤人数"
                 min-width="100">
               </el-table-column>
+
               <el-table-column
-                prop="teacherNames"
-                label="教师"
+                prop="absenceAmount"
+                label="缺勤人数"
                 min-width="100">
               </el-table-column>
+
+              <el-table-column
+                prop="lateAmount"
+                label="迟到人数"
+                min-width="100">
+              </el-table-column>
+
+              <el-table-column
+                prop="leaveAmount"
+                label="请假人数"
+                min-width="100">
+              </el-table-column>
+
               <el-table-column
                 prop="seniorName"
                 label="班主任"
                 min-width="100">
               </el-table-column>
+
               <el-table-column
-                prop="studyingFee"
-                label="学费"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="gradeName"
-                label="年级"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                label="科目"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="periodName"
-                label="期名"
+                prop="teacherName"
+                label="任课老师"
                 min-width="100">
               </el-table-column>
 
               <el-table-column
                 fixed="right"
                 label="操作"
-                width="120">
+                width="80">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.status == 0" @click.native="$router.push('/main/attendance/attendance/record/'+scope.row.classId)">考勤</el-button>
+                  <el-button size="small"  @click.native="showDetailWin(scope.row)">{{scope.row.attendanceStatus  == 0 ? '考勤' : '修改考勤'}}</el-button>
                 </template>
               </el-table-column>
 
@@ -214,12 +215,14 @@
         </div>
       </div>
     </div>
+    <detail-list ref="attendanceRecordDetail" @completed="loadTableData()"></detail-list>
   </div>
 </template>
 <script>
   import io from '../../lib/io'
   import moment from 'moment'
   import Pagination from '../base/Pagination'
+  import AttendanceRecordDetailList from './AttendanceRecordDetailList'
 
   export default{
     data: function () {
@@ -231,29 +234,20 @@
         query: {
           areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId : '',
-          courseTemplateId:'',
-          productId : '',
-          periodId : ''
+          periodId : '',
+          timeSegment : ''
         },
-        searchConfig: {},
-        products:[],
-        courses:[],
-        courseClass :{},
-        selection:[],
         periods:[],
       }
     },
     components: {
-      Pagination
+      Pagination,
+      'detail-list':AttendanceRecordDetailList
     },
     watch:{
       'query.areaTeamId':function(){
         this.query.busTeamId =  ''
-        this.query.productId = ''
-        this.query.courseTemplateId = ''
         this.query.periodId = ''
-        this.loadProductData()
-        this.loadCourseData()
         this.loadPeriodData()
       }
     },
@@ -264,8 +258,6 @@
       this.$once('period.loaded',()=>{
         this.loadTableData(this.pageNo)
       })
-      this.loadProductData()
-      this.loadCourseData()
       this.loadPeriodData()
       var _this = this
       this.$root.$on('courseClass:new',function(){
@@ -289,16 +281,6 @@
         this.query.busTeamId = ''
         return options
       },
-      grades: function () {
-        return this.$root.config.grades.map(function(item){
-          return {value: item.gradeId, text: item.gradeName}
-        })
-      },
-      subjects: function () {
-        return this.$root.config.subjects.map(function(item){
-          return {value: item.subjectId, text: item.subjectName}
-        })
-      },
 
     },
     methods: {
@@ -308,43 +290,15 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminAttendanceCourseClassList, $.extend({
+        io.post(io.apiAdminAttendClassLectureList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, Object.assign({},_this.query, {
-          startCourseTime: this.query.startCourseTime ? moment(this.query.startCourseTime).format('YYYY-MM-DD') : ''
+          classDate: this.query.classDate ? moment(this.query.classDate).format('YYYY-MM-DD') : ''
         })), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadProductData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseProductListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
-        }, function (ret) {
-          if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadCourseData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseCourseListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
-        }, function (ret) {
-          if (ret.success) {
-            _this.courses = ret.data.map(function (item) {
-              return {value: item.courseTemplateId, text: item.courseName}
-            })
           } else {
             _this.$alert(ret.desc)
           }
@@ -366,6 +320,10 @@
           }
         })
       },
+      showDetailWin:function(attendanceRecord){
+        this.$refs.attendanceRecordDetail.attendanceRecord =  attendanceRecord
+        this.$refs.attendanceRecordDetail.show()
+      }
     }
   }
 </script>

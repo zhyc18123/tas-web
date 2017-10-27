@@ -27,11 +27,13 @@
               </el-option>
             </el-select>
             <div class="datepicker">
-              <date-picker v-model="year" >
-                <input type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-              </date-picker>
+              <el-date-picker
+                v-model="year"
+                type="year"
+                placeholder="选择年">
+              </el-date-picker>
             </div>
-            <el-button @click="handleClick" type="success">搜索</el-button>
+            <el-button size="small" @click="handleClick" type="success">搜索</el-button>
           </div>
           <div v-show="!empty" class="widget-body  am-fr">
             <div class="am-u-sm-12">
@@ -70,7 +72,7 @@
               </el-table>
             </div>
           </div>
-          <div v-show="empty">当前年份：{{year}}，还没有设置期数。
+          <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
             <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
           </div>
           <div class="am-u-lg-12 am-cf">
@@ -103,7 +105,7 @@
         areaTeamId: '',
         busTeamId: '',
         areaTeamName: '',
-        year: moment().year(),
+        year: moment().format('YYYY'),
         targetType: 0,
         empty: false,
         pageNo: 1,
@@ -186,7 +188,7 @@
       handleSave(list, index) {
         var _this = this,
           data = {
-            year: this.year,
+            year: this.year ? moment(this.year).format('YYYY'): '',
             mainAccountId: list.mainAccountId,
             targetType: list.list[parseInt(index)].targetType,
             mainAccountTargetVoJson : JSON.stringify(list.list[parseInt(index)].list)
@@ -206,7 +208,7 @@
         var _this = this;
         io.post(io.periodByYearAndAreaTeamId,{
           areaTeamId: this.areaTeamId,
-          year: this.year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
         },function(ret){
           if(ret.success){
             if (ret.data.length === 0) {
@@ -228,7 +230,7 @@
         io.post(io.mainAccountTargetList,{
           areaTeamId: this.areaTeamId,
           busTeamId: this.busTeamId,
-          year: this.year,
+          year: this.year ? moment(this.year).format('YYYY'): '',
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){

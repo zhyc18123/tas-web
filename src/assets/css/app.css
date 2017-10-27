@@ -1235,6 +1235,10 @@ ol.am-breadcrumb{
 .am-btn-default {
   border-radius: 4px;
   font-size: 14px;
+  outline: 0;
+}
+.am-btn:active:focus, .am-btn:focus {
+  outline: 0;
 }
 
 .am-form input[type=number], .am-form input[type=search], .am-form input[type=text],
@@ -1328,4 +1332,8 @@ html::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
 }
 .el-date-editor.el-input {
   width: 100%;
+}
+input[type=radio][disabled]{
+  cursor: not-allowed;
+  opacity: 0.8;
 }
