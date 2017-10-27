@@ -43,10 +43,11 @@
                 label="操作"
                 width="100">
                 <template scope="scope">
-                  <router-link v-if="detailType === '1'" :to="'/main/operating/productStatistics/subDetail?detailType=' +
+                  <router-link v-if="scope.row.detailType !== '0'" :to="'/main/operating/productStatistics/subDetail?detailType=' +
                        scope.row.detailType + '&name=' + name +  '-'+scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&productId=' + productId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">明细</router-link>
+                  <div v-else>-</div>
                 </template>
               </el-table-column>
             </el-table>

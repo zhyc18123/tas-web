@@ -43,10 +43,11 @@
                 label="操作"
                 width="100">
                 <template scope="scope">
-                  <router-link v-if="formData.detailType === '1'" :to="'/main/operating/gradeSubjectStatistics/subDetail?detailType=' +
+                  <router-link v-if="scope.row.detailType !== '0'" :to="'/main/operating/gradeSubjectStatistics/subDetail?detailType=' +
                        scope.row.detailType + '&name=' + name +'-'+ scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&gradeId=' + gradeId +'&subjectId=' + subjectId + '&startDate=' + startDate +
                        '&endDate=' + endDate + '&areaTeamId=' + areaTeamId" tag="a">明细</router-link>
+                  <div v-else>-</div>
                 </template>
               </el-table-column>
             </el-table>

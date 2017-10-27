@@ -278,8 +278,12 @@
                   var teacherId = (cc.teacherIds || '-').split(',')
                   var studyingTime = (cc.studyingTime || '-').split(' ')
                   var col = _this.period.segments == 1 ? ( cc.week || '-') : cc.segmentNo
-                  var td = document.getElementById(teacherId + '_' + studyingTime + '_' + col)
-                  $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' + (cc.classId % 3 ) + '">'+(cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' :'')+'<span class="class-item-title">' + cc.className + '#' + cc.regAmount + '</span>'+(cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' :'')+'</div>')
+                  studyingTime.length > 0 && studyingTime.map((val) => {
+                    var td = document.getElementById(teacherId + '_' + val + '_' + col)
+                    $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' +
+                      (cc.classId % 3 ) + '">' + (cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' : '') + '<span class="class-item-title">' +
+                      cc.className + '#' + cc.regAmount + '</span>' + (cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' : '') + '</div>')
+                  })
                 }
                 _this.$hiddenLoading()
                 _this.initTouchDnd()
