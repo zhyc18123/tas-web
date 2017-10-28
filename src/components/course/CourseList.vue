@@ -231,7 +231,7 @@ import Pagination from '../base/Pagination'
         },
         methods:{
           search:function(){
-            this.loadTableData()
+            this.loadTableData(1)
           },
           loadTableData:function(pageNo){
             var _this = this

@@ -79,6 +79,8 @@ const io = {
     this.apiAdminSaveOrUpdatePeriod = conf.baseApiPath + '/api/admin/saveOrUpdatePeriod'
     this.apiAdminUpdateCurrentPeriod = conf.baseApiPath + '/api/admin/updateCurrentPeriod'
     this.apiAdminPeriodListForAreaTeam = conf.baseApiPath + '/api/admin/periodListForAreaTeam'
+    this.apiAdminContinueClassSetting = conf.baseApiPath + '/api/admin/continueClassSetting'
+    this.apiAdminSaveOrUpdateContinueClassSetting = conf.baseApiPath + '/api/admin/saveOrUpdateContinueClassSetting'
 
     this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
     this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'
@@ -432,7 +434,6 @@ const io = {
     });
   },
   postPlayload: function (url, data, success, fail) {
-    data.accessToken = this.getHeaders().accessToken
     $.ajax({
       url: url,
       type: 'POST',
@@ -440,6 +441,7 @@ const io = {
       data: JSON.stringify(data),
       dataType: 'json',
       processData: false,
+      headers :this.getHeaders(),
       timeout : 30000,
       success: function (data) {
         checkResult(data)
