@@ -76,8 +76,12 @@
                 <template scope="scope">
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/period/edit/'+scope.row.periodId)">编辑
                       </el-button>
-                  <el-button :disabled="scope.row.isCurrent == 1" v-if="hasPermission('setup_current')" size="small" @click.native="setupCurrent(scope.row.periodId ,0)">设置为当前期</el-button>
-                  <el-button size="small" @click.native="$router.push('/main/sys/period/continueApplySet/'+scope.row.periodId + '?areaTeamId=' + query.areaTeamId)">继报设置</el-button>
+                  <el-button :disabled="scope.row.isCurrent == 1" v-if="hasPermission('setup_current')" size="small"
+                             @click.native="setupCurrent(scope.row.periodId ,0)">设置为当前期
+                  </el-button>
+                  <el-button size="small" @click.native="$router.push('/main/sys/period/continueApplySet/'+scope.row.periodId +
+                              '?areaTeamId=' + query.areaTeamId)">续报设置
+                  </el-button>
                 </template>
               </el-table-column>
             </el-table>

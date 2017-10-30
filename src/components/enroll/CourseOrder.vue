@@ -86,7 +86,7 @@
               <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
             </label>
             <label class="am-checkbox-inline">
-              <input type="radio" value="1" name="payWay" v-model="formData.payWay"> 刷卡
+              <input type="radio" value="1" name="payWay" v-model="formData.payWay"> pos机
             </label>
             <label class="am-checkbox-inline">
               <input type="radio" value="2" name="payWay" v-model="formData.payWay"> 转账

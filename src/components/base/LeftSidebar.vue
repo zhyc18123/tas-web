@@ -35,6 +35,7 @@
     data: function () {
       return {
         pathMap: {},
+        activeIndex: '',
         activePath: '',
       }
     },
@@ -48,8 +49,10 @@
       var $sidebar = $('.sidebar-nav')
       $('.sidebar-nav').on('click', '.sidebar-nav-sub-title', function () {
 
-        var $open = $('.active', $sidebar) ;
+        let $open = $('.active', $sidebar),
+          index = $('.sidebar-nav .sidebar-nav-sub-title').index(this)
 
+        sessionStorage.setItem('activeIndex', index)
         if(!$open.is(this)){
           $open.removeClass('active').siblings('.sidebar-nav-sub').slideToggle(80).end()
             .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate')
@@ -60,22 +63,11 @@
           .find('.sidebar-nav-sub-ico').toggleClass('sidebar-nav-sub-ico-rotate');
 
       })
-
-
     },
     created: function () {
-
-      var _this = this
-      setTimeout(function () {
-        _this.$root.$emit('sidebar.click', _this.pathMap[_this.$route.path])
-        $('.sidebar-nav-sub-title').each(function () {
-          if( _this.pathMap[_this.$route.path] &&  _this.pathMap[_this.$route.path].length > 0) {
-            this.innerText.trim() === _this.pathMap[_this.$route.path][0].name ? $(this).trigger('click'): $.noop()
-          }
-          _this.activePath = _this.$route.path
-        })
-      })
-
+      let _this = this
+      this.resetUnfolded()
+      _this.$root.$emit('sidebar.click', _this.pathMap[_this.$route.path])
       _this.$root.$on("showOrHiddenLeftSidebar", function () {
         if ($('.left-sidebar').is('.active')) {
           if ($(window).width() > 1024) {
@@ -105,20 +97,41 @@
     },
 
     methods: {
-//      getClassName: function (item,e) {
-//        var className = ''
-//        this.pathMap[this.$route.path][0].name == item.name ? className = 'active ' : className= ''
-//        item.subMenus?className += 'sidebar-nav-sub-title':className += ''
-//        return className
-//      },
       go: function () {
+        debugger
         var item = arguments[arguments.length - 1]
         if (item.path) {
           this.$root.$emit('sidebar.click', arguments)
           this.$router.push(item.path)
           this.activePath = item.path
+          sessionStorage.setItem('activePath', item.path)
         }
-      }
+      },
+      resetUnfolded() {
+        let _this = this
+        setTimeout(function () {
+          _this.activePath = sessionStorage.getItem('activePath') || _this.$route.path // to 从缓存拿
+          _this.activeIndex = sessionStorage.getItem('activeIndex')
+          _this.menus.map((val, index) => {
+            val.subMenus.map(i => {
+              if(i.path === _this.$route.path) {
+                _this.activeIndex = index
+                _this.activePath = _this.$route.path
+                sessionStorage.setItem('activeIndex', index)
+                sessionStorage.setItem('activePath', _this.$route.path)
+              }
+            })
+          })
+          debugger
+          $('.sidebar-nav-sub-title').each(function (index, target) {
+            if( _this.pathMap[_this.$route.path] &&  _this.pathMap[_this.$route.path].length > 0) {
+              this.innerText.trim() === _this.pathMap[_this.$route.path][0].name ? $(this).trigger('click'): $.noop()
+            } else if (Number(_this.activeIndex) === index) {
+              $(target).trigger('click')
+            }
+          })
+        })
+      },
     },
     watch: {
       menus: function (menus) {
@@ -132,7 +145,23 @@
             }
           }
         }
-      }
+      },
+//      TODO 浏览器前进后退的侧边栏的恢复变现
+//      '$route' (to, from) {
+//        let _this = this
+//        this.activePath = to.path
+//        this.menus.map((val, index) => {
+//          val.subMenus.map(i => {
+//          	if(i.path === to.path) {
+//          		_this.activeIndex = index
+//          		_this.activePath = to.path
+//              sessionStorage.setItem('activeIndex', index)
+//              sessionStorage.setItem('activePath', to.path)
+//            }
+//          })
+//        })
+//        this.resetUnfolded()
+//      }
     }
   }
 
