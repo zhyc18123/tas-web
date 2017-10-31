@@ -30,6 +30,7 @@
                   <option value="teachGradeNames">任教年级</option>
                   <option value="teachSubjectNames">任教科目</option>
                   <option value="areaTeamName">区域</option>
+                  <option value="phoneNo">手机号码</option>
                   <option value="busTeamName">业务组</option>
                 </select>
               </selected>

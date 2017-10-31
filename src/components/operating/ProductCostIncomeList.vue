@@ -95,14 +95,14 @@
                       prop="subjectName"
                       label="科目">
                     </el-table-column>
-                    <el-table-column
+                <!--    <el-table-column
                       label="总退费（元）">
                       <template scope="scope">
                         <div>
                           {{scope.row.totalRefundAmount | formatNumber(2)}}
                         </div>
                       </template>
-                    </el-table-column>
+                    </el-table-column>-->
                     <el-table-column
                       label="营收(元)">
                       <template scope="scope">
