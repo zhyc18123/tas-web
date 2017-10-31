@@ -312,6 +312,7 @@ const io = {
 
     this.mainAccountTargetList = conf.baseApiPath + '/api/admin/analyze/mainAccountTargetList'
     this.teacherTargetList = conf.baseApiPath + '/api/admin/analyze/teacherTargetList'
+    this.classTargetList = conf.baseApiPath + '/api/admin/analyze/classTargetList'
     this.findMainAccountCostAndIncome = conf.baseApiPath + '/api/admin/analyze/findMainAccountCostAndIncome'
     this.findIncomeByAllCategory = conf.baseApiPath + '/api/admin/analyze/findIncomeByAllCategory'
     this.findCostByAllCategory = conf.baseApiPath + '/api/admin/analyze/findCostByAllCategory'
@@ -331,6 +332,7 @@ const io = {
     this.fullClassRate = conf.baseApiPath + '/api/admin/analyze/fullClassRate'
     this.seniorComletionRate = conf.baseApiPath + '/api/admin/analyze/seniorComletionRate'
     this.gradeCompletionRate = conf.baseApiPath + '/api/admin/analyze/gradeCompletionRate'
+    this.classComletionRate = conf.baseApiPath + '/api/admin/analyze/classComletionRate'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
     this.findSummerWinterById = conf.baseApiPath + '/api/admin/findSummerWinterById'
     this.findSummerWinterList = conf.baseApiPath + '/api/admin/findSummerWinterList'
@@ -341,6 +343,7 @@ const io = {
     this.saveOrUpdateMainAccountTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateMainAccountTarget'
     this.saveOrUpdateProductTarget = conf.baseApiPath + '/api/admin/analyze/saveOrUpdateProductTarget'
     this.saveTeacherTarget = conf.baseApiPath + '/api/admin/analyze/saveTeacherTarget'
+    this.saveClassTarget = conf.baseApiPath + '/api/admin/analyze/saveClassTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
 
 

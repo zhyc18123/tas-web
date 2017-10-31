@@ -88,9 +88,9 @@
             <label class="am-checkbox-inline">
               <input type="radio" value="1" name="payWay" v-model="formData.payWay"> pos机
             </label>
-            <label class="am-checkbox-inline">
-              <input type="radio" value="2" name="payWay" v-model="formData.payWay"> 转账
-            </label>
+            <!--<label class="am-checkbox-inline">-->
+              <!--<input type="radio" value="2" name="payWay" v-model="formData.payWay"> 转账-->
+            <!--</label>-->
             <label class="am-checkbox-inline">
               <input type="radio" value="3" name="payWay" v-model="formData.payWay"> 账户余额
             </label>

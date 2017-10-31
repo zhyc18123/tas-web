@@ -10,11 +10,12 @@
       </el-option>
     </el-select>
     <div class="content">
-      <div class="head-opt">
-        <el-button-group>
-          <el-button @click="active = 1" size="small" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
-          <el-button @click="active = 0" size="small" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
-        </el-button-group>
+      <el-button-group>
+        <el-button @click="active = 1" size="small" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
+        <el-button @click="active = 0" size="small" :class="{'el-button el-button--primary': active === 0}">班主任科数完成率</el-button>
+        <el-button @click="active = 2" size="small" :class="{'el-button el-button--primary': active === 2}">班级续读率</el-button>
+      </el-button-group>
+      <div class="head-opt" v-show="active !== 2">
         <el-date-picker
           style="width: 193px"
           v-model="year"
@@ -38,9 +39,11 @@
               :value="item.sectionId">
             </el-option>
           </el-select>
-          <el-button type="success" @click="handleFind">查询</el-button>
+
+          <el-button size="small" type="success" @click="handleFind">查询</el-button>
         </div>
       </div>
+      <toolbar @search="handleFind" v-show="active === 2"></toolbar>
       <div v-show="active === 1" class="am-u-sm-12">
         <el-table
           :data="gradeCompletionRate"
@@ -196,11 +199,79 @@
           </el-table-column>
         </el-table>
       </div>
+      <div v-show="active === 2" class="am-u-sm-12">
+        <el-table
+          :data="classComletionRate"
+          border
+          empty-text="请选择期数"
+          stripe
+          style="min-width: 100%">
+          <el-table-column
+            prop="periodName"
+            label="期数">
+          </el-table-column>
+          <el-table-column
+            prop="className"
+            label="班级名称">
+          </el-table-column>
+          <el-table-column
+            prop="campusName"
+            label="校区">
+          </el-table-column>
+          <el-table-column
+            prop="subjectName"
+            label="学科">
+          </el-table-column>
+          <el-table-column
+            prop="gradeName"
+            label="年级">
+          </el-table-column>
+          <el-table-column
+            prop="teacherNames"
+            label="教师">
+          </el-table-column>
+          <el-table-column
+            prop="regNum"
+            label="报名人数">
+          </el-table-column>
+          <el-table-column
+            prop="sequentialPersonNum"
+            label="顺期人数">
+          </el-table-column>
+          <el-table-column
+            label="顺期续读率">
+            <template scope="scope">
+              <div>{{scope.row.regNum ==null ||scope.row.sequentialPersonNum ==null || scope.row.regNum == '0' ? '0%' :
+                (parseInt(scope.row.sequentialPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="sequentialTargetRate"
+            label="目标顺期续读率">
+          </el-table-column>
+          <el-table-column
+            prop="stepPersonNum"
+            label="跨期人数">
+          </el-table-column>
+          <el-table-column
+            label="跨期续读率">
+            <template scope="scope">
+              <div>{{scope.row.regNum ==null ||scope.row.stepPersonNum ==null || scope.row.regNum == '0' ? '0%' :
+                (parseInt(scope.row.stepPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="stepTargetRate"
+            label="目标跨期续读率">
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
   </div>
 </template>
 <script>
   import io from '../../lib/io'
+  import Toolbar from '../base/Toolbar.vue'
   import moment from 'moment'
 
   export default{
@@ -212,10 +283,15 @@
         busTeamId: '',
         pageSize: 10,
         sectionId: 3,
+        productId: '',
+        courseTemplateId: '',
+        courses: [],
+        products: [],
         year: moment(),
         active: 1,
         seniorComletionRate:[],
         gradeCompletionRate:[],
+        classComletionRate:[],
         areaTeams : [],
         activeName: 'first',
         searchConfig:{},
@@ -239,6 +315,7 @@
       }
     },
     props: ['areaTeamId'],
+    components: {Toolbar},
     watch: {
       areaTeamId(newVal) {
         this.busTeamId = ''
@@ -247,11 +324,6 @@
       year(newVal) {
         if (newVal) {
           this.loadPeriodByYear()
-        }
-      },
-      active(newVal) {
-        if (newVal === 0) {
-          this.getSeniorComletionRate()
         }
       },
     },
@@ -268,11 +340,13 @@
 //      this.getSeniorComletionRate()
     },
     methods:{
-      handleFind() {
+      handleFind(query) {
         if(this.active === 0) {
           this.getSeniorComletionRate()
-        } else {
+        } else if (this.active === 1){
           this.getGradeCompletionRate()
+        } else {
+        	this.getClassComletionRate(query)
         }
       },
       loadPeriodByYear: function () {
@@ -344,6 +418,29 @@
               ret.data.push(summary)
             }
             _this.seniorComletionRate = ret.data.list
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      getClassComletionRate(query) {
+        var _this = this;
+        if(!this.areaTeamId){
+          this.$alert('请选择区域')
+          return
+        }
+        if(!this.busTeamId ){
+          this.$alert('请选择业务组')
+          return
+        }
+        _this.$showLoading()
+        io.post(io.classComletionRate,Object.assign({},{
+          pageNo:1,
+          pageSize:10,
+        },query),function(ret){
+          if(ret.success){
+            _this.$hiddenLoading()
+            _this.classComletionRate = ret.data.list
           }else{
             _this.$alert(ret.desc)
           }
@@ -423,8 +520,16 @@
         font-weight: bold;
         margin: 20px 0;
       }
-      .head-opt {
+      .el-button-group {
+        margin: 0 auto;
         text-align: center;
+        width: 300px;
+        display: block;
+        margin-bottom: 8px;
+        padding-bottom: 21px;
+        border-bottom: 1px solid #ddd;
+      }
+      .head-opt {
         /*height: 36px;*/
         /*line-height: 36px;*/
         /*width: 650px;*/

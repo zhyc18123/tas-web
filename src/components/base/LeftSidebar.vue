@@ -122,7 +122,6 @@
               }
             })
           })
-          debugger
           $('.sidebar-nav-sub-title').each(function (index, target) {
             if( _this.pathMap[_this.$route.path] &&  _this.pathMap[_this.$route.path].length > 0) {
               this.innerText.trim() === _this.pathMap[_this.$route.path][0].name ? $(this).trigger('click'): $.noop()

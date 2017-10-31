@@ -159,6 +159,7 @@ const ProblemWarning = resolve => require(['./components/operating/ProblemWarnin
 const FullClassRate = resolve => require(['./components/operating/FullClassRate'], resolve)
 const SubjectCompleteRate = resolve => require(['./components/operating/SubjectCompleteRate'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
+const CourseTarget = resolve => require(['./components/operating/CourseTarget'], resolve)
 const TargetSet = resolve => require(['./components/operating/TargetSet'], resolve)
 const TeacherTarget = resolve => require(['./components/operating/TeacherTarget'], resolve)
 const ProductTarget = resolve => require(['./components/operating/ProductTarget'], resolve)
@@ -352,6 +353,7 @@ const router = new VueRouter({
       {path: 'operating/targetSet/mainAccountTarget' , component: MainAccountTarget},
       {path: 'operating/targetSet/productTarget' , component: ProductTarget},
       {path: 'operating/targetSet/teacherTarget' , component: TeacherTarget},
+      {path: 'operating/targetSet/courseTarget' , component: CourseTarget},
 
 
     ],
