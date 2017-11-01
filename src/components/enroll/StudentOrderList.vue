@@ -73,7 +73,7 @@
         width="320">
         <template scope="scope">
           <el-button size="small" :disabled="scope.row.regFrom == 1 || scope.row.chargingStatus == 2 ||  scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">缴费</el-button>
-          <el-button size="small" :disabled="scope.row.regFrom == 1 || scope.row.chargingStatus != 0" @click.native="cancel(scope.row.courseOrderId)">撤销</el-button>
+          <el-button size="small" :disabled="scope.row.regFrom == 1 || scope.row.chargingStatus == 4" @click.native="cancel(scope.row.courseOrderId)">撤销</el-button>
           <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="showDetail(scope.row.courseOrderId)">订单详情</el-button>
           <el-button size="small" :disabled="scope.row.chargingStatus == 4" @click.native="printCert(scope.row.courseOrderId)">打印听课证</el-button>
         </template>
@@ -174,6 +174,7 @@
             _this.$hiddenLoading()
             if(ret.success){
               _this.loadTableData(1)
+              _this.$root.$emit('mainAccount:change')
             }else{
               _this.$alert(ret.desc)
             }
