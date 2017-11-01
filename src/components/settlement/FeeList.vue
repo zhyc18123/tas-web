@@ -51,8 +51,7 @@
 
               <el-table-column
                 prop="receiverMainAccountName"
-                label="收款主体"
-                min-width="200">
+                label="收款主体">
               </el-table-column>
 
               <el-table-column
@@ -78,10 +77,23 @@
               </el-table-column>
 
               <el-table-column
-                label="时间"
+                label="创建时间">
+                <template scope="scope">
+                  {{scope.row.createTime | formatDate }}
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="发生时间段"
                 min-width="200">
                 <template scope="scope">
-                  {{scope.row.createTime | formatTime }}
+                  {{scope.row.shareStart | formatDate }} - {{scope.row.shareEnd | formatDate }}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="关联业务组">
+                <template scope="scope">
+                  {{scope.row.shareMainAccountNames ? scope.row.shareMainAccountNames : '-'}}
                 </template>
               </el-table-column>
 
