@@ -9,7 +9,7 @@
           </div>
         </div>
         <div>
-          <toolbar @search="loadTableData"></toolbar>
+          <toolbar :isAreaTeam="true" :isBusTeam="true" @search="loadTableData"></toolbar>
           <div v-show="!empty" class="widget-body  am-fr">
             <div class="am-u-sm-12">
               <el-table
@@ -43,12 +43,14 @@
                   label="教师">
                 </el-table-column>
                 <el-table-column
+                  class-name="input-cell"
                   label="目标顺期续读率">
                   <template scope="scope">
                     <el-input v-model="scope.row.sequentialTargetRate"></el-input>
                   </template>
                 </el-table-column>
                 <el-table-column
+                  class-name="input-cell"
                   label="目标跨期续读率">
                   <template scope="scope">
                     <el-input v-model="scope.row.stepTargetRate"></el-input>
@@ -99,8 +101,9 @@
         tableData:[],
         empty: false,
         year: '',
+        query: [],
         pageNo: 1,
-        pageSize: 5,
+        pageSize: 10,
         total: 0
       }
     },
@@ -111,19 +114,21 @@
 
     },
     created:function(){
-      this.loadTableData()
+      this.loadTableData(1)
     },
 
     methods:{
     	search(query) {
-        loadTableData(query)
+    		this.query = query
+        loadTableData(1)
       },
       handleSave(list) {
+    		debugger
         var _this = this,
           data = {
             classId: list.classId,
-            sequentialRate: list.sequentialRate,
-            stepRate : list.stepRate
+            sequentialTargetRate: list.sequentialTargetRate,
+            stepTargetRate : list.stepTargetRate
           }
         _this.$showLoading()
         io.post(io.saveClassTarget,data,function(ret){
@@ -136,14 +141,14 @@
           }
         })
       },
-      loadTableData:function(query){
+      loadTableData:function(pageNo){
         var _this = this;
         _this.$showLoading()
-
+        _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.classTargetList,Object.assign({},{
           pageNo:this.pageNo,
           pageSize:this.pageSize,
-        },query),function(ret){
+        },_this.query),function(ret){
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data.list
@@ -159,7 +164,7 @@
 
 <style lang="less">
   .m-input-main-income {
-    .el-table .cell, .el-table th>div{
+    td.input-cell .cell{
       padding: 0;
     }
   }
