@@ -17,7 +17,8 @@
                 录入产品线目标
               </el-button>
             </router-link>
-            <router-link to="/main/operating/targetSet/courseTarget" tag="div" class="router" v-if="hasPermission('productTarget')" >
+
+            <router-link to="/main/operating/targetSet/courseTarget" tag="div" class="router" v-if="hasPermission('classTarget')" >
               <el-button type="warning">
                 录入班级目标
               </el-button>
