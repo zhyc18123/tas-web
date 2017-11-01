@@ -265,6 +265,13 @@
             label="目标跨期续读率">
           </el-table-column>
         </el-table>
+        <div class="am-u-lg-12 am-cf">
+
+          <div class="am-fr">
+            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                        @paging="getClassComletionRate"/>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -272,6 +279,7 @@
 <script>
   import io from '../../lib/io'
   import Toolbar from '../base/Toolbar.vue'
+  import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
   export default{
@@ -281,10 +289,12 @@
         periods: [],
         pageNo: 1,
         busTeamId: '',
+        total: 0,
         pageSize: 10,
         sectionId: 3,
         productId: '',
         courseTemplateId: '',
+        classQuery: [],
         courses: [],
         products: [],
         year: moment(),
@@ -315,7 +325,7 @@
       }
     },
     props: ['areaTeamId'],
-    components: {Toolbar},
+    components: {Toolbar, Pagination},
     watch: {
       areaTeamId(newVal) {
         this.busTeamId = ''
@@ -346,7 +356,8 @@
         } else if (this.active === 1){
           this.getGradeCompletionRate()
         } else {
-        	this.getClassComletionRate(query)
+        	this.classQuery = query
+        	this.getClassComletionRate(1)
         }
       },
       loadPeriodByYear: function () {
@@ -423,7 +434,7 @@
           }
         })
       },
-      getClassComletionRate(query) {
+      getClassComletionRate(pageNo) {
         var _this = this;
         if(!this.areaTeamId){
           this.$alert('请选择区域')
@@ -433,14 +444,16 @@
           this.$alert('请选择业务组')
           return
         }
+          _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
         io.post(io.classComletionRate,Object.assign({},{
-          pageNo:1,
-          pageSize:10,
-        },query),function(ret){
+          pageNo: this.pageNo,
+          pageSize: this.pageSize,
+        },_this.classQuery),function(ret){
           if(ret.success){
             _this.$hiddenLoading()
             _this.classComletionRate = ret.data.list
+            _this.total = ret.data.total
           }else{
             _this.$alert(ret.desc)
           }
