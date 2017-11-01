@@ -98,7 +98,6 @@
 
     methods: {
       go: function () {
-        debugger
         var item = arguments[arguments.length - 1]
         if (item.path) {
           this.$root.$emit('sidebar.click', arguments)
