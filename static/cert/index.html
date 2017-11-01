@@ -240,17 +240,17 @@
 
         for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
           var c  = data.regDetailVos[i]
-          LODOP.ADD_PRINT_TEXT(165+30*i,17,72,80,c.courseClass.campusName.trim());
+          LODOP.ADD_PRINT_TEXT(165+30*i,17,72,80,c.courseClass.campusName);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
-          LODOP.ADD_PRINT_TEXT(165+30*i,84,50,80,c.courseClass.gradeName.trim());
+          LODOP.ADD_PRINT_TEXT(165+30*i,84,50,80,c.courseClass.gradeName);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
-          LODOP.ADD_PRINT_TEXT(165+30*i,115,150,80, c.courseClass.className.trim());
+          LODOP.ADD_PRINT_TEXT(165+30*i,115,150,80, c.courseClass.className);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
-          LODOP.ADD_PRINT_TEXT(165+30*i,270,50,80,c.courseClass.roomName.trim());
+          LODOP.ADD_PRINT_TEXT(165+30*i,270,50,80,c.courseClass.roomName);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
           LODOP.ADD_PRINT_TEXT(165+30*i,345,80,80,c.studentReg.startAmount+"—"+c.studentReg.endAmount);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
-          LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.studyingTime.trim());
+          LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.studyingTime);
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
           LODOP.ADD_PRINT_TEXT(165+30*i,530,200,80,formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ) );//报名日期(星期)
           LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);

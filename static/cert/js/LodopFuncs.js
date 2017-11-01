@@ -113,7 +113,7 @@ function getLodop(oOBJECT,oEMBED){
       return LODOP;
     };
     //===如下空白位置适合调用统一功能(如注册语句、语言选择等):===
-    LODOP.SET_LICENSES("","13528A153BAEE3A0254B9507DCDE2839","","");
+    LODOP.SET_LICENSES("","095848891941175210211411456128","688858710010010811411756128900","");
     //===========================================================
     return LODOP;
   } catch(err) {alert("getLodop出错:"+err);};

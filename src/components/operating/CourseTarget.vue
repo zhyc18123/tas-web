@@ -123,7 +123,6 @@
         loadTableData(1)
       },
       handleSave(list) {
-    		debugger
         var _this = this,
           data = {
             classId: list.classId,
