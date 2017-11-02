@@ -117,7 +117,8 @@ import moment from 'moment'
                 tags : [],
                 shareStart: '',
                 shareEnd: '',
-                shareMainAccountIds: ''
+                shareMainAccountIds: '',
+                shareMainAccountNames: '',
               },
               feeCategory: [],
               checkList: [],
@@ -256,10 +257,20 @@ import moment from 'moment'
                 this.$alert('请选择业务组')
                 return
               } else {
+              	var array = []
                 this.formData.shareMainAccountIds = this.checkList.join(',')
+                this.checkList.map((val) => {
+                	this.associationMainAccounts.map((i) => {
+                		if(i.mainAccountId === val) {
+                      array.push(i.name)
+                    }
+                  })
+                })
+                this.formData.shareMainAccountNames = array.join(',')
               }
             } else{
               this.formData.shareMainAccountIds = ''
+              this.formData.shareMainAccountNames = ''
             }
 
             var _this = this
