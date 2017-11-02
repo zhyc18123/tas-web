@@ -26,7 +26,7 @@
                 <select data-am-selected="{btnSize: 'sm'}" placeholder="搜索选项">
                   <option></option>
                   <option value="teacherName">姓名</option>
-                  <option value="idNo">身份证号码</option>
+                  <!--<option value="idNo">身份证号码</option>-->
                   <option value="teachGradeNames">任教年级</option>
                   <option value="teachSubjectNames">任教科目</option>
                   <option value="areaTeamName">区域</option>
@@ -79,11 +79,11 @@
               </el-table-column>
 
 
-              <el-table-column
-                prop="idNo"
-                label="身份证号码"
-                min-width="200">
-              </el-table-column>
+              <!--<el-table-column-->
+                <!--prop="idNo"-->
+                <!--label="身份证号码"-->
+                <!--min-width="200">-->
+              <!--</el-table-column>-->
               <el-table-column
                 label="性别"
                 min-width="100">
