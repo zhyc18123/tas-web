@@ -27,7 +27,7 @@
         <el-table
           :data="mainAccountCostAndIncomeList"
           border
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           :show-summary="true"
           :summary-method="getSummaries"
           stripe
@@ -101,7 +101,7 @@
           border
           :show-summary="true"
           :summary-method="getSummaries"
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           stripe
           style="min-width: 100%">
           <el-table-column
