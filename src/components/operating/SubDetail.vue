@@ -14,6 +14,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -53,6 +55,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -65,13 +69,22 @@
                 prop="teacherName"
                 label="名字">
               </el-table-column>
+              <!--这里采用template的方式是因为不想让‘总计’触发， 没有prop的number为总计显示为‘-’ -->
               <el-table-column
-                prop="phoneNo"
                 label="电话">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.phoneNo}}
+                  </div>
+                </template>
               </el-table-column>
               <el-table-column
-                prop="idNo"
                 label="身份证">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.idNo}}
+                  </div>
+                </template>
               </el-table-column>
               <el-table-column
                 prop="className"

@@ -8,7 +8,7 @@
           placeholder="选择年">
         </el-date-picker>
         <div>
-          <el-select @change="handleSelectChange" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
+          <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
               v-for="item in periods"
               :key="item.periodId"
@@ -17,6 +17,7 @@
             </el-option>
           </el-select>
         </div>
+        <el-button size="small" type="success"  @click="handleSelectChange">查询</el-button>
       </div>
       <div class="chart-content">
         <div v-for="item in gradeFullClassRateList" :style="{width: currentWidth + '%'}">
@@ -161,7 +162,6 @@
     watch: {
       areaTeamId(newVal) {
         this.loadPeriodByYear()
-        this.getFullClassRate()
       },
       year(newVal) {
         if (newVal) {
@@ -195,6 +195,9 @@
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
+            _this.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.getFullClassRate()
+
           }else{
             _this.$alert(ret.desc)
           }

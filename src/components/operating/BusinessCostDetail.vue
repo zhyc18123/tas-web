@@ -14,6 +14,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -54,6 +56,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column

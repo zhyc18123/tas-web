@@ -371,6 +371,7 @@
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
+            _this.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
           }else{
             _this.$alert(ret.desc)
           }
@@ -524,6 +525,7 @@
     .content {
       overflow: hidden;
       padding: 20px;
+      padding-top: 15px;
       border: 1px solid #d1dbe5;
       margin-bottom: 30px;
       .title {
@@ -538,9 +540,9 @@
         text-align: center;
         width: 300px;
         display: block;
-        margin-bottom: 8px;
-        padding-bottom: 21px;
-        border-bottom: 1px solid #ddd;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 1px dashed #ddd;
       }
       .head-opt {
         /*height: 36px;*/

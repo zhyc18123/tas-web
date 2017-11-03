@@ -38,6 +38,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -46,22 +48,22 @@
                 min-width="190">
               </el-table-column>
               <el-table-column
-                prop="cost"
-                label="成本（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.cost | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
                 prop="income"
                 label="营收（元）"
                 min-width="190">
                 <template scope="scope">
                   <div>
                     {{scope.row.income | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="cost"
+                label="成本（元）"
+                min-width="190">
+                <template scope="scope">
+                  <div>
+                    {{scope.row.cost | formatNumber(2)}}
                   </div>
                 </template>
               </el-table-column>
@@ -81,7 +83,7 @@
                 <template scope="scope">
                   <router-link :to="'/main/operating/productStatistics/costIncomeList?productId=' +
                      scope.row.productId + '&name=' + scope.row.productName + '&startDate=' + formatStartDate+
-                     '&endDate=' + formatEndDate + '&activeName=cost'" tag="a">详情</router-link>
+                     '&endDate=' + formatEndDate + '&activeName=income'" tag="a">详情</router-link>
                 </template>
               </el-table-column>
             </el-table>

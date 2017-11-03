@@ -14,6 +14,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -52,6 +54,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -65,6 +69,7 @@
                 label="班级名称">
               </el-table-column>
               <el-table-column
+                prop="studyingFee"
                 label="学费(元)">
                 <template scope="scope">
                   <div>
@@ -101,6 +106,7 @@
                 </template>
               </el-table-column>-->
               <el-table-column
+                prop="totalIncomeAmount"
                 label="营收(元)">
                 <template scope="scope">
                   <div>
@@ -114,6 +120,8 @@
             <el-table
               :data="tableData"
               border
+              :show-summary="true"
+              :summary-method="getSummaries"
               stripe
               style="min-width: 100%">
               <el-table-column
@@ -128,6 +136,7 @@
                 min-width="190">
               </el-table-column>
               <el-table-column
+                prop="totalAmount"
                 label="金额（元）">
                 <template scope="scope">
                   <div>

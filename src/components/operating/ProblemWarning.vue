@@ -12,7 +12,7 @@
           placeholder="选择年">
         </el-date-picker>
         <div>
-          <el-select @change="getWarningOfAreaTeam" :disabled="periods.length === 0" v-model="periodId" placeholder="请选择">
+          <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择">
             <el-option
               v-for="item in periods"
               :key="item.periodId"
@@ -21,12 +21,15 @@
             </el-option>
           </el-select>
         </div>
+        <el-button size="small" type="success"  @click="getWarningOfAreaTeam">查询</el-button>
       </div>
       <div v-show="active === 1" class="am-u-sm-12">
         <el-table
           :data="mainAccountCostAndIncomeList"
           border
           empty-text="请选择期数"
+          :show-summary="true"
+          :summary-method="getSummaries"
           stripe
           style="min-width: 100%">
           <el-table-column
@@ -96,6 +99,8 @@
         <el-table
           :data="productCostAndIncomeVoList"
           border
+          :show-summary="true"
+          :summary-method="getSummaries"
           empty-text="请选择期数"
           stripe
           style="min-width: 100%">
@@ -168,8 +173,10 @@
 <script>
   import io from '../../lib/io'
   import moment from 'moment'
+  import ElButton from "../../../node_modules/element-ui/packages/button/src/button";
 
   export default{
+    components: {ElButton},
     data:function(){
       return {
         periodId: '',
@@ -200,7 +207,6 @@
     },
     created:function(){
       this.loadPeriodByYear()
-      this.getWarningOfAreaTeam()
     },
     methods:{
       loadPeriodByYear: function () {
@@ -214,6 +220,8 @@
         },function(ret){
           if(ret.success){
             _this.periods = ret.data
+            _this.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.getWarningOfAreaTeam()
           }else{
             _this.$alert(ret.desc)
           }
