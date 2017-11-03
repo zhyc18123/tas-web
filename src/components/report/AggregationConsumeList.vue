@@ -259,7 +259,13 @@
 
             </el-table>
           </div>
+          <div class="am-u-lg-12 am-cf">
 
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="handlePage"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -268,12 +274,17 @@
 </template>
 <script>
   import io from '../../lib/io'
+  import Pagination from '../base/Pagination.vue'
   import util from '../../lib/util'
 
   export default{
     data: function () {
       return {
         tableData: [],
+        allData: [],
+        pageNo: 1,
+        pageSize: 10,
+        total: 0,
         query: {
           areaTeamId : '',
           busTeamId : '',
@@ -291,6 +302,7 @@
       this.loadTableData(this.pageNo)
       this.loadProductData()
     },
+    components: {Pagination},
     computed: {
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
@@ -326,17 +338,20 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
-        io.post(io.apiAdminReportAggregateConsumeList, $.extend({
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+        io.post(io.apiAdminReportAggregateConsumeList, _this.query, function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
-            _this.tableData = ret.data
+            _this.total = ret.data.length
+            _this.allData = ret.data
+            _this.handlePage(pageNo)
           } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      handlePage(pageNo) {
+        this.pageNo = pageNo || this.pageNo || 1
+        this.tableData = this.allData.slice((this.pageNo-1)*this.pageSize,this.pageSize*(this.pageNo))
       },
       loadProductData: function () {
         var _this = this
