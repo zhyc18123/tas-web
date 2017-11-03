@@ -484,7 +484,6 @@ const io = {
       inputs.push( '<input type="hidden" name="' + k + '"/>')
     }
 
-    debugger
     // request发送请求
     var $form = $('<form target="_blank" action="' + url + '" method="post" style="display: none">' + inputs.join('') + '</form>')
     for(var k of Object.keys(data)){
