@@ -234,7 +234,7 @@
       var studentId  = this.studentId
       if(studentId){
         var _this = this
-        io.get(io.apiAdminStudentDetail,{ studentId : studentId },
+        io.post(io.apiAdminStudentDetail,{ studentId : studentId },
           function(ret){
             if(ret.success){
               ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
