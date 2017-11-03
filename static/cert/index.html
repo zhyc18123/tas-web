@@ -51,7 +51,7 @@
       }
       function CheckIsInstall() {
         try{
-          var LODOP=getLodop();
+          var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
           if (LODOP.VERSION) {
             if (LODOP.CVERSION)
               console.log("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
