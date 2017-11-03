@@ -26,11 +26,6 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text"  v-model="query.className" placeholder="请输入班级名称"/>
-              </div>
-            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -74,7 +69,7 @@
                 min-width="200">
               </el-table-column>
               <el-table-column
-                label="post流水号"
+                label="pos流水号"
                 min-width="200">
                 <template scope="scope">
                   {{scope.row.payInfoExt.traceNo}}
