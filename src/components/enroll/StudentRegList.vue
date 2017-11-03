@@ -229,7 +229,7 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item   @click.native="setupSenior(scope.row.studentReg)">修改班主任</el-dropdown-item>
+                      <el-dropdown-item  v-if="hasPermission('changeSenior')" @click.native="setupSenior(scope.row.studentReg)">修改班主任</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
