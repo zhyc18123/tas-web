@@ -46,6 +46,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            prop="income"
             label="实际营收（元）">
             <template scope="scope">
               <div>
@@ -118,6 +119,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            prop="income"
             label="实际营收（元）">
             <template scope="scope">
               <div>
