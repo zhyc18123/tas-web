@@ -55,6 +55,28 @@
             prop="gradeName"
             label="年级">
           </el-table-column>
+
+          <el-table-column
+            prop="realClassIncome"
+            label="实际课程营收">
+            <template scope="scope">
+              <div>{{scope.row.realClassIncome | formatNumber(2)}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="targetClassIncome"
+            label="目标课程营收">
+          </el-table-column>
+          <el-table-column
+            label="课程营收完成率">
+            <template scope="scope">
+              <div>{{scope.row.realClassIncome ==null || scope.row.targetClassIncome ==null || scope.row.targetClassIncome == '0' ? '0%' :
+                (parseInt(scope.row.realClassIncome)/ parseInt(scope.row.targetClassIncome))*100 | formatNumber(2)}}%</div>
+            </template>
+          </el-table-column>
+
+
+
           <el-table-column
             prop="realNewStudentNum"
             label="实际新生科数">
@@ -403,6 +425,7 @@
             _this.$hiddenLoading()
             let summary = {
               seniorName : "总计",
+              relClassIncome:0,
               realNewStudentNum: 0,
               targetNewStudentNum: 0,
               realOldStudentNum: 0,
@@ -485,6 +508,8 @@
             _this.$hiddenLoading()
             let summary = {
               gradeName : "总计",
+              realClassIncome:0,
+              targetClassIncome:0,
               realNewStudentNum: 0,
               targetNewStudentNum: 0,
               realOldStudentNum: 0,
@@ -497,6 +522,8 @@
             }
             if (ret.data.length > 0) {
               ret.data.map((val) => {
+                summary.realClassIncome += (val.realClassIncome ? Number(val.realClassIncome): 0)
+                summary.targetClassIncome += (val.targetClassIncome ? Number(val.targetClassIncome): 0)
                 summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
                 summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
                 summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)

@@ -530,7 +530,8 @@
       rearrangeTime:function (courseClass) {
         var _this = this
         _this.$confirm('确定重排时间',function(){
-          io.post(io.apiAdminPrepareRearrange, {
+          _this.arrangeTime(courseClass)
+         /* io.post(io.apiAdminPrepareRearrange, {
             classId : courseClass.classId,
             which:'1'
           }, function (ret) {
@@ -542,7 +543,7 @@
             } else {
               _this.$alert(ret.desc)
             }
-          })
+          })*/
         })
 
       },
@@ -557,7 +558,8 @@
       rearrangeRoom:function (courseClass) {
         var _this = this
         _this.$confirm('确定重排课室',function(){
-          io.post(io.apiAdminPrepareRearrange, {
+          _this.arrangeRoom(courseClass)
+   /*       io.post(io.apiAdminPrepareRearrange, {
             classId : courseClass.classId,
             which:'2'
           }, function (ret) {
@@ -567,7 +569,7 @@
             } else {
               _this.$alert(ret.desc)
             }
-          })
+          })*/
         })
 
       },
@@ -583,7 +585,8 @@
       rearrangeTeacher:function (courseClass) {
         var _this = this
         _this.$confirm('确定重排老师',function(){
-          io.post(io.apiAdminPrepareRearrange, {
+          _this.arrangeTeacher(courseClass)
+         /* io.post(io.apiAdminPrepareRearrange, {
             classId : courseClass.classId,
             which:'3'
           }, function (ret) {
@@ -593,7 +596,7 @@
             } else {
               _this.$alert(ret.desc)
             }
-          })
+          })*/
         })
       },
       batchChangeStatus:function (status) {
