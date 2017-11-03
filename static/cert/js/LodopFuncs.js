@@ -63,7 +63,7 @@ function getLodop(oOBJECT,oEMBED){
     var isIE = (navigator.userAgent.indexOf('MSIE')>=0) || (navigator.userAgent.indexOf('Trident')>=0);
     if (needCLodop()) {
       try{ LODOP=getCLodop();} catch(err) {};
-      if (!LODOP && document.readyState!=="complete") {document.write("C-Lodop没准备好，请稍后再试！"); return;};
+      if (!LODOP && document.readyState!=="complete") {alert("C-Lodop没准备好，请稍后再试！"); return;};
       if (!LODOP) {
         if (isIE) document.write(strCLodopInstall); else
           document.documentElement.innerHTML=strCLodopInstall+document.documentElement.innerHTML;
