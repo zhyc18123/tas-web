@@ -154,7 +154,7 @@
         },
         loadStudent:function(){
           var _this = this
-          io.get(io.apiAdminStudentDetail, {studentId: _this.studentId},
+          io.post(io.apiAdminStudentDetail, {studentId: _this.studentId},
             function (ret) {
               if (ret.success) {
                 ret.data.student.birthday = util.formatDate(ret.data.student.birthday)

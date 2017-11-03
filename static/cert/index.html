@@ -2,7 +2,7 @@
 
 <head>
     <title>誉优品学</title>
-    <link rel="stylesheet" href="css/common.css">
+    <!--<link rel="stylesheet" href="css/common.css">-->
   <script language="javascript" src="./js/CLodopFuncs.js"></script>
   <script language="javascript" src="./js/LodopFuncs.js"></script>
     <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
@@ -26,157 +26,14 @@
 </head>
 
 <body>
-    <div class="J_printArea">
-        <div class="p_foreground">
-            <div class="f_left">
-
-                <div class="l_header clearfix">
-
-                    <div class="h_center">
-                        <div class="r_type">
-                          报名方式：<span id="regFrom"></span>
-                        </div>
-                    </div>
-                </div>
-
-              <div class="l_voucher" style="margin-top: 0px;margin-bottom: -24px;">
-                <div class="v_item">
-                  <div class="c_txt">
-                    <div class="i_txt">收费金额：<span id="totalAmount2"></span></div>
-                  </div>
-                </div>
-                <div class="v_item ml50">
-                  <div class="i_txt">已退金额：<span id="">0.00</span></div>
-                </div>
-              </div>
-
-                <div class="l_voucher">
-                    <div class="v_item">
-                      <span>欠费金额：</span>
-                        <div id="owingAmount2" class="i_txt">
-                        </div>
-                    </div>
-                    <div class="v_item ml160">
-                        <div class="i_txt" id="studentNo"></div>
-                    </div>
-                  <div class="v_item ml160">
-                    <div class="i_txt" id="studentName"></div>
-                  </div>
-                </div>
-
-                <div class="l_table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </thead>
-                        <tbody id ="courseList">
-                            <!--<tr>
-                                <td>动物园高中部</td>
-                                <td>高三</td>
-                                <td>2017-春季班碉堡化学能通气班1</td>
-                                <td>606</td>
-                                <td>4-4</td>
-                                <td>9:30-10:50</td>
-                                <td>周日 201-05-07</td>
-                            </tr>-->
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="l_details clearfix m-left80">
-                    <div class="d_left">
-                        <div class="l_item">
-                            <div class="i_txt" id="campusName"></div>
-                        </div>
-                    </div>
-                </div>
-              <div class="clearfix  m-left80">
-                    <div class="d_left">
-                      <div class="i_txt" id="campusPhoneNo">
-                        <span></span>
-                      </div>
-                    </div>
-                </div>
-
-
-
-                <div class="l_remarks clearfix m-left80">
-                    <div class="r_left">
-                        <div class="l_list">
-                            <div class="l_item">
-                                <div class="i_txt" id="principal"></div>
-                            </div>
-                            <div class="l_item">
-                                <div class="i_txt" id="now"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="r_right">
-                        <div class="r_qrcode">
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-            </div>
-            <div class="f_right">
-                <div class="r_list">
-                    <div class="l_item">
-                        <div class="i_txt" id="studentNo2"></div>
-                    </div>
-                    <div class="l_item">
-                      <div class="i_txt" id="studentName2"></div>
-                    </div>
-                    <div class="l_item">
-                        <div class="i_txt" id="totalAmount"></div>
-                    </div>
-
-                    <div class="l_item">
-                        <div class="i_txt" id="discountAmount"></div>
-                    </div>
-
-                    <div class="l_item">
-                        <div class="i_txt" >0</div>
-                    </div>
-
-                    <div class="l_item">
-                        <div class="i_txt" id="payableAmount"></div>
-                    </div>
-
-                    <!--<div class="l_item">-->
-                        <!--<div class="i_txt" id="paidAmount"></div>-->
-                    <!--</div>-->
-
-                </div>
-                <div class="r_remarksList">
-                    <div class="l_item">
-                        <div class="i_title" id="principal2"></div>
-                        <div class="i_txt"></div>
-                    </div>
-                    <div class="l_item">
-                        <div class="i_txt" id="now2"></div>
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-    </div>
     <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.18.0/moment.min.js"></script>
     <script src="https://cdn.bootcss.com/moment.js/2.18.0/locale/zh-cn.js"></script>
     <script>
       var LODOP
+      $(function () {
+        CheckIsInstall()
+      })
       function getQueryString (name){
         var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
         if(r) {
@@ -192,6 +49,19 @@
         }
         return moment(time).format(format || 'YYYY-MM-DD')
       }
+      function CheckIsInstall() {
+        try{
+          var LODOP=getLodop();
+          if (LODOP.VERSION) {
+            if (LODOP.CVERSION)
+              console.log("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
+            else
+              console.log("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION);
+
+          };
+        }catch(err){
+        }
+      };
 
       function print(data) {
         CreatePrintPage(data)
@@ -260,76 +130,7 @@
         LODOP.ADD_PRINT_TEXT(420,115,310,30,phoneNo);
         LODOP.ADD_PRINT_TEXT(445,100,310,30,operator);//todo 操作员
         LODOP.ADD_PRINT_TEXT(465,100,240,30,operateDate);//todo 打印日期
-//        LODOP.PREVIEW();
-      };
-
-      function fillData(data){
-        var LODOP=getLodop();
-        function str(s){
-          return s ? s : ''
-        }
-
-        var courseListHtml = ''
-        for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
-          var c  = data.regDetailVos[i]
-          courseListHtml +=  '<tr><td>'+str( c.courseClass.campusName )+'</td><td>'+str(c.courseClass.gradeName)+'</td><td>'+str(c.courseClass.className)+'</td><td>'+str(c.courseClass.roomName)+'</td><td>'+str(c.studentReg.startAmount)+'-'+str(c.studentReg.endAmount)+'</td><td>'+str(c.courseClass.classDateTip)+'&nbsp;'+str(c.courseClass.studyingTime)+'</td><td>'+str( formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ))+'</td></tr>'
-        }
-
-        document.getElementById('courseList').innerHTML = courseListHtml
-
-        document.getElementById('totalAmount').innerHTML = data.courseOrder.totalAmount
-        document.getElementById('totalAmount2').innerHTML = data.courseOrder.totalAmount
-        document.getElementById('discountAmount').innerHTML = data.courseOrder.totalAmount - data.courseOrder.payableAmount
-        document.getElementById('payableAmount').innerHTML = data.courseOrder.payableAmount
-//        document.getElementById('paidAmount').innerHTML = data.courseOrder.paidAmount
-        document.getElementById('owingAmount2').innerHTML = data.courseOrder.payableAmount - data.courseOrder.paidAmount
-
-        document.getElementById('principal').innerHTML = data.principal
-        document.getElementById('principal2').innerHTML = data.principal
-        document.getElementById('now').innerHTML = moment().format('YYYY-MM-DD H:mm:ss')
-        document.getElementById('now2').innerHTML = moment().format('YYYY-MM-DD H:mm:ss')
-
-
-        document.getElementById('regFrom').innerHTML = data.courseOrder.regFrom == 0 ? '线下' :'线上'
-
-
-        document.getElementById('studentNo').innerHTML = data.student.studentNo
-        document.getElementById('studentNo2').innerHTML = data.student.studentNo
-        document.getElementById('studentName').innerHTML = data.student.name
-
-        if(data.campus){
-          document.getElementById('campusName').innerHTML = data.campus.address
-          document.getElementById('campusPhoneNo').innerHTML = data.campus.phoneNo
-        }
-
-
-      }
-
-      $(function () {
-        $.post(window.top.window._apiAdminStudentClassCertDetail ,{ courseOrderId : getQueryString('courseOrderId') },
-          function(ret){
-            if(ret.success){
-              fillData(ret.data)
-            }else{
-              alert( ret.desc || '请求服务器失败')
-            }
-          },"json")
-      })
-
-
-    </script>
-    <script language="javascript" type="text/javascript">
-      function CheckIsInstall() {
-        try{
-          if (LODOP.VERSION) {
-            if (LODOP.CVERSION)
-              alert("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
-            else
-              alert("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION);
-
-          };
-        }catch(err){
-        }
+        LODOP.PREVIEW();
       };
     </script>
 
