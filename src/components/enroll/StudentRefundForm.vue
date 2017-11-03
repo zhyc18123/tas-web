@@ -100,7 +100,7 @@
           <tr>
             <td class="bgColor">确认退款金额</td>
             <td>
-              <input type="number"  class="am-input-sm"   v-model="formData.finalRefundAmount" min="0" @change="checkFinalRefundAmount">
+              <input type="number"  class="am-input-sm" :readonly="availableRefundLectures[0] && formData.refundLectureFrom == availableRefundLectures[0].lectureNo"  v-model="formData.finalRefundAmount" min="0" @change="checkFinalRefundAmount">
             </td>
             <td colspan="6">
             </td>
