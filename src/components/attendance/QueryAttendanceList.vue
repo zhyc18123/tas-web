@@ -205,7 +205,6 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo)
       this.loadPeriodData()
     },
     computed: {
@@ -273,7 +272,7 @@
               return {value: item.periodId, text: item.periodName }
             })
             _this.query.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
-            _this.$emit('period.loaded')
+            _this.loadTableData(_this.pageNo)
           } else {
             _this.$alert(ret.desc)
           }

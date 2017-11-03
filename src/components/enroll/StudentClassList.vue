@@ -139,7 +139,7 @@
         var _this = this
         var studentId = this.$params('studentId')
         //创建订单和注册信息
-        io.get(io.apiAdminStudentReadClassList, {
+        io.post(io.apiAdminStudentReadClassList, {
           studentId: studentId,
         }, function (ret) {
           if (ret.success) {

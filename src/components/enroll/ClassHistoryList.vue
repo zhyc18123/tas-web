@@ -132,7 +132,7 @@
       loadDataTable: function () {
         var _this = this;
         var studentId = this.$params('studentId');
-        io.get(io.apiAdminClassHistoryList,{
+        io.post(io.apiAdminClassHistoryList,{
           regStatus:this.regStatus,
           studentId:studentId,
         },function(ret){
