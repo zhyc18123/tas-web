@@ -31,7 +31,7 @@
         <el-table
           :data="productFullClassRateList"
           :default-sort="{prop: 'index'}"
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           border
           stripe
           style="min-width: 100%">

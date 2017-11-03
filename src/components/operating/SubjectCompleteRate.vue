@@ -48,7 +48,7 @@
         <el-table
           :data="gradeCompletionRate"
           border
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           stripe
           style="min-width: 100%">
           <el-table-column
@@ -148,7 +148,7 @@
         <el-table
           :data="seniorComletionRate"
           border
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           stripe
           style="min-width: 100%">
           <el-table-column
@@ -225,7 +225,7 @@
         <el-table
           :data="classComletionRate"
           border
-          empty-text="请选择期数"
+          empty-text="暂无数据"
           stripe
           style="min-width: 100%">
           <el-table-column

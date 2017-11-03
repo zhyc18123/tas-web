@@ -15,7 +15,7 @@
               <el-table
                 :data="tableData"
                 border
-                empty-text="请选择期数"
+                empty-text="暂无数据"
                 stripe
                 style="min-width: 100%">
                 <el-table-column
