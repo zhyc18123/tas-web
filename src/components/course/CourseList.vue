@@ -178,7 +178,10 @@ import Pagination from '../base/Pagination'
             query:{
               areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
               busTeamId : '',
-              productId : ''
+              productId : '',
+              gradeId: '',
+              courseName: '',
+              subjectId: '',
             },
             products:[],
           }

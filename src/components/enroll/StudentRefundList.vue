@@ -175,7 +175,10 @@
         query: {
           areaTeamId : '',
           busTeamId : '',
-          status : ''
+          status : '',
+          studentName: '',
+          className: '',
+          payStatus: '',
         },
       }
     },

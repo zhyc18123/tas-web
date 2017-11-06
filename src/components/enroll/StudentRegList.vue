@@ -265,6 +265,10 @@
           areaTeamId: window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '',
           busTeamId: '',
           periodId: '',
+          className: '',
+          regStatus: '',
+          chargingStatus: '',
+          studentName: '',
         },
         regId:'',
         periods:[],
@@ -286,7 +290,7 @@
       $(window).smoothScroll()
     },
     created: function () {
-      this.loadTableData(this.pageNo)
+      this.loadPeriodData()
     },
     computed: {
       areaTeams: function () {
@@ -359,6 +363,7 @@
           areaTeamId: this.query.areaTeamId
         }, function (ret) {
           if (ret.success) {
+          	_this.loadTableData(_this.pageNo)
             _this.periods = ret.data.map(function (item) {
               return {value: item.periodId, text: item.periodName}
             })

@@ -193,7 +193,10 @@
           areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId : '',
           periodId : '',
-          isAttendance : ''
+          isAttendance : '',
+          teacherNames: '',
+          classNo: '',
+          className: '',
         },
         periods:[],
       }
