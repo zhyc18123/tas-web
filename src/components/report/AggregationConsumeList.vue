@@ -290,7 +290,14 @@
           busTeamId : '',
           productId : '',
           startDate : util.formatDate( util.firstDayOfMonth() ),
-          endDate : util.formatDate( util.endDayOfMonth() )
+          endDate : util.formatDate( util.endDayOfMonth() ),
+          accessToken: '',
+          year: '',
+          className: '',
+          courseName: '',
+          subjectId: '',
+          gradeId: '',
+          campusName: '',
         },
         products:[]
       }

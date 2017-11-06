@@ -35,8 +35,8 @@
                   <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>同科目
                 </label>
                 <div class="am-u-sm-3 input-field am-u-end">
-                  <el-radio  name="isSameSubject" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameSubject" :label="true">是</el-radio>
-                  <el-radio name="isSameSubject" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameSubject" :label="false">否</el-radio>
+                  <el-radio name="isSameSubject" :disabled="true" class="radio" v-model="item.isSameSubject" :label="true">是</el-radio>
+                  <el-radio name="isSameSubject" :disabled="true" class="radio" v-model="item.isSameSubject" :label="false">否</el-radio>
                 </div>
               </div>
               <div class="am-form-group am-form-select">
@@ -44,8 +44,8 @@
                   <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>同校区
                 </label>
                 <div class="am-u-sm-3 input-field am-u-end">
-                  <el-radio name="isSameCampus" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameCampus" :label="true">是</el-radio>
-                  <el-radio name="isSameCampus" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameCampus" :label="false">否</el-radio>
+                  <el-radio name="isSameCampus" :disabled="true" class="radio" v-model="item.isSameCampus" :label="true">是</el-radio>
+                  <el-radio name="isSameCampus" :disabled="true" class="radio" v-model="item.isSameCampus" :label="false">否</el-radio>
                 </div>
               </div>
               <div class="am-form-group am-form-select">
@@ -53,8 +53,8 @@
                   <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>同层级
                 </label>
                 <div class="am-u-sm-3 input-field am-u-end">
-                  <el-radio name="isSameLevel" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameLevel" :label="true">是</el-radio>
-                  <el-radio name="isSameLevel" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameLevel" :label="false">否</el-radio>
+                  <el-radio name="isSameLevel" :disabled="true" class="radio" v-model="item.isSameLevel" :label="true">是</el-radio>
+                  <el-radio name="isSameLevel" :disabled="true" class="radio" v-model="item.isSameLevel" :label="false">否</el-radio>
                 </div>
               </div>
               <div class="am-form-group am-form-select">

@@ -218,8 +218,13 @@
           busTeamId: '',
           courseTemplateId:'',
           productId: '',
-          periodId: ''
-
+          periodId: '',
+          status:'',
+          classType:'',
+          gradeId:'',
+          subjectId:'',
+          classNo:'',
+          className:'',
         },
         products: [],
         courses: [],
