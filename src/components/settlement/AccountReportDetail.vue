@@ -68,7 +68,7 @@
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
           </div>
-          <div class="am-u-lg-12" style="color: red">
+          <div class="am-u-lg-12" style="color: #202e3e;text-align: right;padding-top: 10px;border-top: 1px solid #e0e7ed;">
             总计： {{totalAmount | formatNumber(2)}}
           </div>
 

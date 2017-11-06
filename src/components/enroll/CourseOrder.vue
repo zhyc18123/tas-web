@@ -135,10 +135,12 @@
 
 <style scoped>
 
-
+  .am-table>tbody>tr>td, .am-table>tbody>tr>th{
+    text-align: left;
+  }
   .bgColor {
     background-color: #eee;
-    text-align: center;
+    text-align: center!important;
   }
 </style>
 
