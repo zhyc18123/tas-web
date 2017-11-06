@@ -211,6 +211,7 @@ const io = {
     this.apiAdminSettlementMainAccountList = conf.baseApiPath + '/api/admin/settlement/mainAccountList'
     this.apiAdminSettlementAllMainAccountListWithoutStudent = conf.baseApiPath + '/api/admin/settlement/allMainAccountListWithoutStudent'
     this.apiAdminSettlementAccountReportDetailList = conf.baseApiPath + '/api/admin/settlement/accountReportDetailList'
+    this.apiAdminSettlementAccountReportTotalAmount = conf.baseApiPath + '/api/admin/settlement/accountReportTotalAmount'
     this.apiAdminSettlementFeeList = conf.baseApiPath + '/api/admin/settlement/feeList'
     this.apiAdminSettlementFeeDetail = conf.baseApiPath + '/api/admin/settlement/feeDetail'
     this.apiAdminSettlementSaveFee = conf.baseApiPath + '/api/admin/settlement/saveFee'

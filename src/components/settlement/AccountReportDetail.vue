@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="am-u-lg-12" style="color: red">
-            总计： {{totalAmount}}
+            总计： {{totalAmount | formatNumber(2)}}
           </div>
 
         </div>
@@ -128,13 +128,26 @@ import Pagination from '../base/Pagination'
             },_this.query),function(ret){
               if(ret.success){
                 _this.total = ret.data.total
-                _this.totalAmount = ret.data.extra ? ret.data.extra.totalAmount || 0 : 0
                 _this.tableData = ret.data.list
+                _this.getTotalAmount()
               }else{
                 _this.$alert(ret.desc)
               }
             })
-          }
+          },
+          getTotalAmount:function(){
+            var _this = this
+            io.post(io.apiAdminSettlementAccountReportTotalAmount,$.extend({
+              pageNo:_this.pageNo,
+              pageSize:_this.pageSize
+            },_this.query),function(ret){
+              if(ret.success){
+                _this.totalAmount = ret.data  || 0
+              }else{
+                _this.$alert(ret.desc)
+              }
+            })
+          },
         }
     }
 </script>
