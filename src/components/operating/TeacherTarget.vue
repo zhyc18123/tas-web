@@ -217,17 +217,18 @@
             } else {
               _this.periods = ret.data
               _this.empty = false
-              _this.loadTableData();
+              _this.loadTableData(1);
             }
           }else{
             _this.$alert(ret.desc)
           }
         })
       },
-      loadTableData:function(){
+      loadTableData:function(pageNo){
         var _this = this;
         _this.$showLoading()
 
+        _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.teacherTargetList,{
           areaTeamId: this.areaTeamId,
           busTeamId: this.busTeamId,

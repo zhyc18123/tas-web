@@ -10,7 +10,7 @@
         </div>
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-form">
+          <div class="am-u-sm-12 am-form" style="padding-left: 0">
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.startDate" >
@@ -50,7 +50,7 @@
                 label="金额"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.amount < 0 ? '' : '+'}}{{ scope.row.amount | formatNumber(2) }}
+                  {{ scope.row.amount | formatNumber(2) }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -67,6 +67,9 @@
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
+          </div>
+          <div class="am-u-lg-12" style="color: #202e3e;text-align: right;padding-top: 10px;border-top: 1px solid #e0e7ed;">
+            总计： {{totalAmount | formatNumber(2)}}
           </div>
 
         </div>
@@ -91,6 +94,7 @@ import Pagination from '../base/Pagination'
             total:0,
             pageSize:20,
             pageNo:1,
+            totalAmount: 0,
             query:{
               startDate : util.formatDate( util.firstDayOfMonth() ),
               endDate : util.formatDate( util.endDayOfMonth() )
@@ -125,11 +129,25 @@ import Pagination from '../base/Pagination'
               if(ret.success){
                 _this.total = ret.data.total
                 _this.tableData = ret.data.list
+                _this.getTotalAmount()
               }else{
                 _this.$alert(ret.desc)
               }
             })
-          }
+          },
+          getTotalAmount:function(){
+            var _this = this
+            io.post(io.apiAdminSettlementAccountReportTotalAmount,$.extend({
+              pageNo:_this.pageNo,
+              pageSize:_this.pageSize
+            },_this.query),function(ret){
+              if(ret.success){
+                _this.totalAmount = ret.data  || 0
+              }else{
+                _this.$alert(ret.desc)
+              }
+            })
+          },
         }
     }
 </script>

@@ -100,7 +100,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 placeholder="付款状态" v-model="query.chargingStatus">
-                  <option value="">请选择</option>
+                  <option value="">请选择付款状态</option>
                   <option value="0">未付款</option>
                   <option value="2">已付款</option>
                   <option value="5">已退款</option>
@@ -113,7 +113,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 placeholder="订单状态" v-model="query.orderStatus">
-                  <option value="">请选择</option>
+                  <option value="">请选择订单状态</option>
                   <option value="0">未付款</option>
                   <option value="2">已付款</option>
                   <option value="5">已退款</option>
@@ -126,9 +126,7 @@
 
 
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 am-u-end">
-              <div class="am-form-group">
-                <button type="button" class="btn-check am-btn am-btn-default am-btn-success"
+                <button type="button" style="padding-left: 10px" class="am-btn am-btn-default am-btn-success"
                         @click="search"><span class="am-icon-search"></span>查询
                 </button>
               </div>

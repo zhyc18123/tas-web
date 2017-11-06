@@ -53,7 +53,7 @@
               <student-class-history-list :studentId="studentId" v-if="tabIndex == 4"></student-class-history-list>
             </div>
             <div class="am-tab-panel">
-              <student-edit-from :studentId="studentId" v-if="tabIndex == 5"></student-edit-from>
+              <student-edit-from @saveCompleted="loadStudent" :studentId="studentId" v-if="tabIndex == 5"></student-edit-from>
             </div>
           </div>
         </div>
