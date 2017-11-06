@@ -28,8 +28,6 @@
           :data="mainAccountCostAndIncomeList"
           border
           empty-text="暂无数据"
-          :show-summary="true"
-          :summary-method="getSummaries"
           stripe
           style="min-width: 100%">
           <el-table-column
@@ -100,8 +98,6 @@
         <el-table
           :data="productCostAndIncomeVoList"
           border
-          :show-summary="true"
-          :summary-method="getSummaries"
           empty-text="暂无数据"
           stripe
           style="min-width: 100%">
@@ -240,9 +236,37 @@
           periodId: _this.periodId
         },function(ret){
           if(ret.success){
+          	let sumIncome=0,sumTargetIncome=0,sumProfits=0,sumTargetProfits=0;
             _this.$hiddenLoading()
             _this.productCostAndIncomeVoList = ret.data.productCostAndIncomeVoList
             _this.mainAccountCostAndIncomeList = ret.data.mainAccountCostAndIncomeList
+            ret.data.mainAccountCostAndIncomeList.map(val => {
+            	sumIncome += Number(val.income)
+            	sumTargetIncome += Number(val.targetIncome)
+            	sumProfits += Number(val.profits)
+            	sumTargetProfits += Number(val.targetProfits)
+            })
+            _this.mainAccountCostAndIncomeList.push({
+              name : "总计",
+              income: sumIncome,
+              targetIncome: sumTargetIncome,
+              profits: sumProfits,
+              targetProfits: sumTargetProfits,
+            })
+            sumIncome=0;sumTargetIncome=0;sumProfits=0;sumTargetProfits=0;
+            ret.data.productCostAndIncomeVoList.map(val => {
+              sumIncome += Number(val.income)
+              sumTargetIncome += Number(val.targetIncome)
+              sumProfits += Number(val.profits)
+              sumTargetProfits += Number(val.targetProfits)
+            })
+            _this.productCostAndIncomeVoList.push({
+              productName : "总计",
+              income: sumIncome,
+              targetIncome: sumTargetIncome,
+              profits: sumProfits,
+              targetProfits: sumTargetProfits,
+            })
           }else{
             _this.$alert(ret.desc)
           }

@@ -10,7 +10,7 @@
         </div>
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-form">
+          <div class="am-u-sm-12 am-form" style="padding-left: 0">
             <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.startDate" >
@@ -50,7 +50,7 @@
                 label="金额"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.amount < 0 ? '' : '+'}}{{ scope.row.amount | formatNumber(2) }}
+                  {{ scope.row.amount | formatNumber(2) }}
                 </template>
               </el-table-column>
               <el-table-column
@@ -67,6 +67,9 @@
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
             </div>
+          </div>
+          <div class="am-u-lg-12" style="color: red">
+            总计： {{totalAmount}}
           </div>
 
         </div>
@@ -91,6 +94,7 @@ import Pagination from '../base/Pagination'
             total:0,
             pageSize:20,
             pageNo:1,
+            totalAmount: 0,
             query:{
               startDate : util.formatDate( util.firstDayOfMonth() ),
               endDate : util.formatDate( util.endDayOfMonth() )
@@ -124,6 +128,7 @@ import Pagination from '../base/Pagination'
             },_this.query),function(ret){
               if(ret.success){
                 _this.total = ret.data.total
+                _this.totalAmount = ret.data.extra ? ret.data.extra.totalAmount || 0 : 0
                 _this.tableData = ret.data.list
               }else{
                 _this.$alert(ret.desc)

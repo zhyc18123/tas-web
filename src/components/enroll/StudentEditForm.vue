@@ -348,7 +348,7 @@
       },
       loadLocation:function(){
         var _this = this
-        $.getJSON(conf.basePath + '/static/location/data.json',function(ret){
+        $.getJSON('/static/location/data.json',function(ret){
           _this.location  = ret
           for(var i =0 ; i < ret.length ; i++ ){
             _this.cityMap[ret[i].n] = ret[i].s
