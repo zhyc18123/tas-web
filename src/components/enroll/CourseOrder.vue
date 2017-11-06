@@ -340,6 +340,7 @@
               _this.$refs.win.close()
               _this.$root.$emit('order:new')
               _this.$emit('completed')
+              _this.$root.$emit('mainAccount:change')
 
             } else {
               _this.$alert( ret.desc || "缴费失败")
