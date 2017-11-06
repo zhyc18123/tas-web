@@ -35,7 +35,7 @@
                   <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>同科目
                 </label>
                 <div class="am-u-sm-3 input-field am-u-end">
-                  <el-radio name="isSameSubject" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameSubject" :label="true">是</el-radio>
+                  <el-radio  name="isSameSubject" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameSubject" :label="true">是</el-radio>
                   <el-radio name="isSameSubject" :disabled="!item.regPeriodId" class="radio" v-model="item.isSameSubject" :label="false">否</el-radio>
                 </div>
               </div>

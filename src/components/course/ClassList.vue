@@ -169,7 +169,7 @@
                   <span class="am-icon-cloud-upload"></span>批量导入
                 </button>
 
-                <a href="http://static.yuyou100.com/%E7%8F%AD%E7%BA%A7%E5%AF%BC%E5%85%A5%E6%A8%A1%E7%89%88v_1.xlsx?attname=班级导入模板.xlsx" class="am-btn am-btn-default am-btn-success ">
+                <a href="http://static.yuyou100.com/%E7%8F%AD%E7%BA%A7%E5%AF%BC%E5%85%A5%E6%A8%A1%E7%89%88v_2.xlsx?attname=班级导入模板.xlsx" class="am-btn am-btn-default am-btn-success ">
                   <span class="am-icon-download"></span>下载模板
                 </a>
 
