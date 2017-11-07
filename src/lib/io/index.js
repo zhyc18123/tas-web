@@ -374,7 +374,7 @@ const io = {
       data: data,
       dataType: 'json',
       cache: true,
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {
@@ -397,7 +397,7 @@ const io = {
       type: 'POST',
       data: data,
       dataType: 'json',
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {
@@ -420,7 +420,7 @@ const io = {
       type: 'POST',
       data: data,
       dataType: 'json',
-      timeout : 30000,
+      timeout : 60000,
       async : false ,
       success: function (data) {
         checkResult(data)
@@ -446,7 +446,7 @@ const io = {
       dataType: 'json',
       processData: false,
       headers :this.getHeaders(),
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {

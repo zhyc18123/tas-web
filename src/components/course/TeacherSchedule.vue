@@ -305,7 +305,6 @@
         $('.class-item-wrapper').droppable({
           hoverClass: 'hover',
           accept: function (el) {
-            console.log(el)
             var col = el.data('col')
             // return col == $(this).data('col')
             return true
@@ -340,7 +339,6 @@
               courseClass.studyingTime = time
             }
             $classItem.addClass('class-item-modify')
-            console.log('dfd',$classItem,$this)
             $classItem.appendTo($this)
             _this.saveChange(modifyInfo)
           }
@@ -423,6 +421,14 @@
     position: absolute;
     right: 2px;
 
+  }
+  .class-item .class-item-title {
+    display: inline-block;
+    overflow-x: hidden;
+    width: 169px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
   }
 
   .class-item .am-icon-circle{
