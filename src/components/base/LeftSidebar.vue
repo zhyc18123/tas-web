@@ -170,6 +170,7 @@
             padding-left: 0;
             &.active {
               background-color: #e9ecf3;
+              color: #333333;
               border-left: 3px solid #3bb4f2;
             }
           }

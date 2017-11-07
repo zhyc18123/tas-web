@@ -130,9 +130,6 @@
                         @click="search"><span class="am-icon-search"></span>查询
                 </button>
               </div>
-            </div>
-          </div>
-        </div>
 
         <div class="am-u-sm-12">
           <el-table :data="tableData" border stripe style="min-width: 100%">
@@ -201,6 +198,7 @@
                         @paging="loadTableData"/>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
