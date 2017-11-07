@@ -118,10 +118,10 @@
 
             <div class="am-form-group">
               <label class="am-u-sm-3 am-form-label">
-                <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>人事关系
+                人事关系
               </label>
               <div class="am-u-sm-3 am-u-end input-field">
-                <select2  required v-model="formData.busTeamId" :options="busTeams" >
+                <select2   v-model="formData.busTeamId" :options="busTeams" >
                   <option value="">请选择</option>
                 </select2>
               </div>
