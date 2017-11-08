@@ -7,24 +7,17 @@
         </div>
 
         <div class="am-u-sm-3 service-manager-nav">
-          <div class="am-u-sm-4 active">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
+          <div class="nav-list">
+            <div class="am-u-sm-4 active">
+              <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
+            </div>
+            <div class="am-u-sm-4">
+              <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
+            </div>
+            <div class="am-u-sm-4">
+              <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
+            </div>
           </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
-          </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
-          </div>
-       <!--   <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
-          </div>
-          <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
-          </div>
-          <div class="am-u-sm-2">
-            <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
-          </div>-->
         </div>
 
         <div class="widget-body  am-fr">
@@ -64,59 +57,57 @@
               </div>
             </div>
           </div>
-        </div>
+          <div class="am-u-sm-12">
+            <el-table :data="tableData" border stripe style="min-width: 100%">
+              <el-table-column prop="productName" label="名称" min-width="100"></el-table-column>
+              <el-table-column label="供应分类" min-width="100">
+                <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
+              </el-table-column>
+              <el-table-column label="供应价格" min-width="100">
+                <template scope="scope">{{scope.row.unitPrice}}</template>
+              </el-table-column>
+              <el-table-column label="单位" min-width="100">
+                <template scope="scope">{{scope.row.unit}}</template>
+              </el-table-column>
+              <el-table-column label="用户名" min-width="100">
+                <template scope="scope">{{scope.row.sellerName}}</template>
+              </el-table-column>
 
-        <div class="am-u-sm-12">
-          <el-table :data="tableData" border stripe style="min-width: 100%">
-            <el-table-column prop="productName" label="名称" min-width="100"></el-table-column>
-            <el-table-column label="供应分类" min-width="100">
-              <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
-            </el-table-column>
-            <el-table-column label="供应价格" min-width="100">
-              <template scope="scope">{{scope.row.unitPrice}}</template>
-            </el-table-column>
-            <el-table-column label="单位" min-width="100">
-              <template scope="scope">{{scope.row.unit}}</template>
-            </el-table-column>
-            <el-table-column label="用户名" min-width="100">
-              <template scope="scope">{{scope.row.sellerName}}</template>
-            </el-table-column>
+              <el-table-column label="手机号" min-width="100">
+                <template scope="scope">{{scope.row.sellerPhoneNo}}</template>
+              </el-table-column>
 
-            <el-table-column label="手机号" min-width="100">
-              <template scope="scope">{{scope.row.sellerPhoneNo}}</template>
-            </el-table-column>
-
-            <el-table-column label="发布时间" min-width="100">
-              <template scope="scope">{{scope.row.updateTime | formatTime}}</template>
-            </el-table-column>
+              <el-table-column label="发布时间" min-width="100">
+                <template scope="scope">{{scope.row.updateTime | formatTime}}</template>
+              </el-table-column>
 
 
 
-            <el-table-column label="操作" width="120">
-              <template scope="scope">
-                <el-dropdown>
-                  <span class="el-dropdown-link">操作菜单<i class="el-icon-caret-bottom el-icon--right"></i></span>
-                  <el-dropdown-menu slot="dropdown">
-                   <!-- <el-dropdown-item v-if="hasPermission('edit')"
-                                      @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
-                      编辑
-                    </el-dropdown-item>-->
-                    <el-dropdown-item  v-if="hasPermission('off')" @click.native="offGood(scope.row.productId)">下架</el-dropdown-item>
-                    <el-dropdown-item  v-if="hasPermission('del')" @click.native="deleteGood(scope.row.productId)">删除</el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
-              </template>
-            </el-table-column>
-          </el-table>
+              <el-table-column label="操作" width="120">
+                <template scope="scope">
+                  <el-dropdown>
+                    <span class="el-dropdown-link">操作菜单<i class="el-icon-caret-bottom el-icon--right"></i></span>
+                    <el-dropdown-menu slot="dropdown">
+                      <!-- <el-dropdown-item v-if="hasPermission('edit')"
+										 @click.native="$router.push('/main/tradingService/category/edit/'+scope.row.categoryId)">
+						 编辑
+					   </el-dropdown-item>-->
+                      <el-dropdown-item  v-if="hasPermission('off')" @click.native="offGood(scope.row.productId)">下架</el-dropdown-item>
+                      <el-dropdown-item  v-if="hasPermission('del')" @click.native="deleteGood(scope.row.productId)">删除</el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </template>
+              </el-table-column>
+            </el-table>
 
-        </div>
-
+          </div>
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
                           @paging="loadTableData"/>
             </div>
           </div>
+        </div>
       </div>
     </div>
   </div>
@@ -218,47 +209,43 @@
           height: 600
         })
       },
- /*     buyerConfirm: function (orderItemId) {
-        var _this = this
-        _this.orderItemId = orderItemId
-        io.post(io.apiAdminchangeSellOrderItemStatus, {
-          orderItemId: _this.orderItemId,
-          itemStatus: 3
-        }, function (ret) {
-          if (ret.success) {
-            _this.$toast("ok")
-            _this.$root.$emit('orderList:new')
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      }*/
     }
   }
 </script>
 <style lang="less">
   .service-manager-nav {
-    margin: 10px 0 10px 12px;
-    background: #eef1f6;
+    width: 100%;
     font-size: 14px;
     padding: 0;
-    border: 1px solid #dfe6ec;
-    .am-u-sm-4 {
-      text-align: center;
-      padding: 5px;
-    }
-    .active {
-      background-color: #ffffff;
-
-      a {
-        color: #4db3ff;
+    .nav-list {
+      width: 250px;
+      background: #eef1f6;
+      border: 1px solid #dfe6ec;
+      margin: 0 auto;
+      overflow: hidden;
+      margin-top: 20px;
+      border-radius: 4px;
+      .am-u-sm-4 {
+        text-align: center;
+        padding: 5px;
+        &:nth-child(2) {
+          border-left: 1px solid #dddddd;
+          border-right: 1px solid #dddddd;
+        }
       }
-    }
-    a {
-      color: #666666;
-      display: block;
-      &:hover {
-        color: #333333;
+      .active {
+        background-color: #ffffff;
+
+        a {
+          color: #4db3ff;
+        }
+      }
+      a {
+        color: #666666;
+        display: block;
+        &:hover {
+          color: #333333;
+        }
       }
     }
   }

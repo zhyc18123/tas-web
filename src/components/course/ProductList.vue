@@ -28,14 +28,14 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
             <div class="am-form-group">
               <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="search" ><span class="am-icon-search"></span>查询
+                      @click="search" ><span class="am-icon-search"></span>&nbsp;查询
               </button>
             </div>
           </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>新增产品</button>
+                <button type="button" class="am-btn am-btn-default am-btn-success" @click="$router.push('/main/product/product/add')" v-if="hasPermission('add')"><span  class="am-icon-plus"></span>&nbsp;新增产品</button>
               </div>
             </div>
 

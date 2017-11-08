@@ -53,12 +53,7 @@
                         @click="search"><span class="am-icon-search"></span>查询
 
                 </button>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" v-if="courseClassList.length > 0">
-              <div class="am-form-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success " @click="download">
+                <button v-if="courseClassList.length > 0" type="button" class="am-btn am-btn-default am-btn-success " @click="download">
                   <span class="am-icon-download"></span>下载课表
                 </button>
               </div>
