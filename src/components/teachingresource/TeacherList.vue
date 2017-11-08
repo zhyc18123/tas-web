@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
 
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
+          <div class="am-u-sm-12 am-u-md-6 am-u-lg-4">
             <div class="am-form-group">
               <div class="am-btn-toolbar">
                 <div class="am-btn-group am-btn-group-xs">
@@ -19,7 +19,13 @@
               </div>
             </div>
           </div>
-
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <el-select class="am-fr" @change="loadTableData(1)" placeholder="职能过滤" v-model="query.accessType">
+              <el-option label="全选" value=""></el-option>
+              <el-option label="任课老师" value="0"></el-option>
+              <el-option label="班主任" value="1"></el-option>
+            </el-select>
+          </div>
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-2">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
@@ -41,22 +47,12 @@
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
             </div>
           </div>
-
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-1">
-            <div class="am-form-group">
-              <button type="button" class="am-btn am-btn-default am-btn-success button-search"
-                      @click="search" ><span class="am-icon-search"></span>查询
-              </button>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-6 am-u-lg-1">
-            <div class="am-form-group">
-                    <button type="button" class="am-btn am-btn-default am-btn-success button-export"
-                            @click="exportTeachers" ><span class="am-icon-download"></span>导出
-                    </button>
-            </div>
-          </div>
+          <button type="button" class="am-btn am-btn-default am-btn-success button-search"
+                  @click="search" ><span class="am-icon-search"></span>查询
+          </button>
+          <button type="button" class="am-btn am-btn-default am-btn-success button-export"
+                  @click="exportTeachers" ><span class="am-icon-download"></span>导出
+          </button>
 
           <div class="am-u-sm-12 am-scrollable-horizontal">
             <el-table
@@ -77,13 +73,6 @@
                   {{scope.row.accessType == 0 ? '任课老师' : '班主任' }}
                 </template>
               </el-table-column>
-
-
-              <!--<el-table-column-->
-                <!--prop="idNo"-->
-                <!--label="身份证号码"-->
-                <!--min-width="200">-->
-              <!--</el-table-column>-->
               <el-table-column
                 label="性别"
                 min-width="100">
@@ -253,7 +242,6 @@
 <style lang="less">
   .sys-teacher-list {
     .button-export{
-      margin-left: -38px;
       font-size: 14px;
     }
     .button-search{
