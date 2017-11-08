@@ -459,8 +459,9 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   position: relative;
 }
 .widget-head {
-  width: 100%;
-  padding: 15px;
+  padding-bottom: 15px;
+  margin: 15px;
+  margin-bottom: 0;
 }
 .widget-title {
   font-size: 14px;
@@ -934,7 +935,7 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   color: #5eb95e;
 }
 .theme-white .widget-head {
-  /*border-bottom: 1px solid #eef1f5;*/
+  border-bottom: 1px solid #eef1f5;
 }
 .theme-white .widget-function a {
   color: #838FA1;
@@ -1271,9 +1272,7 @@ input[type="number"]{
 .theme-white .widget-title {
   font-size: 16px;
   color: #5a79a8;
-  width: 100%;
-  border-bottom: 1px solid #eef1f5;
-  padding: 15px 0;
+  margin-top: 15px;
 }
 
 label {
@@ -1324,7 +1323,10 @@ html::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
   -webkit-border-radius: 4px;
 }
 .widget-body {
-  padding: 7px;
+  padding: 20px 7px;
+}
+.widget-function{
+  margin-top: 7px;
 }
 .widget-body>[class*=am-u-].am-form:first-child {
   padding-left: 0;
