@@ -8,8 +8,8 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
         </div>
-        <div>
-          <div class="am-u-sm-24 am-u-md-24 am-u-lg-24 am-form-group toolbar">
+        <div class="widget-body  am-fr">
+          <div class="am-u-lg-12 am-form-group toolbar">
             <el-select @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择">
               <el-option
                 v-for="item in areaTeams"
@@ -36,7 +36,7 @@
             <el-input placeholder="老师名称" v-model="teacherName"></el-input>
             <el-button size="small" @click="handleClick" type="success">搜索</el-button>
           </div>
-          <div v-show="!empty" class="widget-body  am-fr">
+          <div v-show="!empty">
             <div class="am-u-sm-12">
               <el-table
                 :data="tableData"
@@ -256,8 +256,6 @@
       margin-top: 20px;
     }
     .toolbar {
-      margin-top: 15px;
-      margin-left: 16px;
       .el-input {
         width: 160px;
       }

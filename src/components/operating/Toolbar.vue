@@ -1,5 +1,5 @@
 <template>
-  <div class="m-toolbar am-form-group" style="line-height: 33px;margin-top: 13px;">
+  <div class="m-toolbar">
     <div class="am-u-sm-12">
       <el-select v-if="type === 'business' || type === 'gradeSubject'" size="small" class="am-u-md-2"
                  @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择区域">
@@ -219,6 +219,7 @@
     }
     .am-u-sm-12 {
       line-height: 28px;
+      padding-left: 0;
     }
   }
 </style>

@@ -8,10 +8,10 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
         </div>
-        <div>
+        <div class="widget-body  am-fr">
           <toolbar :isAreaTeam="true" :isBusTeam="true" @search="loadTableData"></toolbar>
-          <div v-show="!empty" class="widget-body  am-fr">
-            <div class="am-u-sm-12">
+          <div class="am-u-sm-12" v-show="!empty">
+            <div>
               <el-table
                 :data="tableData"
                 border
@@ -69,7 +69,7 @@
               </el-table>
             </div>
           </div>
-          <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
+          <div style="padding-left: 10px" v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
             <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
           </div>
           <div class="am-u-lg-12 am-cf">

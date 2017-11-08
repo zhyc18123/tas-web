@@ -7,66 +7,66 @@
         </div>
         <div class="widget-body  am-fr">
           <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
-        </div>
-        <div class="am-form-group">
-          <div class="am-u-sm-12">
-            <el-table
-              :data="tableData"
-              border
-              :show-summary="true"
-              :summary-method="getSummaries"
-              stripe
-              style="min-width: 100%">
-              <el-table-column
-                prop="gradeName"
-                label="年级"
-                min-width="190">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                label="科目"
-                min-width="190">
-              </el-table-column>
-              <el-table-column
-                prop="income"
-                label="营收（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.income | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="cost"
-                label="成本（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.cost | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="profits"
-                label="利润（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.profits | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="操作"
-                width="100">
-                <template scope="scope">
-                  <router-link :to="'/main/operating/gradeSubjectStatistics/costIncomeList?gradeId=' +
+          <div class="am-form-group">
+            <div class="am-u-sm-12">
+              <el-table
+                :data="tableData"
+                border
+                :show-summary="true"
+                :summary-method="getSummaries"
+                stripe
+                style="min-width: 100%">
+                <el-table-column
+                  prop="gradeName"
+                  label="年级"
+                  min-width="190">
+                </el-table-column>
+                <el-table-column
+                  prop="subjectName"
+                  label="科目"
+                  min-width="190">
+                </el-table-column>
+                <el-table-column
+                  prop="income"
+                  label="营收（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.income | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="cost"
+                  label="成本（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.cost | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="profits"
+                  label="利润（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.profits | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  width="100">
+                  <template scope="scope">
+                    <router-link :to="'/main/operating/gradeSubjectStatistics/costIncomeList?gradeId=' +
                      scope.row.gradeId + '&subjectId=' + scope.row.subjectId+ '&name=' + scope.row.gradeName+ scope.row.subjectName + '&areaTeamId=' + areaTeamId +
                       '&startDate=' + startDate+ '&endDate=' + endDate + '&activeName=income'" tag="a">详情</router-link>
-                </template>
-              </el-table-column>
-            </el-table>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
         </div>
       </div>

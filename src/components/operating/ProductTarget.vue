@@ -8,120 +8,124 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
         </div>
-        <div class="am-u-sm-24 am-u-md-24 am-u-lg-24 am-form-group toolbar">
-          <el-select @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择">
-            <el-option
-              v-for="item in areaTeams"
-              :key="item.areaTeamId"
-              :label="item.name"
-              :value="item.areaTeamId">
-            </el-option>
-          </el-select>
-          <div class="datepicker">
-            <el-date-picker
-              v-model="year"
-              type="year"
-              placeholder="选择年">
-            </el-date-picker>
+        <div class="widget-body">
+          <div class="toolbar">
+            <el-select @change="handleAreaTeamIdChange" v-model="areaTeamId" placeholder="请选择">
+              <el-option
+                v-for="item in areaTeams"
+                :key="item.areaTeamId"
+                :label="item.name"
+                :value="item.areaTeamId">
+              </el-option>
+            </el-select>
+            <div class="datepicker">
+              <el-date-picker
+                v-model="year"
+                type="year"
+                placeholder="选择年">
+              </el-date-picker>
+            </div>
+            <el-input placeholder="产品名称" v-model="productName"></el-input>
+            <el-button size="small" @click="search" type="success">搜索</el-button>
           </div>
-          <el-input placeholder="产品名称" v-model="productName"></el-input>
-          <el-button size="small" @click="search" type="success">搜索</el-button>
+          <div class="am-u-sm-12">
+            <el-tabs style="clear: both" v-model="activeName" type="card">
+              <el-tab-pane label="营收" name="first">
+                <div>
+                  <div v-show="!empty">
+                    <div>
+                      <el-table
+                        :data="tableData"
+                        border
+                        stripe
+                        style="min-width: 100%">
+                        <el-table-column
+                          prop="productName"
+                          align="center"
+                          label="产品线/营收（万元）/月份"
+                          min-width="190">
+                        </el-table-column>
+                        <el-table-column
+                          class="month"
+                          align="center"
+                          v-for="(item,index) in periods"
+                          :label="item.periodName">
+                          <template scope="scope">
+                            <div v-if="scope.row.productTargetList[index]" size="small">
+                              <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
+                            </div>
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="操作"
+                          align="center"
+                          width="100">
+                          <template scope="scope">
+                            <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
+                          </template>
+                        </el-table-column>
+                      </el-table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf">
+                      <div class="am-fr">
+                        <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
+                    <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
+                  </div>
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="利润" name="second">
+                <div>
+                  <div v-show="!empty">
+                    <div>
+                      <el-table
+                        :data="tableData2"
+                        border
+                        stripe
+                        style="min-width: 100%">
+                        <el-table-column
+                          prop="productName"
+                          align="center"
+                          label="产品线/利润（万元）/月份"
+                          min-width="190">
+                        </el-table-column>
+                        <el-table-column
+                          class="month"
+                          align="center"
+                          v-for="(item,index) in periods"
+                          :label="item.periodName">
+                          <template scope="scope">
+                            <div size="small">
+                              <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
+                            </div>
+                          </template>
+                        </el-table-column>
+                        <el-table-column
+                          label="操作"
+                          width="100">
+                          <template scope="scope">
+                            <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
+                          </template>
+                        </el-table-column>
+                      </el-table>
+                    </div>
+                    <div class="am-u-lg-12 am-cf">
+                      <div class="am-fr">
+                        <pagination v-bind:total="total2" v-bind:pageNo="pageNo2" v-bind:pageSize="pageSize2" @paging="loadTableData" />
+                      </div>
+                    </div>
+                  </div>
+                  <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
+                    <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
+                  </div>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
-        <el-tabs style="clear: both" v-model="activeName" type="card">
-          <el-tab-pane label="营收" name="first">
-            <div>
-              <div v-show="!empty" class="widget-body  am-fr">
-                <div class="am-u-sm-12">
-                  <el-table
-                    :data="tableData"
-                    border
-                    stripe
-                    style="min-width: 100%">
-                    <el-table-column
-                      prop="productName"
-                      align="center"
-                      label="产品线/营收（万元）/月份"
-                      min-width="190">
-                    </el-table-column>
-                    <el-table-column
-                      class="month"
-                      align="center"
-                      v-for="(item,index) in periods"
-                      :label="item.periodName">
-                      <template scope="scope">
-                        <div v-if="scope.row.productTargetList[index]" size="small">
-                          <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
-                        </div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      label="操作"
-                      align="center"
-                      width="100">
-                      <template scope="scope">
-                        <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </div>
-                <div class="am-u-lg-12 am-cf">
-                  <div class="am-fr">
-                    <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize" @paging="loadTableData" />
-                  </div>
-                </div>
-              </div>
-              <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
-                <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="利润" name="second">
-            <div>
-              <div v-show="!empty" class="widget-body  am-fr">
-                <div class="am-u-sm-12">
-                  <el-table
-                    :data="tableData2"
-                    border
-                    stripe
-                    style="min-width: 100%">
-                    <el-table-column
-                      prop="productName"
-                      align="center"
-                      label="产品线/利润（万元）/月份"
-                      min-width="190">
-                    </el-table-column>
-                    <el-table-column
-                      class="month"
-                      align="center"
-                      v-for="(item,index) in periods"
-                      :label="item.periodName">
-                      <template scope="scope">
-                        <div size="small">
-                          <el-input type="number" v-model="scope.row.productTargetList[index].targetPrice"></el-input>
-                        </div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      label="操作"
-                      width="100">
-                      <template scope="scope">
-                        <el-button size="small" @click.native="handleSave(scope.row)">保存</el-button>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </div>
-                <div class="am-u-lg-12 am-cf">
-                  <div class="am-fr">
-                    <pagination v-bind:total="total2" v-bind:pageNo="pageNo2" v-bind:pageSize="pageSize2" @paging="loadTableData" />
-                  </div>
-                </div>
-              </div>
-              <div v-show="empty">当前年份：{{year | formatDate('YYYY')}}，还没有设置期数。
-                <router-link to="/main/sys/period/list" tag="a">前往设置</router-link>
-              </div>
-            </div>
-          </el-tab-pane>
-        </el-tabs>
       </div>
     </div>
 
@@ -277,8 +281,7 @@
       margin-top: 20px;
     }
     .toolbar {
-      margin-top: 15px;
-      padding-left: 0;
+      padding-left: 10px;
       .el-input {
         width: 160px;
       }
