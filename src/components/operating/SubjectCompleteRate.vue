@@ -564,9 +564,7 @@
       }
       .el-button-group {
         margin: 0 auto;
-        text-align: center;
-        width: 300px;
-        display: block;
+        display: table;
         margin-bottom: 20px;
         padding-bottom: 15px;
         border-bottom: 1px dashed #ddd;
