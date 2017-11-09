@@ -161,6 +161,7 @@ const io = {
     this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
+    this.apiAdminCourseClassForReg = conf.baseApiPath + '/api/admin/courseClassForReg'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
     this.apiAdminCourseClassBaseDetail = conf.baseApiPath + '/api/admin/courseClassBaseDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
