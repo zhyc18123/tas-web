@@ -138,7 +138,7 @@
               <el-table-column
                 fixed="right"
                 label="操作"
-                width="120">
+                min-width="120">
                  <template scope="scope">
                       <el-dropdown v-if="scope.row.status != 2">
                         <span class="el-dropdown-link">
