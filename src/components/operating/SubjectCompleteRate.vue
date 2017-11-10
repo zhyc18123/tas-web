@@ -43,7 +43,11 @@
           <el-button size="small" type="success" @click="handleFind">查询</el-button>
         </div>
       </div>
-      <toolbar @search="handleFind" v-show="active === 2"></toolbar>
+      <toolbar class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
+      <div class="am-u-sm-12 am-form-group">
+        <el-button size="small" type="success" @click="$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + active)">
+          <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
+      </div>
       <div v-show="active === 1" class="am-u-sm-12">
         <el-table
           :data="gradeCompletionRate"
@@ -570,9 +574,7 @@
         border-bottom: 1px dashed #ddd;
       }
       .head-opt {
-        /*height: 36px;*/
-        /*line-height: 36px;*/
-        /*width: 650px;*/
+        padding-left: 10px;
         margin: 0 auto 20px;
         &>div {
           display: inline-block;
@@ -580,6 +582,9 @@
         input {
           height: 36px;
         }
+      }
+      .toolbar {
+        margin-left: -10px;
       }
     }
   }
