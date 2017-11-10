@@ -139,7 +139,7 @@
                 </button>
 
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="exportData" v-if="hasPermission('list')">导出
+                        @click="exportData" v-if="hasPermission('export')">导出
                 </button>
               </div>
             </div>
