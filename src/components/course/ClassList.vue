@@ -137,6 +137,10 @@
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>&nbsp;查询
                 </button>
+
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="exportData" v-if="hasPermission('list')">导出
+                </button>
               </div>
             </div>
 
@@ -290,13 +294,6 @@
                 prop="subjectName"
                 label="科目"
                 min-width="100">
-              </el-table-column>
-              <el-table-column
-                label="状态"
-                min-width="100">
-                <template scope="scope">
-                  {{scope.row.status == 0 ? '初始化': ( scope.row.status == 1 ? '报名中' : ( scope.row.status == 2 ? '已作废' :'已结课') )}}
-                </template>
               </el-table-column>
               <el-table-column
                 label="众筹"
@@ -752,6 +749,9 @@
           }
 
         })
+      },
+      exportData:function(){
+        io.downloadFile(io.apiAdminExportCourseClassList , this.query )
       },
     }
   }
