@@ -61,7 +61,7 @@
                     <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>年级阶段
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
-                    <el-select v-model="query.sectionIds" placeholder="请选择年级阶段">
+                    <el-select v-model="query.sectionId" placeholder="请选择年级阶段">
                       <el-option
                         v-for="item in sections"
                         :key="item.sectionId"
@@ -114,7 +114,7 @@
           courseTemplateId:'',
           productIds : [],
           periodIds : [],
-          sectionIds : [],
+          sectionId : '',
           gradeIds : [],
         },
         searchConfig: {},
@@ -263,6 +263,8 @@
           this.busTeams.map((val) => {
             busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')
@@ -286,17 +288,19 @@
           this.busTeams.map((val) => {
           	busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')
           return
         }
-        if (this.query.sectionIds.length === 0) {
+        if (!this.query.sectionId) {
           this.$alert('年级阶段不能为空！')
           return
         }
         io.downloadFile(io.exportGradeCompletionRate,{
-          sectionIdList:_this.query.sectionIds.join(','),
+          sectionIdList:_this.query.sectionId,
           areaTeamIdList:_this.query.areaTeamId,
           busTeamIdList: busTeamIds.join(',') ,
           periodIdList: _this.query.periodIds.join(',')
@@ -314,6 +318,8 @@
           this.busTeams.map((val) => {
             busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')
