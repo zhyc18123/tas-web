@@ -171,7 +171,7 @@
           <el-table-column
             fixed="right"
             label="操作"
-            min-width="120">
+            width="120">
             <template scope="scope">
               <el-dropdown>
                         <span class="el-dropdown-link">
