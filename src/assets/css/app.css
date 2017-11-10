@@ -459,8 +459,9 @@ ul.tpl-dropdown-content .tpl-dropdown-menu-messages-item .menu-messages-content 
   position: relative;
 }
 .widget-head {
-  width: 100%;
-  padding: 15px;
+  padding-bottom: 15px;
+  margin: 15px;
+  margin-bottom: 0;
 }
 .widget-title {
   font-size: 14px;
@@ -1271,6 +1272,7 @@ input[type="number"]{
 .theme-white .widget-title {
   font-size: 16px;
   color: #5a79a8;
+  margin-top: 15px;
 }
 
 label {
@@ -1321,14 +1323,17 @@ html::-webkit-scrollbar-thumb:hover { /*滚动条的hover样式*/
   -webkit-border-radius: 4px;
 }
 .widget-body {
-  padding: 13px 7px;
+  padding: 20px 7px;
 }
-.widget-body>[class*=am-u-]:first-child {
-  /*padding-left: 0;*/
+.widget-function{
+  margin-top: 7px;
 }
-.el-input__inner {
+.widget-body>[class*=am-u-].am-form:first-child {
+  padding-left: 0;
+}
+body .el-input input.el-input__inner {
   padding-right: 35px!important;
-  height: 30px!important;
+  height: 30px;
 }
 .el-date-editor.el-input {
   width: 100%;

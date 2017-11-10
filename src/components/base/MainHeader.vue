@@ -179,7 +179,18 @@ export default {
   },
   methods:{
    autoLeftNav:function() {
-      this.$root.$emit('showOrHiddenLeftSidebar');
+     if ($('.left-sidebar').is('.active')) {
+       if ($(window).width() > 1024) {
+         $('.tpl-content-wrapper').removeClass('active');
+       }
+       $('.left-sidebar').removeClass('active');
+     } else {
+
+       $('.left-sidebar').addClass('active');
+       if ($(window).width() > 1024) {
+         $('.tpl-content-wrapper').addClass('active');
+       }
+     }
    },
    signOut:function(){
       storage.setLogin(null)

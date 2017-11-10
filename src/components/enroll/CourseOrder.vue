@@ -282,11 +282,16 @@
           let discountDetailArr = []
           for(var reg of regDetails){
             let  d = discountDetail[reg.courseClass.classId]
-            if(d){
+            if(d && d.discountRemarkList && d.discountRemarkList.length > 0 ){
               discountDetailArr.push( reg.courseClass.className +'|'+reg.studentReg.srcTotalAmount+ ':' + d.discountRemarkList.join('+').replace(/\|\d*/g,''))
             }
           }
-          this.discountDetail = discountDetailArr.join('<br/>')
+
+          if(discountDetailArr.length > 0 ){
+            this.discountDetail = discountDetailArr.join('<br/>')
+          }else{
+            this.discountDetail = '无'
+          }
         }else{
           this.discountDetail = '无'
         }

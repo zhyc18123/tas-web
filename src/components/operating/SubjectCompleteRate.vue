@@ -43,7 +43,11 @@
           <el-button size="small" type="success" @click="handleFind">查询</el-button>
         </div>
       </div>
-      <toolbar @search="handleFind" v-show="active === 2"></toolbar>
+      <toolbar class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
+      <div class="am-u-sm-12 am-form-group">
+        <el-button size="small" type="success" @click="$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + active)">
+          <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
+      </div>
       <div v-show="active === 1" class="am-u-sm-12">
         <el-table
           :data="gradeCompletionRate"
@@ -74,9 +78,6 @@
                 (parseInt(scope.row.realClassIncome)/ parseInt(scope.row.targetClassIncome))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
-
-
-
           <el-table-column
             prop="realNewStudentNum"
             label="实际新生科数">
@@ -103,7 +104,7 @@
           <el-table-column
             label="老生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum === '0' ? '0%' :
+              <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
                 (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
@@ -118,7 +119,7 @@
           <el-table-column
             label="顺期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
                 (parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
@@ -133,7 +134,7 @@
           <el-table-column
             label="跨期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
                 (parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
@@ -564,17 +565,13 @@
       }
       .el-button-group {
         margin: 0 auto;
-        text-align: center;
-        width: 300px;
-        display: block;
+        display: table;
         margin-bottom: 20px;
         padding-bottom: 15px;
         border-bottom: 1px dashed #ddd;
       }
       .head-opt {
-        /*height: 36px;*/
-        /*line-height: 36px;*/
-        /*width: 650px;*/
+        padding-left: 10px;
         margin: 0 auto 20px;
         &>div {
           display: inline-block;
@@ -582,6 +579,9 @@
         input {
           height: 36px;
         }
+      }
+      .toolbar {
+        margin-left: -10px;
       }
     }
   }

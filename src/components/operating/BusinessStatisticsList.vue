@@ -6,9 +6,18 @@
           <div class="widget-title am-fl">业务组统计</div>
         </div>
         <div class="widget-body  am-fr">
-          <div class="am-form-group">
-            <div class="am-u-sm-12">
-              <div class="am-u-md-3">
+          <div class="am-form am-u-sm-12">
+            <div class="am-u-md-3">
+              <el-select @change="handleSearch"  size="small" v-model="formData.areaTeamId" placeholder="请选择区域">
+                <el-option
+                  v-for="item in areaTeams"
+                  :key="item.areaTeamId"
+                  :label="item.name"
+                  :value="item.areaTeamId">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="am-u-md-3">
                 <div class="am-form-group">
                   <el-date-picker
                     v-model="formData.startDate"
@@ -17,21 +26,18 @@
                   </el-date-picker>
                 </div>
               </div>
-
-              <div class="am-u-md-3">
-                <div class="am-form-group">
-                  <el-date-picker
-                    v-model="formData.endDate"
-                    type="date"
-                    placeholder="结束日期">
-                  </el-date-picker>
-                </div>
-              </div>
-                <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                  <span class="am-icon-search"></span>搜索
-                </button>
+            <div class="am-u-md-3">
+              <div class="am-form-group">
+                <el-date-picker
+                  v-model="formData.endDate"
+                  type="date"
+                  placeholder="结束日期">
+                </el-date-picker>
               </div>
             </div>
+              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
+                <span class="am-icon-search"></span>搜索
+              </button>
           </div>
           <div class="am-form-group">
             <div class="am-u-sm-12">
@@ -82,9 +88,9 @@
                   width="100">
                   <template scope="scope">
                     <router-link :to="'/main/operating/businessStatistics/costIncomeList?busTeamId=' +
-                     scope.row.mainAcoountId+ '&areaTeamId=' +scope.row.parentMainAccountId +
-                      '&name=' + scope.row.name + '&startDate=' +formatStartDate+
-                     '&endDate=' + formatEndDate + '&activeName=income'" tag="a">详情</router-link>
+                   scope.row.mainAcoountId+ '&areaTeamId=' +scope.row.parentMainAccountId +
+                    '&name=' + scope.row.name + '&startDate=' +formatStartDate+
+                   '&endDate=' + formatEndDate + '&activeName=income'" tag="a">详情</router-link>
                   </template>
                 </el-table-column>
               </el-table>
@@ -93,6 +99,7 @@
         </div>
       </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -104,7 +111,7 @@
         formData: {
           startDate: moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD'),
           endDate: moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD'),
-          mainAccountId: '',
+          areaTeamId: '',
         },
         mainAccounts: '',
         tableData: [
@@ -124,11 +131,15 @@
       formatEndDate() {
     		return moment(this.formData.endDate).format('YYYY-MM-DD')
       },
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
+      },
     },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
+      this.formData.areaTeamId = this.formData.areaTeamId ? this.formData.areaTeamId : window.config.areaTeams[0].areaTeamId
       this.loadMainAccountList();
       this.loadTableData();
     },
@@ -173,6 +184,9 @@
     }
     .btn-search {
       margin-bottom: 9px;
+    }
+    .am-form > .am-u-md-3 {
+      width: 200px;
     }
   }
 </style>

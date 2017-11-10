@@ -45,6 +45,18 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2 v-model="query.segmentNo">
+                <option value="">段次</option>
+                <option value="1">段次1</option>
+                <option value="2">段次2</option>
+                <option value="3">段次3</option>
+                <option value="4">段次4</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2 v-model="query.gradeId" :options="grades">
                 <option value="">年级</option>
               </select2>
@@ -65,7 +77,7 @@
             </div>
           </div>
 
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" >
             <div class="am-form-group">
               <input type="text" class="am-form-field" placeholder="班级名"  v-model="query.className">
             </div>
@@ -151,6 +163,13 @@
             </el-table-column>
 
             <el-table-column
+              label="段次"
+              min-width="100">
+              <template scope="scope">
+                段次{{scope.row.segmentNo}}
+              </template>
+            </el-table-column>
+            <el-table-column
               label="开课日期"
               min-width="150">
               <template scope="scope">
@@ -225,6 +244,7 @@
           subjectId:'',
           classNo:'',
           className:'',
+          segmentNo :'',
         },
         products: [],
         courses: [],
@@ -307,7 +327,7 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
-        io.post(io.apiAdminCourseClassList, $.extend({
+        io.post(io.apiAdminCourseClassForReg, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
           status : 1,

@@ -22,9 +22,11 @@
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-3">
             <div class="am-form-group tpl-table-list-select">
-              <date-picker v-model="year" >
-                <input style="height: 32px;" type="text" placeholder="请选择年份" data-am-datepicker="{format: 'yyyy ', viewMode: 'years', minViewMode: 'years'}"  required >
-              </date-picker>
+              <el-date-picker
+                v-model="year"
+                type="year"
+                placeholder="选择年">
+              </el-date-picker>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-1">
@@ -130,7 +132,7 @@
       loadTableData: function () {
         var _this = this
         io.post(io.findSummerWinterList, {
-          year: _this.year
+          year: this.$options.filters.formatDate(this.year, 'YYYY')
         }, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data

@@ -6,87 +6,94 @@
           <div class="widget-title am-fl">产品线统计</div>
         </div>
         <div class="widget-body  am-fr">
+          <div class="am-u-sm-12 am-form ">
+            <div class="am-u-md-3">
+              <el-select @change="handleSearch"  size="small" v-model="formData.areaTeamId" placeholder="请选择区域">
+                <el-option
+                  v-for="item in areaTeams"
+                  :key="item.areaTeamId"
+                  :label="item.name"
+                  :value="item.areaTeamId">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="am-u-md-3">
+              <div class="am-form-group">
+                <el-date-picker
+                  v-model="formData.startDate"
+                  type="date"
+                  placeholder="开始日期">
+                </el-date-picker>
+              </div>
+            </div>
+            <div class="am-u-md-3">
+              <div class="am-form-group">
+                <el-date-picker
+                  v-model="formData.endDate"
+                  type="date"
+                  placeholder="结束日期">
+                </el-date-picker>
+              </div>
+            </div>
+            <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
+              <span class="am-icon-search"></span>搜索
+            </button>
+          </div>
           <div class="am-form-group">
             <div class="am-u-sm-12">
-              <div class="am-u-md-3">
-                <div class="am-form-group">
-                  <el-date-picker
-                    v-model="formData.startDate"
-                    type="date"
-                    placeholder="开始日期">
-                  </el-date-picker>
-                </div>
-              </div>
-
-              <div class="am-u-md-3">
-                <div class="am-form-group">
-                  <el-date-picker
-                    v-model="formData.endDate"
-                    type="date"
-                    placeholder="结束日期">
-                  </el-date-picker>
-                </div>
-              </div>
-              <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
-                <span class="am-icon-search"></span>搜索
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="am-form-group">
-          <div class="am-u-sm-12">
-            <el-table
-              :data="tableData"
-              border
-              :show-summary="true"
-              :summary-method="getSummaries"
-              stripe
-              style="min-width: 100%">
-              <el-table-column
-                prop="productName"
-                label="产品线"
-                min-width="190">
-              </el-table-column>
-              <el-table-column
-                prop="income"
-                label="营收（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.income | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="cost"
-                label="成本（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.cost | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="profits"
-                label="利润（元）"
-                min-width="190">
-                <template scope="scope">
-                  <div>
-                    {{scope.row.profits | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="操作"
-                width="100">
-                <template scope="scope">
-                  <router-link :to="'/main/operating/productStatistics/costIncomeList?productId=' +
+              <el-table
+                :data="tableData"
+                border
+                :show-summary="true"
+                :summary-method="getSummaries"
+                stripe
+                style="min-width: 100%">
+                <el-table-column
+                  prop="productName"
+                  label="产品线"
+                  min-width="190">
+                </el-table-column>
+                <el-table-column
+                  prop="income"
+                  label="营收（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.income | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="cost"
+                  label="成本（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.cost | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  prop="profits"
+                  label="利润（元）"
+                  min-width="190">
+                  <template scope="scope">
+                    <div>
+                      {{scope.row.profits | formatNumber(2)}}
+                    </div>
+                  </template>
+                </el-table-column>
+                <el-table-column
+                  label="操作"
+                  width="100">
+                  <template scope="scope">
+                    <router-link :to="'/main/operating/productStatistics/costIncomeList?productId=' +
                      scope.row.productId + '&name=' + scope.row.productName + '&startDate=' + formatStartDate+
                      '&endDate=' + formatEndDate + '&activeName=income'" tag="a">详情</router-link>
-                </template>
-              </el-table-column>
-            </el-table>
+                  </template>
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
         </div>
       </div>
@@ -103,7 +110,7 @@
         formData: {
           startDate: moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD'),
           endDate: moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD'),
-          mainAccountId: '',
+          areaTeamId: '',
         },
         mainAccounts: '',
         tableData: [
@@ -116,13 +123,11 @@
         ],
       }
     },
-//    components: {
-//      Pagination
-//    },
     mounted:function(){
       $(window).smoothScroll()
     },
     created:function(){
+      this.formData.areaTeamId = this.formData.areaTeamId ? this.formData.areaTeamId : window.config.areaTeams[0].areaTeamId
       this.loadMainAccountList();
       this.loadTableData();
     },
@@ -132,6 +137,9 @@
       },
       formatEndDate() {
         return moment(this.formData.endDate).format('YYYY-MM-DD')
+      },
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
       },
     },
     methods:{
@@ -175,6 +183,9 @@
     }
     .btn-search {
       margin-bottom: 9px;
+    }
+    .am-form > .am-u-md-3 {
+      width: 200px;
     }
   }
 </style>

@@ -52,10 +52,7 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="widget-body am-fr">
-
+        <div class="am-u-sm-12">
         <el-table
           :data="tableData"
           border
@@ -179,6 +176,7 @@
             </template>
           </el-table-column>
         </el-table>
+        </div>
 
         <window ref="sellerRegister" title="服务商注册审批">
           <change-seller-register :merchantId="merchantId"

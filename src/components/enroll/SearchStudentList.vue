@@ -9,7 +9,7 @@
 
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-6">
             <div class="am-form-group">
-              <input type="text" class="am-form-field" placeholder="请输入学生编号／姓名／手机号"  v-model="query.keyword">
+              <input type="text" @keyup.enter="search" class="am-form-field" placeholder="请输入学生编号／姓名／手机号"  v-model="query.keyword">
             </div>
           </div>
 

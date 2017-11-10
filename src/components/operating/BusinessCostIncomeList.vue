@@ -8,104 +8,106 @@
             <button type="button" class="am-btn am-btn-default" @click="$router.push('/main/operating/businessStatistics/list')">返回</button>
           </div>
         </div>
-        <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
-        <div style="clear: both">
-          <el-tabs v-model="activeName" @tab-click="handleTabClick"  type="card">
-            <el-tab-pane label="营收" name="income">
-              <div>
-                <div class="am-u-sm-12">
-                  <el-table
-                    :data="tableData2"
-                    border
-                    :show-summary="true"
-                    :summary-method="getSummaries"
-                    stripe
-                    style="min-width: 100%">
-                    <el-table-column
-                      label="序号"
-                      min-width="190">
-                      <template scope="scope">
-                        {{scope.$index}}
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      prop="name"
-                      label="成本名称"
-                      min-width="190">
-                    </el-table-column>
-                    <el-table-column
-                      prop="totalAmount"
-                      label="金额（元）"
-                      min-width="190">
-                      <template scope="scope">
-                        <div>
-                          {{scope.row.totalAmount | formatNumber(2)}}
-                        </div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      label="操作"
-                      width="100">
-                      <template scope="scope">
-                        <router-link :to="'/main/operating/businessStatistics/incomeDetail?detailType=' +
+        <div class="widget-body">
+          <toolbar @initList="initList" @handleSearch="handleSearch" ref="toolbar"></toolbar>
+          <div style="clear: both">
+            <el-tabs v-model="activeName" @tab-click="handleTabClick"  type="card">
+              <el-tab-pane label="营收" name="income">
+                <div>
+                  <div class="am-u-sm-12">
+                    <el-table
+                      :data="tableData2"
+                      border
+                      :show-summary="true"
+                      :summary-method="getSummaries"
+                      stripe
+                      style="min-width: 100%">
+                      <el-table-column
+                        label="序号"
+                        min-width="190">
+                        <template scope="scope">
+                          {{scope.$index}}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="name"
+                        label="成本名称"
+                        min-width="190">
+                      </el-table-column>
+                      <el-table-column
+                        prop="totalAmount"
+                        label="金额（元）"
+                        min-width="190">
+                        <template scope="scope">
+                          <div>
+                            {{scope.row.totalAmount | formatNumber(2)}}
+                          </div>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        label="操作"
+                        width="100">
+                        <template scope="scope">
+                          <router-link :to="'/main/operating/businessStatistics/incomeDetail?detailType=' +
                        scope.row.detailType + '&name=' + scope.row.name+ '&incomeCategoryId=' + scope.row.categoryId+
                        '&busTeamId=' + busTeamId + '&areaTeamId=' + areaTeamId + '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">详情</router-link>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </div>
+                        </template>
+                      </el-table-column>
+                    </el-table>
+                  </div>
 
-              </div>
-            </el-tab-pane>
-            <el-tab-pane label="成本" name="cost">
-              <div>
-                <div class="am-u-sm-12">
-                  <el-table
-                    :data="tableData"
-                    border
-                    :show-summary="true"
-                    :summary-method="getSummaries"
-                    stripe
-                    style="min-width: 100%">
-                    <el-table-column
-                      label="序号"
-                      min-width="190">
-                      <template scope="scope">
-                        {{scope.$index}}
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      prop="name"
-                      label="分类"
-                      min-width="190">
-                    </el-table-column>
-                    <el-table-column
-                      prop="totalAmount"
-                      label="金额（元）"
-                      min-width="190">
-                      <template scope="scope">
-                        <div>
-                          {{scope.row.totalAmount | formatNumber(2)}}
-                        </div>
-                      </template>
-                    </el-table-column>
-                    <el-table-column
-                      label="操作"
-                      width="100">
-                      <template scope="scope">
-                        <router-link :to="'/main/operating/businessStatistics/costDetail?detailType=' +
+                </div>
+              </el-tab-pane>
+              <el-tab-pane label="成本" name="cost">
+                <div>
+                  <div class="am-u-sm-12">
+                    <el-table
+                      :data="tableData"
+                      border
+                      :show-summary="true"
+                      :summary-method="getSummaries"
+                      stripe
+                      style="min-width: 100%">
+                      <el-table-column
+                        label="序号"
+                        min-width="190">
+                        <template scope="scope">
+                          {{scope.$index}}
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        prop="name"
+                        label="分类"
+                        min-width="190">
+                      </el-table-column>
+                      <el-table-column
+                        prop="totalAmount"
+                        label="金额（元）"
+                        min-width="190">
+                        <template scope="scope">
+                          <div>
+                            {{scope.row.totalAmount | formatNumber(2)}}
+                          </div>
+                        </template>
+                      </el-table-column>
+                      <el-table-column
+                        label="操作"
+                        width="100">
+                        <template scope="scope">
+                          <router-link :to="'/main/operating/businessStatistics/costDetail?detailType=' +
                        scope.row.detailType + '&name=' + scope.row.name+ '&feeCategoryId=' + scope.row.categoryId+
                        '&busTeamId=' + busTeamId + '&areaTeamId=' + areaTeamId +  '&startDate=' + startDate +
                        '&endDate=' + endDate" tag="a">详情</router-link>
-                      </template>
-                    </el-table-column>
-                  </el-table>
-                </div>
+                        </template>
+                      </el-table-column>
+                    </el-table>
+                  </div>
 
-              </div>
-            </el-tab-pane>
-          </el-tabs>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+          </div>
         </div>
       </div>
     </div>

@@ -53,12 +53,7 @@
                         @click="search"><span class="am-icon-search"></span>查询
 
                 </button>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" v-if="courseClassList.length > 0">
-              <div class="am-form-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success " @click="download">
+                <button v-if="courseClassList.length > 0" type="button" class="am-btn am-btn-default am-btn-success " @click="download">
                   <span class="am-icon-download"></span>下载课表
                 </button>
               </div>
@@ -121,7 +116,7 @@
 
               <tr>
                 <td>备注</td>
-                <td :colspan="3 + (period.segments == 1?weeks.length:period.segments)">#后面的数字是报名人数</td>
+                <td :colspan="3 + (period.segments == 1?weeks.length:period.segments)">#前面的数字是报名人数</td>
               </tr>
 
 
@@ -282,8 +277,8 @@
                   studyingTime.length > 0 && studyingTime.map((val) => {
                     var td = document.getElementById(teacherId + '_' + val + '_' + col)
                     $(td).append('<div data-classid="' + cc.classId + '" data-col="' + col + '" class="class-item class-item-bg-' +
-                      (cc.classId % 3 ) + '">' + (cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' : '') + '<span class="class-item-title">' +
-                      cc.className + '#' + cc.regAmount + '</span>' + (cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' : '') + '</div>')
+                      (cc.subjectId) + '">' + (cc.progressStatus == 0 ? '<i class="am-icon-circle"></i>' : '') + '<span class="class-item-title">' +
+                      cc.regAmount + '#' + cc.className  + '</span>' + (cc.progressStatus == 0 ? '<i class="am-icon-edit"></i>' : '') + '</div>')
                   })
                 }
                 _this.$hiddenLoading()
@@ -305,7 +300,6 @@
         $('.class-item-wrapper').droppable({
           hoverClass: 'hover',
           accept: function (el) {
-            console.log(el)
             var col = el.data('col')
             // return col == $(this).data('col')
             return true
@@ -340,7 +334,6 @@
               courseClass.studyingTime = time
             }
             $classItem.addClass('class-item-modify')
-            console.log('dfd',$classItem,$this)
             $classItem.appendTo($this)
             _this.saveChange(modifyInfo)
           }
@@ -381,7 +374,7 @@
   }
 </script>
 
-<style>
+<style lang="less">
 
   .am-table > thead > tr > th {
     border-bottom-width: 0px;
@@ -414,7 +407,7 @@
     margin-left: 4px;
     text-align: left;
     margin-top: 4px;
-
+    color: #333;
   }
 
 
@@ -424,21 +417,81 @@
     right: 2px;
 
   }
+  .class-item .class-item-title {
+    display: inline-block;
+    overflow-x: hidden;
+    width: 161px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: bottom;
+  }
 
   .class-item .am-icon-circle{
     cursor: move;
+    margin: 0 5px 0 3px;
+  }
+  .am-icon-circle:before {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    font-size: 14px;
+    line-height: 12px;
   }
 
-  .class-item-bg-0 {
-    background-color: #ffc;
+  .class-item-bg-10 {
+    background-color: #d4efff;
+    .am-icon-circle:before {
+      color: #008ee9;
+    }
   }
 
-  .class-item-bg-1 {
-    background-color: #cfc;;
+  .class-item-bg-20 {
+    background-color: #e0d9ff;
+    .am-icon-circle:before {
+      color: #574b99;
+    }
   }
 
-  .class-item-bg-2 {
-    background-color: #ccf;
+  .class-item-bg-30 {
+    background-color: #d5f8d9;
+    .am-icon-circle:before {
+      color: #52a25b;
+    }
+  }
+  .class-item-bg-40 {
+    background-color: #f8dae1;
+    .am-icon-circle:before {
+      color: #e9486d;
+    }
+  }
+  .class-item-bg-50 {
+    background-color: #f8e8df;
+    .am-icon-circle:before {
+      color: #f85d00;
+    }
+  }
+  .class-item-bg-60 {
+    background-color: #dbe0f1;
+    .am-icon-circle:before {
+      color: #2846ad;
+    }
+  }
+  .class-item-bg-70 {
+    background-color: #fff8dd;
+    .am-icon-circle:before {
+      color: #f2c500;
+    }
+  }
+  .class-item-bg-80 {
+    background-color: #daf9f6;
+    .am-icon-circle:before {
+      color: #2ddccc;
+    }
+  }
+  .class-item-bg-90 {
+    background-color: #f7e1f9;
+    .am-icon-circle:before {
+      color: #65006f;
+    }
   }
 
   .hover {

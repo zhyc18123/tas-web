@@ -162,6 +162,7 @@ const io = {
     this.apiAdminResetDefaultPassword = conf.baseApiPath + '/api/admin/resetDefaultPassword'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
+    this.apiAdminCourseClassForReg = conf.baseApiPath + '/api/admin/courseClassForReg'
     this.apiAdminCourseClassDetail = conf.baseApiPath + '/api/admin/courseClassDetail'
     this.apiAdminCourseClassBaseDetail = conf.baseApiPath + '/api/admin/courseClassBaseDetail'
     this.apiAdminSaveOrUpdateClass = conf.baseApiPath + '/api/admin/saveOrUpdateCourseClass'
@@ -335,6 +336,9 @@ const io = {
     this.seniorComletionRate = conf.baseApiPath + '/api/admin/analyze/seniorComletionRate'
     this.gradeCompletionRate = conf.baseApiPath + '/api/admin/analyze/gradeCompletionRate'
     this.classComletionRate = conf.baseApiPath + '/api/admin/analyze/classComletionRate'
+    this.exportGradeCompletionRate = conf.baseApiPath + '/api/admin/analyze/exportGradeCompletionRate'
+    this.exportSeniorComletionRate = conf.baseApiPath + '/api/admin/analyze/exportSeniorComletionRate'
+    this.exportClassComletionRate = conf.baseApiPath + '/api/admin/analyze/exportClassComletionRate'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
     this.findSummerWinterById = conf.baseApiPath + '/api/admin/findSummerWinterById'
     this.findSummerWinterList = conf.baseApiPath + '/api/admin/findSummerWinterList'
@@ -375,7 +379,7 @@ const io = {
       data: data,
       dataType: 'json',
       cache: true,
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {
@@ -398,7 +402,7 @@ const io = {
       type: 'POST',
       data: data,
       dataType: 'json',
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {
@@ -421,7 +425,7 @@ const io = {
       type: 'POST',
       data: data,
       dataType: 'json',
-      timeout : 30000,
+      timeout : 60000,
       async : false ,
       success: function (data) {
         checkResult(data)
@@ -447,7 +451,7 @@ const io = {
       dataType: 'json',
       processData: false,
       headers :this.getHeaders(),
-      timeout : 30000,
+      timeout : 60000,
       success: function (data) {
         checkResult(data)
         if (success) {

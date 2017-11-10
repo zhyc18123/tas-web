@@ -5,51 +5,8 @@
         <div class="widget-head am-cf">
           <div class="widget-title  am-cf">所有交易</div>
         </div>
-
- <!--       <div class="am-u-sm-3">
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
-          </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
-          </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
-          </div>
-          &lt;!&ndash;   <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
-             </div>
-             <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
-             </div>
-             <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
-             </div>&ndash;&gt;
-        </div>--><!--       <div class="am-u-sm-3">
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/goods/list')">供应</a>
-          </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/lease/list')">课室</a>
-          </div>
-          <div class="am-u-sm-4">
-            <a href="javascript:;" @click="$router.push('/main/serviceManager/demand/list')">需求</a>
-          </div>
-          &lt;!&ndash;   <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/soldProductOrder/list')">客户供应订单</a>
-             </div>
-             <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/soldServiceOrder/list')">客户服务订单</a>
-             </div>
-             <div class="am-u-sm-2">
-               <a href="javascript:;" @click="$router.push('/main/seller/leaseRecord/list')">客户课室订单</a>
-             </div>&ndash;&gt;
-        </div>-->
-
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form search-div">
-
-
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <el-input type="text" name="productName" v-model="query.productName" placeholder="名称"></el-input>
@@ -123,84 +80,80 @@
                 </select2>
               </div>
             </div>
-
-
-
-                <button type="button" style="padding-left: 10px" class="am-btn am-btn-default am-btn-success"
-                        @click="search"><span class="am-icon-search"></span>查询
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+              <div class="am-form-group am-btn-group-xs">
+                <button @click="search" type="button" class="am-btn am-btn-default am-btn-success">
+                  <span class="am-icon-search"></span>&nbsp;查询
                 </button>
               </div>
             </div>
           </div>
-        </div>
+          <div class="am-u-sm-12">
+            <el-table :data="tableData" border stripe style="min-width: 100%">
+              <el-table-column prop="productName" label="名称" min-width="100"></el-table-column>
+              <el-table-column label="订单类别" min-width="100">
+                <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
+              </el-table-column>
+              <el-table-column label="订单编号" min-width="100">
+                <template scope="scope">{{scope.row.orderItemId}}</template>
+              </el-table-column>
+              <el-table-column label="分类" min-width="100">
+                <template scope="scope">{{scope.row.categoryName}}</template>
+              </el-table-column>
 
-        <div class="am-u-sm-12">
-          <el-table :data="tableData" border stripe style="min-width: 100%">
-            <el-table-column prop="productName" label="名称" min-width="100"></el-table-column>
-            <el-table-column label="订单类别" min-width="100">
-              <template scope="scope">{{scope.row.type==0?"供应":scope.row.type==2?"课室":"需求"}}</template>
-            </el-table-column>
-            <el-table-column label="订单编号" min-width="100">
-              <template scope="scope">{{scope.row.orderItemId}}</template>
-            </el-table-column>
-            <el-table-column label="分类" min-width="100">
-              <template scope="scope">{{scope.row.categoryName}}</template>
-            </el-table-column>
+              <el-table-column label="单价" min-width="100">
+                <template scope="scope">{{scope.row.unitPrice}}</template>
+              </el-table-column>
 
-            <el-table-column label="单价" min-width="100">
-              <template scope="scope">{{scope.row.unitPrice}}</template>
-            </el-table-column>
+              <el-table-column label="数量" min-width="100">
+                <template scope="scope">{{scope.row.quantity}}</template>
+              </el-table-column>
 
-            <el-table-column label="数量" min-width="100">
-              <template scope="scope">{{scope.row.quantity}}</template>
-            </el-table-column>
+              <el-table-column label="实付款" min-width="100">
+                <template scope="scope">{{scope.row.paidAmount }}</template>
+              </el-table-column>
 
-            <el-table-column label="实付款" min-width="100">
-              <template scope="scope">{{scope.row.paidAmount }}</template>
-            </el-table-column>
+              <el-table-column label="支付时间" min-width="100">
+                <template scope="scope">{{scope.row.payTime | formatTime}}</template>
+              </el-table-column>
 
-            <el-table-column label="支付时间" min-width="100">
-              <template scope="scope">{{scope.row.payTime | formatTime}}</template>
-            </el-table-column>
+              <el-table-column label="申请退款时间" min-width="100">
+                <template scope="scope">{{scope.row.refundTime | formatTime}}</template>
+              </el-table-column>
 
-            <el-table-column label="申请退款时间" min-width="100">
-              <template scope="scope">{{scope.row.refundTime | formatTime}}</template>
-            </el-table-column>
+              <el-table-column label="付款状态" min-width="100">
+                <template scope="scope">{{scope.row.chargingStatus==2? "已付款":scope.row.chargingStatus==5?"已退款":scope.row.chargingStatus==6?"退款中":"未付款"}}</template>
+              </el-table-column>
 
-            <el-table-column label="付款状态" min-width="100">
-              <template scope="scope">{{scope.row.chargingStatus==2? "已付款":scope.row.chargingStatus==5?"已退款":scope.row.chargingStatus==6?"退款中":"未付款"}}</template>
-            </el-table-column>
-
-            <el-table-column label="订单状态" min-width="100">
-            <template scope="scope">{{scope.row.orderStatus ==0 ?"未付款":scope.row.orderStatus ==2?"已付款":scope.row.orderStatus ==5?"已退款":scope.row.orderStatus ==6?"退款中":scope.row.orderStatus ==7?"已发货":"已收货"  }}</template>
-          </el-table-column>
-
-            <el-table-column label="快递单号" min-width="100">
-              <template scope="scope">{{scope.row.logisticsNo}}</template>
+              <el-table-column label="订单状态" min-width="100">
+              <template scope="scope">{{scope.row.orderStatus ==0 ?"未付款":scope.row.orderStatus ==2?"已付款":scope.row.orderStatus ==5?"已退款":scope.row.orderStatus ==6?"退款中":scope.row.orderStatus ==7?"已发货":"已收货"  }}</template>
             </el-table-column>
 
-            <el-table-column label="买家用户名" min-width="100">
-              <template scope="scope">{{scope.row.buyerName}}</template>
-            </el-table-column>
-            <el-table-column label="买家手机号" min-width="100">
-              <template scope="scope">{{scope.row.buyerPhoneNo}}</template>
-            </el-table-column>
-            <el-table-column label="卖家用户名" min-width="100">
-              <template scope="scope">{{scope.row.sellerName}}</template>
-            </el-table-column>
-            <el-table-column label="卖家手机号" min-width="100">
-              <template scope="scope">{{scope.row.sellerPhoneNo}}</template>
-            </el-table-column>
-          </el-table>
+              <el-table-column label="快递单号" min-width="100">
+                <template scope="scope">{{scope.row.logisticsNo}}</template>
+              </el-table-column>
 
-        </div>
-
-        <div class="am-u-lg-12 am-cf">
-          <div class="am-fr">
-            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                        @paging="loadTableData"/>
+              <el-table-column label="买家用户名" min-width="100">
+                <template scope="scope">{{scope.row.buyerName}}</template>
+              </el-table-column>
+              <el-table-column label="买家手机号" min-width="100">
+                <template scope="scope">{{scope.row.buyerPhoneNo}}</template>
+              </el-table-column>
+              <el-table-column label="卖家用户名" min-width="100">
+                <template scope="scope">{{scope.row.sellerName}}</template>
+              </el-table-column>
+              <el-table-column label="卖家手机号" min-width="100">
+                <template scope="scope">{{scope.row.sellerPhoneNo}}</template>
+              </el-table-column>
+            </el-table>
           </div>
-        </div>
+          <div class="am-u-lg-12 am-cf">
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
+      </div>
       </div>
     </div>
   </div>

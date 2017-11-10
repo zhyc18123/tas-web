@@ -157,6 +157,7 @@ const ProductStatisticsList = resolve => require(['./components/operating/Produc
 const BasicData = resolve => require(['./components/operating/BasicData'], resolve)
 const ProblemWarning = resolve => require(['./components/operating/ProblemWarning'], resolve)
 const FullClassRate = resolve => require(['./components/operating/FullClassRate'], resolve)
+const ExportSubjectCompleteRate = resolve => require(['./components/operating/ExportSubjectCompleteRate'], resolve)
 const SubjectCompleteRate = resolve => require(['./components/operating/SubjectCompleteRate'], resolve)
 const DataAnalysisList = resolve => require(['./components/operating/DataAnalysisList'], resolve)
 const CourseTarget = resolve => require(['./components/operating/CourseTarget'], resolve)
@@ -349,6 +350,7 @@ const router = new VueRouter({
           {path: 'subjectCompleteRate' , component: SubjectCompleteRate},
         ]
       },
+      {path: 'operating/dataAnalysis/list/exportSubjectCompleteRate' , component: ExportSubjectCompleteRate},
       {path: 'operating/targetSet' , component: TargetSet},
       {path: 'operating/targetSet/mainAccountTarget' , component: MainAccountTarget},
       {path: 'operating/targetSet/productTarget' , component: ProductTarget},

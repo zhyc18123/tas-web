@@ -173,7 +173,7 @@
           cardUser: '',
           cardNo: '',
           description:'',
-          finalRefundAmount : 0.00,
+          finalRefundAmount : 0,
           refundLectureFrom:''
         },
         studentRegDetail:{studentReg:{},courseClass:{}},
@@ -226,11 +226,11 @@
       },
       calRemaining: function () {
         this.remaining = !this.formData.refundLectureFrom ? 0 : math.mul( this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1  , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
-        this.formData.finalRefundAmount = this.remaining.toFixed(2)
+        this.formData.finalRefundAmount = parseInt(this.remaining)
       },
       checkFinalRefundAmount:function(){
         if(this.formData.finalRefundAmount <=0 || this.formData.finalRefundAmount > this.remaining  ){
-          this.formData.finalRefundAmount = this.remaining.toFixed(2)
+          this.formData.finalRefundAmount = parseInt(this.remaining)
         }
       },
       confirmToRefund: function () {

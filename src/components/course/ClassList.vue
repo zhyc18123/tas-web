@@ -135,7 +135,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="search" ><span class="am-icon-search"></span>查询
+                        @click="search" ><span class="am-icon-search"></span>&nbsp;查询
                 </button>
               </div>
             </div>
@@ -144,19 +144,19 @@
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
-                  class="am-icon-plus"></span>新建班级
+                  class="am-icon-plus"></span>&nbsp;新建班级
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="setupSenior" v-if="hasPermission('edit')"><span
-                  class="am-icon-plus"></span>设置班主任
+                  class="am-icon-plus"></span>&nbsp;设置班主任
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('open')"
                         @click="batchChangeStatus(1)" ><span
-                  class="am-icon-plus"></span>开启报名
+                  class="am-icon-plus"></span>&nbsp;开启报名
                 </button>
                 <button type="button" class="am-btn am-btn-default am-btn-success" v-if="hasPermission('invalid')"
                         @click="batchChangeStatus(2)" ><span
-                  class="am-icon-plus"></span>作废
+                  class="am-icon-plus"></span>&nbsp;作废
                 </button>
                 <!--<button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/course/class/add')" v-if="hasPermission('add')"><span
@@ -166,11 +166,11 @@
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         v-if="hasPermission('add')" @click="prepareUpload">
                   <input id="uploadFile" @change="uploadExcel" type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none">
-                  <span class="am-icon-cloud-upload"></span>批量导入
+                  <span class="am-icon-cloud-upload"></span>&nbsp;批量导入
                 </button>
 
                 <a href="http://static.yuyou100.com/%E7%8F%AD%E7%BA%A7%E5%AF%BC%E5%85%A5%E6%A8%A1%E7%89%88v_2.xlsx?attname=班级导入模板.xlsx" class="am-btn am-btn-default am-btn-success ">
-                  <span class="am-icon-download"></span>下载模板
+                  <span class="am-icon-download"></span>&nbsp;下载模板
                 </a>
 
               </div>

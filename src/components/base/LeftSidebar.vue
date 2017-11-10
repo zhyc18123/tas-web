@@ -68,21 +68,6 @@
       let _this = this
       this.resetUnfolded()
       _this.$root.$emit('sidebar.click', _this.pathMap[_this.$route.path])
-      _this.$root.$on("showOrHiddenLeftSidebar", function () {
-        if ($('.left-sidebar').is('.active')) {
-          if ($(window).width() > 1024) {
-            $('.tpl-content-wrapper').removeClass('active');
-          }
-          $('.left-sidebar').removeClass('active');
-        } else {
-
-          $('.left-sidebar').addClass('active');
-          if ($(window).width() > 1024) {
-            $('.tpl-content-wrapper').addClass('active');
-          }
-        }
-      })
-
       _this.$root.$on('changeMenus', function (menus) {
         _this.menus = menus
       })
@@ -185,6 +170,7 @@
             padding-left: 0;
             &.active {
               background-color: #e9ecf3;
+              color: #333333;
               border-left: 3px solid #3bb4f2;
             }
           }

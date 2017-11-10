@@ -40,7 +40,7 @@
         </el-table-column>
         <el-table-column
           label="期数"
-          min-width="100">
+          min-width="120">
           <template scope="scope">
             {{scope.row.courseClass.periodName}}
 
@@ -49,7 +49,7 @@
 
         <el-table-column
           label="校区"
-          min-width="100">
+          min-width="200">
           <template scope="scope">
             {{scope.row.courseClass.campusName}}
 
