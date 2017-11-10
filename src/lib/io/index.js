@@ -159,6 +159,7 @@ const io = {
     this.apiAdminBaseCourseList = conf.baseApiPath + '/api/admin/baseCourseList'
     this.apiAdminBaseCourseListForAreaTeam = conf.baseApiPath + '/api/admin/baseCourseListForAreaTeam'
     this.apiAdminPrepareRearrange = conf.baseApiPath + '/api/admin/arrangement/prepareRearrange'
+    this.apiAdminResetDefaultPassword = conf.baseApiPath + '/api/admin/resetDefaultPassword'
 
     this.apiAdminCourseClassList = conf.baseApiPath + '/api/admin/courseClassList'
     this.apiAdminExportCourseClassList = conf.baseApiPath + '/api/admin/exportCourseClassList'

@@ -8,6 +8,16 @@
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
             <div class="am-u-md-3">
+              <el-select @change="handleSearch"  size="small" v-model="formData.areaTeamId" placeholder="请选择区域">
+                <el-option
+                  v-for="item in areaTeams"
+                  :key="item.areaTeamId"
+                  :label="item.name"
+                  :value="item.areaTeamId">
+                </el-option>
+              </el-select>
+            </div>
+            <div class="am-u-md-3">
               <div class="am-form-group">
                 <el-date-picker
                   v-model="formData.startDate"
@@ -100,7 +110,7 @@
         formData: {
           startDate: moment().month(moment().month() - 1).startOf('month').format('YYYY-MM-DD'),
           endDate: moment().month(moment().month() - 1).endOf('month').format('YYYY-MM-DD'),
-          mainAccountId: '',
+          areaTeamId: '',
         },
         mainAccounts: '',
         tableData: [
@@ -117,6 +127,7 @@
       $(window).smoothScroll()
     },
     created:function(){
+      this.formData.areaTeamId = this.formData.areaTeamId ? this.formData.areaTeamId : window.config.areaTeams[0].areaTeamId
       this.loadMainAccountList();
       this.loadTableData();
     },
@@ -126,6 +137,9 @@
       },
       formatEndDate() {
         return moment(this.formData.endDate).format('YYYY-MM-DD')
+      },
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
       },
     },
     methods:{
@@ -169,6 +183,9 @@
     }
     .btn-search {
       margin-bottom: 9px;
+    }
+    .am-form > .am-u-md-3 {
+      width: 200px;
     }
   }
 </style>

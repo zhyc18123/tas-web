@@ -28,7 +28,7 @@
                 </div>
                 <div class="am-form-group">
                   <label class="am-u-sm-3 am-form-label">
-                    业务组(可多选)
+                    业务组(不选则导出所以业务组)
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
                     <el-select multiple  v-model="query.busTeamIds" placeholder="业务组">
@@ -43,7 +43,7 @@
                 </div>
                 <div class="am-form-group">
                   <label class="am-u-sm-3 am-form-label">
-                    <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数(可多选)
+                    <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
                     <el-select :disabled="periods.length === 0" multiple  v-model="query.periodIds" placeholder="期数">
@@ -61,7 +61,7 @@
                     <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>年级阶段
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
-                    <el-select v-model="query.sectionIds" placeholder="请选择年级阶段">
+                    <el-select v-model="query.sectionId" placeholder="请选择年级阶段">
                       <el-option
                         v-for="item in sections"
                         :key="item.sectionId"
@@ -73,7 +73,7 @@
                 </div>
                 <div class="am-form-group" v-if="active=== '2'">
                   <label class="am-u-sm-3 am-form-label">
-                    年级(可多选)
+                    年级(不选则导出所有年级)
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
                     <el-select multiple v-model="query.gradeIds" placeholder="请选择年级">
@@ -114,7 +114,7 @@
           courseTemplateId:'',
           productIds : [],
           periodIds : [],
-          sectionIds : [],
+          sectionId : '',
           gradeIds : [],
         },
         searchConfig: {},
@@ -153,7 +153,6 @@
     },
     computed: {
     	name() {
-    		debugger
         let active = this.$route.query.active
     		if (active === '1') {
     			return '年级科数完成率'
@@ -263,6 +262,8 @@
           this.busTeams.map((val) => {
             busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')
@@ -286,17 +287,19 @@
           this.busTeams.map((val) => {
           	busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')
           return
         }
-        if (this.query.sectionIds.length === 0) {
+        if (!this.query.sectionId) {
           this.$alert('年级阶段不能为空！')
           return
         }
         io.downloadFile(io.exportGradeCompletionRate,{
-          sectionIdList:_this.query.sectionIds.join(','),
+          sectionIdList:_this.query.sectionId,
           areaTeamIdList:_this.query.areaTeamId,
           busTeamIdList: busTeamIds.join(',') ,
           periodIdList: _this.query.periodIds.join(',')
@@ -314,6 +317,8 @@
           this.busTeams.map((val) => {
             busTeamIds.push(val.value)
           })
+        } else {
+          busTeamIds = this.query.busTeamIds
         }
         if (this.query.periodIds.length === 0) {
           this.$alert('期数不能为空！')

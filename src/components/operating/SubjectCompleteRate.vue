@@ -78,9 +78,6 @@
                 (parseInt(scope.row.realClassIncome)/ parseInt(scope.row.targetClassIncome))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
-
-
-
           <el-table-column
             prop="realNewStudentNum"
             label="实际新生科数">
@@ -107,7 +104,7 @@
           <el-table-column
             label="老生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum === '0' ? '0%' :
+              <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
                 (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
@@ -122,7 +119,7 @@
           <el-table-column
             label="顺期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
                 (parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum))*100 | formatNumber(2)}}%</div>
             </template>
           </el-table-column>
@@ -137,7 +134,7 @@
           <el-table-column
             label="跨期续读率">
             <template scope="scope">
-              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum === '0' ? '0%' :
+              <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
                 (parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
