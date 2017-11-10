@@ -98,8 +98,13 @@
                       </el-dropdown-item>
                       <el-dropdown-item v-if="hasPermission('permission')" @click.native="$router.push('/main/sys/user/roles/'+scope.row.userId)">设置操作权限
                       </el-dropdown-item>
+
                       <el-dropdown-item v-if="hasPermission('data_permission')" @click.native="$router.push('/main/sys/role/dataPermission/'+scope.row.userId)">设置数据权限
                       </el-dropdown-item>
+
+                      <el-dropdown-item v-if="hasPermission('reset_default_password')" @click.native="resetPassword(scope.row)">重置为默认密码
+                      </el-dropdown-item>
+
                       <el-dropdown-item  @click.native="del(scope.row.userId)">删除</el-dropdown-item>
                       <el-dropdown-item v-if="scope.row.status == 1 && hasPermission('enable_disable')" @click.native="changeStatus(scope.row.userId ,0)">禁用</el-dropdown-item>
                       <el-dropdown-item v-if="scope.row.status == 0 && hasPermission('enable_disable')" @click.native="changeStatus(scope.row.userId , 1 )">解禁</el-dropdown-item>
@@ -150,6 +155,21 @@
       this.loadTableData(this.pageNo);
     },
     methods: {
+
+      resetPassword:function (user) {
+        var _this = this
+        _this.$confirm('确定重置为默认密码？',function(){
+
+           io.post(io.apiAdminResetDefaultPassword, {
+            userId : user.userId,
+           }, function (ret) {
+           if (ret.success) {
+             _this.$alert(ret.desc)
+           } else {
+           _this.$alert(ret.desc)
+           }
+           })
+        })},
       del: function (userId) {
         const _this = this;
         _this.$confirm('你确定要删除？',

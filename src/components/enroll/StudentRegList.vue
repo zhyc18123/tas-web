@@ -100,8 +100,8 @@
               </el-table-column>
               <el-table-column
                 fixed
-                prop="studentReg.operator"
-                label="操作人"
+                prop="studentReg.counselorName"
+                label="咨询师"
                 min-width="100">
               </el-table-column>
 
