@@ -109,7 +109,7 @@
                 label="报名时间"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.courseClass.createTime | formatTime}}
+                  {{scope.row.studentReg.createTime | formatTime}}
                 </template>
               </el-table-column>
 

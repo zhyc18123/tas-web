@@ -147,7 +147,8 @@
           teachGradeNames:_this.courseClass.gradeName,
           teachSubjectNames:_this.courseClass.subjectName,
           pageNo:_this.pageNo,
-          pageSize:_this.pageSize
+          pageSize:_this.pageSize,
+          accessType:0
         },_this.query),function(ret){
           if(ret.success){
             _this.total = ret.data.total
