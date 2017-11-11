@@ -63,7 +63,7 @@
           <td><span class="am-text-danger">￥{{ ( courseOrder.payableAmount-courseOrder.paidAmount ) | formatNumber(2) }}</span></td>
           <td colspan="2"></td>
         </tr>
-        <tr v-if="courseOrder.chargingStatus == 0 ">
+        <tr v-if="courseOrder.chargingStatus == 0 && discountDetail.indexOf('特殊优惠') == -1   ">
           <td class="bgColor">特殊优惠</td>
           <td><input type="number" step="0" class="am-input-sm"  v-model="formData.discountAmount"  @change="checkDiscountAmount"/></td>
           <td class="bgColor">优惠原因</td>
