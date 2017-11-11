@@ -12,7 +12,7 @@
                 <select2  v-model="query.payWay">
                   <option value="">支付类型</option>
                   <option value="0">现金</option>
-                  <option value="1">刷卡</option>
+                  <option value="1">pos机</option>
                   <option value="2">转账</option>
                   <option value="3">账户</option>
                   <option value="4">在线支付</option>
@@ -22,7 +22,25 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" v-model="query.operator" placeholder="请输操作人"/>
+                <input type="text" v-model="query.courseOrderId" placeholder="课程订单号"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" v-model="query.payOrderId" placeholder="支付订单号"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" v-model="query.operator" placeholder="操作人"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text" v-model="query.operator" placeholder="操作人"/>
               </div>
             </div>
 
@@ -35,7 +53,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <date-picker v-model="query.endDate" >
                   <input type="text" placeholder="请选择结束日期" data-am-datepicker readonly required >
@@ -43,7 +61,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -65,8 +83,15 @@
               style="min-width: 100%">
               <el-table-column
                 prop="courseOrderId"
-                label="订单编号"
+                label="课程订单号"
                 min-width="200">
+              </el-table-column>
+              <el-table-column
+                label="支付订单号"
+                min-width="200">
+                <template scope="scope">
+                  {{scope.row.payInfoExt.bizseq}}
+                </template>
               </el-table-column>
               <el-table-column
                 label="pos流水号"
