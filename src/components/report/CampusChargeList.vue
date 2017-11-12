@@ -188,15 +188,105 @@
           </div>
 
           <div class="am-u-sm-12">
-            <el-table
-              :data="tableData"
-              border
-              stripe
-              @selection-change="handleSelectionChange"
-              style="min-width: 100%">
-              <el-table-column
-                type="selection"
-                width="55">
+
+            <el-table :data="tableData"
+                      border
+                      stripe
+                      style="width: 100%">
+              <el-table-column type="expand">
+                <template scope="props">
+                  <el-table
+                    :data="props.row.list"
+                    border
+                    stripe
+                    style="min-width: 100%">
+
+                    <el-table-column
+                      prop="className"
+                      label="报读班级"
+                      min-width="200">
+                    </el-table-column>
+                    <el-table-column
+                      prop="gradeName"
+                      label="年级"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="subjectName"
+                      label="科目"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="courseName"
+                      label="课程"
+                      min-width="200">
+                    </el-table-column>
+                    <el-table-column
+                      prop="productName"
+                      label="产品"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="areaTeamName"
+                      label="区域"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="busTeamName"
+                      label="业务组"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="paidAmount"
+                      label="实缴金额"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="discountAmount"
+                      label="优惠金额"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      prop="discountReason"
+                      label="优惠原因"
+                      min-width="200">
+                    </el-table-column>
+
+                    <el-table-column
+                      prop="refundAmount"
+                      label="实退金额"
+                      min-width="100">
+                    </el-table-column>
+
+                    <el-table-column
+                      label="日结状态"
+                      min-width="100">
+                      <template scope="scope">
+                        {{ {'0':'未日结','1':'已日结'}[scope.row.dailyStatus] }}
+                      </template>
+                    </el-table-column>
+
+                    <el-table-column
+                      prop="remark"
+                      label="备注"
+                      min-width="200">
+                    </el-table-column>
+                    <el-table-column
+                      prop="regCampus"
+                      label="报名校区"
+                      min-width="100">
+                    </el-table-column>
+                    <el-table-column
+                      label="申请退费时间"
+                      min-width="200">
+                      <template scope="scope">
+                        {{ scope.row.applyRefundTime | formatTime }}
+                      </template>
+                    </el-table-column>
+
+
+                  </el-table>
+                </template>
               </el-table-column>
               <el-table-column
                 label="业务类型"
@@ -206,17 +296,11 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="时间"
+                prop="orderId"
+                label="订单号"
                 min-width="180">
-                <template scope="scope">
-                  {{ scope.row.updateTime | formatTime }}
-                </template>
               </el-table-column>
-              <el-table-column
-                prop="studentName"
-                label="学生姓名"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 prop="paidAmount"
                 label="实缴金额"
@@ -227,51 +311,19 @@
                 label="优惠金额"
                 min-width="100">
               </el-table-column>
-              <el-table-column
-                prop="discountReason"
-                label="优惠原因"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="historyOwingAmount"
-                label="历史欠费金额"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="newOwingAmount"
-                label="最新欠费金额"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 prop="refundAmount"
                 label="实退金额"
                 min-width="100">
               </el-table-column>
+
               <el-table-column
-                prop="studentNo"
-                label="学生编号"
-                min-width="150">
-              </el-table-column>
-              <el-table-column
-                prop="studentGradeName"
-                label="就读年级"
+                prop="studentName"
+                label="学生姓名"
                 min-width="100">
               </el-table-column>
-              <el-table-column
-                prop="studentSchool"
-                label="就读学校"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="year"
-                label="年份"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="season"
-                label="季节"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 label="支付方式"
                 min-width="100">
@@ -279,21 +331,14 @@
                   {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
                 </template>
               </el-table-column>
-              <el-table-column
-                prop="orderId"
-                label="订单号"
-                min-width="180">
-              </el-table-column>
-              <el-table-column
-                prop="regCampus"
-                label="报名校区"
-                min-width="100">
-              </el-table-column>
+
               <el-table-column
                 prop="chargeCampus"
                 label="收费校区"
                 min-width="100">
               </el-table-column>
+
+
               <el-table-column
                 prop="operator"
                 label="操作人"
@@ -307,60 +352,13 @@
                   {{ {'0':'线下','1':'线上'}[scope.row.regFrom] }}
                 </template>
               </el-table-column>
-              <el-table-column
-                label="申请退费时间"
-                min-width="200">
-                <template scope="scope">
-                  {{ scope.row.applyRefundTime | formatTime }}
-                </template>
-              </el-table-column>
-              <el-table-column
-                label="日结状态"
-                min-width="100">
-                <template scope="scope">
-                  {{ {'0':'未日结','1':'已日结'}[scope.row.dailyStatus] }}
-                </template>
-              </el-table-column>
 
               <el-table-column
-                prop="className"
-                label="报读班级"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="gradeName"
-                label="年级"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                label="科目"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="courseName"
-                label="课程"
-                min-width="200">
-              </el-table-column>
-              <el-table-column
-                prop="productName"
-                label="产品"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="areaTeamName"
-                label="区域"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                label="业务组"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="remark"
-                label="备注"
-                min-width="200">
+                label="时间"
+                min-width="180">
+                <template scope="scope">
+                  {{ scope.row.updateTime | formatTime }}
+                </template>
               </el-table-column>
 
               <el-table-column
@@ -371,7 +369,9 @@
                   <el-button size="small" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
                 </template>
               </el-table-column>
+
             </el-table>
+
           </div>
           <div class="am-u-lg-12 am-cf">
 
@@ -484,51 +484,49 @@
         }), function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
-            let data = []
-            _this.tableData = []
-//            for(let i =0; i < ret.data.list.length; i++) {
-//            	let list = [],sum = 0;
-//              list.push(ret.data.list[i])
-//              sum = Number(ret.data.list[i].paidAmount)
-//              for(let j = i + 1; j < ret.data.list.length; j++) {
-//                if(ret.data.list[i].orderId === ret.data.list[j].orderId) {
-//                  list.push(ret.data.list[j])
-//                  sum += Number(ret.data.list[j].paidAmount)
-//                }
-//              }
-//              _this.tableData.push({
-//                list: list,
-//                sum: sum,
-//                orderId: ret.data.list[i].orderId,
-//              })
-//            }
-            ret.data && ret.data.list && ret.data.list.map((val) => {
-              if (data.length === 0) {
-                data.push({
-                  key: val.orderId,
-                  list: [val]
-                })
-              } else {
-                let number = 0
-                data.map((i) => {
-                  if (i.key === val.orderId) {
-                    i.list.push(val)
-                  } else {
-                    number ++;
-                  }
-                })
-                if (data.length === number) {
-                  data.push({
-                    key: val.orderId,
-                    list: [val]
-                  })
+            let map = {}
+
+            if(ret.data && ret.data ){
+              ret.data.forEach((item)=>{
+                let list  = map[item.orderId]
+                if(!list){
+                  list = []
                 }
-              }
-            })
-            console.log(data)
-            _this.tableData = data
-            _this.total = ret.data.total
-//            _this.tableData = ret.data.list
+                list.push(item)
+                map[item.orderId] = list
+              })
+            }
+            let tableData = []
+            for(var key in map ){
+              let paidAmount = 0
+              let discountAmount = 0
+              let refundAmount = 0
+              let list  = map[key]
+              list.forEach((item)=>{
+                paidAmount += parseFloat(item.paidAmount)
+                discountAmount += parseFloat(item.discountAmount)
+                refundAmount += parseFloat(item.refundAmount)
+              })
+
+              tableData.push({
+                orderId : key ,
+                list : list ,
+                paidAmount: paidAmount,
+                discountAmount:discountAmount,
+                refundAmount:refundAmount,
+                busType: list[0].busType,
+                orderStatus: list[0].orderStatus,
+                studentName: list[0].orderStatus,
+                createTime: list[0].createTime,
+                regFrom: list[0].regFrom,
+                payWay: list[0].payWay,
+                chargeCampus: list[0].chargeCampus,
+                operator: list[0].operator,
+              })
+            }
+
+            _this.tableData = tableData
+
           } else {
             _this.$alert(ret.desc)
           }
