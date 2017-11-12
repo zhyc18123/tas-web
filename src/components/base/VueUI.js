@@ -45,7 +45,8 @@ import {
   ButtonGroup,
   MenuItem,
   Menu,
-  DatePicker
+  DatePicker,
+  Tooltip
 } from 'element-ui'
 var VueUI = function(){
 
@@ -151,6 +152,7 @@ VueUI.install = function (Vue){
   Vue.component(MenuItem.name,MenuItem)
   Vue.component(Menu.name,Menu)
   Vue.component(DatePicker.name,DatePicker)
+  Vue.component(Tooltip.name,Tooltip)
 
   Vue.filter('formatDate' ,util.formatDate )
   Vue.filter('formatTime' , util.formatTime )

@@ -51,8 +51,11 @@ const io = {
     this.apiAdminSaveRoleResource = conf.baseApiPath + '/api/admin/saveRoleResource'
 
     this.apiAdminSysDataPermissionConfig = conf.baseApiPath + '/api/admin/sysDataPermissionConfig'
+    this.sysCampusDataPermissionConfig = conf.baseApiPath + '/api/admin/sysCampusDataPermissionConfig'
     this.apiAdminSaveUserDataPermission = conf.baseApiPath + '/api/admin/saveUserDataPermission'
+    this.saveUserCampusDataPermission = conf.baseApiPath + '/api/admin/saveUserCampusDataPermission'
     this.apiAdminUserDataPermissionList = conf.baseApiPath + '/api/admin/userDataPermissionList'
+    this.userCampusDataPermissionList = conf.baseApiPath + '/api/admin/userCampusDataPermissionList'
 
     this.apiAdminRoleList = conf.baseApiPath + '/api/admin/roleList'
     this.apiAdminRoleDetail = conf.baseApiPath + '/api/admin/roleDetail'
@@ -281,9 +284,11 @@ const io = {
 
 
     this.apiAdminStudentMainAccount = conf.baseApiPath + '/api/admin/studentMainAccount'
+    this.autoBindStudent = conf.baseApiPath + '/api/m/u/autoBindStudent'
 
 
     this.apiAdminReportChargeList = conf.baseApiPath + '/api/admin/report/chargeList'
+    this.campusChargeList = conf.baseApiPath + '/api/admin/report/campusChargeList'
     this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
     this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'

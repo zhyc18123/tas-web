@@ -98,7 +98,8 @@ function loadConfig( cb ){
       busTeams:ret.data.busTeamList || [],
       grades:ret.data.gradeList,
       subjects:ret.data.subjectList,
-      periods:ret.data.periodList
+      periods:ret.data.periodList,
+      campusList:ret.data.campusList
 
     })
 

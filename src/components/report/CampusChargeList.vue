@@ -110,16 +110,21 @@
                 <input type="text"  v-model="query.className" placeholder="请输入班级名称"/>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>
+                <select2  v-model="query.chargeCampusId" :options="campusList">
+                  <option value="">收费校区</option>
+                </select2>
               </div>
             </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text"  v-model="query.chargeCampus" placeholder="请输入收费校区"/>
+                <select2 required  v-model="query.dailyStatus">
+                  <option value="">日结状态</option>
+                  <option value="0">未日结</option>
+                  <option value="1">已日结</option>
+                </select2>
               </div>
             </div>
 
@@ -412,6 +417,7 @@
           className: '',
           dailyStatus: '',
           operator: '',
+          chargeCampusId: '',
           chargeCampus: '',
           regCampus: '',
         },
@@ -431,6 +437,13 @@
       this.loadProductData()
     },
     computed: {
+      campusList: function () {
+        var options = ( this.$root.config.campusList || [] )
+          .map(function (item) {
+            return {value: item.campusId, text: item.campusName}
+          })
+        return options
+      },
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
@@ -465,17 +478,57 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
-        io.post(io.apiAdminReportChargeList, $.extend({
-          pageNo: _this.pageNo,
-          pageSize: _this.pageSize
-        }, _this.query, {
+        io.post(io.campusChargeList, $.extend({}, _this.query, {
           startDate: this.query.startDate ? moment(this.query.startDate).format('YYYY-MM-DD') : '',
           endDate: this.query.endDate ? moment(this.query.endDate).format('YYYY-MM-DD') : ''
         }), function (ret) {
           _this.$hiddenLoading()
           if (ret.success) {
+            let data = []
+            _this.tableData = []
+//            for(let i =0; i < ret.data.list.length; i++) {
+//            	let list = [],sum = 0;
+//              list.push(ret.data.list[i])
+//              sum = Number(ret.data.list[i].paidAmount)
+//              for(let j = i + 1; j < ret.data.list.length; j++) {
+//                if(ret.data.list[i].orderId === ret.data.list[j].orderId) {
+//                  list.push(ret.data.list[j])
+//                  sum += Number(ret.data.list[j].paidAmount)
+//                }
+//              }
+//              _this.tableData.push({
+//                list: list,
+//                sum: sum,
+//                orderId: ret.data.list[i].orderId,
+//              })
+//            }
+            ret.data && ret.data.list && ret.data.list.map((val) => {
+              if (data.length === 0) {
+                data.push({
+                  key: val.orderId,
+                  list: [val]
+                })
+              } else {
+                let number = 0
+                data.map((i) => {
+                  if (i.key === val.orderId) {
+                    i.list.push(val)
+                  } else {
+                    number ++;
+                  }
+                })
+                if (data.length === number) {
+                  data.push({
+                    key: val.orderId,
+                    list: [val]
+                  })
+                }
+              }
+            })
+            console.log(data)
+            _this.tableData = data
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+//            _this.tableData = ret.data.list
           } else {
             _this.$alert(ret.desc)
           }

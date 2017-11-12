@@ -28,6 +28,7 @@ const RoleForm = resolve => require(['./components/sysmanager/RoleForm'], resolv
 const RoleUsers = resolve => require(['./components/sysmanager/RoleUsers'], resolve)
 const RoleOptPermission = resolve => require(['./components/sysmanager/RoleOptPermission'], resolve)
 const DataPermission = resolve => require(['./components/sysmanager/DataPermission'], resolve)
+const CampusPermission = resolve => require(['./components/sysmanager/CampusPermission'], resolve)
 const AreaTeamList = resolve => require(['./components/sysmanager/AreaTeamList'], resolve)
 const AreaTeamForm = resolve => require(['./components/sysmanager/AreaTeamForm'], resolve)
 const BusTeamList = resolve => require(['./components/sysmanager/BusTeamList'], resolve)
@@ -133,6 +134,7 @@ const AttendanceCourseClassList = resolve => require(['./components/attendance/A
 const QueryAttendanceList = resolve => require(['./components/attendance/QueryAttendanceList'], resolve)
 
 const ChargeList = resolve => require(['./components/report/ChargeList'], resolve)
+const CampusChargeList = resolve => require(['./components/report/CampusChargeList'], resolve)
 const AggregationConsumeList = resolve => require(['./components/report/AggregationConsumeList'], resolve)
 const PayRecordList = resolve => require(['./components/report/PayRecordList'], resolve)
 
@@ -194,6 +196,7 @@ const router = new VueRouter({
       {path: 'sys/role/edit/:roleId' , component: RoleForm },
       {path: 'sys/role/optPermission/:roleId' , component: RoleOptPermission },
       {path: 'sys/role/dataPermission/:userId' , component: DataPermission },
+      {path: 'sys/role/campusPermission/:userId' , component: CampusPermission },
       {path: 'sys/role/users/:roleId' , component: RoleUsers },
       {path: 'sys/areateam/list' , component: AreaTeamList },
       {path: 'sys/areateam/add' , component: AreaTeamForm },
@@ -308,6 +311,7 @@ const router = new VueRouter({
       {path: 'attendance/attendanceQuery/list', component:QueryAttendanceList },
 
       {path: 'report/charge/list', component:ChargeList },
+      {path: 'report/campus/charge/list', component:CampusChargeList },
       {path: 'report/consumeAggregation/list', component:AggregationConsumeList },
       {path: 'report/payRecord/list', component:PayRecordList },
 
@@ -389,7 +393,7 @@ var appVue = new Vue({
   el: '#app',
   router,
   template: '<div><router-view class="view"></router-view></div>',
-  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[]} , courseShoppingCart:[], teacherName:[]},
+  data:{ config: {menus:[],permission:{},groupBusTeams:{},areaTeams:[],grades:[],subjects:[],periods:[],campusList:[]} , courseShoppingCart:[], teacherName:[]},
 
 })
 

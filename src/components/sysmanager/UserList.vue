@@ -102,6 +102,9 @@
                       <el-dropdown-item v-if="hasPermission('data_permission')" @click.native="$router.push('/main/sys/role/dataPermission/'+scope.row.userId)">设置数据权限
                       </el-dropdown-item>
 
+                      <el-dropdown-item v-if="hasPermission('campus_data_permission')" @click.native="$router.push('/main/sys/role/campusPermission/'+scope.row.userId)">设置校区权限
+                      </el-dropdown-item>
+
                       <el-dropdown-item v-if="hasPermission('reset_default_password')" @click.native="resetPassword(scope.row)">重置为默认密码
                       </el-dropdown-item>
 

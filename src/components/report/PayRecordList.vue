@@ -38,12 +38,6 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text" v-model="query.operator" placeholder="操作人"/>
-              </div>
-            </div>
-
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">

@@ -8,21 +8,26 @@
         </div>
       </div>
       <div class="am-padding-sm">
-      <table style="width: 100%">
-        <tr>
-          <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
-          <td>学号：{{formData.studentNo}}</td>
-          <td>年级：{{formData.gradeName}}</td>
-          <td>账户余额：{{mainAccount.balanceAmount | formatNumber(2)}}</td>
-        </tr>
-        <tr>
-          <td>电话：{{formData.phoneNo}}</td>
-          <td>就读学校：{{formData.school}}</td>
-          <td></td>
-        </tr>
+        <table style="width: 100%">
+          <tr>
+            <td rowspan="2" class="am-text-middle">{{formData.name}}</td>
+            <td>学号：{{formData.studentNo}}</td>
+            <td>年级：{{formData.gradeName}}</td>
+            <td>账户余额：{{mainAccount.balanceAmount | formatNumber(2)}}</td>
+          </tr>
+          <tr>
+            <td>电话：{{formData.phoneNo}}</td>
+            <td>就读学校：{{formData.school}}</td>
+            <td>绑定学员：
+              <el-tooltip placement="top">
+                <div slot="content"><img class="bing-student-src-big" :src="src" alt=""></div>
+                <img class="bing-student-src" :src="src" alt="">
+              </el-tooltip>
+            </td>
+          </tr>
 
 
-      </table>
+        </table>
       </div>
       <div class="widget-body am-fr">
 
@@ -97,10 +102,19 @@
     background-color: #fff;
     color: #0e90d2;
   }
+  .bing-student-src {
+    width: 27px;
+    cursor: pointer;
+    border: 1px solid #02c8c2;
+  }
+  .bing-student-src:hover{
+    border-color: #000;
+  }
 </style>
 
 <script>
   import io from '../../lib/io'
+  import conf from '../../lib/conf'
   import util from '../../lib/util'
   import StudentEditForm from './StudentEditForm'
   import StudentApply from './StudentApply'
@@ -110,9 +124,11 @@
   import ClassHistoryList from './ClassHistoryList'
   export default{
     data(){
+      let url = conf.studentBasePath + '/bind-student?studentId=' + this.$params('studentId')
       return {
         studentId : this.$params('studentId') ,
         tabIndex : 0 ,
+        src : conf.baseApiPath + '/api/qrcode/encode?content=' + encodeURIComponent(url),
         formData:[],
         mainAccount:{}
       }
@@ -140,27 +156,27 @@
     },
     methods: {
 
-        loadMainAccount:function(){
-          var _this = this
-          io.post(io.apiAdminStudentMainAccount,{
-              studentId : _this.studentId
-          },function(ret){
-              if(ret.success){
-                _this.mainAccount = ret.data || { balanceAmount : 0 }
-              }else{
-                  _this.$alert(ret.desc)
-              }
-          })
-        },
-        loadStudent:function(){
-          var _this = this
-          io.post(io.apiAdminStudentDetail, {studentId: _this.studentId},
-            function (ret) {
-              if (ret.success) {
-                ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
-                _this.formData = ret.data.student
-              }})
-        }
+      loadMainAccount:function(){
+        var _this = this
+        io.post(io.apiAdminStudentMainAccount,{
+          studentId : _this.studentId
+        },function(ret){
+          if(ret.success){
+            _this.mainAccount = ret.data || { balanceAmount : 0 }
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadStudent:function(){
+        var _this = this
+        io.post(io.apiAdminStudentDetail, {studentId: _this.studentId},
+          function (ret) {
+            if (ret.success) {
+              ret.data.student.birthday = util.formatDate(ret.data.student.birthday)
+              _this.formData = ret.data.student
+            }})
+      }
 
     }
   }
