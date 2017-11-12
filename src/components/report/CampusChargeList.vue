@@ -104,7 +104,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-6 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -122,10 +122,11 @@
                 </button>
               </div>
             </div>
-
-
           </div>
-
+          <div class="am-u-sm-12 am-form-group totalSum">
+            合计（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金{{sumOther | formatNumber(2)}}，刷卡{{sumCart | formatNumber(2)}}，余额{{sumBalance | formatNumber(2)}}，微信{{sumWX | formatNumber(2)}}，
+            支付宝{{sumZFB | formatNumber(2)}}
+          </div>
           <div class="am-u-sm-12">
 
             <el-table :data="tableData"
@@ -150,15 +151,6 @@
                 </template>
               </el-table-column>
               <el-table-column
-                label="时间"
-                min-width="180">
-                <template scope="scope">
-                  <div v-if="!scope.row.sum">
-                    {{ scope.row.updateTime | formatTime }}
-                  </div>
-                </template>
-              </el-table-column>
-              <el-table-column
                 prop="studentName"
                 label="学生姓名"
                 min-width="100">
@@ -173,7 +165,7 @@
                 label="订单号"
                 min-width="180">
                 <template scope="scope">
-                  <div :class="{'sum': scope.row.sum}">
+                  <div v-if="!scope.row.sum">
                     {{scope.row.orderId}}
                   </div>
                 </template>
@@ -316,7 +308,15 @@
                   </div>
                 </template>
               </el-table-column>
-
+              <el-table-column
+                label="时间"
+                min-width="180">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{ scope.row.updateTime | formatTime }}
+                  </div>
+                </template>
+              </el-table-column>
 
               <el-table-column
                 fixed="right"
@@ -342,15 +342,16 @@
   import io from '../../lib/io'
   import moment from 'moment'
   import util from '../../lib/util'
-  import Pagination from '../base/Pagination'
 
   export default{
     data: function () {
       return {
         tableData: [],
-        total: 0,
-        pageSize: 10,
-        pageNo: 1,
+        sumCart: 0,
+        sumBalance: 0,
+        sumWX: 0,
+        sumZFB: 0,
+        sumOther: 0,
         query: {
           areaTeamId : '',
           busTeamId : '',
@@ -378,13 +379,12 @@
       }
     },
     components: {
-      Pagination
     },
     mounted: function () {
       $(window).smoothScroll()
-//      this.width = $('.widget-body').width()
     },
     created: function () {
+      this.query.chargeCampusId = window.config.campusList[0] ? window.config.campusList[0].campusId: ''
       this.loadTableData(this.pageNo)
       this.loadProductData()
     },
@@ -452,6 +452,23 @@
                 }
                 list.push(item)
                 map[item.orderId] = list
+                switch(item.payWay) {
+                  case '0':
+                    _this.sumOther += Number(item.paidAmount);
+                    break;
+                  case '1':
+                    _this.sumCart += Number(item.paidAmount);
+                    break;
+                  case '3':
+                    _this.sumBalance += Number(item.paidAmount);
+                    break;
+                  case '4':
+                    _this.sumWX += Number(item.paidAmount);
+                    break;
+                  case '5':
+                    _this.sumZFB += Number(item.paidAmount);
+                    break;
+                }
               })
             }
             let tableData = []
@@ -573,6 +590,10 @@
 </script>
 <style lang="less">
   .m-campus-charge {
+    .totalSum {
+      color: #333333;
+      text-align: center;
+    }
     .sum {
       font-weight: bold;
       color: #333333;
