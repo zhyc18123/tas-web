@@ -191,18 +191,25 @@
         })
       },
       confirmPrint:function(){
-        var frame = $("#certIframe iframe")[0];
         var _this = this;
         io.post(io.apiAdminStudentClassCertDetail,{
           courseOrderId:this.courseOrderId
         },function(ret){
           if(ret.success){
-            frame.contentWindow.focus()
-            frame.contentWindow.print(ret.data);
-            _this.$refs.cert.close()
+          	_this.getBase64Img(ret.data)
           }else{
             _this.$alert(ret.desc)
           }
+        })
+      },
+      getBase64Img(data) {
+        var frame = $("#certIframe iframe")[0];
+        var _this = this
+        var url = conf.studentBasePath + '/bind-student?studentId=' + data.courseOrder.studentId
+        io.post(io.encodeBase64 + '?content='+ url, {} ,function (ret) {
+          frame.contentWindow.focus()
+          frame.contentWindow.print(data, 'data:image/png;base64,'+ret.desc);
+          _this.$refs.cert.close()
         })
       }
 

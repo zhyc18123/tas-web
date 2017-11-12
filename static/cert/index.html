@@ -66,12 +66,12 @@
         }
       };
 
-      function print(data) {
-        CreatePrintPage(data)
+      function print(data, img) {
+        CreatePrintPage(data, img)
         LODOP.PRINT();
       }
 
-      function CreatePrintPage(data) {
+      function CreatePrintPage(data,img) {
         var totalAmount= data.courseOrder.totalAmount,
           discountAmount= data.courseOrder.totalAmount - data.courseOrder.payableAmount,
           payableAmount= data.courseOrder.payableAmount,
@@ -89,6 +89,9 @@
         LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
         LODOP.SET_PRINT_PAGESIZE (2, 0, 0,"A5");
         LODOP.ADD_PRINT_TEXT(35,280,130,25,"报名方式：" + regFrom);//报名方式
+        LODOP.ADD_PRINT_TEXT(35,470,130,25,"绑定学员：");
+        LODOP.ADD_PRINT_IMAGE(10,535,"100%","100%",img);//二维码
+
         LODOP.ADD_PRINT_TEXT(108,39,130,25,"欠费金额：" + owingAmount.toFixed(2));//欠费金额
         //学生编号
         LODOP.ADD_PRINT_TEXT(110,239,90,25,studentNo);//Top、Left、Width、Height

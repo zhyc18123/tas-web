@@ -201,6 +201,7 @@ const io = {
     this.apiAdminStudentClassCertDetail = conf.baseApiPath + '/api/admin/studentClassCertDetail'
     this.apiAdminConfirmPayOrder= conf.baseApiPath + '/api/admin/confirmPayOrder'
     this.apiAdminQueryPayResult= conf.baseApiPath + '/api/admin/queryPayResult'
+    this.encodeBase64= conf.baseApiPath + '/api/qrcode/encodeBase64'
 
     this.apiAdminStudentRegDetail = conf.baseApiPath + '/api/admin/studentRegDetail'
     this.apiAdminTurnClass = conf.baseApiPath + '/api/admin/turnClass'
@@ -402,6 +403,7 @@ const io = {
     });
   },
   post: function (url, data, success, fail) {
+    debugger
     data.accessToken = this.getHeaders().accessToken
     $.ajax({
       url: url,

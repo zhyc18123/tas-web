@@ -127,7 +127,7 @@
             合计（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金{{sumOther | formatNumber(2)}}，刷卡{{sumCart | formatNumber(2)}}，余额{{sumBalance | formatNumber(2)}}，微信{{sumWX | formatNumber(2)}}，
             支付宝{{sumZFB | formatNumber(2)}}
           </div>
-          <div class="am-u-sm-12">
+          <div class="am-u-sm-12 table">
 
             <el-table :data="tableData"
                       border
@@ -593,6 +593,10 @@
     .totalSum {
       color: #333333;
       text-align: center;
+    }
+    .table {
+      max-height: 600px;
+      overflow-y: scroll;
     }
     .sum {
       font-weight: bold;
