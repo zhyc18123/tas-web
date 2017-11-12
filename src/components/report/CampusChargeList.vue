@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="m-campus-charge">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
@@ -7,6 +7,12 @@
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.chargeCampusId" :options="campusList">
+                </select2>
+              </div>
+            </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.busType">
@@ -49,55 +55,6 @@
                 </select2>
               </div>
             </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.areaTeamId" :options="areaTeams">
-                  <option value="">区域</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.busTeamId" :options="busTeams">
-                  <option value="">业务组</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.productId" :options="products">
-                  <option value="">产品</option>
-                </select2>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.season"  >
-                  <option value="">季节</option>
-                  <option value="春季班">春季班</option>
-                  <option value="暑期班">暑期班</option>
-                  <option value="秋季班">秋季班</option>
-                  <option value="寒假班">寒假班</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.gradeId" :options="grades">
-                  <option value="">年级</option>
-                </select2>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.subjectId" :options="subjects">
-                  <option value="">科目</option>
-                </select2>
-              </div>
-            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -108,13 +65,6 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <input type="text"  v-model="query.className" placeholder="请输入班级名称"/>
-              </div>
-            </div>
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2  v-model="query.chargeCampusId" :options="campusList">
-                  <option value="">收费校区</option>
-                </select2>
               </div>
             </div>
 
@@ -133,17 +83,6 @@
                 <input type="text"  v-model="query.operator" placeholder="请输入操作人"/>
               </div>
             </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <select2 required  v-model="query.dailyStatus">
-                  <option value="">日结状态</option>
-                  <option value="0">未日结</option>
-                  <option value="1">已日结</option>
-                </select2>
-              </div>
-            </div>
-
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -191,144 +130,156 @@
 
             <el-table :data="tableData"
                       border
+                      @selection-change="handleSelectionChange"
                       stripe
                       style="width: 100%">
-              <el-table-column type="expand">
-                <template scope="props">
-                  <el-table
-                    :data="props.row.list"
-                    border
-                    stripe
-                    style="min-width: 100%">
-
-                    <el-table-column
-                      prop="className"
-                      label="报读班级"
-                      min-width="200">
-                    </el-table-column>
-                    <el-table-column
-                      prop="gradeName"
-                      label="年级"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="subjectName"
-                      label="科目"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="courseName"
-                      label="课程"
-                      min-width="200">
-                    </el-table-column>
-                    <el-table-column
-                      prop="productName"
-                      label="产品"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="areaTeamName"
-                      label="区域"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="busTeamName"
-                      label="业务组"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="paidAmount"
-                      label="实缴金额"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="discountAmount"
-                      label="优惠金额"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      prop="discountReason"
-                      label="优惠原因"
-                      min-width="200">
-                    </el-table-column>
-
-                    <el-table-column
-                      prop="refundAmount"
-                      label="实退金额"
-                      min-width="100">
-                    </el-table-column>
-
-                    <el-table-column
-                      label="日结状态"
-                      min-width="100">
-                      <template scope="scope">
-                        {{ {'0':'未日结','1':'已日结'}[scope.row.dailyStatus] }}
-                      </template>
-                    </el-table-column>
-
-                    <el-table-column
-                      prop="remark"
-                      label="备注"
-                      min-width="200">
-                    </el-table-column>
-                    <el-table-column
-                      prop="regCampus"
-                      label="报名校区"
-                      min-width="100">
-                    </el-table-column>
-                    <el-table-column
-                      label="申请退费时间"
-                      min-width="200">
-                      <template scope="scope">
-                        {{ scope.row.applyRefundTime | formatTime }}
-                      </template>
-                    </el-table-column>
-
-
-                  </el-table>
-                </template>
+              <el-table-column
+                type="selection"
+                width="55">
               </el-table-column>
               <el-table-column
                 label="业务类型"
                 min-width="100">
                 <template scope="scope">
-                  {{ {'0':'报名收费','2':'退班退费','3':'众筹押金','4':'众筹退费'}[scope.row.busType] || '' }}
+                  <div v-if="!scope.row.sum">
+                    {{ {'0':'报名收费','2':'退班退费','3':'众筹押金','4':'众筹退费'}[scope.row.busType] || '' }}
+                  </div>
+                  <div class="sum" v-else>
+                    小计
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="时间"
+                min-width="180">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{ scope.row.updateTime | formatTime }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="studentName"
+                label="学生姓名"
+                min-width="100">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.studentName}}
+                  </div>
                 </template>
               </el-table-column>
               <el-table-column
                 prop="orderId"
                 label="订单号"
                 min-width="180">
+                <template scope="scope">
+                  <div :class="{'sum': scope.row.sum}">
+                    {{scope.row.orderId}}
+                  </div>
+                </template>
               </el-table-column>
 
               <el-table-column
                 prop="paidAmount"
                 label="实缴金额"
                 min-width="100">
+                <template scope="scope">
+                  <div :class="{'sum': scope.row.sum}">
+                    {{scope.row.paidAmount | formatNumber(2)}}
+                  </div>
+                </template>
               </el-table-column>
               <el-table-column
                 prop="discountAmount"
                 label="优惠金额"
                 min-width="100">
+                <template scope="scope">
+                  <div :class="{'sum': scope.row.sum}">
+                    {{scope.row.discountAmount | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                prop="discountReason"
+                label="优惠原因"
+                min-width="200">
+                <template scope="scope">
+                  <div :class="{'sum': scope.row.sum}">
+                    {{scope.row.discountReason}}
+                  </div>
+                </template>
               </el-table-column>
 
               <el-table-column
                 prop="refundAmount"
                 label="实退金额"
                 min-width="100">
-              </el-table-column>
-
-              <el-table-column
-                prop="studentName"
-                label="学生姓名"
-                min-width="100">
+                <template scope="scope">
+                  <div :class="{'sum': scope.row.sum}">
+                    {{scope.row.refundAmount | formatNumber(2)}}
+                  </div>
+                </template>
               </el-table-column>
 
               <el-table-column
                 label="支付方式"
                 min-width="100">
                 <template scope="scope">
-                  {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
+                  <div v-if="!scope.row.sum">
+                    {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
+                  </div>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="日结状态"
+                min-width="100">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{ {'0':'未日结','1':'已日结'}[scope.row.dailyStatus] }}
+
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="className"
+                label="报读班级"
+                min-width="200">
+                 <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.className}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="gradeName"
+                label="年级"
+                min-width="100">
+                 <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.gradeName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="subjectName"
+                label="科目"
+                min-width="100">
+                 <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.subjectName}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="courseName"
+                label="课程"
+                min-width="200">
+                 <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.courseName}}
+                  </div>
                 </template>
               </el-table-column>
 
@@ -336,6 +287,11 @@
                 prop="chargeCampus"
                 label="收费校区"
                 min-width="100">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.chargeCampus}}
+                  </div>
+                </template>
               </el-table-column>
 
 
@@ -343,42 +299,37 @@
                 prop="operator"
                 label="操作人"
                 min-width="100">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                  {{scope.row.operator}}
+                </div>
+                </template>
               </el-table-column>
 
               <el-table-column
                 label="报名方式"
                 min-width="100">
                 <template scope="scope">
-                  {{ {'0':'线下','1':'线上'}[scope.row.regFrom] }}
+                  <div v-if="!scope.row.sum">
+                    {{ {'0':'线下','1':'线上'}[scope.row.regFrom] }}
+
+                  </div>
                 </template>
               </el-table-column>
 
-              <el-table-column
-                label="时间"
-                min-width="180">
-                <template scope="scope">
-                  {{ scope.row.updateTime | formatTime }}
-                </template>
-              </el-table-column>
 
               <el-table-column
                 fixed="right"
                 label="操作"
                 width="80">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
-                </template>
+                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
+                  <span v-show="scope.row.sum">-</span>
+                 </template>
               </el-table-column>
 
             </el-table>
 
-          </div>
-          <div class="am-u-lg-12 am-cf">
-
-            <div class="am-fr">
-              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                          @paging="loadTableData"/>
-            </div>
           </div>
 
         </div>
@@ -431,12 +382,16 @@
     },
     mounted: function () {
       $(window).smoothScroll()
+//      this.width = $('.widget-body').width()
     },
     created: function () {
       this.loadTableData(this.pageNo)
       this.loadProductData()
     },
     computed: {
+    	width() {
+    		return $('.widget-body').width() || 1000
+      },
       campusList: function () {
         var options = ( this.$root.config.campusList || [] )
           .map(function (item) {
@@ -471,6 +426,9 @@
       }
     },
     methods: {
+      sumClassName(data) {
+      	debugger
+      },
       search: function () {
         this.loadTableData(1)
       },
@@ -508,9 +466,12 @@
                 refundAmount += parseFloat(item.refundAmount)
               })
 
+              list.map((val) => {
+                tableData.push(val)
+              })
               tableData.push({
+                sum: true,
                 orderId : key ,
-                list : list ,
                 paidAmount: paidAmount,
                 discountAmount:discountAmount,
                 refundAmount:refundAmount,
@@ -610,3 +571,11 @@
     }
   }
 </script>
+<style lang="less">
+  .m-campus-charge {
+    .sum {
+      font-weight: bold;
+      color: #333333;
+    }
+  }
+</style>
