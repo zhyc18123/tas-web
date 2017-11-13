@@ -434,6 +434,11 @@
       },
       loadTableData: function (pageNo) {
         var _this = this
+        _this.sumOther=0
+        _this.sumCart=0
+        _this.sumBalance=0
+        _this.sumWX=0
+        _this.sumZFB=0
         _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
         io.post(io.campusChargeList, $.extend({}, _this.query, {
