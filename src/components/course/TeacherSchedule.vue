@@ -173,10 +173,7 @@
       }
     },
     created: function () {
-//      this.$once('period.loaded',()=>{
-//        this.loadScheduleData()
-//      })
-      //this.loadScheduleData()
+      this.query.busTeamId = window.config.groupBusTeams[this.query.areaTeamId].length > 0 ? window.config.groupBusTeams[this.query.areaTeamId][0].busTeamId : ''
       this.loadPeriodData()
     },
     mounted: function () {
@@ -212,7 +209,6 @@
           .map(function (item) {
             return {value: item.busTeamId, text: item.name}
           })
-        this.query.busTeamId = ''
         return options
       },
       subjects: function () {

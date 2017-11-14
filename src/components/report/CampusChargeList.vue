@@ -106,17 +106,17 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>
-              </div>
-            </div>
+            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">-->
+              <!--<div class="am-form-group">-->
+                <!--<input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>-->
+              <!--</div>-->
+            <!--</div>-->
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-              <div class="am-form-group">
-                <input type="text"  v-model="query.chargeCampus" placeholder="请输入收费校区"/>
-              </div>
-            </div>
+            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">-->
+              <!--<div class="am-form-group">-->
+                <!--<input type="text"  v-model="query.chargeCampus" placeholder="请输入收费校区"/>-->
+              <!--</div>-->
+            <!--</div>-->
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -683,6 +683,11 @@
 </script>
 <style lang="less">
   .m-campus-charge {
+    .am-form {
+      &>.am-u-sm-12:nth-child(4n + 1) {
+        clear: both;
+      }
+    }
     .totalSum {
       color: #333333;
       text-align: center;

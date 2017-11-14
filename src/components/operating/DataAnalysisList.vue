@@ -17,40 +17,10 @@
                     :value="item.areaTeamId">
                   </el-option>
                 </el-select>
-                <!--<el-select v-if="showBusTeam" size="small" class="am-u-md-2 am-u-end"-->
-                           <!--:disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">-->
-                  <!--<el-option-->
-                    <!--v-for="item in busTeams"-->
-                    <!--:key="item.busTeamId"-->
-                    <!--:label="item.name"-->
-                    <!--:value="item.busTeamId">-->
-                  <!--</el-option>-->
-                <!--</el-select>-->
               </div>
             </div>
-            <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">-->
-              <!--<div class="am-form-group">-->
-                <!--<button type="button" class="am-btn am-btn-default am-btn-success"-->
-                        <!--@click="search" ><span class="am-icon-search"></span>查询-->
-                <!--</button>-->
-              <!--</div>-->
-            <!--</div>-->
           </div>
           <div class="am-u-sm-12 am-form-group">
-            <!--<el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal">-->
-              <!--<el-menu-item  v-if="hasPermission('basicData')"index="/main/operating/dataAnalysis/list/basicData?type=basic" >-->
-                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/basicData">基础数据分析</router-link>-->
-              <!--</el-menu-item>-->
-              <!--<el-menu-item  v-if="hasPermission('problemWarning')" index="/main/operating/dataAnalysis/list/basicData?type=problemWarning">-->
-                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/problemWarning">财务预警</router-link>-->
-              <!--</el-menu-item>-->
-              <!--<el-menu-item v-if="hasPermission('fullClassRate')"  index="/main/operating/dataAnalysis/list/basicData?type=fullClassRate">-->
-                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/fullClassRate">满班率</router-link>-->
-              <!--</el-menu-item>-->
-              <!--<el-menu-item v-if="hasPermission('subjectCompleteRate')" index="/main/operating/dataAnalysis/list/basicData?type=subjectCompleteRate">-->
-                <!--<router-link tag="a" to="/main/operating/dataAnalysis/list/subjectCompleteRate">科数完成率</router-link>-->
-              <!--</el-menu-item>-->
-            <!--</el-menu>-->
             <router-view :areaTeamId="areaTeamId" :busTeamId="busTeamId"></router-view>
           </div>
         </div>

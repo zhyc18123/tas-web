@@ -571,3 +571,10 @@
     }
   }
 </script>
+<style lang="less" scoped>
+  .am-form {
+  &>.am-u-sm-12:nth-child(4n + 1) {
+      clear: both;
+    }
+  }
+</style>

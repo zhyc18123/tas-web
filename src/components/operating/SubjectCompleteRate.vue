@@ -1,6 +1,6 @@
 <template>
   <div class="subject-complete">
-    <el-select style="position: absolute;top: -57px;left: 207px;" size="small"
+    <el-select style="position: absolute;top: -58px;left: 223px;" size="small"
                :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
       <el-option
         v-for="item in busTeams"
