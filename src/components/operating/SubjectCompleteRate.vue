@@ -62,14 +62,14 @@
 
           <el-table-column
             prop="realClassIncome"
-            label="实际课程营收">
+            label="实际课程预收">
             <template scope="scope">
               <div>{{scope.row.realClassIncome | formatNumber(2)}}</div>
             </template>
           </el-table-column>
           <el-table-column
             prop="targetClassIncome"
-            label="目标课程营收">
+            label="目标课程预收">
           </el-table-column>
           <el-table-column
             label="课程营收完成率">
