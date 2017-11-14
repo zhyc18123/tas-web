@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">财务收支</div>
+          <div class="widget-title  am-cf">校区收支</div>
         </div>
         <div class="widget-body  am-fr">
           <div class="am-u-sm-12 am-form ">
@@ -55,6 +55,44 @@
                 </select2>
               </div>
             </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">区域</option>
+                </select2>
+              </div>
+            </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.busTeamId" :options="busTeams">
+                  <option value="">业务组</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.productId" :options="products">
+                  <option value="">产品</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.gradeId" :options="grades">
+                  <option value="">年级</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.subjectId" :options="subjects">
+                  <option value="">科目</option>
+                </select2>
+              </div>
+            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -70,11 +108,13 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2 required  v-model="query.dailyStatus">
-                  <option value="">日结状态</option>
-                  <option value="0">未日结</option>
-                  <option value="1">已日结</option>
-                </select2>
+                <input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text"  v-model="query.chargeCampus" placeholder="请输入收费校区"/>
               </div>
             </div>
 
@@ -83,6 +123,17 @@
                 <input type="text"  v-model="query.operator" placeholder="请输入操作人"/>
               </div>
             </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2 required  v-model="query.dailyStatus">
+                  <option value="">日结状态</option>
+                  <option value="0">未日结</option>
+                  <option value="1">已日结</option>
+                </select2>
+              </div>
+            </div>
+
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -148,7 +199,7 @@
                     {{ scope.row.updateTime | formatTime }}
                   </div>
                   <div class="sum" v-else>
-                    小计
+                    实缴金额总数小计
                   </div>
                 </template>
               </el-table-column>
