@@ -124,26 +124,28 @@
             </div>
           </div>
           <div class="am-u-sm-12 am-form-group totalSum">
-            合计（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金{{sumOther | formatNumber(2)}}，刷卡{{sumCart | formatNumber(2)}}，余额{{sumBalance | formatNumber(2)}}，微信{{sumWX | formatNumber(2)}}，
-            支付宝{{sumZFB | formatNumber(2)}}
+            合计&nbsp;（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金&nbsp;{{sumOther | formatNumber(2)}}，刷卡&nbsp;{{sumCart | formatNumber(2)}}，余额&nbsp;{{sumBalance | formatNumber(2)}}，微信&nbsp;{{sumWX | formatNumber(2)}}，
+            支付宝&nbsp;{{sumZFB | formatNumber(2)}}
           </div>
           <div class="am-u-sm-12 table">
 
             <el-table :data="tableData"
-                      border
-                      @selection-change="handleSelectionChange"
-                      stripe
-                      style="width: 100%">
+              border
+              ref="table"
+              @selection-change="handleSelectionChange"
+              stripe
+              style="width: 100%">
               <el-table-column
+                class-name="selection"
                 type="selection"
                 width="55">
               </el-table-column>
               <el-table-column
-                label="业务类型"
-                min-width="100">
+                label="时间"
+                min-width="180">
                 <template scope="scope">
                   <div v-if="!scope.row.sum">
-                    {{ {'0':'报名收费','2':'退班退费','3':'众筹押金','4':'众筹退费'}[scope.row.busType] || '' }}
+                    {{ scope.row.updateTime | formatTime }}
                   </div>
                   <div class="sum" v-else>
                     小计
@@ -161,16 +163,14 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="orderId"
-                label="订单号"
-                min-width="180">
+                label="支付方式"
+                min-width="100">
                 <template scope="scope">
                   <div v-if="!scope.row.sum">
-                    {{scope.row.orderId}}
+                    {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
                   </div>
                 </template>
               </el-table-column>
-
               <el-table-column
                 prop="paidAmount"
                 label="实缴金额"
@@ -188,6 +188,25 @@
                 <template scope="scope">
                   <div :class="{'sum': scope.row.sum}">
                     {{scope.row.discountAmount | formatNumber(2)}}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="业务类型"
+                min-width="100">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{ {'0':'报名收费','2':'退班退费','3':'众筹押金','4':'众筹退费'}[scope.row.busType] || '' }}
+                  </div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="orderId"
+                label="订单号"
+                min-width="180">
+                <template scope="scope">
+                  <div v-if="!scope.row.sum">
+                    {{scope.row.orderId}}
                   </div>
                 </template>
               </el-table-column>
@@ -210,16 +229,6 @@
                 <template scope="scope">
                   <div :class="{'sum': scope.row.sum}">
                     {{scope.row.refundAmount | formatNumber(2)}}
-                  </div>
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                label="支付方式"
-                min-width="100">
-                <template scope="scope">
-                  <div v-if="!scope.row.sum">
-                    {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
                   </div>
                 </template>
               </el-table-column>
@@ -308,28 +317,29 @@
                   </div>
                 </template>
               </el-table-column>
-              <el-table-column
-                label="时间"
-                min-width="180">
-                <template scope="scope">
-                  <div v-if="!scope.row.sum">
-                    {{ scope.row.updateTime | formatTime }}
-                  </div>
-                </template>
-              </el-table-column>
 
               <el-table-column
                 fixed="right"
                 label="操作"
-                width="80">
+                :min-width="dailyCheckWidth">
                 <template scope="scope">
-                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
+                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 1"
+                             @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
+                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 0"
+                             @click.native="cancelDailyCheck(scope.row)" v-if="hasPermission('cancel_daily_check')">撤销</el-button>
                   <span v-show="scope.row.sum">-</span>
                  </template>
               </el-table-column>
 
             </el-table>
 
+          </div>
+          <div class="am-u-lg-12 am-cf">
+
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
           </div>
 
         </div>
@@ -341,12 +351,17 @@
 <script>
   import io from '../../lib/io'
   import moment from 'moment'
+  import Pagination from '../base/Pagination.vue'
   import util from '../../lib/util'
 
   export default{
     data: function () {
       return {
         tableData: [],
+        allData: [],
+        pageNo: 1,
+        pageSize: 10,
+        total: 1,
         sumCart: 0,
         sumBalance: 0,
         sumWX: 0,
@@ -378,8 +393,7 @@
         selection:[]
       }
     },
-    components: {
-    },
+    components: {Pagination},
     mounted: function () {
       $(window).smoothScroll()
     },
@@ -389,8 +403,8 @@
       this.loadProductData()
     },
     computed: {
-    	width() {
-    		return $('.widget-body').width() || 1000
+      dailyCheckWidth() {
+    		return this.hasPermission('cancel_daily_check') ? 140 : 80
       },
       campusList: function () {
         var options = ( this.$root.config.campusList || [] )
@@ -426,9 +440,6 @@
       }
     },
     methods: {
-      sumClassName(data) {
-      	debugger
-      },
       search: function () {
         this.loadTableData(1)
       },
@@ -508,12 +519,18 @@
               })
             }
 
-            _this.tableData = tableData
+            _this.allData = tableData
+            _this.total = tableData.length
+            _this.handlePage(pageNo)
 
           } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      handlePage(pageNo) {
+        this.pageNo = pageNo || this.pageNo || 1
+        this.tableData = this.allData.slice((this.pageNo-1)*this.pageSize,this.pageSize*(this.pageNo))
       },
       loadProductData: function () {
         var _this = this
@@ -549,7 +566,23 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
-            _this.$alert('处理成功')
+            _this.$toast('日结成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      cancelDailyCheck:function(item){
+        var _this = this
+        _this.$showLoading()
+        io.post(io.canelChargeDailyStatus , {
+          chargeIds: [item.chargeId]  ,
+          dailyStatus : 0
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$toast('撤销成功')
           } else {
             _this.$alert(ret.desc)
           }
@@ -600,7 +633,7 @@
       text-align: center;
     }
     .table {
-      max-height: 600px;
+      max-height: 650px;
       overflow-y: scroll;
     }
     .sum {

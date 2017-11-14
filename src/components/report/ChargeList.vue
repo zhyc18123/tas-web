@@ -350,9 +350,13 @@
               <el-table-column
                 fixed="right"
                 label="操作"
-                width="80">
+                :min-width="dailyCheckWidth">
                 <template scope="scope">
-                  <el-button size="small" :disabled="scope.row.dailyStatus == 1"  @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
+                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 1"
+                             @click.native="dailyCheck(scope.row)" v-if="hasPermission('daily_check')">日结</el-button>
+                  <el-button size="small" v-show="!scope.row.sum" :disabled="scope.row.dailyStatus == 0"
+                             @click.native="cancelDailyCheck(scope.row)" v-if="hasPermission('cancel_daily_check')">撤销</el-button>
+                  <span v-show="scope.row.sum">-</span>
                 </template>
               </el-table-column>
             </el-table>
@@ -420,6 +424,9 @@
       this.loadProductData()
     },
     computed: {
+      dailyCheckWidth() {
+        return this.hasPermission('cancel_daily_check') ? 140 : 80
+      },
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
@@ -504,7 +511,23 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
-            _this.$alert('处理成功')
+            _this.$toast('日结成功')
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      cancelDailyCheck:function(item){
+        var _this = this
+        _this.$showLoading()
+        io.post(io.canelChargeDailyStatus , {
+          chargeIds: [item.chargeId]  ,
+          dailyStatus : 0
+        }, function (ret) {
+          _this.$hiddenLoading()
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.$toast('撤销成功')
           } else {
             _this.$alert(ret.desc)
           }

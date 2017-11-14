@@ -291,6 +291,7 @@ const io = {
     this.apiAdminReportChargeList = conf.baseApiPath + '/api/admin/report/chargeList'
     this.campusChargeList = conf.baseApiPath + '/api/admin/report/campusChargeList'
     this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
+    this.canelChargeDailyStatus  = conf.baseApiPath + '/api/admin/report/canelChargeDailyStatus '
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
     this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'
     this.apiAdminReportExportConsumeAggregation = conf.baseApiPath + '/api/admin/report/exportConsumeAggregation'
@@ -403,7 +404,6 @@ const io = {
     });
   },
   post: function (url, data, success, fail) {
-    debugger
     data.accessToken = this.getHeaders().accessToken
     $.ajax({
       url: url,
