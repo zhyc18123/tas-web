@@ -73,6 +73,11 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <input type="text" class="am-form-field" placeholder="教师名称"  v-model="query.teacherNames">
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <input type="text" class="am-form-field" placeholder="班级编号"  v-model="query.classNo">
             </div>
           </div>
@@ -244,9 +249,11 @@
           subjectId:'',
           classNo:'',
           className:'',
+          teacherNames: '',
           segmentNo :'',
         },
         products: [],
+        busTeams: [],
         courses: [],
         searchConfig: {},
         courseOrderId: '',
@@ -264,25 +271,17 @@
         this.query.courseTemplateId = ''
         this.query.periodId = ''
         this.loadProductData()
+        this.loadAllBusTeamList()
         this.loadCourseData()
         this.loadPeriodData()
       }
     },
     computed: {
-
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
             return {value: item.areaTeamId, text: item.name}
           })
-        return options
-      },
-      busTeams: function () {
-        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
-          .map(function (item) {
-            return {value: item.busTeamId, text: item.name}
-          })
-        this.query.busTeamId = ''
         return options
       },
       grades: function () {
@@ -305,6 +304,7 @@
       })
       this.loadTableData()
       this.loadProductData()
+      this.loadAllBusTeamList()
       this.loadCourseData()
       this.loadPeriodData()
     },
@@ -356,6 +356,21 @@
             _this.products = ret.data.map(function (item) {
               return {value: item.productId, text: item.name}
             })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadAllBusTeamList: function () {
+        var _this = this
+        io.post(io.allBusTeamList, {
+          areaTeamId : this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.busTeams = ret.data.map(function (item) {
+              return {value: item.busTeamId, text: item.name}
+            })
+            _this.query.busTeamId = ''
           } else {
             _this.$alert(ret.desc)
           }

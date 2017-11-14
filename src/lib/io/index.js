@@ -152,6 +152,7 @@ const io = {
     this.apiAdminCourseTypeSaveOrUpdate = conf.baseApiPath + '/api/admin/saveOrUpdateCourseType'
     this.apiAdminDeleteCourseType = conf.baseApiPath + '/api/admin/deleteCourseType'
 
+    this.allBusTeamList  = conf.baseApiPath + '/api/admin/allBusTeamList'
     this.apiAdminProductManageList  = conf.baseApiPath + '/api/admin/productManageList'
     this.apiAdminProductDetail = conf.baseApiPath + '/api/admin/productDetail'
     this.apiAdminDeleteProduct = conf.baseApiPath + '/api/admin/deleteProduct'

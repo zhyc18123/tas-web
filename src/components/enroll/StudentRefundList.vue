@@ -137,10 +137,10 @@
             <el-table-column
               fixed="right"
               label="操作"
-              width="150">
+              :min-width="optionWidth">
               <template scope="scope">
                 <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">审核</el-button>
-                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.studentRefundId)">支付</el-button>
+                <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.studentRefundId)">支付</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -175,10 +175,10 @@
         query: {
           areaTeamId : '',
           busTeamId : '',
-          status : '',
+          status : 1,
           studentName: '',
           className: '',
-          payStatus: '',
+          payStatus: 0,
         },
       }
     },
@@ -187,6 +187,9 @@
       'change-student-refund': ChangeStudentRefund
     },
     computed: {
+    	optionWidth() {
+    		return this.hasPermission('audit') && this.hasPermission('pay') ? 150 : 80
+      },
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
