@@ -640,9 +640,13 @@
         })
       },
       batchDailyCheck:function(){
-
         var chargeIds = this.selection.map(function (item) {
-          return item.chargeId
+        	debugger
+        	if (item.chargeId !== undefined) {
+            return item.chargeId
+          } else {
+        		return ''
+          }
         })
 
         if( !chargeIds || chargeIds.length == 0 ){
@@ -659,7 +663,7 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.loadTableData(_this.pageNo)
-            _this.$alert('处理成功')
+            _this.$toast('处理成功')
           } else {
             _this.$alert(ret.desc)
           }
