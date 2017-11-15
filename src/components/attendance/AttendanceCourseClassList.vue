@@ -197,7 +197,7 @@
               <el-table-column
                 fixed="right"
                 label="操作"
-                width="80">
+                width="110">
                 <template scope="scope">
                   <el-button size="small"  @click.native="showDetailWin(scope.row)">{{scope.row.attendanceStatus  == 0 ? '考勤' : '修改考勤'}}</el-button>
                 </template>
