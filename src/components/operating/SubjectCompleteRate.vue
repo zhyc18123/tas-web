@@ -221,6 +221,13 @@
             label="目标跨期续读率">
           </el-table-column>
         </el-table>
+        <div class="am-u-lg-12 am-cf">
+
+          <div class="am-fr">
+            <pagination v-bind:total="seniorTotal" v-bind:pageNo="seniorPageNo" v-bind:pageSize="seniorPageSize"
+                        @paging="getSeniorComletionRate"/>
+          </div>
+        </div>
       </div>
       <div v-show="active === 2" class="am-u-sm-12">
         <el-table
@@ -314,6 +321,9 @@
         busTeamId: '',
         total: 0,
         pageSize: 10,
+        seniorPageNo: 1,
+        seniorPageSize: 10,
+        seniorTotal: 1,
         sectionId: 3,
         productId: '',
         courseTemplateId: '',
@@ -375,7 +385,7 @@
     methods:{
       handleFind(query) {
         if(this.active === 0) {
-          this.getSeniorComletionRate()
+          this.getSeniorComletionRate(1)
         } else if (this.active === 1){
           this.getGradeCompletionRate()
         } else {
@@ -400,7 +410,7 @@
           }
         })
       },
-      getSeniorComletionRate:function(){
+      getSeniorComletionRate:function(pageNo){
         var _this = this;
         if(!this.areaTeamId){
           this.$alert('请选择区域')
@@ -414,45 +424,18 @@
           this.$alert('请选择业务组')
           return
         }
+        _this.seniorPageNo = pageNo || _this.seniorPageNo || 1
         _this.$showLoading()
         io.post(io.seniorComletionRate,{
           areaTeamId:_this.areaTeamId,
           busTeamId:_this.busTeamId,
-          pageNo:_this.pageNo,
-          pageSize:_this.pageSize,
+          pageNo:_this.seniorPageNo,
+          pageSize:_this.seniorPageSize,
           periodId: _this.periodId
         },function(ret){
           if(ret.success){
             _this.$hiddenLoading()
-            let summary = {
-              seniorName : "总计",
-              relClassIncome:0,
-              realNewStudentNum: 0,
-              targetNewStudentNum: 0,
-              realOldStudentNum: 0,
-              targetOldSudentNum: 0,
-              nowPeriodNum: 0,
-              sequentialNum: 0,
-              targetSequentialNum: 0,
-              stepNum: 0,
-              targetStepNum: 0,
-            }
-            if (ret.data.length > 0) {
-              ret.data.map((val) => {
-                summary.realNewStudentNum += (val.realNewStudentNum ? Number(val.realNewStudentNum): 0)
-                summary.targetNewStudentNum += (val.targetNewStudentNum ? Number(val.targetNewStudentNum): 0)
-                summary.realOldStudentNum += (val.realOldStudentNum ? Number(val.realOldStudentNum): 0)
-                summary.targetOldSudentNum += (val.targetOldSudentNum ? Number(val.targetOldSudentNum): 0)
-                summary.nowPeriodNum += (val.nowPeriodNum ? Number(val.nowPeriodNum): 0)
-                summary.sequentialNum += (val.sequentialNum ? Number(val.sequentialNum): 0)
-                summary.targetSequentialNum += (val.targetSequentialNum ? Number((val.targetSequentialNum).split('%')[0]): 0)
-                summary.stepNum += (val.stepNum ? Number(val.stepNum): 0)
-                summary.targetStepNum += (val.targetStepNum ? Number((val.targetStepNum).split('%')[0]): 0)
-              })
-              summary.targetSequentialNum = summary.targetSequentialNum + '%'
-              summary.targetStepNum = summary.targetStepNum + '%'
-              ret.data.push(summary)
-            }
+            _this.seniorTotal = ret.data.total
             _this.seniorComletionRate = ret.data.list
           }else{
             _this.$alert(ret.desc)
