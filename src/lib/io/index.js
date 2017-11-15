@@ -294,6 +294,7 @@ const io = {
     this.apiAdminReportChangeChargeDailyStatus = conf.baseApiPath + '/api/admin/report/changeChargeDailyStatus'
     this.canelChargeDailyStatus  = conf.baseApiPath + '/api/admin/report/canelChargeDailyStatus '
     this.apiAdminReportExportCharge = conf.baseApiPath + '/api/admin/report/exportCharge'
+    this.exportCampusCharge = conf.baseApiPath + '/api/admin/report/exportCampusCharge'
     this.apiAdminReportAggregateConsumeList = conf.baseApiPath + '/api/admin/report/aggregateConsumeList'
     this.apiAdminReportExportConsumeAggregation = conf.baseApiPath + '/api/admin/report/exportConsumeAggregation'
     this.apiAdminReportPayRecordList = conf.baseApiPath + '/api/admin/report/payRecordList'

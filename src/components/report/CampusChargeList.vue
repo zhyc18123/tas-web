@@ -670,7 +670,7 @@
         })
       },
       exportExcel:function(){
-        io.downloadFile(io.apiAdminReportExportCharge,$.extend(this.query, {
+        io.downloadFile(io.exportCampusCharge,$.extend(this.query, {
           startDate: moment(this.query.startDate).format('YYYY-MM-DD'),
           endDate: moment(this.query.endDate).format('YYYY-MM-DD')
         }))
