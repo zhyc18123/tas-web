@@ -86,7 +86,7 @@
       <el-table-column
         fixed="right"
         label="操作"
-        width="200">
+        min-width="200">
         <template scope="scope">
           <el-button size="small"  @click.native="shiftClass(scope.row.studentReg.regId)">临时调班</el-button>
           <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "

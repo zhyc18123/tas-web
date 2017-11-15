@@ -72,7 +72,7 @@
             label="目标课程预收">
           </el-table-column>
           <el-table-column
-            label="课程营收完成率">
+            label="课程预收完成率">
             <template scope="scope">
               <div>{{scope.row.realClassIncome ==null || scope.row.targetClassIncome ==null || scope.row.targetClassIncome == '0' ? '0%' :
                 (parseInt(scope.row.realClassIncome)/ parseInt(scope.row.targetClassIncome))*100 | formatNumber(2)}}%</div>
