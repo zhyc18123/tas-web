@@ -12,7 +12,7 @@
                 录入业务组目标
               </el-button>
             </router-link>
-            <router-link to="/main/operating/targetSet/productTarget" tag="div" class="router" v-if="hasPermission('teacherTarget')" >
+            <router-link to="/main/operating/targetSet/productTarget" tag="div" class="router" v-if="hasPermission('productTarget')" >
               <el-button type="success">
                 录入产品线目标
               </el-button>
@@ -23,7 +23,7 @@
                 录入班级目标
               </el-button>
             </router-link>
-            <router-link to="/main/operating/targetSet/teacherTarget" tag="div" class="router" v-if="hasPermission('productTarget')" >
+            <router-link to="/main/operating/targetSet/teacherTarget" tag="div" class="router" v-if="hasPermission('teacherTarget')" >
               <el-button type="info">
                 录入班主任目标
               </el-button>
