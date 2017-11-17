@@ -74,6 +74,13 @@
                 </template>
               </el-table-column>
               <el-table-column
+                label="星级"
+                min-width="100">
+                <template scope="scope">
+                  {{scope.row.level}}星
+                </template>
+              </el-table-column>
+              <el-table-column
                 label="性别"
                 min-width="100">
                 <template scope="scope">
