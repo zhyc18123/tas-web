@@ -189,6 +189,7 @@
         }
       },
       arrangeTime: function () {
+        debugger
         if(!this.startDate){
           this.$alert('请选择首次上课时间')
           return
@@ -252,6 +253,10 @@
 
           (function () {
             var start = moment(this.startDate, "YYYY-MM-DD")
+            if(this.courseClass.lectureAmount === '0') {
+              this.$alert('该课程讲数为0，不能排时间，请修改讲数。')
+              return
+            }
             for (var i = 0; ; i++) {
               var currentDay = moment(start).add( i , 'days')
               var date = currentDay.format("YYYY-MM-DD")
