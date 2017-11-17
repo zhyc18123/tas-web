@@ -454,10 +454,11 @@
         }
           _this.pageNo = pageNo || _this.pageNo || 1
         _this.$showLoading()
-        io.post(io.classComletionRate,Object.assign({},{
+        io.post(io.classComletionRate,Object.assign({},_this.classQuery,{
           pageNo: this.pageNo,
           pageSize: this.pageSize,
-        },_this.classQuery),function(ret){
+          areaTeamId:this.areaTeamId,
+          busTeamId:this.busTeamId ,}),function(ret){
           if(ret.success){
             _this.$hiddenLoading()
             _this.classComletionRate = ret.data.list
