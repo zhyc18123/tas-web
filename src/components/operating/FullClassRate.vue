@@ -214,9 +214,10 @@
           periodId: _this.periodId
         },function(ret){
           if(ret.success){
+            debugger
             _this.$hiddenLoading()
-            _this.productFullClassRateList = ret.data.productFullClassRateList
-            _this.classFullRateList = ret.data.productFullClassRateList[0] ? ret.data.productFullClassRateList[0].classFullRateList : []
+            _this.productFullClassRateList = ret.data.productFullClassRateList || []
+            _this.classFullRateList = ret.data.productFullClassRateList[0] ? ret.data.productFullClassRateList[0].classFullRateList || [] : []
             _this.productFullClassRateList = _this.productFullClassRateList.sort(_this.objectSort('rate',true))
             _this.classFullRateList = _this.classFullRateList.sort(_this.objectSort('rate',true))
             _this.productName = ret.data.productFullClassRateList[0] && ret.data.productFullClassRateList[0].name
