@@ -172,6 +172,8 @@ const GradeSubjectStatisticsList = resolve => require(['./components/operating/G
 const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
 const GradeSubjectCostDetail = resolve => require(['./components/operating/GradeSubjectCostDetail'], resolve)
 const GradeSubjectIncomeDetail = resolve => require(['./components/operating/GradeSubjectIncomeDetail'], resolve)
+const Withdrawal = resolve => require(['./components/balance/Withdrawal'], resolve)
+const Transfer = resolve => require(['./components/balance/Transfer'], resolve)
 
 
 Vue.use(VueRouter)
@@ -360,6 +362,8 @@ const router = new VueRouter({
       {path: 'operating/targetSet/productTarget' , component: ProductTarget},
       {path: 'operating/targetSet/teacherTarget' , component: TeacherTarget},
       {path: 'operating/targetSet/courseTarget' , component: CourseTarget},
+      {path: 'balance/withdrawal/list' , component: Withdrawal},
+      {path: 'balance/transfer/list' , component: Transfer},
 
 
     ],

@@ -361,6 +361,15 @@ const io = {
     this.saveTeacherTarget = conf.baseApiPath + '/api/admin/analyze/saveTeacherTarget'
     this.saveClassTarget = conf.baseApiPath + '/api/admin/analyze/saveClassTarget'
     this.ownMainCount = conf.baseApiPath + '/api/admin/trading/ownMainCount'
+    this.auditTransfer = conf.baseApiPath + '/api/admin/balance/auditTransfer'
+    this.auditWithdrawal = conf.baseApiPath + '/api/admin/balance/auditWithdrawal'
+    this.setupPayStatusForWithdrawal = conf.baseApiPath + '/api/admin/balance/setupPayStatusForWithdrawal'
+    this.transferDetail = conf.baseApiPath + '/api/admin/balance/transferDetail'
+    this.transferForStudent = conf.baseApiPath + '/api/admin/balance/transferForStudent'
+    this.transferList = conf.baseApiPath + '/api/admin/balance/transferList'
+    this.withdrawalDetail = conf.baseApiPath + '/api/admin/balance/withdrawalDetail'
+    this.withdrawalForStudent = conf.baseApiPath + '/api/admin/balance/withdrawalForStudent'
+    this.withdrawalList = conf.baseApiPath + '/api/admin/balance/withdrawalList'
 
 
     this.apiAdminAllinPayCusIdConfigList = conf.baseApiPath + '/api/admin/allinPayCusIdConfigList'
