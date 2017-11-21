@@ -370,6 +370,8 @@ const io = {
     this.withdrawalDetail = conf.baseApiPath + '/api/admin/balance/withdrawalDetail'
     this.withdrawalForStudent = conf.baseApiPath + '/api/admin/balance/withdrawalForStudent'
     this.withdrawalList = conf.baseApiPath + '/api/admin/balance/withdrawalList'
+    this.exportWithdrawalList = conf.baseApiPath + '/api/admin/balance/exportWithdrawalList'
+    this.exportTransferList = conf.baseApiPath + '/api/admin/balance/exportTransferList'
 
 
     this.apiAdminAllinPayCusIdConfigList = conf.baseApiPath + '/api/admin/allinPayCusIdConfigList'

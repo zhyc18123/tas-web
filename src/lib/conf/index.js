@@ -2,7 +2,7 @@ window.UEDITOR_HOME_URL = '/static/ueditor/'
 
 export default {
 
-  baseApiPath : 'development' == process.env.NODE_ENV ? 'http://test.yuyou100.com/yyfn-api' : 'http://test.yuyou100.com/yyfn-api',
+  baseApiPath : 'development' == process.env.NODE_ENV ? 'http://172.20.22.200:8080/yyfn-api' : 'http://test.yuyou100.com/yyfn-api',
 
   // baseApiPath : 'development' == process.env.NODE_ENV ? 'http://localhost:8080/yyfn-api' : 'http://test.yuyou100.com/yyfn-api',
 

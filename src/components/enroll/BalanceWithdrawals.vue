@@ -123,7 +123,6 @@
     components: {SelectCampus},
     methods: {
       selectCampusCallback:function(campus){
-        debugger
         this.formData.acceptCampusId = campus.campusId
         this.formData.chargeCampusName = campus.campusName
         storage.setChargeCampus(campus)
@@ -150,19 +149,50 @@
       },
       handleSave() {
         var _this = this
-        io.post(io.withdrawalForStudent, this.formData,
-          function (ret) {
-            if (ret.success) {
-              debugger
-
-            } else {
-              _this.$alert(ret.desc)
-            }
-          })
+        if(_this.check()) {
+          io.post(io.withdrawalForStudent, this.formData,
+            function (ret) {
+              if (ret.success) {
+                _this.$root.$emit('mainAccount:change')
+                _this.$toast('保存成功')
+                _this.handleCancel()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+        }
       },
       handleCancel() {
         this.$refs.win.close()
       },
+      check() {
+        if(!this.formData.acceptCampusId) {
+          this.$alert('请选择受理校区')
+          return false
+        } else if (!this.formData.amount) {
+          this.$alert('请输入实退金额')
+          return false
+        }else if (!this.formData.bankName) {
+          this.$alert('请输入开户银行')
+          return false
+        }else if (!this.formData.bankCity) {
+          this.$alert('请输入开户城市')
+          return false
+        }else if (!this.formData.cardUser) {
+          this.$alert('请输入姓名')
+          return false
+        }else if (!this.formData.cardNo) {
+          this.$alert('请输入开户账号')
+          return false
+        }else if (!this.formData.reasonRemark) {
+          this.$alert('请输入提现原因备注')
+          return false
+        }else if (Number(this.formData.amount) > this.balanceAmount) {
+          this.$alert('实退金额不能大于可退金额')
+          return false
+        }
+        return true
+      }
     },
 
   }
