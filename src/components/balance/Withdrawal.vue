@@ -142,7 +142,7 @@
               label="操作"
               :min-width="optionWidth">
               <template scope="scope">
-                <el-button v-if="hasPermission('audit')" size="small" @click.native="editRefund(scope.row.balanceWithdrawalId)">查看</el-button>
+                <el-button v-if="hasPermission('audit')" size="small" @click.native="handleView(scope.row.balanceWithdrawalId)">查看</el-button>
                 <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status=== '1'" @click.native="handleAudit(scope.row)">审核</el-button>
                 <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.balanceWithdrawalId)">支付</el-button>
               </template>
@@ -153,6 +153,7 @@
 
 
         <withdraw-audit ref="withdrawAudit" @completed="loadTableData()"></withdraw-audit>
+        <withdraw-doc ref="withdrawDoc"></withdraw-doc>
 
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
@@ -168,6 +169,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
+  import WithdrawDoc from '../base/WithdrawDoc.vue'
   import WithdrawAudit from './WithdrawAudit.vue'
   export default{
     data: function () {
@@ -190,7 +192,8 @@
     },
     components: {
       Pagination,
-      WithdrawAudit
+      WithdrawAudit,
+      WithdrawDoc
     },
     computed: {
       optionWidth() {
@@ -269,6 +272,10 @@
       handleAudit(row) {
         this.$refs.withdrawAudit.balanceWithdrawalId = row.balanceWithdrawalId
         this.$refs.withdrawAudit.show()
+      },
+      handleView(balanceWithdrawalId) {
+        this.$refs.withdrawDoc.balanceWithdrawalId = balanceWithdrawalId
+        this.$refs.withdrawDoc.show()
       },
       //导出学生退费信息
       exportWithdrawalList:function(){

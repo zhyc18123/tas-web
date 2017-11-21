@@ -149,7 +149,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import TransferAudit from './transferAudit.vue'
+  import TransferAudit from './TransferAudit.vue'
   export default{
     data: function () {
       return {
