@@ -30,27 +30,10 @@
         <table width="100%" class="am-table am-table-bordered am-table-compact">
           <tbody>
           <tr>
-            <td class="bgColor">可退金额</td>
+            <td class="bgColor">可转金额</td>
             <td><span class="am-text-danger">￥{{balanceAmount}}</span></td>
-            <td class="bgColor">实退金额</td>
+            <td class="bgColor">转让金额</td>
             <td><input type="number" class="am-input-sm"  v-model="formData.amount"/></td>
-          </tr>
-          <tr>
-            <td class="bgColor">开户银行</td>
-            <td><input type="text" class="am-input-sm"  v-model="formData.bankName"  /></td>
-            <td class="bgColor">开户城市</td>
-            <td><input type="text" class="am-input-sm"  v-model="formData.bankCity"  /></td>
-          </tr>
-          <tr>
-            <td class="bgColor">姓名</td>
-            <td><input type="text" class="am-input-sm"  v-model="formData.cardUser" /></td>
-            <td class="bgColor">开户账号</td>
-            <td><input type="text" class="am-input-sm"  v-model="formData.cardNo"  /></td>
-          </tr>
-          <tr>
-            <td class="bgColor">提现原因备注</td>
-            <td><input type="text" min="1" class="am-input-sm"  v-model="formData.reasonRemark"/></td>
-            <td colspan="4"></td>
           </tr>
           <tr>
             <td class="bgColor">受理校区</td>
@@ -59,7 +42,19 @@
             </td>
             <td style="border: none"><button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectCampus.show()">选择</button>
             </td>
-
+          </tr>
+          <tr>
+            <td class="bgColor">转让学生</td>
+            <td>
+              <input required type="text" placeholder="名称/学号/电话" class="am-input-sm" v-model="formData.studentName"  readonly @click="$refs.selectStudent.show()">
+            </td>
+            <td style="border: none"><button type="button" class="am-btn am-btn-default am-btn-sm" @click="$refs.selectStudent.show()">选择</button>
+            </td>
+          </tr>
+          <tr>
+            <td class="bgColor">转让原因备注</td>
+            <td><input type="text" min="1" class="am-input-sm"  v-model="formData.reasonRemark"/></td>
+            <td colspan="4"></td>
           </tr>
 
           </tbody>
@@ -73,6 +68,7 @@
       </div>
 
       <select-campus ref="selectCampus" @ok="selectCampusCallback" ></select-campus>
+      <select-student ref="selectStudent" @ok="selectStudentCallback" ></select-student>
     </form>
   </window>
 
@@ -96,6 +92,7 @@
   import util from '../../lib/util'
   import storage from '../../lib/storage'
   import SelectCampus from '../teachingresource/SelectCampus'
+  import SelectStudent from '../base/SelectStudent.vue'
   export default{
     data: function () {
 
@@ -104,13 +101,11 @@
         studentDetail: {},
         formData: {
           applierMainAccountId: '',
+          destMainAccountId: '',
+          studentName: '',
           acceptCampusId: chargeCampus?chargeCampus.campusId : '' ,
           chargeCampusName: chargeCampus?chargeCampus.campusName : '',
           amount: '',
-          bankName: '',
-          bankCity: '',
-          cardUser: '',
-          cardNo: '',
           reasonRemark: '',
         },
         studentId:'',
@@ -120,13 +115,16 @@
     mounted: function () {
       $(window).smoothScroll()
     },
-    components: {SelectCampus},
+    components: {SelectCampus, SelectStudent},
     methods: {
       selectCampusCallback:function(campus){
-        debugger
         this.formData.acceptCampusId = campus.campusId
         this.formData.chargeCampusName = campus.campusName
         storage.setChargeCampus(campus)
+      },
+      selectStudentCallback:function(student){
+        this.formData.destMainAccountId = student.studentId
+        this.formData.studentName = student.name + '/' + student.studentNo + '/' + student.phoneNo
       },
       loadStudentDetail: function (studentId) {
         var _this = this
@@ -150,19 +148,41 @@
       },
       handleSave() {
         var _this = this
-        io.post(io.withdrawalForStudent, this.formData,
-          function (ret) {
-            if (ret.success) {
-              debugger
-
-            } else {
-              _this.$alert(ret.desc)
-            }
-          })
+        if(_this.check()) {
+          io.post(io.transferForStudent, this.formData,
+            function (ret) {
+              if (ret.success) {
+                _this.$root.$emit('mainAccount:change')
+                _this.$toast('转让成功')
+                _this.handleCancel()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+        }
       },
       handleCancel() {
         this.$refs.win.close()
       },
+      check() {
+        if(!this.formData.acceptCampusId) {
+          this.$alert('请选择受理校区')
+          return false
+        } else if (!this.formData.destMainAccountId) {
+          this.$alert('请选择转让学生')
+          return false
+        }else if (!this.formData.reasonRemark) {
+          this.$alert('请输入提现原因备注')
+          return false
+        }else if (!this.formData.amount) {
+          this.$alert('请输入转让金额')
+          return false
+        }else if (Number(this.formData.amount) > this.balanceAmount) {
+          this.$alert('转让金额不能大于可转金额')
+          return false
+        }
+        return true
+      }
     },
 
   }

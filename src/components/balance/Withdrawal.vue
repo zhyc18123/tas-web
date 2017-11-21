@@ -118,7 +118,7 @@
               min-width="100">
             </el-table-column>
             <el-table-column
-              prop="amount"
+              prop="auditName"
               label="审核人"
               min-width="100">
             </el-table-column>
@@ -144,7 +144,7 @@
               <template scope="scope">
                 <el-button v-if="hasPermission('audit')" size="small" @click.native="editRefund(scope.row.balanceWithdrawalId)">查看</el-button>
                 <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status=== '1'" @click.native="handleAudit(scope.row)">审核</el-button>
-                <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.payStatus !== '0'" @click.native="changePayStatus(scope.row.balanceWithdrawalId)">支付</el-button>
+                <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.balanceWithdrawalId)">支付</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -230,10 +230,15 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
+        var startTime = this.$options.filters.formatDate(this.query.startTime)
+        var endTime = this.$options.filters.formatDate(this.query.endTime)
         io.post(io.withdrawalList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+        }, _this.query, {
+          startTime: startTime,
+          endTime: endTime,
+        }), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list

@@ -2,7 +2,7 @@
   <div class="am-u-sm-12">
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">学生退费管理</div>
+        <div class="widget-title am-fl">转让审核</div>
       </div>
       <div class="widget-body am-fr">
 
@@ -14,43 +14,52 @@
               </select2>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <select2  v-model="query.busTeamId" :options="busTeams">
-                <option value="">业务组</option>
-              </select2>
-            </div>
-          </div>
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <input type="text"  v-model="query.studentName" placeholder="学生姓名"/>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
-            <div class="am-form-group">
-              <input type="text"  v-model="query.className" placeholder="班级名称"/>
-            </div>
-          </div>
-
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both;">
             <div class="am-form-group">
               <select2  v-model="query.status" >
                 <option value="">处理状态</option>
-                <option value="0">处理中</option>
-                <option value="1">已处理</option>
-                <option value="2">已拒绝</option>
+                <option value="0">审核中</option>
+                <option value="1">已审核</option>
+                <option value="2">驳回审核</option>
               </select2>
             </div>
           </div>
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
-              <select2  v-model="query.payStatus" >
-                <option value="">支付状态</option>
-                <option value="0">未支付</option>
-                <option value="1">已支付</option>
-              </select2>
+              <input type="text"  v-model="query.applierMainAccountName" placeholder="学生姓名"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <input type="text"  v-model="query.extra" placeholder="学生编号"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <input type="text"  v-model="query.operatorName" placeholder="申请人"/>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="query.startTime"
+                type="date"
+                placeholder="申请开始时间">
+              </el-date-picker>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="query.endTime"
+                type="date"
+                placeholder="申请结束时间">
+              </el-date-picker>
             </div>
           </div>
 
@@ -61,7 +70,7 @@
                       @click="search" ><span class="am-icon-search"></span>查询
               </button>
               <button type="button" class="am-btn am-btn-default am-btn-success"
-                      @click="exportStudentRefund" ><span class="am-icon-download"></span>导出
+                      @click="exportWithdrawalList" ><span class="am-icon-download"></span>导出
               </button>
             </div>
           </div>
@@ -77,14 +86,14 @@
             style="min-width: 100%">
             <el-table-column
               fixed
-              prop="studentName"
+              prop="applierMainAccountName"
               label="学生姓名"
               min-width="100">
             </el-table-column>
             <el-table-column
-              prop="className"
-              label="班级名称"
-              min-width="200">
+              prop="amount"
+              label="提现金额"
+              min-width="100">
             </el-table-column>
             <el-table-column
               label="申请时间"
@@ -94,53 +103,29 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="refundLecture"
-              label="申请退费讲次"
+              prop="operatorName"
+              label="申请人"
               min-width="100">
             </el-table-column>
             <el-table-column
-              prop="amount"
-              label="退费金额"
+              prop="auditName"
+              label="审核人"
               min-width="100">
             </el-table-column>
             <el-table-column
-              prop="description"
-              label="退费原因"
-              min-width="100">
-            </el-table-column>
-            <el-table-column
-              label="退费方式"
+              prop="status"
+              label="审核状态"
               min-width="100">
               <template scope="scope">
-                {{scope.row.refundWay == 0 ? '支付宝' : scope.row.refundWay == 1 ? '微信' : scope.row.refundWay == 2 ? '现金' : scope.row.refundWay == 3 ? '余额账户':'银行卡转账' }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="returnResult"
-              label="审批意见"
-              min-width="100">
-            </el-table-column>
-            <el-table-column
-              label="处理状态"
-              min-width="100">
-              <template scope="scope">
-                {{ {'0':'处理中','1':'已处理','2':'已拒绝' }[scope.row.status] }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              label="支付状态"
-              min-width="100">
-              <template scope="scope">
-                {{ {'0':'未支付','1':'已支付' }[scope.row.payStatus] }}
+                {{ {'0':'审核中','1':'通过审核','2':'驳回审核' }[scope.row.status] }}
               </template>
             </el-table-column>
             <el-table-column
               fixed="right"
               label="操作"
-              :min-width="optionWidth">
+              :min-width="80">
               <template scope="scope">
-                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="editRefund(scope.row.studentRefundId)">审核</el-button>
-                <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.studentRefundId)">支付</el-button>
+                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status=== '1'" @click.native="handleAudit(scope.row)">审核</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -148,7 +133,7 @@
 
 
 
-        <change-student-refund ref="changeStudentRefund" @completed="loadTableData()"></change-student-refund>
+        <transfer-audit ref="transferAudit" @completed="loadTableData()"></transfer-audit>
 
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
@@ -164,7 +149,7 @@
 <script>
   import io from '../../lib/io'
   import Pagination from '../base/Pagination'
-  import ChangeStudentRefund from './ChangeStudentRefund'
+  import TransferAudit from './transferAudit.vue'
   export default{
     data: function () {
       return {
@@ -174,21 +159,23 @@
         pageNo: 1,
         query: {
           areaTeamId : '',
-          busTeamId : '',
-          status : 1,
-          studentName: '',
-          className: '',
-          payStatus: 0,
+          applierMainAccountName : '',
+          operatorName : '',
+          extra : '',
+          status : '',
+          startTime: '',
+          endTime: '',
+          payStatus: '',
         },
       }
     },
     components: {
       Pagination,
-      'change-student-refund': ChangeStudentRefund
+      TransferAudit
     },
     computed: {
       optionWidth() {
-        return this.hasPermission('audit') && this.hasPermission('pay') ? 150 : 80
+        return this.hasPermission('audit') && this.hasPermission('pay') ? 220 : 150
       },
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
@@ -224,10 +211,15 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.apiAdminStudentRefundList, $.extend({
+        var startTime = this.$options.filters.formatDate(this.query.startTime)
+        var endTime = this.$options.filters.formatDate(this.query.endTime)
+        io.post(io.transferList, $.extend({
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
-        }, _this.query), function (ret) {
+        }, _this.query, {
+          startTime: startTime,
+          endTime: endTime,
+        }), function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
@@ -241,23 +233,13 @@
         this.$refs.changeStudentRefund.show()
       },
 
-      changePayStatus:function(studentRefundId){
-        this.$confirm('确定更改支付状态',()=>{
-          io.post(io.apiAdminChangeStudentPayStatus,{
-            studentRefundId : studentRefundId
-          },  (ret) => {
-            if (ret.success) {
-              this.$toast('处理成功')
-              this.loadTableData()
-            } else {
-              this.$alert(ret.desc)
-            }
-          })
-        })
+      handleAudit(row) {
+        this.$refs.transferAudit.balanceTransferId = row.balanceTransferId
+        this.$refs.transferAudit.show()
       },
       //导出学生退费信息
-      exportStudentRefund:function(){
-        io.downloadFile(io.apiAdminExportStudentRefund , this.query )
+      exportWithdrawalList:function(){
+        io.downloadFile(io.exportTransferList , this.query )
       },
     }
   }
