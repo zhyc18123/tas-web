@@ -167,7 +167,7 @@
     data: function () {
       return {
         formData: {
-          refundWay: 2,
+          refundWay: 4,
           bankName: '',
           bankCity: '',
           cardUser: '',
@@ -189,7 +189,7 @@
     },
     methods: {
       reset:function(){
-        this.formData.refundWay =  2
+        this.formData.refundWay =  4
         this.formData.bankName = ''
         this.formData.bankCity = ''
         this.formData.cardUser = ''

@@ -143,7 +143,7 @@
               :min-width="optionWidth">
               <template scope="scope">
                 <el-button v-if="hasPermission('audit')" size="small" @click.native="handleView(scope.row.balanceWithdrawalId)">查看</el-button>
-                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status=== '1'" @click.native="handleAudit(scope.row)">审核</el-button>
+                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="handleAudit(scope.row)">审核</el-button>
                 <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.balanceWithdrawalId)">支付</el-button>
               </template>
             </el-table-column>

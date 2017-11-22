@@ -130,7 +130,7 @@
               label="操作"
               :min-width="80">
               <template scope="scope">
-                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status=== '1'" @click.native="handleAudit(scope.row)">审核</el-button>
+                <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="handleAudit(scope.row)">审核</el-button>
               </template>
             </el-table-column>
           </el-table>
