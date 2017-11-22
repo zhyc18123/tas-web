@@ -31,12 +31,13 @@
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-            _this.tableData = Object.assign({},ret.data.studentRefund,ret.data.courseClass,ret.data.studentReg)
+            ret.data.studentRefund.createTime = _this.$options.filters.formatTime(ret.data.studentRefund.createTime)
+            ret.data.studentRefund.updateTime = _this.$options.filters.formatTime(ret.data.studentRefund.updateTime)
+            _this.tableData = Object.assign({},ret.data.studentRefund,ret.data.courseClass,ret.data.studentReg,ret.data.student)
             ret.data.createTime = _this.$options.filters.formatDate(ret.data.createTime)
             ret.data.auditTime = _this.$options.filters.formatDate(ret.data.auditTime)
-            ret.data.bigAmount = _this.digitUppercase(ret.data.amount)
             sessionStorage.setItem('refundDetail', JSON.stringify(ret.data))
-            $('#iframe').html('<iframe ref="refundDoc" height="800px" src="../../static/cert/refund.html" ' +
+            $('#iframe').html('<iframe ref="refundDoc" height="900px" src="../../static/cert/refund.html" ' +
               'width="100%" frameborder="0"></iframe>')
           }else{
             _this.$alert(ret.desc)
@@ -46,7 +47,7 @@
       show:function(){
         this.$refs.win.show({
           width:900,
-          height:900
+          height:1000
         })
         this.loadTableData()
       },
@@ -54,37 +55,6 @@
         var frame = $("#iframe iframe")[0];
         frame.contentWindow.focus()
         frame.contentWindow.print();
-      },
-//      https://gist.github.com/tonyc726/00c829a54a40cf80409f 数字金额大写转换
-      digitUppercase (n) {
-        var fraction = ['角', '分'];
-        var digit = [
-          '零', '壹', '贰', '叁', '肆',
-          '伍', '陆', '柒', '捌', '玖'
-        ];
-        var unit = [
-          ['元', '万', '亿'],
-          ['', '拾', '佰', '仟']
-        ];
-        var head = n < 0 ? '欠' : '';
-        n = Math.abs(n);
-        var s = '';
-        for (var i = 0; i < fraction.length; i++) {
-          s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
-        }
-        s = s || '整';
-        n = Math.floor(n);
-        for (var i = 0; i < unit[0].length && n > 0; i++) {
-          var p = '';
-          for (var j = 0; j < unit[1].length && n > 0; j++) {
-            p = digit[n % 10] + unit[1][j] + p;
-            n = Math.floor(n / 10);
-          }
-          s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
-        }
-        return head + s.replace(/(零.)*零元/, '元')
-          .replace(/(零.)+/g, '零')
-          .replace(/^整$/, '零元整');
       },
     }
   }

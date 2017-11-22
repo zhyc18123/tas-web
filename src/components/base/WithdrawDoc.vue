@@ -35,8 +35,8 @@
           _this.$hiddenLoading()
           if(ret.success){
             _this.tableData = ret.data
-            ret.data.createTime = _this.$options.filters.formatDate(ret.data.createTime)
-            ret.data.auditTime = _this.$options.filters.formatDate(ret.data.auditTime)
+            ret.data.createTime = _this.$options.filters.formatTime(ret.data.createTime)
+            ret.data.auditTime = _this.$options.filters.formatTime(ret.data.auditTime)
             ret.data.bigAmount = _this.digitUppercase(ret.data.amount)
             if (ret.data.status === '0') {
               ret.data.status = '审核中'

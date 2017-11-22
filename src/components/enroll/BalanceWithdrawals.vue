@@ -170,11 +170,15 @@
         this.$refs.win.close()
       },
       check() {
+        debugger
         if(!this.formData.acceptCampusId) {
           this.$alert('请选择受理校区')
           return false
         } else if (!this.formData.amount) {
           this.$alert('请输入实退金额')
+          return false
+        }else if (Number(this.formData.amount) === 0) {
+          this.$alert('实退金额不能为0')
           return false
         }else if (!this.formData.bankName) {
           this.$alert('请输入开户银行')

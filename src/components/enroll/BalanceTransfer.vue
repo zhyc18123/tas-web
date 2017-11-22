@@ -181,6 +181,9 @@
         }else if (!this.formData.amount) {
           this.$alert('请输入转让金额')
           return false
+        }else if (Number(this.formData.amount) === 0) {
+          this.$alert('实退金额不能为0')
+          return false
         }else if (Number(this.formData.amount) > this.balanceAmount) {
           this.$alert('转让金额不能大于可转金额')
           return false

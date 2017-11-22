@@ -134,80 +134,79 @@
   </style>
 </head>
 
-<body style="padding: 20px;
-      font-size: 12px;">
+<body style="font-size: 12px;">
 <div id="main" style="font-size: 12px;padding: 20px;">
-  <h2 style="text-align: center;font-size: 20px;margin-bottom: 22px;">提现单</h2>
+  <h2 style="text-align: center;font-size: 20px;margin-bottom: 22px;">退费单</h2>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
     <table style="font-size: 13px;    width: 750px;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0;
     border-spacing: 0;
     border-collapse: separate;    border: 1px solid #ddd;" width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
       <tbody>
       <tr>
-        <td style="font-weight: bold;width: 95px;height: 30px;">学生姓名</td>
-        <td style="width: 95px;height: 30px;"><span id="studentName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">学生学号</td>
-        <td style="width: 95px;height: 30px;"><span id="studentNo"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">年级</td>
-        <td style="width: 95px;height: 30px;"><span id="gradeName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">就读学校</td>
-        <td style="width: 95px;height: 30px;"><span id="school"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">学生姓名</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="studentName"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">学生学号</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="studentNo"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">年级</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="gradeName"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">就读学校</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="school"></span></td>
       </tr>
       <tr>
-        <td style="font-weight: bold">电话</td>
-        <td><span id="phoneNo"></span></td>
-        <td style="font-weight: bold">监护人姓名</td>
-        <td><span></span></td>
-        <td style="font-weight: bold">监护人电话</td>
-        <td><span></span></td>
+        <td style="text-align:center;font-weight: bold">电话</td>
+        <td style="text-align:center;"><span id="phoneNo"></span></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
         <td></td>
       </tr>
       <tr>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
-        <td style="width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
+        <td style="text-align:center;width: 95px;height: 30px;"></td>
       </tr>
       <tr>
-        <td style="font-weight: bold;width: 95px;height: 30px;">报读期数</td>
-        <td style="width: 95px;height: 30px;"><span id="studentName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">报名校区</td>
-        <td style="width: 95px;height: 30px;"><span id="studentNo"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">年级</td>
-        <td style="width: 95px;height: 30px;"><span id="gradeName2"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">报读班级</td>
-        <td style="width: 95px;height: 30px;"><span id="school"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">报读期数</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="periodName"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">报名校区</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="campusName2"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">年级</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="gradeName2"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">报读班级</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="className"></span></td>
       </tr>
       <tr>
-        <td style="font-weight: bold;width: 95px;height: 30px;">课程总讲次</td>
-        <td style="width: 95px;height: 30px;"><span id="studentName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">报读总讲次</td>
-        <td style="width: 95px;height: 30px;"><span id="school"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">退费起初讲次</td>
-        <td style="width: 95px;height: 30px;"><span id="studentNo"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">结束讲次</td>
-        <td style="width: 95px;height: 30px;"><span id="gradeName"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">课程总讲次</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="lectureAmount"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">报读总讲次</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="refundLecture"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">退费起初讲次</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="startAmount"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">结束讲次</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="endAmount"></span></td>
       </tr>
       <tr>
-        <td style="font-weight: bold;width: 95px;height: 30px;">已上讲次</td>
-        <td style="width: 95px;height: 30px;"><span id="studentName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">整期金额</td>
-        <td style="width: 95px;height: 30px;"><span id="studentNo"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">实收金额</td>
-        <td style="width: 95px;height: 30px;"><span id="gradeName"></span></td>
-        <td style="font-weight: bold;width: 95px;height: 30px;">实退金额</td>
-        <td style="width: 95px;height: 30px;"><span id="school"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">已上讲次</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="completedLectureAmount"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">整期金额</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="studyingFee"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">实收金额</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="payAmount"></span></td>
+        <td style="text-align:center;font-weight: bold;width: 95px;height: 30px;">实退金额</td>
+        <td style="text-align:center;width: 95px;height: 30px;"><span id="amount"></span></td>
       </tr>
       </tbody>
     </table>
     <table style="font-size: 13px;    width: 750px;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0;
     border-spacing: 0;
     border-collapse: separate;    border: 1px solid #ddd;" width="100%" class="am-table am-table-bordered am-table-compact">
       <tbody>
@@ -226,42 +225,42 @@
       </tr>
       <tr>
         <td></td>
-        <td style="text-align: center">申请退费日期：</td>
+        <td style="text-align: center">申请退费日期：<span id="createTime2"></span></td>
       </tr>
       </tbody>
     </table>
     <table style="font-size: 13px;    width: 750px;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0;
     border-spacing: 0;
     border-collapse: separate;    border: 1px solid #ddd;" width="100%" class="am-table am-table-bordered am-table-compact">
       <tbody>
       <tr>
-        <td style="width: 260px;height: 60px" >申请提现原因</td>
+        <td style="width: 160px;height: 60px" >申请退费原因</td>
         <td>
           <div>
             <div style="width: 30%;  display: inline-block;">申请原因：<span id="reasonRemark"></span></div>
-            <div style="width: 30%;  display: inline-block;">申请人签名：<span id="operatorName"></span></div>
+            <div style="width: 30%;  display: inline-block;">申请人签名：<span id="applyOperator"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="createTime"></span></div>
           </div>
         </td>
       </tr>
       <tr>
-        <td style="width: 260px;height: 60px">负责人审批</td>
+        <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
             <div style="width: 30%;  display: inline-block;">审核状态：<span id="status"></span></div>
-            <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditName"></span></div>
-            <div style="width: 30%;  display: inline-block;">日期：<span id="auditTime"></span></div>
+            <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditOperator"></span></div>
+            <div style="width: 30%;  display: inline-block;">日期：<span id="updateTime"></span></div>
           </div>
         </td>
       </tr>
       <tr>
-        <td style="width: 260px;height: 60px">提现账户信息及金额</td>
+        <td style="width: 160px;height: 60px">退费账户信息及金额</td>
         <td class="info">
           <div><span style="display: inline-block;  width: 149px;">姓名：</span><span id="cardUser"></span></div>
           <div><span style="display: inline-block;  width: 149px;">开户银行：</span><span id="bankName"></span></div>
           <div><span style="display: inline-block;  width: 149px;">开户账号：</span><span id="cardNo"></span></div>
-          <div><span style="display: inline-block;  width: 149px;">提现金额（单位：元）</span><span id="amount2"></span></div>
+          <div><span style="display: inline-block;  width: 149px;">退费金额（单位：元）</span><span id="amount2"></span></div>
           <div><span style="display: inline-block;  width: 149px;">大写：人民币 </span><span id="bigAmount"></span></div>
         </td>
       </tr>
@@ -272,7 +271,7 @@
       <p>1. 您提交的退费资料已收悉，本次收取的资料仅作退费使用，不作其他用途。</p>
       <p>2. 退费金额（小写）：¥ <span id="amount3"></span>元，该退费金额预计于您提交资料之日起10个工作日到账，若您仍有疑问，请与受理校区咨询。</p>
       <div style="margin-left: 550px;margin-top: 20px;">受理校区：<span id="acceptCampusName"></span></div>
-      <div style="margin-left: 550px;margin-top: 20px;">受理日期：<span id="auditTime2"></span></div>
+      <div style="margin-left: 550px;margin-top: 20px;">受理日期：<span id="updateTime2"></span></div>
     </div>
   </form>
 </div>
@@ -282,49 +281,79 @@
   $(function () {
     var data = JSON.parse(sessionStorage.getItem('refundDetail'))
     debugger
-    var studentName = data.studentRefund.studentName
-    studentNo = data.studentRefund.studentNo
-    gradeName = data.studentRefund.gradeName
-    school = data.studentRefund.school
-    phoneNo = data.studentRefund.phoneNo
+    var studentName = data.student.name
+    studentNo = data.student.studentNo
+    gradeName = data.student.gradeName
+    school = data.student.school
+    phoneNo = data.student.phoneNo
     amount = data.studentRefund.amount
-    bigAmount = data.studentRefund.bigAmount
+    gradeName2 = data.courseClass.gradeName
+    bigAmount = digitUppercase(data.studentRefund.amount)
     operatorName = data.studentRefund.operatorName
+    auditOperator = data.studentRefund.auditOperator
     createTime = data.studentRefund.createTime
+    updateTime = data.studentRefund.updateTime
     reasonRemark = data.studentRefund.description
     auditName = data.studentRefund.auditName
     auditTime = data.studentRefund.auditTime
     cardUser = data.studentRefund.cardUser
     bankName = data.studentRefund.bankName
     cardNo = data.studentRefund.cardNo
+    applyOperator = data.studentRefund.applyOperator
     acceptCampusName = data.studentRefund.acceptCampusName
     className = data.studentRefund.className
     status = data.studentRefund.status
     payStatus = data.studentRefund.payStatus
     refundWay = data.studentRefund.refundWay
+    refundLecture = data.studentRefund.refundLecture
+    lectureAmount = data.courseClass.lectureAmount
+    completedLectureAmount = data.courseClass.completedLectureAmount +'/'+data.courseClass.lectureAmount
     subjectName = data.courseClass.subjectName
-    gradeName = data.courseClass.gradeName
     teacherNames = data.courseClass.teacherNames
+    studyingFee = data.courseClass.studyingFee
     periodName = data.courseClass.periodName
     campusName = data.courseClass.campusName
     operator = data.studentReg.operator
-    if (data.studentRefund.status === '0') {
-      data.studentRefund.status = '审核中'
-    } else if (data.studentRefund.status === '1') {
-      data.studentRefund.status = '同意'
-    } else if (data.studentRefund.status === '2') {
-      data.studentRefund.status = '拒绝'
+    payAmount = data.studentReg.payAmount
+    totalAmount = data.studentReg.totalAmount
+    startAmount = data.studentReg.startAmount
+    endAmount = data.studentReg.endAmount
+    refundStatus = data.studentReg.refundStatus
+    if (status === '0') {
+      status = '审核中'
+      updateTime = ''
+    } else if (status === '1') {
+      status = '同意'
+    } else if (status === '2') {
+      status = '拒绝'
     }
+    refundLecture = refundLecture.split(',').length
 
+    $('#updateTime').html(updateTime)
+    $('#updateTime2').html(updateTime)
+    $('#payAmount').html(payAmount)
+    $('#refundStatus').html(refundStatus)
+    $('#auditOperator').html(auditOperator)
+    $('#applyOperator').html(applyOperator)
+    $('#className').html(className)
+    $('#periodName').html(periodName)
+    $('#campusName').html(campusName)
+    $('#campusName2').html(campusName)
+    $('#operator').html(operator)
+    $('#completedLectureAmount').html(completedLectureAmount)
+    $('#refundLecture').html(refundLecture)
+    $('#lectureAmount').html(lectureAmount)
     $('#status').html(status)
     $('#studentName').html(studentName)
     $('#studentNo').html(studentNo)
     $('#gradeName').html(gradeName)
+    $('#gradeName2').html(gradeName2)
     $('#school').html(school)
     $('#phoneNo').html(phoneNo)
     $('#amount').html(amount)
     $('#auditName').html(auditName)
     $('#createTime').html(createTime)
+    $('#createTime2').html(createTime)
     $('#reasonRemark').html(reasonRemark)
     $('#operatorName').html(operatorName)
     $('#auditTime').html(auditTime)
@@ -336,6 +365,9 @@
     $('#amount3').html(amount)
     $('#acceptCampusName').html(acceptCampusName)
     $('#auditTime2').html(auditTime)
+    $('#startAmount').html(startAmount)
+    $('#endAmount').html(endAmount)
+    $('#studyingFee').html(studyingFee)
     CheckIsInstall()
   })
   function CheckIsInstall() {
@@ -350,6 +382,38 @@
       };
     }catch(err){
     }
+  };
+
+  //      https://gist.github.com/tonyc726/00c829a54a40cf80409f 数字金额大写转换
+  function digitUppercase (n) {
+    var fraction = ['角', '分'];
+    var digit = [
+      '零', '壹', '贰', '叁', '肆',
+      '伍', '陆', '柒', '捌', '玖'
+    ];
+    var unit = [
+      ['元', '万', '亿'],
+      ['', '拾', '佰', '仟']
+    ];
+    var head = n < 0 ? '欠' : '';
+    n = Math.abs(n);
+    var s = '';
+    for (var i = 0; i < fraction.length; i++) {
+      s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+    }
+    s = s || '整';
+    n = Math.floor(n);
+    for (var i = 0; i < unit[0].length && n > 0; i++) {
+      var p = '';
+      for (var j = 0; j < unit[1].length && n > 0; j++) {
+        p = digit[n % 10] + unit[1][j] + p;
+        n = Math.floor(n / 10);
+      }
+      s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+    }
+    return head + s.replace(/(零.)*零元/, '元')
+      .replace(/(零.)+/g, '零')
+      .replace(/^整$/, '零元整');
   };
 
   function print() {
