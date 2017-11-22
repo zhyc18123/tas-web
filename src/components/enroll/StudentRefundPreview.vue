@@ -7,16 +7,13 @@
 
 <script>
   import io from '../../lib/io'
-
   import Pagination from '../base/Pagination'
-  import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
 
   export default{
-    components: {ElButton},
     data: function () {
       return {
         tableData: [],
-        balanceWithdrawalId: '',
+        studentRefundId: '',
       }
     },
     mounted: function () {
@@ -29,24 +26,17 @@
       loadTableData:function(){
         var _this = this
         _this.$showLoading()
-        io.post(io.withdrawalDetail,{
-          balanceWithdrawalId: this.balanceWithdrawalId
+        io.post(io.studentRefundWithRegInfoDetail,{
+          studentRefundId: this.studentRefundId
         },function(ret){
           _this.$hiddenLoading()
           if(ret.success){
-            _this.tableData = ret.data
+            _this.tableData = Object.assign({},ret.data.studentRefund,ret.data.courseClass,ret.data.studentReg)
             ret.data.createTime = _this.$options.filters.formatDate(ret.data.createTime)
             ret.data.auditTime = _this.$options.filters.formatDate(ret.data.auditTime)
             ret.data.bigAmount = _this.digitUppercase(ret.data.amount)
-            if (ret.data.status === '0') {
-              ret.data.status = '审核中'
-            } else if (ret.data.status === '1') {
-              ret.data.status = '同意'
-            } else if (ret.data.status === '2') {
-              ret.data.status = '驳回'
-            }
-            sessionStorage.setItem('withdrawalDetail', JSON.stringify(ret.data))
-            $('#iframe').html('<iframe ref="withdrawDoc" height="600px" src="../../static/cert/withdrawDoc.html" ' +
+            sessionStorage.setItem('refundDetail', JSON.stringify(ret.data))
+            $('#iframe').html('<iframe ref="refundDoc" height="800px" src="../../static/cert/refund.html" ' +
               'width="100%" frameborder="0"></iframe>')
           }else{
             _this.$alert(ret.desc)
@@ -56,14 +46,14 @@
       show:function(){
         this.$refs.win.show({
           width:900,
-          height:600
+          height:900
         })
         this.loadTableData()
       },
       print() {
         var frame = $("#iframe iframe")[0];
-          frame.contentWindow.focus()
-          frame.contentWindow.print();
+        frame.contentWindow.focus()
+        frame.contentWindow.print();
       },
 //      https://gist.github.com/tonyc726/00c829a54a40cf80409f 数字金额大写转换
       digitUppercase (n) {
