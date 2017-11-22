@@ -280,7 +280,6 @@
   var LODOP
   $(function () {
     var data = JSON.parse(sessionStorage.getItem('refundDetail'))
-    debugger
     var studentName = data.student.name
     studentNo = data.student.studentNo
     gradeName = data.student.gradeName
@@ -300,7 +299,6 @@
     bankName = data.studentRefund.bankName
     cardNo = data.studentRefund.cardNo
     applyOperator = data.studentRefund.applyOperator
-    acceptCampusName = data.studentRefund.acceptCampusName
     className = data.studentRefund.className
     status = data.studentRefund.status
     payStatus = data.studentRefund.payStatus
@@ -363,7 +361,7 @@
     $('#amount2').html(amount)
     $('#bigAmount').html(bigAmount)
     $('#amount3').html(amount)
-    $('#acceptCampusName').html(acceptCampusName)
+    $('#acceptCampusName').html(campusName)
     $('#auditTime2').html(auditTime)
     $('#startAmount').html(startAmount)
     $('#endAmount').html(endAmount)
@@ -417,7 +415,6 @@
   };
 
   function print() {
-    debugger
     CreatePrintPage()
     LODOP.PRINT();
   }
