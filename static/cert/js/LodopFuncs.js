@@ -65,13 +65,13 @@ function getLodop(oOBJECT,oEMBED){
       try{ LODOP=getCLodop();} catch(err) {};
       if (!LODOP && document.readyState!=="complete") {console.log("C-Lodop没准备好，请稍后再试！"); return;};
       if (!LODOP) {
-        if (isIE) document.write(strCLodopInstall); else
+        if (isIE) document.prepend && document.prepend(strCLodopInstall); else
           document.documentElement.innerHTML=strCLodopInstall+document.documentElement.innerHTML;
         return;
       } else {
 
         if (CLODOP.CVERSION<"2.0.9.0") {
-          if (isIE) document.write(strCLodopUpdate); else
+          if (isIE) document.prepend && document.prepend(strCLodopUpdate); else
             document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML;
         };
         if (oEMBED && oEMBED.parentNode) oEMBED.parentNode.removeChild(oEMBED);
@@ -98,8 +98,8 @@ function getLodop(oOBJECT,oEMBED){
           document.documentElement.innerHTML=strHtmChrome+document.documentElement.innerHTML;
         if (navigator.userAgent.indexOf('Firefox')>=0)
           document.documentElement.innerHTML=strHtmFireFox+document.documentElement.innerHTML;
-        if (is64IE) document.write(strHtm64_Install); else
-        if (isIE)   document.write(strHtmInstall);    else
+        if (is64IE) document.prepend && document.prepend(strHtm64_Install); else
+        if (isIE)   document.prepend && document.prepend(strHtmInstall);    else
           document.documentElement.innerHTML=strHtmInstall+document.documentElement.innerHTML;
         return LODOP;
       };
@@ -107,8 +107,8 @@ function getLodop(oOBJECT,oEMBED){
     if (LODOP.VERSION<"6.2.1.5") {
       if (needCLodop())
         document.documentElement.innerHTML=strCLodopUpdate+document.documentElement.innerHTML; else
-      if (is64IE) document.write(strHtm64_Update); else
-      if (isIE) document.write(strHtmUpdate); else
+      if (is64IE)document.prepend &&  document.prepend(strHtm64_Update); else
+      if (isIE) document.prepend && document.prepend(strHtmUpdate); else
         document.documentElement.innerHTML=strHtmUpdate+document.documentElement.innerHTML;
       return LODOP;
     };
