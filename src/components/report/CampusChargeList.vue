@@ -175,7 +175,7 @@
             </div>
           </div>
           <div class="am-u-sm-12 am-form-group totalSum">
-            合计&nbsp;（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金&nbsp;{{sumOther | formatNumber(2)}}，刷卡&nbsp;{{sumCart | formatNumber(2)}}，余额&nbsp;{{sumBalance | formatNumber(2)}}，微信&nbsp;{{sumWX | formatNumber(2)}}，
+            收费报名合计&nbsp;（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金&nbsp;{{sumOther | formatNumber(2)}}，刷卡&nbsp;{{sumCart | formatNumber(2)}}，余额&nbsp;{{sumBalance | formatNumber(2)}}，微信&nbsp;{{sumWX | formatNumber(2)}}，
             支付宝&nbsp;{{sumZFB | formatNumber(2)}}
           </div>
           <div class="am-u-sm-12 table">
@@ -218,7 +218,7 @@
                 min-width="100">
                 <template scope="scope">
                   <div v-if="!scope.row.sum">
-                    {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
+                    {{ scope.row.busType== 0 ? {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] :'' }}
                   </div>
                 </template>
               </el-table-column>
@@ -281,6 +281,14 @@
                   <div :class="{'sum': scope.row.sum}">
                     {{scope.row.refundAmount | formatNumber(2)}}
                   </div>
+                </template>
+              </el-table-column>
+
+              <el-table-column
+                label="退费方式"
+                min-width="100">
+                <template scope="scope">
+                  {{ scope.row.busType== 2 ? {'0':'支付宝','1':'微信','2':'现金','3':'退账户','4':'转账退费'}[scope.row.refundWay] :'' }}
                 </template>
               </el-table-column>
 
