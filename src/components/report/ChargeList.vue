@@ -232,6 +232,13 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                label="退费方式"
+                min-width="100">
+                <template scope="scope">
+                  {{ scope.row.busType== 2 ? {'0':'支付宝','1':'微信','2':'现金','3':'余额账户','4':'银行卡转账'}[scope.row.refundWay] :'' }}
+                </template>
+              </el-table-column>
+              <el-table-column
                 prop="studentNo"
                 label="学生编号"
                 min-width="150">
@@ -260,7 +267,7 @@
                 label="支付方式"
                 min-width="100">
                 <template scope="scope">
-                  {{ {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] }}
+                  {{ scope.row.busType== 0 ? {'0':'现金','1':'刷卡','2':'转账','3':'账户','4':'微信','5':'支付宝'}[scope.row.payWay] :'' }}
                 </template>
               </el-table-column>
               <el-table-column
