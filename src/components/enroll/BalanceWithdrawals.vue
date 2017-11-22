@@ -32,28 +32,28 @@
           <tr>
             <td class="bgColor">可退金额</td>
             <td><span class="am-text-danger">￥{{balanceAmount}}</span></td>
-            <td class="bgColor">实退金额</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>实退金额(整数)</td>
             <td><input type="number" class="am-input-sm"  v-model="formData.amount"/></td>
           </tr>
           <tr>
-            <td class="bgColor">开户银行</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>开户银行</td>
             <td><input type="text" class="am-input-sm"  v-model="formData.bankName"  /></td>
-            <td class="bgColor">开户城市</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>开户城市</td>
             <td><input type="text" class="am-input-sm"  v-model="formData.bankCity"  /></td>
           </tr>
           <tr>
-            <td class="bgColor">姓名</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>姓名</td>
             <td><input type="text" class="am-input-sm"  v-model="formData.cardUser" /></td>
-            <td class="bgColor">开户账号</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>开户账号</td>
             <td><input type="Number" class="am-input-sm"  v-model="formData.cardNo"  /></td>
           </tr>
           <tr>
-            <td class="bgColor">提现原因备注</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>提现原因备注</td>
             <td><input type="text" min="1" class="am-input-sm"  v-model="formData.reasonRemark"/></td>
             <td colspan="4"></td>
           </tr>
           <tr>
-            <td class="bgColor">受理校区</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>受理校区</td>
             <td>
               <input required type="text" placeholder="校区" class="am-input-sm" v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
             </td>
@@ -86,6 +86,10 @@
   .bgColor {
     background-color: #eee;
     text-align: center!important;
+  }
+  .red {
+    color: #dd514c;
+    vertical-align: middle;
   }
 </style>
 
@@ -189,6 +193,9 @@
           return false
         }else if (Number(this.formData.amount) > this.balanceAmount) {
           this.$alert('实退金额不能大于可退金额')
+          return false
+        }else if (Number(this.formData.amount)%1 !== 0) {
+          this.$alert('实退金额只能为整数')
           return false
         }
         return true

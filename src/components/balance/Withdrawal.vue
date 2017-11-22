@@ -279,9 +279,21 @@
       },
       //导出学生退费信息
       exportWithdrawalList:function(){
-        io.downloadFile(io.exportWithdrawalList , this.query )
+        var startTime = this.$options.filters.formatDate(this.query.startTime)
+        var endTime = this.$options.filters.formatDate(this.query.endTime)
+        io.downloadFile(io.exportWithdrawalList , Object.assign({},this.query, {
+          startTime:startTime,
+          endTime:endTime
+        }) )
       },
     }
   }
 </script>
+<style lang="less" scpoed>
+  .am-form {
+    &>.am-u-sm-12:nth-child(4n + 1) {
+      clear: both;
+    }
+  }
+</style>
 

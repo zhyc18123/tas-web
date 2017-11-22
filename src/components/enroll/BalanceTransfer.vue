@@ -32,11 +32,11 @@
           <tr>
             <td class="bgColor">可转金额</td>
             <td><span class="am-text-danger">￥{{balanceAmount}}</span></td>
-            <td class="bgColor">转让金额</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>转让金额</td>
             <td><input type="number" class="am-input-sm"  v-model="formData.amount"/></td>
           </tr>
           <tr>
-            <td class="bgColor">受理校区</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>受理校区</td>
             <td>
               <input required type="text" placeholder="校区" class="am-input-sm" v-model="formData.chargeCampusName"  readonly @click="$refs.selectCampus.show()">
             </td>
@@ -44,7 +44,7 @@
             </td>
           </tr>
           <tr>
-            <td class="bgColor">转让学生</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>转让学生</td>
             <td>
               <input required type="text" placeholder="名称/学号/电话" class="am-input-sm" v-model="formData.studentName"  readonly @click="$refs.selectStudent.show()">
             </td>
@@ -52,7 +52,7 @@
             </td>
           </tr>
           <tr>
-            <td class="bgColor">转让原因备注</td>
+            <td class="bgColor"><span class="red">*&nbsp;&nbsp;</span>转让原因备注</td>
             <td><input type="text" min="1" class="am-input-sm"  v-model="formData.reasonRemark"/></td>
             <td colspan="4"></td>
           </tr>
@@ -82,6 +82,10 @@
   .bgColor {
     background-color: #eee;
     text-align: center!important;
+  }
+  .red {
+    color: #dd514c;
+    vertical-align: middle;
   }
 </style>
 
