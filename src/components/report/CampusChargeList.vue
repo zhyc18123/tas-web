@@ -175,7 +175,7 @@
             </div>
           </div>
           <div class="am-u-sm-12 am-form-group totalSum">
-            合计&nbsp;（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金&nbsp;{{sumOther | formatNumber(2)}}，刷卡&nbsp;{{sumCart | formatNumber(2)}}，余额&nbsp;{{sumBalance | formatNumber(2)}}，微信&nbsp;{{sumWX | formatNumber(2)}}，
+            收费报名合计&nbsp;（{{(sumOther + sumCart + sumBalance + sumWX + sumZFB) |formatNumber(2)}}）：现金&nbsp;{{sumOther | formatNumber(2)}}，刷卡&nbsp;{{sumCart | formatNumber(2)}}，余额&nbsp;{{sumBalance | formatNumber(2)}}，微信&nbsp;{{sumWX | formatNumber(2)}}，
             支付宝&nbsp;{{sumZFB | formatNumber(2)}}
           </div>
           <div class="am-u-sm-12 table">
