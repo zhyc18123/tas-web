@@ -25,10 +25,14 @@
               </el-tooltip>
             </td>
           </tr>
-
-
         </table>
+        <div class="btn-box">
+          <el-button size="small" @click="handleWithdrawal" type="primary">提现</el-button>
+          <el-button size="small" @click="handleTransfer" type="primary">转让</el-button>
+        </div>
       </div>
+      <balance-withdrawals ref="withdrawals"></balance-withdrawals>
+      <balance-transfer ref="transfer"></balance-transfer>
       <div class="widget-body am-fr">
 
         <div id="tabs"  class="am-tabs" data-am-tabs="{noSwipe: 1}" >
@@ -110,6 +114,14 @@
   .bing-student-src:hover{
     border-color: #000;
   }
+  .btn-box {
+    background: #eee;
+    overflow: hidden;
+    padding-top: 5px;
+    text-align: right;
+    padding-right: 75px;
+    padding-bottom: 10px;
+  }
 </style>
 
 <script>
@@ -122,6 +134,8 @@
   import StudentOrderList from './StudentOrderList'
   import StudentClassList from './StudentClassList'
   import ClassHistoryList from './ClassHistoryList'
+  import BalanceTransfer from './BalanceTransfer.vue'
+  import BalanceWithdrawals from './BalanceWithdrawals.vue'
   export default{
     data(){
       let url = conf.studentBasePath + '/bind-student?studentId=' + this.$params('studentId')
@@ -134,6 +148,8 @@
       }
     },
     components:{
+      BalanceTransfer,
+      BalanceWithdrawals,
       'student-edit-from': StudentEditForm,
       'student-apply': StudentApply,
       'reg-class-list': RegClassList,
@@ -155,7 +171,16 @@
 
     },
     methods: {
-
+      handleWithdrawal() {
+        this.$refs.withdrawals.studentId = this.studentId
+        this.$refs.withdrawals.balanceAmount = Number(this.mainAccount.balanceAmount).toFixed(2)
+        this.$refs.withdrawals.show()
+      },
+      handleTransfer() {
+        this.$refs.transfer.studentId = this.studentId
+        this.$refs.transfer.balanceAmount = Number(this.mainAccount.balanceAmount).toFixed(2)
+        this.$refs.transfer.show()
+      },
       loadMainAccount:function(){
         var _this = this
         io.post(io.apiAdminStudentMainAccount,{

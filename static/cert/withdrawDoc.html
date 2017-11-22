@@ -1,0 +1,369 @@
+<html>
+
+<head>
+  <title>誉优品学</title>
+  <link rel="stylesheet" href="css/common.css">
+  <!--<script language="javascript" src="./js/CLodopFuncs.js"></script>-->
+  <script language="javascript" src="./js/LodopFuncs.js"></script>
+  <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
+    <embed id="LODOP_EM" type="application/x-print-lodop"  width=0 height=0 />
+  </object>
+  <style>
+    .fr {
+      float: right;
+    }
+    .am-table {
+      width: 100%;
+      margin-bottom: 1.6rem;
+      border-spacing: 0;
+      border-collapse: separate
+    }
+
+    .am-table>tbody>tr>td,.am-table>tbody>tr>th,.am-table>tfoot>tr>td,.am-table>tfoot>tr>th,.am-table>thead>tr>td,.am-table>thead>tr>th {
+      padding: .7rem;
+      line-height: 1.6;
+      vertical-align: top;
+      border-top: 1px solid #ddd
+    }
+
+    .am-table>thead>tr>th {
+      vertical-align: bottom;
+      border-bottom: 1px solid #ddd
+    }
+
+    .am-table>caption+thead>tr:first-child>td,.am-table>caption+thead>tr:first-child>th,.am-table>colgroup+thead>tr:first-child>td,.am-table>colgroup+thead>tr:first-child>th,.am-table>thead:first-child>tr:first-child>td,.am-table>thead:first-child>tr:first-child>th {
+      border-top: 0
+    }
+
+    .am-table>tbody+tbody tr:first-child td {
+      border-top: 2px solid #ddd
+    }
+
+    .am-table-bordered {
+      border: 1px solid #ddd;
+      border-left: none
+    }
+
+    .am-table-bordered>tbody>tr>td,.am-table-bordered>tbody>tr>th,.am-table-bordered>tfoot>tr>td,.am-table-bordered>tfoot>tr>th,.am-table-bordered>thead>tr>td,.am-table-bordered>thead>tr>th {
+      border-left: 1px solid #ddd
+    }
+
+    .am-table-bordered>tbody>tr:first-child>td,.am-table-bordered>tbody>tr:first-child>th {
+      border-top: none
+    }
+
+    .am-table-bordered>thead+tbody>tr:first-child>td,.am-table-bordered>thead+tbody>tr:first-child>th {
+      border-top: 1px solid #ddd
+    }
+
+    .am-table-radius {
+      border: 1px solid #ddd;
+      border-radius: 2px
+    }
+
+    .am-table-radius>thead>tr:first-child>td:first-child,.am-table-radius>thead>tr:first-child>th:first-child {
+      border-top-left-radius: 2px;
+      border-left: none
+    }
+
+    .am-table-radius>thead>tr:first-child>td:last-child,.am-table-radius>thead>tr:first-child>th:last-child {
+      border-top-right-radius: 2px;
+      border-right: none
+    }
+
+    .am-table-radius>tbody>tr>td:first-child,.am-table-radius>tbody>tr>th:first-child {
+      border-left: none
+    }
+
+    .am-table-radius>tbody>tr>td:last-child,.am-table-radius>tbody>tr>th:last-child {
+      border-right: none
+    }
+
+    .am-table-radius>tbody>tr:last-child>td,.am-table-radius>tbody>tr:last-child>th {
+      border-bottom: none
+    }
+
+    .am-table-radius>tbody>tr:last-child>td:first-child,.am-table-radius>tbody>tr:last-child>th:first-child {
+      border-bottom-left-radius: 2px
+    }
+
+    .am-table-radius>tbody>tr:last-child>td:last-child,.am-table-radius>tbody>tr:last-child>th:last-child {
+      border-bottom-right-radius: 2px
+    }
+
+    .am-table-striped>tbody>tr:nth-child(odd)>td,.am-table-striped>tbody>tr:nth-child(odd)>th {
+      background-color: #f9f9f9
+    }
+
+    .am-table-hover>tbody>tr:hover>td,.am-table-hover>tbody>tr:hover>th {
+      background-color: #e9e9e9
+    }
+
+    .am-table-compact>tbody>tr>td,.am-table-compact>tbody>tr>th,.am-table-compact>tfoot>tr>td,.am-table-compact>tfoot>tr>th,.am-table-compact>thead>tr>td,.am-table-compact>thead>tr>th {
+      padding: .4rem
+    }
+
+    .am-table-centered>tbody>tr>td,.am-table-centered>tbody>tr>th,.am-table-centered>tfoot>tr>td,.am-table-centered>tfoot>tr>th,.am-table-centered>thead>tr>td,.am-table-centered>thead>tr>th {
+      text-align: center
+    }
+
+    .am-table>tbody>tr.am-active>td,.am-table>tbody>tr.am-active>th,.am-table>tbody>tr>td.am-active,.am-table>tbody>tr>th.am-active,.am-table>tfoot>tr.am-active>td,.am-table>tfoot>tr.am-active>th,.am-table>tfoot>tr>td.am-active,.am-table>tfoot>tr>th.am-active,.am-table>thead>tr.am-active>td,.am-table>thead>tr.am-active>th,.am-table>thead>tr>td.am-active,.am-table>thead>tr>th.am-active {
+      background-color: #ffd
+    }
+
+    .am-table>tbody>tr.am-disabled>td,.am-table>tbody>tr.am-disabled>th,.am-table>tbody>tr>td.am-disabled,.am-table>tbody>tr>th.am-disabled,.am-table>tfoot>tr.am-disabled>td,.am-table>tfoot>tr.am-disabled>th,.am-table>tfoot>tr>td.am-disabled,.am-table>tfoot>tr>th.am-disabled,.am-table>thead>tr.am-disabled>td,.am-table>thead>tr.am-disabled>th,.am-table>thead>tr>td.am-disabled,.am-table>thead>tr>th.am-disabled {
+      color: #999
+    }
+
+    .am-table>tbody>tr.am-primary>td,.am-table>tbody>tr.am-primary>th,.am-table>tbody>tr>td.am-primary,.am-table>tbody>tr>th.am-primary,.am-table>tfoot>tr.am-primary>td,.am-table>tfoot>tr.am-primary>th,.am-table>tfoot>tr>td.am-primary,.am-table>tfoot>tr>th.am-primary,.am-table>thead>tr.am-primary>td,.am-table>thead>tr.am-primary>th,.am-table>thead>tr>td.am-primary,.am-table>thead>tr>th.am-primary {
+      color: #0b76ac;
+      background-color: rgba(14,144,210,.115)
+    }
+
+    .am-table>tbody>tr.am-success>td,.am-table>tbody>tr.am-success>th,.am-table>tbody>tr>td.am-success,.am-table>tbody>tr>th.am-success,.am-table>tfoot>tr.am-success>td,.am-table>tfoot>tr.am-success>th,.am-table>tfoot>tr>td.am-success,.am-table>tfoot>tr>th.am-success,.am-table>thead>tr.am-success>td,.am-table>thead>tr.am-success>th,.am-table>thead>tr>td.am-success,.am-table>thead>tr>th.am-success {
+      color: #5eb95e;
+      background-color: rgba(94,185,94,.115)
+    }
+
+    .am-table>tbody>tr.am-warning>td,.am-table>tbody>tr.am-warning>th,.am-table>tbody>tr>td.am-warning,.am-table>tbody>tr>th.am-warning,.am-table>tfoot>tr.am-warning>td,.am-table>tfoot>tr.am-warning>th,.am-table>tfoot>tr>td.am-warning,.am-table>tfoot>tr>th.am-warning,.am-table>thead>tr.am-warning>td,.am-table>thead>tr.am-warning>th,.am-table>thead>tr>td.am-warning,.am-table>thead>tr>th.am-warning {
+      color: #F37B1D;
+      background-color: rgba(243,123,29,.115)
+    }
+
+    .am-table>tbody>tr.am-danger>td,.am-table>tbody>tr.am-danger>th,.am-table>tbody>tr>td.am-danger,.am-table>tbody>tr>th.am-danger,.am-table>tfoot>tr.am-danger>td,.am-table>tfoot>tr.am-danger>th,.am-table>tfoot>tr>td.am-danger,.am-table>tfoot>tr>th.am-danger,.am-table>thead>tr.am-danger>td,.am-table>thead>tr.am-danger>th,.am-table>thead>tr>td.am-danger,.am-table>thead>tr>th.am-danger {
+      color: #dd514c;
+      background-color: rgba(221,81,76,.115)
+    }
+  </style>
+  <style>
+    body {
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+<!--<div>-->
+  <!--备注：打印控件需要时间加载，可以点击多次，不行，请刷新页面。-->
+<!--</div>-->
+<div id="main">
+  <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
+    <table width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
+        <thead class="bg-color">
+        <tr>
+          <th>学生姓名</th>
+          <th>学生学号</th>
+          <th>年级</th>
+          <th>就读学校</th>
+          <th>电话</th>
+          <th>账户余额</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><span id="studentName"></span></td>
+          <td><span id="studentNo"></span></td>
+          <td><span id="gradeName"></span></td>
+          <td><span id="school"></span></td>
+          <td><span id="phoneNo"></span></td>
+          <td><span id="amount"></span></td>
+        </tr>
+        </tbody>
+      </table>
+    <table width="100%" class="am-table am-table-bordered am-table-compact">
+      <tbody>
+      <tr>
+        <td class="bgColor">申请提现原因</td>
+        <td>
+          <div>
+            <div id="reasonRemark"></div>
+            <div>申请人签名：<span id="operatorName"></span></div>
+            <div>日期：<span id="auditTime"></span></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="bgColor">负责人审批</td>
+        <td>
+          <div>
+            <div>同意</div>
+            <div>负责人签名：<span id="auditName"></span></div>
+            <div>日期：<span id="createTime"></span></div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="bgColor">提现账户信息及金额</td>
+        <td>
+          <div>姓名：<span id="cardUser"></span></div>
+          <div>开户银行：<span id="bankName"></span></div>
+          <div>开户账号：<span id="cardNo"></span></div>
+          <div>提现金额（单位：元）<span id="amount2"></span></div>
+          <div>大写：人民币 </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+      <h4>退费申请受理回执</h4>
+      <p>1. 您提交的退费资料已收悉，本次收取的资料仅作退费使用，不作其他用途。</p>
+      <p>2. 退费金额（小写）：¥ <span id="amount3"></span>元，该退费金额预计于您提交资料之日起10个工作日到账，若您仍有疑问，请与受理校区咨询。</p>
+      <div class="fr">受理校区：<span id="acceptCampusName"></span></div>
+      <div class="fr">受理日期：<span id="auditTime2"></span></div>
+    </div>
+  </form>
+</div>
+<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.18.0/moment.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.18.0/locale/zh-cn.js"></script>
+<script>
+  var LODOP
+  $(function () {
+    window.addEventListener('message',function(event) {
+      debugger
+      if(event.source!=window.parent) return;
+      console.log('received response:  ',event.data);
+      var data = JSON.parse(event.data),extra = JSON.parse(data.extra)
+      var studentName = extra.name
+        studentNo = extra.studentNo
+        gradeName = extra.gradeName
+        school = extra.school
+        phoneNo = extra.phoneNo
+        amount = data.amount
+        operatorName = data.operatorName
+        createTime = data.createTime
+        reasonRemark = data.reasonRemark
+      auditName = data.auditName
+        auditTime = data.auditTime
+        cardUser = data.cardUser
+        bankName = data.bankName
+        cardNo = data.cardNo
+        acceptCampusName = data.acceptCampusName
+
+      $('#studentName').html(studentName)
+      $('#studentNo').html(studentNo)
+      $('#gradeName').html(gradeName)
+      $('#school').html(school)
+      $('#phoneNo').html(phoneNo)
+      $('#amount').html(amount)
+      $('#auditName').html(auditName)
+      $('#createTime').html(createTime)
+      $('#reasonRemark').html(reasonRemark)
+      $('#operatorName').html(operatorName)
+      $('#auditTime').html(auditTime)
+      $('#cardUser').html(cardUser)
+      $('#bankName').html(bankName)
+      $('#cardNo').html(cardNo)
+      $('#amount2').html(amount)
+      $('#amount3').html(amount)
+      $('#acceptCampusName').html(acceptCampusName)
+      $('#auditTime2').html(auditTime)
+    },false);
+    CheckIsInstall()
+  })
+  function getQueryString (name){
+    var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
+    if(r) {
+      return r[2];
+    }
+    return null;
+  }
+
+  function formatDate (time , format ) {
+    if (!time) return "";
+    if (typeof time == "string") {
+      time = parseInt(time, 10);
+    }
+    return moment(time).format(format || 'YYYY-MM-DD')
+  }
+  function CheckIsInstall() {
+    try{
+      var LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
+      if (LODOP.VERSION) {
+        if (LODOP.CVERSION)
+          console.log("当前有C-Lodop云打印可用!\n C-Lodop版本:"+LODOP.CVERSION+"(内含Lodop"+LODOP.VERSION+")");
+        else
+          console.log("本机已成功安装了Lodop控件！\n 版本号:"+LODOP.VERSION);
+
+      };
+    }catch(err){
+    }
+  };
+
+  function print(data, img) {
+    CreatePrintPage(data, img)
+    LODOP.PRINT();
+  }
+
+  function CreatePrintPage(data,img) {
+    var totalAmount= data.courseOrder.totalAmount,
+      discountAmount= data.courseOrder.totalAmount - data.courseOrder.payableAmount,
+      payableAmount= data.courseOrder.payableAmount,
+      paidAmount= data.courseOrder.paidAmount,
+      owingAmount= data.courseOrder.payableAmount - data.courseOrder.paidAmount,
+      courseOrderUpdate= formatDate ( data.courseOrder.updateTime),
+      operateDate= moment().format('YYYY-MM-DD H:mm:ss'),
+      regFrom= data.courseOrder.regFrom == 0 ? '线下' :'线上',
+      studentNo= data.student.studentNo,
+      studentName= data.student.name,
+      address= data.campus.address,
+      operator= data.principal,
+      phoneNo = data.campus.phoneNo;
+    campusPhoneNo= data.campus.phoneNo;
+    LODOP=getLodop(document.getElementById('LODOP_OB'),document.getElementById('LODOP_EM'));
+    LODOP.SET_PRINT_PAGESIZE (2, 0, 0,"A5");
+    LODOP.ADD_PRINT_TEXT(35,280,130,25,"报名方式：" + regFrom);//报名方式
+    LODOP.ADD_PRINT_TEXT(35,470,130,25,"绑定学员：");
+    LODOP.ADD_PRINT_IMAGE(10,535,"100%","100%",img);//二维码
+
+    LODOP.ADD_PRINT_TEXT(108,39,130,25,"欠费金额：" + owingAmount.toFixed(2));//欠费金额
+    //学生编号
+    LODOP.ADD_PRINT_TEXT(110,239,90,25,studentNo);//Top、Left、Width、Height
+    //学生姓名
+    LODOP.ADD_PRINT_TEXT(108,440,100,25,studentName);
+    LODOP.ADD_PRINT_TEXT(75,700,70,25,studentNo);//学生编号
+    LODOP.ADD_PRINT_TEXT(115,700,70,25,studentName);//学生姓名
+    LODOP.ADD_PRINT_TEXT(145,700,70,25,totalAmount);//总金额
+    LODOP.ADD_PRINT_TEXT(190,700,70,25,discountAmount);//优惠金额
+    LODOP.ADD_PRINT_TEXT(270,700,70,25,payableAmount);//实收金额
+//        LODOP.ADD_PRINT_TEXT(235,700,70,25,0.00);//使用账户金额
+//        LODOP.ADD_PRINT_TEXT(325,700,70,25,0.00);//现金金额
+//        LODOP.ADD_PRINT_TEXT(365,700,70,25,0.00);//pos
+//        LODOP.ADD_PRINT_TEXT(405,700,70,25,0.00);//代金券
+    LODOP.ADD_PRINT_TEXT(465,700,70,25,operateDate); // 操作时间
+    LODOP.ADD_PRINT_TEXT(452,700,70,25,operator); // 操作人员
+    //LODOP.ADD_PRINT_TEXT(502,700,70,25,"报名方式：前台报名");//报名方式
+    //20161104 新增收费金额
+    LODOP.ADD_PRINT_TEXT(85,39,130,25,"收费金额：" + paidAmount);//收费金额
+    LODOP.ADD_PRINT_TEXT(85,149,130,25,"已退金额：" + 0.00);//已退金额
+
+    for(var i = 0 ;i < data.regDetailVos.length ;i++ ){
+      var c  = data.regDetailVos[i]
+      LODOP.ADD_PRINT_TEXT(165+30*i,17,72,80,c.courseClass.campusName);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,84,50,80,c.courseClass.gradeName);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,115,150,80, c.courseClass.className);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,270,50,80,c.courseClass.roomName);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,345,80,80,c.studentReg.startAmount+"—"+c.studentReg.endAmount);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,380,80,80,c.courseClass.studyingTime);
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+      LODOP.ADD_PRINT_TEXT(165+30*i,530,200,80,formatDate( c.courseClass.startCourseTime , 'dddd YYYY-MM-DD' ) );//报名日期(星期)
+      LODOP.SET_PRINT_STYLEA(0, "fontsize", 8);
+    }
+
+    LODOP.ADD_PRINT_TEXT(385,115,310,30,address);
+    LODOP.ADD_PRINT_TEXT(420,115,310,30,phoneNo);
+    LODOP.ADD_PRINT_TEXT(445,100,310,30,operator);//todo 操作员
+    LODOP.ADD_PRINT_TEXT(465,100,240,30,operateDate);//todo 打印日期
+    LODOP.PREVIEW();
+  };
+</script>
+
+
+</body>
+
+</html>
