@@ -2,7 +2,7 @@
 
 <head>
   <title>誉优品学</title>
-  <link rel="stylesheet" href="css/common.css">
+  <!--<link rel="stylesheet" href="css/common.css">-->
   <!--<script language="javascript" src="./js/CLodopFuncs.js"></script>-->
   <script language="javascript" src="./js/LodopFuncs.js"></script>
   <object id="LODOP_OB" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0>
@@ -88,13 +88,6 @@
       border-bottom-right-radius: 2px
     }
 
-    .am-table-striped>tbody>tr:nth-child(odd)>td,.am-table-striped>tbody>tr:nth-child(odd)>th {
-      background-color: #f9f9f9
-    }
-
-    .am-table-hover>tbody>tr:hover>td,.am-table-hover>tbody>tr:hover>th {
-      background-color: #e9e9e9
-    }
 
     .am-table-compact>tbody>tr>td,.am-table-compact>tbody>tr>th,.am-table-compact>tfoot>tr>td,.am-table-compact>tfoot>tr>th,.am-table-compact>thead>tr>td,.am-table-compact>thead>tr>th {
       padding: .4rem
@@ -104,32 +97,24 @@
       text-align: center
     }
 
-    .am-table>tbody>tr.am-active>td,.am-table>tbody>tr.am-active>th,.am-table>tbody>tr>td.am-active,.am-table>tbody>tr>th.am-active,.am-table>tfoot>tr.am-active>td,.am-table>tfoot>tr.am-active>th,.am-table>tfoot>tr>td.am-active,.am-table>tfoot>tr>th.am-active,.am-table>thead>tr.am-active>td,.am-table>thead>tr.am-active>th,.am-table>thead>tr>td.am-active,.am-table>thead>tr>th.am-active {
-      background-color: #ffd
-    }
-
     .am-table>tbody>tr.am-disabled>td,.am-table>tbody>tr.am-disabled>th,.am-table>tbody>tr>td.am-disabled,.am-table>tbody>tr>th.am-disabled,.am-table>tfoot>tr.am-disabled>td,.am-table>tfoot>tr.am-disabled>th,.am-table>tfoot>tr>td.am-disabled,.am-table>tfoot>tr>th.am-disabled,.am-table>thead>tr.am-disabled>td,.am-table>thead>tr.am-disabled>th,.am-table>thead>tr>td.am-disabled,.am-table>thead>tr>th.am-disabled {
       color: #999
     }
 
     .am-table>tbody>tr.am-primary>td,.am-table>tbody>tr.am-primary>th,.am-table>tbody>tr>td.am-primary,.am-table>tbody>tr>th.am-primary,.am-table>tfoot>tr.am-primary>td,.am-table>tfoot>tr.am-primary>th,.am-table>tfoot>tr>td.am-primary,.am-table>tfoot>tr>th.am-primary,.am-table>thead>tr.am-primary>td,.am-table>thead>tr.am-primary>th,.am-table>thead>tr>td.am-primary,.am-table>thead>tr>th.am-primary {
       color: #0b76ac;
-      background-color: rgba(14,144,210,.115)
     }
 
     .am-table>tbody>tr.am-success>td,.am-table>tbody>tr.am-success>th,.am-table>tbody>tr>td.am-success,.am-table>tbody>tr>th.am-success,.am-table>tfoot>tr.am-success>td,.am-table>tfoot>tr.am-success>th,.am-table>tfoot>tr>td.am-success,.am-table>tfoot>tr>th.am-success,.am-table>thead>tr.am-success>td,.am-table>thead>tr.am-success>th,.am-table>thead>tr>td.am-success,.am-table>thead>tr>th.am-success {
       color: #5eb95e;
-      background-color: rgba(94,185,94,.115)
     }
 
     .am-table>tbody>tr.am-warning>td,.am-table>tbody>tr.am-warning>th,.am-table>tbody>tr>td.am-warning,.am-table>tbody>tr>th.am-warning,.am-table>tfoot>tr.am-warning>td,.am-table>tfoot>tr.am-warning>th,.am-table>tfoot>tr>td.am-warning,.am-table>tfoot>tr>th.am-warning,.am-table>thead>tr.am-warning>td,.am-table>thead>tr.am-warning>th,.am-table>thead>tr>td.am-warning,.am-table>thead>tr>th.am-warning {
       color: #F37B1D;
-      background-color: rgba(243,123,29,.115)
     }
 
     .am-table>tbody>tr.am-danger>td,.am-table>tbody>tr.am-danger>th,.am-table>tbody>tr>td.am-danger,.am-table>tbody>tr>th.am-danger,.am-table>tfoot>tr.am-danger>td,.am-table>tfoot>tr.am-danger>th,.am-table>tfoot>tr>td.am-danger,.am-table>tfoot>tr>th.am-danger,.am-table>thead>tr.am-danger>td,.am-table>thead>tr.am-danger>th,.am-table>thead>tr>td.am-danger,.am-table>thead>tr>th.am-danger {
       color: #dd514c;
-      background-color: rgba(221,81,76,.115)
     }
   </style>
 </head>
@@ -238,9 +223,9 @@
         <td style="width: 160px;height: 60px" >申请退费原因</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;"><span id="reasonRemark"></span></div>
-            <div style="width: 30%;  display: inline-block;">申请人签名：<span id="applyOperator"></span></div>
-            <div style="width: 30%;  display: inline-block;">日期：<span id="createTime"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left"><span id="reasonRemark"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">申请人签名：<span id="applyOperator"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">日期：<span id="createTime"></span></div>
           </div>
         </td>
       </tr>
@@ -248,9 +233,9 @@
         <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;"><span id="status"></span></div>
-            <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditOperator"></span></div>
-            <div style="width: 30%;  display: inline-block;">日期：<span id="updateTime"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left"><span id="status"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">负责人签名：<span id="auditOperator"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">日期：<span id="updateTime"></span></div>
           </div>
         </td>
       </tr>
