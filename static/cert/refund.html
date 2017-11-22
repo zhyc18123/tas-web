@@ -136,7 +136,7 @@
 
 <body style="font-size: 12px;">
 <div id="main" style="font-size: 12px;padding: 20px;">
-  <h2 style="text-align: center;font-size: 20px;margin-bottom: 22px;">退费单</h2>
+  <div style="text-align: center;font-size: 20px;margin-bottom: 22px;font-weight: bold">退费单</div>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
     <table style="font-size: 13px;    width: 750px;
     margin-bottom: 0;
@@ -238,7 +238,7 @@
         <td style="width: 160px;height: 60px" >申请退费原因</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;">申请原因：<span id="reasonRemark"></span></div>
+            <div style="width: 30%;  display: inline-block;"><span id="reasonRemark"></span></div>
             <div style="width: 30%;  display: inline-block;">申请人签名：<span id="applyOperator"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="createTime"></span></div>
           </div>
@@ -248,7 +248,7 @@
         <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;">审核状态：<span id="status"></span></div>
+            <div style="width: 30%;  display: inline-block;"><span id="status"></span></div>
             <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditOperator"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="updateTime"></span></div>
           </div>
@@ -267,7 +267,7 @@
       </tbody>
     </table>
     <div>
-      <h3 style="text-align: center;margin: 18px;">退费申请受理回执</h3>
+      <div style="text-align: center;margin: 18px;font-weight: bold">退费申请受理回执</div>
       <p>1. 您提交的退费资料已收悉，本次收取的资料仅作退费使用，不作其他用途。</p>
       <p>2. 退费金额（小写）：¥ <span id="amount3"></span>元，该退费金额预计于您提交资料之日起10个工作日到账，若您仍有疑问，请与受理校区咨询。</p>
       <div style="margin-left: 550px;margin-top: 20px;">受理校区：<span id="acceptCampusName"></span></div>

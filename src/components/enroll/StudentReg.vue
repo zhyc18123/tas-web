@@ -25,11 +25,18 @@
               </el-tooltip>
             </td>
           </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <div class="btn-box">
+                <el-button size="small" @click="handleWithdrawal" type="primary">提现</el-button>
+                <el-button size="small" @click="handleTransfer" type="primary">转让</el-button>
+              </div>
+            </td>
+          </tr>
         </table>
-        <div class="btn-box">
-          <el-button size="small" @click="handleWithdrawal" type="primary">提现</el-button>
-          <el-button size="small" @click="handleTransfer" type="primary">转让</el-button>
-        </div>
       </div>
       <balance-withdrawals ref="withdrawals"></balance-withdrawals>
       <balance-transfer ref="transfer"></balance-transfer>
@@ -118,8 +125,6 @@
     background: #eee;
     overflow: hidden;
     padding-top: 5px;
-    text-align: right;
-    padding-right: 75px;
     padding-bottom: 10px;
   }
 </style>

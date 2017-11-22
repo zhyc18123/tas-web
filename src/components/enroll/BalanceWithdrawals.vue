@@ -170,7 +170,6 @@
         this.$refs.win.close()
       },
       check() {
-        debugger
         if(!this.formData.acceptCampusId) {
           this.$alert('请选择受理校区')
           return false

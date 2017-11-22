@@ -189,7 +189,6 @@
         }
       },
       arrangeTime: function () {
-        debugger
         if(!this.startDate){
           this.$alert('请选择首次上课时间')
           return

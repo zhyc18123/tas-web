@@ -649,7 +649,6 @@
       },
       batchDailyCheck:function(){
         var chargeIds = this.selection.map(function (item) {
-        	debugger
         	if (item.chargeId !== undefined) {
             return item.chargeId
           } else {

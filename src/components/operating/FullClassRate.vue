@@ -214,7 +214,6 @@
           periodId: _this.periodId
         },function(ret){
           if(ret.success){
-            debugger
             _this.$hiddenLoading()
             _this.productFullClassRateList = ret.data.productFullClassRateList || []
             _this.classFullRateList = ret.data.productFullClassRateList[0] ? ret.data.productFullClassRateList[0].classFullRateList || [] : []

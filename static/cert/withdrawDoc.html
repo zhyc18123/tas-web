@@ -137,7 +137,7 @@
 <body style="padding: 20px;
       font-size: 12px;">
 <div id="main" style="font-size: 12px;padding: 20px;">
-  <h2 style="text-align: center;font-size: 20px;margin-bottom: 22px;">提现单</h2>
+  <div style="text-align: center;font-size: 20px;margin-bottom: 22px;font-weight: bold">提现单</div>
   <form class="am-form tpl-form-border-form tpl-form-border-br" data-am-validator :id="id" onsubmit="return false ">
     <table style="font-size: 13px;    width: 750px;
     margin-bottom: 1.6rem;
@@ -145,52 +145,52 @@
     border-collapse: separate;    border: 1px solid #ddd;" width="100%" class="am-table am-table-bordered am-table-compact am-table-striped am-text-nowrap">
         <thead class="bg-color">
         <tr>
-          <th>学生姓名</th>
-          <th>学生学号</th>
-          <th>年级</th>
-          <th>就读学校</th>
-          <th>电话</th>
-          <th>申请提现余额</th>
+          <th style="text-align: center">学生姓名</th>
+          <th style="text-align: center">学生学号</th>
+          <th style="text-align: center">年级</th>
+          <th style="text-align: center">就读学校</th>
+          <th style="text-align: center">电话</th>
+          <th style="text-align: center">申请提现余额</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-          <td><span id="studentName"></span></td>
-          <td><span id="studentNo"></span></td>
-          <td><span id="gradeName"></span></td>
-          <td><span id="school"></span></td>
-          <td><span id="phoneNo"></span></td>
-          <td><span id="amount"></span></td>
+          <td style="text-align: center"><span id="studentName"></span></td>
+          <td style="text-align: center"><span id="studentNo"></span></td>
+          <td style="text-align: center"><span id="gradeName"></span></td>
+          <td style="text-align: center"><span id="school"></span></td>
+          <td style="text-align: center"><span id="phoneNo"></span></td>
+          <td style="text-align: center"><span id="amount"></span></td>
         </tr>
         </tbody>
       </table>
     <table style="font-size: 13px;    width: 750px;
-    margin-bottom: 1.6rem;
+    margin-bottom: 0;
     border-spacing: 0;
     border-collapse: separate;    border: 1px solid #ddd;" width="100%" class="am-table am-table-bordered am-table-compact">
       <tbody>
       <tr>
-        <td style="width: 260px;height: 60px" >申请提现原因</td>
+        <td style="width: 160px;height: 60px" >申请提现原因</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;">申请原因：<span id="reasonRemark"></span></div>
+            <div style="width: 30%;  display: inline-block;"><span id="reasonRemark"></span></div>
             <div style="width: 30%;  display: inline-block;">申请人签名：<span id="operatorName"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="createTime"></span></div>
           </div>
         </td>
       </tr>
       <tr>
-        <td style="width: 260px;height: 60px">负责人审批</td>
+        <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;">审核状态：<span id="status"></span></div>
+            <div style="width: 30%;  display: inline-block;"><span id="status"></span></div>
             <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditName"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="auditTime"></span></div>
           </div>
         </td>
       </tr>
       <tr>
-        <td style="width: 260px;height: 60px">提现账户信息及金额</td>
+        <td style="width: 160px;height: 60px">提现账户信息及金额</td>
         <td class="info">
           <div><span style="display: inline-block;  width: 149px;">姓名：</span><span id="cardUser"></span></div>
           <div><span style="display: inline-block;  width: 149px;">开户银行：</span><span id="bankName"></span></div>
@@ -202,7 +202,7 @@
       </tbody>
     </table>
     <div>
-      <h3 style="text-align: center;margin: 18px;">退费申请受理回执</h3>
+      <div style="text-align: center;margin: 18px;font-weight: bold">退费申请受理回执</div>
       <p>1. 您提交的退费资料已收悉，本次收取的资料仅作退费使用，不作其他用途。</p>
       <p>2. 退费金额（小写）：¥ <span id="amount3"></span>元，该退费金额预计于您提交资料之日起10个工作日到账，若您仍有疑问，请与受理校区咨询。</p>
       <div style="margin-left: 550px;margin-top: 20px;">受理校区：<span id="acceptCampusName"></span></div>
