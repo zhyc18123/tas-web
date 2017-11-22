@@ -6,13 +6,13 @@
           <!--searching condition-->
           <div class="am-u-sm-12 am-form ">
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-4">
               <div class="am-form-group">
                 <input type="text" @keyup.enter="search" class="am-form-field" placeholder="请输入学生编号／姓名／手机号"  v-model="query.keyword">
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-u-end" style="text-align: left;">
               <div class="am-form-group">
                 <button type="button" class="am-btn am-btn-default am-btn-success "
                         @click="search" ><span class="am-icon-search"></span>查询
@@ -27,6 +27,7 @@
               :data="tableData"
               border
               stripe
+              emptyText="请输入学生信息进行查询"
               style="min-width: 100%;min-height: 500px">
               <el-table-column
                 fixed
