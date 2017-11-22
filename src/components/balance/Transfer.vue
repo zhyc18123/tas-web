@@ -92,7 +92,12 @@
             </el-table-column>
             <el-table-column
               prop="amount"
-              label="提现金额"
+              label="转让金额"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="destMainAccountName"
+              label="转让学生姓名"
               min-width="100">
             </el-table-column>
             <el-table-column
