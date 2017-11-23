@@ -79,7 +79,7 @@
               <button type="button" class="am-btn am-btn-default am-btn-success"
                       @click="search" ><span class="am-icon-search"></span>查询
               </button>
-              <button type="button" class="am-btn am-btn-default am-btn-success"
+              <button v-if="hasPermission('export')" type="button" class="am-btn am-btn-default am-btn-success"
                       @click="exportWithdrawalList" ><span class="am-icon-download"></span>导出
               </button>
             </div>
@@ -142,7 +142,7 @@
               label="操作"
               :min-width="optionWidth">
               <template scope="scope">
-                <el-button v-if="hasPermission('audit')" size="small" @click.native="handleView(scope.row.balanceWithdrawalId)">查看</el-button>
+                <el-button v-if="hasPermission('list')" size="small" @click.native="handleView(scope.row.balanceWithdrawalId)">查看</el-button>
                 <el-button v-if="hasPermission('audit')" size="small" :disabled="scope.row.status!=0" @click.native="handleAudit(scope.row)">审核</el-button>
                 <el-button v-if="hasPermission('pay')" size="small" :disabled="scope.row.status!=1 || scope.row.payStatus != 0" @click.native="changePayStatus(scope.row.balanceWithdrawalId)">支付</el-button>
               </template>
