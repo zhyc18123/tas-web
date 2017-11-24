@@ -53,7 +53,7 @@
         this.loadTableData()
       },
       print() {
-        var frame = $("#iframe iframe")[0];
+        var frame = $(this.$refs.refundDocIframe).find('iframe')[0];
         frame.contentWindow.focus()
         frame.contentWindow.print();
       },

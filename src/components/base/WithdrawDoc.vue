@@ -1,6 +1,6 @@
 <template>
   <window ref="win" title="">
-    <div ref="iframe"></div>
+    <div ref="withdrawIframe"></div>
     <el-button type="success" @click="print">打印</el-button>
   </window>
 </template>
@@ -45,7 +45,7 @@
             }
             sessionStorage.setItem('withdrawalDetail', JSON.stringify(ret.data))
             let src = "../../static/cert/withdrawDoc.html?time=" + new Date().getTime()
-            $(_this.$refs.iframe).html('<iframe ref="withdrawDoc" height="600px" src='+ src +
+            $(_this.$refs.withdrawIframe).html('<iframe ref="withdrawDoc" height="600px" src='+ src +
               ' width="100%" frameborder="0"></iframe>')
           }else{
             _this.$alert(ret.desc)
@@ -60,7 +60,7 @@
         this.loadTableData()
       },
       print() {
-        var frame = $("#iframe iframe")[0];
+        var frame = $(this.$refs.withdrawIframe).find('iframe')[0];
           frame.contentWindow.focus()
           frame.contentWindow.print();
       },

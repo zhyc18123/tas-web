@@ -289,7 +289,7 @@
     payStatus = data.studentRefund.payStatus
     refundWay = data.studentRefund.refundWay
     refundLecture = data.studentRefund.refundLecture
-    returnResult = data.studentRefund.returnResult
+    returnResult = data.studentRefund.returnResult || '&nbsp;'
     lectureAmount = data.courseClass.lectureAmount
     completedLectureAmount = data.courseClass.completedLectureAmount +'/'+data.courseClass.lectureAmount
     subjectName = data.courseClass.subjectName

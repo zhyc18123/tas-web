@@ -173,9 +173,9 @@
         <td style="width: 160px;height: 60px" >申请提现原因</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;"><span id="reasonRemark"></span></div>
-            <div style="width: 30%;  display: inline-block;">申请人签名：<span id="operatorName"></span></div>
-            <div style="width: 30%;  display: inline-block;">日期：<span id="createTime"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left"><span id="reasonRemark"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">申请人签名：<span id="operatorName"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">日期：<span id="createTime"></span></div>
           </div>
         </td>
       </tr>
@@ -183,9 +183,9 @@
         <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;"><span id="auditRemark"></span></div>
-            <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditName"></span></div>
-            <div style="width: 30%;  display: inline-block;">日期：<span id="auditTime"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left"><span id="auditRemark"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">负责人签名：<span id="auditName"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left">日期：<span id="auditTime"></span></div>
           </div>
         </td>
       </tr>
@@ -232,7 +232,7 @@
     cardNo = data.cardNo
     acceptCampusName = data.acceptCampusName
     status = data.status
-    auditRemark = data.auditRemark
+    auditRemark = data.auditRemark || '&nbsp;'
 
     $('#auditRemark').html(auditRemark)
     $('#status').html(status)
