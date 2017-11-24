@@ -1342,3 +1342,6 @@ input[type=radio][disabled]{
   cursor: not-allowed;
   opacity: 0.8;
 }
+.am-form >.am-u-sm-12:nth-child(4n + 1) {
+   clear: both;
+}

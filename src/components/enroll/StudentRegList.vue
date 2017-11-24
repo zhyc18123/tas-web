@@ -29,6 +29,21 @@
                 </select2>
               </div>
             </div>
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.gradeId" :options="grades">
+                  <option value="">年级</option>
+                </select2>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <select2  v-model="query.subjectId" :options="subjects">
+                  <option value="">科目</option>
+                </select2>
+              </div>
+            </div>
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
@@ -36,7 +51,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3" style="clear: both;">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <input type="text" name="teacherNames" v-model="query.studentName" placeholder="请输入学生姓名"/>
               </div>
@@ -114,7 +129,6 @@
                 </template>
               </el-table-column>
               <el-table-column
-                fixed
                 prop="seniorName"
                 label="班主任"
                 min-width="100">
@@ -297,6 +311,8 @@
           busTeamId: '',
           periodId: '',
           className: '',
+          gradeId: '',
+          subjectId: '',
           regStatus: '',
           chargingStatus: '',
           studentName: '',
@@ -338,6 +354,16 @@
           })
         this.query.busTeamId = ''
         return options
+      },
+      grades: function () {
+        return this.$root.config.grades.map(function(item){
+          return {value: item.gradeId, text: item.gradeName}
+        })
+      },
+      subjects: function () {
+        return this.$root.config.subjects.map(function(item){
+          return {value: item.subjectId, text: item.subjectName}
+        })
       }
     },
     methods: {
