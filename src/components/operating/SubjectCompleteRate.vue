@@ -220,6 +220,15 @@
             prop="targetStepNum"
             label="目标跨期续读率">
           </el-table-column>
+          <el-table-column
+            align="center"
+            fixed="right"
+            label="操作"
+            width="80">
+            <template scope="scope">
+              <el-button size="small" @click="handleExportSomeSeniorComletionRate(scope.row)">导出</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="am-u-lg-12 am-cf">
 
@@ -294,6 +303,15 @@
             prop="stepTargetRate"
             label="目标跨期续读率">
           </el-table-column>
+          <el-table-column
+            align="center"
+            fixed="right"
+            label="操作"
+            width="80">
+            <template scope="scope">
+              <el-button size="small" @click="handleExportClassComletionRate(scope.row)">导出</el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <div class="am-u-lg-12 am-cf">
 
@@ -358,7 +376,8 @@
       }
     },
     props: ['areaTeamId'],
-    components: {Toolbar, Pagination},
+    components: {
+      Toolbar, Pagination},
     watch: {
       areaTeamId(newVal) {
         this.busTeamId = ''
@@ -524,6 +543,37 @@
               ret.data.push(summary)
             }
             _this.gradeCompletionRate = ret.data
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      handleExportSomeSeniorComletionRate(row) {
+        let _this = this;
+        io.downloadFile(io.exportSomeSeniorComletionRate,{
+          areaTeamId: _this.areaTeamId,
+          periodId: _this.periodId,
+          busTeamId: _this.busTeamId,
+          seniorIdStr: row.seniorId
+        },function(ret){
+          if(ret.success){
+
+          }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      handleExportClassComletionRate(row) {
+        debugger
+        let _this = this;
+        io.downloadFile(io.exportClassComletionRate,{
+          areaTeamId: _this.areaTeamId,
+          periodId: _this.periodId,
+          busTeamId: _this.busTeamId,
+          classId: row.classId
+        },function(ret){
+          if(ret.success){
+
           }else{
             _this.$alert(ret.desc)
           }
