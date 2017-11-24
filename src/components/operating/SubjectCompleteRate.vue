@@ -567,9 +567,6 @@
         debugger
         let _this = this;
         io.downloadFile(io.exportClassComletionRate,{
-          areaTeamId: _this.areaTeamId,
-          periodId: _this.periodId,
-          busTeamId: _this.busTeamId,
           classId: row.classId
         },function(ret){
           if(ret.success){

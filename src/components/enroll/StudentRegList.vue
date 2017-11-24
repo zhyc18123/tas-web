@@ -393,7 +393,7 @@
       setupSenior:function (studentReg) {
 
         var areaTeamId=studentReg.areaTeamId
-        this.regId=studentReg.regId
+        this.regId=studentReg.studentRegStateId
         this.$refs.selectSenior.query.areaTeamId = areaTeamId
         this.$refs.selectSenior.show()
 
