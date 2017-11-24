@@ -73,6 +73,7 @@
       </div>
 
       <select-campus ref="selectCampus" @ok="selectCampusCallback" ></select-campus>
+      <withdraw-doc ref="withdrawDoc"></withdraw-doc>
     </form>
   </window>
 
@@ -100,6 +101,7 @@
   import util from '../../lib/util'
   import storage from '../../lib/storage'
   import SelectCampus from '../teachingresource/SelectCampus'
+  import WithdrawDoc from '../base/WithdrawDoc.vue'
   export default{
     data: function () {
 
@@ -110,12 +112,12 @@
           applierMainAccountId: '',
           acceptCampusId: chargeCampus?chargeCampus.campusId : '' ,
           chargeCampusName: chargeCampus?chargeCampus.campusName : '',
-          amount: '',
-          bankName: '',
-          bankCity: '',
-          cardUser: '',
-          cardNo: '',
-          reasonRemark: '',
+          amount: '1',
+          bankName: '1',
+          bankCity: '1',
+          cardUser: '1',
+          cardNo: '1',
+          reasonRemark: '1',
         },
         studentId:'',
         balanceAmount:'',
@@ -124,7 +126,7 @@
     mounted: function () {
       $(window).smoothScroll()
     },
-    components: {SelectCampus},
+    components: {SelectCampus, WithdrawDoc},
     methods: {
       selectCampusCallback:function(campus){
         this.formData.acceptCampusId = campus.campusId
@@ -160,11 +162,16 @@
                 _this.$root.$emit('mainAccount:change')
                 _this.$toast('保存成功')
                 _this.handleCancel()
+                _this.handleView(ret.data)
               } else {
                 _this.$alert(ret.desc)
               }
             })
         }
+      },
+      handleView(balanceWithdrawalId) {
+        this.$refs.withdrawDoc.balanceWithdrawalId = balanceWithdrawalId
+        this.$refs.withdrawDoc.show()
       },
       handleCancel() {
         this.$refs.win.close()

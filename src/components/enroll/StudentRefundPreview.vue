@@ -1,6 +1,6 @@
 <template>
   <window ref="win" title="">
-    <div id="iframe"></div>
+    <div ref="refundDocIframe"></div>
     <el-button type="success" @click="print">打印</el-button>
   </window>
 </template>
@@ -37,8 +37,9 @@
             ret.data.createTime = _this.$options.filters.formatDate(ret.data.createTime)
             ret.data.auditTime = _this.$options.filters.formatDate(ret.data.auditTime)
             sessionStorage.setItem('refundDetail', JSON.stringify(ret.data))
-            $('#iframe').html('<iframe ref="refundDoc" height="900px" src="../../static/cert/refund.html" ' +
-              'width="100%" frameborder="0"></iframe>')
+            let src = "../../static/cert/refund.html?time=" + new Date().getTime()
+            $(_this.$refs.refundDocIframe).html('<iframe ref="withdrawDoc" height="900px" src='+ src +
+              ' width="100%" frameborder="0"></iframe>')
           }else{
             _this.$alert(ret.desc)
           }

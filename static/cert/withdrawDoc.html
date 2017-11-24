@@ -183,7 +183,7 @@
         <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;"><span id="status"></span></div>
+            <div style="width: 30%;  display: inline-block;"><span id="auditRemark"></span></div>
             <div style="width: 30%;  display: inline-block;">负责人签名：<span id="auditName"></span></div>
             <div style="width: 30%;  display: inline-block;">日期：<span id="auditTime"></span></div>
           </div>
@@ -232,7 +232,9 @@
     cardNo = data.cardNo
     acceptCampusName = data.acceptCampusName
     status = data.status
+    auditRemark = data.auditRemark
 
+    $('#auditRemark').html(auditRemark)
     $('#status').html(status)
     $('#studentName').html(studentName)
     $('#studentNo').html(studentNo)
@@ -271,7 +273,6 @@
   };
 
   function print() {
-    debugger
     CreatePrintPage()
     LODOP.PRINT();
   }

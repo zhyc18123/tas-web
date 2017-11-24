@@ -142,6 +142,7 @@
         </a>
       </div>
     </form>
+    <student-refund-preview ref="previewStudentRefund"></student-refund-preview>
   </window>
 
 </template>
@@ -162,6 +163,7 @@
 <script>
   import io from '../../lib/io'
   import math from '../../lib/math'
+  import StudentRefundPreview from './StudentRefundPreview.vue'
 
   export default{
     data: function () {
@@ -182,6 +184,7 @@
         regId:''
       }
     },
+    components: {StudentRefundPreview},
     watch: {
       'formData.refundLectureFrom': function () {
         this.calRemaining()
@@ -276,15 +279,20 @@
               _this.$emit('completed')
               if(_this.formData.refundWay == 3 ){
                 _this.$root.$emit('mainAccount:change')
-                _this.$alert('已经退费成功')
+                _this.$toast('已经退费成功')
               }else{
-                _this.$alert('已接受退款申请')
+                _this.$toast('已接受退款申请')
               }
+              _this.previewRefund(ret.data)
             } else {
               _this.$alert(ret.desc || '申请失败')
             }
           })
 
+      },
+      previewRefund: function (studentRefundId) {
+        this.$refs.previewStudentRefund.studentRefundId = studentRefundId
+        this.$refs.previewStudentRefund.show()
       },
       show:function(){
         this.$refs.win.show({

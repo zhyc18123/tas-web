@@ -1,6 +1,6 @@
 <template>
   <window ref="win" title="">
-    <div id="iframe"></div>
+    <div ref="iframe"></div>
     <el-button type="success" @click="print">打印</el-button>
   </window>
 </template>
@@ -9,10 +9,8 @@
   import io from '../../lib/io'
 
   import Pagination from '../base/Pagination'
-  import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
 
   export default{
-    components: {ElButton},
     data: function () {
       return {
         tableData: [],
@@ -46,8 +44,9 @@
               ret.data.status = '驳回'
             }
             sessionStorage.setItem('withdrawalDetail', JSON.stringify(ret.data))
-            $('#iframe').html('<iframe ref="withdrawDoc" height="600px" src="../../static/cert/withdrawDoc.html" ' +
-              'width="100%" frameborder="0"></iframe>')
+            let src = "../../static/cert/withdrawDoc.html?time=" + new Date().getTime()
+            $(_this.$refs.iframe).html('<iframe ref="withdrawDoc" height="600px" src='+ src +
+              ' width="100%" frameborder="0"></iframe>')
           }else{
             _this.$alert(ret.desc)
           }
