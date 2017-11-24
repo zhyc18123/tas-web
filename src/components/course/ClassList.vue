@@ -224,6 +224,12 @@
               </el-table-column>
 
               <el-table-column
+                prop="studyingFee"
+                label="学费"
+                min-width="100">
+              </el-table-column>
+
+              <el-table-column
                 label="开课日期"
                 min-width="150">
                 <template scope="scope">
@@ -273,11 +279,6 @@
               <el-table-column
                 prop="seniorName"
                 label="班主任"
-                min-width="100">
-              </el-table-column>
-              <el-table-column
-                prop="studyingFee"
-                label="学费"
                 min-width="100">
               </el-table-column>
               <el-table-column
