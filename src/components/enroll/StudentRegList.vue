@@ -88,135 +88,166 @@
               style="min-width: 100%">
               <el-table-column
                 fixed
-                prop="studentReg.studentName"
+                prop="studentName"
                 label="学生姓名"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 fixed
-                prop="studentReg.seniorName"
-                label="班主任"
-                min-width="100">
+                prop="studentNo"
+                label="学生学号"
+                min-width="130">
               </el-table-column>
               <el-table-column
                 fixed
-                prop="studentReg.counselorName"
-                label="咨询师"
+                prop="phoneNo"
+                label="电话号码"
+                min-width="130">
+              </el-table-column>
+              <el-table-column
+                fixed
+                prop="phoneNo"
+                label="生源类型"
+                min-width="100">
+                <template scope="scope">
+                  {{{'0': '新生', '1': '老生', '2': '续读生'}[scope.row.studentState]}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                fixed
+                prop="seniorName"
+                label="班主任"
                 min-width="100">
               </el-table-column>
 
               <el-table-column
-                label="报名时间"
-                min-width="150">
-                <template scope="scope">
-                  {{scope.row.studentReg.createTime | formatTime}}
-                </template>
-              </el-table-column>
-
-              <el-table-column
-                prop="studentReg.className"
+                prop="className"
                 label="班级名称"
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="courseClass.gradeName"
+                prop="gradeName"
                 label="年级"
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="courseClass.subjectName"
+                prop="subjectName"
                 label="科目"
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="courseClass.periodName"
+                prop="periodName"
                 label="期名"
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="courseClass.campusName"
+                prop="campusName"
                 label="校区"
                 min-width="200">
               </el-table-column>
               <el-table-column
-                prop="courseClass.roomName"
+                prop="roomName"
                 label="教室"
                 min-width="100">
               </el-table-column>
               <el-table-column
                 label="众筹"
-                min-width="100">
+                min-width="60">
                 <template scope="scope">
-                  {{scope.row.courseClass.classType == 0 ? "否" : "是"}}
+                  {{scope.row.classType == 0 ? "否" : "是"}}
                 </template>
               </el-table-column>
               <el-table-column
                 label="开课日期"
                 min-width="150">
                 <template scope="scope">
-                  {{scope.row.courseClass.startCourseTime | formatDate}}
+                  {{scope.row.startCourseTime | formatDate}}
                 </template>
               </el-table-column>
               <el-table-column
-                prop="courseClass.studyingTime"
+                prop="studyingTime"
                 label="上课时间"
                 min-width="150">
               </el-table-column>
               <el-table-column
-                prop="courseClass.teacherNames"
+                prop="teacherNames"
                 label="教师"
                 min-width="100">
               </el-table-column>
+              <el-table-column
+                label="报读开始讲数"
+                min-width="80">
+                <template scope="scope">
+                  {{scope.row.startAmount}}
+                </template>
+              </el-table-column>
+              <el-table-column
+                label="报读结束讲数"
+                min-width="80">
+                <template scope="scope">
+                 {{scope.row.endAmount}}
+                </template>
+              </el-table-column>
 
               <el-table-column
-                prop="courseClass.teacherNames"
                 label="报读讲数"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.studentReg.startAmount}}~{{scope.row.studentReg.endAmount}}
+                  {{scope.row.startAmount}}~{{scope.row.endAmount}}
                 </template>
               </el-table-column>
 
               <el-table-column
-                prop="courseClass.teacherNames"
                 label="应缴金额"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.studentReg.totalAmount}}
+                  {{scope.row.totalAmount}}
                 </template>
               </el-table-column>
 
               <el-table-column
-                prop="courseClass.teacherNames"
                 label="已缴金额"
                 min-width="100">
                 <template scope="scope">
-                  {{scope.row.studentReg.payAmount}}
+                  {{scope.row.payAmount}}
                 </template>
               </el-table-column>
 
               <el-table-column
-                prop="courseClass.teacherNames"
                 label="报名状态"
                 min-width="100">
                 <template scope="scope">
-                  {{{'0': '在读', '1': '转班', '2': '退账户', '3': '退班退费', '4': '无效'}[scope.row.studentReg.regStatus]}}
+                  {{{'0': '在读', '1': '转班', '2': '退账户', '3': '退班退费', '4': '无效'}[scope.row.regStatus]}}
                 </template>
               </el-table-column>
 
               <el-table-column
-                prop="courseClass.teacherNames"
                 label="缴费状态"
                 min-width="100">
                 <template scope="scope">
-                  {{{'0': '未缴费', '1': '欠费', '2': '已缴费'}[scope.row.studentReg.chargingStatus]}}
+                  {{{'0': '未缴费', '1': '欠费', '2': '已缴费'}[scope.row.chargingStatus]}}
                 </template>
               </el-table-column>
 
               <el-table-column
-                prop="studentReg.operator"
+                prop="operator"
                 label="操作人"
+                min-width="120">
+              </el-table-column>
+              <el-table-column
+                prop="location"
+                label="学生地址（区域）"
                 min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="address"
+                label="详细地址"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="discountReason"
+                label="优惠原因"
+                min-width="300">
               </el-table-column>
               <el-table-column
                 align="center"
@@ -229,7 +260,7 @@
                       操作菜单<i class="el-icon-caret-bottom el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                      <el-dropdown-item  v-if="hasPermission('changeSenior')" @click.native="setupSenior(scope.row.studentReg)">修改班主任</el-dropdown-item>
+                      <el-dropdown-item  v-if="hasPermission('changeSenior')" @click.native="setupSenior(scope.row)">修改班主任</el-dropdown-item>
                     </el-dropdown-menu>
                   </el-dropdown>
                 </template>
