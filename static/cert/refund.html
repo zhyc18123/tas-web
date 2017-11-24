@@ -233,7 +233,7 @@
         <td style="width: 160px;height: 60px">负责人审批</td>
         <td>
           <div>
-            <div style="width: 30%;  display: inline-block;float: left"><span id="status"></span></div>
+            <div style="width: 30%;  display: inline-block;float: left"><span id="returnResult"></span></div>
             <div style="width: 30%;  display: inline-block;float: left">负责人签名：<span id="auditOperator"></span></div>
             <div style="width: 30%;  display: inline-block;float: left">日期：<span id="updateTime"></span></div>
           </div>
@@ -289,6 +289,7 @@
     payStatus = data.studentRefund.payStatus
     refundWay = data.studentRefund.refundWay
     refundLecture = data.studentRefund.refundLecture
+    returnResult = data.studentRefund.returnResult
     lectureAmount = data.courseClass.lectureAmount
     completedLectureAmount = data.courseClass.completedLectureAmount +'/'+data.courseClass.lectureAmount
     subjectName = data.courseClass.subjectName
@@ -312,6 +313,7 @@
     }
     refundLecture = refundLecture.split(',').length
 
+    $('#returnResult').html(returnResult)
     $('#updateTime').html(updateTime)
     $('#updateTime2').html(updateTime)
     $('#payAmount').html(payAmount)
