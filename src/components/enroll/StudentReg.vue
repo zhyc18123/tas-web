@@ -49,7 +49,8 @@
             <li><a href="javascript: void(0)" @click="tabIndex = 2">订单信息</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 3">在读班级</a></li>
             <li><a href="javascript: void(0)" @click="tabIndex = 4">班级历史</a></li>
-            <li><a href="javascript: void(0)" @click="tabIndex = 5">学生信息</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 5">测评成绩</a></li>
+            <li><a href="javascript: void(0)" @click="tabIndex = 6">学生信息</a></li>
           </ul>
 
           <div class="am-tabs-bd am-tabs-bd-ofv">
@@ -69,7 +70,10 @@
               <student-class-history-list :studentId="studentId" v-if="tabIndex == 4"></student-class-history-list>
             </div>
             <div class="am-tab-panel">
-              <student-edit-from @saveCompleted="loadStudent" :studentId="studentId" v-if="tabIndex == 5"></student-edit-from>
+              <evaluation-score :studentId="studentId" v-if="tabIndex == 5"></evaluation-score>
+            </div>
+            <div class="am-tab-panel">
+              <student-edit-from @saveCompleted="loadStudent" :studentId="studentId" v-if="tabIndex == 6"></student-edit-from>
             </div>
           </div>
         </div>
@@ -141,6 +145,7 @@
   import ClassHistoryList from './ClassHistoryList'
   import BalanceTransfer from './BalanceTransfer.vue'
   import BalanceWithdrawals from './BalanceWithdrawals.vue'
+  import EvaluationScore from './EvaluationScore.vue'
   export default{
     data(){
       let url = conf.studentBasePath + '/bind-student?studentId=' + this.$params('studentId')
@@ -155,6 +160,7 @@
     components:{
       BalanceTransfer,
       BalanceWithdrawals,
+      EvaluationScore,
       'student-edit-from': StudentEditForm,
       'student-apply': StudentApply,
       'reg-class-list': RegClassList,
