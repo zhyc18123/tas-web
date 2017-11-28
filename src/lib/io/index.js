@@ -383,6 +383,16 @@ const io = {
 
 
 
+    this.studentScoreList = conf.baseApiPath + '/api/admin/measurement/studentScoreList'
+    this.studentScoreDetail = conf.baseApiPath + '/api/admin/measurement/studentScoreDetail'
+    this.saveOrUpdateStudentScore = conf.baseApiPath + '/api/admin/measurement/saveOrUpdateStudentScore'
+    this.saveOrUpdateMeasurement = conf.baseApiPath + '/api/admin/measurement/saveOrUpdateMeasurement'
+    this.measurementList = conf.baseApiPath + '/api/admin/measurement/measurementList'
+    this.measurementDetail = conf.baseApiPath + '/api/admin/measurement/measurementDetail'
+    this.deleteMeasurement = conf.baseApiPath + '/api/admin/measurement/deleteMeasurement'
+
+
+
 
 
 
