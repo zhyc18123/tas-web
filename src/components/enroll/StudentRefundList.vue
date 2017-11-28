@@ -87,6 +87,16 @@
               min-width="200">
             </el-table-column>
             <el-table-column
+              prop="periodName"
+              label="期数"
+              min-width="120">
+            </el-table-column>
+            <el-table-column
+              prop="campusName"
+              label="校区"
+              min-width="200">
+            </el-table-column>
+            <el-table-column
               label="申请时间"
               min-width="200">
               <template scope="scope">
@@ -128,10 +138,24 @@
               </template>
             </el-table-column>
             <el-table-column
+              label="审核人"
+              min-width="100">
+              <template scope="scope">
+                {{ scope.row.auditOperator }}
+              </template>
+            </el-table-column>
+            <el-table-column
               label="支付状态"
               min-width="100">
               <template scope="scope">
                 {{ {'0':'未支付','1':'已支付' }[scope.row.payStatus] }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              label="支付人"
+              min-width="100">
+              <template scope="scope">
+                {{ scope.row.payOperator }}
               </template>
             </el-table-column>
             <el-table-column
