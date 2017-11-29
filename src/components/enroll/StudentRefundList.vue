@@ -38,9 +38,9 @@
             <div class="am-form-group">
               <select2  v-model="query.status" >
                 <option value="">处理状态</option>
-                <option value="0">处理中</option>
-                <option value="1">已处理</option>
-                <option value="2">已拒绝</option>
+                <option value="0">审核中</option>
+                <option value="1">审核通过</option>
+                <option value="2">审核不通过</option>
               </select2>
             </div>
           </div>
@@ -50,6 +50,53 @@
                 <option value="">支付状态</option>
                 <option value="0">未支付</option>
                 <option value="1">已支付</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2 v-model="query.periodId" :options="periods">
+                <option value="">期数</option>
+              </select2>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="auditTime"
+                type="daterange"
+                placeholder="申请时间">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="payTime"
+                type="daterange"
+                placeholder="审核时间">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="createTime"
+                type="daterange"
+                placeholder="支付时间">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <select2  v-model="query.refundWay" >
+                <option value="">退费方式</option>
+                <option value="0">支付宝</option>
+                <option value="1">微信</option>
+                <option value="2">现金</option>
+                <option value="3">虚拟余额账户</option>
+                <option value="4">银行卡转账</option>
               </select2>
             </div>
           </div>
@@ -134,7 +181,7 @@
               label="处理状态"
               min-width="100">
               <template scope="scope">
-                {{ {'0':'处理中','1':'已处理','2':'已拒绝' }[scope.row.status] }}
+                {{ {'0':'审核中','1':'审核通过','2':'审核不通过' }[scope.row.status] }}
               </template>
             </el-table-column>
             <el-table-column
@@ -206,13 +253,39 @@
           studentName: '',
           className: '',
           payStatus: 0,
+          periodId: '',
+          refundWay: '',
+          startAuditTime: '',
+          endAuditTime: '',
+          startPayTime: '',
+          endPayTime: '',
+          startCreateTime: '',
+          endCreateTime: '',
         },
+        periods: [],
+        auditTime: '',
+        payTime: '',
+        createTime: '',
       }
     },
     components: {
       Pagination,
       StudentRefundPreview,
       'change-student-refund': ChangeStudentRefund
+    },
+    watch: {
+      auditTime(newVal) {
+        this.query.startAuditTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endAuditTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
+      payTime(newVal) {
+        this.query.startPayTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endPayTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
+      createTime(newVal) {
+        this.query.startCreateTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endCreateTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
     },
     computed: {
     	optionWidth() {
@@ -238,6 +311,7 @@
       $(window).smoothScroll()
     },
     created: function () {
+      this.loadPeriodData()
       this.loadTableData(this.pageNo)
       var _this = this
       this.$root.$on('studentRefundList:new', function () {
@@ -246,6 +320,21 @@
       })
     },
     methods: {
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId: this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.loadTableData(_this.pageNo)
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       search: function () {
         this.loadTableData(1)
       },

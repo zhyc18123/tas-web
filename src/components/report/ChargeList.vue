@@ -102,6 +102,12 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
+                <input type="text"  v-model="query.studentName" placeholder="请输入学生名称"/>
+              </div>
+            </div>
+
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
                 <input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>
               </div>
             </div>
@@ -139,7 +145,7 @@
               </div>
             </div>
 
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3"  style="clear: both">
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <el-date-picker
                   v-model="query.endDate"
@@ -410,6 +416,7 @@
           subjectId: '',
           courseName: '',
           className: '',
+          studentName: '',
           dailyStatus: '',
           operator: '',
           chargeCampus: '',

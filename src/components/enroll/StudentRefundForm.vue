@@ -86,13 +86,13 @@
             <td class="bgColor">退费方式</td>
             <td colspan="7">
               <label class="am-checkbox-inline">
-                <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
-              </label>
-              <label class="am-checkbox-inline">
                 <input type="radio" value="3" name="refundWay" v-model="formData.refundWay"> 账户余额
               </label>
               <label class="am-checkbox-inline">
                 <input type="radio" value="4" name="refundWay" v-model="formData.refundWay"> 银行卡转账
+              </label>
+              <label class="am-checkbox-inline">
+                <input type="radio" value="2" name="refundWay" v-model="formData.refundWay"> 现金
               </label>
             </td>
           </tr>
@@ -175,7 +175,7 @@
           cardUser: '',
           cardNo: '',
           description:'',
-          finalRefundAmount : 0,
+          finalRefundAmount : 0.00,
           refundLectureFrom:''
         },
         studentRegDetail:{studentReg:{},courseClass:{}},
@@ -229,11 +229,11 @@
       },
       calRemaining: function () {
         this.remaining = !this.formData.refundLectureFrom ? 0 : math.mul( this.studentRegDetail.studentReg.endAmount - this.formData.refundLectureFrom + 1  , math.div(this.studentRegDetail.studentReg.totalAmount, this.studentRegDetail.studentReg.regLectureAmount)) || '0'
-        this.formData.finalRefundAmount = parseInt(this.remaining)
+        this.formData.finalRefundAmount = this.remaining.toFixed(2)
       },
       checkFinalRefundAmount:function(){
         if(this.formData.finalRefundAmount <=0 || this.formData.finalRefundAmount > this.remaining  ){
-          this.formData.finalRefundAmount = parseInt(this.remaining)
+          this.formData.finalRefundAmount = this.remaining.toFixed(2)
         }
       },
       confirmToRefund: function () {

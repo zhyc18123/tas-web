@@ -106,6 +106,12 @@
               </div>
             </div>
 
+            <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+              <div class="am-form-group">
+                <input type="text"  v-model="query.studentName" placeholder="请输入学生名称"/>
+              </div>
+            </div>
+
             <!--<div class="am-u-sm-12 am-u-md-12 am-u-lg-3">-->
               <!--<div class="am-form-group">-->
                 <!--<input type="text"  v-model="query.regCampus" placeholder="请输入报名校区"/>-->
@@ -441,6 +447,7 @@
           subjectId: '',
           courseName: '',
           className: '',
+          studentName: '',
           dailyStatus: '',
           operator: '',
           chargeCampusId: '',
