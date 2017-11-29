@@ -247,7 +247,7 @@
         pageSize: 10,
         pageNo: 1,
         query: {
-          areaTeamId : '',
+          areaTeamId : this.areaTeamId || window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamId : '',
           status : 1,
           studentName: '',
@@ -274,6 +274,11 @@
       'change-student-refund': ChangeStudentRefund
     },
     watch: {
+      'query.areaTeamId':function(){
+        this.query.busTeamId = ''
+        this.query.periodId = ''
+        this.loadPeriodData()
+      },
       auditTime(newVal) {
         this.query.startAuditTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
         this.query.endAuditTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''

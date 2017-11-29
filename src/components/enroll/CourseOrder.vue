@@ -82,9 +82,6 @@
         <tr v-if="courseOrder.chargingStatus != 2 ">
           <td class="bgColor">支付方式</td>
           <td colspan="5">
-            <!--<label class="am-radio-inline">
-              <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
-            </label>-->
             <label class="am-checkbox-inline">
               <input type="radio" value="1" name="payWay" v-model="formData.payWay"> pos机
             </label>
@@ -94,6 +91,9 @@
             <label class="am-checkbox-inline">
               <input type="radio" value="3" name="payWay" v-model="formData.payWay"> 账户余额
             </label>
+            <label class="am-checkbox-inline">
+               <input type="radio" value="0" name="payWay" v-model="formData.payWay" > 现金
+             </label>
             <!--<label class="am-checkbox-inline">
               <input type="radio" value="4" name="payWay" v-model="formData.payWay"> 微信／支付宝
             </label>-->

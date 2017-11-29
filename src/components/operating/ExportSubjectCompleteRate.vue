@@ -28,7 +28,7 @@
                 </div>
                 <div class="am-form-group">
                   <label class="am-u-sm-3 am-form-label">
-                    业务组(不选则导出所以业务组)
+                    业务组(不选则导出所业务组)
                   </label>
                   <div class="am-u-sm-3 am-u-end input-field">
                     <el-select multiple  v-model="query.busTeamIds" placeholder="业务组">
@@ -112,7 +112,6 @@
           areaTeamId : this.areaTeamId || window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamIds : [],
           courseTemplateId:'',
-          productIds : [],
           periodIds : [],
           sectionId : '',
           gradeIds : [],
@@ -141,14 +140,11 @@
         ]
       }
     },
-    props: ['areaTeamId', 'busTeamId','isAreaTeam', 'isBusTeam'],
     mounted: function () {
       $(window).smoothScroll()
     },
     created: function () {
     	this.active = this.$route.query.active
-      this.loadProductData()
-      this.loadCourseData()
       this.loadPeriodData()
     },
     computed: {
@@ -191,47 +187,11 @@
     watch:{
       'query.areaTeamId':function(){
         this.query.busTeamIds =  []
-        this.query.productIds = []
-        this.query.courseTemplateIds = []
         this.query.periodIds = []
-        this.loadProductData()
-        this.loadCourseData()
         this.loadPeriodData()
       }
     },
     methods: {
-      loadProductData: function () {
-        var _this = this
-        if (!this.query.areaTeamId) {
-          this.$alert('请选择区域！')
-          return
-        }
-        io.post(io.apiAdminBaseProductListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
-        }, function (ret) {
-          if (ret.success) {
-            _this.products = ret.data.map(function (item) {
-              return {value: item.productId, text: item.name}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
-      loadCourseData: function () {
-        var _this = this
-        io.post(io.apiAdminBaseCourseListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
-        }, function (ret) {
-          if (ret.success) {
-            _this.courses = ret.data.map(function (item) {
-              return {value: item.courseTemplateId, text: item.courseName}
-            })
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
       loadPeriodData: function () {
         var _this = this
         io.post(io.apiAdminPeriodListForAreaTeam, {

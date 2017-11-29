@@ -16,12 +16,12 @@
         <el-button @click="active = 2" size="small" :class="{'el-button el-button--primary': active === 2}">班级续读率</el-button>
       </el-button-group>
       <div class="head-opt" v-show="active !== 2">
-        <el-date-picker
-          style="width: 193px"
-          v-model="year"
-          type="year"
-          placeholder="请选择年份">
-        </el-date-picker>
+        <!--<el-date-picker-->
+          <!--style="width: 193px"-->
+          <!--v-model="year"-->
+          <!--type="year"-->
+          <!--placeholder="请选择年份">-->
+        <!--</el-date-picker>-->
         <div>
           <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
@@ -45,7 +45,8 @@
       </div>
       <toolbar class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
       <div class="am-u-sm-12 am-form-group">
-        <el-button size="small" type="success" @click="$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + active)">
+        <el-button size="small" type="success" @click="$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + active +
+          '&periodId='+ periodId +  '&sectionId='+ sectionId +  '&busTeamId='+ busTeamId+  '&gradeId='+ gradeId + '&areaTeamId='+ areaTeamId)">
           <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
       </div>
       <div v-show="active === 1" class="am-u-sm-12">
@@ -381,13 +382,14 @@
     watch: {
       areaTeamId(newVal) {
         this.busTeamId = ''
-        this.loadPeriodByYear()
+//        this.loadPeriodByYear()
+        this.loadPeriodData()
       },
-      year(newVal) {
-        if (newVal) {
-          this.loadPeriodByYear()
-        }
-      },
+//      year(newVal) {
+//        if (newVal) {
+//          this.loadPeriodByYear()
+//        }
+//      },
     },
     computed: {
       busTeams: function () {
@@ -398,7 +400,8 @@
       $(window).smoothScroll()
     },
     created:function(){
-      this.loadPeriodByYear()
+//      this.loadPeriodByYear()
+      this.loadPeriodData()
 //      this.getSeniorComletionRate()
     },
     methods:{
@@ -422,9 +425,24 @@
           year: moment(this.year).format("YYYY"),
         },function(ret){
           if(ret.success){
+            debugger
             _this.periods = ret.data
-            _this.periodId = ret.data.filter(item => item.isCurrent == 1 )[0].periodId
           }else{
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      loadPeriodData: function () {
+        var _this = this
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId: this.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.periods = ret.data.map(function (item) {
+              return {periodId: item.periodId, periodName: item.periodName}
+            })
+            _this.periodId = ret.data.filter(item => item.isCurrent == 1 )[0] && ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+          } else {
             _this.$alert(ret.desc)
           }
         })
