@@ -142,6 +142,7 @@
           way: '0',
           checkedCampuses: [],
       }
+      this.checkAll = false
       this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
       this.query.measurementId = this.$route.query.measurementId
       if (this.query.measurementId) {

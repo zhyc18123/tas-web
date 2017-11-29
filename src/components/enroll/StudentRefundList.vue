@@ -64,7 +64,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <el-date-picker
-                v-model="auditTime"
+                v-model="createTime"
                 type="daterange"
                 placeholder="申请时间">
               </el-date-picker>
@@ -73,7 +73,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <el-date-picker
-                v-model="payTime"
+                v-model="auditTime"
                 type="daterange"
                 placeholder="审核时间">
               </el-date-picker>
@@ -82,7 +82,7 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <el-date-picker
-                v-model="createTime"
+                v-model="payTime"
                 type="daterange"
                 placeholder="支付时间">
               </el-date-picker>
