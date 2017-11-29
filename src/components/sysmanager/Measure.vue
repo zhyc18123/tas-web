@@ -102,12 +102,12 @@
               </el-table-column>
             </el-table>
           </div>
-          <!--<div class="am-u-lg-12 am-cf">-->
-            <!--<div class="am-fr">-->
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"-->
-                          <!--@paging="loadTableData"/>-->
-            <!--</div>-->
-          <!--</div>-->
+          <div class="am-u-lg-12 am-cf">
+            <div class="am-fr">
+              <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+                          @paging="loadTableData"/>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -200,11 +200,13 @@
         _this.pageNo = pageNo || _this.pageNo || 1
         io.post(io.measurementList, {
           areaTeamId: _this.query.areaTeamId,
-          periodId: _this.query.periodId
+          periodId: _this.query.periodId,
+          pageNo: _this.pageNo,
+          pageSize: _this.pageSize,
         }, function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data
+            _this.tableData = ret.data.list
           } else {
             _this.$alert(ret.desc)
           }

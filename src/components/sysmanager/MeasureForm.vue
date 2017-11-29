@@ -123,6 +123,25 @@
       $(window).smoothScroll()
     },
     created: function () {
+      console.log(1)
+      this.query = {
+        measurementId: '',
+          studentId: '',
+          areaTeamId: '',
+          areaTeamName: "",
+          campusIds: [],
+          campusNames: "",
+          gradeId: '',
+          gradeName: "",
+          level: '',
+          periodId: '',
+          periodName: "",
+          passingScore: "",
+          subjectId: '',
+          subjectName: "",
+          way: '0',
+          checkedCampuses: [],
+      }
       this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
       this.query.measurementId = this.$route.query.measurementId
       if (this.query.measurementId) {
