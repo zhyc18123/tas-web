@@ -1,6 +1,12 @@
 import store from 'store' ;
 
 const storage = {
+  setBreadcrumb:function(breadcrumb){
+    store.set("breadcrumb" , breadcrumb );
+  },
+  getBreadcrumb:function () {
+    return store.get("breadcrumb");
+  },
   setAccessToken:function(accessToken){
     store.set("accessToken" , accessToken );
   },

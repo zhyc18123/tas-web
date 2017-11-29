@@ -19,13 +19,6 @@
               </div>
             </div>
           </div>
-          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
-            <el-select class="am-fr" @change="loadTableData(1)" placeholder="职能过滤" v-model="query.accessType">
-              <el-option label="全选" value=""></el-option>
-              <el-option label="任课老师" value="0"></el-option>
-              <el-option label="班主任" value="1"></el-option>
-            </el-select>
-          </div>
           <div class="am-u-sm-12 am-u-md-6 am-u-lg-2">
             <div class="am-form-group tpl-table-list-select">
               <selected v-model="searchConfig.searchItem">
@@ -46,6 +39,13 @@
             <div class="am-input-group-sm tpl-form-border-form cl-p">
               <input type="text" class="am-form-field " v-model="searchConfig.searchValue">
             </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-2">
+            <el-select class="am-fr" placeholder="选择职能" v-model="searchConfig.accessType">
+              <el-option label="全选" value=""></el-option>
+              <el-option label="任课老师" value="0"></el-option>
+              <el-option label="班主任" value="1"></el-option>
+            </el-select>
           </div>
           <button type="button" class="am-btn am-btn-default am-btn-success button-search"
                   @click="search" ><span class="am-icon-search"></span>查询
@@ -209,17 +209,19 @@
       },
       search: function () {
         this.query = {}
-        if (!this.searchConfig.searchItem) {
-          this.$alert('请选择搜索选项')
-          return
+        if(this.searchConfig.searchItem) {
+          this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue || ''
         }
-        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
+        this.query.accessType = this.searchConfig.accessType || ''
         this.loadTableData(1)
       },
       //导出教师信息
       exportTeachers:function(){
         this.query = {}
-        this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue
+        if(this.searchConfig.searchItem) {
+          this.query[this.searchConfig.searchItem] = this.searchConfig.searchValue || ''
+        }
+        this.query.accessType = this.searchConfig.accessType || ''
         var url = io.apiAdminExportTeachers + '?accessToken=' + io.getHeaders().accessToken;
 
         for(var i in this.query)    {

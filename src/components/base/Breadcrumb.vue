@@ -8,6 +8,7 @@
 
 </style>
 <script>
+  import storage from '../../lib/storage'
     export default{
         name:'breadcrumb',
         data(){
@@ -17,10 +18,14 @@
         },
         created:function(){
           var _this = this
+          console.log(1)
+          _this.items = storage.getBreadcrumb()
           this.$root.$on('sidebar.click',function(items){
             _this.items = items
+            storage.setBreadcrumb(items)
           })
         },
+      components: {storage},
         methods:{
           go:function(item){
             this.$router.push(item.path)
