@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">测评添加</div>
+        <div class="widget-title am-fl">测评设置</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -15,9 +15,9 @@
                 <el-option v-for="item in areaTeams" :key="item.areaTeamId" :label="item.areaTeamName" :value="item.areaTeamId"></el-option>
               </el-select>
             </el-form-item></el-col>
-            <el-col :span="12"><el-form-item label="请选择校区" prop="campusIds">
-              <el-select multiple v-model="query.campusIds" placeholder="请选择校区">
-                <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
+            <el-col :span="12"><el-form-item label="请选择期数" prop="periodId">
+              <el-select v-model="query.periodId" placeholder="请选择期数">
+                <el-option v-for="item in periods" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
               </el-select>
             </el-form-item></el-col>
           </el-row>
@@ -45,12 +45,13 @@
                 <el-option value="7" label="⑦集训队"></el-option>
               </el-select>
             </el-form-item></el-col>
-            <el-col :span="12"><el-form-item label="请选择期数" prop="periodId">
-              <el-select v-model="query.periodId" placeholder="请选择期数">
-                <el-option v-for="item in periods" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
-              </el-select>
-            </el-form-item></el-col>
           </el-row>
+          <el-form-item label="请选择校区" prop="checkedCampuses">
+            <el-checkbox  v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+            <el-checkbox-group v-model="query.checkedCampuses" @change="handleCampusesChange">
+              <el-checkbox v-for="item in campuses" :key="item.campusId" :label="item.campusId">{{item.campusName}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item>
           <el-form-item label="请输入及格分数" prop="passingScore">
             <el-input type="Number" placeholder="请输入及格分数" v-model="query.passingScore"></el-input>
           </el-form-item>
@@ -85,7 +86,9 @@
           subjectId: '',
           subjectName: "",
           way: '0',
+          checkedCampuses: [],
         },
+        checkAll: false,
         isEdit: false,
         campuses: [],
         periods: [],
@@ -96,8 +99,8 @@
           areaTeamId: [
             { required: true, message: '请选择区域', trigger: 'change' }
           ],
-          campusIds: [
-            { type: 'array',required: true, message: '请选择校区', trigger: 'change' }
+          checkedCampuses: [
+            { type: 'array',required: true, message: '请至少选择一个校区', trigger: 'change' }
           ],
           gradeId: [
             { required: true, message: '请选择年级', trigger: 'change' }
@@ -120,6 +123,7 @@
       $(window).smoothScroll()
     },
     created: function () {
+      this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
       this.query.measurementId = this.$route.query.measurementId
       if (this.query.measurementId) {
         this.measurementDetail(this.query.measurementId)
@@ -157,6 +161,17 @@
       },
     },
     methods: {
+      handleCheckAllChange(event) {
+        let allCampusId = []
+        this.campuses.map(item => {
+          allCampusId.push(item.campusId)
+        })
+        this.query.checkedCampuses = event.target.checked ? allCampusId : [];
+      },
+      handleCampusesChange(value) {
+        let checkedCount = value.length;
+        this.checkAll = checkedCount === this.campuses.length;
+      },
       measurementDetail(measurementId) {
         let _this =this;
         if (this.query.measurementId) {
@@ -165,7 +180,7 @@
           }, function (ret) {
             if (ret.success) {
               _this.isEdit = true
-              ret.data.campusIds = ret.data.campusIds.split(',')
+              ret.data.checkedCampuses = ret.data.campusIds.split(',')
               _this.query = ret.data;
               _this.loadCampusData()
               _this.loadPeriodData()
@@ -217,12 +232,12 @@
             _this.query.periodName = _this.periods.filter((item)=>{ return item.periodId === _this.query.periodId })[0].periodName
             _this.query.subjectName = _this.subjects.filter((item)=>{ return item.subjectId === _this.query.subjectId })[0].subjectName
             let campusNames = [];
-            _this.query.campusIds.map((campusId) => {
+            _this.query.checkedCampuses.map((campusId) => {
               campusNames.push(_this.campuses.filter((item)=>{return item.campusId === campusId})[0].campusName)
               })
             io.post(io.saveOrUpdateMeasurement,Object.assign({},_this.query,{
               campusNames: campusNames.join(','),
-              campusIds: _this.query.campusIds.join(',')
+              campusIds: _this.query.checkedCampuses.join(',')
             }), function (ret) {
               if (ret.success) {
                 _this.$toast('提交成功！')
@@ -244,10 +259,24 @@
   .el-form {
     padding: 30px 100px;
   }
+  .red {
+    padding: 0 100px;
+    color: #ff9449;
+    font-size: 14px;
+  }
   .el-form-item__content {
     text-align: left;
   }
   .am-text-center .el-form-item__content {
     text-align: left;
+  }
+  .el-checkbox+.el-checkbox {
+    margin-left: 0;
+  }
+  .el-checkbox {
+    margin-right: 15px;
+  }
+  .am-text-center .el-form-item__content {
+    text-align: center;
   }
 </style>

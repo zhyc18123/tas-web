@@ -7,11 +7,11 @@
           <el-option v-for="item in areaTeams" :key="item.areaTeamId" :label="item.areaTeamName" :value="item.areaTeamId"></el-option>
         </el-select>
       </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label=" " prop="campusId">
-        <el-select v-model="query.campusId" placeholder="请选择校区">
-          <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
-        </el-select>
-      </el-form-item></el-col>
+        <el-col :span="12"><el-form-item label=" " prop="periodId">
+          <el-select v-model="query.periodId" placeholder="请选择期数">
+            <el-option v-for="item in periods" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
+          </el-select>
+        </el-form-item></el-col>
       </el-row>
       <el-row>
         <el-col :span="12"><el-form-item label=" " prop="gradeId">
@@ -37,9 +37,9 @@
             <el-option value="7" label="⑦集训队"></el-option>
           </el-select>
         </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label=" " prop="periodId">
-          <el-select v-model="query.periodId" placeholder="请选择期数">
-            <el-option v-for="item in periods" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
+        <el-col :span="12"><el-form-item label=" " prop="campusId">
+          <el-select v-model="query.campusId" placeholder="请选择校区">
+            <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
           </el-select>
         </el-form-item></el-col>
       </el-row>
@@ -196,10 +196,7 @@
             _this.query.periodName = _this.periods.filter((item)=>{ return item.periodId === _this.query.periodId })[0].periodName
             _this.query.subjectName = _this.subjects.filter((item)=>{ return item.subjectId === _this.query.subjectId })[0].subjectName
             _this.query.campusName = _this.campuses.filter((item)=>{ return item.campusId === _this.query.campusId })[0].campusName
-//            let campusNames = [];
-//            _this.query.campusIds.map((campusId) => {
-//              campusNames.push(_this.campuses.filter((item)=>{return item.campusId === campusId})[0].campusName)
-//              })
+            _this.query.studentId = _this.studentId
             io.post(io.saveOrUpdateStudentScore,_this.query, function (ret) {
               if (ret.success) {
                 _this.$toast('提交成功！')
@@ -259,8 +256,6 @@
             height:600
           })
         }
-
-//        this.loadTableData()
       },
     }
   }
@@ -273,6 +268,6 @@
     text-align: left;
   }
   .am-text-center .el-form-item__content {
-    text-align: left;
+    text-align: center;
   }
 </style>

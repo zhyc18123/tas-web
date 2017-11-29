@@ -79,9 +79,14 @@
               </el-table-column>
               <el-table-column
                 label="适用校区"
-                min-width="200">
+                min-width="150">
                 <template scope="scope">
-                  {{scope.row.campusNames}}
+                  <div>
+                    <el-tooltip  effect="light" placement="top">
+                      <div class="content-tooltip" slot="content">{{scope.row.campusNames.replace(/,/g, '\n')}}</div>
+                      <a>查看</a>
+                    </el-tooltip>
+                  </div>
                 </template>
               </el-table-column>
 
@@ -221,3 +226,11 @@
     }
   }
 </script>
+<style scoped lang="less">
+  .content-tooltip {
+    unicode-bidi: embed;
+    white-space: pre;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+</style>

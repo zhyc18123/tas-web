@@ -22,7 +22,7 @@
         <el-table-column
           prop="campusName"
           label="测评校区"
-          min-width="80">
+          min-width="120">
         </el-table-column>
         <el-table-column
           prop="gradeName"
@@ -63,12 +63,12 @@
         <el-table-column
           prop="operator"
           label="最后操作人"
-          min-width="100">
+          min-width="120">
         </el-table-column>
         <el-table-column
           prop="updateTime"
           label="最后操作时间"
-          min-width="100">
+          min-width="130">
           <template scope="scope">
             <div>{{scope.row.updateTime | formatDate}}</div>
           </template>
@@ -104,6 +104,7 @@
     },
     components: {ScoreForm},
     created:function () {
+      this.studentId = this.$params('studentId')
       this.loadTableData()
     },
     methods:{
@@ -113,9 +114,11 @@
       },
       handleDelete(row) {
         var _this = this
+        this.$showLoading()
         io.post(io.saveOrUpdateStudentScore,Object.assign({},row, {
           validity: 0
         }),function(ret){
+          _this.$hiddenLoading();
           if(ret.success){
             _this.$toast('作废成功！')
             _this.loadTableData()
