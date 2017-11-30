@@ -56,7 +56,7 @@
             <el-input type="Number" placeholder="请输入及格分数" v-model="query.passingScore"></el-input>
           </el-form-item>
           <el-form-item class="am-text-center">
-            <el-button type="primary" @click="submitForm('query')">提交</el-button>
+            <el-button :disabled="disabledBtn" type="primary" @click="submitForm('query')">提交</el-button>
           </el-form-item>
         </el-form>
 
@@ -88,6 +88,7 @@
           way: '0',
           checkedCampuses: [],
         },
+        disabledBtn: false,
         checkAll: false,
         isEdit: false,
         campuses: [],
@@ -143,10 +144,13 @@
           checkedCampuses: [],
       }
       this.checkAll = false
-      this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
+      this.disabledBtn = false
       this.query.measurementId = this.$route.query.measurementId
       if (this.query.measurementId) {
+        this.isEdit = true
         this.measurementDetail(this.query.measurementId)
+      } else {
+        this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
       }
     },
     watch: {
@@ -154,6 +158,7 @@
         if (!this.isEdit) {
           this.query.campusIds = []
           this.query.periodId = ''
+          this.query.checkedCampuses = []
           this.loadCampusData()
           this.loadPeriodData()
         } else {
@@ -199,7 +204,6 @@
             measurementId : measurementId
           }, function (ret) {
             if (ret.success) {
-              _this.isEdit = true
               ret.data.checkedCampuses = ret.data.campusIds.split(',')
               _this.query = ret.data;
               _this.loadCampusData()
@@ -245,6 +249,7 @@
       },
       submitForm(formName) {
         let _this = this
+        this.disabledBtn = true
         this.$refs[formName].validate((valid) => {
           if (valid) {
             _this.query.areaTeamName = _this.areaTeams.filter((item)=>{ return item.areaTeamId === _this.query.areaTeamId })[0].areaTeamName
@@ -263,10 +268,12 @@
                 _this.$toast('提交成功！')
                 _this.$router.go(-1)
               } else {
+                _this.disabledBtn = false
                 _this.$alert(ret.desc)
               }
             })
           } else {
+            this.disabledBtn = false
             console.log('error submit!!');
             return false;
           }

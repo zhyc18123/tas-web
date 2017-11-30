@@ -35,12 +35,9 @@
           min-width="100">
         </el-table-column>
         <el-table-column
-          prop="level"
-          label="测评班型"
-          min-width="100">
-          <template scope="scope">
-            <div>{{{'1': '不区分','2': '尖端','3': '状元','4': '尖子','5': '提高','6': '竞赛','7': '集训队'}[scope.row.level]}}</div>
-          </template>
+          prop="canRegLevel"
+          label="通过班型"
+          min-width="150">
         </el-table-column>
         <el-table-column
           prop="studentScore"

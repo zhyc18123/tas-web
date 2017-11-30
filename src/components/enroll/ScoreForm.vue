@@ -26,28 +26,17 @@
         </el-form-item></el-col>
       </el-row>
       <el-row>
-        <el-col :span="12"><el-form-item label=" " prop="level">
-          <el-select v-model="query.level" placeholder="请选择班型">
-            <el-option value="1" label="①不区分"></el-option>
-            <el-option value="2" label="②尖端"></el-option>
-            <el-option value="3" label="③状元"></el-option>
-            <el-option value="4" label="④尖子"></el-option>
-            <el-option value="5" label="⑤提高"></el-option>
-            <el-option value="6" label="⑥竞赛"></el-option>
-            <el-option value="7" label="⑦集训队"></el-option>
-          </el-select>
-        </el-form-item></el-col>
+        <el-col :span="12">
+          <el-form-item label=" " prop="validity">
+            <el-select v-model="query.validity" placeholder="请选择状态">
+              <el-option label="有效" value="1"></el-option>
+              <el-option label="作废" value="0"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
         <el-col :span="12"><el-form-item label=" " prop="campusId">
           <el-select v-model="query.campusId" placeholder="请选择校区">
             <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
-          </el-select>
-        </el-form-item></el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="12"><el-form-item label=" " prop="validity">
-          <el-select v-model="query.validity" placeholder="请选择状态">
-            <el-option label="有效" value="1"></el-option>
-            <el-option label="作废" value="0"></el-option>
           </el-select>
         </el-form-item></el-col>
       </el-row>
@@ -75,7 +64,6 @@
           campusName: "",
           gradeId: '',
           gradeName: "",
-          level: '',
           periodId: '',
           periodName: "",
           studentScore: "",
@@ -102,9 +90,6 @@
           ],
           subjectId: [
             { required: true, message: '请选择科目', trigger: 'change' }
-          ],
-          level: [
-            { required: true, message: '请选择班型', trigger: 'change' }
           ],
           periodId: [
             { required: true, message: '请选择期数', trigger: 'change' }
@@ -242,7 +227,6 @@
               campusName: "",
               gradeId: '',
               gradeName: "",
-              level: '',
               periodId: '',
               periodName: "",
               studentScore: "",
