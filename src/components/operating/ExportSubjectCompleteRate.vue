@@ -111,7 +111,6 @@
         query: {
           areaTeamId : this.areaTeamId || window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           busTeamIds : [],
-          courseTemplateId:'',
           periodIds : [],
           sectionId : '',
           gradeIds : [],

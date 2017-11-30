@@ -43,10 +43,9 @@
           <el-button size="small" type="success" @click="handleFind">查询</el-button>
         </div>
       </div>
-      <toolbar class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
+      <toolbar ref="toolbar" class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
       <div class="am-u-sm-12 am-form-group">
-        <el-button size="small" type="success" @click="$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + active +
-          '&periodId='+ periodId +  '&sectionId='+ sectionId +  '&busTeamId='+ busTeamId+  '&gradeId='+ gradeId + '&areaTeamId='+ areaTeamId)">
+        <el-button size="small" type="success" @click="handleExport">
           <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
       </div>
       <div v-show="active === 1" class="am-u-sm-12">
@@ -565,6 +564,15 @@
             _this.$alert(ret.desc)
           }
         })
+      },
+      handleExport() {
+        if (this.active === 2) {
+          this.$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + this.active +
+            '&periodId='+ this.$refs.toolbar.periodId +  '&gradeId='+ this.$refs.toolbar.gradeId +  '&busTeamId='+ this.busTeamId + '&areaTeamId='+ this.areaTeamId)
+        } else {
+          this.$router.push('/main/operating/dataAnalysis/list/exportSubjectCompleteRate?active=' + this.active +
+            '&periodId='+ this.periodId +  '&sectionId='+ this.sectionId +  '&busTeamId='+ this.busTeamId + '&areaTeamId='+ this.areaTeamId)
+        }
       },
       handleExportSomeSeniorComletionRate(row) {
         let _this = this;

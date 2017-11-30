@@ -36,7 +36,7 @@
         </el-table-column>
         <el-table-column
           prop="canRegLevel"
-          label="通过班型"
+          label="可报读最高班型"
           min-width="150">
         </el-table-column>
         <el-table-column
