@@ -206,7 +206,7 @@
             if (ret.success) {
               ret.data.checkedCampuses = ret.data.campusIds.split(',')
               _this.query = ret.data;
-              _this.loadCampusData()
+              _this.loadCampusData(ret.data.checkedCampuses)
               _this.loadPeriodData()
             } else {
               _this.$alert(ret.desc)
@@ -232,7 +232,7 @@
           }
         })
       },
-      loadCampusData:function(){
+      loadCampusData:function(checkedCampuses){
         var _this  = this
         if (!this.query.areaTeamId) {
           return
@@ -242,6 +242,9 @@
         }, function (ret) {
           if (ret.success) {
             _this.campuses = ret.data
+            if(checkedCampuses) {
+              _this.handleCampusesChange(checkedCampuses)
+            }
           } else {
             _this.$alert(ret.desc)
           }
