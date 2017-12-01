@@ -92,8 +92,10 @@
 
               <el-table-column
                 label="操作"
-                width="150">
+                width="240">
                 <template scope="scope">
+                  <el-button size="small" @click.native="$router.push('/main/sys/measure/measureWhitelist?measurementId='+scope.row.measurementId)">设置白名单
+                  </el-button>
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/measure/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
                   <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
