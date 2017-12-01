@@ -8,24 +8,24 @@
         </div>
       </div>
       <div class="widget-body am-fr">
-        <el-form :model="query" ref="query" label-width="200px" class="demo-query">
+        <el-form :model="query" :rules="rules" ref="query" label-width="200px" class="demo-query">
           <el-form-item label="区域：">
-            <div>{{}}</div>
+            <div>{{areaTeamName}}</div>
           </el-form-item>
           <el-form-item label="科目：">
-            <div>{{}}</div>
+            <div>{{subjectName}}</div>
           </el-form-item>
-          <el-form-item label="年级：">
+          <el-form-item label="年级：" prop="gradeIds">
             <el-checkbox-group v-model="query.gradeIds">
               <el-checkbox v-for="item in grades" :key="item.gradeId" :label="item.gradeId">{{item.gradeName}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="期数：">
+          <el-form-item label="期数：" prop="periodIds">
             <el-checkbox-group v-model="query.periodIds">
               <el-checkbox v-for="item in periods" :key="item.periodId" :label="item.periodId">{{item.periodName}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="班型：">
+          <el-form-item label="班型：" prop="levels">
             <el-checkbox-group v-model="query.levels">
               <el-checkbox label="1">不区分</el-checkbox>
               <el-checkbox label="2">尖端</el-checkbox>
@@ -36,9 +36,9 @@
               <el-checkbox label="7">集训队</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="报名校区：">
+          <el-form-item label="报名校区：" prop="campusIds">
             <el-checkbox  v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-            <el-checkbox-group v-model="query.checkedCampuses" @change="handleCampusesChange">
+            <el-checkbox-group v-model="query.campusIds" @change="handleCampusesChange">
               <el-checkbox v-for="item in campuses" :key="item.campusId" :label="item.campusId">{{item.campusName}}</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
@@ -57,16 +57,29 @@
   export default{
     data() {
       return {
+        subjectName: '',
+        areaTeamId: '',
+        areaTeamName: '',
         query: {
-          measurementId: '',
-          areaTeamId: '',
-          areaTeamName: "",
           campusIds: [],
-          campusNames: "",
           gradeIds: [],
+          measurementId: '',
           levels: [],
           periodIds: [],
-          checkedCampuses: [],
+        },
+        rules: {
+          campusIds: [
+            { type: 'array',required: true, message: '请至少选择一个校区', trigger: 'change' }
+          ],
+          gradeIds: [
+            { type: 'array', required: true, message: '请至少选择一个年级', trigger: 'change' }
+          ],
+          levels: [
+            { type: 'array', required: true, message: '请至少选择一个班型', trigger: 'change' }
+          ],
+          periodIds: [
+            { type: 'array', required: true, message: '请至少选择一个期数', trigger: 'change' }
+          ],
         },
         disabledBtn: false,
         checkAll: false,
@@ -89,19 +102,6 @@
         this.query.areaTeamId = window.config.areaTeams[0].areaTeamId
       }
     },
-    watch: {
-      'query.areaTeamId' () {
-        if (!this.isEdit) {
-          this.query.campusIds = []
-          this.query.periodId = ''
-          this.query.checkedCampuses = []
-          this.loadCampusData()
-          this.loadPeriodData()
-        } else {
-          this.isEdit = false;
-        }
-      }
-    },
     computed: {
       grades: function () {
         return this.$root.config.grades.map(function(item){
@@ -110,12 +110,19 @@
       },
     },
     methods: {
+      formatData(arr) {
+        debugger
+        for(let i=0 ; i< arr.length; i++) {
+          arr[i] = '' + String(new Number(arr[i]).toFixed(0))
+        }
+        return arr
+      },
       handleCheckAllChange(event) {
         let allCampusId = []
         this.campuses.map(item => {
           allCampusId.push(item.campusId)
         })
-        this.query.checkedCampuses = event.target.checked ? allCampusId : [];
+        this.query.campusIds = event.target.checked ? allCampusId : [];
       },
       handleCampusesChange(value) {
         let checkedCount = value.length;
@@ -128,9 +135,22 @@
             measurementId : measurementId
           }, function (ret) {
             if (ret.success) {
-              ret.data.checkedCampuses = ret.data.campusIds.split(',')
-              _this.query.areaTeamId = ret.data.areaTeamId;
-              _this.loadCampusData(ret.data.checkedCampuses)
+              let whitelistConfig = JSON.parse(ret.data.whitelistConfig);
+              _this.areaTeamId = ret.data.areaTeamId;
+              _this.subjectName = ret.data.subjectName
+              _this.areaTeamName = ret.data.areaTeamName
+              if (whitelistConfig) {
+                _this.query.periodIds = whitelistConfig.periodIds
+                _this.query.gradeIds = whitelistConfig.gradeIds
+                _this.query.levels = whitelistConfig.levels
+                _this.query.campusIds = whitelistConfig.campusIds
+              } else {
+                _this.query.periodIds = []
+                _this.query.gradeIds = []
+                _this.query.levels = []
+                _this.query.campusIds = []
+              }
+              _this.loadCampusData(_this.query.campusIds)
               _this.loadPeriodData()
             } else {
               _this.$alert(ret.desc)
@@ -140,17 +160,16 @@
       },
       loadPeriodData: function () {
         var _this = this
-        if (!this.query.areaTeamId) {
+        if (!this.areaTeamId) {
           return
         }
         io.post(io.apiAdminPeriodListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
+          areaTeamId : this.areaTeamId
         }, function (ret) {
           if (ret.success) {
             _this.periods = ret.data.map(function (item) {
               return {periodId: item.periodId, periodName: item.periodName }
             })
-            _this.query.periodId = _this.query.periodId ? _this.query.periodId: ret.data.filter(item => item.isCurrent == 1 )[0].periodId
           } else {
             _this.$alert(ret.desc)
           }
@@ -158,11 +177,11 @@
       },
       loadCampusData:function(checkedCampuses){
         var _this  = this
-        if (!this.query.areaTeamId) {
+        if (!this.areaTeamId) {
           return
         }
         io.post(io.apiAdminCampusOfAreaTeam, {
-          areaTeamId : _this.query.areaTeamId
+          areaTeamId : _this.areaTeamId
         }, function (ret) {
           if (ret.success) {
             _this.campuses = ret.data
@@ -175,22 +194,20 @@
         })
       },
       submitForm(formName) {
-        let _this = this
+        let _this = this,whitelistConfig
         this.disabledBtn = true
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            _this.query.areaTeamName = _this.areaTeams.filter((item)=>{ return item.areaTeamId === _this.query.areaTeamId })[0].areaTeamName
-            _this.query.gradeName = _this.grades.filter((item)=>{ return item.gradeId === _this.query.gradeId })[0].gradeName
-            _this.query.periodName = _this.periods.filter((item)=>{ return item.periodId === _this.query.periodId })[0].periodName
-            _this.query.subjectName = _this.subjects.filter((item)=>{ return item.subjectId === _this.query.subjectId })[0].subjectName
-            let campusNames = [];
-            _this.query.checkedCampuses.map((campusId) => {
-              campusNames.push(_this.campuses.filter((item)=>{return item.campusId === campusId})[0].campusName)
+            whitelistConfig = JSON.stringify({
+              periodIds: this.query.periodIds,
+              gradeIds: this.query.gradeIds,
+              levels: this.query.levels,
+              campusIds: this.query.campusIds,
             })
-            io.post(io.saveOrUpdateMeasurement,Object.assign({},_this.query,{
-              campusNames: campusNames.join(','),
-              campusIds: _this.query.checkedCampuses.join(',')
-            }), function (ret) {
+            io.post(io.updateWhiltelist,{
+              measurementId: this.query.measurementId,
+              whitelistConfig: whitelistConfig,
+            }, function (ret) {
               if (ret.success) {
                 _this.$toast('提交成功！')
                 _this.$router.go(-1)

@@ -94,7 +94,7 @@
                 label="操作"
                 width="240">
                 <template scope="scope">
-                  <el-button size="small" @click.native="$router.push('/main/sys/measure/measureWhitelist?measurementId='+scope.row.measurementId)">设置白名单
+                  <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/measure/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
@@ -161,6 +161,17 @@
       }
     },
     methods: {
+      handleSettingWhitelist(row) {
+        debugger
+//        sessionStorage.setItem('measureWhitelist', JSON.stringify({
+//            whitelistConfig: row.whitelistConfig,
+//            subjectName: row.subjectName,
+//            areaTeamName: row.areaTeamName,
+//            areaTeamId: row.areaTeamId,
+//            measurementId: row.measurementId,
+//          }));
+        this.$router.push('/main/sys/measure/measureWhitelist?measurementId='+row.measurementId)
+      },
       handleDelete(measurementId) {
         var _this = this
         io.post(io.deleteMeasurement, {

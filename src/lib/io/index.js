@@ -390,6 +390,7 @@ const io = {
     this.measurementList = conf.baseApiPath + '/api/admin/measurement/measurementList'
     this.measurementDetail = conf.baseApiPath + '/api/admin/measurement/measurementDetail'
     this.deleteMeasurement = conf.baseApiPath + '/api/admin/measurement/deleteMeasurement'
+    this.updateWhiltelist = conf.baseApiPath + '/api/admin/measurement/updateWhiltelist'
 
 
 
