@@ -17,6 +17,14 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2  v-model="query.campusId" :options="campuses">
+                <option value="">受理校区</option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <select2  v-model="query.status" >
                 <option value="">处理状态</option>
                 <option value="0">审核中</option>
@@ -56,19 +64,27 @@
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <el-date-picker
-                v-model="query.startTime"
-                type="date"
-                placeholder="申请开始时间">
+                v-model="createTime"
+                type="daterange"
+                placeholder="申请时间">
               </el-date-picker>
             </div>
           </div>
-
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
               <el-date-picker
-                v-model="query.endTime"
-                type="date"
-                placeholder="申请结束时间">
+                v-model="auditTime"
+                type="daterange"
+                placeholder="审核时间">
+              </el-date-picker>
+            </div>
+          </div>
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
+              <el-date-picker
+                v-model="payTime"
+                type="daterange"
+                placeholder="支付时间">
               </el-date-picker>
             </div>
           </div>
@@ -115,6 +131,16 @@
             <el-table-column
               prop="operatorName"
               label="申请人"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="payPersonName"
+              label="支付人"
+              min-width="100">
+            </el-table-column>
+            <el-table-column
+              prop="acceptCampusName"
+              label="受理校区"
               min-width="100">
             </el-table-column>
             <el-table-column
@@ -178,16 +204,25 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
+        campuses: [],
         query: {
           areaTeamId : '',
           applierMainAccountName : '',
           operatorName : '',
           extra : '',
           status : '',
-          startTime: '',
-          endTime: '',
           payStatus: '',
+          campusId: '',
+          startAuditTime: '',
+          endAuditTime: '',
+          startPayTime: '',
+          endPayTime: '',
+          startCreateTime: '',
+          endCreateTime: '',
         },
+        auditTime: '',
+        payTime: '',
+        createTime: '',
       }
     },
     components: {
@@ -205,18 +240,28 @@
             return {value: item.areaTeamId, text: item.name}
           })
         return options
-      },
-      busTeams: function () {
-        var options = ( ( this.query.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.query.areaTeamId] || [] ) : [] )
-          .map(function (item) {
-            return {value: item.busTeamId, text: item.name}
-          })
-        this.query.busTeamId = ''
-        return options
       }
     },
     mounted: function () {
       $(window).smoothScroll()
+    },
+    watch: {
+      'query.areaTeamId':function(){
+        this.query.campusId = ''
+        this.loadCampusData()
+      },
+      auditTime(newVal) {
+        this.query.startAuditTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endAuditTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
+      payTime(newVal) {
+        this.query.startPayTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endPayTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
+      createTime(newVal) {
+        this.query.startCreateTime = newVal[0] ? this.$options.filters.formatDate(newVal[0]) : ''
+        this.query.endCreateTime = newVal[1] ? this.$options.filters.formatDate(newVal[1]): ''
+      },
     },
     created: function () {
       this.loadTableData(this.pageNo)
@@ -229,6 +274,20 @@
     methods: {
       search: function () {
         this.loadTableData(1)
+      },
+      loadCampusData:function(){
+        var _this  = this
+        io.post(io.apiAdminCampusOfAreaTeam, {
+          areaTeamId : _this.query.areaTeamId
+        }, function (ret) {
+          if (ret.success) {
+            _this.campuses = ret.data.map(item => {
+              return {value: item.campusId, text: item.campusName}
+            })
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
