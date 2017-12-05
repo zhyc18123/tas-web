@@ -24,7 +24,7 @@ require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
               _this.editor.setContent(_this.value)
             }
           })
-          _this.editor.addListener('contentChange',function(){
+          _this.editor.addListener('wordcount',function(){
             _this.$emit('input',_this.editor.getContent())
           })
 
