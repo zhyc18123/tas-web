@@ -47,6 +47,11 @@
                 min-width="150">
               </el-table-column>
               <el-table-column
+                prop="lastRegCampusName"
+                label="最近报读校区"
+                min-width="150">
+              </el-table-column>
+              <el-table-column
                 label="出生日期"
                 min-width="150">
                 <template scope="scope">

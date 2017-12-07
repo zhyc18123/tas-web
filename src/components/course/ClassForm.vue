@@ -78,12 +78,12 @@
 
           <div class="am-form-group">
             <label class="am-u-sm-3 am-form-label">
-              校区
-             </label>
+              <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>校区
+            </label>
             <div class="am-u-sm-3 am-u-end input-field">
 
-              <choose v-model="formData.campusId">
-                <select required data-placeholder="排课校区" style="min-width:300px;" class="chosen-select">
+              <choose required v-model="formData.campusId">
+                <select required data-placeholder="排课校区" style="min-width:300px;" class="chosen-select input-field">
                   <option value=""></option>
                   <option v-for="item in campuses" :value="item.campusId">{{item.campusName}}</option>
                 </select>
@@ -127,7 +127,7 @@
           </div>
           <div class="am-form-group">
             <div class="am-u-sm-9 am-u-sm-push-3">
-              <button  type="submit" class="am-btn am-btn-primary">提交</button>
+              <button type="submit" class="am-btn am-btn-primary">提交</button>
             </div>
           </div>
         </fieldset>
@@ -238,6 +238,10 @@
         },
         submit: function (e) {
           e.preventDefault();//因为点击事件往上冒泡到form e.preventDefault可以改变这种行为 或者button类型不要submit类型 ，OK懂了么en
+          if( !_this.formData.campusId){
+            _this.$alert('请选择校区')
+            return ''
+          }
           if( !_this.formData.courseDescription){
             _this.$alert('请输入课程描述')
             return ''
