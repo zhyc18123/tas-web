@@ -392,6 +392,12 @@ const io = {
     this.deleteMeasurement = conf.baseApiPath + '/api/admin/measurement/deleteMeasurement'
     this.updateWhiltelist = conf.baseApiPath + '/api/admin/measurement/updateWhiltelist'
 
+    this.financeSubjectList = conf.baseApiPath + '/api/admin/electronicinvoice/financeSubjectList'
+    this.financeSubject = conf.baseApiPath + '/api/admin/electronicinvoice/financeSubject'
+    this.openInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/openInvoice'
+    this.saveInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveInvoice'
+    this.saveOrUpdate = conf.baseApiPath + '/api/admin/electronicinvoice/saveOrUpdate'
+
 
 
 

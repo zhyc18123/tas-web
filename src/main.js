@@ -19,6 +19,8 @@ const NotFound = resolve => require(['./components/error/NotFound'], resolve)
 const Login = resolve => require(['./components/login/Login'], resolve)
 const Enroll = resolve => require(['./components/login/Enroll'], resolve)
 
+const InvoiceMainPartList  = resolve => require(['./components/sysmanager/InvoiceMainPartList'], resolve)
+const InvoiceMainPartForm  = resolve => require(['./components/sysmanager/InvoiceMainPartForm'], resolve)
 const MeasureWhitelist  = resolve => require(['./components/sysmanager/MeasureWhitelist'], resolve)
 const MeasureForm  = resolve => require(['./components/sysmanager/MeasureForm'], resolve)
 const Measure  = resolve => require(['./components/sysmanager/Measure'], resolve)
@@ -191,6 +193,8 @@ const router = new VueRouter({
     path: '/main',
     component: Main,
     children:[
+      {path: 'sys/invoice/invoiceMainPartList' , component: InvoiceMainPartList },
+      {path: 'sys/invoice/invoiceMainPartForm' , component: InvoiceMainPartForm },
       {path: 'sys/measure/list' , component: Measure },
       {path: 'sys/measure/add' , component: MeasureForm },
       {path: 'sys/measure/measureWhitelist' , component: MeasureWhitelist },
