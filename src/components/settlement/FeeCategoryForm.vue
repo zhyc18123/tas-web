@@ -17,7 +17,7 @@
               <el-select class="am-u-sm-3 input-field" style="float: left;" v-model="formData.parentFeeCategoryId" placeholder="请选择">
                 <el-option
                   v-for="item in feeCategories"
-                  :key="item"
+                  :key="item.feeCategoryId"
                   :label="item.name"
                   :value="item.feeCategoryId">
                 </el-option>
@@ -59,7 +59,7 @@
               <el-select class="am-u-sm-3 input-field" style="float: left;" v-model="formData.incomeCategoryId" placeholder="请选择">
                 <el-option
                   v-for="item in incomeCategoryList"
-                  :key="item"
+                  :key="item.incomeCategoryId"
                   :label="item.name"
                   :value="item.incomeCategoryId">
                 </el-option>
@@ -86,7 +86,7 @@
     data(){
       return {
         formData: {
-          needShareTime: '',
+          needShareTime: '1',
           incomeCategoryId: '',
           parentFeeCategoryId: ''
         },
@@ -181,6 +181,11 @@
       save: function (complete) {
         var _this = this
         var data = _this.formData
+        if (!this.formData.incomeCategoryId) {
+          this.$alert('请选择收入类型')
+          complete.call()
+          return
+        }
         io.post(io.apiAdminSettlementSaveOrUpdateFeeCategory, data,
           function (ret) {
             complete.call()
@@ -205,6 +210,10 @@
     .am-selected-list {
       height: 230px;
       overflow-y: scroll;
+    }
+     .am-form input[type=text][readonly] {
+      cursor: default;
+      background-color: #fff;
     }
   }
 </style>

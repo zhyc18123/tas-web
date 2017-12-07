@@ -1,5 +1,5 @@
 <template>
-  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12" >
+  <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 m-invoice-mainPart-form" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
         <div class="widget-title am-fl">测评设置</div>
@@ -184,7 +184,9 @@
     watch: {
       'query.areaTeamId' () {
         if (!this.isEdit) {
-
+          this.query.campusIds = []
+          this.query.checkedCampuses = []
+          this.loadCampusData()
         } else {
           this.isEdit = false;
         }
@@ -273,27 +275,27 @@
   }
 </script>
 <style lang="less">
-  .el-form {
-    padding: 30px 100px;
-  }
-  .red {
-    padding: 0 100px;
-    color: #ff9449;
-    font-size: 14px;
-  }
-  .el-form-item__content {
-    text-align: left;
-  }
-  .am-text-center .el-form-item__content {
-    text-align: left;
-  }
-  .el-checkbox+.el-checkbox {
-    margin-left: 0;
-  }
-  .el-checkbox {
-    margin-right: 15px;
-  }
-  .am-text-center .el-form-item__content {
-    text-align: center;
+  .m-invoice-mainPart-form {
+    .el-form {
+      padding: 30px 100px;
+      .el-select {
+        width: 100%;
+      }
+    }
+    .el-form-item__content {
+      text-align: left;
+    }
+    .am-text-center .el-form-item__content {
+      text-align: left;
+    }
+    .el-checkbox+.el-checkbox {
+      margin-left: 0;
+    }
+    .el-checkbox {
+      margin-right: 15px;
+    }
+    .am-text-center .el-form-item__content {
+      text-align: center;
+    }
   }
 </style>

@@ -92,6 +92,10 @@
           <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "
                      @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
           </el-button>
+          <!--todo-->
+          <!--<el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "-->
+                     <!--@click.native="studentRefund(scope.row.studentReg.regId)">发票管理-->
+          <!--</el-button>-->
         </template>
       </el-table-column>
     </el-table>
