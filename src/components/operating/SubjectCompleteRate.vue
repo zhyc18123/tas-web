@@ -215,7 +215,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="lessrealOldStudentNum"
+            prop="lessRealOldStudentNum"
             min-width="180"
             label="老生科数（小于6讲）">
           </el-table-column>
