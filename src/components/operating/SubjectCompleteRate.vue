@@ -18,6 +18,10 @@
           </el-select>
           <el-select size="small" :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
             <el-option
+              label="请选择业务组"
+              value="">
+            </el-option>
+            <el-option
               v-for="item in busTeams"
               :key="item.busTeamId"
               :label="item.name"

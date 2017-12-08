@@ -44,7 +44,7 @@
                 fixed
                 prop="phoneNo"
                 label="手机号码"
-                min-width="150">
+                min-width="120">
               </el-table-column>
               <el-table-column
                 prop="lastRegCampusName"
