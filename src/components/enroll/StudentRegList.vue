@@ -133,6 +133,11 @@
                 label="班主任"
                 min-width="100">
               </el-table-column>
+              <el-table-column
+                prop="counselorName"
+                label="咨询师"
+                min-width="100">
+              </el-table-column>
 
               <el-table-column
                 prop="className"

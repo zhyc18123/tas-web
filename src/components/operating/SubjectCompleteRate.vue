@@ -1,14 +1,5 @@
 <template>
   <div class="subject-complete">
-    <el-select style="position: absolute;top: -58px;left: 223px;" size="small"
-               :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
-      <el-option
-        v-for="item in busTeams"
-        :key="item.busTeamId"
-        :label="item.name"
-        :value="item.busTeamId">
-      </el-option>
-    </el-select>
     <div class="content">
       <el-button-group>
         <el-button @click="active = 1" size="small" :class="{'el-button el-button--primary': active === 1}">年级科数完成率</el-button>
@@ -16,13 +7,27 @@
         <el-button @click="active = 2" size="small" :class="{'el-button el-button--primary': active === 2}">班级续读率</el-button>
       </el-button-group>
       <div class="head-opt" v-show="active !== 2">
-        <!--<el-date-picker-->
-          <!--style="width: 193px"-->
-          <!--v-model="year"-->
-          <!--type="year"-->
-          <!--placeholder="请选择年份">-->
-        <!--</el-date-picker>-->
         <div>
+          <el-select size="small" v-model="areaTeamId" placeholder="请选择区域">
+            <el-option
+              v-for="item in areaTeams"
+              :key="item.areaTeamId"
+              :label="item.name"
+              :value="item.areaTeamId">
+            </el-option>
+          </el-select>
+          <el-select size="small" :disabled="busTeams.length === 0" v-model="busTeamId" placeholder="请选择业务组">
+            <el-option
+              label="请选择业务组"
+              value="">
+            </el-option>
+            <el-option
+              v-for="item in busTeams"
+              :key="item.busTeamId"
+              :label="item.name"
+              :value="item.busTeamId">
+            </el-option>
+          </el-select>
           <el-select :disabled="periods.length === 0" v-model="periodId" placeholder="请选择期数">
             <el-option
               v-for="item in periods"
@@ -40,10 +45,12 @@
             </el-option>
           </el-select>
 
-          <el-button size="small" type="success" @click="handleFind">查询</el-button>
+          <button type="button" class="am-btn am-btn-default am-btn-success"
+                  @click="handleFind" ><span class="am-icon-search"></span>查询
+          </button>
         </div>
       </div>
-      <toolbar ref="toolbar" class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
+      <toolbar ref="toolbar" :isAreaTeam="true" :isBusTeam="true" class="toolbar" @search="handleFind" v-show="active === 2"></toolbar>
       <div class="am-u-sm-12 am-form-group">
         <el-button size="small" type="success" @click="handleExport">
           <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
@@ -56,11 +63,18 @@
           stripe
           style="min-width: 100%">
           <el-table-column
+             min-width="140"
+            prop="busTeamName"
+            label="业务组">
+          </el-table-column>
+          <el-table-column
+             min-width="100"
             prop="gradeName"
             label="年级">
           </el-table-column>
 
           <el-table-column
+             min-width="140"
             prop="realClassIncome"
             label="实际课程预收">
             <template scope="scope">
@@ -68,10 +82,12 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="targetClassIncome"
             label="目标课程预收">
           </el-table-column>
           <el-table-column
+             min-width="140"
             label="课程预收完成率">
             <template scope="scope">
               <div>{{scope.row.realClassIncome ==null || scope.row.targetClassIncome ==null || scope.row.targetClassIncome == '0' ? '0%' :
@@ -79,14 +95,17 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="realNewStudentNum"
             label="实际新生科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="targetNewStudentNum"
             label="目标新生科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             label="新生科数完成率">
             <template scope="scope">
               <div>{{scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum == '0' ? '0%' :
@@ -94,14 +113,17 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="realOldStudentNum"
             label="实际老生科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="targetOldSudentNum"
             label="目标老生科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             label="老生科数完成率">
             <template scope="scope">
               <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
@@ -109,14 +131,17 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="nowPeriodNum"
             label="本期科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="sequentialNum"
             label="顺期科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             label="顺期续读率">
             <template scope="scope">
               <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
@@ -124,14 +149,17 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="targetSequentialNum"
             label="目标顺期续读率">
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="stepNum"
             label="跨期科数">
           </el-table-column>
           <el-table-column
+             min-width="140"
             label="跨期续读率">
             <template scope="scope">
               <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
@@ -139,6 +167,7 @@
             </template>
           </el-table-column>
           <el-table-column
+             min-width="140"
             prop="targetStepNum"
             label="目标跨期续读率">
           </el-table-column>
@@ -153,48 +182,73 @@
           stripe
           style="min-width: 100%">
           <el-table-column
+            prop="busTeamName"
+            min-width="160"
+            label="业务组">
+          </el-table-column>
+          <el-table-column
             prop="seniorName"
+            min-width="100"
             label="班主任">
           </el-table-column>
           <el-table-column
-            prop="realNewStudentNum"
-            label="实际新生科数">
+            prop="lessRealNewStudentNum"
+            min-width="200"
+            label="新生科数（小于6讲）">
+          </el-table-column>
+          <el-table-column
+            prop="bigRealNewStudentNum"
+            min-width="200"
+            label="新生科数（大于等于6讲）">
           </el-table-column>
           <el-table-column
             prop="targetNewStudentNum"
+            min-width="140"
             label="目标新生科数">
           </el-table-column>
           <el-table-column
+            min-width="140"
             label="新生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realNewStudentNum ==null ||scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum == '0' ? '0%' :
-                (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 |formatNumber(2)}}%</div>
+              <div>{{scope.row.bigRealNewStudentNum ==null ||scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum == '0' ? '0%' :
+                (parseInt(scope.row.bigRealNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
-            prop="realOldStudentNum"
-            label="实际老生科数">
+            prop="lessRealOldStudentNum"
+            min-width="180"
+            label="老生科数（小于6讲）">
+          </el-table-column>
+          <el-table-column
+            prop="bigRealOldStudentNum"
+            min-width="200"
+            label="老生科数（大于等于6讲）">
           </el-table-column>
           <el-table-column
             prop="targetOldSudentNum"
+            min-width="140"
             label="目标老生科数">
           </el-table-column>
           <el-table-column
+            min-width="160"
             label="老生科数完成率">
             <template scope="scope">
-              <div>{{scope.row.realOldStudentNum ==null ||scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
-                (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 |formatNumber(2)}}%</div>
+              <div>{{scope.row.bigRealOldStudentNum ==null ||scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
+                (parseInt(scope.row.bigRealOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 |formatNumber(2)}}%</div>
             </template>
           </el-table-column>
           <el-table-column
             prop="nowPeriodNum"
+            min-width="100"
             label="本期科数">
           </el-table-column>
           <el-table-column
             prop="sequentialNum"
+            min-width="100"
             label="顺期科数">
           </el-table-column>
           <el-table-column
+            min-width="120"
             label="顺期续读率">
             <template scope="scope">
               <div>{{scope.row.nowPeriodNum ==null ||scope.row.sequentialNum ==null || scope.row.nowPeriodNum == '0' ? '0%' :
@@ -203,13 +257,16 @@
           </el-table-column>
           <el-table-column
             prop="targetSequentialNum"
+            min-width="140"
             label="目标顺期续读率">
           </el-table-column>
           <el-table-column
             prop="stepNum"
+            min-width="120"
             label="跨期科数">
           </el-table-column>
           <el-table-column
+            min-width="140"
             label="跨期续读率">
             <template scope="scope">
               <div>{{scope.row.nowPeriodNum ==null ||scope.row.stepNum ==null || scope.row.nowPeriodNum == '0' ? '0%' :
@@ -218,6 +275,7 @@
           </el-table-column>
           <el-table-column
             prop="targetStepNum"
+            min-width="160"
             label="目标跨期续读率">
           </el-table-column>
           <el-table-column
@@ -251,6 +309,7 @@
           </el-table-column>
           <el-table-column
             prop="className"
+            min-width="100"
             label="班级名称">
           </el-table-column>
           <el-table-column
@@ -271,13 +330,16 @@
           </el-table-column>
           <el-table-column
             prop="regNum"
+            min-width="100"
             label="报名人数">
           </el-table-column>
           <el-table-column
+            min-width="140"
             prop="sequentialPersonNum"
             label="顺期人数">
           </el-table-column>
           <el-table-column
+            min-width="140"
             label="顺期续读率">
             <template scope="scope">
               <div>{{scope.row.regNum ==null ||scope.row.sequentialPersonNum ==null || scope.row.regNum == '0' ? '0%' :
@@ -285,14 +347,17 @@
             </template>
           </el-table-column>
           <el-table-column
+            min-width="140"
             prop="sequentialTargetRate"
             label="目标顺期续读率">
           </el-table-column>
           <el-table-column
+            min-width="140"
             prop="stepPersonNum"
             label="跨期人数">
           </el-table-column>
           <el-table-column
+            min-width="140"
             label="跨期续读率">
             <template scope="scope">
               <div>{{scope.row.regNum ==null ||scope.row.stepPersonNum ==null || scope.row.regNum == '0' ? '0%' :
@@ -300,6 +365,7 @@
             </template>
           </el-table-column>
           <el-table-column
+            min-width="140"
             prop="stepTargetRate"
             label="目标跨期续读率">
           </el-table-column>
@@ -333,6 +399,7 @@
   export default{
     data:function(){
       return {
+        areaTeamId: '',
         periodId: '',
         periods: [],
         pageNo: 1,
@@ -353,7 +420,6 @@
         seniorComletionRate:[],
         gradeCompletionRate:[],
         classComletionRate:[],
-        areaTeams : [],
         activeName: 'first',
         searchConfig:{},
         sections: [
@@ -375,22 +441,19 @@
         ]
       }
     },
-    props: ['areaTeamId'],
     components: {
       Toolbar, Pagination},
     watch: {
       areaTeamId(newVal) {
         this.busTeamId = ''
-//        this.loadPeriodByYear()
         this.loadPeriodData()
       },
-//      year(newVal) {
-//        if (newVal) {
-//          this.loadPeriodByYear()
-//        }
-//      },
+
     },
     computed: {
+      areaTeams: function () {
+        return this.$root.config.areaTeams || []
+      },
       busTeams: function () {
         return ( ( this.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.areaTeamId] || [] ) : [] )
       },
@@ -399,9 +462,10 @@
       $(window).smoothScroll()
     },
     created:function(){
-//      this.loadPeriodByYear()
+      if (window.config.areaTeams) {
+        this.areaTeamId = window.config.areaTeams[0].areaTeamId
+      }
       this.loadPeriodData()
-//      this.getSeniorComletionRate()
     },
     methods:{
       handleFind(query) {
@@ -456,10 +520,6 @@
           this.$alert('请选择期数')
           return
         }
-        if(!this.busTeamId ){
-          this.$alert('请选择业务组')
-          return
-        }
         _this.seniorPageNo = pageNo || _this.seniorPageNo || 1
         _this.$showLoading()
         io.post(io.seniorComletionRate,{
@@ -484,7 +544,7 @@
           this.$alert('请选择区域')
           return
         }
-        if(!this.busTeamId ){
+        if(!this.classQuery.busTeamId ){
           this.$alert('请选择业务组')
           return
         }
@@ -493,8 +553,7 @@
         io.post(io.classComletionRate,Object.assign({},_this.classQuery,{
           pageNo: this.pageNo,
           pageSize: this.pageSize,
-          areaTeamId:this.areaTeamId,
-          busTeamId:this.busTeamId ,}),function(ret){
+          areaTeamId:this.areaTeamId,}),function(ret){
           if(ret.success){
             _this.$hiddenLoading()
             _this.classComletionRate = ret.data.list
@@ -512,10 +571,6 @@
         }
         if(!this.periodId){
           this.$alert('请选择期数')
-          return
-        }
-        if(!this.busTeamId ){
-          this.$alert('请选择业务组')
           return
         }
         _this.$showLoading()
@@ -608,11 +663,6 @@
 <style lang="less" scoped>
   .subject-complete {
     .content {
-      overflow: hidden;
-      padding: 20px;
-      padding-top: 15px;
-      border: 1px solid #d1dbe5;
-      margin-bottom: 30px;
       .title {
         text-align: center;
         color: #333;

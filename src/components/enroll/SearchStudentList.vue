@@ -44,6 +44,11 @@
                 fixed
                 prop="phoneNo"
                 label="手机号码"
+                min-width="120">
+              </el-table-column>
+              <el-table-column
+                prop="lastRegCampusName"
+                label="最近报读校区"
                 min-width="150">
               </el-table-column>
               <el-table-column

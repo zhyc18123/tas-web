@@ -73,6 +73,21 @@
 
           <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
             <div class="am-form-group">
+              <select2 v-model="query.level">
+                <option value="" label="班型"></option>
+                <option value="1" label="①不区分"></option>
+                <option value="2" label="②尖端"></option>
+                <option value="3" label="③状元"></option>
+                <option value="4" label="④尖子"></option>
+                <option value="5" label="⑤提高"></option>
+                <option value="6" label="⑥竞赛"></option>
+                <option value="7" label="⑦集训队"></option>
+              </select2>
+            </div>
+          </div>
+
+          <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
+            <div class="am-form-group">
               <input type="text" class="am-form-field" placeholder="教师名称"  v-model="query.teacherNames">
             </div>
           </div>
@@ -166,6 +181,13 @@
               label="老师"
               min-width="100">
             </el-table-column>
+            <el-table-column
+              label="班型"
+              min-width="100">
+              <template scope="scope">
+                <div>{{{'1': '不区分','2': '尖端','3': '状元','4': '尖子','5': '提高','6': '竞赛','7': '集训队'}[scope.row.level]}}</div>
+              </template>
+            </el-table-column>
 
             <el-table-column
               label="段次"
@@ -251,6 +273,7 @@
           className:'',
           teacherNames: '',
           segmentNo :'',
+          level: '',
         },
         products: [],
         busTeams: [],
