@@ -232,7 +232,7 @@ import moment from 'moment'
               return
             }
 
-            if(!this.feeCategory){
+            if(this.feeCategory.length === 0){
               complete.call()
               this.$alert('请选择成本类型')
               return
