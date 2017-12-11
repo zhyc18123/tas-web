@@ -31,7 +31,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
-                <button type="button" class="am-btn am-btn-default am-btn-success"
+                <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/sys/invoice/invoiceMainPartForm')"><span
                   class="am-icon-plus"></span>新建财务主体
                 </button>
@@ -66,9 +66,9 @@
                 label="操作"
                 width="240">
                 <template scope="scope">
-                  <el-button size="small" @click.native="$router.push('/main/sys/invoice/invoiceMainPartForm?financeSubjectId='+scope.row.financeSubjectId)">编辑
+                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/invoice/invoiceMainPartForm?financeSubjectId='+scope.row.financeSubjectId)">编辑
                   </el-button>
-                  <el-button @click="handleStop(scope.row.financeSubjectId)" size="small">停用
+                  <el-button v-if="hasPermission('edit')" @click="handleStop(scope.row.financeSubjectId)" size="small">停用
                   </el-button>
                 </template>
               </el-table-column>

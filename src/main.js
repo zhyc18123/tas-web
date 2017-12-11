@@ -98,6 +98,7 @@ const ClassHistoryList = resolve => require([ './components/enroll/ClassHistoryL
 const StudentRefundList = resolve => require([ './components/enroll/StudentRefundList'], resolve)
 const TurnClass = resolve => require([ './components/enroll/TurnClassStepOne'], resolve)
 const StudentRegList = resolve => require(['./components/enroll/StudentRegList'], resolve)
+const InvoiceManagement = resolve => require(['./components/enroll/InvoiceManagement'], resolve)
 
 
 
@@ -288,6 +289,7 @@ const router = new VueRouter({
       {path: 'enroll/ClassHistoryList', component:ClassHistoryList},
       {path: 'enroll/student/studentRefundList', component:StudentRefundList},
       {path: 'enroll/student/turnClass', component:TurnClass},
+      {path: 'enroll/student/invoiceList', component:InvoiceManagement},
 
 
 

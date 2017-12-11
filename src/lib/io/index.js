@@ -397,6 +397,14 @@ const io = {
     this.openInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/openInvoice'
     this.saveInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveInvoice'
     this.saveOrUpdate = conf.baseApiPath + '/api/admin/electronicinvoice/saveOrUpdate'
+    this.invoiceList = conf.baseApiPath + '/api/admin/electronicinvoice/invoiceList'
+    this.openInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/openInvoice'
+    this.resendMail = conf.baseApiPath + '/api/admin/electronicinvoice/resendMail'
+    this.rushInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/rushInvoice'
+    this.rushInvoiceCreateNew = conf.baseApiPath + '/api/admin/electronicinvoice/rushInvoiceCreateNew'
+    this.saveInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveInvoice'
+    this.saveRushInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveRushInvoice'
+    this.invoiceDetail = conf.baseApiPath + '/api/admin/electronicinvoice/invoiceDetail'
 
 
 

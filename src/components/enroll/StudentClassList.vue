@@ -86,16 +86,15 @@
       <el-table-column
         fixed="right"
         label="操作"
-        min-width="200">
+        min-width="270">
         <template scope="scope">
           <el-button size="small"  @click.native="shiftClass(scope.row.studentReg.regId)">临时调班</el-button>
           <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "
                      @click.native="studentRefund(scope.row.studentReg.regId)">退费申请
           </el-button>
-          <!--todo-->
-          <!--<el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "-->
-                     <!--@click.native="studentRefund(scope.row.studentReg.regId)">发票管理-->
-          <!--</el-button>-->
+          <el-button size="small" :disabled="scope.row.studentReg.chargingStatus != 2 || scope.row.studentReg.refundStatus == 1 "
+                     @click.native="$router.push('/main/enroll/student/invoiceList?regId=' + scope.row.studentReg.regId)">发票管理
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
