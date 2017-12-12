@@ -93,7 +93,7 @@
           </el-row>
           <el-row>
             <el-col :span="12"><el-form-item label="是否享受优惠政策" prop="periodId">
-              <el-select v-model="query.ifDiscount" placeholder="请选择区域">
+              <el-select v-model="query.ifDiscount" placeholder="请选择">
                 <el-option label="否" value="0"></el-option>
                 <el-option label="是" value="1"></el-option>
               </el-select>
@@ -101,6 +101,16 @@
             <el-col :span="12"><el-form-item label="增值税特殊管理" prop="areaTeamId">
               <el-input type="text" placeholder="享受优惠政策时请填写，例如：免税" v-model="query.taxEspecialManager"></el-input>
             </el-form-item></el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="是否启用" prop="subjectStatus">
+                <el-select v-model="query.subjectStatus" placeholder="是否启用">
+                  <el-option label="否" value="0"></el-option>
+                  <el-option label="是" value="1"></el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
           </el-row>
           <el-form-item label="请选择校区" prop="checkedCampuses">
             <el-checkbox  v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
@@ -172,6 +182,7 @@
         modifyRise: '0',
         goodCategoryCode: '',
         ifDiscount: '0',
+        subjectStatus: '1',
         taxEspecialManager: '',
         campusIds: '',
         campusNames: '',

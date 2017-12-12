@@ -405,6 +405,7 @@ const io = {
     this.saveInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveInvoice'
     this.saveRushInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveRushInvoice'
     this.invoiceDetail = conf.baseApiPath + '/api/admin/electronicinvoice/invoiceDetail'
+    this.changeSubjectStatus = conf.baseApiPath + '/api/admin/electronicinvoice/changeSubjectStatus'
 
 
 

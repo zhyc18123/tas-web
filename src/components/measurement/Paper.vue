@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">发票财务主体</div>
+          <div class="widget-title  am-cf">试卷列表</div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -16,8 +16,7 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <select2  v-model="query.campusId" :options="campuses">
-                  <option value="">请选择校区</option>
+                <select2  v-model="query.periodId" :options="periods">
                 </select2>
               </div>
             </div>
@@ -31,9 +30,9 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
-                <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/sys/invoice/invoiceMainPartForm')"><span
-                  class="am-icon-plus"></span>新建财务主体
+                <button type="button" class="am-btn am-btn-default am-btn-success"
+                        @click="$router.push('/main/measurement/test/add')"><span
+                  class="am-icon-plus"></span>新建试卷
                 </button>
               </div>
             </div>
@@ -47,30 +46,59 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="financeSubjectName"
-                label="财务主体"
-                min-width="150">
-              </el-table-column>
-              <el-table-column
                 prop="areaTeamName"
                 label="区域"
                 min-width="100">
               </el-table-column>
               <el-table-column
-                prop="campusNames"
-                label="校区"
+                prop="periodName"
+                label="期数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="gradeName"
+                label="年级"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                prop="subjectName"
+                label="科目"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="班型"
+                min-width="100">
+                <template scope="scope">
+                  <div>{{{'1': '不区分','2': '尖端','3': '状元','4': '尖子','5': '提高','6': '竞赛','7': '集训队'}[scope.row.level]}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="passingScore"
+                label="及格分数"
+                min-width="100">
+              </el-table-column>
+              <el-table-column
+                label="适用校区"
                 min-width="150">
+                <template scope="scope">
+                  <div>
+                    <el-tooltip  effect="light" placement="top">
+                      <div class="content-tooltip" slot="content">{{scope.row.campusNames.replace(/,/g, '\n')}}</div>
+                      <a>查看</a>
+                    </el-tooltip>
+                  </div>
+                </template>
               </el-table-column>
 
               <el-table-column
                 label="操作"
                 width="240">
                 <template scope="scope">
-                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/invoice/invoiceMainPartForm?financeSubjectId='+scope.row.financeSubjectId)">编辑
+                  <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>
-                  <el-button :disabled="scope.row.subjectStatus === '0'" v-if="hasPermission('edit')" @click="handleStop(scope.row.financeSubjectId)" size="small">停用
+                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/measurement/test/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
-                  <el-button :disabled="scope.row.subjectStatus === '1'" v-if="hasPermission('edit')" @click="handleStart(scope.row.financeSubjectId)" size="small">启动
+                  <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
                   </el-button>
                 </template>
               </el-table-column>
@@ -92,7 +120,8 @@
 <script>
 
   import Pagination from '../base/Pagination'
-  import io from '../../lib/io'
+
+  import io from '../../lib/io/index'
 
   export default{
     data: function () {
@@ -104,7 +133,7 @@
         query: {
           areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
         },
-        campuses: [],
+        periods: [],
         searchConfig: {}
       }
     },
@@ -124,61 +153,45 @@
       }
     },
     created: function () {
-      this.loadTableData()
-      this.loadCampusData()
+      this.loadPeriodData();
     },
     watch: {
       'query.areaTeamId'() {
-        this.loadCampusData()
+        this.loadPeriodData()
       }
     },
     methods: {
-      handleStop(financeSubjectId) {
-        var _this = this
-        _this.$confirm("确认停用吗",
-          function () {
-            io.post(io.changeSubjectStatus, {
-              subjectStatus: '0',
-              financeSubjectId: financeSubjectId
-            }, function (ret) {
-              if (ret.success) {
-                _this.$toast('停用成功！')
-                _this.loadTableData()
-              } else {
-                _this.$alert(ret.desc)
-              }
-            })
-          });
+      handleSettingWhitelist(row) {
+        this.$router.push('/main/measurement/test/measureWhitelist?measurementId='+row.measurementId)
       },
-      handleStart(financeSubjectId) {
+      handleDelete(measurementId) {
         var _this = this
-        _this.$confirm("确认启动吗",
-          function () {
-            io.post(io.changeSubjectStatus, {
-              subjectStatus: '1',
-              financeSubjectId: financeSubjectId
-            }, function (ret) {
-              if (ret.success) {
-                _this.$toast('启动成功！')
-                _this.loadTableData()
-              } else {
-                _this.$alert(ret.desc)
-              }
-            })
-          });
+        io.post(io.deleteMeasurement, {
+          measurementIdStr : measurementId
+        }, function (ret) {
+          if (ret.success) {
+            _this.$toast('删除成功！')
+            _this.loadTableData(1)
+
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
-      loadCampusData:function(){
-        var _this  = this
+      loadPeriodData: function () {
+        var _this = this
         if (!this.query.areaTeamId) {
           return
         }
-        io.post(io.apiAdminCampusOfAreaTeam, {
-          areaTeamId : _this.query.areaTeamId
+        io.post(io.apiAdminPeriodListForAreaTeam, {
+          areaTeamId : this.query.areaTeamId
         }, function (ret) {
           if (ret.success) {
-            _this.campuses = ret.data.map(function (item) {
-              return {value: item.campusId, text: item.campusName }
+            _this.periods = ret.data.map(function (item) {
+              return {value: item.periodId, text: item.periodName }
             })
+            _this.query.periodId = _this.query.periodId ? _this.query.periodId: ret.data.filter(item => item.isCurrent == 1 )[0].periodId
+            _this.loadTableData(_this.pageNo);
           } else {
             _this.$alert(ret.desc)
           }
@@ -190,9 +203,9 @@
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        io.post(io.financeSubjectList, {
+        io.post(io.measurementList, {
           areaTeamId: _this.query.areaTeamId,
-          campusId: _this.query.campusId,
+          periodId: _this.query.periodId,
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
         }, function (ret) {
@@ -204,6 +217,19 @@
           }
         })
       },
+      setupCurrent:function(periodId){
+        var _this = this
+        io.post(io.apiAdminUpdateCurrentPeriod,{
+          periodId
+        }, function (ret) {
+          if (ret.success) {
+            _this.$toast('OK')
+            _this.loadTableData()
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      }
     }
   }
 </script>

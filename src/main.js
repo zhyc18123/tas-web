@@ -21,9 +21,10 @@ const Enroll = resolve => require(['./components/login/Enroll'], resolve)
 
 const InvoiceMainPartList  = resolve => require(['./components/sysmanager/InvoiceMainPartList'], resolve)
 const InvoiceMainPartForm  = resolve => require(['./components/sysmanager/InvoiceMainPartForm'], resolve)
-const MeasureWhitelist  = resolve => require(['./components/sysmanager/MeasureWhitelist'], resolve)
-const MeasureForm  = resolve => require(['./components/sysmanager/MeasureForm'], resolve)
-const Measure  = resolve => require(['./components/sysmanager/Measure'], resolve)
+const MeasureWhitelist  = resolve => require(['./components/measurement/MeasureWhitelist'], resolve)
+const MeasureForm  = resolve => require(['./components/measurement/MeasureForm'], resolve)
+const Measure  = resolve => require(['./components/measurement/Measure'], resolve)
+const Paper  = resolve => require(['./components/measurement/Paper'], resolve)
 const UserProfile = resolve => require(['./components/sysmanager/UserProfile'], resolve)
 const UserList = resolve => require(['./components/sysmanager/UserList'], resolve)
 const UserForm = resolve => require(['./components/sysmanager/UserForm'], resolve)
@@ -194,6 +195,7 @@ const router = new VueRouter({
     path: '/main',
     component: Main,
     children:[
+      {path: 'measurement/exam/paper' , component: Paper },
       {path: 'measurement/test/setting' , component: Measure },
       {path: 'measurement/test/add' , component: MeasureForm },
       {path: 'measurement/test/measureWhitelist' , component: MeasureWhitelist },
