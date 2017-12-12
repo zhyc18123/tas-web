@@ -31,7 +31,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
-                        @click="$router.push('/main/sys/measure/add')"><span
+                        @click="$router.push('/main/measurement/test/add')"><span
                   class="am-icon-plus"></span>新建测评
                 </button>
               </div>
@@ -96,7 +96,7 @@
                 <template scope="scope">
                   <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>
-                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/measure/add?measurementId='+scope.row.measurementId)">编辑
+                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/measurement/test/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
                   <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
                   </el-button>
@@ -162,15 +162,7 @@
     },
     methods: {
       handleSettingWhitelist(row) {
-        debugger
-//        sessionStorage.setItem('measureWhitelist', JSON.stringify({
-//            whitelistConfig: row.whitelistConfig,
-//            subjectName: row.subjectName,
-//            areaTeamName: row.areaTeamName,
-//            areaTeamId: row.areaTeamId,
-//            measurementId: row.measurementId,
-//          }));
-        this.$router.push('/main/sys/measure/measureWhitelist?measurementId='+row.measurementId)
+        this.$router.push('/main/measurement/test/measureWhitelist?measurementId='+row.measurementId)
       },
       handleDelete(measurementId) {
         var _this = this

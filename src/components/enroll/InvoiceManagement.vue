@@ -127,7 +127,7 @@
     methods: {
       handleShowInvoiceForm(type, invoiceId) {
         if (type === 'open') {
-          if (this.tableData[0].status === '1' && this.tableData[0].operationCode === '10') {
+          if (this.tableData[0] && this.tableData[0].status === '1' && this.tableData[0].operationCode === '10') {
             this.$alert('请先红冲当前订单发票记录或者选择错票重开!')
             return
           }
