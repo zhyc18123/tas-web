@@ -391,6 +391,10 @@ const io = {
     this.measurementDetail = conf.baseApiPath + '/api/admin/measurement/measurementDetail'
     this.deleteMeasurement = conf.baseApiPath + '/api/admin/measurement/deleteMeasurement'
     this.updateWhiltelist = conf.baseApiPath + '/api/admin/measurement/updateWhiltelist'
+    this.examPapers = conf.baseApiPath + '/api/admin/measurement/examPapers'
+    this.questionsOfExamPaper = conf.baseApiPath + '/api/admin/measurement/questionsOfExamPaper'
+    this.saveOrUpdateExamPaper = conf.baseApiPath + '/api/admin/measurement/saveOrUpdateExamPaper'
+    this.saveOrUpdateExamPaperQuestions = conf.baseApiPath + '/api/admin/measurement/saveOrUpdateExamPaperQuestions'
 
     this.financeSubjectList = conf.baseApiPath + '/api/admin/electronicinvoice/financeSubjectList'
     this.financeSubject = conf.baseApiPath + '/api/admin/electronicinvoice/financeSubject'

@@ -25,6 +25,8 @@ const MeasureWhitelist  = resolve => require(['./components/measurement/MeasureW
 const MeasureForm  = resolve => require(['./components/measurement/MeasureForm'], resolve)
 const Measure  = resolve => require(['./components/measurement/Measure'], resolve)
 const Paper  = resolve => require(['./components/measurement/Paper'], resolve)
+const PaperForm  = resolve => require(['./components/measurement/PaperForm'], resolve)
+const TopicForm  = resolve => require(['./components/measurement/TopicForm'], resolve)
 const UserProfile = resolve => require(['./components/sysmanager/UserProfile'], resolve)
 const UserList = resolve => require(['./components/sysmanager/UserList'], resolve)
 const UserForm = resolve => require(['./components/sysmanager/UserForm'], resolve)
@@ -196,6 +198,8 @@ const router = new VueRouter({
     component: Main,
     children:[
       {path: 'measurement/exam/paper' , component: Paper },
+      {path: 'measurement/exam/add' , component: PaperForm },
+      {path: 'measurement/exam/addTopic' , component: TopicForm },
       {path: 'measurement/test/setting' , component: Measure },
       {path: 'measurement/test/add' , component: MeasureForm },
       {path: 'measurement/test/measureWhitelist' , component: MeasureWhitelist },
