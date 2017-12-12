@@ -29,26 +29,26 @@
             <td>{{tableData.buyerName}}</td>
           </tr>
           <tr>
-            <td class="bgColor">购货方手机：</td>
+            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>购货方手机：</td>
             <td>
               <input type="Number" max="11"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerPhone">
               <div v-else>{{tableData.buyerPhone}}</div>
             </td>
-            <td class="bgColor">购货方邮箱：</td>
+            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>购货方邮箱：</td>
             <td>
               <input type="text"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerEmail">
               <div v-else>{{tableData.buyerEmail}}</div>
             </td>
           </tr>
           <tr v-if="type === 'open'||type === 'reOpen'||type === 'look'">
-            <td class="bgColor">开票备注：</td>
+            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>开票备注：</td>
             <td colspan="3">
               <input type="text"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.remark">
               <div v-else>{{tableData.remark}}</div>
             </td>
           </tr>
           <tr v-if="type === 'rush' || type === 'look'">
-            <td class="bgColor">红冲原因：</td>
+            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>红冲原因：</td>
             <td colspan="3">
               <input type="text"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.rushRedReason">
               <div v-else>{{tableData.rushRedReason}}</div>
@@ -87,6 +87,11 @@
     margin-bottom: 2px;
     cursor: pointer;
     border: 1px solid #02c8c2;
+  }
+  .red {
+    color: #dd514c;
+    vertical-align: middle;
+    margin-right: 5px;
   }
 </style>
 

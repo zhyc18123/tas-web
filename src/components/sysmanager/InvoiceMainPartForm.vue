@@ -2,7 +2,7 @@
   <div class="am-u-sm-12 am-u-md-12 am-u-lg-12 m-invoice-mainPart-form" >
     <div class="widget am-cf">
       <div class="widget-head am-cf">
-        <div class="widget-title am-fl">测评设置</div>
+        <div class="widget-title am-fl">发票财务主体</div>
         <div class="widget-function am-fr">
           <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
         </div>
@@ -238,7 +238,7 @@
             if (ret.success) {
               ret.data.checkedCampuses = ret.data.campusIds && ret.data.campusIds.split(',') || []
               _this.query = ret.data;
-              _this.loadCampusData(ret.data.campusIds)
+              _this.loadCampusData(ret.data.checkedCampuses)
             } else {
               _this.$alert(ret.desc)
             }
@@ -268,6 +268,11 @@
         this.disabledBtn = true
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            if (_this.query.ifDiscount === '1' && !_this.query.taxEspecialManager) {
+              _this.$alert('享受优惠政策时，必须输入增值税特殊管理')
+              this.disabledBtn = false
+              return
+            }
             _this.query.areaTeamName = _this.areaTeams.filter((item)=>{ return item.areaTeamId === _this.query.areaTeamId })[0].areaTeamName
             io.post(io.saveOrUpdate,Object.assign({},_this.query,{
               campusIds: _this.query.checkedCampuses.join(',')

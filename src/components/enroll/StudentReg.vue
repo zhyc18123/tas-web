@@ -175,11 +175,15 @@
       this.$root.$on('mainAccount:change',function(){
         _this.loadMainAccount()
       })
+      this.$root.$on('studentReg:changeTabIndex',function(tabIndex){
+        _this.tabIndex =  tabIndex
+        console.log(_this.tabIndex)
+      })
+      console.log(_this.tabIndex)
       //init tabs
       $('#tabs').tabs();
     },
     mounted: function () {
-
     },
     methods: {
       handleWithdrawal() {
