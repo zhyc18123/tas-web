@@ -68,7 +68,9 @@
                 <template scope="scope">
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/sys/invoice/invoiceMainPartForm?financeSubjectId='+scope.row.financeSubjectId)">编辑
                   </el-button>
-                  <el-button v-if="hasPermission('edit')" @click="handleStop(scope.row.financeSubjectId)" size="small">停用
+                  <el-button :disabled="scope.row.subjectStatus === '0'" v-if="hasPermission('edit')" @click="handleStop(scope.row)" size="small">停用
+                  </el-button>
+                  <el-button :disabled="scope.row.subjectStatus === '1'" v-if="hasPermission('edit')" @click="handleStart(scope.row)" size="small">启动
                   </el-button>
                 </template>
               </el-table-column>
@@ -131,22 +133,37 @@
       }
     },
     methods: {
-      handleSettingWhitelist(row) {
-        this.$router.push('/main/sys/measure/measureWhitelist?financeSubjectId='+row.financeSubjectId)
-      },
-      handleStop(financeSubjectId) {
+      handleStop(row) {
         var _this = this
-        io.post(io.deleteMeasurement, {
-          financeSubjectIdStr : financeSubjectId
-        }, function (ret) {
-          if (ret.success) {
-            _this.$toast('删除成功！')
-            _this.loadTableData(1)
-
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
+        _this.$confirm("确认停用吗",
+          function () {
+            io.post(io.saveOrUpdate, Object.assign({},row,{
+              subjectStatus: '0'
+            }), function (ret) {
+              if (ret.success) {
+                _this.$toast('停用成功！')
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
+      handleStart(row) {
+        var _this = this
+        _this.$confirm("确认启动吗",
+          function () {
+            io.post(io.saveOrUpdate, Object.assign({},row,{
+              subjectStatus: '1'
+            }), function (ret) {
+              if (ret.success) {
+                _this.$toast('启动成功！')
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
       },
       loadCampusData:function(){
         var _this  = this

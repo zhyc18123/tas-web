@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="widget-body am-fr">
-        <el-form :model="query" ref="query" label-width="180px" class="demo-query">
+        <el-form :rules="rules" :model="query" ref="query" label-width="180px" class="demo-query">
           <el-row>
             <el-col :span="12"><el-form-item label="财务主体" prop="periodId">
               <el-input type="text" placeholder="财务主体" v-model="query.financeSubjectName"></el-input>
@@ -77,7 +77,7 @@
           </el-row>
           <el-row>
             <el-col :span="12"><el-form-item label="税率" prop="periodId">
-              <el-input type="text" placeholder="税率" v-model="query.taxRate"></el-input>
+              <el-input type="Number" placeholder="税率" v-model="query.taxRate"></el-input>
             </el-form-item></el-col>
             <el-col :span="12"><el-form-item label="发票开票含税限额" prop="areaTeamId">
               <el-input type="text" placeholder="发票开票含税限额" v-model="query.limitInvoicingTax"></el-input>
@@ -135,6 +135,11 @@
         isEdit: false,
         campuses: [],
         periods: [],
+        rules: {
+          checkedCampuses: [
+            {  type: 'array', required: true, message: '请至少选择一个校区', trigger: 'change'},
+          ],
+        }
       };
     },
     props: ['studentId'],
@@ -220,7 +225,7 @@
             financeSubjectId : financeSubjectId
           }, function (ret) {
             if (ret.success) {
-              ret.data.checkedCampuses = ret.data.campusIds.split(',')
+              ret.data.checkedCampuses = ret.data.campusIds && ret.data.campusIds.split(',') || []
               _this.query = ret.data;
               _this.loadCampusData(ret.data.campusIds)
             } else {
