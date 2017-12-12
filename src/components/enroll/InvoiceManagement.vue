@@ -3,7 +3,7 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">发票管理</div>
+          <div class="widget-title am-fl">发票管理</div>
           <div class="widget-function am-fr">
             <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
           </div>
@@ -126,15 +126,23 @@
     },
     methods: {
       handleShowInvoiceForm(type, invoiceId) {
+        if (type === 'open') {
+          if (this.tableData[0].status === '1' && this.tableData[0].operationCode === '10') {
+            this.$alert('请先红冲当前订单发票记录或者选择错票重开!')
+            return
+          }
+        }
         this.$refs.InvoiceForm.type = type
         this.$refs.InvoiceForm.invoiceId = invoiceId
         this.$refs.InvoiceForm.show()
       },
       loadTableData: function () {
         var _this = this
+        this.$showLoading()
         io.post(io.invoiceList, {
           regId: this.regId
         }, function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.tableData = ret.data
           } else {

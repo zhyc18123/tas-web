@@ -31,7 +31,7 @@
           <tr>
             <td class="bgColor">购货方手机：</td>
             <td>
-              <input type="text"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerPhone">
+              <input type="Number" max="11"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerPhone">
               <div v-else>{{tableData.buyerPhone}}</div>
             </td>
             <td class="bgColor">购货方邮箱：</td>
@@ -58,6 +58,10 @@
         </table>
         <div class="footer" v-if="type=== 'look'">
           <a :href="QRCode" target="_blank" download="二维码下载">二维码下载</a>
+          <el-tooltip placement="top">
+            <div slot="content"><img class="bing-student-src-big" :src="QRCode" alt=""></div>
+            <img class="qrCode-img" :src="QRCode" alt="">
+          </el-tooltip>
           <a href="javascript:void(0)" @click="type= 'reSendMail'">重发邮件</a>
           <a :href="tableData.pdfUrl">电子发票下载</a>
         </div>
@@ -75,6 +79,14 @@
 <style scoped>
   .footer a {
     margin-right: 15px;
+  }
+  .footer .qrCode-img {
+    width: 25px;
+    margin-left: -18px;
+    margin-right: 15px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    border: 1px solid #02c8c2;
   }
 </style>
 
@@ -109,21 +121,61 @@
     },
     methods: {
       handleSave() {
+        let email = this.tableData.buyerEmail,
+          phone = this.tableData.buyerPhone,
+          remark = this.tableData.remark,
+          rushRedReason = this.tableData.rushRedReason;
+
         if (this.type === 'rush') {
+          if (!this.check(email, phone,rushRedReason)) {
+            return
+          }
           this.saveRushInvoice()
         } else if (this.type === 'open') {
+          if (!this.check(email, phone,remark)) {
+            return
+          }
           this.saveInvoice()
         } else if (this.type === 'reOpen') {
+          if (!this.check(email, phone,remark)) {
+            return
+          }
           this.rushInvoiceCreateNew()
         } else if (this.type === 'reSendMail') {
+          if (!this.check(email, phone)) {
+            return
+          }
           this.resendMail()
         }
+      },
+      check(email, phone, remark) {
+        if (!this.validatePhone(phone)) {
+          this.$alert('请输入正确电话！')
+          return false
+        }
+        if (!this.validateEmail(email)) {
+          this.$alert('请输入正确邮箱！')
+          return false
+        }
+        if(remark !== undefined && !remark) {
+          this.$alert('请输入备注原因！')
+          return false
+        }
+        return true
+      },
+      validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      },
+      validatePhone(phone) {
+        var re = /^1\d{10}$/;
+        return re.test(phone)
       },
       saveInvoice() {
         var _this = this
         io.post(io.saveInvoice, this.tableData, function (ret) {
           if (ret.success) {
-            _this.tableData = ret.data
+            _this.$toast('开票成功')
             _this.close()
           } else {
             _this.$alert(ret.desc)
@@ -134,7 +186,18 @@
         var _this = this
         io.post(io.saveRushInvoice, this.tableData, function (ret) {
           if (ret.success) {
-            _this.tableData = ret.data
+            _this.$toast('红冲发票成功')
+            _this.close()
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      rushInvoiceCreateNew() {
+        var _this = this
+        io.post(io.rushInvoiceCreateNew, this.tableData, function (ret) {
+          if (ret.success) {
+            _this.$toast('错票重开成功')
             _this.close()
           } else {
             _this.$alert(ret.desc)
@@ -143,9 +206,9 @@
       },
       resendMail() {
         var _this = this
-        io.post(io.resendMail, {invoiceId: this.invoiceId}, function (ret) {
+        io.post(io.resendMail, this.tableData, function (ret) {
           if (ret.success) {
-            _this.tableData = ret.data
+            _this.$toast('重发邮件成功')
             _this.close()
           } else {
             _this.$alert(ret.desc)
