@@ -90,7 +90,7 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="examConfig"
+                prop="examPaperNos"
                 label="已选试卷序号"
                 min-width="150">
               </el-table-column>
@@ -186,7 +186,7 @@
         })
       },
       handleExam(measurementId) {
-
+        this.$router.push('/main/measurement/exam/bingPaper?measurementId='+measurementId)
       },
       loadPeriodData: function () {
         var _this = this
@@ -221,7 +221,16 @@
         }, function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
+            ret.data.list.map(val => {
+              if (val.examConfig) {
+                val.examConfig = JSON.parse(val.examConfig)
+                val.examPaperNos = val.examConfig.map(i => {
+                  return i.examPaperNo
+                }).join('，')
+              }
+            })
             _this.tableData = ret.data.list
+
           } else {
             _this.$alert(ret.desc)
           }

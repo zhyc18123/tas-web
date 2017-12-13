@@ -7,17 +7,37 @@
 <script>
 
 import io from '../../lib/io'
-
 require('../../../static/ueditor/ueditor.config.js')
 require('../../../static/ueditor/ueditor.all.js')
 require('../../../static/ueditor/lang/zh-cn/zh-cn.js')
+
+// 数学公式与latex插件
+require('../../../static/ueditor/kityformula-plugin/addKityFormulaDialog.js')
+require('../../../static/ueditor/kityformula-plugin/getKfContent.js')
+require('../../../static/ueditor/kityformula-plugin/defaultFilterFix.js')
+require('../../../static/ueditor/latex-plugin/latexDialog.js')
+require('../../../static/ueditor/latex-plugin/getKfContent.js')
+require('../../../static/ueditor/latex-plugin/defaultFilterFix.js')
 
     export default{
         name:'editor',
         props:['value','width','height'],
         mounted:function(){
           var _this = this
-          _this.editor =  UE.getEditor(_this.id)
+          _this.editor =  UE.getEditor(_this.id, {
+            toolbars: [
+              [
+                'source', '|','undo', 'redo', 'superscript', 'subscript','|',
+                'bold', 'italic', 'underline', 'fontborder','|', 'strikethrough',
+                'forecolor', 'backcolor',
+                'lineheight','insertorderedlist', '|', 'fontfamily', 'fontsize','removeformat', '|',
+                'justifyleft', 'justifycenter', 'justifyright', 'justifyjustify','|',
+                'insertimage', 'spechars', '|','inserttable'
+              ]
+            ],
+            autoHeightEnabled: true,
+            autoFloatEnabled: true
+          })
           _this.editor.addListener('ready',function(){
             _this.ok = true
             if(_this.value){

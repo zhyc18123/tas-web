@@ -198,6 +198,7 @@ const router = new VueRouter({
     component: Main,
     children:[
       {path: 'measurement/exam/paper' , component: Paper },
+      {path: 'measurement/exam/bingPaper' , component: Paper },
       {path: 'measurement/exam/add' , component: PaperForm },
       {path: 'measurement/exam/addTopic' , component: TopicForm },
       {path: 'measurement/test/setting' , component: Measure },

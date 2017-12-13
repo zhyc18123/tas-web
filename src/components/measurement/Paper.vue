@@ -40,12 +40,7 @@
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="search" ><span class="am-icon-search"></span>查询
                 </button>
-              </div>
-            </div>
-
-            <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
-              <div class="am-form-group am-btn-group-xs">
-                <button v-if="hasPermission('add')" type="button" class="am-btn am-btn-default am-btn-success"
+                <button v-if="hasPermission('add') && !measurementId" type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/measurement/exam/add')"><span
                   class="am-icon-plus"></span>新建
                 </button>
@@ -59,8 +54,10 @@
               :data="tableData"
               border
               stripe
+              @selection-change="handleSelectionChange"
               style="min-width: 100%">
               <el-table-column
+                v-if="measurementId"
                 type="selection"
                 width="55">
               </el-table-column>
@@ -100,6 +97,7 @@
                 min-width="100">
               </el-table-column>
               <el-table-column
+                v-if="!measurementId"
                 label="最后编辑时间"
                 min-width="150">
                 <template scope="scope">
@@ -111,14 +109,17 @@
 
               <el-table-column
                 label="操作"
+                fixed="right"
                 width="240">
                 <template scope="scope">
-                  <el-button v-if="hasPermission('add')" size="small" @click.native="$router.push('/main/measurement/exam/add?examPaperId='+
+                  <el-button v-if="measurementId" size="small" @click.native="handleLooking">查看
+                  </el-button>
+                  <el-button v-if="hasPermission('add') && !measurementId" size="small" @click.native="$router.push('/main/measurement/exam/add?examPaperId='+
                   scope.row.examPaperId)">编辑
                   </el-button>
-                  <el-button v-if="hasPermission('add')" @click="handleDelete(scope.row.examPaperId)" size="small">删除
+                  <el-button v-if="hasPermission('add') && !measurementId" @click="handleDelete(scope.row.examPaperId)" size="small">删除
                   </el-button>
-                  <el-button v-if="hasPermission('add')" size="small" @click.native="$router.push('/main/measurement/exam/addTopic?examPaperId='+
+                  <el-button v-if="hasPermission('add') && !measurementId" size="small" @click.native="$router.push('/main/measurement/exam/addTopic?examPaperId='+
                   scope.row.examPaperId)">录入题目
                   </el-button>
                 </template>
@@ -129,6 +130,11 @@
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
                           @paging="loadTableData"/>
+            </div>
+          </div>
+          <div class="am-u-lg-12 am-cf">
+            <div class="am-fr">
+              <el-button type="primary" @click="handleSave">保存</el-button>
             </div>
           </div>
         </div>
@@ -143,10 +149,14 @@
   import Pagination from '../base/Pagination'
 
   import io from '../../lib/io/index'
+  import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
 
   export default{
     data: function () {
       return {
+        multipleSelection: [],
+        examPaperIds: [],
+        measurementId: '',
         tableData: [],
         total: 0,
         pageSize: 10,
@@ -162,6 +172,7 @@
       }
     },
     components: {
+      ElButton,
       Pagination
     },
     mounted: function () {
@@ -187,9 +198,33 @@
       },
     },
     created: function () {
+      this.measurementId = this.$route.query.measurementId
       this.loadTableData(1)
     },
     methods: {
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
+      handleSave() {
+        var _this = this,
+        examPaperIds = this.multipleSelection.map(val => {
+          return val.examPaperId
+        })
+        io.post(io.bindExams, {
+          measurementId: _this.measurementId,
+          examPaperIds: examPaperIds,
+        }, function (ret) {
+          if (ret.success) {
+            _this.$toast('组卷成功！')
+            _this.$router.go(-1)
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
+      handleLooking() {
+
+      },
       search:function(){
         this.loadTableData(1)
       },
