@@ -255,6 +255,19 @@
           }
         })
       },
+      rushAndCreateInvoice: function () {
+        var _this = this
+        io.post(io.rushAndCreateInvoice, {
+          invoiceId: this.invoiceId
+        }, function (ret) {
+          if (ret.success) {
+            _this.tableData = ret.data
+            _this.tableData.remark = '订单号：' + ret.data.orderId
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
+      },
       close() {
         this.$refs.win.close()
         this.$emit('completed')
@@ -265,10 +278,12 @@
         })
         if (this.type === 'open') {
           this.openInvoice()
-        } else if (this.type === 'rush' || this.type === 'reOpen') {
+        } else if (this.type === 'rush') {
           this.rushInvoice()
-        }else if (this.type === 'look') {
+        } else if (this.type === 'look') {
           this.invoiceDetail()
+        } else if (this.type === 'reOpen') {
+          this.rushAndCreateInvoice()
         }
       }
     }

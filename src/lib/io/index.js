@@ -402,6 +402,7 @@ const io = {
     this.resendMail = conf.baseApiPath + '/api/admin/electronicinvoice/resendMail'
     this.rushInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/rushInvoice'
     this.rushInvoiceCreateNew = conf.baseApiPath + '/api/admin/electronicinvoice/rushInvoiceCreateNew'
+    this.rushAndCreateInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/rushAndCreateInvoice'
     this.saveInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveInvoice'
     this.saveRushInvoice = conf.baseApiPath + '/api/admin/electronicinvoice/saveRushInvoice'
     this.invoiceDetail = conf.baseApiPath + '/api/admin/electronicinvoice/invoiceDetail'
