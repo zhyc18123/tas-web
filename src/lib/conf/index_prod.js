@@ -1,3 +1,4 @@
+window.UEDITOR_HOME_URL = '/static/ueditor/'
 export default {
   baseApiPath : 'http://b.yuyou100.com/yyfn-api',
   basePath : 'http://b.yuyou100.com',
