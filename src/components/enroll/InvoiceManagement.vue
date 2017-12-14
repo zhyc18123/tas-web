@@ -83,14 +83,14 @@
 
               <el-table-column
                 label="操作"
-                width="260">
+                width="180">
                 <template scope="scope">
                   <el-button size="small" @click.native="handleShowInvoiceForm('look',scope.row.invoiceId)">查看
                   </el-button>
                   <el-button :disabled="scope.row.status === '0' || scope.row.invoiceType === '2'" @click.native="handleShowInvoiceForm('rush',scope.row.invoiceId)" size="small">红冲发票
                   </el-button>
-                  <el-button :disabled="scope.row.status === '0' || scope.row.invoiceType === '2'" @click.native="handleShowInvoiceForm('reOpen',scope.row.invoiceId)" size="small">错票重开
-                  </el-button>
+                  <!--<el-button :disabled="scope.row.status === '0' || scope.row.invoiceType === '2'" @click.native="handleShowInvoiceForm('reOpen',scope.row.invoiceId)" size="small">错票重开-->
+                  <!--</el-button>-->
                 </template>
               </el-table-column>
             </el-table>
