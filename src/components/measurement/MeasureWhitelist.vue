@@ -111,7 +111,6 @@
     },
     methods: {
       formatData(arr) {
-        debugger
         for(let i=0 ; i< arr.length; i++) {
           arr[i] = '' + String(new Number(arr[i]).toFixed(0))
         }

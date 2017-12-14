@@ -465,7 +465,6 @@
       if (window.config.areaTeams) {
         this.areaTeamId = window.config.areaTeams[0].areaTeamId
       }
-      this.loadPeriodData()
     },
     methods:{
       handleFind(query) {
@@ -477,23 +476,6 @@
         	this.classQuery = query
         	this.getClassComletionRate(1)
         }
-      },
-      loadPeriodByYear: function () {
-        var _this = this;
-        if(!this.areaTeamId || !this.year) {
-          return
-        }
-        io.post(io.periodByYearAndAreaTeamId,{
-          areaTeamId: this.areaTeamId,
-          year: moment(this.year).format("YYYY"),
-        },function(ret){
-          if(ret.success){
-            debugger
-            _this.periods = ret.data
-          }else{
-            _this.$alert(ret.desc)
-          }
-        })
       },
       loadPeriodData: function () {
         var _this = this
@@ -634,7 +616,7 @@
         io.downloadFile(io.exportSomeSeniorComletionRate,{
           areaTeamId: _this.areaTeamId,
           periodId: _this.periodId,
-          busTeamId: _this.busTeamId,
+          busTeamId: row.busTeamId,
           seniorIdStr: row.seniorId
         },function(ret){
           if(ret.success){
@@ -645,7 +627,6 @@
         })
       },
       handleExportClassComletionRate(row) {
-        debugger
         let _this = this;
         io.downloadFile(io.exportClassComletionRate,{
           classId: row.classId
