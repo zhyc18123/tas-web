@@ -63,7 +63,7 @@
             <img class="qrCode-img" :src="QRCode" alt="">
           </el-tooltip>
           <a href="javascript:void(0)" @click="type= 'reSendMail'">重发邮件</a>
-          <a :href="tableData.pdfUrl">电子发票下载</a>
+          <a :href="tableData.pdfUrl" target="_blank" download>电子发票下载</a>
         </div>
       </div>
       <div class="am-u-sm-12 am-text-center am-margin-top-lg">
