@@ -89,16 +89,23 @@
                   </div>
                 </template>
               </el-table-column>
+              <el-table-column
+                prop="examPaperNos"
+                label="已选试卷序号"
+                min-width="150">
+              </el-table-column>
 
               <el-table-column
                 label="操作"
-                width="240">
+                width="290">
                 <template scope="scope">
                   <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/measurement/test/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
                   <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
+                  </el-button>
+                  <el-button v-if="hasPermission('exam')" @click="handleExam(scope.row.measurementId)" size="small">组卷
                   </el-button>
                 </template>
               </el-table-column>
@@ -178,6 +185,9 @@
           }
         })
       },
+      handleExam(measurementId) {
+        this.$router.push('/main/measurement/exam/bingPaper?measurementId='+measurementId)
+      },
       loadPeriodData: function () {
         var _this = this
         if (!this.query.areaTeamId) {
@@ -211,7 +221,16 @@
         }, function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
+            ret.data.list.map(val => {
+              if (val.examConfig) {
+                val.examConfig = JSON.parse(val.examConfig)
+                val.examPaperNos = val.examConfig.map(i => {
+                  return i.examPaperNo
+                }).join('，')
+              }
+            })
             _this.tableData = ret.data.list
+
           } else {
             _this.$alert(ret.desc)
           }
