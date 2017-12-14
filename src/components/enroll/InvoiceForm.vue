@@ -29,12 +29,12 @@
             <td>{{tableData.buyerName}}</td>
           </tr>
           <tr>
-            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>购货方手机：</td>
+            <td class="bgColor">购货方手机：</td>
             <td>
               <input type="Number" max="11"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerPhone">
               <div v-else>{{tableData.buyerPhone}}</div>
             </td>
-            <td class="bgColor"><span v-if="type!== 'look'" class="red">*</span>购货方邮箱：</td>
+            <td class="bgColor">购货方邮箱：</td>
             <td>
               <input type="text"  class="am-input-sm refundWidth" v-if="type!== 'look'"  v-model="tableData.buyerEmail">
               <div v-else>{{tableData.buyerEmail}}</div>
@@ -67,7 +67,7 @@
         </div>
       </div>
       <div class="am-u-sm-12 am-text-center am-margin-top-lg">
-        <button type="button" class="am-btn am-btn-primary" @click="handleSave()">保存</button>
+        <button type="button" :disabled="disabledBtn" v-if="type !== 'look'" class="am-btn am-btn-primary" @click="handleSave()">保存</button>
         <a href="javascript:void(0)" data-am-modal-close>
           <button class="am-btn am-btn-primary">取消</button>
         </a>
@@ -77,6 +77,15 @@
 
 </template>
 <style scoped>
+  .footer {
+    text-align: center;
+  }
+  table td,table th {
+    text-align: left;
+  }
+  table .bgColor {
+    text-align: center;
+  }
   .footer a {
     margin-right: 15px;
   }
@@ -105,6 +114,7 @@
         invoiceId: '',
         QRCode: '',
         invoiceSrc: '',
+        disabledBtn: false,
         tableData: {},
       }
     },
@@ -126,59 +136,40 @@
     },
     methods: {
       handleSave() {
-        let email = this.tableData.buyerEmail,
-          phone = this.tableData.buyerPhone,
-          remark = this.tableData.remark,
+        let remark = this.tableData.remark,
           rushRedReason = this.tableData.rushRedReason;
 
         if (this.type === 'rush') {
-          if (!this.check(email, phone,rushRedReason)) {
+          if (!this.check(rushRedReason)) {
             return
           }
           this.saveRushInvoice()
         } else if (this.type === 'open') {
-          if (!this.check(email, phone,remark)) {
+          if (!this.check(remark)) {
             return
           }
           this.saveInvoice()
         } else if (this.type === 'reOpen') {
-          if (!this.check(email, phone,remark)) {
+          if (!this.check(remark)) {
             return
           }
           this.rushInvoiceCreateNew()
         } else if (this.type === 'reSendMail') {
-          if (!this.check(email, phone)) {
-            return
-          }
           this.resendMail()
         }
       },
-      check(email, phone, remark) {
-        if (!this.validatePhone(phone)) {
-          this.$alert('请输入正确电话！')
-          return false
-        }
-        if (!this.validateEmail(email)) {
-          this.$alert('请输入正确邮箱！')
-          return false
-        }
+      check(remark) {
         if(remark !== undefined && !remark) {
           this.$alert('请输入备注原因！')
           return false
         }
         return true
       },
-      validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-      },
-      validatePhone(phone) {
-        var re = /^1\d{10}$/;
-        return re.test(phone)
-      },
       saveInvoice() {
         var _this = this
+        _this.disabledBtn = true
         io.post(io.saveInvoice, this.tableData, function (ret) {
+          _this.disabledBtn = false
           if (ret.success) {
             _this.$toast('开票成功')
             _this.close()
@@ -189,7 +180,9 @@
       },
       saveRushInvoice() {
         var _this = this
+        this.disabledBtn = true
         io.post(io.saveRushInvoice, this.tableData, function (ret) {
+          _this.disabledBtn = false
           if (ret.success) {
             _this.$toast('红冲发票成功')
             _this.close()
@@ -200,7 +193,9 @@
       },
       rushInvoiceCreateNew() {
         var _this = this
+        _this.disabledBtn = true
         io.post(io.rushInvoiceCreateNew, this.tableData, function (ret) {
+          _this.disabledBtn = false
           if (ret.success) {
             _this.$toast('错票重开成功')
             _this.close()
@@ -211,7 +206,9 @@
       },
       resendMail() {
         var _this = this
+        _this.disabledBtn = true
         io.post(io.resendMail, this.tableData, function (ret) {
+          _this.disabledBtn = false
           if (ret.success) {
             _this.$toast('重发邮件成功')
             _this.close()
@@ -227,6 +224,7 @@
         }, function (ret) {
           if (ret.success) {
             _this.tableData = ret.data
+            _this.tableData.remark = '订单号：' + ret.data.orderId
           } else {
             _this.$alert(ret.desc)
           }

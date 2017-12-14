@@ -1345,3 +1345,10 @@ input[type=radio][disabled]{
 .am-form >.am-u-sm-12:nth-child(4n + 1) {
    clear: both;
 }
+:not(output):-moz-ui-invalid {
+  box-shadow: 0 0 1.5px 1px #fff;
+}
+
+:not(output):-moz-ui-invalid:-moz-focusring {
+  box-shadow: 0 0 2px 2px #fff;
+}
