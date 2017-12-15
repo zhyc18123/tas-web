@@ -209,6 +209,9 @@
     },
     created: function () {
       this.measurementId = this.$route.query.measurementId
+      this.query.areaTeamId = this.$route.query.areaTeamId
+      this.query.gradeId = this.$route.query.gradeId
+      this.query.subjectId = this.$route.query.subjectId
       this.loadTableData(1)
     },
     methods: {
@@ -266,6 +269,7 @@
           areaTeamId: _this.query.areaTeamId,
           gradeId: _this.query.gradeId,
           subjectId: _this.query.subjectId,
+          hasQuestion: '1',
           title: _this.query.title,
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,

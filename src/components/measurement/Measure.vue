@@ -106,7 +106,7 @@
                   </el-button>
                   <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
                   </el-button>
-                  <el-button v-if="hasPermission('exam')" @click="handleExam(scope.row.measurementId)" size="small">组卷
+                  <el-button v-if="hasPermission('exam')" @click="handleExam(scope.row)" size="small">组卷
                   </el-button>
                 </template>
               </el-table-column>
@@ -186,8 +186,9 @@
           }
         })
       },
-      handleExam(measurementId) {
-        this.$router.push('/main/measurement/exam/bingPaper?measurementId='+measurementId)
+      handleExam(row) {
+        this.$router.push('/main/measurement/exam/bingPaper?measurementId='+row.measurementId + '&areaTeamId=' + row.areaTeamId +
+          '&gradeId=' + row.gradeId + '&subjectId=' + row.subjectId)
       },
       loadPeriodData: function () {
         var _this = this
