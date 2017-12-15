@@ -205,6 +205,22 @@
       this.loadTableData(1)
     },
     methods: {
+      handleDelete(examPaperId) {
+        var _this = this
+        _this.$confirm('你确定要删除？',
+          function () {
+            io.post(io.delExamPaper, {
+              examPaperId: examPaperId,
+            }, function (ret) {
+              if (ret.success) {
+                _this.$toast('删除成功！')
+                _this.loadTableData()
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
       handleSelectionChange(val) {
         this.multipleSelection = val;
       },
