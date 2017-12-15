@@ -97,7 +97,8 @@
 
               <el-table-column
                 label="操作"
-                width="290">
+                fixed="right"
+                width="300">
                 <template scope="scope">
                   <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>

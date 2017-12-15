@@ -14,6 +14,7 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2  v-model="query.areaTeamId" :options="areaTeams">
+                  <option value="">请选择区域</option>
                 </select2>
               </div>
             </div>
@@ -52,6 +53,7 @@
 
           </div>
 
+          <div v-if="measurementId" class="am-u-sm-12 red am-form-group">备注：每一次组卷，旧的试卷组合将被覆盖。</div>
           <div class="am-u-sm-12">
             <el-table
               :data="tableData"
@@ -113,7 +115,7 @@
               <el-table-column
                 label="操作"
                 fixed="right"
-                width="240">
+                :width="optionWidth">
                 <template scope="scope">
                   <el-button v-if="measurementId" size="small" @click.native="handleLooking(scope.row.examPaperId)">查看
                   </el-button>
@@ -182,6 +184,9 @@
       $(window).smoothScroll()
     },
     computed: {
+      optionWidth() {
+        return this.measurementId ? 80: 240
+      },
       areaTeams: function () {
         var options = ( this.$root.config.areaTeams || [] )
           .map(function (item) {
@@ -288,6 +293,9 @@
   }
 </script>
 <style scoped lang="less">
+  .red {
+    color: red;
+  }
   .content-tooltip {
     unicode-bidi: embed;
     white-space: pre;
