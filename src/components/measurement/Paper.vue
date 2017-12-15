@@ -3,7 +3,10 @@
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
-          <div class="widget-title  am-cf">试卷列表</div>
+          <div class="widget-title am-fl">试卷列表</div>
+          <div class="widget-function am-fr">
+            <button type="button" class="am-btn am-btn-default" @click="$router.go(-1)">返回</button>
+          </div>
         </div>
         <div class="widget-body  am-fr">
 
@@ -112,7 +115,7 @@
                 fixed="right"
                 width="240">
                 <template scope="scope">
-                  <el-button v-if="measurementId" size="small" @click.native="handleLooking">查看
+                  <el-button v-if="measurementId" size="small" @click.native="handleLooking(scope.row.examPaperId)">查看
                   </el-button>
                   <el-button v-if="hasPermission('add') && !measurementId" size="small" @click.native="$router.push('/main/measurement/exam/add?examPaperId='+
                   scope.row.examPaperId)">编辑
@@ -126,14 +129,15 @@
               </el-table-column>
             </el-table>
           </div>
+          <paper-detail ref="paperDetail"></paper-detail>
           <div class="am-u-lg-12 am-cf">
             <div class="am-fr">
               <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
                           @paging="loadTableData"/>
             </div>
           </div>
-          <div class="am-u-lg-12 am-cf">
-            <div class="am-fr">
+          <div class="am-u-lg-12">
+            <div class="am-text-center">
               <el-button type="primary" @click="handleSave">保存</el-button>
             </div>
           </div>
@@ -147,9 +151,8 @@
 <script>
 
   import Pagination from '../base/Pagination'
-
   import io from '../../lib/io/index'
-  import ElButton from "../../../node_modules/element-ui/packages/button/src/button.vue";
+  import PaperDetail from './PaperDetail.vue'
 
   export default{
     data: function () {
@@ -172,7 +175,7 @@
       }
     },
     components: {
-      ElButton,
+      PaperDetail,
       Pagination
     },
     mounted: function () {
@@ -210,6 +213,10 @@
         examPaperIds = this.multipleSelection.map(val => {
           return val.examPaperId
         })
+        if (this.multipleSelection.length === 0) {
+          this.$alert('请选择试卷！')
+          return false
+        }
         io.post(io.bindExams, {
           measurementId: _this.measurementId,
           examPaperIds: examPaperIds,
@@ -222,8 +229,9 @@
           }
         })
       },
-      handleLooking() {
-
+      handleLooking(examPaperId) {
+        this.$refs.paperDetail.examPaperId = examPaperId
+        this.$refs.paperDetail.show()
       },
       search:function(){
         this.loadTableData(1)
