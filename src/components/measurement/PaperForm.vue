@@ -152,6 +152,11 @@
         this.disabledBtn = true
         this.$refs[formName].validate((valid) => {
           if (valid) {
+            if (Number(_this.query.testTime) % 1 !== 0) {
+              _this.$alert('考试时间为整数')
+              this.disabledBtn = false
+              return
+            }
             io.post(io.saveOrUpdateExamPaper,_this.query, function (ret) {
               if (ret.success) {
                 _this.$toast('提交成功！')

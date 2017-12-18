@@ -67,6 +67,11 @@
                 width="55">
               </el-table-column>
               <el-table-column
+                prop="examPaperNo"
+                label="试卷序号"
+                min-width="120">
+              </el-table-column>
+              <el-table-column
                 prop="areaTeamName"
                 label="区域"
                 min-width="100">

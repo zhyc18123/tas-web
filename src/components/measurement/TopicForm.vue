@@ -43,7 +43,7 @@
                 <el-input @change="inputAnswersLengthChange" type="Number" :placeholder="'请输入答案个数'" v-model="questions[currentQuestionNo].inputAnswersLength"></el-input>
               </el-form-item>
               <el-form-item class="input-answer is-required" label="标准答案（注意答案顺序）：">
-                <el-input v-for="(item,index) in questions[currentQuestionNo].inputAnswers" type="Number"
+                <el-input v-for="(item,index) in questions[currentQuestionNo].inputAnswers" type="text"
                           :placeholder="'请输入第'+ (index+1) +'个答案'" v-model="item.answer"></el-input>
               </el-form-item>
             </div>
@@ -163,8 +163,13 @@
       },
       handleDelCurrentQuestion() {
         let length,_this = this
+        if (this.questions.length === 1) {
+          this.$alert('题目数量必须大于0')
+          return
+        }
         _this.$confirm("确认删除本道题目吗？",
           function () {
+          debugger
             _this.questions.splice(_this.currentQuestionNo,1)
             length = _this.questions.length
             _this.currentQuestionNo = _this.currentQuestionNo === length ? _this.currentQuestionNo - 1: _this.currentQuestionNo

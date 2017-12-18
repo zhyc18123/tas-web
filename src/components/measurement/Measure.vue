@@ -174,17 +174,20 @@
       },
       handleDelete(measurementId) {
         var _this = this
-        io.post(io.deleteMeasurement, {
-          measurementIdStr : measurementId
-        }, function (ret) {
-          if (ret.success) {
-            _this.$toast('删除成功！')
-            _this.loadTableData(1)
+        _this.$confirm("确认删除吗？",
+          function () {
+            io.post(io.deleteMeasurement, {
+              measurementIdStr : measurementId
+            }, function (ret) {
+              if (ret.success) {
+                _this.$toast('删除成功！')
+                _this.loadTableData(1)
 
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
       },
       handleExam(row) {
         this.$router.push('/main/measurement/exam/bingPaper?measurementId='+row.measurementId + '&areaTeamId=' + row.areaTeamId +
