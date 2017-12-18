@@ -199,7 +199,7 @@
                 label="时间"
                 min-width="180">
                 <template scope="scope">
-                  {{ scope.row.updateTime | formatTime }}
+                  {{ scope.row.createTime | formatTime }}
                 </template>
               </el-table-column>
               <el-table-column

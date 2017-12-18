@@ -202,7 +202,7 @@
                 min-width="180">
                 <template scope="scope">
                   <div v-if="!scope.row.sum">
-                    {{ scope.row.updateTime | formatTime }}
+                    {{ scope.row.createTime | formatTime }}
                   </div>
                   <div class="sum" v-else>
                     实缴金额总数小计
