@@ -2,6 +2,14 @@
   <div class="full-class-rate">
     <div class="content">
       <div class="head-opt">
+        <el-select  size="small" v-model="areaTeamId" placeholder="请选择区域">
+          <el-option
+            v-for="item in areaTeams"
+            :key="item.areaTeamId"
+            :label="item.name"
+            :value="item.areaTeamId">
+          </el-option>
+        </el-select>
         <el-date-picker
           v-model="year"
           type="year"
@@ -113,6 +121,7 @@
     components: {},
     data:function(){
       return {
+        areaTeamId: '',
         periodId: '',
         productName: '',
         periods: [],
@@ -121,7 +130,6 @@
         productFullClassRateList:[],
         classFullRateList:[],
         gradeFullClassRateList:[],
-        areaTeams : [],
         activeName: 'first',
         searchConfig:{},
         option : {
@@ -145,8 +153,10 @@
         },
       }
     },
-    props: ['areaTeamId'],
     computed: {
+      areaTeams: function () {
+        return window.config.areaTeams || []
+      },
       currentWidth() {
       	if(this.gradeFullClassRateList.length === 1) {
           return 100
@@ -173,6 +183,7 @@
       $(window).smoothScroll()
     },
     created:function(){
+      this.areaTeamId = window.config.areaTeams[0].areaTeamId || ''
       this.loadPeriodByYear()
     },
     methods:{
@@ -257,7 +268,6 @@
     .content {
       overflow: hidden;
       padding: 20px;
-      border: 1px solid #d1dbe5;
       margin-bottom: 30px;
       .title {
         text-align: center;

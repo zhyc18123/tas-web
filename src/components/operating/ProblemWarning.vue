@@ -6,6 +6,14 @@
           <el-button size="small" @click="active = 1" :class="{'el-button el-button--primary': active === 1}">业务组</el-button>
           <el-button size="small" v-if="hasPermission('warningProduct')" @click="active = 0" :class="{'el-button el-button--primary': active === 0}">产品线</el-button>
         </el-button-group>
+        <el-select  size="small" v-model="areaTeamId" placeholder="请选择区域">
+          <el-option
+            v-for="item in areaTeams"
+            :key="item.areaTeamId"
+            :label="item.name"
+            :value="item.areaTeamId">
+          </el-option>
+        </el-select>
         <el-date-picker
           v-model="year"
           type="year"
@@ -178,24 +186,23 @@
     data:function(){
       return {
         periodId: '',
+        areaTeamId: '',
         periods: [],
         year: moment().format('YYYY'),
         active: 1,
         productCostAndIncomeVoList:[],
         mainAccountCostAndIncomeList:[],
-        areaTeams : [],
         activeName: 'first',
         searchConfig:{},
       }
     },
-    props: ['areaTeamId'],
     watch: {
       areaTeamId(newVal) {
         this.loadPeriodByYear()
         this.getWarningOfAreaTeam()
       },
       year(newVal) {
-        if (newVal) {
+        if (!!newVal) {
           this.loadPeriodByYear()
         }
       },
@@ -203,7 +210,13 @@
     mounted:function(){
       $(window).smoothScroll()
     },
+    computed: {
+      areaTeams: function () {
+        return window.config.areaTeams || []
+      },
+    },
     created:function(){
+      this.areaTeamId = window.config.areaTeams[0].areaTeamId || ''
       this.loadPeriodByYear()
     },
     methods:{
@@ -280,7 +293,6 @@
     .content {
       overflow: hidden;
       padding: 20px;
-      border: 1px solid #d1dbe5;
       margin-bottom: 30px;
       .title {
         text-align: center;
