@@ -207,11 +207,14 @@
           })
         }
       },
+      isInteger(value) {
+        return !isNaN(value) && parseInt(Number(value)) == value && !isNaN(parseInt(value, 10));
+      },
       formatData(questions) {
         let arr = [], missingIndexes = ''
         questions.map((val, index) => {
           if(val.questionType === '0') {
-            if (!val.score || !val.body|| !val.answer || !Number.isInteger(Number(val.score))) {
+            if (!val.score || !val.body|| !val.answer || !this.isInteger(Number(val.score))) {
               missingIndexes += (index + 1) + '，'
             }
             arr.push({
@@ -223,7 +226,7 @@
             })
           } else if (val.questionType === '1') {
             let answer = []
-            if (!val.score || !val.body || !Number.isInteger(Number(val.score))) {
+            if (!val.score || !val.body || !this.isInteger(Number(val.score))) {
               missingIndexes += (index + 1) + '，'
             } else {
               for (var i = 0; i < val.inputAnswers.length; i++) {
