@@ -8,7 +8,7 @@
         </div>
       </div>
       <div class="widget-body am-fr">
-        <el-form :model="query" :rules="rules" ref="query" label-width="210px" class="demo-query">
+        <el-form :model="query" :rules="rules" ref="query" label-width="230px" class="demo-query">
           <el-form-item class="question-number-btn" label="题目：">
             <el-button :type="currentQuestionNo === index ? 'primary': 'default'" @click="currentQuestionNo = index" v-for="(item,index) in questions">{{index + 1}}</el-button>
             <el-button type="success" @click="handleAddQuestion" >添加</el-button>
@@ -39,11 +39,15 @@
               </span>
             </el-form-item>
             <div v-else>
-              <el-form-item class="input-answer is-required" label="设置答案个数：" prop="inputAnswersLength">
-                <el-input @change="inputAnswersLengthChange" type="Number" :placeholder="'请输入答案个数'" v-model="questions[currentQuestionNo].inputAnswersLength"></el-input>
+              <el-form-item class="input-answer-set is-required" label="设置标准答案数量和答案个数：" prop="standardAnswersLength">
+                <el-input @change="standardAnswersLengthChange" type="Number" :placeholder="'请输入标准答案数量'"
+                          v-model="questions[currentQuestionNo].standardAnswersLength"></el-input>
+                <el-input @change="inputAnswersLengthChange" type="Number" :placeholder="'请输入答案个数'"
+                          v-model="questions[currentQuestionNo].inputAnswersLength"></el-input>
               </el-form-item>
-              <el-form-item class="input-answer is-required" label="标准答案（注意答案顺序）：">
-                <el-input v-for="(item,index) in questions[currentQuestionNo].inputAnswers" type="text"
+              <el-form-item v-for="(standardAnswer, i) in questions[currentQuestionNo].standardAnswers" class="input-answer is-required"
+                            :label="'标准答案'+(i + 1) +'（注意答案顺序）：'">
+                <el-input v-for="(item,index) in standardAnswer" :key="index" type="text"
                           :placeholder="'请输入第'+ (index+1) +'个答案'" v-model="item.answer"></el-input>
               </el-form-item>
             </div>
@@ -74,6 +78,8 @@
         questions: [{
           answer: '',
           inputAnswersLength: 1,
+          standardAnswersLength: 1,
+          standardAnswers: [[{answer: ''}]],
           score: '',
           answerConfig: {
             items: ["A", "B", "C", "D"]
@@ -123,23 +129,36 @@
         let items = this.questions[this.currentQuestionNo].answerConfig.items
         items.splice(items.length -1, 1)
       },
-      inputAnswersLengthChange(val) {
-        val = parseInt(val)
-        let inputAnswers = this.questions[this.currentQuestionNo].inputAnswers
-        if (val > 50) {
-          this.$alert('系统不支持超过50个答案，请确认！')
+      standardAnswersLengthChange(val) {
+        this.handleAnswersCount(val,this.questions[this.currentQuestionNo].inputAnswersLength)
+      },
+      handleAnswersCount(standardAnswersLength,inputAnswersLength) {
+        let arr = [], answers = []
+
+        standardAnswersLength = parseInt(standardAnswersLength) || 1
+        inputAnswersLength = parseInt(inputAnswersLength) || 1
+        if (standardAnswersLength > 5) {
+          this.$alert('系统不支持超过5种答案，请确认！')
+          this.questions[this.currentQuestionNo].standardAnswersLength = 1
+          this.questions[this.currentQuestionNo].standardAnswers = [[{answer: ''}]]
           return
-        } else {
-          let arr = [],currentLength = inputAnswers.length
-          if (currentLength > val) {
-            inputAnswers.splice(val, inputAnswers.length)
-          } else {
-            for (let i = currentLength, length = val; i < length; i++) {
-              arr.push({answer: ''})
-            }
-            this.questions[this.currentQuestionNo].inputAnswers = inputAnswers.concat(arr)
-          }
         }
+        if (inputAnswersLength > 50) {
+          this.$alert('系统不支持超过50个答案，请确认！')
+          inputAnswersLength = 1
+        }
+
+        for (let i = 0, length = inputAnswersLength; i < length; i++) {
+          answers.push({answer: ''})
+        }
+        for (let i = 0, length = standardAnswersLength; i < length; i++) {
+          arr.push(JSON.parse(JSON.stringify(answers)))
+        }
+
+        this.questions[this.currentQuestionNo].standardAnswers = arr
+      },
+      inputAnswersLengthChange(val) {
+       this.handleAnswersCount(this.questions[this.currentQuestionNo].standardAnswersLength,val)
       },
       handleAddQuestion() {
         let oldQuestionLength = this.questions.length
@@ -151,6 +170,8 @@
           answer: '',
           score: '',
           inputAnswersLength: 1,
+          standardAnswersLength: 1,
+          standardAnswers: [[{answer: ''}]],
           inputAnswers: [{
             answer: ''
           }],
@@ -189,14 +210,21 @@
                     val.answerConfig = JSON.parse(val.answerConfig)
                     val.answer = val.answer && JSON.parse(val.answer)[0]
                     val.inputAnswersLength = 1
+                    val.standardAnswersLength = 1
+                    val.standardAnswers = [[{answer: ''}]]
                     val.inputAnswers = [{answer: ''}]
                   } else {
                     val.answerConfig = JSON.parse(val.answerConfig)
                     val.inputAnswersLength = val.answerConfig.inputCount
                     val.answerConfig.items = ["A", "B", "C", "D"]
-                    val.inputAnswers = val.answer && JSON.parse(val.answer).map((val) => {
-                      return {answer: val}
-                    })
+                    let answers = val.answer && JSON.parse(val.answer)
+                    for (let i = 0; i < answers.length; i++) {
+                      for(let j = 0; j < answers[i].length; j++) {
+                        answers[i][j] = {answer: answers[i][j]}
+                      }
+                    }
+                    val.standardAnswers = answers
+                    val.standardAnswersLength = val.standardAnswers.length || 1
                   }
                 })
               }
@@ -229,12 +257,21 @@
             if (!val.score || !val.body || !this.isInteger(Number(val.score))) {
               missingIndexes += (index + 1) + '，'
             } else {
-              for (var i = 0; i < val.inputAnswers.length; i++) {
-                if (!val.inputAnswers[i].answer) {
-                  missingIndexes += (index + 1) + '，'
+              let end = false
+              for (var i = 0; i < val.standardAnswers.length; i++) {
+                let arr = []
+                if (end) {
                   break
                 }
-                answer.push(val.inputAnswers[i].answer)
+                for (var j = 0; j < val.standardAnswers[i].length; j++) {
+                  if (!val.standardAnswers[i][j].answer) {
+                    missingIndexes += (index + 1) + '，'
+                    end = true
+                    break
+                  }
+                  arr.push(val.standardAnswers[i][j].answer)
+                }
+                answer.push(arr)
               }
             }
             arr.push({
@@ -285,6 +322,14 @@
         width: 49%;
         &:nth-child(2n) {
           margin-left: 2%;
+        }
+      }
+    }
+    .input-answer-set {
+      .el-input {
+        width: 49%;
+        &:nth-child(2n) {
+          margin-left: 1%;
         }
       }
     }

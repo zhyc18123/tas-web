@@ -246,7 +246,6 @@
         this.multipleSelection = val;
       },
       handleSelection(rows) {
-        debugger
         if (rows) {
           rows.forEach(row => {
             this.$refs.multipleTable.toggleRowSelection(row);

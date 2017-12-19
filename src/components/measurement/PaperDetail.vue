@@ -18,9 +18,10 @@
                      :label="item">{{item}}</el-radio>
          </el-form-item>
          <div v-else>
-           <el-form-item class="input-answer" label="标准答案（注意答案顺序）：">
-             <el-input disabled v-for="(item,index) in questions[currentQuestionNo].inputAnswers" type="Number"
-                       :placeholder="'第'+ (index+1) +'个答案'" v-model="item.answer"></el-input>
+           <el-form-item v-for="(standardAnswer, i) in questions[currentQuestionNo].standardAnswers" class="input-answer is-required"
+                         :label="'标准答案'+(i + 1) +'：'">
+             <el-input disabled v-for="(item,index) in standardAnswer" :key="index" type="text"
+                       :placeholder="'请输入第'+ (index+1) +'个答案'" v-model="item.answer"></el-input>
            </el-form-item>
          </div>
          <el-form-item class="" label="分值：" prop="score">
@@ -80,12 +81,16 @@
                   val.answer = val.answer && JSON.parse(val.answer)[0]
                 } else {
                   val.answerConfig = JSON.parse(val.answerConfig)
-                  val.inputAnswers = val.answer && JSON.parse(val.answer).map((val, index) => {
-                    return {answer: val}
-                  })
+                  let answers = val.answer && JSON.parse(val.answer)
+                  for (let i = 0; i < answers.length; i++) {
+                    for(let j = 0; j < answers[i].length; j++) {
+                      answers[i][j] = {answer: answers[i][j]}
+                    }
+                  }
+                  val.standardAnswers = answers
+                  val.standardAnswersLength = val.standardAnswers.length || 1
                 }
               })
-              debugger
               _this.questions = ret.data.questions;
               _this.$set(_this.questions, 'inputAnswers', ret.data.questions.inputAnswers)
             } else {
