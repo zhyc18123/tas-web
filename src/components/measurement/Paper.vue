@@ -99,7 +99,7 @@
               <el-table-column
                 prop="testTime"
                 label="考试时间（min）"
-                min-width="100">
+                min-width="120">
               </el-table-column>
               <el-table-column
                 prop="totalScore"
@@ -143,7 +143,7 @@
                           @paging="loadTableData"/>
             </div>
           </div>
-          <div class="am-u-lg-12">
+          <div  v-if="measurementId" class="am-u-lg-12">
             <div class="am-text-center">
               <el-button type="primary" @click="handleSave">保存</el-button>
             </div>

@@ -100,7 +100,7 @@
               <el-table-column
                 prop="testTime"
                 label="考试时间（min）"
-                min-width="100">
+                min-width="120">
               </el-table-column>
               <el-table-column
                 prop="totalScore"

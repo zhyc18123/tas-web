@@ -14,11 +14,11 @@
           label="区域"
           min-width="100">
         </el-table-column>
-        <el-table-column
-          prop="periodName"
-          label="期数"
-          min-width="100">
-        </el-table-column>
+        <!--<el-table-column-->
+          <!--prop="periodName"-->
+          <!--label="期数"-->
+          <!--min-width="100">-->
+        <!--</el-table-column>-->
         <el-table-column
           prop="campusName"
           label="测评校区"

@@ -47,7 +47,7 @@
                           :placeholder="'请输入第'+ (index+1) +'个答案'" v-model="item.answer"></el-input>
               </el-form-item>
             </div>
-            <el-form-item class="is-required" label="分值：" prop="score">
+            <el-form-item class="is-required" label="分值(整数)：" prop="score">
               <el-input type="Number" placeholder="分值" v-model="questions[currentQuestionNo].score"></el-input>
             </el-form-item>
             <el-form-item label=" ">
@@ -131,7 +131,6 @@
           return
         } else {
           let arr = [],currentLength = inputAnswers.length
-          debugger
           if (currentLength > val) {
             inputAnswers.splice(val, inputAnswers.length)
           } else {
@@ -169,7 +168,6 @@
         }
         _this.$confirm("确认删除本道题目吗？",
           function () {
-          debugger
             _this.questions.splice(_this.currentQuestionNo,1)
             length = _this.questions.length
             _this.currentQuestionNo = _this.currentQuestionNo === length ? _this.currentQuestionNo - 1: _this.currentQuestionNo
@@ -213,7 +211,7 @@
         let arr = [], missingIndexes = ''
         questions.map((val, index) => {
           if(val.questionType === '0') {
-            if (!val.score || !val.body|| !val.answer) {
+            if (!val.score || !val.body|| !val.answer || !Number.isInteger(Number(val.score))) {
               missingIndexes += (index + 1) + '，'
             }
             arr.push({
@@ -224,9 +222,8 @@
               questionType: val.questionType,
             })
           } else if (val.questionType === '1') {
-            debugger
             let answer = []
-            if (!val.score || !val.body) {
+            if (!val.score || !val.body || !Number.isInteger(Number(val.score))) {
               missingIndexes += (index + 1) + '，'
             } else {
               for (var i = 0; i < val.inputAnswers.length; i++) {
