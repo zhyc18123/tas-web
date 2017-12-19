@@ -85,7 +85,9 @@
                   })
                 }
               })
+              debugger
               _this.questions = ret.data.questions;
+              _this.$set(_this.questions, 'inputAnswers', ret.data.questions.inputAnswers)
             } else {
               _this.$alert(ret.desc)
             }

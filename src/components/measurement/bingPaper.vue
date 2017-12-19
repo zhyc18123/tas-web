@@ -53,11 +53,11 @@
 
           </div>
 
-          <div v-if="measurementId" class="am-u-sm-12 red am-form-group">备注：每一次组卷，旧的试卷组合将被覆盖。</div>
           <div class="am-u-sm-12 am-form-group">
             <el-table
               :data="tableData"
               border
+              ref="multipleTable"
               stripe
               max-height="600"
               @selection-change="handleSelectionChange"
@@ -217,7 +217,13 @@
       this.query.areaTeamId = this.$route.query.areaTeamId
       this.query.gradeId = this.$route.query.gradeId
       this.query.subjectId = this.$route.query.subjectId
+      this.query.examPaperNos = this.$route.query.examPaperNos && this.$route.query.examPaperNos.split('，')
       this.loadTableData(1)
+    },
+    mounted() {
+      setTimeout(() => {
+        this.handleSelection(this.checkList)
+      }, 20)
     },
     methods: {
       handleDelete(examPaperId) {
@@ -238,6 +244,14 @@
       },
       handleSelectionChange(val) {
         this.multipleSelection = val;
+      },
+      handleSelection(rows) {
+        debugger
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        }
       },
       handleSave() {
         var _this = this,
@@ -281,6 +295,14 @@
         }, function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
+            _this.checkList = []
+            ret.data.list.map(val => {
+              _this.query.examPaperNos.map(examPaperNo => {
+                if (examPaperNo === val.examPaperNo) {
+                  _this.checkList.push(val)
+                }
+              })
+            })
             _this.tableData = ret.data.list
           } else {
             _this.$alert(ret.desc)

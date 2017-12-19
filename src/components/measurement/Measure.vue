@@ -191,7 +191,7 @@
       },
       handleExam(row) {
         this.$router.push('/main/measurement/exam/bingPaper?measurementId='+row.measurementId + '&areaTeamId=' + row.areaTeamId +
-          '&gradeId=' + row.gradeId + '&subjectId=' + row.subjectId)
+          '&gradeId=' + row.gradeId + '&subjectId=' + row.subjectId+ '&examPaperNos=' + row.examPaperNos)
       },
       loadPeriodData: function () {
         var _this = this
