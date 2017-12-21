@@ -253,14 +253,21 @@
         }
       },
       handleSave() {
-        var _this = this,
+        let _this = this
+        if (this.multipleSelection.length === 0) {
+          _this.$confirm('当前没有选择如何试卷？',
+            function () {
+              _this.bindExams()
+            });
+        } else {
+         this.bindExams()
+        }
+      },
+      bindExams() {
+        let _this = this,
           examPaperIds = this.multipleSelection.map(val => {
             return val.examPaperId
           })
-        if (this.multipleSelection.length === 0) {
-          this.$alert('请选择试卷！')
-          return false
-        }
         io.post(io.bindExams, {
           measurementId: _this.measurementId,
           examPaperIds: examPaperIds,
@@ -274,6 +281,7 @@
         })
       },
       handleLooking(examPaperId) {
+        this.$refs.paperDetail.currentQuestionNo = 0
         this.$refs.paperDetail.examPaperId = examPaperId
         this.$refs.paperDetail.show()
       },
@@ -296,7 +304,7 @@
             _this.total = ret.data.total
             _this.checkList = []
             ret.data.list.map(val => {
-              _this.query.examPaperNos.map(examPaperNo => {
+              _this.query.examPaperNos && _this.query.examPaperNos.map(examPaperNo => {
                 if (examPaperNo === val.examPaperNo) {
                   _this.checkList.push(val)
                 }

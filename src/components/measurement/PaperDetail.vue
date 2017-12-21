@@ -76,6 +76,7 @@
           }, function (ret) {
             if (ret.success) {
               ret.data.questions.map(val => {
+                debugger
                 if (val.questionType === '0') {
                   val.answerConfig = JSON.parse(val.answerConfig)
                   val.answer = val.answer && JSON.parse(val.answer)[0]
