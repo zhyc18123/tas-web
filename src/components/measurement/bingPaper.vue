@@ -138,13 +138,6 @@
             </el-table>
           </div>
           <paper-detail ref="paperDetail"></paper-detail>
-          <!-- 防止跨页选择问题，换种方法，设置maxHeight，pageSize：1000-->
-          <!--<div class="am-u-lg-12 am-cf">-->
-            <!--<div class="am-fr">-->
-              <!--<pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"-->
-                          <!--@paging="loadTableData"/>-->
-            <!--</div>-->
-          <!--</div>-->
           <div class="am-u-lg-12">
             <div class="am-text-center">
               <el-button type="primary" @click="handleSave">保存</el-button>
@@ -213,6 +206,7 @@
       },
     },
     created: function () {
+      this.multipleSelection = []
       this.measurementId = this.$route.query.measurementId
       this.query.areaTeamId = this.$route.query.areaTeamId
       this.query.gradeId = this.$route.query.gradeId

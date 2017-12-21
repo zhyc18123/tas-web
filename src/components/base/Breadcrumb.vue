@@ -18,7 +18,6 @@
         },
         created:function(){
           var _this = this
-          console.log(1)
           _this.items = storage.getBreadcrumb()
           this.$root.$on('sidebar.click',function(items){
             _this.items = items
