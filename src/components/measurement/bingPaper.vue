@@ -249,7 +249,7 @@
       handleSave() {
         let _this = this
         if (this.multipleSelection.length === 0) {
-          _this.$confirm('当前没有选择如何试卷？',
+          _this.$confirm('当前没有选择任何试卷？',
             function () {
               _this.bindExams()
             });
