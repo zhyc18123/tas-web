@@ -1,5 +1,15 @@
 <template>
   <div>
+    <div>
+      <el-select class="am-form-group"  size="small" v-model="areaTeamId" placeholder="请选择区域">
+        <el-option
+          v-for="item in areaTeams"
+          :key="item.areaTeamId"
+          :label="item.name"
+          :value="item.areaTeamId">
+        </el-option>
+      </el-select>
+    </div>
     <div class="month-analysis-box">
       <div class="head-opt">
         <el-button-group>
@@ -65,7 +75,7 @@
         total:0,
         pageSize:10,
         pageNo:1,
-        areaTeams : [],
+        areaTeamId : '',
         activeName: 'first',
         searchConfig:{},
         option: {
@@ -214,7 +224,6 @@
         },
       }
     },
-    props: ['areaTeamId'],
     watch: {
       areaTeamId(newVal) {
         this.getBusinessCaseOfAreaTeam()
@@ -228,6 +237,9 @@
       }
     },
     computed: {
+      areaTeams: function () {
+        return window.config.areaTeams || []
+      },
     	formatMonth() {
     		return this.month ? moment(this.month).format('YYYY-MM'): '';
       }
@@ -236,6 +248,7 @@
       $(window).smoothScroll()
     },
     created:function(){
+      this.areaTeamId = window.config.areaTeams[0].areaTeamId || ''
       this.getBusinessCaseOfAreaTeam()
       this.getIncomeProfitsOfAreaTeam()
     },

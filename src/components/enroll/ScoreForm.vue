@@ -7,9 +7,9 @@
           <el-option v-for="item in areaTeams" :key="item.areaTeamId" :label="item.areaTeamName" :value="item.areaTeamId"></el-option>
         </el-select>
       </el-form-item></el-col>
-        <el-col :span="12"><el-form-item label=" " prop="periodId">
-          <el-select v-model="query.periodId" placeholder="请选择期数">
-            <el-option v-for="item in periods" :key="item.periodId" :label="item.periodName" :value="item.periodId"></el-option>
+        <el-col :span="12"><el-form-item label=" " prop="campusId">
+          <el-select v-model="query.campusId" placeholder="请选择校区">
+            <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
           </el-select>
         </el-form-item></el-col>
       </el-row>
@@ -34,11 +34,6 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="12"><el-form-item label=" " prop="campusId">
-          <el-select v-model="query.campusId" placeholder="请选择校区">
-            <el-option v-for="item in campuses" :key="item.campusId" :label="item.campusName" :value="item.campusId"></el-option>
-          </el-select>
-        </el-form-item></el-col>
       </el-row>
       <el-form-item label=" " prop="studentScore">
         <el-input type="Number" placeholder="请输入分数" v-model="query.studentScore"></el-input>
@@ -64,8 +59,6 @@
           campusName: "",
           gradeId: '',
           gradeName: "",
-          periodId: '',
-          periodName: "",
           studentScore: "",
           subjectId: '',
           subjectName: "",
@@ -91,9 +84,6 @@
           subjectId: [
             { required: true, message: '请选择科目', trigger: 'change' }
           ],
-          periodId: [
-            { required: true, message: '请选择期数', trigger: 'change' }
-          ],
           validity: [
             { required: true, message: '请选择状态', trigger: 'change' }
           ],
@@ -111,9 +101,7 @@
       'query.areaTeamId' () {
         if (!this.isEdit) {
           this.query.campusId = ''
-          this.query.periodId = ''
           this.loadCampusData()
-          this.loadPeriodData()
         } else {
           this.isEdit = false;
         }
@@ -139,24 +127,6 @@
       },
     },
     methods: {
-      loadPeriodData: function () {
-        var _this = this
-        if (!this.query.areaTeamId) {
-          return
-        }
-        io.post(io.apiAdminPeriodListForAreaTeam, {
-          areaTeamId : this.query.areaTeamId
-        }, function (ret) {
-          if (ret.success) {
-            _this.periods = ret.data.map(function (item) {
-              return {periodId: item.periodId, periodName: item.periodName }
-            })
-            _this.query.periodId = _this.query.periodId ? _this.query.periodId: ret.data.filter(item => item.isCurrent == 1 )[0].periodId
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
-      },
       loadCampusData:function(){
         var _this  = this
         if (!this.query.areaTeamId) {
@@ -178,7 +148,6 @@
           if (valid) {
             _this.query.areaTeamName = _this.areaTeams.filter((item)=>{ return item.areaTeamId === _this.query.areaTeamId })[0].areaTeamName
             _this.query.gradeName = _this.grades.filter((item)=>{ return item.gradeId === _this.query.gradeId })[0].gradeName
-            _this.query.periodName = _this.periods.filter((item)=>{ return item.periodId === _this.query.periodId })[0].periodName
             _this.query.subjectName = _this.subjects.filter((item)=>{ return item.subjectId === _this.query.subjectId })[0].subjectName
             _this.query.campusName = _this.campuses.filter((item)=>{ return item.campusId === _this.query.campusId })[0].campusName
             _this.query.studentId = _this.studentId
@@ -204,7 +173,6 @@
             _this.query = ret.data
             _this.isEdit = true
             _this.loadCampusData()
-            _this.loadPeriodData()
             _this.$refs.win.show({
               width:700,
               height:600
@@ -227,8 +195,6 @@
               campusName: "",
               gradeId: '',
               gradeName: "",
-              periodId: '',
-              periodName: "",
               studentScore: "",
               subjectId: '',
               subjectName: "",

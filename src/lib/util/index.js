@@ -35,7 +35,30 @@ export default  {
 
   formatNumber:function(val , fixed){
     return parseFloat(val).toFixed(fixed)
-  }
+  },
+  initReEdit:function(){
+    setTimeout(function(){
+      //重新编辑公式
+      $($(document).find('iframe').contents().find('body.view')).on('click','.kfformula',function(){
+        let viewArr=$(document).find('iframe').contents().find('body.view');
+        for(var i=0;i<viewArr.length;i++){
+          if(viewArr[i]===$(this).closest('body.view')[0]){
+            $($('.edui-for-插入kityformula')[i]).find('.edui-default').click();
+          }
+        }
+      });
+      //重新编辑latex
+      $($(document).find('iframe').contents().find('body.view')).on('click','.latex',function(){
+        let viewArr=$(document).find('iframe').contents().find('body.view');
+        for(var i=0;i<viewArr.length;i++){
+          if(viewArr[i]===$(this).closest('body.view')[0]){
+            $($('.edui-for-解析latex')[i]).find('.edui-default').click();
+          }
+        }
+      });
+
+    },1000)
+  },
 
 
 }

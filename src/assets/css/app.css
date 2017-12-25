@@ -1352,3 +1352,32 @@ input[type=radio][disabled]{
 :not(output):-moz-ui-invalid:-moz-focusring {
   box-shadow: 0 0 2px 2px #fff;
 }
+/*editor*/
+.edui-default .edui-editor{
+  border-color: #bfcbd9 !important;
+  width: auto !important;
+}
+.edui-default .edui-editor-toolbarboxouter,.edui-default .edui-editor-toolbarbox{
+  box-shadow: 0 0 0 white !important;
+  background: white !important;
+}
+.edui-default .edui-editor-toolbarboxouter{
+  border-bottom:1px solid #bfcbd9 !important;
+}
+.edui-default{
+  border-color: #bfcbd9 !important;
+  line-height: 0;
+}
+.edui-default .edui-editor-iframeholder{
+  min-height: 100px;
+}
+.edui-editor-bottomContainer{
+  display: none;
+}
+.no-bottom .edui-default .edui-editor{
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+#edui1{
+  width: auto !important;
+}

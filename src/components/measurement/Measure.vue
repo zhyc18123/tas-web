@@ -89,16 +89,24 @@
                   </div>
                 </template>
               </el-table-column>
+              <el-table-column
+                prop="examPaperNos"
+                label="已选试卷序号"
+                min-width="150">
+              </el-table-column>
 
               <el-table-column
                 label="操作"
-                width="240">
+                fixed="right"
+                width="300">
                 <template scope="scope">
                   <el-button size="small" @click.native="handleSettingWhitelist(scope.row)">设置白名单
                   </el-button>
                   <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/measurement/test/add?measurementId='+scope.row.measurementId)">编辑
                   </el-button>
                   <el-button v-if="hasPermission('del')" @click="handleDelete(scope.row.measurementId)" size="small">删除
+                  </el-button>
+                  <el-button v-if="hasPermission('exam')" @click="handleExam(scope.row)" size="small">组卷
                   </el-button>
                 </template>
               </el-table-column>
@@ -166,17 +174,24 @@
       },
       handleDelete(measurementId) {
         var _this = this
-        io.post(io.deleteMeasurement, {
-          measurementIdStr : measurementId
-        }, function (ret) {
-          if (ret.success) {
-            _this.$toast('删除成功！')
-            _this.loadTableData(1)
+        _this.$confirm("确认删除吗？",
+          function () {
+            io.post(io.deleteMeasurement, {
+              measurementIdStr : measurementId
+            }, function (ret) {
+              if (ret.success) {
+                _this.$toast('删除成功！')
+                _this.loadTableData(1)
 
-          } else {
-            _this.$alert(ret.desc)
-          }
-        })
+              } else {
+                _this.$alert(ret.desc)
+              }
+            })
+          });
+      },
+      handleExam(row) {
+        this.$router.push('/main/measurement/exam/bingPaper?measurementId='+row.measurementId + '&areaTeamId=' + row.areaTeamId +
+          '&gradeId=' + row.gradeId + '&subjectId=' + row.subjectId+ '&examPaperNos=' + row.examPaperNos)
       },
       loadPeriodData: function () {
         var _this = this
@@ -211,7 +226,16 @@
         }, function (ret) {
           if (ret.success) {
             _this.total = ret.data.total
+            ret.data.list.map(val => {
+              if (val.examConfig) {
+                val.examConfig = JSON.parse(val.examConfig)
+                val.examPaperNos = val.examConfig.map(i => {
+                  return i.examPaperNo
+                }).join('，')
+              }
+            })
             _this.tableData = ret.data.list
+
           } else {
             _this.$alert(ret.desc)
           }
