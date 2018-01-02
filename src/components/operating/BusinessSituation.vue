@@ -200,7 +200,9 @@
         }
         if(toolbar.formData.gradeIds.length === 0) {
           toolbar.grades.map(val => {
-            gradeIds.push(val.value)
+            if (val.value) {
+              gradeIds.push(val.value)
+            }
           })
         } else {
           gradeIds = toolbar.formData.gradeIds
