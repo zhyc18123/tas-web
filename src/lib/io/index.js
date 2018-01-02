@@ -414,6 +414,11 @@ const io = {
     this.invoiceDetail = conf.baseApiPath + '/api/admin/electronicinvoice/invoiceDetail'
     this.changeSubjectStatus = conf.baseApiPath + '/api/admin/electronicinvoice/changeSubjectStatus'
 
+    this.findCounselorBranchBonusPage = conf.baseApiPath + '/api/admin/analyze/findCounselorBranchBonusPage'
+    this.findSeniorBranchBonusPage = conf.baseApiPath + '/api/admin/analyze/findSeniorBranchBonusPage'
+    this.findClassLectureGroupDetail = conf.baseApiPath + '/api/admin/analyze/findClassLectureGroupDetail'
+    this.findClassComletionRateVoPage = conf.baseApiPath + '/api/admin/analyze/findClassComletionRateVoPage'
+
 
 
 

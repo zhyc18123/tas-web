@@ -177,6 +177,10 @@ const TargetSet = resolve => require(['./components/operating/TargetSet'], resol
 const TeacherTarget = resolve => require(['./components/operating/TeacherTarget'], resolve)
 const ProductTarget = resolve => require(['./components/operating/ProductTarget'], resolve)
 const MainAccountTarget = resolve => require(['./components/operating/MainAccountTarget'], resolve)
+const Consultant = resolve => require(['./components/operating/Consultant'], resolve)
+const SeniorBranchBonus = resolve => require(['./components/operating/SeniorBranchBonus'], resolve)
+const ClassComletionRate = resolve => require(['./components/operating/ClassComletionRate'], resolve)
+const ClassLectureGroupDetail = resolve => require(['./components/operating/ClassLectureGroupDetail'], resolve)
 
 const GradeSubjectStatisticsList = resolve => require(['./components/operating/GradeSubjectStatisticsList'], resolve)
 const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
@@ -382,8 +386,12 @@ const router = new VueRouter({
       {path: 'operating/targetSet/productTarget' , component: ProductTarget},
       {path: 'operating/targetSet/teacherTarget' , component: TeacherTarget},
       {path: 'operating/targetSet/courseTarget' , component: CourseTarget},
-      {path: 'balance/withdrawal/list' , component: Withdrawal},
-      {path: 'balance/transfer/list' , component: Transfer},
+
+      {path: 'operating/counselorBranchBonus' , component: Consultant},
+      {path: 'operating/seniorBranchBonus' , component: SeniorBranchBonus},
+      {path: 'operating/classComletionRate' , component: ClassComletionRate},
+      {path: 'operating/classLectureGroupDetail' , component: ClassLectureGroupDetail},
+
 
 
     ],
