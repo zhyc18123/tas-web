@@ -62,13 +62,13 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
+                  <el-button size="small" @click="handleDetail(scope.row.seniorRegDetailList)">查看明细</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </div>
-        <consultant-detail ref="consultantDetail"></consultant-detail>
+        <senior-branch-bonus-detail ref="seniorBranchBonusDetail"></senior-branch-bonus-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -83,7 +83,7 @@
 <script>
   import io from '../../lib/io'
   import MultipleToolbar from './MultipleToolbar.vue'
-  import ConsultantDetail from './ConsultantDetail.vue'
+  import SeniorBranchBonusDetail from './SeniorBranchBonusDetail.vue'
   import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
@@ -97,7 +97,7 @@
       }
     },
     components: {
-      MultipleToolbar, Pagination, ConsultantDetail
+      MultipleToolbar, Pagination, SeniorBranchBonusDetail
     },
     watch: {
 
@@ -113,9 +113,9 @@
       handleFind() {
         this.loadTableData()
       },
-      handleDetail(counselorRegDetailList) {
-        this.$refs.consultantDetail.show()
-        this.$refs.consultantDetail.tableData = counselorRegDetailList || []
+      handleDetail(seniorRegDetailList) {
+        this.$refs.seniorBranchBonusDetail.show()
+        this.$refs.seniorBranchBonusDetail.tableData = seniorRegDetailList || []
       },
       handleExport() {
         var _this = this

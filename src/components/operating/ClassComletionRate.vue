@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period grade subject
+                            areaTeam busTeam startDate endDate period grade subject className teacherName
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -107,13 +107,13 @@
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
+                  <el-button size="small" @click="handleDetail(scope.row.classComletionDetailVoList)">查看明细</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </div>
-        <consultant-detail ref="consultantDetail"></consultant-detail>
+        <class-comletion-rate-detail ref="classComletionRateDetail" ></class-comletion-rate-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -128,7 +128,7 @@
 <script>
   import io from '../../lib/io'
   import MultipleToolbar from './MultipleToolbar.vue'
-  import ConsultantDetail from './ConsultantDetail.vue'
+  import ClassComletionRateDetail from './ClassComletionRateDetail.vue'
   import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
@@ -142,7 +142,7 @@
       }
     },
     components: {
-      MultipleToolbar, Pagination, ConsultantDetail
+      MultipleToolbar, Pagination, ClassComletionRateDetail
     },
     watch: {
 
@@ -158,9 +158,9 @@
       handleFind() {
         this.loadTableData()
       },
-      handleDetail(counselorRegDetailList) {
-        this.$refs.consultantDetail.show()
-        this.$refs.consultantDetail.tableData = counselorRegDetailList || []
+      handleDetail(classComletionDetailVoList) {
+        this.$refs.classComletionRateDetail.show()
+        this.$refs.classComletionRateDetail.tableData = classComletionDetailVoList || []
       },
       handleExport() {
 
@@ -200,7 +200,7 @@
         }
         if(toolbar.formData.gradeIds.length === 0) {
           toolbar.grades.map(val => {
-            gradeIds.push(val.gradeId)
+            gradeIds.push(val.value)
           })
         } else {
           gradeIds = toolbar.formData.gradeIds
@@ -209,6 +209,8 @@
           startRecordRegTime: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
           endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
+          className: toolbar.formData.className || '',
+          teacherName: toolbar.formData.teacherName || '',
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
           gradeIds: gradeIds.join(','),

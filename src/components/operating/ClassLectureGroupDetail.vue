@@ -70,20 +70,9 @@
                 min-width="160"
                 label="第几讲">
               </el-table-column>
-
-              <el-table-column
-                align="center"
-                fixed="right"
-                label="操作"
-                width="120">
-                <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
-                </template>
-              </el-table-column>
             </el-table>
           </div>
         </div>
-        <consultant-detail ref="consultantDetail"></consultant-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -98,7 +87,6 @@
 <script>
   import io from '../../lib/io'
   import MultipleToolbar from './MultipleToolbar.vue'
-  import ConsultantDetail from './ConsultantDetail.vue'
   import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
@@ -112,7 +100,7 @@
       }
     },
     components: {
-      MultipleToolbar, Pagination, ConsultantDetail
+      MultipleToolbar, Pagination
     },
     watch: {
 
@@ -133,7 +121,14 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportClassLectureGroupDetail, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -170,7 +165,7 @@
         }
         if(toolbar.formData.gradeIds.length === 0) {
           toolbar.grades.map(val => {
-            gradeIds.push(val.gradeId)
+            gradeIds.push(val.value)
           })
         } else {
           gradeIds = toolbar.formData.gradeIds

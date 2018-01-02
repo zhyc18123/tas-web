@@ -418,7 +418,10 @@ const io = {
     this.findSeniorBranchBonusPage = conf.baseApiPath + '/api/admin/analyze/findSeniorBranchBonusPage'
     this.exportSeniorBranchBonus = conf.baseApiPath + '/api/admin/analyze/exportSeniorBranchBonus'
     this.findClassLectureGroupDetail = conf.baseApiPath + '/api/admin/analyze/findClassLectureGroupDetail'
+    this.exportClassLectureGroupDetail = conf.baseApiPath + '/api/admin/analyze/exportClassLectureGroupDetail'
     this.findClassComletionRateVoPage = conf.baseApiPath + '/api/admin/analyze/findClassComletionRateVoPage'
+    this.findGradeCompletionVoList = conf.baseApiPath + '/api/admin/analyze/findGradeCompletionVoList'
+    this.exportGradeCompletionRate = conf.baseApiPath + '/api/admin/analyze/exportGradeCompletionRate'
     this.exportCounselorBranchBonus = conf.baseApiPath + '/api/admin/analyze/exportCounselorBranchBonus'
 
 

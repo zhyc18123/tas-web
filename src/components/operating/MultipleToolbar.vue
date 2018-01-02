@@ -42,7 +42,7 @@
         :value="item.productId">
       </el-option>
     </el-select>
-    <el-select v-if="grade" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group"
+    <el-select v-if="grade" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" multiple
                v-model="formData.gradeIds" placeholder="请选择年级">
       <el-option
         v-for="item in grades"
@@ -75,6 +75,9 @@
       </el-date-picker>
     </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="teacherName">
+      <el-input v-model="formData.teacherName" placeholder="班级名称"></el-input>
+    </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="teacherName">
      <el-input v-model="formData.teacherName" :placeholder="teacherNamePlaceholder"></el-input>
     </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group am-u-end">
@@ -99,7 +102,7 @@
           busTeamIds: [],
           startDate:　'',
           endDate: '',
-          gradeIds: '',
+          gradeIds: [],
           periodIds: [],
           subjectId: '',
           productId: '',
@@ -132,6 +135,10 @@
         default : false
       },
       subject: {
+        type: Boolean,
+        default : false
+      },
+      className: {
         type: Boolean,
         default : false
       },

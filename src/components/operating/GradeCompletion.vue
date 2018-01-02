@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period
+                            areaTeam busTeam period grade
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -25,80 +25,6 @@
                 prop="periodName"
                 min-width="160"
                 label="期数">
-              </el-table-column>
-              <el-table-column
-                prop="className"
-                min-width="160"
-                label="班级名称">
-              </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                min-width="160"
-                label="业务组">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                min-width="160"
-                label="学科">
-              </el-table-column>
-              <el-table-column
-                prop="gradeName"
-                min-width="160"
-                label="年级">
-              </el-table-column>
-              <el-table-column
-                prop="teacherNames"
-                min-width="160"
-                label="教师">
-              </el-table-column>
-              <el-table-column
-                prop="jobNature"
-                min-width="160"
-                label="任教性质">
-                <template scope="scope">
-                  <div>{{scope.row.jobNature === '0'? '专职': '兼职'}}</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="regNum"
-                min-width="160"
-                label="报名人数">
-              </el-table-column>
-              <el-table-column
-                prop="sequentialPersonNum"
-                min-width="160"
-                label="顺期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="顺期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.sequentialPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.sequentialPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sequentialTargetRate"
-                min-width="160"
-                label="目标顺期续读率">
-              </el-table-column>
-              <el-table-column
-                prop="stepPersonNum"
-                min-width="160"
-                label="跨期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="跨期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.stepPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.stepPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="stepTargetRate"
-                min-width="160"
-                label="目标跨期续读率">
               </el-table-column>
 
               <el-table-column
@@ -163,13 +89,20 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportGradeCompletionRate, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
-        io.post(io.findClassComletionRateVoPage, Object.assign({}, {
+        io.post(io.findGradeCompletionVoList, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
@@ -200,14 +133,12 @@
         }
         if(toolbar.formData.gradeIds.length === 0) {
           toolbar.grades.map(val => {
-            gradeIds.push(val.gradeId)
+            gradeIds.push(val.value)
           })
         } else {
           gradeIds = toolbar.formData.gradeIds
         }
         return {
-          startRecordRegTime: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
-          endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
