@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period
+                            areaTeam busTeam startDate endDate period teacherName
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -118,16 +118,24 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportSeniorBranchBonus, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-
+        this.$showLoading()
         io.post(io.findSeniorBranchBonusPage, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
@@ -158,6 +166,7 @@
           endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
           busTeamIds: busTeamIds.join(','),
+          teacherName: toolbar.formData.teacherName || '',
           periodIds: periodIds.join(','),
         }
       }

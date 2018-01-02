@@ -115,7 +115,7 @@
               </el-table-column>
               <el-table-column
                 fixed
-                prop="phoneNo"
+                prop="studentPhoneNo"
                 label="电话号码"
                 min-width="130">
               </el-table-column>
@@ -400,7 +400,7 @@
       setupSenior:function (studentReg) {
 
         var areaTeamId=studentReg.areaTeamId
-        this.regId=studentReg.studentRegStateId
+        this.regId=studentReg.regId
         this.$refs.selectSenior.query.areaTeamId = areaTeamId
         this.$refs.selectSenior.show()
 

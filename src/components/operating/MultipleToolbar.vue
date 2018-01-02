@@ -74,6 +74,9 @@
         placeholder="结束日期">
       </el-date-picker>
     </div>
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="teacherName">
+     <el-input v-model="formData.teacherName" :placeholder="teacherNamePlaceholder"></el-input>
+    </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group am-u-end">
       <button @click="handleSearch" type="button" class="btn-search am-btn am-btn-default am-btn-success">
         <span class="am-icon-search"></span>搜索
@@ -104,6 +107,10 @@
       }
     },
     props: {
+      teacherNamePlaceholder: {
+        type: String,
+        default: '教师名称'
+      },
       areaTeam: {
         type: Boolean,
         default : false
@@ -125,6 +132,10 @@
         default : false
       },
       subject: {
+        type: Boolean,
+        default : false
+      },
+      teacherName: {
         type: Boolean,
         default : false
       },
@@ -192,6 +203,7 @@
             if(ret.success){
               _this.formData.periodIds = []
               _this.periods = ret.data
+              _this.handleSearch()
             }else{
               _this.$alert(ret.desc)
             }

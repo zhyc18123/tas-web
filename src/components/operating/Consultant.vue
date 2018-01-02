@@ -6,8 +6,8 @@
           <div class="widget-title am-fl">咨询师科数统计</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" teacherNamePlaceholder="咨询师"
+                            areaTeam busTeam startDate endDate period teacherName
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -118,17 +118,25 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportCounselorBranchBonus, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
-        debugger
 
+        this.$showLoading()
         io.post(io.findCounselorBranchBonusPage, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
@@ -140,6 +148,7 @@
       formatData() {
         let toolbar = this.$refs.toolbar
         let busTeamIds = [],periodIds = []
+
         if(toolbar.formData.busTeamIds.length === 0) {
           toolbar.busTeams.map(val => {
             busTeamIds.push(val.busTeamId)
@@ -158,6 +167,7 @@
           startRecordRegTime: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
           endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
+          teacherName: toolbar.formData.teacherName || '',
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
         }
