@@ -181,6 +181,11 @@ const Consultant = resolve => require(['./components/operating/Consultant'], res
 const SeniorBranchBonus = resolve => require(['./components/operating/SeniorBranchBonus'], resolve)
 const ClassComletionRate = resolve => require(['./components/operating/ClassComletionRate'], resolve)
 const ClassLectureGroupDetail = resolve => require(['./components/operating/ClassLectureGroupDetail'], resolve)
+const GradeCompletion = resolve => require(['./components/operating/GradeCompletion'], resolve)
+const Block = resolve => require(['./components/operating/Block'], resolve)
+const EverySituation = resolve => require(['./components/operating/EverySituation'], resolve)
+const BusinessSituation = resolve => require(['./components/operating/BusinessSituation'], resolve)
+const SeniorComletionRate = resolve => require(['./components/operating/SeniorComletionRate'], resolve)
 
 const GradeSubjectStatisticsList = resolve => require(['./components/operating/GradeSubjectStatisticsList'], resolve)
 const GradeSubjectCostIncomeList = resolve => require(['./components/operating/GradeSubjectCostIncomeList'], resolve)
@@ -391,6 +396,11 @@ const router = new VueRouter({
       {path: 'operating/seniorBranchBonus' , component: SeniorBranchBonus},
       {path: 'operating/classComletionRate' , component: ClassComletionRate},
       {path: 'operating/classLectureGroupDetail' , component: ClassLectureGroupDetail},
+      {path: 'operating/gradeCompletion' , component: GradeCompletion},
+      {path: 'operating/block' , component: Block},
+      {path: 'operating/everySituation' , component: EverySituation},
+      {path: 'operating/businessSituation' , component: BusinessSituation},
+      {path: 'operating/seniorComletionRate' , component: SeniorComletionRate},
 
 
 

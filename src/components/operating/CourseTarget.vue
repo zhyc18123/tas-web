@@ -9,7 +9,7 @@
           </div>
         </div>
         <div class="widget-body  am-fr">
-          <toolbar :isAreaTeam="true" :isBusTeam="true" @search="loadTableData"></toolbar>
+          <toolbar :isAreaTeam="true" :isBusTeam="true" @search="search"></toolbar>
           <div class="am-u-sm-12" v-show="!empty">
             <div>
               <el-table
@@ -120,7 +120,7 @@
     methods:{
     	search(query) {
     		this.query = query
-        loadTableData(1)
+        this.loadTableData(1)
       },
       handleSave(list) {
         var _this = this,
