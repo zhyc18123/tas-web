@@ -9,11 +9,6 @@
         stripe
         style="min-width: 100%">
         <el-table-column
-          prop="busTeamName"
-          min-width="160"
-          label="业务组">
-        </el-table-column>
-        <el-table-column
           prop="periodName"
           min-width="100"
           label="期数">

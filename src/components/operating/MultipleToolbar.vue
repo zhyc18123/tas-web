@@ -74,8 +74,20 @@
         placeholder="结束日期">
       </el-date-picker>
     </div>
-    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="teacherName">
-      <el-input v-model="formData.teacherName" placeholder="班级名称"></el-input>
+    <el-select v-if="needWithPeriod" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group"
+               v-model="formData.needWithPeriod" placeholder="请选择科目">
+      <el-option
+        label="只查本期"
+        value="0">
+      </el-option>
+      <el-option
+        label="查询同期"
+        value="1">
+      </el-option>
+    </el-select>
+
+    <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="className">
+      <el-input v-model="formData.className" placeholder="班级名称"></el-input>
     </div>
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-if="teacherName">
      <el-input v-model="formData.teacherName" :placeholder="teacherNamePlaceholder"></el-input>
@@ -106,10 +118,17 @@
           periodIds: [],
           subjectId: '',
           productId: '',
+          className: '',
+          teacherName: '',
+          needWithPeriod: '0',
         },
       }
     },
     props: {
+      needWithPeriod: {
+        type: Boolean,
+        default : false
+      },
       teacherNamePlaceholder: {
         type: String,
         default: '教师名称'

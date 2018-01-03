@@ -22,20 +22,93 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="periodName"
+                prop="busTeamName"
                 min-width="160"
-                label="期数">
+                label="业务组">
               </el-table-column>
-
               <el-table-column
-                align="center"
-                fixed="right"
-                label="操作"
-                width="120">
+                prop="gradeName"
+                min-width="160"
+                label="年级">
+              </el-table-column>
+              <el-table-column
+                prop="realNewStudentNum"
+                min-width="160"
+                label="实际新生科数">
+              </el-table-column>
+              <el-table-column
+                prop="targetNewStudentNum"
+                min-width="160"
+                label="目标新生科数">
+              </el-table-column>
+              <el-table-column
+                min-width="160"
+                label="新生科数完成率">
                 <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
+                  <div>{{scope.row.realNewStudentNum ==null || scope.row.targetNewStudentNum ==null || scope.row.targetNewStudentNum == '0' ? '0%' :
+                    (parseInt(scope.row.realNewStudentNum)/ parseInt(scope.row.targetNewStudentNum))*100 | formatNumber(2)}}%</div>
                 </template>
               </el-table-column>
+              <el-table-column
+                prop="realOldStudentNum"
+                min-width="160"
+                label="实际老生科数">
+              </el-table-column>
+              <el-table-column
+                prop="targetOldSudentNum"
+                min-width="160"
+                label="目标老生科数">
+              </el-table-column>
+              <el-table-column
+                min-width="160"
+                label="老生科数完成率">
+                <template scope="scope">
+                  <div>{{scope.row.realOldStudentNum ==null || scope.row.targetOldSudentNum ==null || scope.row.targetOldSudentNum == '0' ? '0%' :
+                    (parseInt(scope.row.realOldStudentNum)/ parseInt(scope.row.targetOldSudentNum))*100 | formatNumber(2)}}%</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="nowPeriodNumme"
+                min-width="160"
+                label="本期科数">
+              </el-table-column>
+              <el-table-column
+                prop="sequentialNumme"
+                min-width="160"
+                label="顺期科数">
+              </el-table-column>
+              <el-table-column
+                min-width="160"
+                label="顺期续读率">
+                <template scope="scope">
+                  <div>{{scope.row.nowPeriodNum ==null || scope.row.sequentialNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
+                    (parseInt(scope.row.sequentialNum)/ parseInt(scope.row.nowPeriodNum))*100 | formatNumber(2)}}%</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="targetSequentialNum"
+                min-width="160"
+                label="目标顺期续读率">
+              </el-table-column>
+              <el-table-column
+                prop="stepNumme"
+                min-width="160"
+                label="跨期科数">
+              </el-table-column>
+              <el-table-column
+                min-width="160"
+                label="跨期续读率">
+                <template scope="scope">
+                  <div>{{scope.row.nowPeriodNum ==null || scope.row.stepNum==null || scope.row.nowPeriodNum == '0' ? '0%' :
+                    (parseInt(scope.row.stepNum)/ parseInt(scope.row.nowPeriodNum))*100 | formatNumber(2)}}%</div>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="targetStepNum"
+                min-width="160"
+                label="目标跨期续读率">
+              </el-table-column>
+
             </el-table>
           </div>
         </div>
@@ -102,13 +175,15 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
+        this.$showLoading()
         io.post(io.findGradeCompletionVoList, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.tableData = ret.data
           } else {
             _this.$alert(ret.desc)
           }

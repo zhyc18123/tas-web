@@ -8,48 +8,29 @@
         stripe
         style="min-width: 100%">
         <el-table-column
-          prop="periodName"
-          align="center"
-          min-width="160"
-          label="期数">
-        </el-table-column>
-        <el-table-column
-          prop="campusName"
-          align="center"
-          min-width="160"
-          label="报读校区">
-        </el-table-column>
-        <el-table-column
-          prop="teacherName"
-          align="center"
-          min-width="160"
-          label="咨询师">
-        </el-table-column>
-        <el-table-column
           prop="studentName"
           align="center"
           min-width="160"
           label="学生姓名">
         </el-table-column>
         <el-table-column
-          prop="studentGradeName"
+          prop="nowPeriodDetail"
           align="center"
           min-width="160"
-          label="年级">
+          label="本期在读班级">
         </el-table-column>
         <el-table-column
-          prop="bigLectureNum"
+          prop="sequentialDetail"
           align="center"
           min-width="160"
-          label="6讲（含）以上科数">
+          label="顺期续读情况">
         </el-table-column>
         <el-table-column
+          prop="stepDetail"
           align="center"
-          prop="lessLectureNum"
           min-width="160"
-          label="6讲以下科数">
+          label="跨期续读情况">
         </el-table-column>
-
       </el-table>
     </div>
   </window>
