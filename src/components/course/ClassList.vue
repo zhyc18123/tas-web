@@ -77,14 +77,14 @@
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
                 <select2 v-model="query.level">
-                  <option value="" label="班型"></option>
-                  <option value="1" label="①不区分"></option>
-                  <option value="2" label="②尖端"></option>
-                  <option value="3" label="③状元"></option>
-                  <option value="4" label="④尖子"></option>
-                  <option value="5" label="⑤提高"></option>
-                  <option value="6" label="⑥竞赛"></option>
-                  <option value="7" label="⑦集训队"></option>
+                  <option value="">班型</option>
+                  <option value="1">不区分</option>
+                  <option value="2">尖端</option>
+                  <option value="3">状元</option>
+                  <option value="4">尖子</option>
+                  <option value="5">提高</option>
+                  <option value="6">竞赛</option>
+                  <option value="7">集训队</option>
                 </select2>
               </div>
             </div>

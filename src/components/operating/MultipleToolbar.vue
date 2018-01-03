@@ -53,9 +53,19 @@
         :value="item.value">
       </el-option>
     </el-select>
-    <el-select v-if="subject" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" v-model="formData.subjectId" placeholder="请选择科目">
+    <el-select v-if="subject" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group"
+               v-model="formData.subjectId" placeholder="请选择科目">
       <el-option
         v-for="item in subjects"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </el-option>
+    </el-select>
+    <el-select v-if="classStatus" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group"
+               v-model="formData.status" placeholder="请选择班级状态">
+      <el-option
+        v-for="item in statuses"
         :key="item.value"
         :label="item.label"
         :value="item.value">
@@ -110,6 +120,12 @@
       return {
         products: [],
         periods: [],
+        statuses: [
+          {label: '初始化',value: 0},
+          {label: '报名中',value: 1},
+          {label: '已作废',value: 2},
+          {label: '已结课',value: 3},
+        ],
         year: moment().format('YYYY'),
         formData: {
           areaTeamId: '',
@@ -122,11 +138,16 @@
           productId: '',
           className: '',
           teacherName: '',
+          status: '',
           needWithPeriod: '0',
         },
       }
     },
     props: {
+      classStatus: {
+        type: Boolean,
+        default : false
+      },
       needWithPeriod: {
         type: Boolean,
         default : false

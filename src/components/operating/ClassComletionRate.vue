@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period grade subject className teacherName
+                            areaTeam busTeam startDate endDate period grade subject className teacherName classStatus
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -213,6 +213,7 @@
           areaTeamId: toolbar.formData.areaTeamId,
           className: toolbar.formData.className || '',
           teacherName: toolbar.formData.teacherName || '',
+          status: toolbar.formData.status || '',
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
           gradeIds: gradeIds.join(','),

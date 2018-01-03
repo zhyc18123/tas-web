@@ -1,6 +1,6 @@
 <template>
   <ul class="am-pagination tpl-pagination" v-if="total != 0 ">
-    <li style="font-size: 14px;color: #333">共&nbsp;{{total}}&nbsp;条</li>
+    <li v-if="isShowTotal" style="font-size: 14px;color: #333">共&nbsp;{{total}}&nbsp;条</li>
     <li v-if="showLeftMore"><a href="javascript:;" @click="$emit('paging' , showPages[0] - 1 )">...</a></li>
     <li v-for="n in showPages" :key="n" :class="n==pageNo ? 'am-active' :''"><a href="javascript:;" @click="$emit('paging' , n )" class="">{{n}}</a></li>
     <li v-if="showRightMore"><a href="javascript:;" @click="$emit('paging' , showPages[showPages.length - 1] + 1 )">...</a></li>
@@ -12,7 +12,21 @@
 <script>
     export default{
         name : 'pagination',
-        props:['total','pageNo','pageSize'],
+        props:{
+          total: {
+            default: 0
+          },
+          pageNo: {
+            default: 1
+          },
+          pageSize: {
+            default: 10
+          },
+          isShowTotal: {
+            type: Boolean,
+            default: true
+          }
+        },
         data:function(){
           return {
             totalPage : 10,

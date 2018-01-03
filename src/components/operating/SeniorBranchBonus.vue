@@ -71,7 +71,7 @@
         <senior-branch-bonus-detail ref="seniorBranchBonusDetail"></senior-branch-bonus-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
-            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
+            <pagination :isShowTotal="false" v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
                         @paging="loadTableData"/>
           </div>
         </div>
