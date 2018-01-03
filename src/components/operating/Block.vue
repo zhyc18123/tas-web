@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period grade subject
+                            areaTeam  period grade
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -15,7 +15,7 @@
           </div>
           <div class="am-u-sm-12">
             <el-table
-              :data="tableData"
+              :data="advanceBlockVoList"
               border
               maxHeight="600"
               empty-text="暂无数据"
@@ -138,7 +138,9 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
-        tableData: [],
+        advanceBlockVoList: [],
+        studentStateBlockVoList: [],
+        branchNumBlockVoList: [],
       }
     },
     components: {
@@ -163,19 +165,30 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportBlockVo, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
-        io.post(io.findClassComletionRateVoPage, Object.assign({}, {
+        this.$showLoading()
+        io.post(io.findBlockVo, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.advanceBlockVoList = ret.data.advanceBlockVoList
+            _this.studentStateBlockVoList = ret.data.studentStateBlockVoList
+            _this.branchNumBlockVoList = ret.data.branchNumBlockVoList
           } else {
             _this.$alert(ret.desc)
           }
@@ -208,8 +221,6 @@
           gradeIds = toolbar.formData.gradeIds
         }
         return {
-          startRecordRegTime: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
-          endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),

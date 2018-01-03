@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period grade subject needWithPeriod
+                            areaTeam busTeam startDate endDate period grade subject needWithPeriod defaultEndDate
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -22,9 +22,89 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="teacherName"
+                prop="periodName"
                 min-width="160"
                 label="期数">
+              </el-table-column>
+              <el-table-column
+                prop="busTeamName"
+                min-width="160"
+                label="业务组">
+              </el-table-column>
+              <el-table-column
+                prop="gradeName"
+                min-width="160"
+                label="年级">
+              </el-table-column>
+              <el-table-column
+                prop="targetAmount"
+                min-width="160"
+                label="目标金额">
+              </el-table-column>
+              <el-table-column
+                prop="totalAmount"
+                min-width="160"
+                label="总计金额">
+              </el-table-column>
+              <el-table-column
+                prop="realAmount"
+                min-width="160"
+                label="实收金额">
+              </el-table-column>
+              <el-table-column
+                prop="discountAmount"
+                min-width="160"
+                label="优惠金额">
+              </el-table-column>
+              <el-table-column
+                prop="amountRate"
+                min-width="160"
+                label="金额完成率">
+              </el-table-column>
+              <el-table-column
+                prop="newStudentPersonNum"
+                min-width="160"
+                label="新生人数">
+              </el-table-column>
+              <el-table-column
+                prop="newStudentNum"
+                min-width="160"
+                label="新生科数">
+              </el-table-column>
+              <el-table-column
+                prop="newStudentAmount"
+                min-width="160"
+                label="新生金额">
+              </el-table-column>
+              <el-table-column
+                prop="oldStudentPersonNum"
+                min-width="160"
+                label="老生人数">
+              </el-table-column>
+              <el-table-column
+                prop="oldStudentNum"
+                min-width="160"
+                label="老生科数">
+              </el-table-column>
+              <el-table-column
+                prop="oldStudentAmount"
+                min-width="160"
+                label="老生金额">
+              </el-table-column>
+              <el-table-column
+                prop="seqStepPersonNum"
+                min-width="160"
+                label="续读人数">
+              </el-table-column>
+              <el-table-column
+                prop="seqStepNum"
+                min-width="160"
+                label="续读科数">
+              </el-table-column>
+              <el-table-column
+                prop="seqStepAmount"
+                min-width="160"
+                label="续读金额">
               </el-table-column>
             </el-table>
           </div>
@@ -79,7 +159,7 @@
       handleExport() {
         var _this = this
 
-        io.downloadFile(io.exportBusinessSituationList, this.formatData(), function (ret) {
+        io.downloadFile(io.exportBusinessSituation, this.formatData(), function (ret) {
           if (ret.success) {
           } else {
             _this.$alert(ret.desc)
@@ -90,13 +170,15 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
+        this.$showLoading()
         io.post(io.findBusinessSituationList, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.tableData = ret.data
           } else {
             _this.$alert(ret.desc)
           }

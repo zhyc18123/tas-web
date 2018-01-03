@@ -7,7 +7,7 @@
         </div>
         <div class="widget-body  am-fr">
           <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
-                            areaTeam busTeam startDate endDate period grade subject
+                            areaTeam startDate endDate period grade
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
@@ -163,16 +163,25 @@
         this.$refs.consultantDetail.tableData = counselorRegDetailList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportAmountBranchPerson, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
-        io.post(io.findClassComletionRateVoPage, Object.assign({}, {
+        this.$showLoading()
+        io.post(io.findAmountBranchPerson, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list
@@ -208,10 +217,9 @@
           gradeIds = toolbar.formData.gradeIds
         }
         return {
-          startRecordRegTime: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
-          endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
+          startDate: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
+          endDate: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
-          busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
           gradeIds: gradeIds.join(','),
         }

@@ -173,6 +173,10 @@
         type: Boolean,
         default : false
       },
+      defaultEndDate: {
+        type: Boolean,
+        default : false
+      }
     },
     computed: {
       areaTeams: function () {
@@ -199,6 +203,9 @@
     created() {
       if (window.config.areaTeams) {
         this.formData.areaTeamId = window.config.areaTeams[0].areaTeamId
+      }
+      if(this.defaultEndDate) {
+        this.formData.endDate = moment().format('YYYY-MM-DD')
       }
       this.loadProductsList()
       this.loadPeriodByYear()
