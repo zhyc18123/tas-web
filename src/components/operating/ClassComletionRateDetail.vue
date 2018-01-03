@@ -9,24 +9,34 @@
         stripe
         style="min-width: 100%">
         <el-table-column
-          prop="busTeamName"
-          min-width="160"
-          label="业务组">
-        </el-table-column>
-        <el-table-column
           prop="periodName"
           min-width="100"
           label="期数">
         </el-table-column>
         <el-table-column
-          prop="campusName"
+          prop="busTeamName"
           min-width="100"
-          label="报读校区">
+          label="业务组">
         </el-table-column>
         <el-table-column
           prop="teacherName"
           min-width="100"
-          label="班主任">
+          label="教师">
+        </el-table-column>
+        <el-table-column
+          prop="gradeName"
+          min-width="100"
+          label="年级">
+        </el-table-column>
+        <el-table-column
+          prop="subjectName"
+          min-width="100"
+          label="科目">
+        </el-table-column>
+        <el-table-column
+          prop="className"
+          min-width="100"
+          label="班级">
         </el-table-column>
         <el-table-column
           prop="studentName"
@@ -34,34 +44,14 @@
           label="学生姓名">
         </el-table-column>
         <el-table-column
-          prop="studentNo"
-          min-width="100"
-          label="学号">
+          prop="sequentialDetail"
+          min-width="160"
+          label="顺期情况">
         </el-table-column>
         <el-table-column
-          prop="studentGradeName"
-          min-width="100"
-          label="年级">
-        </el-table-column>
-        <el-table-column
-          prop="lessSeqStudentNum"
-          min-width="200"
-          label="顺期科数（小于6讲）">
-        </el-table-column>
-        <el-table-column
-          prop="bigSeqStudentNum"
-          min-width="200"
-          label="顺期科数（大于等于6讲）">
-        </el-table-column>
-        <el-table-column
-          prop="lessStepStudentNum"
-          min-width="180"
-          label="跨期科数（小于6讲）">
-        </el-table-column>
-        <el-table-column
-          prop="bigStepStudentNum"
-          min-width="200"
-          label="跨期科数（大于等于6讲）">
+          prop="stepDetail"
+          min-width="160"
+          label="跨期情况">
         </el-table-column>
       </el-table>
     </div>
