@@ -1,5 +1,5 @@
 <template>
-  <window class="m-consultant-detail" ref="win" title="班主任续读详情">
+  <window class="m-consultant-detail" ref="win" title="教师续读统计详情">
     <div>
       <el-table
         :data="tableData"

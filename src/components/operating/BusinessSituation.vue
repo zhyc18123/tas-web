@@ -6,7 +6,7 @@
           <div class="widget-title am-fl">营运概况</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false"
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false" needGradeSearch
                             areaTeam busTeam startDate endDate period grade subject needWithPeriod defaultEndDate
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">

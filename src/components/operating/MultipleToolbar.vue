@@ -22,7 +22,9 @@
       <el-date-picker
         v-model="year"
         type="year"
-        placeholder="选择年">
+        :clearable="false"
+        :editable="false"
+        placeholder="请选择年份">
       </el-date-picker>
     </div>
     <el-select :disabled="periods.length === 0" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" multiple
@@ -180,6 +182,10 @@
       needInitSearch: {
         type: Boolean,
         default : true
+      },
+      needGradeSearch: {
+        type: Boolean,
+        default : false
       }
     },
     computed: {
@@ -190,11 +196,9 @@
         return ( ( this.formData.areaTeamId  ) ? ( this.$root.config.groupBusTeams[this.formData.areaTeamId] || [] ) : [] )
       },
       grades () {
-        return [{value: '', label: '全部年级'}].concat(
-          this.$root.config.grades.map(function(item){
-            return {value: item.gradeId, label: item.gradeName}
-          })
-        )
+        return this.$root.config.grades.map(function(item){
+          return {value: item.gradeId, label: item.gradeName}
+        })
       },
       subjects () {
         return [{value: '', label: '全部科目'}].concat(
@@ -228,6 +232,10 @@
         this.formData.periodIds = []
       },
       handleSearch(e) {
+        if (this.needGradeSearch &&  this.grade && this.formData.gradeIds.length === 0) {
+          this.$alert('请选择年级！')
+          return
+        }
         this.$emit('search', e)
       },
       loadPeriodByYear: function () {
@@ -240,7 +248,11 @@
             if(ret.success){
               _this.formData.periodIds = []
               _this.periods = ret.data
-              if (_this.needInitSearch) {
+              if (_this.periods.length === 0) {
+                _this.$alert('当前没有设置期数')
+                _this.year = moment().format('YYYY')
+              }
+              if (_this.needInitSearch && _this.periods.length > 0) {
                 _this.handleSearch()
               }
             }else{

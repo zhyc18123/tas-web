@@ -14,11 +14,6 @@
           label="期数">
         </el-table-column>
         <el-table-column
-          prop="campusName"
-          min-width="100"
-          label="报读校区">
-        </el-table-column>
-        <el-table-column
           prop="teacherName"
           min-width="100"
           label="班主任">
@@ -29,14 +24,9 @@
           label="学生姓名">
         </el-table-column>
         <el-table-column
-          prop="studentNo"
-          min-width="100"
-          label="学号">
-        </el-table-column>
-        <el-table-column
           prop="studentGradeName"
           min-width="100"
-          label="年级">
+          label="学生年级">
         </el-table-column>
         <el-table-column
           prop="lessSeqStudentNum"

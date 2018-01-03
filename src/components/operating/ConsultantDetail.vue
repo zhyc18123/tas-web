@@ -32,10 +32,11 @@
           label="学生姓名">
         </el-table-column>
         <el-table-column
-          prop="studentGradeName"
-          align="center"
-          min-width="160"
-          label="年级">
+          label="生源类型"
+          min-width="100">
+          <template scope="scope">
+            {{{'0': '新生', '1': '老生'}[scope.row.relativeType]}}
+          </template>
         </el-table-column>
         <el-table-column
           prop="bigLectureNum"

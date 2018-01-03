@@ -1,119 +1,226 @@
 <template>
-  <div>
+  <div class="m-block">
     <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
       <div class="widget am-cf">
         <div class="widget-head am-cf">
           <div class="widget-title am-fl">看板</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false"
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false" needGradeSearch
                             areaTeam  period grade
           ></multiple-toolbar>
+          <div class="am-u-sm-12">
+            <el-button-group>
+              <el-button @click="active = 0;tableData = advanceBlockVoList" size="big" :class="{'el-button el-button--primary': active === 0}">
+                预收看板
+              </el-button>
+              <el-button @click="active = 1;tableData = studentStateBlockVoList" size="big" :class="{'el-button el-button--primary': active === 1}">
+                生源看板
+              </el-button>
+              <el-button @click="active = 2;tableData = branchNumBlockVoList" size="big" :class="{'el-button el-button--primary': active === 2}">
+                科数看板
+              </el-button>
+            </el-button-group>
+          </div>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
               <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
           </div>
-          <div class="am-u-sm-12">
-            <el-table
-              :data="advanceBlockVoList"
-              border
-              maxHeight="600"
-              empty-text="暂无数据"
-              stripe
-              style="min-width: 100%">
-              <el-table-column
-                prop="periodName"
-                min-width="160"
-                label="期数">
-              </el-table-column>
-              <el-table-column
-                prop="className"
-                min-width="160"
-                label="班级名称">
-              </el-table-column>
-              <el-table-column
-                prop="busTeamName"
-                min-width="160"
-                label="业务组">
-              </el-table-column>
-              <el-table-column
-                prop="subjectName"
-                min-width="160"
-                label="学科">
-              </el-table-column>
-              <el-table-column
-                prop="gradeName"
-                min-width="160"
-                label="年级">
-              </el-table-column>
-              <el-table-column
-                prop="teacherNames"
-                min-width="160"
-                label="教师">
-              </el-table-column>
-              <el-table-column
-                prop="jobNature"
-                min-width="160"
-                label="任教性质">
-                <template scope="scope">
-                  <div>{{scope.row.jobNature === '0'? '专职': '兼职'}}</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="regNum"
-                min-width="160"
-                label="报名人数">
-              </el-table-column>
-              <el-table-column
-                prop="sequentialPersonNum"
-                min-width="160"
-                label="顺期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="顺期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.sequentialPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.sequentialPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sequentialTargetRate"
-                min-width="160"
-                label="目标顺期续读率">
-              </el-table-column>
-              <el-table-column
-                prop="stepPersonNum"
-                min-width="160"
-                label="跨期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="跨期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.stepPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.stepPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="stepTargetRate"
-                min-width="160"
-                label="目标跨期续读率">
-              </el-table-column>
-
-              <el-table-column
-                align="center"
-                fixed="right"
-                label="操作"
-                width="120">
-                <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
-                </template>
-              </el-table-column>
-            </el-table>
+          <div v-show="active === 0" v-for="item in advanceBlockVoListKeys">
+            <h2>{{item}}</h2>
+            <div class="am-u-sm-12 am-form-group">
+              <el-table
+                :data="advanceBlockVoList[item]"
+                border
+                show-summary
+                empty-text="暂无数据"
+                stripe
+                style="min-width: 100%">
+                <el-table-column
+                  prop="areaTeamName"
+                  min-width="160"
+                  label="区域">
+                </el-table-column>
+                <el-table-column
+                  prop="gradeName"
+                  min-width="120"
+                  label="年级">
+                </el-table-column>
+                <el-table-column
+                  prop="advanceAmount"
+                  min-width="120"
+                  label="预收金额">
+                </el-table-column>
+                <el-table-column
+                  prop="withAdvanceAmount"
+                  min-width="120"
+                  label="同期金额">
+                </el-table-column>
+                <el-table-column
+                  prop="targetAmount"
+                  min-width="120"
+                  label="目标金额">
+                </el-table-column>
+                <el-table-column
+                  prop="withTargetAmount"
+                  min-width="120"
+                  label="同期目标">
+                </el-table-column>
+                <el-table-column
+                  prop="advanceProgress"
+                  min-width="120"
+                  label="预收进度">
+                </el-table-column>
+                <el-table-column
+                  prop="withProgress"
+                  min-width="120"
+                  label="同期进度">
+                </el-table-column>
+                <el-table-column
+                  prop="advanceCompare"
+                  min-width="120"
+                  label="预收同比">
+                </el-table-column>
+                <el-table-column
+                  prop="targetCompare"
+                  min-width="120"
+                  label="目标增长">
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+          <div v-show="active === 1" v-for="item in studentStateBlockVoListKeys">
+            <h2>{{item}}</h2>
+            <div class="am-u-sm-12 am-form-group">
+              <el-table
+                :data="studentStateBlockVoList[item]"
+                border
+                :summary-method="getSummaries"
+                empty-text="暂无数据"
+                stripe
+                style="min-width: 100%">
+                <el-table-column
+                  prop="areaTeamName"
+                  min-width="120"
+                  label="区域">
+                </el-table-column>
+                <el-table-column
+                  prop="gradeName"
+                  min-width="120"
+                  label="年级">
+                </el-table-column>
+                <el-table-column
+                  prop="regStudentNum"
+                  min-width="120"
+                  label="报读人数">
+                </el-table-column>
+                <el-table-column
+                  prop="withStudentNum"
+                  min-width="120"
+                  label="同期报读">
+                </el-table-column>
+                <el-table-column
+                  prop="newStudentNum"
+                  min-width="120"
+                  label="新生人数">
+                </el-table-column>
+                <el-table-column
+                  prop="withNewStudentNum"
+                  min-width="120"
+                  label="同期新生">
+                </el-table-column>
+                <el-table-column
+                  prop="oldStudentNum"
+                  min-width="120"
+                  label="老生人数">
+                </el-table-column>
+                <el-table-column
+                  prop="withOldStudentNum"
+                  min-width="120"
+                  label="同期老生">
+                </el-table-column>
+                <el-table-column
+                  prop="seqStepStudentNum"
+                  min-width="120"
+                  label="续读人数">
+                </el-table-column>
+                <el-table-column
+                  prop="withSeqStepStudentNum"
+                  min-width="120"
+                  label="同期续读">
+                </el-table-column>
+              </el-table>
+            </div>
+          </div>
+          <div v-show="active === 2" v-for="item in branchNumBlockVoListKeys">
+            <h2>{{item}}</h2>
+            <div class="am-u-sm-12 am-form-group">
+              <el-table
+                :data="branchNumBlockVoList[item]"
+                border
+                :summary-method="getSummaries"
+                empty-text="暂无数据"
+                stripe
+                style="min-width: 100%">
+                <el-table-column
+                  prop="areaTeamName"
+                  min-width="120"
+                  label="区域">
+                </el-table-column>
+                <el-table-column
+                  prop="gradeName"
+                  min-width="120"
+                  label="年级">
+                </el-table-column>
+                <el-table-column
+                  prop="avgNum"
+                  min-width="120"
+                  label="人均科数">
+                </el-table-column>
+                <el-table-column
+                  prop="percent1"
+                  min-width="160"
+                  label="报读一科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent2"
+                  min-width="160"
+                  label="报读两科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent3"
+                  min-width="160"
+                  label="报读三科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent4"
+                  min-width="160"
+                  label="报读四科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent5"
+                  min-width="160"
+                  label="报读五科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent6"
+                  min-width="160"
+                  label="报读六科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percent7"
+                  min-width="160"
+                  label="报读七科（占比）">
+                </el-table-column>
+                <el-table-column
+                  prop="percentOver"
+                  min-width="160"
+                  label="报读七科以上（占比）">
+                </el-table-column>
+              </el-table>
+            </div>
           </div>
         </div>
-        <consultant-detail ref="consultantDetail"></consultant-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -128,7 +235,6 @@
 <script>
   import io from '../../lib/io'
   import MultipleToolbar from './MultipleToolbar.vue'
-  import ConsultantDetail from './ConsultantDetail.vue'
   import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
@@ -138,13 +244,18 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
+        active: 0,
+        tableData: [],
         advanceBlockVoList: [],
         studentStateBlockVoList: [],
         branchNumBlockVoList: [],
+        advanceBlockVoListKeys: [],
+        studentStateBlockVoListKeys: [],
+        branchNumBlockVoListKeys: [],
       }
     },
     components: {
-      MultipleToolbar, Pagination, ConsultantDetail
+      MultipleToolbar, Pagination
     },
     watch: {
 
@@ -186,13 +297,30 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.advanceBlockVoList = ret.data.advanceBlockVoList
-            _this.studentStateBlockVoList = ret.data.studentStateBlockVoList
-            _this.branchNumBlockVoList = ret.data.branchNumBlockVoList
+            _this.advanceBlockVoList = _this.formatResult(ret.data.advanceBlockVoList)
+            _this.advanceBlockVoListKeys = Object.keys(_this.advanceBlockVoList)
+            _this.studentStateBlockVoList = _this.formatResult(ret.data.studentStateBlockVoList)
+            _this.studentStateBlockVoListKeys = Object.keys(_this.studentStateBlockVoList)
+            _this.branchNumBlockVoList = _this.formatResult(ret.data.branchNumBlockVoList)
+            _this.branchNumBlockVoListKeys = Object.keys(_this.branchNumBlockVoList)
+            _this.tableData = _this.advanceBlockVoList
           } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      formatResult(data) {
+        let obj = {}
+        data.map(val => {
+          if (!obj[val.periodName]) {
+            let arr = []
+            arr.push(val)
+            obj[val.periodName] = arr
+          } else {
+            obj[val.periodName].push(val)
+          }
+        })
+        return obj
       },
       formatData() {
         let toolbar = this.$refs.toolbar
@@ -230,5 +358,22 @@
     }
   }
 </script>
-<style lang="less" scoped>
+<style lang="less">
+  .m-block {
+    .el-button-group {
+      margin: 0 auto;
+      display: table;
+      padding-bottom: 15px;
+      border-bottom: 1px dashed #ddd;
+    }
+    h2 {
+      text-align: center;
+      font-weight: normal;
+      margin-bottom: 5px;
+    }
+    .el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td {
+      background-color: #7fcfeb;
+      color: #333;
+    }
+  }
 </style>

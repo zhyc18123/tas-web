@@ -47,7 +47,7 @@
                 label="年级">
               </el-table-column>
               <el-table-column
-                prop="teacherNames"
+                prop="teacherName"
                 min-width="160"
                 label="教师">
               </el-table-column>
