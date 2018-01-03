@@ -68,12 +68,12 @@
                 </template>
               </el-table-column>
               <el-table-column
-                prop="nowPeriodNumme"
+                prop="nowPeriodNum"
                 min-width="160"
                 label="本期科数">
               </el-table-column>
               <el-table-column
-                prop="sequentialNumme"
+                prop="sequentialNum"
                 min-width="160"
                 label="顺期科数">
               </el-table-column>
@@ -91,7 +91,7 @@
                 label="目标顺期续读率">
               </el-table-column>
               <el-table-column
-                prop="stepNumme"
+                prop="stepNum"
                 min-width="160"
                 label="跨期科数">
               </el-table-column>
