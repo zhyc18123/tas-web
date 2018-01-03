@@ -6,9 +6,22 @@
           <div class="widget-title am-fl">每日运营概况</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false"
                             areaTeam startDate endDate period grade
           ></multiple-toolbar>
+          <div class="am-u-sm-12">
+            <el-button-group>
+              <el-button @click="active = 0;tableData = amountList" size="big" :class="{'el-button el-button--primary': active === 0}">
+                金融
+              </el-button>
+              <el-button @click="active = 1;tableData = branchList" size="big" :class="{'el-button el-button--primary': active === 1}">
+                科数
+              </el-button>
+              <el-button @click="active = 2;tableData = personList" size="big" :class="{'el-button el-button--primary': active === 2}">
+                人数
+              </el-button>
+            </el-button-group>
+          </div>
           <div class="am-u-sm-12 am-form-group">
             <el-button size="small" type="success" @click="handleExport">
               <span class="am-icon-download"></span>&nbsp;&nbsp;导出</el-button>
@@ -22,98 +35,43 @@
               stripe
               style="min-width: 100%">
               <el-table-column
-                prop="periodName"
-                min-width="160"
-                label="期数">
-              </el-table-column>
-              <el-table-column
-                prop="className"
-                min-width="160"
-                label="班级名称">
-              </el-table-column>
-              <el-table-column
                 prop="busTeamName"
                 min-width="160"
                 label="业务组">
               </el-table-column>
               <el-table-column
-                prop="subjectName"
+                prop="newStudentNum"
                 min-width="160"
-                label="学科">
+                label="新生">
               </el-table-column>
               <el-table-column
-                prop="gradeName"
+                prop="oldStudentNum"
                 min-width="160"
-                label="年级">
+                label="老生">
               </el-table-column>
               <el-table-column
-                prop="teacherNames"
+                prop="seqStepStudentNum"
                 min-width="160"
-                label="教师">
+                label="续读生">
               </el-table-column>
               <el-table-column
-                prop="jobNature"
+                prop="totalNum"
                 min-width="160"
-                label="任教性质">
-                <template scope="scope">
-                  <div>{{scope.row.jobNature === '0'? '专职': '兼职'}}</div>
-                </template>
+                label="总计">
               </el-table-column>
-              <el-table-column
-                prop="regNum"
-                min-width="160"
-                label="报名人数">
-              </el-table-column>
-              <el-table-column
-                prop="sequentialPersonNum"
-                min-width="160"
-                label="顺期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="顺期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.sequentialPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.sequentialPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="sequentialTargetRate"
-                min-width="160"
-                label="目标顺期续读率">
-              </el-table-column>
-              <el-table-column
-                prop="stepPersonNum"
-                min-width="160"
-                label="跨期人数">
-              </el-table-column>
-              <el-table-column
-                min-width="160"
-                label="跨期续读率">
-                <template scope="scope">
-                  <div>{{scope.row.regNum ==null ||scope.row.stepPersonNum ==null || scope.row.regNum == '0' ? '0%' :
-                    (parseInt(scope.row.stepPersonNum)/ parseInt(scope.row.regNum))*100 |formatNumber(2)}}%</div>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="stepTargetRate"
-                min-width="160"
-                label="目标跨期续读率">
-              </el-table-column>
-
               <el-table-column
                 align="center"
                 fixed="right"
                 label="操作"
                 width="120">
                 <template scope="scope">
-                  <el-button size="small" @click="handleDetail(scope.row.counselorRegDetailList)">查看明细</el-button>
+                  <el-button size="small" @click="handleDetail(scope.row.amountBranchPersonDetailVoList)">查看明细</el-button>
                 </template>
               </el-table-column>
             </el-table>
           </div>
         </div>
-        <consultant-detail ref="consultantDetail"></consultant-detail>
+        <every-situation-detail ref="everySituationDetail" :titleType="titleType"></every-situation-detail>
         <div class="am-u-lg-12 am-cf">
           <div class="am-fr">
             <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
@@ -128,27 +86,39 @@
 <script>
   import io from '../../lib/io'
   import MultipleToolbar from './MultipleToolbar.vue'
-  import ConsultantDetail from './ConsultantDetail.vue'
+  import EverySituationDetail from './EverySituationDetail.vue'
   import Pagination from '../base/Pagination.vue'
   import moment from 'moment'
 
   export default{
     data:function(){
       return {
+        active: 0,
         total: 0,
         pageSize: 10,
         pageNo: 1,
         tableData: [],
+        amountList: [],
+        branchList: [],
+        personList: [],
       }
     },
     components: {
-      MultipleToolbar, Pagination, ConsultantDetail
+      MultipleToolbar, Pagination, EverySituationDetail
     },
     watch: {
 
     },
     computed: {
-
+      titleType() {
+        if (this.active === 0) {
+          return '金融'
+        } else if(this.active === 1) {
+          return '科数'
+        } else if(this.active === 2) {
+          return '人数'
+        }
+      }
     },
     mounted :function(){
       $(window).smoothScroll()
@@ -158,9 +128,9 @@
       handleFind() {
         this.loadTableData()
       },
-      handleDetail(counselorRegDetailList) {
-        this.$refs.consultantDetail.show()
-        this.$refs.consultantDetail.tableData = counselorRegDetailList || []
+      handleDetail(amountBranchPersonDetailVoList) {
+        this.$refs.everySituationDetail.show()
+        this.$refs.everySituationDetail.tableData = amountBranchPersonDetailVoList || []
       },
       handleExport() {
         var _this = this
@@ -184,7 +154,10 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.list
+            _this.tableData = ret.data.amountList
+            _this.amountList = ret.data.amountList
+            _this.branchList = ret.data.branchList
+            _this.personList = ret.data.personList
           } else {
             _this.$alert(ret.desc)
           }
@@ -228,4 +201,10 @@
   }
 </script>
 <style lang="less" scoped>
+  .el-button-group {
+    margin: 0 auto;
+    display: table;
+    padding-bottom: 15px;
+    border-bottom: 1px dashed #ddd;
+  }
 </style>

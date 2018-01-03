@@ -6,7 +6,7 @@
           <div class="widget-title am-fl">营运概况</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" :needInitSearch="false"
                             areaTeam busTeam startDate endDate period grade subject needWithPeriod defaultEndDate
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">
@@ -107,12 +107,6 @@
                 label="续读金额">
               </el-table-column>
             </el-table>
-          </div>
-        </div>
-        <div class="am-u-lg-12 am-cf">
-          <div class="am-fr">
-            <pagination v-bind:total="total" v-bind:pageNo="pageNo" v-bind:pageSize="pageSize"
-                        @paging="loadTableData"/>
           </div>
         </div>
       </div>

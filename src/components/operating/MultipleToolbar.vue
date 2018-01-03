@@ -176,6 +176,10 @@
       defaultEndDate: {
         type: Boolean,
         default : false
+      },
+      needInitSearch: {
+        type: Boolean,
+        default : true
       }
     },
     computed: {
@@ -236,7 +240,9 @@
             if(ret.success){
               _this.formData.periodIds = []
               _this.periods = ret.data
-              _this.handleSearch()
+              if (_this.needInitSearch) {
+                _this.handleSearch()
+              }
             }else{
               _this.$alert(ret.desc)
             }
