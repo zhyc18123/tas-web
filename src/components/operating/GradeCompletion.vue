@@ -27,6 +27,11 @@
                 label="业务组">
               </el-table-column>
               <el-table-column
+                prop="periodName"
+                min-width="160"
+                label="期数">
+              </el-table-column>
+              <el-table-column
                 prop="gradeName"
                 min-width="160"
                 label="年级">

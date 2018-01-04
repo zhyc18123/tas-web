@@ -176,10 +176,12 @@
         var _this = this
         _this.pageNo = pageNo || _this.pageNo || 1
 
+        this.$showLoading()
         io.post(io.findClassComletionRateVoPage, Object.assign({}, {
           pageNo: _this.pageNo,
           pageSize: _this.pageSize
         }, this.formatData()), function (ret) {
+          _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
             _this.tableData = ret.data.list

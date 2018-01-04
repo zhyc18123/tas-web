@@ -154,7 +154,13 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data.amountList
+            if (_this.active === 0) {
+              _this.tableData = ret.data.amountList
+            } else if(_this.active === 1) {
+              _this.tableData = ret.data.branchList
+            } else if(_this.active === 2) {
+              _this.tableData = ret.data.personList
+            }
             _this.amountList = ret.data.amountList
             _this.branchList = ret.data.branchList
             _this.personList = ret.data.personList
