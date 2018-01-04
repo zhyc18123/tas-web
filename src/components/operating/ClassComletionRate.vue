@@ -219,7 +219,7 @@
           endRecordRegTime: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
           className: toolbar.formData.className || '',
-          teacherName: toolbar.formData.teacherName || '',
+          teacherNames: toolbar.formData.teacherName || '',
           status: toolbar.formData.status || '',
           subjectId: toolbar.formData.subjectId || '',
           busTeamIds: busTeamIds.join(','),

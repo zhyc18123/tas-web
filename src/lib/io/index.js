@@ -85,6 +85,7 @@ const io = {
     this.apiAdminContinueClassSetting = conf.baseApiPath + '/api/admin/continueClassSetting'
     this.apiAdminSaveOrUpdateContinueClassSetting = conf.baseApiPath + '/api/admin/saveOrUpdateContinueClassSetting'
     this.savePeriodGradeDate = conf.baseApiPath + '/api/admin/savePeriodGradeDate'
+    this.periodGradeDateList = conf.baseApiPath + '/api/admin/periodGradeDateList'
 
     this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
     this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'

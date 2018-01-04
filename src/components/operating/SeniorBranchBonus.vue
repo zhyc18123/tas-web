@@ -6,7 +6,7 @@
           <div class="widget-title am-fl">班主任续读统计（奖金指标）</div>
         </div>
         <div class="widget-body  am-fr">
-          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind"
+          <multiple-toolbar ref="toolbar"  class="toolbar" @search="handleFind" teacherNamePlaceholder="班主任名称"
                             areaTeam busTeam startDate endDate period teacherName
           ></multiple-toolbar>
           <div class="am-u-sm-12 am-form-group">

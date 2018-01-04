@@ -12,7 +12,7 @@
           <div class="am-u-sm-12">
             <el-button-group>
               <el-button @click="active = 0;tableData = amountList" size="big" :class="{'el-button el-button--primary': active === 0}">
-                金融
+                金额
               </el-button>
               <el-button @click="active = 1;tableData = branchList" size="big" :class="{'el-button el-button--primary': active === 1}">
                 科数
@@ -112,7 +112,7 @@
     computed: {
       titleType() {
         if (this.active === 0) {
-          return '金融'
+          return '金额'
         } else if(this.active === 1) {
           return '科数'
         } else if(this.active === 2) {

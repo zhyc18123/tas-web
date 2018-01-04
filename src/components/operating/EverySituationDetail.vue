@@ -53,7 +53,7 @@
     },
     props: {
       titleType: {
-        default: '金融',
+        default: '金额',
         type: String
       }
     },

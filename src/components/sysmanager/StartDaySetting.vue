@@ -9,14 +9,14 @@
       </div>
       <div class="widget-body am-fr">
         <div class="content">
-          <el-form ref="form" label-width="80px">
-            <el-form-item class="list-item" v-for="item in list" label="开课日期1">
+          <el-form ref="form" label-width="100px">
+            <el-form-item class="list-item am-form-group" v-for="(item, index) in list" :label="'开课日期' + (index + 1) + '：'">
               <el-date-picker
                 v-model="item.periodGradeDate"
                 type="date"
                 placeholder="开课日期">
               </el-date-picker>
-              <el-select size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" multiple
+              <el-select size="small" class="" multiple
                          v-model="item.gradeIds" placeholder="适用年级">
                 <el-option
                   v-for="item in grades"
@@ -28,12 +28,12 @@
             </el-form-item>
           </el-form>
           <div>
-            <el-button @click="handleAdd" type="success">添加开课日</el-button>
-            <el-button @click="handleDel" type="success">删除最后一个</el-button>
+            <el-button size="small" @click="handleAdd" type="success">添加开课日</el-button>
+            <el-button size="small" :disabled="list.length < 2" @click="handleDel" type="success">删除最后一个</el-button>
           </div>
         </div>
         <div class="am-form-group" style="text-align: center">
-          <button type="button" :disabled="submitting" class="am-btn am-btn-primary" @click="submit">保存</button>
+          <button type="button" size="big" :disabled="submitting" class="am-btn am-btn-primary" @click="submit">保存</button>
 
         </div>
       </div>
@@ -72,6 +72,7 @@
           _this.areaTeamName = val.name
         }
       })
+      this.getPeriodGradeDateList()
     },
     computed: {
       grades () {
@@ -82,16 +83,18 @@
     },
     methods:{
       submit:function(){
-        let periodGradeDateSaveList
-
-//        this.list.map(val => {
-//          val.periodGradeDate = val.periodGradeDate
-//        })
-        periodGradeDateSaveList = JSON.stringify(this.list)
+        let periodGradeDateSaveList = []
+        let _this = this
+        this.list.map(val => {
+          periodGradeDateSaveList.push({
+            periodGradeDate: this.$options.filters.formatDate(val.periodGradeDate),
+            gradeIds: val.gradeIds.join(',')
+          })
+        })
         this.submitting = true
-        io.postPlayload(io.savePeriodGradeDate,{
+        io.post(io.savePeriodGradeDate,{
           periodId: this.periodId,
-          periodGradeDateSaveList: periodGradeDateSaveList,
+          periodGradeDateSaveList: JSON.stringify(periodGradeDateSaveList),
         },(ret)=>{
           this.submitting = false
           if(ret.success){
@@ -101,38 +104,48 @@
           }
         })
       },
+      getPeriodGradeDateList() {
+        io.post(io.periodGradeDateList,{
+          periodId: this.periodId,
+        },(ret)=>{
+          if(ret.success){
+            this.periodGradeDateList = ret.data
+            this.list = []
+            let obj = {}
+            for(let i =0; i< ret.data.length; i ++) {
+              if(!obj[ret.data[i].periodGradeDate]) {
+                obj[ret.data[i].periodGradeDate] = {
+                  periodGradeDate: this.$options.filters.formatDate(ret.data[i].periodGradeDate),
+                  gradeIds: [ret.data[i].gradeId]
+                }
+              } else {
+                obj[ret.data[i].periodGradeDate].gradeIds.push(ret.data[i].gradeId)
+              }
+            }
+            Object.keys(obj).map(val => {
+              this.list.push(obj[val])
+            })
+          }else{
+            this.$alert(ret.desc || '处理失败')
+          }
+        })
+      },
       handleAdd() {
-        this.formData.itemList.push(
-          {regPeriodId :'' ,isSameSubject:true,isSameCampus:true,isSameLevel:true,isSameGrade:true}
+        this.list.push(
+          {
+            periodGradeDate: '',
+            gradeIds: []
+          }
         )
       },
       handleDel() {
-        this.formData.itemList.length > 1 && this.formData.itemList.pop()
+        this.list.splice(this.list.length -1 , this.list.length)
       },
     }
   }
 </script>
-<style lang="less">
-  .m-continue-apply-set {
-    .info {
-      margin-left: 20px;
-    }
-    .form-box {
-      border: 1px dashed #ddd;
-      margin: 15px;
-      .am-form input[type=text][readonly] {
-        cursor: default;
-        background-color: #fff;
-      }
-      form + form {
-        border-top: 1px solid #ddd;
-      }
-    }
-    .btn-group {
-      margin-left: 25%;
-      padding-left: 10px;
-      margin-top: -20px;
-      margin-bottom: 20px;
-    }
+<style lang="less" scoped>
+  .content {
+    padding: 20px 150px;
   }
 </style>
