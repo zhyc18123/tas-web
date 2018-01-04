@@ -32,7 +32,8 @@
               <el-table
                 :data="advanceBlockVoList[item]"
                 border
-                show-summary
+                :show-summary="true"
+                :summary-method="getSummaries"
                 empty-text="暂无数据"
                 stripe
                 style="min-width: 100%">
@@ -95,6 +96,7 @@
               <el-table
                 :data="studentStateBlockVoList[item]"
                 border
+                :show-summary="true"
                 :summary-method="getSummaries"
                 empty-text="暂无数据"
                 stripe
@@ -158,7 +160,6 @@
               <el-table
                 :data="branchNumBlockVoList[item]"
                 border
-                :summary-method="getSummaries"
                 empty-text="暂无数据"
                 stripe
                 style="min-width: 100%">
@@ -268,6 +269,32 @@
 //      this.loadTableData()
     },
     methods:{
+      getSummaries(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总计';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = sums[index];
+          } else {
+            sums[index] = '-';
+          }
+        });
+        debugger
+        return sums;
+      },
       handleFind() {
         this.loadTableData()
       },
@@ -320,6 +347,11 @@
             obj[val.periodName].push(val)
           }
         })
+//        Object.keys(obj).map(val => {
+//          obj[val].map(i => {
+//
+//          })
+//        })
         return obj
       },
       formatData() {

@@ -43,6 +43,7 @@
 
 <script>
   import io from '../../lib/io'
+  import moment from 'moment'
   import util from '../../lib/util'
   export default{
     data(){
@@ -87,7 +88,7 @@
         let _this = this
         this.list.map(val => {
           periodGradeDateSaveList.push({
-            periodGradeDate: this.$options.filters.formatDate(val.periodGradeDate),
+            periodGradeDate: moment(val.periodGradeDate).format('YYYY-MM-DD'),
             gradeIds: val.gradeIds.join(',')
           })
         })
