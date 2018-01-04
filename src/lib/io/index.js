@@ -84,6 +84,7 @@ const io = {
     this.apiAdminPeriodListForAreaTeam = conf.baseApiPath + '/api/admin/periodListForAreaTeam'
     this.apiAdminContinueClassSetting = conf.baseApiPath + '/api/admin/continueClassSetting'
     this.apiAdminSaveOrUpdateContinueClassSetting = conf.baseApiPath + '/api/admin/saveOrUpdateContinueClassSetting'
+    this.savePeriodGradeDate = conf.baseApiPath + '/api/admin/savePeriodGradeDate'
 
     this.apiAdminStudentSchoolList = conf.baseApiPath + '/api/admin/studentSchoolList'
     this.apiAdminStudentSchoolDetail = conf.baseApiPath + '/api/admin/studentSchoolDetail'
@@ -350,7 +351,6 @@ const io = {
     this.exportSomeSeniorComletionRate  = conf.baseApiPath + '/api/admin/analyze/exportSomeSeniorComletionRate '
     this.exportClassComletionRate = conf.baseApiPath + '/api/admin/analyze/exportClassComletionRate'
     this.exportSeniorComletionRate = conf.baseApiPath + '/api/admin/analyze/exportSeniorComletionRate'
-    this.exportClassComletionRate = conf.baseApiPath + '/api/admin/analyze/exportClassComletionRate'
     this.productTargetList = conf.baseApiPath + '/api/admin/analyze/productTargetList'
     this.findSummerWinterById = conf.baseApiPath + '/api/admin/findSummerWinterById'
     this.findSummerWinterList = conf.baseApiPath + '/api/admin/findSummerWinterList'

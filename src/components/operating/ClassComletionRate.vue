@@ -163,7 +163,14 @@
         this.$refs.classComletionRateDetail.tableData = classComletionDetailVoList || []
       },
       handleExport() {
+        var _this = this
 
+        io.downloadFile(io.exportClassComletionRate, this.formatData(), function (ret) {
+          if (ret.success) {
+          } else {
+            _this.$alert(ret.desc)
+          }
+        })
       },
       loadTableData: function (pageNo) {
         var _this = this
@@ -214,6 +221,7 @@
           className: toolbar.formData.className || '',
           teacherName: toolbar.formData.teacherName || '',
           status: toolbar.formData.status || '',
+          subjectId: toolbar.formData.subjectId || '',
           busTeamIds: busTeamIds.join(','),
           periodIds: periodIds.join(','),
           gradeIds: gradeIds.join(','),

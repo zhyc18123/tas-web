@@ -23,45 +23,6 @@
               </div>
             </div>
 
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class=" am-margin-right-xs am-text-xs"></span>顺期来源
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <choose v-model="formData.sequentialPeriodIds">
-                  <select data-placeholder="选择顺期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
-                    <option value=""></option>
-                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
-                  </select>
-                </choose>
-              </div>
-            </div>
-
-            <div class="am-form-group">
-              <label class="am-u-sm-3 am-form-label">
-                <span class=" am-margin-right-xs am-text-xs"></span>跨期来源
-              </label>
-              <div class="am-u-sm-9 input-field">
-                <choose v-model="formData.stepPeriodIds">
-                  <select data-placeholder="选择跨期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
-                    <option value=""></option>
-                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
-                  </select>
-                </choose>
-              </div>
-            </div>
-
-
-
-
-            <!--<div class="am-form-group am-form-select">-->
-              <!--<label class="am-u-sm-3 am-form-label">-->
-                <!--<span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期数-->
-              <!--</label>-->
-              <!--<div class="am-u-sm-3 input-field am-u-end">-->
-                <!--<input :disabled="!editable"  type="number" class="am-form-field" min="1" step="1" placeholder="" required v-model="formData.periodNo">-->
-              <!--</div>-->
-            <!--</div>-->
             <div class="am-form-group am-form-select">
               <label class="am-u-sm-3 am-form-label">
                 <span class="am-text-danger am-margin-right-xs am-text-xs">*</span>期名
@@ -99,6 +60,46 @@
             </div>
 
             <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class=" am-margin-right-xs am-text-xs"></span>顺期来源
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.sequentialPeriodIds">
+                  <select data-placeholder="选择顺期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
+                  </select>
+                </choose>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class=" am-margin-right-xs am-text-xs"></span>跨期来源
+              </label>
+              <div class="am-u-sm-9 input-field">
+                <choose v-model="formData.stepPeriodIds">
+                  <select data-placeholder="选择跨期来源" style="min-width:300px;" multiple class="chosen-select-no-results">
+                    <option value=""></option>
+                    <option v-for="item in beforePeriods" :value="item.periodId">{{item.periodName}}</option>
+                  </select>
+                </choose>
+              </div>
+            </div>
+
+            <div class="am-form-group">
+              <label class="am-u-sm-3 am-form-label">
+                <span class="am-text-danger am-margin-right-xs am-text-xs"></span>同期期数
+              </label>
+              <div class="am-u-sm-3 am-u-end input-field">
+                <select2 v-model="formData.withPeriodId" :options="periods">
+                  <option value="">请选择期数</option>
+                </select2>
+
+              </div>
+            </div>
+
+            <div class="am-form-group">
               <div class="am-u-sm-9 am-u-sm-push-3">
 
                 <button type="submit" class="am-btn am-btn-primary">提交</button>
@@ -121,8 +122,8 @@ import util from '../../lib/util'
                 segments: 1,
                 sequentialPeriodIds:'',
                 areaTeamId:'',
-                stepPeriodIds:''
-
+                stepPeriodIds:'',
+                withPeriodId:''
               },
               segmentList:[{}],
               editable:true,
@@ -164,7 +165,17 @@ import util from '../../lib/util'
                 return {value:item.areaTeamId,text:item.name}
               })
             return options
-          }
+          },
+          periods() {
+            let arr = []
+            this.beforePeriods.map(val => {
+              arr.push({
+                text: val.periodName,
+                value: val.periodId
+              })
+            })
+            return arr
+          },
         },
         created:function(){
           var _this = this
