@@ -29,22 +29,22 @@
           label="学生年级">
         </el-table-column>
         <el-table-column
-          prop="lessSeqStudentNum"
+          prop="lessSeqNum"
           min-width="200"
           label="顺期科数（小于6讲）">
         </el-table-column>
         <el-table-column
-          prop="bigSeqStudentNum"
+          prop="bigSeqNum"
           min-width="200"
           label="顺期科数（大于等于6讲）">
         </el-table-column>
         <el-table-column
-          prop="lessStepStudentNum"
+          prop="lessStepNum"
           min-width="180"
           label="跨期科数（小于6讲）">
         </el-table-column>
         <el-table-column
-          prop="bigStepStudentNum"
+          prop="bigStepNum"
           min-width="200"
           label="跨期科数（大于等于6讲）">
         </el-table-column>
