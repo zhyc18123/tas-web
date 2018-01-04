@@ -430,7 +430,7 @@ const io = {
     this.findAmountBranchPerson = conf.baseApiPath + '/api/admin/analyze/findAmountBranchPerson'
     this.exportAmountBranchPerson = conf.baseApiPath + '/api/admin/analyze/exportAmountBranchPerson'
     this.findBlockVo = conf.baseApiPath + '/api/admin/analyze/findBlockVo'
-    this.exportBlockVo = conf.baseApiPath + '/api/admin/analyze/exportBlockVo'
+    this.exportBlock = conf.baseApiPath + '/api/admin/analyze/exportBlock'
 
 
 

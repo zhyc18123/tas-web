@@ -305,7 +305,7 @@
       handleExport() {
         var _this = this
 
-        io.downloadFile(io.exportBlockVo, this.formatData(), function (ret) {
+        io.downloadFile(io.exportBlock, this.formatData(), function (ret) {
           if (ret.success) {
           } else {
             _this.$alert(ret.desc)

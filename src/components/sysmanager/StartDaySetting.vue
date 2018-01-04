@@ -87,11 +87,20 @@
         let periodGradeDateSaveList = []
         let _this = this
         this.list.map(val => {
+          if(!val.periodGradeDate || val.gradeIds.length === 0) {
+            this.disabled = true
+            return
+          }
           periodGradeDateSaveList.push({
             periodGradeDate: moment(val.periodGradeDate).format('YYYY-MM-DD'),
             gradeIds: val.gradeIds.join(',')
           })
         })
+        if (this.disabled) {
+          this.$alert('请填写完整信息')
+          this.disabled = false
+          return
+        }
         this.submitting = true
         io.post(io.savePeriodGradeDate,{
           periodId: this.periodId,
