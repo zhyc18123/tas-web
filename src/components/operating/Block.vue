@@ -356,12 +356,14 @@
             sums[index] = '-';
           }
         });
-        sums[5] = (sums[5]/sums[3]*(100)) === Infinity ? '': (sums[5]/sums[3]*(100)).toFixed(2) + '%'
-        sums[6] = (sums[6]/sums[3]*(100)) === Infinity ? '': (sums[6]/sums[3]*(100)).toFixed(2) + '%'
-        sums[7] = (sums[7]/sums[3]*(100)) === Infinity ? '': (sums[7]/sums[3]*(100)).toFixed(2) + '%'
-        sums[8] = (sums[8]/sums[3]*(100)) === Infinity ? '': (sums[8]/sums[3]*(100)).toFixed(2) + '%'
-        sums[9] = (sums[9]/sums[3]*(100)) === Infinity ? '': (sums[9]/sums[3]*(100)).toFixed(2) + '%'
-        sums[10] = (sums[10]/sums[3]*(100)) === Infinity ? '': (sums[10]/sums[3]*(100)).toFixed(2) + '%'
+        sums[5] = (sums[5]/sums[2]*(100)) === Infinity ? '': (sums[5]/sums[2]*(100)).toFixed(2) + '%'
+        sums[6] = (sums[6]/sums[2]*(100)) === Infinity ? '': (sums[6]/sums[2]*(100)).toFixed(2) + '%'
+        sums[7] = (sums[7]/sums[2]*(100)) === Infinity ? '': (sums[7]/sums[2]*(100)).toFixed(2) + '%'
+        sums[8] = (sums[8]/sums[2]*(100)) === Infinity ? '': (sums[8]/sums[2]*(100)).toFixed(2) + '%'
+        sums[9] = (sums[9]/sums[2]*(100)) === Infinity ? '': (sums[9]/sums[2]*(100)).toFixed(2) + '%'
+        sums[10] = (sums[10]/sums[2]*(100)) === Infinity ? '': (sums[10]/sums[2]*(100)).toFixed(2) + '%'
+        sums[11] = (sums[11]/sums[2]*(100)) === Infinity ? '': (sums[11]/sums[2]*(100)).toFixed(2) + '%'
+        sums[12] = (sums[12]/sums[2]*(100)) === Infinity ? '': (sums[12]/sums[2]*(100)).toFixed(2) + '%'
         console.log(sums)
         return sums;
       },
