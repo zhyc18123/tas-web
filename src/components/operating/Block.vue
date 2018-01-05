@@ -97,7 +97,6 @@
                 :data="studentStateBlockVoList[item]"
                 border
                 :show-summary="true"
-                :summary-method="getSummaries"
                 empty-text="暂无数据"
                 stripe
                 style="min-width: 100%">
@@ -160,6 +159,8 @@
               <el-table
                 :data="branchNumBlockVoList[item]"
                 border
+                :show-summary="true"
+                :summary-method="getSummaries2"
                 empty-text="暂无数据"
                 stripe
                 style="min-width: 100%">
@@ -174,49 +175,83 @@
                   label="年级">
                 </el-table-column>
                 <el-table-column
+                  prop="totalPersonNum"
+                  min-width="120"
+                  label="报读人数">
+                </el-table-column>
+                <el-table-column
+                  prop="totalBranchNum"
+                  min-width="120"
+                  label="总科数">
+                </el-table-column>
+                <el-table-column
                   prop="avgNum"
                   min-width="120"
                   label="人均科数">
                 </el-table-column>
                 <el-table-column
-                  prop="percent1"
+                  prop="percentNum1"
                   min-width="160"
                   label="报读一科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum1}}({{scope.row.percent1}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent2"
+                  prop="percentNum2"
                   min-width="160"
                   label="报读两科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum2}}({{scope.row.percent2}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent3"
+                  prop="percentNum3"
                   min-width="160"
                   label="报读三科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum3}}({{scope.row.percent3}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent4"
+                  prop="percentNum4"
                   min-width="160"
                   label="报读四科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum4}}({{scope.row.percent4}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent5"
+                  prop="percentNum5"
                   min-width="160"
                   label="报读五科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum5}}({{scope.row.percent5}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent6"
+                  prop="percentNum6"
                   min-width="160"
                   label="报读六科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum6}}({{scope.row.percent6}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percent7"
+                  prop="percentNum7"
                   min-width="160"
                   label="报读七科（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNum7}}({{scope.row.percent7}})</div>
+                  </template>
                 </el-table-column>
                 <el-table-column
-                  prop="percentOver"
+                  prop="percentNumOver"
                   min-width="160"
                   label="报读七科以上（占比）">
+                  <template scope="scope">
+                    <div>{{scope.row.percentNumOver}}({{scope.row.percentOver}})</div>
+                  </template>
                 </el-table-column>
               </el-table>
             </div>
@@ -292,7 +327,42 @@
             sums[index] = '-';
           }
         });
-        debugger
+        sums[6] = (sums[2]/sums[4]*(100)) === Infinity ? '': (sums[2]/sums[4]*(100)).toFixed(2) + '%'
+        sums[7] = (sums[3]/sums[5]*(100)) === Infinity ? '': (sums[3]/sums[5]*(100)).toFixed(2) + '%'
+        sums[8] = ((sums[2] - sums[3])/sums[3]*(100)) === Infinity ? '': ((sums[2] -sums[3])/sums[3]*(100)).toFixed(2) + '%'
+        sums[9] = ((sums[4]-sums[5])/sums[5]*(100)) === Infinity ? '': ((sums[4]-sums[5])/sums[5]*(100)).toFixed(2) + '%'
+        return sums;
+      },
+      getSummaries2(param) {
+        const { columns, data } = param;
+        const sums = [];
+        columns.forEach((column, index) => {
+          if (index === 0) {
+            sums[index] = '总计';
+            return;
+          }
+          const values = data.map(item => Number(item[column.property]));
+          if (!values.every(value => isNaN(value))) {
+            sums[index] = values.reduce((prev, curr) => {
+              const value = Number(curr);
+              if (!isNaN(value)) {
+                return prev + curr;
+              } else {
+                return prev;
+              }
+            }, 0);
+            sums[index] = sums[index];
+          } else {
+            sums[index] = '-';
+          }
+        });
+        sums[5] = (sums[5]/sums[3]*(100)) === Infinity ? '': (sums[5]/sums[3]*(100)).toFixed(2) + '%'
+        sums[6] = (sums[6]/sums[3]*(100)) === Infinity ? '': (sums[6]/sums[3]*(100)).toFixed(2) + '%'
+        sums[7] = (sums[7]/sums[3]*(100)) === Infinity ? '': (sums[7]/sums[3]*(100)).toFixed(2) + '%'
+        sums[8] = (sums[8]/sums[3]*(100)) === Infinity ? '': (sums[8]/sums[3]*(100)).toFixed(2) + '%'
+        sums[9] = (sums[9]/sums[3]*(100)) === Infinity ? '': (sums[9]/sums[3]*(100)).toFixed(2) + '%'
+        sums[10] = (sums[10]/sums[3]*(100)) === Infinity ? '': (sums[10]/sums[3]*(100)).toFixed(2) + '%'
+        console.log(sums)
         return sums;
       },
       handleFind() {
@@ -404,7 +474,6 @@
       margin-bottom: 5px;
     }
     .el-table__footer-wrapper tbody td, .el-table__header-wrapper tbody td {
-      background-color: #7fcfeb;
       color: #333;
     }
   }
