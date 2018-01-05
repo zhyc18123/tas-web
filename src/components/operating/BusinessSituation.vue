@@ -208,8 +208,8 @@
           startDate: toolbar.formData.startDate ? moment(toolbar.formData.startDate).format('YYYY-MM-DD') + ' 00:00:00' : '',
           endDate: toolbar.formData.endDate ? moment(toolbar.formData.endDate).format('YYYY-MM-DD') + ' 23:59:59' : '',
           areaTeamId: toolbar.formData.areaTeamId,
+          needWithPeriod: toolbar.formData.needWithPeriod,
           busTeamIds: busTeamIds.join(','),
-          needWithPeriod: 0,
           periodIds: periodIds.join(','),
           gradeIds: gradeIds.join(','),
         }
