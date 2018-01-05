@@ -27,7 +27,7 @@
         placeholder="请选择年份">
       </el-date-picker>
     </div>
-    <el-select :disabled="periods.length === 0" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" multiple
+    <el-select :disabled="periods.length === 0" size="small" class="am-u-sm-12 am-u-md-12 am-u-lg-3 am-form-group" multiple
                v-if="period" v-model="formData.periodIds" placeholder="请选择期数">
       <el-option
         v-for="item in periods"
