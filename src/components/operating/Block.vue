@@ -356,6 +356,7 @@
             sums[index] = '-';
           }
         });
+        sums[4] = (sums[3]/sums[2]*(100)) === Infinity ? '': (sums[3]/sums[2]).toFixed(2)
         sums[5] = (sums[5]/sums[2]*(100)) === Infinity ? '': (sums[5]/sums[2]*(100)).toFixed(2) + '%'
         sums[6] = (sums[6]/sums[2]*(100)) === Infinity ? '': (sums[6]/sums[2]*(100)).toFixed(2) + '%'
         sums[7] = (sums[7]/sums[2]*(100)) === Infinity ? '': (sums[7]/sums[2]*(100)).toFixed(2) + '%'
@@ -364,7 +365,6 @@
         sums[10] = (sums[10]/sums[2]*(100)) === Infinity ? '': (sums[10]/sums[2]*(100)).toFixed(2) + '%'
         sums[11] = (sums[11]/sums[2]*(100)) === Infinity ? '': (sums[11]/sums[2]*(100)).toFixed(2) + '%'
         sums[12] = (sums[12]/sums[2]*(100)) === Infinity ? '': (sums[12]/sums[2]*(100)).toFixed(2) + '%'
-        console.log(sums)
         return sums;
       },
       handleFind() {
