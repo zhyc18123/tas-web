@@ -56,7 +56,7 @@
                 min-width="160"
                 label="任教性质">
                 <template scope="scope">
-                  <div>{{scope.row.jobNature === '0'? '专职': '兼职'}}</div>
+                  <div>{{{'0': '专职','1': '兼职','null': ''}[scope.row.jobNature]}}</div>
                 </template>
               </el-table-column>
               <el-table-column
