@@ -331,6 +331,9 @@
         sums[7] = (sums[3]/sums[5]*(100)) === Infinity ? '': (sums[3]/sums[5]*(100)).toFixed(2) + '%'
         sums[8] = ((sums[2] - sums[3])/sums[3]*(100)) === Infinity ? '': ((sums[2] -sums[3])/sums[3]*(100)).toFixed(2) + '%'
         sums[9] = ((sums[4]-sums[5])/sums[5]*(100)) === Infinity ? '': ((sums[4]-sums[5])/sums[5]*(100)).toFixed(2) + '%'
+        sums[2] = sums[2].toFixed(2)
+        sums[3] = sums[3].toFixed(2)
+        sums[4] = sums[4].toFixed(2)
         return sums;
       },
       getSummaries2(param) {

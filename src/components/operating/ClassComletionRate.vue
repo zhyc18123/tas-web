@@ -63,11 +63,17 @@
                 prop="regNum"
                 min-width="160"
                 label="报名人数">
+                <template scope="scope">
+                  <div>{{scope.row.regNum || 0}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 prop="sequentialPersonNum"
                 min-width="160"
                 label="顺期人数">
+                <template scope="scope">
+                  <div>{{scope.row.sequentialPersonNum || 0}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 min-width="160"
@@ -86,6 +92,9 @@
                 prop="stepPersonNum"
                 min-width="160"
                 label="跨期人数">
+                <template scope="scope">
+                  <div>{{scope.row.stepPersonNum || 0}}</div>
+                </template>
               </el-table-column>
               <el-table-column
                 min-width="160"
