@@ -126,7 +126,7 @@
     },
     methods:{
       handleFind() {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       handleDetail(amountBranchPersonDetailVoList) {
         this.$refs.everySituationDetail.show()

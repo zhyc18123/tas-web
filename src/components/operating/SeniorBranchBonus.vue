@@ -111,7 +111,7 @@
     },
     methods:{
       handleFind() {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       handleDetail(seniorRegDetailList) {
         this.$refs.seniorBranchBonusDetail.show()

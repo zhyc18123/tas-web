@@ -131,7 +131,7 @@
     },
     methods:{
       handleFind() {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       handleDetail(seniorRegDetailVoList) {
         this.$refs.seniorComletionRateDetail.show()

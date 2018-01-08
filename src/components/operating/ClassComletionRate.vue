@@ -156,7 +156,7 @@
     },
     methods:{
       handleFind() {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       handleDetail(classComletionDetailVoList) {
         this.$refs.classComletionRateDetail.show()

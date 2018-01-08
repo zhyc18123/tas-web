@@ -114,7 +114,7 @@
     },
     methods:{
       handleFind() {
-        this.loadTableData()
+        this.loadTableData(1)
       },
       handleDetail(counselorRegDetailList) {
         this.$refs.consultantDetail.show()
