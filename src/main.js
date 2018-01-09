@@ -403,6 +403,8 @@ const router = new VueRouter({
       {path: 'operating/everySituation' , component: EverySituation},
       {path: 'operating/businessSituation' , component: BusinessSituation},
       {path: 'operating/seniorComletionRate' , component: SeniorComletionRate},
+      {path: 'balance/withdrawal/list' , component: Withdrawal},
+      {path: 'balance/transfer/list' , component: Transfer},
 
 
 
