@@ -15,7 +15,7 @@
           </el-form-item>
           <hr>
           <div>
-            <el-form-item label="题干：" prop="body">
+            <el-form-item label="题干：" class="is-required" prop="body">
               <el-input
   type="textarea"
   autosize

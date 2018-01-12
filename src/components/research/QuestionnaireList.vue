@@ -17,7 +17,7 @@
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" name="title" v-model="query.title" placeholder="输入问卷标题"/>
+                <input type="text" name="title" v-model="query.questionnaireName" placeholder="输入问卷标题"/>
               </div>
             </div>
 
@@ -196,7 +196,7 @@
           areaTeamId : window.config.areaTeams[0] && window.config.areaTeams[0].areaTeamId || '' ,
           gradeId:'',
           subjectId:'',
-          title:'',
+          questionnaireName:'',
         },
         periods: [],
         searchConfig: {}
@@ -314,7 +314,7 @@ this.$nextTick(()=>{
           areaTeamId: _this.query.areaTeamId,
           gradeId: _this.query.gradeId,
           subjectId: _this.query.subjectId,
-          title: _this.query.title,
+          questionnaireName: _this.query.questionnaireName,
           pageNo: _this.pageNo,
           pageSize: _this.pageSize,
         }, function (ret) {

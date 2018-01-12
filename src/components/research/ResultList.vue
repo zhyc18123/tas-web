@@ -99,7 +99,7 @@
               </el-table-column>
               <el-table-column label="班级名称" prop="className" min-width="100">
               </el-table-column>
-              <el-table-column prop="campusName" label="校区" min-width="100">
+              <el-table-column prop="busTeamName" label="业务组" min-width="100">
               </el-table-column>
               <el-table-column prop="subjectName" label="学科" min-width="100">
               </el-table-column>

@@ -80,6 +80,10 @@ export default {
                 checkedGrade: [],
                 checkedSubject: [],
                 checkedCampuses: [],
+                optimalWeight:'',
+                goodWeight:'',
+                midWeight:'',
+                badWeight:''
             },
             disabledBtn: false,
             checkAllGrade: false,
@@ -278,11 +282,22 @@ export default {
                 }
             })
         },
+        resetForm(){
+this.query.questionnaireName='';
+this.query.optimalWeight='';
+this.query.goodWeight='';
+this.query.midWeight='';
+this.query.badWeight='';
+        },
         submitForm(formName) {
             let _this = this
-            this.disabledBtn = true
+            // this.disabledBtn = true
             this.$refs[formName].validate((valid) => {
                 if (valid) {
+                    if(!this.query.optimalWeight||!this.query.goodWeight||!this.query.midWeight||!this.query.badWeight){
+                        this.$alert('权重不允许为空！');
+                        return;
+                    }
                     _this.query.areaTeamName = _this.areaTeams.filter((item) => { return item.areaTeamId === _this.query.areaTeamId })[0].areaTeamName
                     // _this.query.gradeIds=this.query.checkedGrade.join(',');
                     // _this.query.periodName = _this.periods.filter((item) => { return item.periodId === _this.query.periodId })[0].periodName
@@ -297,6 +312,7 @@ export default {
                     }), function(ret) {
                         if (ret.success) {
                             _this.$toast('提交成功！')
+                            _this.resetForm();
                             _this.$router.go(-1)
                         } else {
                             _this.disabledBtn = false

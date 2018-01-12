@@ -65,7 +65,7 @@
                 fixed="right"
                 :width="optionWidth">
                 <template scope="scope">
-                  <el-button v-if="settingId" size="small" @click.native="handleLooking(scope.row.questionnaireId)">查看
+                  <el-button v-if="settingId" size="small" @click.native="handleLooking(scope.row.questionnaireId)">预览
                   </el-button>
                 </template>
               </el-table-column>
@@ -74,7 +74,7 @@
           <paper-detail ref="paperDetail"></paper-detail>
           <div class="am-u-lg-12">
             <div class="am-text-center">
-              <el-button type="primary" @click="handleSave">保存</el-button>
+              <el-button type="primary" @click="handleSave">确定</el-button>
             </div>
           </div>
         </div>
@@ -233,3 +233,9 @@
     line-height: 1.5;
   }
 </style>
+<style>
+.el-table__body tr.current-row>td{
+  background: red !important;
+}
+</style>
+

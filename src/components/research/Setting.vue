@@ -32,7 +32,7 @@
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/research/newSetting')"><span
-                  class="am-icon-plus"></span>新建测评
+                  class="am-icon-plus"></span>新建测调研
                 </button>
               </div>
             </div>
@@ -102,7 +102,7 @@
                 fixed="right"
                 width="300">
                 <template scope="scope">
-                  <el-button v-if="hasPermission('edit')" size="small" @click.native="$router.push('/main/research/newSetting?settingId='+scope.row.settingId)">编辑
+                  <el-button size="small" @click.native="$router.push('/main/research/newSetting?settingId='+scope.row.settingId)">编辑
                   </el-button>
                   <el-button @click="chooseQuestion(scope.row)" size="small">选择问卷
                   </el-button>

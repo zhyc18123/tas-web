@@ -16,14 +16,14 @@
                 <span>{{questionDetail.courseClass&&questionDetail.courseClass.className}} </span>
             </el-form-item>
             <el-form-item label="本班人数：">
-                <span>{{questionDetail.courseClass&&questionDetail.courseClass.regAmount}}</span>
+                <span>{{questionDetail.courseClass&&questionDetail.courseClass.regAmount&&questionDetail.courseClass.regNum}}</span>
             </el-form-item>
             </el-form-item>
             <el-form-item label="教师：">
                 <span>{{questionDetail.courseClass&&questionDetail.courseClass.teacherName}}</span>
             </el-form-item>
             <el-form-item v-if="isWindow" label="调研问卷份数：">
-                <span>{{totalNum}}</span>
+                <span>{{questionDetail.courseClass&&questionDetail.courseClass.totalNum}}</span>
             </el-form-item>
             <el-form-item v-if="!isWindow" label="调研问卷份数：" prop="questionTotal">
                 <el-input type="Number" placeholder="" v-model="totalNum"></el-input>
@@ -41,7 +41,7 @@
                     </el-form-item>
                 </div>
                 <div>
-                    <el-form-item v-if="!isWindow" label="调研结果：" class="is-required">
+                    <el-form-item v-if="!isWindow" label="调研结果：">
                         <el-table border :data="item.resultTable" style="width: 100%">
                             <el-table-column align="center" prop="levle" label="选项" width="300">
                             </el-table-column>
@@ -51,7 +51,7 @@
                                 </template>
                             </el-table-column>
                         </el-table>
-                        <!--<el-button @click="handleDelCurrentQuestion" >删除本题</el-button>-->
+                        <el-button style="float:right" v-if="currentQuestionNo<questions.length-1" @click="currentQuestionNo++" >下一题</el-button>
                     </el-form-item>
                     <el-form-item v-if="isWindow" label="调研结果：">
                         <el-table border :data="item.resultTable" style="width: 100%">
@@ -108,7 +108,7 @@ export default {
             questionTotal: '',
             rules: {
                 questionTotal: [
-                    { required: true, message: '请输入份数' }
+                    // { required: true, message: '请输入份数' }
                 ],
             }
         };
@@ -124,16 +124,16 @@ export default {
                 this.questionDetail && this.questionDetail.questionnaireQuestionList.map((item) => {
                     item.resultTable = [{
                         levle: '优',
-                        questionNum: item.optimalScore
+                        questionNum: item.optimalNum
                     }, {
                         levle: '良',
-                        questionNum: item.goodScore
+                        questionNum: item.goodNum
                     }, {
                         levle: '中',
-                        questionNum: item.midScore
+                        questionNum: item.midNum
                     }, {
                         levle: '差',
-                        questionNum: item.badScore
+                        questionNum: item.badNum
                     }]
                 })
             } else {
@@ -193,6 +193,10 @@ export default {
         submitForm() {
             let _this = this
             let classQuestionDetailJson = [];
+            if(!this.totalNum){
+                this.$alert('请输入份数！');
+                return;
+            }
             this.questions.map((item) => {
                 classQuestionDetailJson.push({
                     questionnaireQuestionId: item.questionnaireQuestionId,

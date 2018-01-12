@@ -59,7 +59,7 @@
 
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
               <div class="am-form-group">
-                <input type="text" name="gradeName" v-model="query.gradeName" placeholder="请输入班级名称" />
+                <input type="text" name="className" v-model="query.className" placeholder="请输入班级名称" />
               </div>
             </div>
             <div class="am-u-sm-12 am-u-md-12 am-u-lg-3">
@@ -82,7 +82,7 @@
               </el-table-column>
               <el-table-column label="班级名称" prop="className" min-width="100">
               </el-table-column>
-              <el-table-column prop="campusName" label="校区" min-width="100">
+              <el-table-column prop="busTeamName" label="业务组" min-width="100">
               </el-table-column>
               <el-table-column prop="subjectName" label="学科" min-width="100">
               </el-table-column>
@@ -130,6 +130,7 @@ export default {
         productId: '',
         gradeId: '',
         gradeName: '',
+        className:'',
         teacherName:'',
         subjectId: '',
       },
@@ -140,17 +141,16 @@ export default {
     Pagination
   },
   watch: {
-    'query.areaTeamId': function() {
-      this.query.busTeamId = ''
-      this.query.productId = ''
-      // this.loadProductData()
-    }
+    // 'query.areaTeamId': function() {
+    //   this.query.busTeamId = ''
+    //   this.query.productId = ''
+    //   // this.loadProductData()
+    // }
   },
   mounted: function() {
     $(window).smoothScroll()
   },
   created: function() {
-    this.loadTableData(this.pageNo)
     // this.loadProductData();
     this.loadPeriodData();
   },
@@ -168,7 +168,7 @@ export default {
         .map(function(item) {
           return { value: item.busTeamId, text: item.name }
         })
-      this.query.busTeamId = ''
+      // this.query.busTeamId = ''
       return options
     },
     //计算缓存，性能开销比较大的的计算属性
@@ -188,6 +188,7 @@ export default {
       this.loadTableData(1)
     },
     loadTableData: function(pageNo) {
+      console.log(this.query)
       var _this = this
       _this.pageNo = pageNo || _this.pageNo || 1
       io.post(io.apiAdminCourseClassList, $.extend({
@@ -211,6 +212,7 @@ export default {
           _this.periods = ret.data.map(function(item) {
             return { value: item.periodId, text: item.periodName }
           })
+    this.loadTableData(this.pageNo)
         } else {
           console.log(ret.desc)
           _this.periods = []
