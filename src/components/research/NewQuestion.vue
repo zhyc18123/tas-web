@@ -16,7 +16,12 @@
           <hr>
           <div>
             <el-form-item label="题干：" prop="body">
-              <editor :toolbar='[]' v-model="questions[currentQuestionNo].content"></editor>
+              <el-input
+  type="textarea"
+  autosize
+  placeholder="请输入内容"
+  v-model="questions[currentQuestionNo].content"></el-input>
+              <!--<editor :toolbar='[]' v-model="questions[currentQuestionNo].content"></editor>-->
             </el-form-item>
             <el-form-item class="is-required" label="分值(整数)：" prop="score">
               <el-input type="Number" placeholder="分值" v-model="questions[currentQuestionNo].score"></el-input>

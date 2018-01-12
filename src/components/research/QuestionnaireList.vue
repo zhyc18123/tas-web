@@ -96,7 +96,7 @@
                   <el-button size="small" @click.native="$router.push('/main/research/newQuestion?questionnaireId='+
                   scope.row.questionnaireId)">录入题目
                   </el-button>
-                  <el-button @click="handleDelete(scope.row.examPaperId)" size="small">导出
+                  <el-button @click="exportQuestion(scope.row.questionnaireId)" size="small">导出
                   </el-button>
                 </template>
               </el-table-column>
@@ -109,9 +109,63 @@
                           @paging="loadTableData"/>
             </div>
           </div>
-          <div  v-if="measurementId" class="am-u-lg-12">
-            <div class="am-text-center">
-              <el-button type="primary" @click="handleSave">保存</el-button>
+          <div id="export" style="display:none">
+            <h4 style="textAlign:center">卓越教育——教学效果调查表</h4>
+            <p>
+              亲爱的同学们：
+              <p style="textIndent:2em">
+                大家好！为了进一步提升老师的教学质量，让大家有一个更高效的课堂，从而提升教学效果，提升更优质的服务。请你根据实际情况，对以下项目作出真实客观的评价。谢谢！
+              </p>
+            </p>
+            <div style="marginTop:10px">
+              <span>年级：</span><span>&nbsp;&nbsp;&nbsp;</span>
+              <span>科目：</span><span>&nbsp;&nbsp;&nbsp;</span>
+              <span>班级：</span><span>&nbsp;&nbsp;&nbsp;</span>
+            </div>
+            <table cellpadding=0 border=1 cellspacing=0 width=100%>
+              <tr style="background:#eee;height:40px">
+                <th>
+                  序号
+                </th>
+                <th>
+                  评价内容
+                </th>
+                <th>
+                  优
+                </th>
+                <th>
+                  良
+                </th>
+                <th>
+                  中
+                </th>
+                <th>
+                  差
+                </th>
+              </tr>
+              <tr v-for="(item,i) in questions" :key="i">
+                <td style="textAlign:center;width:100px">
+                  <span>&nbsp;&nbsp;{{i+1}}&nbsp;&nbsp;</span>
+                </td>
+                <td>
+                  <span v-html="item.content"></span>
+                </td>
+                <td>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+                <td>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </td>
+              </tr>
+            </table>
+            <div style="marginTop:10px">
+              我还想对老师说：
             </div>
           </div>
         </div>
@@ -130,6 +184,7 @@
   export default{
     data: function () {
       return {
+        questions:[],
         multipleSelection: [],
         examPaperIds: [],
         measurementId: '',
@@ -181,6 +236,30 @@
       this.loadTableData(1)
     },
     methods: {
+      exportWord(){
+        let contentHtml = "<!DOCTYPE html><html><body>" + $('#export').html() + "</body></html>";
+        let converted = htmlDocx.asBlob(contentHtml);
+        let fileName='';
+        saveAs(converted, fileName);
+
+      },
+      exportQuestion(questionnaireId){
+        if (questionnaireId) {
+          io.post(io.questionList, {
+            questionnaireId : questionnaireId
+          },  (ret)=> {
+            if (ret.success) {
+this.questions=ret.data;
+this.$nextTick(()=>{
+  this.exportWord();
+})
+            } else {
+              this.$alert(ret.desc)
+            }
+          })
+        }
+
+      },
       handleDelete(questionnaireId) {
         var _this = this
         _this.$confirm('你确定要删除？',
@@ -272,5 +351,10 @@
     white-space: pre;
     font-size: 14px;
     line-height: 1.5;
+  }
+  #export{
+    p{
+      margin: 0;
+    }
   }
 </style>
