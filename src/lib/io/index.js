@@ -432,10 +432,24 @@ const io = {
     this.findBlockVo = conf.baseApiPath + '/api/admin/analyze/findBlockVo'
     this.exportBlock = conf.baseApiPath + '/api/admin/analyze/exportBlock'
 
-
-
-
-
+    this.findSettingPage = conf.baseApiPath + '/api/admin/questionnaire/findSettingPage'
+    this.saveUpdateQuestionnaire = conf.baseApiPath + '/api/admin/questionnaire/saveUpdateQuestionnaire'
+    this.saveOrUpdateSetting = conf.baseApiPath + '/api/admin/questionnaire/saveOrUpdateSetting'
+    this.deleteBySetting = conf.baseApiPath + '/api/admin/questionnaire/deleteBySetting'
+    this.questionnaireList = conf.baseApiPath + '/api/admin/questionnaire/questionnaireList'
+    this.naireSettingVoDetail = conf.baseApiPath + '/api/admin/questionnaire/naireSettingVoDetail'
+    this.questionnaireDetail = conf.baseApiPath + '/api/admin/questionnaire/questionnaireDetail'
+    this.deleteQuestionnaire = conf.baseApiPath + '/api/admin/questionnaire/deleteQuestionnaire'
+    this.questionnaireRecordList = conf.baseApiPath + '/api/admin/questionnaire/questionnaireRecordList'
+    this.questionListByClassId = conf.baseApiPath + '/api/admin/questionnaire/questionListByClassId'
+    this.settingSelectQuestionnaire = conf.baseApiPath + '/api/admin/questionnaire/settingSelectQuestionnaire'
+    this.questionList = conf.baseApiPath + '/api/admin/questionnaire/questionList'
+    this.importQuestion = conf.baseApiPath + '/api/admin/questionnaire/importQuestion'
+    this.saveQuestionnaireRecord = conf.baseApiPath + '/api/admin/questionnaire/saveQuestionnaireRecord'
+    this.questionnaireRecordDetail = conf.baseApiPath + '/api/admin/questionnaire/questionnaireRecordDetail'
+    this.invalidQuestionnaireRecordDetail = conf.baseApiPath + '/api/admin/questionnaire/invalidQuestionnaireRecordDetail'
+    this.exportQuestionnaireRecordDetail = conf.baseApiPath + '/api/admin/questionnaire/exportQuestionnaireRecordDetail'
+    this.exportQuestionnaireRecord = conf.baseApiPath + '/api/admin/questionnaire/exportQuestionnaireRecord'
 
 
   },

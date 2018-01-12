@@ -194,6 +194,15 @@ const GradeSubjectCostDetail = resolve => require(['./components/operating/Grade
 const GradeSubjectIncomeDetail = resolve => require(['./components/operating/GradeSubjectIncomeDetail'], resolve)
 const Withdrawal = resolve => require(['./components/balance/Withdrawal'], resolve)
 const Transfer = resolve => require(['./components/balance/Transfer'], resolve)
+const ResearchSetting = resolve => require(['./components/research/Setting'], resolve)
+const NewSetting = resolve => require(['./components/research/NewSetting'], resolve)
+const ChooseQuestion = resolve => require(['./components/research/ChooseQuestion'], resolve)
+const QuestionnaireList = resolve => require(['./components/research/QuestionnaireList'], resolve)
+const NewQuestion = resolve => require(['./components/research/NewQuestion'], resolve)
+const ImportResult = resolve => require(['./components/research/ImportResult'], resolve)
+const ResultList = resolve => require(['./components/research/ResultList'], resolve)
+const Import = resolve => require(['./components/research/Import'], resolve)
+const CreateEditQuestion = resolve => require(['./components/research/CreateEditQuestion'], resolve)
 
 
 Vue.use(VueRouter)
@@ -405,6 +414,16 @@ const router = new VueRouter({
       {path: 'operating/seniorComletionRate' , component: SeniorComletionRate},
       {path: 'balance/withdrawal/list' , component: Withdrawal},
       {path: 'balance/transfer/list' , component: Transfer},
+      // 调研
+      {path: 'research/questionnaireSetting' , component: ResearchSetting},
+      {path: 'research/newSetting' , component: NewSetting},
+      {path: 'research/chooseQuestion' , component: ChooseQuestion},
+      {path: 'research/questionnaireList' , component: QuestionnaireList},
+      {path: 'research/newQuestion' , component: NewQuestion},
+      {path: 'research/importResult' , component: ImportResult},
+      {path: 'research/result' , component: ResultList},
+      {path: 'research/import' , component: Import},
+      {path: 'research/createEditQuestion' , component: CreateEditQuestion},
 
 
 
