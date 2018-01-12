@@ -32,7 +32,7 @@
               <div class="am-form-group am-btn-group-xs">
                 <button type="button" class="am-btn am-btn-default am-btn-success"
                         @click="$router.push('/main/research/newSetting')"><span
-                  class="am-icon-plus"></span>新建测调研
+                  class="am-icon-plus"></span>新建调研
                 </button>
               </div>
             </div>
