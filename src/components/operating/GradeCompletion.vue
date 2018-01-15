@@ -17,6 +17,8 @@
             <el-table
               :data="tableData"
               border
+              :showSummary="true"
+              :summaryMethod="summary"
               maxHeight="600"
               empty-text="暂无数据"
               stripe
@@ -142,6 +144,7 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
+        sum: [],
         tableData: [],
       }
     },
@@ -159,6 +162,26 @@
 //      this.loadTableData()
     },
     methods:{
+      summary() {
+        let sum = []
+        sum[0] = ''
+        sum[1] = '总计'
+        sum[2] = ''
+        sum[3] = this.sum.realNewStudentNum
+        sum[4] = this.sum.targetNewStudentNum
+        sum[5] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetNewStudentNum, 2) + '%'
+        sum[6] = this.sum.realOldStudentNum
+        sum[7] = this.sum.targetOldSudentNum
+        sum[8] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetOldSudentNum, 2) + '%'
+        sum[9] = this.sum.nowPeriodNum
+        sum[10] = this.sum.sequentialNum
+        sum[11] = this.$options.filters.formatNumber(this.sum.sequentialNum / this.sum.nowPeriodNum, 2) + '%'
+        sum[12] = ''
+        sum[13] = this.sum.stepNum
+        sum[14] = this.$options.filters.formatNumber(this.sum.stepNum / this.sum.nowPeriodNum, 2) + '%'
+        sum[15] = this.sum.targetStepNum
+        return sum
+      },
       handleFind() {
         this.loadTableData(1)
       },
@@ -188,11 +211,86 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data
+            _this.groupingData(ret.data)
           } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      groupingData(data) {
+        let obj = {},tableData = [],sumObj = {
+          periodName: "总计",
+          realNewStudentNum: 0,
+          targetNewStudentNum: 0,
+          realOldStudentNum: 0,
+          targetOldSudentNum: 0,
+          nowPeriodNum: 0,
+          sequentialNum: 0,
+          stepNum: 0,
+          targetStepNum: 0,
+        }
+        debugger
+        for (let i =0; i<data.length; i++) {
+          if (!obj[data[i].busTeamId + data[i].periodId]) {
+            obj[data[i].busTeamId + data[i].periodId] = [data[i]]
+          } else {
+            obj[data[i].busTeamId + data[i].periodId].push(data[i])
+          }
+        }
+        Object.keys(obj).map(key => {
+          let sum = {
+            periodName: "小计",
+            realNewStudentNum: 0,
+            targetNewStudentNum: 0,
+            realOldStudentNum: 0,
+            targetOldSudentNum: 0,
+            nowPeriodNum: 0,
+            sequentialNum: 0,
+            stepNum: 0,
+            targetStepNum: 0,
+          }
+          obj[key].map(val => {
+            sum.realNewStudentNum += Number(val.realNewStudentNum)
+            sum.targetNewStudentNum += Number(val.targetNewStudentNum)
+            sum.realOldStudentNum += Number(val.realOldStudentNum)
+            sum.targetOldSudentNum += Number(val.targetOldSudentNum)
+            sum.nowPeriodNum += Number(val.nowPeriodNum)
+            sum.sequentialNum += Number(val.sequentialNum)
+            sum.stepNum += Number(val.stepNum)
+            sum.targetStepNum += Number(val.targetStepNum)
+          })
+          sum.realNewStudentNum = sum.realNewStudentNum.toFixed(2)
+          sum.targetNewStudentNum = sum.targetNewStudentNum.toFixed(2)
+          sum.realOldStudentNum = sum.realOldStudentNum.toFixed(2)
+          sum.targetOldSudentNum = sum.targetOldSudentNum.toFixed(2)
+          sum.nowPeriodNum = sum.nowPeriodNum.toFixed(2)
+          sum.sequentialNum = sum.sequentialNum.toFixed(2)
+          sum.stepNum = sum.stepNum.toFixed(2)
+          sum.targetStepNum = sum.targetStepNum.toFixed(2)
+          obj[key].push(sum)
+          tableData = tableData.concat(obj[key])
+        })
+        tableData.map(val => {
+          sumObj.realNewStudentNum += Number(val.realNewStudentNum)
+          sumObj.targetNewStudentNum += Number(val.targetNewStudentNum)
+          sumObj.realOldStudentNum += Number(val.realOldStudentNum)
+          sumObj.targetOldSudentNum += Number(val.targetOldSudentNum)
+          sumObj.nowPeriodNum += Number(val.nowPeriodNum)
+          sumObj.sequentialNum += Number(val.sequentialNum)
+          sumObj.stepNum += Number(val.stepNum)
+          sumObj.targetStepNum += Number(val.targetStepNum)
+
+        })
+        sumObj.realNewStudentNum = sumObj.realNewStudentNum.toFixed(2)
+        sumObj.targetNewStudentNum = sumObj.targetNewStudentNum.toFixed(2)
+        sumObj.realOldStudentNum = sumObj.realOldStudentNum.toFixed(2)
+        sumObj.targetOldSudentNum = sumObj.targetOldSudentNum.toFixed(2)
+        sumObj.nowPeriodNum = sumObj.nowPeriodNum.toFixed(2)
+        sumObj.sequentialNum = sumObj.sequentialNum.toFixed(2)
+        sumObj.stepNum = sumObj.stepNum.toFixed(2)
+        sumObj.targetStepNum = sumObj.targetStepNum.toFixed(2)
+        this.sum = sumObj
+        this.tableData = tableData
       },
       formatData() {
         let toolbar = this.$refs.toolbar

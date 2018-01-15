@@ -34,7 +34,11 @@ export default  {
   },
 
   formatNumber:function(val , fixed){
-    return parseFloat(val).toFixed(fixed)
+    if (val === Infinity || isNaN(parseFloat(val))) {
+      return 0.00
+    } else {
+      return parseFloat(val).toFixed(fixed)
+    }
   },
   initReEdit:function(){
     setTimeout(function(){
