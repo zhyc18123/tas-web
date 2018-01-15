@@ -327,13 +327,13 @@
             sums[index] = '-';
           }
         });
-        sums[6] = (sums[2]/sums[4]*(100)) === Infinity ? '': (sums[2]/sums[4]*(100)).toFixed(2) + '%'
-        sums[7] = (sums[3]/sums[5]*(100)) === Infinity ? '': (sums[3]/sums[5]*(100)).toFixed(2) + '%'
-        sums[8] = ((sums[2] - sums[3])/sums[3]*(100)) === Infinity ? '': ((sums[2] -sums[3])/sums[3]*(100)).toFixed(2) + '%'
-        sums[9] = ((sums[4]-sums[5])/sums[5]*(100)) === Infinity ? '': ((sums[4]-sums[5])/sums[5]*(100)).toFixed(2) + '%'
-        sums[2] = sums[2].toFixed(2)
-        sums[3] = sums[3].toFixed(2)
-        sums[4] = sums[4].toFixed(2)
+        sums[6] = this.$options.filters.formatNumber(sums[2]/sums[4]*(100), 2) + '%'
+        sums[7] = this.$options.filters.formatNumber(sums[3]/sums[5]*(100), 2) + '%'
+        sums[8] = this.$options.filters.formatNumber((sums[2] -sums[3])/sums[3]*(100), 2) + '%'
+        sums[9] = this.$options.filters.formatNumber((sums[4]-sums[5])/sums[5]*(100), 2) + '%'
+        sums[2] = this.$options.filters.formatNumber(sums[2], 2)
+        sums[3] = this.$options.filters.formatNumber(sums[3], 2)
+        sums[4] = this.$options.filters.formatNumber(sums[4], 2)
         return sums;
       },
       getSummaries2(param) {

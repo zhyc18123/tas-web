@@ -17,6 +17,8 @@
             <el-table
               :data="tableData"
               border
+              :showSummary="true"
+              :summaryMethod="summary"
               maxHeight="600"
               empty-text="暂无数据"
               stripe
@@ -126,6 +128,7 @@
         total: 0,
         pageSize: 10,
         pageNo: 1,
+        sum: [],
         tableData: [],
       }
     },
@@ -135,14 +138,33 @@
     watch: {
 
     },
-    computed: {
-
-    },
     mounted :function(){
       $(window).smoothScroll()
 //      this.loadTableData()
     },
     methods:{
+      summary() {
+        let sum = []
+        debugger
+        sum[0] = ''
+        sum[1] = '总计'
+        sum[2] = ''
+        sum[3] = this.sum.targetAmount
+        sum[4] = this.sum.totalAmount
+        sum[5] = this.sum.realAmount
+        sum[6] = this.sum.discountAmount
+        sum[7] = this.sum.amountRate
+        sum[8] = this.sum.newStudentPersonNum
+        sum[9] = this.sum.newStudentNum
+        sum[10] = this.sum.newStudentAmount
+        sum[11] = this.sum.oldStudentPersonNum
+        sum[12] = this.sum.oldStudentNum
+        sum[13] = this.sum.oldStudentAmount
+        sum[14] = this.sum.seqStepPersonNum
+        sum[15] = this.sum.seqStepNum
+        sum[16] = this.sum.seqStepAmount
+        return sum
+      },
       handleFind() {
         this.loadTableData(1)
       },
@@ -172,11 +194,119 @@
           _this.$hiddenLoading()
           if (ret.success) {
             _this.total = ret.data.total
-            _this.tableData = ret.data
+            _this.GroupingData(ret.data)
+
           } else {
             _this.$alert(ret.desc)
           }
         })
+      },
+      GroupingData(data) {
+        let obj = {},tableData = [],sumObj = {
+          busTeamName: "总计",
+          targetAmount: 0,
+          totalAmount: 0,
+          realAmount: 0,
+          discountAmount: 0,
+          amountRate: 0,
+          newStudentPersonNum: 0,
+          newStudentNum: 0,
+          newStudentAmount: 0,
+          oldStudentPersonNum: 0,
+          oldStudentNum: 0,
+          oldStudentAmount: 0,
+          seqStepPersonNum: 0,
+          seqStepNum: 0,
+          seqStepAmount: 0,
+        }
+        for (let i =0; i<data.length; i++) {
+          if (!obj[data[i].busTeamId + data[i].periodId]) {
+            obj[data[i].busTeamId + data[i].periodId] = [data[i]]
+          } else {
+            obj[data[i].busTeamId + data[i].periodId].push(data[i])
+          }
+        }
+        Object.keys(obj).map(key => {
+          let sum = {
+            busTeamName: "小计",
+            targetAmount: 0,
+            totalAmount: 0,
+            realAmount: 0,
+            discountAmount: 0,
+            amountRate: 0,
+            newStudentPersonNum: 0,
+            newStudentNum: 0,
+            newStudentAmount: 0,
+            oldStudentPersonNum: 0,
+            oldStudentNum: 0,
+            oldStudentAmount: 0,
+            seqStepPersonNum: 0,
+            seqStepNum: 0,
+            seqStepAmount: 0,
+          }
+          obj[key].map(val => {
+            sum.targetAmount += Number(val.targetAmount)
+            sum.totalAmount += Number(val.totalAmount)
+            sum.realAmount += Number(val.realAmount)
+            sum.discountAmount += Number(val.discountAmount)
+            sum.newStudentPersonNum += Number(val.newStudentPersonNum)
+            sum.newStudentNum += Number(val.newStudentNum)
+            sum.newStudentAmount += Number(val.newStudentAmount)
+            sum.oldStudentPersonNum += Number(val.oldStudentPersonNum)
+            sum.oldStudentNum += Number(val.oldStudentNum)
+            sum.oldStudentAmount += Number(val.oldStudentAmount)
+            sum.seqStepPersonNum += Number(val.seqStepPersonNum)
+            sum.seqStepNum += Number(val.seqStepNum)
+            sum.seqStepAmount += Number(val.seqStepAmount)
+          })
+          sum.targetAmount = sum.targetAmount.toFixed(2)
+          sum.totalAmount = sum.totalAmount.toFixed(2)
+          sum.realAmount = sum.realAmount.toFixed(2)
+          sum.discountAmount = sum.discountAmount.toFixed(2)
+          sum.newStudentPersonNum = sum.newStudentPersonNum.toFixed(2)
+          sum.newStudentNum = sum.newStudentNum.toFixed(2)
+          sum.newStudentAmount = sum.newStudentAmount.toFixed(2)
+          sum.oldStudentPersonNum = sum.oldStudentPersonNum.toFixed(2)
+          sum.oldStudentNum = sum.oldStudentNum.toFixed(2)
+          sum.oldStudentAmount = sum.oldStudentAmount.toFixed(2)
+          sum.seqStepPersonNum = sum.seqStepPersonNum.toFixed(2)
+          sum.seqStepNum = sum.seqStepNum.toFixed(2)
+          sum.seqStepAmount = sum.seqStepAmount.toFixed(2)
+          sum.amountRate = Number(sum.realAmount/sum.targetAmount*100).toFixed(2) + '%'
+          obj[key].push(sum)
+          tableData = tableData.concat(obj[key])
+        })
+        tableData.map(val => {
+          sumObj.targetAmount += Number(val.targetAmount)
+          sumObj.totalAmount += Number(val.totalAmount)
+          sumObj.realAmount += Number(val.realAmount)
+          sumObj.discountAmount += Number(val.discountAmount)
+          sumObj.newStudentPersonNum += Number(val.newStudentPersonNum)
+          sumObj.newStudentNum += Number(val.newStudentNum)
+          sumObj.newStudentAmount += Number(val.newStudentAmount)
+          sumObj.oldStudentPersonNum += Number(val.oldStudentPersonNum)
+          sumObj.oldStudentNum += Number(val.oldStudentNum)
+          sumObj.oldStudentAmount += Number(val.oldStudentAmount)
+          sumObj.seqStepPersonNum += Number(val.seqStepPersonNum)
+          sumObj.seqStepNum += Number(val.seqStepNum)
+          sumObj.seqStepAmount += Number(val.seqStepAmount)
+        })
+        sumObj.targetAmount = sumObj.targetAmount.toFixed(2)
+        sumObj.totalAmount = sumObj.totalAmount.toFixed(2)
+        sumObj.realAmount = sumObj.realAmount.toFixed(2)
+        sumObj.discountAmount = sumObj.discountAmount.toFixed(2)
+        sumObj.newStudentPersonNum = sumObj.newStudentPersonNum.toFixed(2)
+        sumObj.newStudentNum = sumObj.newStudentNum.toFixed(2)
+        sumObj.newStudentAmount = sumObj.newStudentAmount.toFixed(2)
+        sumObj.oldStudentPersonNum = sumObj.oldStudentPersonNum.toFixed(2)
+        sumObj.oldStudentNum = sumObj.oldStudentNum.toFixed(2)
+        sumObj.oldStudentAmount = sumObj.oldStudentAmount.toFixed(2)
+        sumObj.seqStepPersonNum = sumObj.seqStepPersonNum.toFixed(2)
+        sumObj.seqStepNum = sumObj.seqStepNum.toFixed(2)
+        sumObj.seqStepAmount = sumObj.seqStepAmount.toFixed(2)
+        sumObj.amountRate = Number(sumObj.realAmount/sumObj.targetAmount*100).toFixed(2) + '%'
+        this.sum = sumObj
+        this.tableData = tableData
       },
       formatData() {
         let toolbar = this.$refs.toolbar
