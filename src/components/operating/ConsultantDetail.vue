@@ -32,6 +32,12 @@
           label="学生姓名">
         </el-table-column>
         <el-table-column
+          prop="studentPhoneNo"
+          align="center"
+          min-width="160"
+          label="学生电话">
+        </el-table-column>
+        <el-table-column
           label="生源类型"
           min-width="100">
           <template scope="scope">
