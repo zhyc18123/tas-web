@@ -121,7 +121,11 @@ export default {
     },
     props: ['studentId'],
     mounted: function() {
-        $(window).smoothScroll()
+        $(window).smoothScroll();
+        setTimeout(()=> {
+        this.handleGradeChange(this.query.checkedGrade);
+        this.handleSubjectChange(this.query.checkedSubject);
+        }, 200);
     },
     created: function() {
         //   console.log(1)
@@ -167,10 +171,6 @@ export default {
                 this.isEdit = false;
             }
         }
-    },
-    mounted(){
-        this.handleGradeChange(this.query.checkedGrade);
-        this.handleSubjectChange(this.query.checkedSubject);
     },
     computed: {
         areaTeams: function() {
@@ -220,7 +220,7 @@ export default {
         },
         handleSubjectChange(value) {
             let checkedCount = value.length;
-            console.log('ddd',checkedCount === this.subjects.length)
+            console.log('ddd',checkedCount, this.subjects.length)
             this.checkAllSubject = checkedCount === this.subjects.length;
         },
         handleCampusesChange(value) {
