@@ -5,6 +5,10 @@ moment.locale('zh-cn')
 
 export default  {
 
+  install:function(Vue){
+    Vue.filter('formatNumber' ,this.formatNumber )
+  },
+
   getQueryString : function (name){
     var r = window.location.search.substr(1).match(new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"));
     if(r) {
@@ -34,6 +38,7 @@ export default  {
   },
 
   formatNumber:function(val , fixed){
+    console.log('xxx')
     return parseFloat(val).toFixed(fixed)
   },
   initReEdit:function(){

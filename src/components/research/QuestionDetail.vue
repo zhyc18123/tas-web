@@ -3,10 +3,10 @@
         <el-form :inline="true" :model="query" :rules="rules" ref="query" label-width="130px" class="demo-query">
             <div v-if="isWindow" class='total-score'>
                 <el-form-item label="总分：">
-                    <span>{{questionDetail.courseClass&&questionDetail.courseClass.totalScore}}</span>
+                    <span>{{questionDetail.courseClass&&questionDetail.courseClass.totalScore | formatNumber(2)}}</span>
                 </el-form-item>
                 <el-form-item label="最终得分：">
-                    <span>{{questionDetail.courseClass&&questionDetail.courseClass.headCoefficientScore||'--'}}</span>
+                    <span>{{questionDetail.courseClass&&questionDetail.courseClass.headCoefficientScore | formatNumber(2)||'--'}}</span>
                 </el-form-item>
             </div>
             <el-form-item label="校区：">
@@ -68,7 +68,7 @@
                 </div>
                 <div v-if="isWindow">
                     <el-form-item label="本题得分：">
-                        <span>{{item.questionScore}}</span>
+                        <span>{{item.questionScore| formatNumber(2)}}</span>
                     </el-form-item>
                 </div>
             </div>
