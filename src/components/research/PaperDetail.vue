@@ -49,6 +49,9 @@
             questionnaireId : this.questionnaireId
           },  (ret)=> {
             if (ret.success) {
+              ret.data.map((item)=>{
+                item.content=item.content.replace(/\n|\r\n/g,'<br/>');
+              })
 this.questions=ret.data;
             } else {
               this.$alert(ret.desc)

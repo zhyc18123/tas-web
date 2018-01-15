@@ -111,13 +111,25 @@
               </el-table-column>
               <el-table-column prop="totalNum" label="调查问卷份数" min-width="100">
               </el-table-column>
-              <el-table-column prop="totalScore" label="总分" min-width="100">
+              <el-table-column  label="总分" min-width="100">
+                <template scope="scope">
+                  {{scope.row.totalScore | formatNumber(2)}}
+                </template>
               </el-table-column>
-              <el-table-column prop="headCoefficient" label="人头系数" min-width="100">
+              <el-table-column label="人头系数" min-width="100">
+                <template scope="scope">
+                  {{scope.row.headCoefficient | formatNumber(2)}}
+                </template>
               </el-table-column>
-              <el-table-column prop="headCoefficientScore" label="最终得分" min-width="100">
+              <el-table-column label="最终得分" min-width="100">
+                <template scope="scope">
+                  {{scope.row.headCoefficientScore | formatNumber(2)}}
+                </template>
               </el-table-column>
-              <el-table-column prop="preferentialRate" label="选“优”率" min-width="100">
+              <el-table-column label="选“优”率" min-width="100">
+                <template scope="scope">
+                  {{scope.row.preferentialRate | formatNumber(2)}}
+                </template>
               </el-table-column>
               <el-table-column prop="operatorName" label="录入人" min-width="100">
               </el-table-column>

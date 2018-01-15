@@ -10,6 +10,9 @@ import VueResource from 'vue-resource'
 import io from './lib/io'
 import storage from './lib/storage'
 
+import util from './lib/util'
+Vue.use(util)
+
 import VueUI from './components/base/VueUI'
 
 
