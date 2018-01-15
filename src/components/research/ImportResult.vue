@@ -212,27 +212,13 @@ export default {
           _this.periods = ret.data.map(function(item) {
             return { value: item.periodId, text: item.periodName }
           })
-    this.loadTableData(this.pageNo)
+          _this.loadTableData(_this.pageNo)
         } else {
           console.log(ret.desc)
           _this.periods = []
         }
       })
     },
-    // loadProductData: function () {
-    //   var _this = this
-    //   io.post(io.apiAdminBaseProductListForAreaTeam, {
-    //     areaTeamId : this.query.areaTeamId
-    //   }, function (ret) {
-    //     if (ret.success) {
-    //       _this.products = ret.data.map(function (item) {
-    //         return {value: item.productId, text: item.name}
-    //       })
-    //     } else {
-    //       _this.$alert(ret.desc)
-    //     }
-    //   })
-    // },
     prepareUpload: function() {
       $('#uploadFile').click()
     },
