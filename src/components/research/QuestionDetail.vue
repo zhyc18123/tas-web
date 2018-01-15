@@ -16,7 +16,7 @@
                 <span>{{questionDetail.courseClass&&questionDetail.courseClass.className}} </span>
             </el-form-item>
             <el-form-item label="本班人数：">
-                <span>{{questionDetail.courseClass&&questionDetail.courseClass.regAmount&&questionDetail.courseClass.regNum}}</span>
+                <span v-if="questionDetail.courseClass">{{questionDetail.courseClass.regAmount||questionDetail.courseClass.regNum}}</span>
             </el-form-item>
             </el-form-item>
             <el-form-item label="教师：">
