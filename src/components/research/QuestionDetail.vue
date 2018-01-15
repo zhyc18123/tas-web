@@ -37,7 +37,7 @@
             <div v-show="currentQuestionNo === index" v-for="(item,index) in questions">
                 <div>
                     <el-form-item label="题干：" prop="body">
-                        <span v-html="item.content"></span>
+                        <span v-html="item.content.replace(/\n|\r\n/g,'<br/>')"></span>
                     </el-form-item>
                 </div>
                 <div>
