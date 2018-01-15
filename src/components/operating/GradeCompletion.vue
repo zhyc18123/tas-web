@@ -169,7 +169,7 @@
         sum[2] = ''
         sum[3] = this.sum.realNewStudentNum
         sum[4] = this.sum.targetNewStudentNum
-        sum[5] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetNewStudentNum, 2) + '%'
+        sum[5] = this.$options.filters.formatNumber(this.sum.realNewStudentNum / this.sum.targetNewStudentNum, 2) + '%'
         sum[6] = this.sum.realOldStudentNum
         sum[7] = this.sum.targetOldSudentNum
         sum[8] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetOldSudentNum, 2) + '%'
