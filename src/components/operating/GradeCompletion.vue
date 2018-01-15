@@ -169,16 +169,16 @@
         sum[2] = ''
         sum[3] = this.sum.realNewStudentNum
         sum[4] = this.sum.targetNewStudentNum
-        sum[5] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetNewStudentNum, 2) + '%'
+        sum[5] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetNewStudentNum *100, 2) + '%'
         sum[6] = this.sum.realOldStudentNum
         sum[7] = this.sum.targetOldSudentNum
-        sum[8] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetOldSudentNum, 2) + '%'
+        sum[8] = this.$options.filters.formatNumber(this.sum.realOldStudentNum / this.sum.targetOldSudentNum *100, 2) + '%'
         sum[9] = this.sum.nowPeriodNum
         sum[10] = this.sum.sequentialNum
-        sum[11] = this.$options.filters.formatNumber(this.sum.sequentialNum / this.sum.nowPeriodNum, 2) + '%'
+        sum[11] = this.$options.filters.formatNumber(this.sum.sequentialNum / this.sum.nowPeriodNum *100, 2) + '%'
         sum[12] = ''
         sum[13] = this.sum.stepNum
-        sum[14] = this.$options.filters.formatNumber(this.sum.stepNum / this.sum.nowPeriodNum, 2) + '%'
+        sum[14] = this.$options.filters.formatNumber(this.sum.stepNum / this.sum.nowPeriodNum *100, 2) + '%'
         sum[15] = ''
         return sum
       },
