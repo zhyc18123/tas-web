@@ -272,11 +272,11 @@
           sum.seqStepPersonNum = sum.seqStepPersonNum.toFixed(2)
           sum.seqStepNum = sum.seqStepNum.toFixed(2)
           sum.seqStepAmount = sum.seqStepAmount.toFixed(2)
-          sum.amountRate = Number(sum.realAmount/sum.targetAmount*100).toFixed(2) + '%'
+          sum.amountRate = this.$options.filters.formatNumber((sum.realAmount/sum.targetAmount*100), 2) + '%'
           obj[key].push(sum)
           tableData = tableData.concat(obj[key])
         })
-        tableData.map(val => {
+        data.map(val => {
           sumObj.targetAmount += Number(val.targetAmount)
           sumObj.totalAmount += Number(val.totalAmount)
           sumObj.realAmount += Number(val.realAmount)
@@ -304,7 +304,7 @@
         sumObj.seqStepPersonNum = sumObj.seqStepPersonNum.toFixed(2)
         sumObj.seqStepNum = sumObj.seqStepNum.toFixed(2)
         sumObj.seqStepAmount = sumObj.seqStepAmount.toFixed(2)
-        sumObj.amountRate = Number(sumObj.realAmount/sumObj.targetAmount*100).toFixed(2) + '%'
+        sumObj.amountRate = this.$options.filters.formatNumber((sumObj.realAmount/sumObj.targetAmount*100), 2) + '%'
         this.sum = sumObj
         this.tableData = tableData
       },

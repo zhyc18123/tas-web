@@ -179,7 +179,7 @@
         sum[12] = ''
         sum[13] = this.sum.stepNum
         sum[14] = this.$options.filters.formatNumber(this.sum.stepNum / this.sum.nowPeriodNum, 2) + '%'
-        sum[15] = this.sum.targetStepNum
+        sum[15] = ''
         return sum
       },
       handleFind() {
@@ -227,9 +227,26 @@
           nowPeriodNum: 0,
           sequentialNum: 0,
           stepNum: 0,
-          targetStepNum: 0,
         }
-        debugger
+        data.map(val => {
+          sumObj.realNewStudentNum += Number(val.realNewStudentNum)
+          sumObj.targetNewStudentNum += Number(val.targetNewStudentNum)
+          sumObj.realOldStudentNum += Number(val.realOldStudentNum)
+          sumObj.targetOldSudentNum += Number(val.targetOldSudentNum)
+          sumObj.nowPeriodNum += Number(val.nowPeriodNum)
+          sumObj.sequentialNum += Number(val.sequentialNum)
+          sumObj.stepNum += Number(val.stepNum)
+
+        })
+        sumObj.realNewStudentNum = sumObj.realNewStudentNum.toFixed(2)
+        sumObj.targetNewStudentNum = sumObj.targetNewStudentNum.toFixed(2)
+        sumObj.realOldStudentNum = sumObj.realOldStudentNum.toFixed(2)
+        sumObj.targetOldSudentNum = sumObj.targetOldSudentNum.toFixed(2)
+        sumObj.nowPeriodNum = sumObj.nowPeriodNum.toFixed(2)
+        sumObj.sequentialNum = sumObj.sequentialNum.toFixed(2)
+        sumObj.stepNum = sumObj.stepNum.toFixed(2)
+        this.sum = sumObj
+
         for (let i =0; i<data.length; i++) {
           if (!obj[data[i].busTeamId + data[i].periodId]) {
             obj[data[i].busTeamId + data[i].periodId] = [data[i]]
@@ -247,7 +264,6 @@
             nowPeriodNum: 0,
             sequentialNum: 0,
             stepNum: 0,
-            targetStepNum: 0,
           }
           obj[key].map(val => {
             sum.realNewStudentNum += Number(val.realNewStudentNum)
@@ -257,7 +273,6 @@
             sum.nowPeriodNum += Number(val.nowPeriodNum)
             sum.sequentialNum += Number(val.sequentialNum)
             sum.stepNum += Number(val.stepNum)
-            sum.targetStepNum += Number(val.targetStepNum)
           })
           sum.realNewStudentNum = sum.realNewStudentNum.toFixed(2)
           sum.targetNewStudentNum = sum.targetNewStudentNum.toFixed(2)
@@ -266,30 +281,9 @@
           sum.nowPeriodNum = sum.nowPeriodNum.toFixed(2)
           sum.sequentialNum = sum.sequentialNum.toFixed(2)
           sum.stepNum = sum.stepNum.toFixed(2)
-          sum.targetStepNum = sum.targetStepNum.toFixed(2)
           obj[key].push(sum)
           tableData = tableData.concat(obj[key])
         })
-        tableData.map(val => {
-          sumObj.realNewStudentNum += Number(val.realNewStudentNum)
-          sumObj.targetNewStudentNum += Number(val.targetNewStudentNum)
-          sumObj.realOldStudentNum += Number(val.realOldStudentNum)
-          sumObj.targetOldSudentNum += Number(val.targetOldSudentNum)
-          sumObj.nowPeriodNum += Number(val.nowPeriodNum)
-          sumObj.sequentialNum += Number(val.sequentialNum)
-          sumObj.stepNum += Number(val.stepNum)
-          sumObj.targetStepNum += Number(val.targetStepNum)
-
-        })
-        sumObj.realNewStudentNum = sumObj.realNewStudentNum.toFixed(2)
-        sumObj.targetNewStudentNum = sumObj.targetNewStudentNum.toFixed(2)
-        sumObj.realOldStudentNum = sumObj.realOldStudentNum.toFixed(2)
-        sumObj.targetOldSudentNum = sumObj.targetOldSudentNum.toFixed(2)
-        sumObj.nowPeriodNum = sumObj.nowPeriodNum.toFixed(2)
-        sumObj.sequentialNum = sumObj.sequentialNum.toFixed(2)
-        sumObj.stepNum = sumObj.stepNum.toFixed(2)
-        sumObj.targetStepNum = sumObj.targetStepNum.toFixed(2)
-        this.sum = sumObj
         this.tableData = tableData
       },
       formatData() {
