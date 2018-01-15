@@ -168,6 +168,10 @@ export default {
             }
         }
     },
+    mounted(){
+        this.handleGradeChange(this.query.checkedGrade);
+        this.handleSubjectChange(this.query.checkedSubject);
+    },
     computed: {
         areaTeams: function() {
             var options = (this.$root.config.areaTeams || [])
@@ -216,6 +220,7 @@ export default {
         },
         handleSubjectChange(value) {
             let checkedCount = value.length;
+            console.log('ddd',checkedCount === this.subjects.length)
             this.checkAllSubject = checkedCount === this.subjects.length;
         },
         handleCampusesChange(value) {

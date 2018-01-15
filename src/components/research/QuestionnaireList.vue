@@ -239,7 +239,7 @@
       exportWord(){
         let contentHtml = "<!DOCTYPE html><html><body>" + $('#export').html() + "</body></html>";
         let converted = htmlDocx.asBlob(contentHtml);
-        let fileName='';
+        let fileName='问卷调查';
         saveAs(converted, fileName);
 
       },
