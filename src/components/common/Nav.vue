@@ -1,0 +1,531 @@
+<template>
+  <div class="m-nav">
+    <el-row>
+      <div class="head-nav container">
+
+        <el-dialog title="请选择科目" :show-close='false' :close-on-click-modal="false" :visible="selectSubject">
+          <el-radio class="radio" v-for="(item,i) in subjects" :key="i" v-model="subjectId" :label="item.id">{{item.name}}</el-radio>
+          <div class="tip">提示：为了不丢失正在编辑的内容，请不要在同个浏览器登录不同的科目</div>
+          <el-row class="sure-btn">
+            <el-button type="primary" @click="confirm">确定</el-button>
+          </el-row>
+        </el-dialog>
+
+        <el-col :span='16' class="head-version">
+          <div class="logo-div">
+            <router-link to="/">
+              <img class="logo" alt="logo" src="../../assets/img/logo.svg">
+            </router-link>
+          </div>
+          <el-col :span='10' class="version">教研服务平台
+            <em>V1.0</em>
+          </el-col>
+        </el-col>
+        <el-col :span='8'>
+          <template v-if="!loginInfo">
+            <el-button class="btn-login" v-show="false" type="text" @click="showLoginForm = true">登录</el-button>
+          </template>
+          <div class="has-login" v-else>
+            <div class="login-name">
+              <img v-if="false" :src="loginInfo.avatarUrl" />
+              <span>欢迎您！
+                <em>{{loginInfo?loginInfo.name:''}}</em>
+              </span>
+              <!--<svg class="icon xiala" aria-hidden="true">
+                    <use xlink:href="#icon-xiala"></use>
+                  </svg>-->
+            </div>
+            <span class="subject-name">{{subjectName}}</span>
+            <a href="javascript:;" @click="logout">退出</a>
+          </div>
+        </el-col>
+        <!--登录弹窗-->
+        <el-dialog :show-close='false' :close-on-click-modal='false' size="" customClass="login-dialog" :visible.sync="showLoginForm" title="教研服务平台">
+          <el-form labelWidth="0" :model="loginForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item prop="username">
+              <el-input placeholder="请输入用户名" auto-complete="off" v-model="loginForm.username">
+                <template slot="prepend">
+                  <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-user"></use>
+                  </svg>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+              <el-input @keyup.enter.native.stop="checkNeedCaptcha" auto-complete="off" type="password" placeholder="请输入密码" v-model="loginForm.password">
+                <template slot="prepend">
+                  <svg class="icon pass" aria-hidden="true">
+                    <use xlink:href="#icon-Secret"></use>
+                  </svg>
+                </template>
+              </el-input>
+            </el-form-item>
+            <el-form-item v-if="needCaptcha" class="phone-code-item" prop="captcha">
+              <el-input auto-complete='off' placeholder="请输入图片验证码" v-model="loginForm.captcha"></el-input>
+              <img @click="refreshLoginImg" :src="loginForm.captchaSrc" alt="图片验证码" />
+            </el-form-item>
+            <div class="remember">
+              <el-checkbox v-model="rememberMe">记住密码</el-checkbox>
+            </div>
+            <div class="dialog-footer">
+              <el-button type="primary" class="submit-login" @click="checkNeedCaptcha">登 录</el-button>
+            </div>
+          </el-form>
+        </el-dialog>
+      </div>
+    </el-row>
+    <div class="nav-div">
+      <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
+        <el-menu-item index="/index">首页</el-menu-item>
+        <el-menu-item v-if="config.question_manage" index="/main/question-bank">题库管理</el-menu-item>
+        <el-menu-item v-if="config.knowledge_tree_manage" index="/main/knowledge-tree">知识树管理</el-menu-item>
+        <el-menu-item v-if="config.product_manage" index="/main/production">产品管理</el-menu-item>
+        <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
+        <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
+      </el-menu>
+    </div>
+  </div>
+</template>
+
+<script>
+import io from '../../lib/io'
+import md5 from 'js-md5'
+import storage from '../../lib/storage/index'
+import { mapGetters } from 'vuex'
+
+const PASSWORD_PLACEHOLDER = '****************' // 16
+export default {
+  components: {},
+  data: function() {
+    let activeIndex,
+      routerModule = this.$router.currentRoute.path.split("/")[2];
+    const validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        callback();
+      }
+    };
+    if (routerModule) {
+      if (routerModule.indexOf('question-bank') === 0) {
+        activeIndex = '/main/question-bank'
+      } else if (routerModule.indexOf('knowledge-tree') === 0) {
+        activeIndex = '/main/knowledge-tree'
+      } else if (routerModule.indexOf('production') === 0) {
+        activeIndex = '/main/production'
+      }else if (routerModule.indexOf('system') === 0) {
+        activeIndex = '/main/system/basisSetting/topicOrigin'
+      } else if (routerModule.indexOf('report') === 0) {
+        activeIndex = '/main/report'
+      } else {
+        activeIndex = '/index'
+      }
+    } else {
+      activeIndex = '/index'
+    }
+    return {
+      activeIndex: activeIndex,
+      rememberMe: true,
+      disabled: false,
+      normalPhoneNo: false,
+      next: null,
+      needCaptcha: false,
+      subjectName: storage.getSubjectName() || '',
+      reportUrl:'',
+      loginForm: {
+        username: '',
+        password: '',
+        captcha: '',
+        captchaSrc: io.generatePictureCaptcha,
+      },
+      rules: {
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+        ],
+        captcha: [
+          { required: true, message: '请输入图片验证码', trigger: 'blur' },
+        ],
+        password: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+      }
+    }
+  },
+  created: function() {
+    this.$store.dispatch('hasLogin')
+    if (storage.getAccessToken()) {
+      this.$store.dispatch('config')
+    }
+  },
+  computed: {
+    ...mapGetters(['loginInfo', 'loginSuccess', 'config', 'selectSubject', 'subjects']),
+    showLoginForm: ({
+      get() {
+        console.log('xddd',this.$store.state.global.showLoginForm)
+        return this.$store.state.global.showLoginForm;
+      },
+      set(value) {
+        this.$store.commit('SHOW_LOGIN_FORM', value)
+      }
+    }),
+    subjectId: ({
+      get() {
+        return this.$store.state.global.subjectId;
+      },
+      set(value) {
+        this.$store.commit('changeSubjectId', value)
+      }
+    }),
+  },
+  watch: {
+    loginSuccess(newVal) {
+      if (newVal) {
+        this.$store.dispatch('config');
+      }
+    }
+  },
+  methods: {
+    confirm() {
+      if (!this.subjectId) {
+        this.$message('请选择科目');
+        return;
+      } else {
+        this.subjects.map((item) => {
+          if (item.id === this.subjectId) {
+            storage.setSubjectId(item.id);
+            storage.setSubjectName(item.name);
+            this.subjectName = item.name;
+          }
+        })
+      };
+      this.$store.commit('changeSelectSubject');
+    },
+    logout() {
+      this.$confirm('确认退出?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        storage.removeCurrentUserInfo('currentUserInfo')
+        storage.removeAccessToken('accessToken')
+        this.$store.dispatch('hasLogin');
+        this.$message({
+          type: 'success',
+          message: '已退出!'
+        });
+        this.$router.push('/');
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
+    },
+    show() {
+      this.showLoginForm = true
+    },
+    refreshLoginImg() {
+      this.loginForm.captchaSrc = io.generatePictureCaptcha + "?" + Date.parse('' + (new Date()));
+    },
+    checkNeedCaptcha() {
+      io.post(io.checkNeedCaptcha, {
+        username: this.loginForm.username
+      }, (res) => {
+        console.log("dd",res)
+        if (res === true) {
+          this.needCaptcha = true;
+          console.log(this.loginForm.captcha)
+          if(this.loginForm.captcha){
+            this.login();
+          }
+        }else{
+          this.login();
+        }
+      })
+    },
+    login() {
+      var _this = this, password;
+      _this.disabled = true
+      if (PASSWORD_PLACEHOLDER == this.loginForm.password) {
+        password = this.localPassword
+      } else {
+        password = md5(this.loginForm.password)
+      }
+      this.$store.dispatch('login', {
+        username: this.loginForm.username,
+        password: password,
+        captchaCode: this.loginForm.captcha
+      });
+      setTimeout(() => {
+        if (!this.rememberMe) {
+          this.loginForm.password = ''
+        }
+      }, 200);
+    },
+  }
+}
+</script>
+
+<style lang="less">
+.m-nav {
+  background-color: #fff;
+  .tip{
+    color:red;
+    margin: 0 0 20px 0;
+  }
+  .radio{
+    margin: 30px 20px 20px 0;
+  }
+  .logo-div {
+    display: inline-block;
+    float: left;
+    height: 80px;
+  }
+  .head-version {
+    height: 80px;
+    line-height: 80px;
+    a:hover {
+      background: transparent;
+    }
+  }
+  .version {
+    font-size: 24px;
+    margin-left: 35px;
+    color: #00b1d1;
+    display: inline-block; // height: 80px;
+    em {
+      color: #ff9000;
+      font-size: 14px;
+      position: relative;
+      top: -5px;
+      vertical-align: top;
+      margin-left: 10px;
+    }
+  }
+  .subject-name {
+    background: #eee;
+    border-radius: 2px;
+    font-size: 12px;
+    padding: 3px 6px;
+    margin-right: 10px;
+  }
+  .has-login {
+    font-size: 14px;
+    color: #666;
+    float: right;
+    height: 80px;
+    line-height: 80px;
+    .login-name {
+      display: inline-block;
+      padding-right: 20px;
+      height: 80px;
+      em {
+        font-style: normal;
+        display: inline-block;
+        height: 47px;
+        max-width: 150px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: relative;
+        top: 2px;
+      }
+    }
+    .xiala {
+      font-size: 20px !important;
+      color: #00b1d1;
+      position: relative;
+      top: -2px;
+      margin-left: 3px;
+      margin-right: 20px;
+    }
+    a {
+      padding-left: 10px;
+      border-left: 1px solid #eee;
+      &:hover {
+        color: #00a7eb;
+      }
+    }
+    img {
+      width: 46px;
+      height: 46px;
+      border-radius: 46px;
+      position: relative;
+      top: 17px;
+      margin-right: 10px;
+    }
+  }
+  .head-nav {
+    height: 80px;
+    line-height: 80px;
+    .el-dialog__body {
+      padding: 0 20px;
+    }
+    .el-dialog__header {
+      padding: 0 20px;
+    }
+    .logo {
+      width: 132px;
+      height: 48px;
+      line-height: 67px;
+      margin: 16px 0;
+      padding: 0 38px;
+      padding-left: 20px;
+      border-right: 1px solid #eee;
+    }
+
+    .icon {
+      font-size: 28px;
+      vertical-align: -8px;
+      margin-right: 3px;
+    }
+    .pass{
+      font-size: 24px;
+    }
+
+    .btn-login {
+      background-color: #0681d1 !important;
+      color: #fff;
+      padding: 0 12px;
+      font-size: 12px;
+      border: none;
+      height: 26px;
+      line-height: 26px;
+      margin: 32px 0;
+      &:hover {
+        background-color: #2a92d6;
+      }
+    }
+    .btn-sign-up {
+      background-color: #ff7f00;
+      color: #fff;
+      padding: 0 12px;
+      font-size: 12px;
+      border: none;
+      height: 26px;
+      line-height: 26px;
+      margin: 32px 0px 0 10px;
+      &:hover {
+        background-color: #fba652;
+      }
+    }
+  }
+
+  .login-dialog {
+    width: 540px;
+    // height: 400px;
+    padding: 30px 70px;
+    background: white;
+
+    .el-dialog__headerbtn {
+      margin-top: -15px;
+    }
+
+    .el-dialog__header {
+      padding: 20px 0 0;
+      text-align: center;
+      border-bottom: 2px solid #00b1d1;
+      height: 40px;
+      line-height: 40px;
+      background: white !important;
+      .el-dialog__title {
+        line-height: 1;
+        color: #008fa9 !important;
+        font-size: 28px;
+      }
+    }
+    .el-dialog__body {
+      padding: 20px 0;
+    }
+
+    .el-form {
+      width: 398px;
+
+      .el-form-item {
+        .el-input__inner {
+          height: 40px;
+          line-height: 40px;
+        }
+      }
+      .phone-code-item {
+        margin-bottom: 12px;
+        .el-input {
+          width: 291px;
+          vertical-align: top;
+          text-align: left;
+          margin-top: 3px;
+        }
+        img {
+          cursor: pointer;
+        }
+      }
+      .el-input-group__prepend {
+        border-color: #bfebf3;
+        svg {
+          fill: #00b1d1;
+        }
+        input {
+          border-left: none;
+        }
+      }
+      .remember {
+        height: 20px;
+        line-height: 20px;
+        margin-top: 20px;
+      }
+      .dialog-footer {
+        height: 80px;
+        line-height: 36px;
+      }
+      .submit-login {
+        padding: 14px 177px;
+        font-size: 20px;
+        margin-top: 42px;
+        color: white;
+      }
+    }
+    .login-form-footer {
+      text-align: left;
+      a {
+        text-decoration: underline;
+        color: #20a0ff;
+      }
+    }
+  }
+
+  .el-menu {
+    width: 800px;
+    background-color: transparent;
+    margin: 0 auto;
+  }
+  .nav-div {
+    background: linear-gradient(to right, #009fd7, #01d1bb);
+  }
+  .el-menu--horizontal .el-menu-item {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 35px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    &.is-active,
+    &:hover {
+      border-bottom: 5px solid #ffd800;
+      background: #33c9d1;
+    }
+  }
+}
+
+.container {
+  width: 80%;
+  min-width: 1200px;
+  margin: auto;
+}
+
+.sure-btn {
+  text-align: center;
+}
+</style>
+
+<!--覆盖第三方组件的子组件存在问题-->
+<!--https://github.com/vuejs/vue-loader/issues/821-->
