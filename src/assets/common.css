@@ -170,7 +170,7 @@ th div{
 }
 .el-input__prefix{
   top: -5px !important;
-  left: auto !important;
+  /*left: auto !important;*/
 }
 .el-checkbox__inner{
   border-color: #00a7eb;
