@@ -17,7 +17,7 @@
               <img class="logo" alt="logo" src="../../assets/img/logo.svg">
             </router-link>
           </div>
-          <el-col :span='10' class="version">教研服务平台
+          <el-col :span='10' class="version" text="教学赋能平台">教学赋能平台
             <em>V1.0</em>
           </el-col>
         </el-col>
@@ -26,9 +26,12 @@
             <el-button class="btn-login" v-show="false" type="text" @click="showLoginForm = true">登录</el-button>
           </template>
           <div class="has-login" v-else>
+            <!-- <div class="has-name-img">
+              <img src="" alt="">
+            </div> -->
             <div class="login-name">
-              <img v-if="false" :src="loginInfo.avatarUrl" />
-              <span>欢迎您！
+              <img v-if="true" :src="loginInfo.avatarUrl" />
+              <span>欢 迎您！
                 <em>{{loginInfo?loginInfo.name:''}}</em>
               </span>
               <!--<svg class="icon xiala" aria-hidden="true">
@@ -40,7 +43,7 @@
           </div>
         </el-col>
         <!--登录弹窗-->
-        <el-dialog :show-close='false' :close-on-click-modal='false' size="" customClass="login-dialog" :visible.sync="showLoginForm" title="教研服务平台">
+        <el-dialog :show-close='false' :close-on-click-modal='false' size="" customClass="login-dialog" :visible.sync="showLoginForm" title="教学赋能平台">
           <el-form labelWidth="0" :model="loginForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <el-form-item prop="username">
               <el-input placeholder="请输入用户名" auto-complete="off" v-model="loginForm.username">
@@ -76,12 +79,12 @@
     </el-row>
     <div class="nav-div">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/index">首页</el-menu-item>
-        <el-menu-item v-if="config.question_manage" index="/main/question-bank">题库管理</el-menu-item>
-        <el-menu-item v-if="config.knowledge_tree_manage" index="/main/knowledge-tree">知识树管理</el-menu-item>
-        <el-menu-item v-if="config.product_manage" index="/main/production">产品管理</el-menu-item>
-        <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
-        <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
+        <el-menu-item index="/main/home">教研</el-menu-item>
+        <el-menu-item v-if="config.question_manage" index="/main/prepare-lessons">备课</el-menu-item>
+        <el-menu-item v-if="config.knowledge_tree_manage" index="/main/attend-class">上课</el-menu-item>
+        <el-menu-item v-if="config.product_manage" index="/main/production">系统管理</el-menu-item>
+        <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
+        <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
     </div>
   </div>
@@ -107,19 +110,19 @@ export default {
       }
     };
     if (routerModule) {
-      if (routerModule.indexOf('question-bank') === 0) {
-        activeIndex = '/main/question-bank'
-      } else if (routerModule.indexOf('knowledge-tree') === 0) {
-        activeIndex = '/main/knowledge-tree'
-      } else if (routerModule.indexOf('production') === 0) {
-        activeIndex = '/main/production'
-      }else if (routerModule.indexOf('system') === 0) {
-        activeIndex = '/main/system/basisSetting/topicOrigin'
-      } else if (routerModule.indexOf('report') === 0) {
-        activeIndex = '/main/report'
-      } else {
-        activeIndex = '/index'
+      if (routerModule.indexOf('home') === 0) {
+        activeIndex = '/main/home'
+      } else if (routerModule.indexOf('prepare-lessons') === 0) {
+        activeIndex = '/main/prepare-lessons'
+      } else if (routerModule.indexOf('attend-class') === 0) {
+        activeIndex = '/main/attend-class'
+      } else if (routerModule.indexOf('attend-class') === 0) {
+        activeIndex = '/main/attend-class'
       }
+       else{
+         activeIndex = '/index'
+       } 
+      // }
     } else {
       activeIndex = '/index'
     }
@@ -289,17 +292,28 @@ export default {
     }
   }
   .version {
-    font-size: 24px;
+    font-size: 26px;
     margin-left: 35px;
-    color: #00b1d1;
+    font-family: MFLangQian_Noncommercial-Regular;
+    color: #00A1D5;
     display: inline-block; // height: 80px;
+    position: relative;
+    &:before{//渐变
+        content: attr(text);
+        position: absolute;
+        z-index: 10;
+        color:#01CEBF;
+        -webkit-mask:linear-gradient(to left, #01CEBF, transparent );
+    }
     em {
       color: #ff9000;
-      font-size: 14px;
+      font-size: 12px;
       position: relative;
       top: -5px;
       vertical-align: top;
-      margin-left: 10px;
+      margin-left: 7px;
+      font-weight:700;
+      font-style:normal;
     }
   }
   .subject-name {
@@ -310,11 +324,23 @@ export default {
     margin-right: 10px;
   }
   .has-login {
-    font-size: 14px;
-    color: #666;
+    font-size: 12px;
+    color: #999;
     float: right;
     height: 80px;
     line-height: 80px;
+    .has-name-img{
+      display:inline-block;
+      padding-right:22px;
+      height:80px;
+      img{
+        width:36px;
+        height:36px;
+        display:inline-block;
+        border: solid 2px rgba(170, 170, 170, 0.3);
+        border-radius:50%;
+      }
+    }
     .login-name {
       display: inline-block;
       padding-right: 20px;
@@ -347,12 +373,12 @@ export default {
       }
     }
     img {
-      width: 46px;
-      height: 46px;
-      border-radius: 46px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       position: relative;
-      top: 17px;
-      margin-right: 10px;
+      top: 13px;
+      margin-right: 22px;
     }
   }
   .head-nav {
@@ -365,10 +391,10 @@ export default {
       padding: 0 20px;
     }
     .logo {
-      width: 132px;
-      height: 48px;
+      width: 110px;
+      height: 40px;
       line-height: 67px;
-      margin: 16px 0;
+      margin: 20px 0;
       padding: 0 38px;
       padding-left: 20px;
       border-right: 1px solid #eee;
