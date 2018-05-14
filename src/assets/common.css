@@ -51,6 +51,9 @@ ol{
 .el-table__expanded-cell{
   box-shadow:none;
 }
+.el-menu--horizontal{
+  border-bottom: 0;
+}
 .el-table::after,.el-table::before{
   width: 0;
 }

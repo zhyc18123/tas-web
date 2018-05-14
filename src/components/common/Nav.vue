@@ -520,7 +520,7 @@ export default {
   }
 
   .el-menu {
-    width: 800px;
+    width: 450px;
     background-color: transparent;
     margin: 0 auto;
   }
