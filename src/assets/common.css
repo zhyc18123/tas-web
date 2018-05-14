@@ -343,3 +343,7 @@ border-radius: 4px 4px 0 0;
 .my-tabs .el-tabs--card>.el-tabs__header .el-tabs__item:first-child{
   border-left: 1px solid #00b1d1 !important;
 }
+.el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
+  outline: 0;
+  color: #fff;
+}

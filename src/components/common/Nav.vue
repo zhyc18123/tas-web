@@ -293,7 +293,7 @@ export default {
   }
   .version {
     font-size: 26px;
-    margin-left: 35px;
+    margin-left: 28px;
     font-family: MFLangQian_Noncommercial-Regular;
     color: #00A1D5;
     display: inline-block; // height: 80px;
@@ -520,7 +520,7 @@ export default {
   }
 
   .el-menu {
-    width: 450px;
+    width: 480px;
     background-color: transparent;
     margin: 0 auto;
   }
@@ -530,13 +530,15 @@ export default {
   .el-menu--horizontal .el-menu-item {
     height: 60px;
     line-height: 60px;
-    padding: 0 35px;
-    font-size: 16px;
+    // padding: 0 35px;
+    width:120px;
+    text-align:center;
+    font-size: 18px;
     color: white;
-    font-weight: bold;
+    // font-weight: bold;
     &.is-active,
     &:hover {
-      border-bottom: 5px solid #ffd800;
+      border-bottom: 4px solid #ffd800;
       background: #33c9d1;
     }
   }
