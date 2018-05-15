@@ -10,6 +10,10 @@ a {
   text-decoration: none;
   color: #999;
 }
+ul,li{
+  padding:0;
+  margin:0;
+}
 img{
   max-width: 100%;
 }
@@ -45,7 +49,7 @@ ol{
 }
 
 .el-table th,.el-table__fixed-header-wrapper thead div,.el-table__header-wrapper thead div, .el-table__footer-wrapper thead div{
-  background-color: #dff1f6 !important;
+  background-color: #fff !important;
 }
 
 .el-table__expanded-cell{
@@ -57,15 +61,28 @@ ol{
 .el-table::after,.el-table::before{
   width: 0;
 }
-.el-table{
+/* .el-table{
   border: 1px solid #bbdde7 !important;
   border-radius: 4px;
-}
+} */
 .el-table--border th, .el-table--border td{
   border-right: 1px solid #bbdde7;
 }
-.el-table th.is-leaf, .el-table td{
+/* .el-table th.is-leaf, .el-table td{
   border-bottom: 1px solid #bbdde7;
+} */
+.el-table th.is-leaf{
+  border-bottom:3px solid ;
+  border-image: linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
+}
+.el-table th{
+  font-size:14px;
+  color:#333;
+}
+.el-table td{
+  font-size:14px;
+  color:#333;
+  border-bottom:1px dashed rgba(35, 201, 179, 0.3);
 }
 /*.el-table tr:last-child td{
   border-bottom: 0;
@@ -77,7 +94,8 @@ ol{
   line-height: 50px;
 }*/
 .el-table th, .el-table td{
-  height: 50px;
+  height: 55px;
+  /* 50->>55 */
 }
 .el-table td{
   padding: 0 !important;
@@ -136,6 +154,13 @@ th div{
   color: #333;
   /*font-size: 14px;*/
 }
+.el-breadcrumb__inner{
+  color:#999;
+}
+.el-breadcrumb__inner.is-link{
+  font-weight: normal;
+  color:#999;
+}
 .el-tabs__item{
   padding: 0 23px;
 }
@@ -167,10 +192,10 @@ th div{
   color: #bfebf3;
   top:0;
 }
-.el-table--fit{
+/* .el-table--fit{
   border-right: 1px solid #bbdde7;
   border-bottom: 1px solid #bbdde7;
-}
+} */
 .el-input__prefix{
   top: -5px !important;
   /*left: auto !important;*/
@@ -327,9 +352,10 @@ border-radius: 4px 4px 0 0;
     line-height: 49px !important;
     color: #999;
     font-size: 12px;
-    border-bottom: 1px solid #f1f1f1;
-    margin: 0 20px;
+    /* border-bottom: 1px solid #f1f1f1; */
+    /* margin: 0 20px; */
 }
+
 .min-button{
   background: #00b1d1 !important;
     height: 30px;
@@ -346,4 +372,7 @@ border-radius: 4px 4px 0 0;
 .el-menu--horizontal .el-menu-item:not(.is-disabled):focus, .el-menu--horizontal .el-menu-item:not(.is-disabled):hover {
   outline: 0;
   color: #fff;
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner a, .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover{
+  color:#999 !important; 
 }

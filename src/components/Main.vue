@@ -33,7 +33,7 @@
     height: 100%;
     .main-container {
       width: 100%;
-      background-color: #f8f8f8;
+      background-color: #f5f8f9;
       min-height: 100%;
       // height: 100%;
       .container{
