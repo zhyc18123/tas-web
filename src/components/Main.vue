@@ -28,19 +28,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less">
-.main {
-  min-height: 100%;
-  height: 100%;
-  .main-container {
-    width: 100%;
-    background-color: #f8f8f8;
-    min-height: 100%; // height: 100%;
-    .container {
-      width: 80%;
-      box-sizing: border-box;
-      min-width: 1200px;
-      margin: auto; // min-height: 1000px;
+  .main {
+    min-height: 100%;
+    height: 100%;
+    .main-container {
+      width: 100%;
+      background-color: #f5f8f9;
+      min-height: 100%;
+      // height: 100%;
+      .container{
+        width: 80%;
+        box-sizing: border-box;
+        min-width: 1200px;
+        margin: auto;
+      // min-height: 1000px;
+      }
     }
   }
-}
+
 </style>

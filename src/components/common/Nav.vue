@@ -1,6 +1,6 @@
 <template>
   <div class="m-nav">
-    <el-row>
+    <el-row class="m-head-nav">
       <div class="head-nav container">
 
         <el-dialog title="请选择科目" :show-close='false' :close-on-click-modal="false" :visible="selectSubject">
@@ -272,6 +272,9 @@ export default {
 <style lang="less">
 .m-nav {
   background-color: #fff;
+  .m-head-nav{
+    box-shadow: 0px 1px 4px 0px  rgba(85, 85, 85, 0.3);
+  }
   .tip{
     color:red;
     margin: 0 0 20px 0;

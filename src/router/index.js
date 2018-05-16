@@ -42,7 +42,10 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 //教学
 const Home = resolve => require(['../components/view/Home'],resolve)
 const AttendClass = resolve => require(['../components/view/AttendClass'],resolve)
+// 备课
 const PrepareLessons = resolve => require(['../components/view/PrepareLessons'],resolve)
+const CourseWare = resolve => require(['../components/prepareLessons/CourseWare'],resolve)
+
 
 Vue.use(Router)
 
@@ -71,7 +74,11 @@ export default new Router({
         },
         {
           path:"prepare-lessons",
-          component:PrepareLessons
+          component:PrepareLessons,
+        },
+        {
+          path:"prepare-lessons/:id/:sourceType/:optType",
+          component:CourseWare
         },
         
       ]

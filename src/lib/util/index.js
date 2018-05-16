@@ -10,10 +10,6 @@ export function deepCopy (obj, cache = []) {
   }
 }
 export default  {
-//   debounce:function(){
-// let lastTime=new Date();
-// if()
-//   },
   deepGet:function (object, path, defaultValue) {
     console.log('x',object,path)
     return (!Array.isArray(path) ? path.replace(/\[/g, '.').replace(/\]/g, '').split('.') : path)
