@@ -50,7 +50,7 @@
             </ul>
         </div>
         <div class="g-table-attend">
-            <el-table :data="tableData"  style="width: 100%" header-align="center" :row-click="handRowClick()">
+            <el-table :data="tableData"  style="width: 100%" header-align="center" @row-click="handRowClick">
                 <el-table-column prop="className" label="班级名称" align="center" ></el-table-column>
                 <el-table-column prop="grade" label="年级"  align="center"></el-table-column>
                 <el-table-column prop="term"  label="学期" align="center"> </el-table-column>
@@ -64,6 +64,29 @@
                 </el-table-column>
             </el-table>
         </div>
+        <div  class="g-lessons">
+            <el-dialog title="2018春季物理提高班" :visible.sync="showClassLessons" width="39%"  center>
+                <ul class="g-lessons-list">
+                    <router-link tag="li" to= "/main/attend-content" >
+                        <div class="lessons-num">
+                            第 1 讲
+                        </div>
+                        <div class="lessons-title">
+                            长度与时间的测量
+                        </div>
+                    </router-link>
+                    <router-link tag="li" to= "/main/attend-content" >
+                        <div class="lessons-num">
+                            第 2 讲
+                        </div>
+                        <div class="lessons-title">
+                            长度与时间的测量
+                        </div>
+                    </router-link>
+                </ul>
+            </el-dialog>
+        </div>
+        
     </div>
 </template>
 <script>
@@ -126,7 +149,8 @@ export default {
                     schoolTime:"8:45 - 9:45",
                     week:'周一'
                 }
-            ]
+            ],
+            showClassLessons:false,
         }
     },
     created(){
@@ -148,7 +172,8 @@ export default {
             }
         },
         handRowClick(row,event,cloumn){
-            console.log(row)
+            this.showClassLessons = true
+            console.log(row,event,cloumn)
         }
     }
 
@@ -161,7 +186,6 @@ export default {
             background:#fff;
             padding-left:30px;
             box-sizing: border-box;
-           
             .el-breadcrumb-item{
                 font-size:12px;
                 color:#999;
@@ -226,15 +250,47 @@ export default {
                 }
             }
         }
+        .g-lessons-list{
+            max-height:590px;
+            overflow-y:auto;
+            li{
+                min-height:50px;
+                margin-top:10px;
+                background:rgba(221, 234, 238, 0.3);
+                padding:0 23px;
+                color:#333;
+                font-size:16px;
+                cursor:pointer;
+                display:flex;
+                .lessons-num{
+                    width:auto;
+                    height:50px;
+                    line-height:50px;
+                }
+                .lessons-title{
+                    flex:1;
+                    min-height:50px;
+                    box-sizing:border-box;
+                    padding:15px 0;
+                    line-height:20px;
+                    padding-left:10px;
+                }
+                &:hover{
+                    background:rgba(75, 202, 173, 0.3);
+                }
+            }
+        }
     }
 </style>
 <style lang="less">
-    .t-attend{
-        .nav-little{
-            .el-breadcrumb-item{
-                .el-breadcrumb__inner{
-                    color:#999;
-                }
+    .g-lessons {
+        .el-dialog{
+            width:39%;
+        }
+        .el-dialog--center {
+            .el-dialog__body{
+                padding:0;
+                
             }
         }
     }

@@ -43,6 +43,7 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 const Home = resolve => require(['../components/view/Home'],resolve)
 const AttendClass = resolve => require(['../components/view/AttendClass'],resolve)
 const PrepareLessons = resolve => require(['../components/view/PrepareLessons'],resolve)
+const AttendContent = resolve => require(['../components/attend-class/AttendContent'],resolve)
 
 Vue.use(Router)
 
@@ -67,7 +68,11 @@ export default new Router({
         },
         {
           path:"attend-class",
-          component:AttendClass
+          component:AttendClass,
+        },
+        {
+          path:"attend-content",
+          component:AttendContent,
         },
         {
           path:"prepare-lessons",

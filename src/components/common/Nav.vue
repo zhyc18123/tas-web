@@ -114,11 +114,9 @@ export default {
         activeIndex = '/main/home'
       } else if (routerModule.indexOf('prepare-lessons') === 0) {
         activeIndex = '/main/prepare-lessons'
-      } else if (routerModule.indexOf('attend-class') === 0) {
+      } else if (routerModule.indexOf('attend') === 0) {
         activeIndex = '/main/attend-class'
-      } else if (routerModule.indexOf('attend-class') === 0) {
-        activeIndex = '/main/attend-class'
-      }
+      } 
        else{
          activeIndex = '/index'
        } 

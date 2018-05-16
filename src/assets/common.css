@@ -20,6 +20,14 @@ img{
 ol{
   width: auto !important;
 }
+.clearfix::after{
+  content:"";
+  height:0;
+  clear:both;
+  display:block;
+  visibility: hidden;
+  overflow: hidden;
+}
 .detail table{
   border-collapse: unset;
   border-spacing: 0;
@@ -65,23 +73,25 @@ ol{
   border: 1px solid #bbdde7 !important;
   border-radius: 4px;
 } */
-.el-table--border th, .el-table--border td{
-  border-right: 1px solid #bbdde7;
+/* .el-table--border th, .el-table--border td{ */
+  /* border-right: 1px solid #bbdde7; */
+/* } */
+.el-table th.is-leaf, .el-table td{
+  border-bottom: 0 none;
 }
-/* .el-table th.is-leaf, .el-table td{
-  border-bottom: 1px solid #bbdde7;
+/* .el-table th.is-leaf{ */
+  /* border-bottom:3px solid ;
+  border-image: linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
 } */
-.el-table th.is-leaf{
+.el-table .el-table__header-wrapper{
   border-bottom:3px solid ;
   border-image: linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
 }
-.el-table th{
+.el-table th,.el-table td{
   font-size:14px;
   color:#333;
 }
 .el-table td{
-  font-size:14px;
-  color:#333;
   border-bottom:1px dashed rgba(35, 201, 179, 0.3);
 }
 /*.el-table tr:last-child td{
@@ -283,10 +293,11 @@ border-radius: 4px 4px 0 0;
   min-width: 800px;
 }
 .el-dialog{
-  background: #eaeaea;
+  /* background: #eaeaea; */
+  background:#fff;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  padding: 5px;
+  padding: 10px;
   left: 0;
   transform: translateX(0)
 }
