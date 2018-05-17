@@ -21,7 +21,7 @@
             <em>V1.0</em>
           </el-col>
         </el-col>
-        <el-col :span='8'>
+        <el-col :span='8' v-if="!noLogin">
           <template v-if="!loginInfo">
             <el-button class="btn-login" v-show="false" type="text" @click="showLoginForm = true">登录</el-button>
           </template>
@@ -42,47 +42,14 @@
             <a href="javascript:;" @click="logout">退出</a>
           </div>
         </el-col>
-        <!--登录弹窗-->
-        <el-dialog :show-close='false' :close-on-click-modal='false' size="" customClass="login-dialog" :visible.sync="showLoginForm" title="教学赋能平台">
-          <el-form labelWidth="0" :model="loginForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item prop="username">
-              <el-input placeholder="请输入用户名" auto-complete="off" v-model="loginForm.username">
-                <template slot="prepend">
-                  <svg class="icon" aria-hidden="true">
-                    <use xlink:href="#icon-user"></use>
-                  </svg>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item prop="password">
-              <el-input @keyup.enter.native.stop="checkNeedCaptcha" auto-complete="off" type="password" placeholder="请输入密码" v-model="loginForm.password">
-                <template slot="prepend">
-                  <svg class="icon pass" aria-hidden="true">
-                    <use xlink:href="#icon-Secret"></use>
-                  </svg>
-                </template>
-              </el-input>
-            </el-form-item>
-            <el-form-item v-if="needCaptcha" class="phone-code-item" prop="captcha">
-              <el-input auto-complete='off' placeholder="请输入图片验证码" v-model="loginForm.captcha"></el-input>
-              <img @click="refreshLoginImg" :src="loginForm.captchaSrc" alt="图片验证码" />
-            </el-form-item>
-            <div class="remember">
-              <el-checkbox v-model="rememberMe">记住密码</el-checkbox>
-            </div>
-            <div class="dialog-footer">
-              <el-button type="primary" class="submit-login" @click="checkNeedCaptcha">登 录</el-button>
-            </div>
-          </el-form>
-        </el-dialog>
       </div>
     </el-row>
-    <div class="nav-div">
+    <div class="nav-div" v-if="!noTab">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
         <el-menu-item index="/main/home">教研</el-menu-item>
         <el-menu-item v-if="config.question_manage" index="/main/prepare-lessons">备课</el-menu-item>
         <el-menu-item v-if="config.knowledge_tree_manage" index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item v-if="config.product_manage" index="/main/production">系统管理</el-menu-item>
+        <el-menu-item v-if="config.product_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
         <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
@@ -99,6 +66,7 @@ import { mapGetters } from 'vuex'
 const PASSWORD_PLACEHOLDER = '****************' // 16
 export default {
   components: {},
+  props: ['noTab','noLogin'],
   data: function() {
     let activeIndex,
       routerModule = this.$router.currentRoute.path.split("/")[2];
@@ -114,11 +82,11 @@ export default {
         activeIndex = '/main/home'
       } else if (routerModule.indexOf('prepare-lessons') === 0) {
         activeIndex = '/main/prepare-lessons'
-      } else if (routerModule.indexOf('attend-class') === 0) {
+      } else if (routerModule.indexOf('attend') === 0) {
         activeIndex = '/main/attend-class'
-      } else if (routerModule.indexOf('attend-class') === 0) {
-        activeIndex = '/main/attend-class'
-      }
+      }  else if (routerModule.indexOf('system') === 0) {
+        activeIndex = '/main/system/basisSetting/topicOrigin'
+      } 
        else{
          activeIndex = '/index'
        } 

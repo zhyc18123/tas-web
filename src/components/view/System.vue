@@ -17,13 +17,10 @@
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="基础设定" name="基础设定">
-          <!--<v-basis-set-container></v-basis-set-container>-->
         </el-tab-pane>
         <el-tab-pane label="用户列表" name="用户列表">
-          <!--<v-user-list-container></v-user-list-container>-->
         </el-tab-pane>
         <el-tab-pane label="操作角色列表" name="操作角色列表">
-          <!--<v-character-list-container></v-character-list-container>-->
         </el-tab-pane>
       </el-tabs>
     </el-row>

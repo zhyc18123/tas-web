@@ -2,7 +2,7 @@
   <div class="index">
     <v-nav />
     <div class="welcome">
-      教研平台欢迎您！
+      教学平台欢迎您！
     </div>
   </div>
 </template>

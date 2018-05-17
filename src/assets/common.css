@@ -20,6 +20,14 @@ img{
 ol{
   width: auto !important;
 }
+.clearfix::after{
+  content:"";
+  height:0;
+  clear:both;
+  display:block;
+  visibility: hidden;
+  overflow: hidden;
+}
 .detail table{
   border-collapse: unset;
   border-spacing: 0;
@@ -48,8 +56,12 @@ ol{
   overflow: hidden;
 }
 
-.el-table th,.el-table__fixed-header-wrapper thead div,.el-table__header-wrapper thead div, .el-table__footer-wrapper thead div{
+.el-table.line-table th,.line-table .el-table__fixed-header-wrapper thead div,.line-table .el-table__header-wrapper thead div, .line-table .el-table__footer-wrapper thead div{
   background-color: #fff !important;
+}
+.el-table th,.el-table__fixed-header-wrapper thead div,.el-table__header-wrapper thead div, .el-table__footer-wrapper thead div{
+  background-color: #dff1f6;
+  color: #333;
 }
 
 .el-table__expanded-cell{
@@ -64,27 +76,33 @@ ol{
 .t-card{
   box-shadow: 0px 1px 6px 0px rgba(85,85,85,.3);
 }
-/* .el-table{
+
+ .el-table{
   border: 1px solid #bbdde7 !important;
   border-radius: 4px;
-} */
-.el-table--border th, .el-table--border td{
-  border-right: 1px solid #bbdde7;
+} 
+ .el-table--border th, .el-table--border td{ 
+   border-right: 1px solid #bbdde7; 
+} 
+.el-table th.is-leaf, .el-table td{
+  border-bottom: 1px solid #ebeef5;
 }
-/* .el-table th.is-leaf, .el-table td{
-  border-bottom: 1px solid #bbdde7;
-} */
-.el-table th.is-leaf{
+
+.el-table.line-table th.is-leaf, .el-table.line-table td{
+  border-bottom: 0 none;
+}
+.el-table.line-table{
+  border: 0 !important;
+}
+.el-table.line-table .el-table__header-wrapper{
   border-bottom:3px solid ;
   border-image: linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
 }
-.el-table th{
+.el-table.line-table th,.el-table.line-table td{
   font-size:14px;
   color:#333;
 }
-.el-table td{
-  font-size:14px;
-  color:#333;
+.el-table.line-table td{
   border-bottom:1px dashed rgba(35, 201, 179, 0.3);
 }
 /*.el-table tr:last-child td{
@@ -286,10 +304,11 @@ border-radius: 4px 4px 0 0;
   min-width: 800px;
 }
 .el-dialog{
-  background: #eaeaea;
+  /* background: #eaeaea; */
+  background:#fff;
   box-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
   border-radius: 4px;
-  padding: 5px;
+  padding: 10px;
   left: 0;
   transform: translateX(0)
 }

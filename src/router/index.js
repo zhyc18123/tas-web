@@ -14,24 +14,24 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // const EditKnowledge = resolve => require(['../components/production/EditKnowledge'],resolve)
 // const EditQuestion = resolve => require(['../components/production/EditQuestion'],resolve)
 // const SelectQuestion = resolve => require(['../components/production/SelectQuestion'],resolve)
-// const System = resolve => require(['../components/view/System'], resolve)
-// const TopicOrigin = resolve => require(['../components/system/basis/TopicOrigin'], resolve)
-// const SetTag = resolve => require(['../components/system/basis/SetTag'], resolve)
-// const ProvinceSetting = resolve => require(['../components/system/basis/ProvinceSetting'], resolve)
-// const TopicCategory = resolve => require(['../components/system/basis/TopicCategory'], resolve)
-// const FamousSchool = resolve => require(['../components/system/basis/FamousSchool'], resolve)
-// const AbilityRadar = resolve => require(['../components/system/basis/AbilityRadar'], resolve)
-// const ParadigmList = resolve => require(['../components/system/basis/ParadigmList'], resolve)
-// const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
-// const UserListContainer = resolve => require(['../components/system/UserListContainer'], resolve)
-// const UserList = resolve => require(['../components/system/user/UserList'], resolve)
-// const UserAdd = resolve => require(['../components/system/user/UserAdd'], resolve)
-// const CharacterList = resolve => require(['../components/system/character/CharacterList'], resolve)
-// const CharacterAdd = resolve => require(['../components/system/character/CharacterAdd'], resolve)
-// const ParadigmSetting = resolve => require(['../components/system/character/ParadigmSetting'], resolve)
-// const PermissionSetting = resolve => require(['../components/system/character/PermissionSetting'], resolve)
-// const CharacterListContainer = resolve => require(['../components/system/CharacterListContainer'], resolve)
-// const CreateQuestion = resolve => require(['../components/question_bank/CreateQuestion'], resolve)
+ const System = resolve => require(['../components/view/System'], resolve)
+ const TopicOrigin = resolve => require(['../components/system/basis/TopicOrigin'], resolve)
+ const SetTag = resolve => require(['../components/system/basis/SetTag'], resolve)
+ const ProvinceSetting = resolve => require(['../components/system/basis/ProvinceSetting'], resolve)
+ const TopicCategory = resolve => require(['../components/system/basis/TopicCategory'], resolve)
+ const FamousSchool = resolve => require(['../components/system/basis/FamousSchool'], resolve)
+ const AbilityRadar = resolve => require(['../components/system/basis/AbilityRadar'], resolve)
+ const ParadigmList = resolve => require(['../components/system/basis/ParadigmList'], resolve)
+ const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
+ const UserListContainer = resolve => require(['../components/system/UserListContainer'], resolve)
+ const UserList = resolve => require(['../components/system/user/UserList'], resolve)
+ const UserAdd = resolve => require(['../components/system/user/UserAdd'], resolve)
+ const CharacterList = resolve => require(['../components/system/character/CharacterList'], resolve)
+ const CharacterAdd = resolve => require(['../components/system/character/CharacterAdd'], resolve)
+ const ParadigmSetting = resolve => require(['../components/system/character/ParadigmSetting'], resolve)
+ const PermissionSetting = resolve => require(['../components/system/character/PermissionSetting'], resolve)
+ const CharacterListContainer = resolve => require(['../components/system/CharacterListContainer'], resolve)
+//  const CreateQuestion = resolve => require(['../components/question_bank/CreateQuestion'], resolve)
 // const CreateSpecialTree = resolve => require(['../components/knowledge_tree/CreateSpecialTree'], resolve)
 // // 报表管理
 // const Report = resolve => require(['../components/view/Report'], resolve)
@@ -45,7 +45,10 @@ const AttendClass = resolve => require(['../components/view/AttendClass'],resolv
 // 备课
 const PrepareLessons = resolve => require(['../components/view/PrepareLessons'],resolve)
 const CourseWare = resolve => require(['../components/prepareLessons/CourseWare'],resolve)
-
+// 上课
+const AttendContent = resolve => require(['../components/attend-class/AttendContent'],resolve)
+// 登陆
+const Login = resolve => require(['../components/login/Login'],resolve)
 
 Vue.use(Router)
 
@@ -70,7 +73,11 @@ export default new Router({
         },
         {
           path:"attend-class",
-          component:AttendClass
+          component:AttendClass,
+        },
+        {
+          path:"attend-content",
+          component:AttendContent,
         },
         {
           path:"prepare-lessons",
@@ -79,7 +86,64 @@ export default new Router({
         {
           path:"prepare-lessons/:id/:sourceType/:optType",
           component:CourseWare
-        },
+        }, {
+         path: 'system',
+         component: System,
+         children: [{
+           path: 'basisSetting',
+           component: BasisSetContainer,
+           children: [{
+             path: 'topicOrigin',
+             component: TopicOrigin
+           },{
+             path: 'set-tag',
+             component: SetTag
+           }, {
+             path: 'famousSchool',
+             component: FamousSchool
+           }, {
+             path: 'provinceSetting',
+             component: ProvinceSetting
+           }, {
+             path: 'topicCategory',
+             component: TopicCategory
+           }, {
+             path: 'abilityRadar',
+             component: AbilityRadar
+           }, {
+             path: 'paradigmList',
+             component: ParadigmList
+           }
+           ]
+         }, {
+           path: 'userList',
+           component: UserListContainer,
+           children: [{
+             path: 'list',
+             component: UserList
+           }, {
+             path: 'userAdd',
+             component: UserAdd
+           }]
+         }, {
+           path: 'characterList',
+           component: CharacterListContainer,
+           children: [{
+             path: 'list',
+             component: CharacterList
+           }, {
+             path: 'paradigmSetting',
+             component: ParadigmSetting
+           }, {
+             path: 'permissionSetting',
+             component: PermissionSetting
+           }, {
+             path: 'add',
+             component: CharacterAdd
+           }]
+         }
+         ]
+         }
         
       ]
     //   children: [{
@@ -106,63 +170,8 @@ export default new Router({
     //     },{
     //       path:'production/select-question',
     //       component:SelectQuestion
-    //     }, {
-    //     path: 'system',
-    //     component: System,
-    //     children: [{
-    //       path: 'basisSetting',
-    //       component: BasisSetContainer,
-    //       children: [{
-    //         path: 'topicOrigin',
-    //         component: TopicOrigin
-    //       },{
-    //         path: 'set-tag',
-    //         component: SetTag
-    //       }, {
-    //         path: 'famousSchool',
-    //         component: FamousSchool
-    //       }, {
-    //         path: 'provinceSetting',
-    //         component: ProvinceSetting
-    //       }, {
-    //         path: 'topicCategory',
-    //         component: TopicCategory
-    //       }, {
-    //         path: 'abilityRadar',
-    //         component: AbilityRadar
-    //       }, {
-    //         path: 'paradigmList',
-    //         component: ParadigmList
-    //       }
-    //       ]
-    //     }, {
-    //       path: 'userList',
-    //       component: UserListContainer,
-    //       children: [{
-    //         path: 'list',
-    //         component: UserList
-    //       }, {
-    //         path: 'userAdd',
-    //         component: UserAdd
-    //       }]
-    //     }, {
-    //       path: 'characterList',
-    //       component: CharacterListContainer,
-    //       children: [{
-    //         path: 'list',
-    //         component: CharacterList
-    //       }, {
-    //         path: 'paradigmSetting',
-    //         component: ParadigmSetting
-    //       }, {
-    //         path: 'permissionSetting',
-    //         component: PermissionSetting
-    //       }, {
-    //         path: 'add',
-    //         component: CharacterAdd
-    //       }]
-    //     }
-    //     ]
+        //  }
+         
     //   } ,{
     //   path: 'report',
     //   component: Report,
@@ -188,6 +197,9 @@ export default new Router({
     }, {
       path: '/index',
       component: Index
+    }, {
+      path: '/login',
+      component: Login
     }
   ]
 })
