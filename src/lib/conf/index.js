@@ -10,6 +10,7 @@ export default {
 
   qiniuCDN: 'http://static.yuyou100.com/',
 
+  qiniuBaseUrl: 'http://upload-z2.qiniup.com/',
   qiniuUploadTokenApi:'development' == process.env.NODE_ENV ?
   'http://test.yuyou100.com/yyfn-api/api/qiniu/upload/token':'http://b.yuyou100.com/yyfn-api/api/qiniu/upload/token',
 

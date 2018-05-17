@@ -1,12 +1,13 @@
 <template>
   <div class="pagination">
     <el-pagination
+      background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
       :current-page="form.pageNo"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="form.pageSize"
-      layout="total, prev, pager, next, jumper"
+      layout="total, prev, pager, next"
       :total="total || 0">
     </el-pagination>
   </div>

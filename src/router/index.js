@@ -15,6 +15,9 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // const EditQuestion = resolve => require(['../components/production/EditQuestion'],resolve)
 // const SelectQuestion = resolve => require(['../components/production/SelectQuestion'],resolve)
  const System = resolve => require(['../components/view/System'], resolve)
+ const OrganizationContainer = resolve => require(['../components/system/OrganizationContainer'], resolve)
+ const OrganizationList = resolve => require(['../components/system/organization/OrganizationList'], resolve)
+ const OrganizationDetail = resolve => require(['../components/system/organization/OrganizationDetail'], resolve)
  const TopicOrigin = resolve => require(['../components/system/basis/TopicOrigin'], resolve)
  const SetTag = resolve => require(['../components/system/basis/SetTag'], resolve)
  const ProvinceSetting = resolve => require(['../components/system/basis/ProvinceSetting'], resolve)
@@ -140,6 +143,16 @@ export default new Router({
            }, {
              path: 'add',
              component: CharacterAdd
+           }]
+         },{
+           path:'organization',
+           component:OrganizationContainer,
+           children:[{
+             path:'list',
+             component:OrganizationList
+           },{
+             path:'list/:id',
+             component:OrganizationDetail
            }]
          }
          ]

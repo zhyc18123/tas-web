@@ -161,6 +161,34 @@ const io = {
         }
       });
   },
+    get6: async function (url, data, success, fail, timeout) {
+        try {
+            data = { accessToken: this.getHeaders().accessToken, ...data }
+            let formdata = qs.stringify(data);
+            let res = await axios(url + "?" + formdata, {
+                dataType: 'json',
+                timeout: timeout || 30000
+            });
+            if (res.data.code === '3001') {
+                storage.removeAccessToken()
+                storage.removeCurrentUserInfo()
+                Vue.prototype.$router.push('/login')
+            }
+            if (!res.data.success && !res.data.uptoken) {
+                Vue.prototype.$notify.error({
+                    title: '错误',
+                    message: res.data.desc
+                });
+            }
+            return res;
+        } catch (err) {
+            Vue.prototype.$notify.error({
+                title: '错误',
+                message: err.name
+            })
+            return
+        }
+    },
   post: function (url, data, success, fail) {
     //如果需要加载数据时显示loading动画，需要传人this对象
     // data对象统一转成formdata 的形式

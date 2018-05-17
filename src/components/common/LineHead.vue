@@ -9,7 +9,6 @@
 <script>
   export default {
     name: 'child',
-    props:['list','isActive'],
     components:{
     },
     props:['title']

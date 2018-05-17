@@ -127,6 +127,18 @@ ol{
 .el-checkbox{
   color: #666;
 }
+.height-btn,.light-btn{
+  padding: 12px 35px !important;
+  color: white !important;
+  font-size: 16px;
+  border: 0;
+}
+.light-btn,.light-btn:hover{
+background: #01cabf
+}
+.height-btn,.height-btn:hover{
+  background: #00b1d1;
+}
 th div{
   width: 100%;
   /*padding-left: 0 !important;*/
@@ -138,6 +150,7 @@ th div{
 .el-button {
   color: #20a0ff;
   border-color: #20a0ff;
+  padding: 7px 15px;
 }
 
 .el-button--primary {
@@ -199,8 +212,21 @@ th div{
 .el-breadcrumb__separator{
   margin: 0 8px 0 4px;
 }
+.gray .el-input__inner{
+  border: 0;
+}
+.el-form-item__label{
+  font-weight: bold;
+  color: #333;
+}
 .el-input__inner{
   border-color: #bfebf3;
+  color: #666;
+  height: 34px;
+  line-height: 34px;
+}
+.el-range-editor.el-input__inner{
+  padding: 0px 10px;
 }
 .el-input{
   border: 0 !important;
@@ -318,6 +344,9 @@ border-radius: 4px 4px 0 0;
 }
 .is-multiple .el-select-dropdown__item.selected{
   color: #409EFF !important;
+}
+.el-pagination.is-background .el-pager li:not(.disabled).active{
+  background: #23c9b3;
 }
 .el-select-dropdown__item.selected{
   color: white !important;

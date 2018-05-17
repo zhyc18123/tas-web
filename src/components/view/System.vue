@@ -22,6 +22,8 @@
         </el-tab-pane>
         <el-tab-pane label="操作角色列表" name="操作角色列表">
         </el-tab-pane>
+        <el-tab-pane label="教育机构管理" name="教育机构管理">
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <div class="system-content">
@@ -54,6 +56,8 @@ export default {
       this.activeName = '用户列表'
     } else if (this.$route.path.indexOf('characterList') > 0) {
       this.activeName = '操作角色列表'
+    } else if (this.$route.path.indexOf('organization') > 0) {
+      this.activeName = '教育机构管理'
     }
   },
   computed: {
@@ -66,6 +70,8 @@ export default {
         this.$router.push('/main/system/userList/list')
       } else if (this.activeName === '操作角色列表') {
         this.$router.push('/main/system/characterList/list')
+      }else if (this.activeName === '教育机构管理') {
+        this.$router.push('/main/system/organization/list')
       }
     }
   }
@@ -86,7 +92,7 @@ export default {
 </style>
 <style lang="less">
 .m-system {
-  padding: 0 20px;
+  padding: 0 30px;
   background-color: #fff;
   .tabs {
     .el-tabs__header {

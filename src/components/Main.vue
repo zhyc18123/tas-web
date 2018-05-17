@@ -47,3 +47,8 @@ export default {
   }
 
 </style>
+<style lang="stylus">
+@import '~assets/stylus/mixin.styl'
+  
+</style>
+
