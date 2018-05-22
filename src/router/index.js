@@ -19,6 +19,7 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
 const Data = resolve => require(['../components/teachResearch/data/Data'], resolve)
+const DataDetail = resolve => require(['../components/teachResearch/data/DataDetail'], resolve)
 //  系统管理
 const System = resolve => require(['../components/view/System'], resolve)
 const OrganizationContainer = resolve => require(['../components/system/OrganizationContainer'], resolve)
@@ -94,6 +95,9 @@ export default new Router({
           }, {
             path: 'data',
             component: Data
+          }, {
+            path: 'data/:id',
+            component: DataDetail
           }]
         },
         {

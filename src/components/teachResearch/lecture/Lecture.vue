@@ -52,7 +52,7 @@
                   <template scope="scope">
                     <router-link to="/main/system/organization/list/1">
                             <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-xiugaiziliao"></use>
+                                <use xlink:href="#icon-bianji"></use>
                             </svg>
                     </router-link>
                   </template>
