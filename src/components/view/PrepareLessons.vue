@@ -340,6 +340,9 @@ export default {
     .el-radio-button:focus:not(.is-focus):not(:active) {
         box-shadow: unset;
     }
+    .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+        box-shadow:0 0 0 0;
+    }
 }
 
 .g-course {

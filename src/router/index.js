@@ -34,6 +34,9 @@ const Index = resolve => require(['../components/view/Index'], resolve)
  const ParadigmSetting = resolve => require(['../components/system/character/ParadigmSetting'], resolve)
  const PermissionSetting = resolve => require(['../components/system/character/PermissionSetting'], resolve)
  const CharacterListContainer = resolve => require(['../components/system/CharacterListContainer'], resolve)
+//  班级管理
+const ClassListContainer = resolve => require(['../components/system/ClassListContainer'], resolve)
+const ClassList = resolve => require(['../components/system/class/ClassList'], resolve)
 //  const CreateQuestion = resolve => require(['../components/question_bank/CreateQuestion'], resolve)
 // const CreateSpecialTree = resolve => require(['../components/knowledge_tree/CreateSpecialTree'], resolve)
 // // 报表管理
@@ -154,7 +157,16 @@ export default new Router({
              path:'list/:id',
              component:OrganizationDetail
            }]
-         }
+         },{
+           path:'class',
+           component:ClassListContainer,
+           children:[
+             {
+              path:'list',
+              component:ClassList
+             }
+           ]
+          }
          ]
          }
         

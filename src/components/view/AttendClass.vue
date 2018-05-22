@@ -18,7 +18,9 @@
                         <label>年级：</label>
                     </div>
                     <div class="search-list">
-                        <a v-for="(item,index) in gradelist" @click="changeSearch(item,index,'grade')" :class="index===gradeNum?'active':''" :key="index">{{item.name}}</a>
+                        <el-radio-group v-model="form.gradeId" size="mini">
+                             <el-radio-button v-for="item in gradelist" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
+                        </el-radio-group>
                     </div>
                 </li>
                 <li>
@@ -26,7 +28,9 @@
                         <label>学期：</label>
                     </div>
                     <div class="search-list">
-                        <a v-for="(item,index) in semesterlist" @click="changeSearch(item,index,'semester')" :class="index===semesterNum?'active':''" :key="index">{{item.name}}</a>
+                        <el-radio-group v-model="form.semesterId" size="mini">
+                             <el-radio-button v-for="item in semesterlist" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
+                        </el-radio-group>
                     </div>
                 </li>
                 <li>
@@ -34,8 +38,10 @@
                         <label >时段：</label>
                     </div>
                     <div class="search-list">
-                        <a @click="changeSearch('全部',-1,'time')" :class="timeNum===-1?'active':''">全部</a>
-                        <a v-for="(item,index) in timelist" @click="changeSearch(item,index,'time')" :class="index===timeNum?'active':''" :key="index">{{item.name}}</a>
+                        <el-radio-group v-model="form.timeId" size="mini">
+                            <el-radio-button :label="null" >全部</el-radio-button>
+                            <el-radio-button v-for="item in timelist" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
+                        </el-radio-group>
                     </div>
                 </li>
                 <li>
@@ -43,8 +49,10 @@
                         <label >校区：</label>
                     </div>
                     <div class="search-list">
-                        <a  @click="changeSearch('全部',-1,'school')" :class="schoolNum===-1?'active':''">全部</a>
-                        <a v-for="(item,index) in schoollist" @click="changeSearch(item,index,'school')" :class="index===schoolNum?'active':''" :key="index">{{item.name}}</a>
+                        <el-radio-group v-model="form.schoolId" size="mini">
+                            <el-radio-button :label="null" >全部</el-radio-button>
+                            <el-radio-button v-for="item in schoollist" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
+                        </el-radio-group>
                     </div>
                 </li>
             </ul>
@@ -96,48 +104,50 @@ export default {
     data(){
         return{
             gradelist:[
-               {
+               {   
+                   id:1,
                    name:'初二',
                },
-               {
+               {   id:2,
                    name:'初三', 
                },
-               {
+               {    id:3,
                     name:'高一', 
                }
             ],
-            gradeNum:1,
             semesterlist:[
-                {
+                {  id:1,
                    name:"春季"
                 },
-                {
+                {  id:2,
                    name:"夏季"
                 },
-                {
+                {  id:3,
                    name:"秋季"
                 },
-                {
+                {   id:4,
                    name:"冬季"
                 }
             ],
-            semesterNum:0,
             timelist:[
-                {
-                  name: "一期" 
+                {   id:1,
+                    name: "一期" 
                 },
-                {
+                { id:2,
                   name: "周一到周五" 
                 }
             ],
-            timeNum:-1,
             schoollist:[
-                {
+                {   id:1,
                     name:"岗顶校区"
                 },
-
             ],
-            schoolNum:-1,
+            form:{
+                gradeId:1,
+                semesterId:1,
+                timeId:null,
+                schoolId:null,
+            },
             tableData:[
                 {
                     className:"2018春季物理提高班",
@@ -220,21 +230,6 @@ export default {
                     .search-list{
                         flex:1;
                         line-height:22px;
-                        a{
-                            font-size:12px;
-                            height:22px;
-                            color:#00b099;
-                            margin:0 10px 10px 0;
-                            padding:0 18px;
-                            border-radius:11px;
-                            line-height:22px;
-                            display:inline-block;
-                            cursor: pointer;
-                            &.active{
-                                background:#23c9b3;
-                                color:#fff;
-                            }
-                        }
                     }
                 }
             }
@@ -292,6 +287,33 @@ export default {
                 padding:0;
                 
             }
+        }
+    }
+    .g-search {
+        .el-radio-button__inner,
+        .el-radio-button:first-child .el-radio-button__inner,
+        .el-radio-button:last-child .el-radio-button__inner {
+            border: 0;
+            font-size: 12px;
+            height: 22px;
+            color: #00b099;
+            margin: 0 10px 10px 0;
+            padding: 0 18px;
+            border-radius: 11px;
+            line-height: 22px;
+            display: inline-block;
+            cursor: pointer;
+        }
+        .el-radio-button__orig-radio:checked+.el-radio-button__inner,
+        .el-radio-button__orig-radio+.el-radio-button__inner:hover {
+            background: #23c9b3;
+            color: #fff;
+        }
+        .el-radio-button:focus:not(.is-focus):not(:active) {
+            box-shadow: unset;
+        }
+        .el-radio-button__orig-radio:checked+.el-radio-button__inner{
+            box-shadow:0 0 0 0;
         }
     }
 </style>

@@ -24,6 +24,8 @@
         </el-tab-pane>
         <el-tab-pane label="教育机构管理" name="教育机构管理">
         </el-tab-pane>
+        <el-tab-pane label="班级管理" name="班级管理">
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <div class="system-content">
@@ -58,6 +60,8 @@ export default {
       this.activeName = '操作角色列表'
     } else if (this.$route.path.indexOf('organization') > 0) {
       this.activeName = '教育机构管理'
+    } else if (this.$route.path.indexOf('class') > 0) {
+      this.activeName = '班级管理'
     }
   },
   computed: {
@@ -72,7 +76,10 @@ export default {
         this.$router.push('/main/system/characterList/list')
       }else if (this.activeName === '教育机构管理') {
         this.$router.push('/main/system/organization/list')
+      }else if (this.activeName === '班级管理') {
+        this.$router.push('/main/system/class/list')
       }
+
     }
   }
 }
