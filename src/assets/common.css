@@ -214,6 +214,7 @@ th div{
 }
 .gray .el-input__inner{
   border: 0;
+  padding-right: 30px
 }
 .el-form-item__label{
   font-weight: bold;

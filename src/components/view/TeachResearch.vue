@@ -1,5 +1,5 @@
 <template>
-  <div class="m-system container">
+  <div class="t-research container">
     <el-breadcrumb class="nav-little" separator=">">
       <el-breadcrumb-item :to="{ path: '/' }">
         <svg class="icon shouye" aria-hidden="true">
@@ -7,77 +7,59 @@
         </svg>
         首页
       </el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/main/system' }">
+      <!--<el-breadcrumb-item :to="{ path: '/main/system' }">
         系统管理
-      </el-breadcrumb-item>
+      </el-breadcrumb-item>-->
       <el-breadcrumb-item>
         {{activeName}}
       </el-breadcrumb-item>
     </el-breadcrumb>
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="基础设定" name="基础设定">
+        <el-tab-pane label="课程" name="课程">
         </el-tab-pane>
-        <el-tab-pane label="用户列表" name="用户列表">
+        <el-tab-pane label="讲次" name="讲次">
         </el-tab-pane>
-        <el-tab-pane label="操作角色列表" name="操作角色列表">
-        </el-tab-pane>
-        <el-tab-pane label="教育机构管理" name="教育机构管理">
-        </el-tab-pane>
-        <el-tab-pane label="个人合作管理" name="个人合作管理">
+        <el-tab-pane label="素材" name="素材">
         </el-tab-pane>
       </el-tabs>
     </el-row>
-    <div class="system-content">
+    <div class="researc-content">
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script>
-import VCharacterListContainer from '../system/CharacterListContainer.vue'
-import VUserListContainer from '../system/UserListContainer.vue'
-import VBasisSetContainer from '../system/BasisSetContainer.vue'
 export default {
-  name: 'system',
+  name: 't-research',
   components: {
-    VCharacterListContainer,
-    VUserListContainer,
-    VBasisSetContainer
   },
   data() {
     return {
-      activeName: '基础设定'
+      activeName: '课程'
     }
   },
   created() {
     this.$store.dispatch('config')
-    if (this.$route.path.indexOf('basisSetting') > 0) {
-      this.activeName = '基础设定'
-    } else if (this.$route.path.indexOf('userList') > 0) {
-      this.activeName = '用户列表'
-    } else if (this.$route.path.indexOf('characterList') > 0) {
-      this.activeName = '操作角色列表'
-    } else if (this.$route.path.indexOf('organization') > 0) {
-      this.activeName = '教育机构管理'
-    }else if (this.$route.path.indexOf('personal') > 0) {
-      this.activeName = '个人合作管理'
+    if (this.$route.path.indexOf('course') > 0) {
+      this.activeName = '课程'
+    } else if (this.$route.path.indexOf('lecture') > 0) {
+      this.activeName = '讲次'
+    } else if (this.$route.path.indexOf('data') > 0) {
+      this.activeName = '素材'
     }
   },
   computed: {
   },
   methods: {
     handleClick(tab) {
-      if (this.activeName === '基础设定') {
-        this.$router.push('/main/system/basisSetting/topicOrigin')
-      } else if (this.activeName === '用户列表') {
-        this.$router.push('/main/system/userList/list')
-      } else if (this.activeName === '操作角色列表') {
-        this.$router.push('/main/system/characterList/list')
-      }else if (this.activeName === '教育机构管理') {
-        this.$router.push('/main/system/organization/list')
-      }else if (this.activeName === '个人合作管理') {
-        this.$router.push('/main/system/personal/list')
+      if (this.activeName === '课程') {
+        this.$router.push('/main/teach-research/course')
+      } else if (this.activeName === '讲次') {
+        this.$router.push('/main/teach-research/lecture')
+      } else if (this.activeName === '素材') {
+        this.$router.push('/main/teach-research/data')
       }
     }
   }
@@ -86,18 +68,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
-.m-system {
+.t-research {
   .nav-little {
     border-bottom: none;
     margin: 0;
   }
-  .system-content {
-    // min-height: 1000px;
-  }
 }
 </style>
 <style lang="less">
-.m-system {
+.t-research {
   padding: 0 30px;
   background-color: #fff;
   .tabs {
@@ -120,6 +99,7 @@ export default {
       font-weight: bold;
       border: 1px solid #00b1d1;
       border-bottom: 4px solid #00b1d1;
+      padding:0 50px !important;
     }
     .el-tabs__nav-wrap {
       margin-bottom: -4px;

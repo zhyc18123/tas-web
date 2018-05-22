@@ -46,7 +46,7 @@
     </el-row>
     <div class="nav-div" v-if="!noTab">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/main/home">教研</el-menu-item>
+        <el-menu-item index="/main/teach-research/course">教研</el-menu-item>
         <el-menu-item v-if="config.question_manage" index="/main/prepare-lessons">备课</el-menu-item>
         <el-menu-item v-if="config.knowledge_tree_manage" index="/main/attend-class">上课</el-menu-item>
         <el-menu-item v-if="config.product_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
@@ -78,8 +78,8 @@ export default {
       }
     };
     if (routerModule) {
-      if (routerModule.indexOf('home') === 0) {
-        activeIndex = '/main/home'
+      if (routerModule.indexOf('teach-research') === 0) {
+        activeIndex = '/main/teacher-research/course'
       } else if (routerModule.indexOf('prepare-lessons') === 0) {
         activeIndex = '/main/prepare-lessons'
       } else if (routerModule.indexOf('attend') === 0) {
