@@ -26,6 +26,8 @@
         </el-tab-pane>
         <el-tab-pane label="个人合作管理" name="个人合作管理">
         </el-tab-pane>
+        <el-tab-pane label="班级管理" name="班级管理">
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <div class="system-content">
@@ -62,6 +64,8 @@ export default {
       this.activeName = '教育机构管理'
     }else if (this.$route.path.indexOf('personal') > 0) {
       this.activeName = '个人合作管理'
+    } else if (this.$route.path.indexOf('class') > 0) {
+      this.activeName = '班级管理'
     }
   },
   computed: {
@@ -78,7 +82,10 @@ export default {
         this.$router.push('/main/system/organization/list')
       }else if (this.activeName === '个人合作管理') {
         this.$router.push('/main/system/personal/list')
+      }else if (this.activeName === '班级管理') {
+        this.$router.push('/main/system/class/list')
       }
+
     }
   }
 }
