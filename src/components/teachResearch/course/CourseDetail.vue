@@ -1,5 +1,5 @@
 <template>
-  <el-row class="data-detail">
+  <el-row class="course-detail">
 <course-step/>
 <div class="add-type">
     <el-radio label="1" v-model="addType">新建课程</el-radio>
@@ -13,40 +13,67 @@
       <div slot="label" class="tow-four">
           年<span>级:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item>
       <div slot="label" class="tow-four">
           科<span>目:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item>
       <div slot="label" class="tow-four">
           层<span>级:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item>
       <div slot="label" class="tow-four">
           讲<span>数:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item>
       <div slot="label" class="tow-four">
           学<span>期:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item label="教材版本:">
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item>
       <div slot="label" class="tow-four">
           年<span>份:</span>
       </div>
-    <el-input v-model="form.name"></el-input>
+    
+        <el-select v-model="form.region" placeholder="">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
   </el-form-item>
   <el-form-item label="课程简介:">
     <el-input type="textarea" :rows="6" v-model="form.name"></el-input>
@@ -56,7 +83,7 @@
       </upload>
   </el-form-item>
   <el-form-item class="opt-btn">
-      <el-button class="height-btn">确定</el-button>
+      <el-button class="height-btn" @click="sure">确定</el-button>
       <el-button class="light-btn">取消</el-button>
   </el-form-item>
 </el-form>
@@ -155,13 +182,16 @@ export default {
       },
       onSubmit(){
 
+      },
+      sure(){
+          this.$router.push({path:'/main/teach-research/edit-lecture/11'})
       }
   }
 }
 </script>
 <style lang="stylus" scoped>
 @import '~assets/stylus/mixin.styl'
-.data-detail
+.course-detail
     .has-course-btn
         margin-top 50px
     .add-type
@@ -180,6 +210,8 @@ export default {
         padding 0 200px
         margin auto
         margin-top 50px
+        .el-select
+            width 100%
     .head
       margin-top 10px
     .free-num

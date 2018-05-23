@@ -18,6 +18,7 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // 教研
 const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
 const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
+const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve) 
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
 const LectureDetail = resolve => require(['../components/teachResearch/lecture/LectureDetail'], resolve)
 const Data = resolve => require(['../components/teachResearch/data/Data'], resolve)
@@ -94,6 +95,9 @@ export default new Router({
           },{
             path: 'course/:id',
             component: CourseDetail
+          },{
+            path: 'edit-lecture/:id',
+            component: EditLecture
           }, {
             path: 'lecture',
             component: Lecture
