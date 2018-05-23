@@ -33,7 +33,7 @@
                 <el-button type="primary" @click="handleSearch" class="search-btn">查询</el-button>
             </el-form-item>
             <el-form-item class="new-item">
-                <el-button type="primary" class="new-btn" @click="addClass">新增班级</el-button>
+                <el-button type="primary" class="new-btn" @click="$router.push('/main/system/class/add')">新增班级</el-button>
             </el-form-item>
         </el-form>
         <el-table class="line-table" :data="tableData"  style="width: 100%" header-align="center" >
@@ -46,7 +46,7 @@
              <el-table-column prop="campus"  label="所属校区" align="center"> </el-table-column>
             <el-table-column  label="操作" align="center"> 
                 <template slot-scope="scope" >
-                    <router-link to="/">
+                    <router-link to="/main/system/class/details">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-2yulan"></use>
                         </svg>
@@ -58,7 +58,7 @@
                     </router-link>
                     <router-link to="/">
                         <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-delete"></use>
+                            <use xlink:href="#icon-icon-cross-empty"></use>
                         </svg>
                     </router-link>
                 </template>
