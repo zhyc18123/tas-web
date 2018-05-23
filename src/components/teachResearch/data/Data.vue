@@ -32,7 +32,7 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="onSubmit">新增素材</el-button>
+        <el-button type="primary" class="new-btn" @click="addData">新增素材</el-button>
       </el-form-item>
     </el-form>
             <el-table class="line-table" :data="tableData"  header-align="center">
@@ -46,7 +46,7 @@
                   <template scope="scope">
                     <router-link to="/main/system/organization/list/1">
                             <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-xiugaiziliao"></use>
+                                <use xlink:href="#icon-bianji"></use>
                             </svg>
                     </router-link>
                   </template>
@@ -89,6 +89,10 @@ export default {
   methods: {
     onSubmit(){
 
+    },
+    addData(){
+      console.log('sss')
+this.$router.push({path:'/main/teach-research/data/add'})
     },
     getListResult(){
 

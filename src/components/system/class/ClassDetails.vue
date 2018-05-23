@@ -151,6 +151,7 @@ export default {
                         border-color #cceff6
                     .el-step__main
                         padding-left 23px
+                        padding-bottom 37px
                         box-sizing border-box
                         .el-step__title
                             height 36px
