@@ -46,6 +46,8 @@ const CharacterListContainer = resolve => require(['../components/system/Charact
 //  班级管理
 const ClassListContainer = resolve => require(['../components/system/ClassListContainer'], resolve)
 const ClassList = resolve => require(['../components/system/class/ClassList'], resolve)
+const AddClass = resolve => require(['../components/system/class/AddClass'], resolve)
+const ClassDetails = resolve => require(['../components/system/class/ClassDetails'], resolve)
 //  const CreateQuestion = resolve => require(['../components/question_bank/CreateQuestion'], resolve)
 // const CreateSpecialTree = resolve => require(['../components/knowledge_tree/CreateSpecialTree'], resolve)
 // // 报表管理
@@ -190,19 +192,18 @@ export default new Router({
            path:'class',
            component:ClassListContainer,
            children:[
-             {
+            {
               path:'list',
               component:ClassList
-             }
-           ]
-          },{
-           path:'class',
-           component:ClassListContainer,
-           children:[
-             {
-              path:'list',
-              component:ClassList
-             }
+            },
+            {
+              path:"add",
+              component:AddClass,
+            },
+            {
+              path:"details",
+              component:ClassDetails,
+            },
            ]
           }
           ]

@@ -350,7 +350,7 @@ border-radius: 4px 4px 0 0;
   background: #23c9b3;
 }
 .el-select-dropdown__item.selected{
-  color: white !important;
+  /* color: white !important; */
 }
 .el-select__tags span:first-child{
   display: inline-block;
