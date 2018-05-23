@@ -17,7 +17,9 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 
 // 教研
 const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
+const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
+const LectureDetail = resolve => require(['../components/teachResearch/lecture/LectureDetail'], resolve)
 const Data = resolve => require(['../components/teachResearch/data/Data'], resolve)
 const DataDetail = resolve => require(['../components/teachResearch/data/DataDetail'], resolve)
 //  系统管理
@@ -89,9 +91,15 @@ export default new Router({
           children: [{
             path: 'course',
             component: Course
+          },{
+            path: 'course/:id',
+            component: CourseDetail
           }, {
             path: 'lecture',
             component: Lecture
+          }, {
+            path: 'lecture/:id',
+            component: LectureDetail
           }, {
             path: 'data',
             component: Data

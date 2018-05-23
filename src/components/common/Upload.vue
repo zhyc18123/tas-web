@@ -1,9 +1,29 @@
 
 <template>
-    <div class="upload" :style="{width:width||'100%'}">
-        <el-upload v-loading="loading" class="avatar-uploader" :ref="ref" :http-request="httpRequest" :auto-upload="true" :disabled="disabled" action="string" :show-file-list="false" :before-upload="beforeAvatarUpload" :data="{token:uptoken}">
-        <el-button size="small" type="primary"><i class="el-icon-plus"></i>点击上传</el-button>
+    <div class="upload" :style="{width:'100%'}">
+        <el-upload v-loading="loading" class="avatar-uploader f-upload" :ref="ref" :http-request="httpRequest" :auto-upload="true" action="string" :show-file-list="false" :before-upload="beforeAvatarUpload" :data="{token:uptoken}">
+
+        <el-button size="small" type="primary" class="up-btn">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-jiajianzujianjiahao"></use>
+                            </svg>
+            {{btnText}}</el-button>
         </el-upload>
+<el-form class="upload-form" :inline="true"  label-position="right" label-width="80px">
+  <el-form-item label="已上传:">
+      <label>自动获取课件名</label>
+  </el-form-item>
+  <el-form-item label="类型:">
+      <label>word</label>
+  </el-form-item>
+  <el-form-item label="大小:">
+      <label>10M</label>
+  </el-form-item>
+  <el-form-item label="" class="preview">
+      <el-button size="small" @click="preview">预览</el-button>
+  </el-form-item>
+</el-form>
+<slot></slot>
     </div>
 </template>
 
@@ -13,7 +33,7 @@ import io from 'lib/io'
 import axios from 'axios'
 export default {
     name: 'v-header',
-    props: ['fileUrl'],
+    props: ['fileUrl','btnText'],
     components: {
     },
     data() {
@@ -29,6 +49,9 @@ export default {
         }
     },
     methods: {
+        preview(){
+
+        },
         async httpRequest(item) {
             try {
                 let param = new FormData()
@@ -131,12 +154,43 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@import '~assets/stylus/mixin.styl'
+.upload-form
+    table-form()
+    padding-right 20px
+    width 100%
+.preview
+    float right 
+    .el-button
+        border 0
+        background transparent
+        text-decoration-line underline
+.up-btn
+    background white
+    height 46px
+    line-height 42px
+    padding 0 15px
+    color #01d1bb
+    border-color #01d1bb
+    border-width 2px
+    border-radius 6px
+    font-weight bold
+    font-size 14px
+    .icon
+        font-size 20px
 .decoding{
     line-height 178px
 }
 </style>
 
-<style>
+<style lang="stylus">
+.f-upload
+    .el-upload
+        width 100%
+        text-align left 
+.upload-form
+    .el-form-item__label
+        font-weight normal
 .avatar-uploader .el-upload {
     /*border: 1px dashed #d9d9d9;*/
     border-radius: 6px;

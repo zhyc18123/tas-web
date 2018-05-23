@@ -343,6 +343,9 @@ border-radius: 4px 4px 0 0;
   background: #808080;
   opacity: .3;
 }
+.tow-four span{
+  margin-left: 28px;
+}
 .is-multiple .el-select-dropdown__item.selected{
   color: #409EFF !important;
 }

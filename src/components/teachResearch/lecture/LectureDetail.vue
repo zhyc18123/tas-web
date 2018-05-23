@@ -1,8 +1,8 @@
 <template>
-  <el-row class="data-detail">
-<line-head-form class="head" title="新增素材"/>
+  <el-row class="lecture-detail">
+<line-head-form class="head" title="新建讲次"/>
 <el-form class="o-form" label-position="right" label-width="120px" :model="form">
-  <el-form-item label="素材名称:">
+  <el-form-item label="讲次名称:">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
   <el-form-item label="科目:">
@@ -37,6 +37,10 @@
       </el-form-item>
     </el-form>
   </el-form-item>
+  <el-form-item label="讲次类型:">
+      <el-radio label="课程讲次" v-model="form.operatStatus"></el-radio>
+      <el-radio label="期中期末讲次" v-model="form.operatStatus"></el-radio>
+  </el-form-item>
   <el-form-item label="层级:">
   <el-checkbox-group v-model="checkList">
     <el-checkbox label="能力提高"></el-checkbox>
@@ -46,20 +50,13 @@
     <el-checkbox label="层级四"></el-checkbox>
   </el-checkbox-group>
   </el-form-item>
-  <el-form-item label="资料说明:">
-    <el-input type="textarea" :rows="6" v-model="form.name"></el-input>
-  </el-form-item>
   <el-form-item label="">
-      <upload btnText="上传素材">
-          <p class="surport">(支持PPT、Word、Excel、PDF、压缩包)</p>
+      <upload class="upload" btnText="上传课件（PPT）">
       </upload>
   </el-form-item>
-  <el-form-item label="权限设置:">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="全选"></el-checkbox>
-    <el-checkbox label="可预览"></el-checkbox>
-    <el-checkbox label="可下载"></el-checkbox>
-  </el-checkbox-group>
+  <el-form-item label="">
+      <upload class="upload" btnText="上传讲义（Word）">
+      </upload>
   </el-form-item>
   <el-form-item class="opt-btn">
       <el-button class="height-btn">确定</el-button>
@@ -90,7 +87,7 @@ export default {
 </script>
 <style lang="stylus" scoped>
 @import '~assets/stylus/mixin.styl'
-.data-detail
+.lecture-detail
     .gray
         table-form()
         padding-top 15px
