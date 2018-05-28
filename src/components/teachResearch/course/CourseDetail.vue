@@ -1,6 +1,6 @@
 <template>
   <el-row class="course-detail">
-<course-step/>
+<course-step :active="1"/>
 <div class="add-type">
     <el-radio label="1" v-model="addType">新建课程</el-radio>
     <el-radio label="2" v-model="addType">已有课程</el-radio>
@@ -184,7 +184,7 @@ export default {
 
       },
       sure(){
-          this.$router.push({path:'/main/teach-research/edit-lecture/11'})
+          this.$router.push({path:'/main/teach-research/course/edit-lecture/11'})
       }
   }
 }

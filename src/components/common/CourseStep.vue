@@ -1,5 +1,5 @@
 <template>
-    <el-steps :active="1" align-center class="step c-step">
+    <el-steps :active="active" align-center class="step c-step">
         <el-step title="1.新建">
             <div slot="icon">
                 <svg class="icon new" aria-hidden="true">
