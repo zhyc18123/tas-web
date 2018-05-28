@@ -8,14 +8,14 @@
                 </div>
                 <span class="b-line"></span>
                 <div class="c-tab">
-                    <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push('/main/teach-research/course/view-lecture/courseWare/1/1')">课件</div>
-                    <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push('/main/teach-research/course/view-lecture/lecture/1/2')">讲义</div>
+                    <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push('/main/teach-research/course/view-course/courseWare')">课件</div>
+                    <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push('/main/teach-research/course/view-lecture/lecture')">讲义</div>
                 </div>
             </div>
             <div class="t-cont">
                 <div class="cont-left">
                     <ul>
-                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id ==1?'active':''" @click="$router.push('/main/teach-research/course/view-lecture/sourceType/'+1+'/'+item.id)">
+                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id ==1?'active':''" @click="$router.push('/main/teach-research/course/view-lecture/1/'+sourceType+'/'+item.id)">
                             <div class="left-order">{{item.order}}</div>
                             <div class="list-name">{{item.courseName}}</div>
                         </li>
@@ -24,10 +24,6 @@
                 <div class="cont-right">
                     <router-view></router-view>
                 </div>
-                
-            </div>
-            <div class="next-btn">
-                <el-button class="height-btn" @click="$router.push('/')">下一步</el-button>
             </div>
         </div>
        
@@ -42,7 +38,7 @@ export default {
   },
   data () {
       return {
-          sourceType:'lecture',
+          sourceType:'courseWare',
           courseList:[
                 {
                     order:"第一讲",
@@ -147,9 +143,6 @@ export default {
             flex 1
             min-height 500px
             background #f8f8f8
-    .next-btn
-        text-align center
-        padding-top 20px
             
 
 </style>

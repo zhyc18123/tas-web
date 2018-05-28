@@ -18,7 +18,9 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // 教研
 const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
 const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
-const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve) 
+const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve)
+const PreLecture = resolve => require(['../components/teachResearch/course/preview/Lecture'], resolve)  
+const PreCourseWare = resolve => require(['../components/teachResearch/course/preview/CourseWare'], resolve)
 const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve) 
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
 const LectureDetail = resolve => require(['../components/teachResearch/lecture/LectureDetail'], resolve)
@@ -102,9 +104,10 @@ export default new Router({
             path: 'course/edit-lecture/:id',
             component: EditLecture
           },{
-            path: 'course/view-lecture/:id',
-            component: ViewLecture
-          }, {
+            path: 'course/view-lecture/:sourceType/:courseId/:id',
+            component: ViewLecture,
+          },
+           {
             path: 'lecture',
             component: Lecture
           }, {

@@ -85,7 +85,7 @@ export default {
             console.log("xx", end)
         },
         sure() {
-            this.$router.push({path:'/main/teach-research/course/view-lecture/1'})
+            this.$router.push({path:'/main/teach-research/course/view-lecture/course-word/1/1'})
          }
     }
 }

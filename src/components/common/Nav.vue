@@ -46,10 +46,10 @@
     </el-row>
     <div class="nav-div" v-if="!noTab">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="/main/teach-research/course">教研</el-menu-item>
-        <el-menu-item v-if="config.question_manage" index="/main/prepare-lessons">备课</el-menu-item>
-        <el-menu-item v-if="config.knowledge_tree_manage" index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item v-if="config.product_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
+        <el-menu-item   index="/main/teach-research/course">教研</el-menu-item>
+        <el-menu-item   index="/main/prepare-lessons">备课</el-menu-item>
+        <el-menu-item   index="/main/attend-class">上课</el-menu-item>
+        <el-menu-item   index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
         <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
