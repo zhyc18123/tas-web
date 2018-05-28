@@ -123,10 +123,10 @@ export default {
     }
   },
   created: function() {
-    this.$store.dispatch('hasLogin')
-    if (storage.getAccessToken()) {
-      this.$store.dispatch('config')
-    }
+    // this.$store.dispatch('hasLogin')
+    // if (storage.getAccessToken()) {
+    //   this.$store.dispatch('config')
+    // }
   },
   computed: {
     ...mapGetters(['loginInfo', 'loginSuccess', 'config', 'selectSubject', 'subjects']),

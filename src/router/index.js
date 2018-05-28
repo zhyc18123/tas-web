@@ -80,14 +80,14 @@ export default new Router({
     {
       path: '/main',
       component: Main,
-      beforeEnter(to, from, next) {
-        let loginInfo = storage.getCurrentUserInfo()
-        if (Object.keys(loginInfo).length === 0) {
-          next('/index')
-        } else {
-          next()
-        }
-      },
+      // beforeEnter(to, from, next) {
+      //   let loginInfo = storage.getCurrentUserInfo()
+      //   if (Object.keys(loginInfo).length === 0) {
+      //     next('/index')
+      //   } else {
+      //     next()
+      //   }
+      // },
       children: [
         {
           path: "teach-research",
