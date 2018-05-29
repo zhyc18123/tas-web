@@ -8,7 +8,7 @@
                 </div>
                 <span class="b-line"></span>
                 <div class="c-add" >
-                    <p>支持PPT、Word、Excel、PDF、压缩包</p>
+                    <span>支持PPT、Word、Excel、PDF、压缩包</span>
                     <el-button @click="$router.push('/main/teach-research/course/add-sheet/'+id)">添加辅助材料</el-button>
                 </div>
             </div>
@@ -88,11 +88,12 @@ export default {
         position relative
         font-size 16px
         height 54px
-        line-height 54px
         border-bottom 4px solid #bfebf3
         .t-title
             font-size 14px
             color #333
+            display inline-block
+            line-height 54px
             font-weight bold
             em
                 font-style normal
@@ -108,11 +109,17 @@ export default {
             position absolute
             right 0
             bottom 0
-            p
+            height 54px
+            line-height 54px
+            span
                 font-size 12px
-                margin-bottom -9px
                 color #999
+                height 12px
+                line-height 12px
+                float left
+                margin-top 31px
                 display inline-block
+                margin-right 5px
             .el-button
                 background #1ebd99
                 color #ffffff
@@ -122,6 +129,7 @@ export default {
                 
            
     .t-cont
+        padding-top 28px
         .el-table
             .icon
                 font-size 20px
