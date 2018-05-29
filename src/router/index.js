@@ -18,8 +18,12 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // 教研
 const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
 const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
-const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve) 
+const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve)
+// const PreLecture = resolve => require(['../components/teachResearch/course/preview/Lecture'], resolve)  
+const PreCourseWare = resolve => require(['../components/teachResearch/course/preview/Preview'], resolve)
 const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve) 
+const Sheet = resolve => require(['../components/teachResearch/course/Sheet'], resolve) 
+const AddSheet = resolve => require(['../components/teachResearch/course/AddSheet'], resolve)  
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
 const LectureDetail = resolve => require(['../components/teachResearch/lecture/LectureDetail'], resolve)
 const Data = resolve => require(['../components/teachResearch/data/Data'], resolve)
@@ -94,9 +98,23 @@ const router= new Router({
             path: 'course/edit-lecture/:id',
             component: EditLecture
           },{
-            path: 'course/view-lecture/:id',
-            component: ViewLecture
-          }, {
+            path: 'course/view-lecture/:sourceType',
+            component: ViewLecture,
+            children:[{
+              path: ':courseId/:id',
+              component: PreCourseWare,
+            },
+          ]
+          },
+          {
+            path: 'course/sheet/:id',
+            component: Sheet
+          },
+          {
+            path: 'course/add-sheet/:id',
+            component: AddSheet
+          },
+           {
             path: 'lecture',
             component: Lecture
           }, {

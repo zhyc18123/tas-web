@@ -12,38 +12,168 @@
         <div class="cont-main">
             <el-steps :active="stepActive" direction="vertical" name="">
                 <el-step title="班级基础信息" >
-                    <div slot="title">
+                    <div slot="title"  class="title">
                         <span>班级基础信息</span>
-                        <el-button>修改基本信息</el-button>
+                        <el-button @click="$router.push('/main/system/class/add')">修改基本信息</el-button>
                     </div>
                     <div slot="description" class="class-info">
-                        
+                        <ul class="">
+                            <li>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                       班级编号：
+                                    </div>
+                                    <span>12311313131</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                        学<span>科：</span>
+                                    </div>
+                                    <span>初中物理</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                       创建日期：
+                                    </div>
+                                    <span>2018-01-01</span>
+                                </div>
+                                <!-- <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                        上课时段：
+                                    </div>
+                                    <span>周一  09:10-11:20，周二  09:10-11:20</span>
+                                </div> -->
+                            </li>
+                            <li>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                       学员总数：
+                                    </div>
+                                    <span>50</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                        年<span>级：</span>
+                                    </div>
+                                    <span>初二</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                       所在校区：
+                                    </div>
+                                    <span>岗顶校区</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                       每讲总数：
+                                    </div>
+                                    <span>15讲</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                        开课日期：
+                                    </div>
+                                    <span>2018-01-01</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                      班<span>型：</span>
+                                    </div>
+                                    <span>物理能力提高</span>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </el-step>
                 <el-step title="主讲老师基础信息" >
-                    <div slot="title">
+                    <div slot="title" class="title">
                         <span>主讲老师基础信息</span>
-                        <el-button>添加主讲老师</el-button>
+                        <el-button @click="dialogAddTeacher = true">添加主讲老师</el-button>
                     </div>
-                    <div slot="description">
-                        
+                    <div slot="description" class="teacher-info">
+                        <ul>
+                            <li v-for="(item,index) in teacherData" :key="item.id">
+                                <span class="teacher-order">主讲老师{{index+1}}</span>
+                                <span>{{item.name}}</span>
+                                <div class="teacher-btn">
+                                    <el-button  @click="dialogAddTeacher = true">更换</el-button>
+                                    <el-button>删除</el-button>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </el-step>
                 <el-step title="讲次排课信息" >
-                    <div slot="title">
+                    <div slot="title" class="title">
                         <span>讲次排课信息</span>
-                        <el-button>修改讲次课表</el-button>
+                        <!-- <el-button>修改讲次课表</el-button> -->
                     </div>
                     <div slot="description">
-                        
+                        <el-table 
+                            :data="tableData"
+                            class="line-table"
+                            header-align="center" 
+                            style="width: 100%">
+                            <el-table-column
+                                prop="course"
+                                label="讲次"
+                                align = "center"
+                                width="180">
+                            </el-table-column>
+                            <el-table-column
+                                prop="courseName"
+                                label="讲次名称"
+                                align = "center"
+                                width="180">
+                            </el-table-column>
+                            <el-table-column
+                                prop="dateTime"
+                                align = "center"
+                                label="日期">
+                            </el-table-column>
+                            <el-table-column
+                                prop="substituteTeacher"
+                                align = "center"
+                                label="带课老师">
+                            </el-table-column>
+                            <el-table-column
+                                align = "center"
+                                label="操作">
+                                <template slot-scope="scope">
+                                    <div>
+                                        <el-button class="noborder"  @click="dialogAddTeacher = true">添加带课老师</el-button>
+                                    </div>
+                                </template>
+                            </el-table-column>
+                        </el-table>
                     </div>
                 </el-step>
-                <el-step >
+                <el-step v-show="false">
                     
                 </el-step>
             </el-steps>
         </div>
-        
+        <el-dialog title="选择老师" :visible.sync="dialogAddTeacher" class="add-teacher" width="40%">
+            <el-form>
+                <el-form-item >
+                    <el-input v-model="query.teacherName" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
+                    <el-button>搜索</el-button>
+                </el-form-item>
+            </el-form>
+            <div class="teacher-table">
+                <el-table :data="TeacherData" ref="multipleTable"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
+                    <el-table-column  type="selection" width="55" :selectable="selectable"></el-table-column>
+                    <el-table-column property="teacherName" label="姓名" width="200"></el-table-column>
+                    <el-table-column property="course" label="科目" align="right"></el-table-column>
+                </el-table>
+            </div>
+            <div class="add-btn">
+                <el-button class="height-btn">确认</el-button>
+                <el-button class="light-btn">取消</el-button>
+            </div>
+        </el-dialog>
     </div>
     
 </el-row>
@@ -56,26 +186,109 @@ export default {
     },
     data () {
         return {
-            stepActive:4
+            stepActive:4,
+            teacherData:[
+                {
+                    name:"王小明",
+                    id:1,
+                },
+                {
+                    name:"王小明",
+                    id:2,
+                }
+            ],
+            tableData:[
+                {
+                    substituteTeacher:'刘德华',
+                    course:'第1讲',
+                    courseName:'内能的应用',
+                    dateTime:"2018-05-14",
+                },
+                 {
+                    substituteTeacher:'刘德华',
+                    course:'第2讲',
+                    courseName:'内能的应用',
+                    dateTime:"2018-05-14",
+
+                }
+            ],
+            TeacherData:[
+                {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:1,
+                },
+                {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:2,
+                },
+                 {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:3,
+                },
+                 {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:4,
+                },
+                 {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:5,
+                },
+                 {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:6,
+                },
+                 {
+                    teacherName:"刘德华",
+                    course:"物理",
+                    id:7,
+                }
+            ],
+            dialogAddTeacher:false,
+            addTeacher:[],
+            query:{
+                teacherName:""
+            }
         }
     },
     created(){
 
     },
     methods:{
-        handleCheckedWeekChange(val){
-            if(val.constructor==Array){
-                console.log("array",val.constructor==Array)
-                this.form.everyday = false
-            }else if(val.constructor==Boolean){
-                this.form.checkweek = []
-                console.log("boolean",val.constructor==Boolean)
+        handleSelectionChange(val){
+            this.addTeacher = val
+            console.log(val)
+        },
+        selectable(){
+            console.log(arguments)
+            if(this.addTeacher.length>=2){
+                this.TeacherData.map((item)=>{
+                    if(arguments[0].id == item.id){
+                        return true
+                    }else{
+                        return false
+                    }
+                })
+            }else{
+                return true;
             }
-      }
+        },
   }
 }
 </script>
 <style lang="stylus" scoped>
+.noborder.el-button
+    background transparent
+    border 0 none 
+    color #009ada
+    padding 0 
+    border-bottom 1px solid #009ada
+    border-radius 0 
 .class-detail
     .head
         margin-top 10px
@@ -110,17 +323,92 @@ export default {
             padding 38px 64px 38px 25px
             box-sizing border-box
             .el-step
-                .el-button
-                    height 30px
-                    background #009ada
-                    border 1px solid #009ada
-                    color #ffffff
-                    font-size 12px
-                    float right
+                .title
+                    .el-button
+                        height 30px
+                        background #009ada
+                        border 1px solid #009ada
+                        color #ffffff
+                        font-size 12px
+                        float right
                 .class-info
                     width 100%
-                    height 222px
+                    // height 222px
                     background rgba(230, 236, 238, 0.4)
+                    ul
+                        display flex
+                        height 100%
+                        padding 47px 0
+                        box-sizing border-box
+                        li
+                            flex 1
+                            height 100%
+                            padding-left 40px
+                            .info-item
+                                font-size 14px 
+                                color #333
+                                margin-bottom 22px
+                                &:last-child
+                                    margin-bottom 0px
+                                .tow-four
+                                    display inline-block
+                                &>span 
+                                    text-overflow ellipsis
+                                    overflow hidden
+                                    white-space nowrap
+                .teacher-info
+                    width 100%
+                    ul
+                        li
+                            height 50px
+                            background rgba(230, 236, 238, 0.4)
+                            margin-bottom 2px 
+                            padding-left 40px
+                            font-size 14px
+                            line-height 50px
+                            color #333
+                            .teacher-order
+                                display inline-block
+                                width 150px
+                            .teacher-btn
+                                float right
+                                height 50px
+                                padding 0 44px
+                                line-height 50px
+                                box-sizing border-box
+                                .el-button
+                                    background transparent
+                                    height 18px
+                                    color #009ada
+                                    border 0 none
+                                    font-size 14px
+                                    margin-left 50px
+                                    padding 0 
+                                    border-bottom 1px solid #009ada
+                                    border-radius 0 
+        .add-teacher
+            min-width 580px
+            .el-form-item
+                padding 20px 30px 0 20px
+                .el-input
+                    width 85%
+                    height 38px
+                .el-button
+                    background #009ada
+                    color #fff
+                    height 36px
+                    margin-left 10px
+            .teacher-table
+                padding 0 30px
+                .el-table
+                    border 0 none !important
+            .add-btn
+                text-align center
+                margin-top 100px
+                padding-bottom 20px
+                .el-button
+                    height 38px
+
 
 </style>
 <style lang="stylus">
@@ -161,7 +449,12 @@ export default {
                             font-weight 700 
                         .el-step__description
                             padding-right 0       
-
+        .add-teacher
+            .el-input
+                height 38px
+                .el-input__inner
+                    height 38px
+                    line-height 38px
 
 
 </style>

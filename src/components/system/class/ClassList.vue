@@ -44,14 +44,14 @@
             <el-table-column prop="curriculumTime"  label="授课时段" align="center"> </el-table-column>
             <el-table-column prop="tier"  label="任课教师" align="center"> </el-table-column>
              <el-table-column prop="campus"  label="所属校区" align="center"> </el-table-column>
-            <el-table-column  label="操作" align="center"> 
+            <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
                     <router-link to="/main/system/class/details">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-2yulan"></use>
                         </svg>
                     </router-link>
-                    <router-link to="/">
+                    <router-link to="/main/system/class/add">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-xiugaiziliao"></use>
                         </svg>

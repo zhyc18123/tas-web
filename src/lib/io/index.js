@@ -233,7 +233,7 @@ const io = {
         }else{
           storage.removeAccessToken();
           storage.removeCurrentUserInfo();
-            document.location.href='/';
+            // document.location.href='/';
           }
         }
       })

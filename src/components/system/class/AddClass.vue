@@ -2,6 +2,32 @@
 <el-row class="addclass-detail">
     <line-head-form class="head" title="新增班级"/>
     <el-form class="c-form" label-position="right" label-width="120px" :model="form">
+        <el-form-item label="请选择课程:">
+            <el-radio-group v-model="form.courseType">
+                <el-radio :label="0" >标准课程</el-radio>
+                <el-radio :label="1" >机构定制课程</el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="请选择学科:">
+            <el-select v-model="form.subject" placeholder="请选择学科">
+                <el-option
+                v-for="item in subjects"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="请选择年级:">
+            <el-select v-model="form.grade" placeholder="请选择年级">
+                <el-option
+                v-for="item in grades"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+                </el-option>
+            </el-select>
+        </el-form-item>
         <el-form-item label="班型:">
             <el-select v-model="form.classSizeValue" placeholder="请选择班型">
                 <el-option
@@ -49,7 +75,7 @@
             placeholder="选择日期">
             </el-date-picker>
         </el-form-item>
-        <el-form-item label="上课时段:" class="week">
+        <!-- <el-form-item label="上课时段:" class="week">
             <el-checkbox  label="每天" v-model="form.everyday" @change="handleCheckedWeekChange"></el-checkbox>
             <el-checkbox-group v-model="form.checkweek" @change="handleCheckedWeekChange">
                 <el-checkbox v-for="item in weekTime" :label="item.week" :key="item.weekId" ></el-checkbox>
@@ -94,7 +120,7 @@
                     </li>
                 </ul>
             </div>
-        </div>
+        </div> -->
         <el-form-item class="class-btn">
             <el-button class="height-btn">确定</el-button>
             <el-button class="light-btn">取消</el-button>
@@ -177,17 +203,49 @@ export default {
                   everytime:""
               },
             ],
+            subjects:[
+                {
+                    name:"语文",
+                    id:"0"
+                },
+                 {
+                    name:"数学",
+                    id:"1"
+                },
+                 {
+                    name:"英语",
+                    id:"2"
+                }
+            ],
+            grades:[
+                {
+                    name:"高一",
+                    id:'1'
+                },
+                {
+                    name:"高二",
+                    id:'2'
+                },
+                {
+                    name:"高三",
+                    id:'3'
+                },
+                
+            ],
             form:{
-              classSizeValue:'',
-              semester:1,
-              teacherId:[],
-              classname:"",
-              compusId:"",
-              curriculumTime:"",
-              checkweek:[],
-              everyday:false,
-              skipStatus:'是',
-              everytime:''
+                courseType:0,
+                subject:"",
+                classSizeValue:'',
+                grade:"",
+                semester:1,
+                teacherId:[],
+                classname:"",
+                compusId:"",
+                curriculumTime:"",
+                checkweek:[],
+                everyday:false,
+                skipStatus:'是',
+                everytime:''
             }
         }
     },
