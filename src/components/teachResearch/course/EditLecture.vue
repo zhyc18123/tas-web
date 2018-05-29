@@ -62,14 +62,14 @@
             </el-form>
             <div class="t-cont" >
                 <el-table :data="tableData" style="width: 100%" class="line-table"  @selection-change="handleSelectionChange">
-                    <el-table-column type="selection" width="55"> </el-table-column>
-                    <el-table-column prop="type" label="讲次名称"   align="center"></el-table-column>
-                    <el-table-column prop="name"  label="知识点"   align="center">  </el-table-column>
-                    <el-table-column prop="size" label="讲次类型" align="center"></el-table-column>  
+                    <el-table-column type="selection" width="55" :selectable="selectable"> </el-table-column>
+                    <el-table-column prop="name" label="讲次名称"   align="center"></el-table-column>
+                    <el-table-column prop="knowledge"  label="知识点"   align="center">  </el-table-column>
+                    <el-table-column prop="type" label="讲次类型" align="center"></el-table-column>  
                 </el-table>
             </div>
             <div class="next-btn" >
-                <el-button class="height-btn" @click="$router.push('/')">确定</el-button>
+                <el-button class="height-btn" @click="isAdd=!isAdd">确定</el-button>
             </div>
         </div>
     </el-row>
@@ -108,16 +108,27 @@ export default {
             },
             tableData: [
                 {
-                    className: "2018春季物理提高班",
-                    grade: "初二",
-                    term: "春季",
-                    campus: "岗顶校区",
-                    curriculumTime: "2017-02-12",
-                    tier: "提高班",
-                    schoolTime: "8:45 - 9:45",
-                    week: '周一'
-                }
+                    name: "长度的测量 ",
+                    knowledge: "长度的测量，时间的测量  ",
+                    type:"非期中期末"
+                },
+                {
+                    name: "长度的测量 ",
+                    knowledge: "长度的测量，时间的测量  ",
+                    type:"非期中期末"
+                },
+                {
+                    name: "长度的测量 ",
+                    knowledge: "长度的测量，时间的测量  ",
+                    type:"非期中期末"
+                },
+                {
+                    name: "长度的测量 ",
+                    knowledge: "长度的测量，时间的测量  ",
+                    type:"非期中期末"
+                },
             ],
+            addCourseList:[],
         }
     },
     methods: {
@@ -136,8 +147,16 @@ export default {
         sure() {
             this.$router.push({path:'/main/teach-research/course/view-lecture/courseWare/'+ this.myArray[0].id+'/1'})
          },
-        handleSelectionChange(){
-
+        handleSelectionChange(val){
+            this.addCourseList = val
+            console.log(val)
+        },
+        selectable(val,index){
+           if(this.addCourseList.length>2){
+               return false
+           }else{
+               return true
+           }
         }
     }
 }
@@ -248,8 +267,6 @@ export default {
             margin 10px 0 28px 0
             padding 22px 20px 0 20px
             background #f7f7f7
-            .el-select
-                width 120px
             
 .has-course
     padding 20px 50px 

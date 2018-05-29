@@ -38,7 +38,7 @@
       <el-table-column prop="curriculumTime" label="学期" align="center"> </el-table-column>
       <el-table-column label="操作" align="center">
         <template scope="scope">
-          <router-link to="/main/system/organization/list/1">
+          <router-link to="/main/teach-research/course/add">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bianji"></use>
             </svg>
