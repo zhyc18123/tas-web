@@ -37,9 +37,10 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .step
-    background #f7f7f7
+    // background #f7f7f7
     padding 10px 0 8px
     margin-top 20px
+    border 1px solid #f1f1f1
     
 </style>
 <style lang="stylus">
@@ -62,8 +63,8 @@ export default {
     .el-step__title
         font-size 12px
     .el-step__title.is-finish
-        color #2bcfbb
-        font-weight bold
+        color #333
+        // font-weight bold
     .el-step__head.is-finish
         border-color #2bcfbb
         color #2bcfbb

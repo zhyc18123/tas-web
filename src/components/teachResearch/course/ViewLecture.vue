@@ -15,7 +15,7 @@
             <div class="t-cont">
                 <div class="cont-left">
                     <ul>
-                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id ==1?'active':''" @click="$router.push('/main/teach-research/course/view-lecture/sourceType/'+1+'/'+item.id)">
+                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id ==1?'active':''" @click="$router.push('/main/teach-research/course/view-lecture/'+ sourceType +'/'+1+'/'+item.id)">
                             <div class="left-order">{{item.order}}</div>
                             <div class="list-name">{{item.courseName}}</div>
                         </li>
@@ -24,10 +24,9 @@
                 <div class="cont-right">
                     <router-view></router-view>
                 </div>
-                
             </div>
             <div class="next-btn">
-                <el-button class="height-btn" @click="$router.push('/')">下一步</el-button>
+                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+id)">下一步</el-button>
             </div>
         </div>
        
@@ -36,27 +35,41 @@
 <script>
 import CourseStep from '../../common/CourseStep'
 export default {
-  props: [],
-  components: {
-      CourseStep
-  },
-  data () {
-      return {
-          sourceType:'lecture',
-          courseList:[
-                {
-                    order:"第一讲",
-                    courseName:"长度与时间的测量",
-                    id:"1"
-                },
-                 {
-                     order:"第二讲",
-                    courseName:"长度与时间的测量长度与时间的测量",
-                    id:"2"
-                }
-          ]
-      }
-  }
+    props: [],
+    components: {
+        CourseStep
+    },
+    data () {
+        return {
+            sourceType:this.$route.params.sourceType,
+            courseId:this.$route.params.courseId,
+            id:this.$route.params.id,
+            courseList:[
+                    {
+                        order:"第一讲",
+                        courseName:"长度与时间的测量",
+                        id:"1"
+                    },
+                    {
+                        order:"第二讲",
+                        courseName:"长度与时间的测量长度与时间的测量",
+                        id:"2"
+                    }
+            ]
+        }
+    },
+    beforeRouteUpdate(to, from, next) {
+        console.log('to', to)
+        this.sourceType = to.params.sourceType
+        this.optType = to.params.optType
+        next()
+    },
+    created(){
+
+    },
+    methods:{
+
+    }
 }
 </script>
 <style lang="stylus" scoped>
