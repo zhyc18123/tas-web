@@ -41,7 +41,7 @@ export default {
     }
   },
   created() {
-    this.$store.dispatch('config')
+    // this.$store.dispatch('config')
     if (this.$route.path.indexOf('course') > 0) {
       this.activeName = '课程'
     } else if (this.$route.path.indexOf('lecture') > 0) {

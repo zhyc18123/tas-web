@@ -9,12 +9,14 @@
 
 <script>
 import VNav from '../common/Nav.vue'
+import {mapGetters} from 'vuex'
 
 export default {
   name: 'index',
   components: {
     VNav,
   },
+    computed: {...mapGetters(['loginSuccess'])},
 
 }
 </script>

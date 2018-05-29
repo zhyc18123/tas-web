@@ -3,14 +3,6 @@
     <el-row class="m-head-nav">
       <div class="head-nav container">
 
-        <el-dialog title="请选择科目" :show-close='false' :close-on-click-modal="false" :visible="selectSubject">
-          <el-radio class="radio" v-for="(item,i) in subjects" :key="i" v-model="subjectId" :label="item.id">{{item.name}}</el-radio>
-          <div class="tip">提示：为了不丢失正在编辑的内容，请不要在同个浏览器登录不同的科目</div>
-          <el-row class="sure-btn">
-            <el-button type="primary" @click="confirm">确定</el-button>
-          </el-row>
-        </el-dialog>
-
         <el-col :span='16' class="head-version">
           <div class="logo-div">
             <router-link to="/">
@@ -27,19 +19,18 @@
           </template>
           <div class="has-login" v-else>
             <!-- <div class="has-name-img">
-              <img src="" alt="">
-            </div> -->
+                <img src="" alt="">
+              </div> -->
             <div class="login-name">
               <img v-if="true" :src="loginInfo.avatarUrl" />
               <span>欢 迎您！
-                <em>{{loginInfo?loginInfo.name:''}}</em>
+                <em>{{loginInfo?loginInfo.userName:''}}</em>
               </span>
               <!--<svg class="icon xiala" aria-hidden="true">
-                    <use xlink:href="#icon-xiala"></use>
-                  </svg>-->
+                      <use xlink:href="#icon-xiala"></use>
+                    </svg>-->
             </div>
-            <span class="subject-name">{{subjectName}}</span>
-            <a href="javascript:;" @click="logout">退出</a>
+            <a href="javascript:;" @click="vLogout">退出</a>
           </div>
         </el-col>
       </div>
@@ -47,11 +38,11 @@
     <div class="nav-div" v-if="!noTab">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
         <el-menu-item index="/main/teach-research/course">教研</el-menu-item>
-        <el-menu-item v-if="config.question_manage" index="/main/prepare-lessons">备课</el-menu-item>
-        <el-menu-item v-if="config.knowledge_tree_manage" index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item v-if="config.product_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
+        <el-menu-item index="/main/prepare-lessons">备课</el-menu-item>
+        <el-menu-item index="/main/attend-class">上课</el-menu-item>
+        <el-menu-item index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
-        <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
+          <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
     </div>
   </div>
@@ -61,12 +52,12 @@
 import io from '../../lib/io'
 import md5 from 'js-md5'
 import storage from '../../lib/storage/index'
-import { mapGetters } from 'vuex'
+import { mapGetters,mapActions } from 'vuex'
 
 const PASSWORD_PLACEHOLDER = '****************' // 16
 export default {
   components: {},
-  props: ['noTab','noLogin'],
+  props: ['noTab', 'noLogin'],
   data: function() {
     let activeIndex,
       routerModule = this.$router.currentRoute.path.split("/")[2];
@@ -78,161 +69,44 @@ export default {
       }
     };
     if (routerModule) {
+      console.log('fff',routerModule.indexOf('teach-research'))
       if (routerModule.indexOf('teach-research') === 0) {
-        activeIndex = '/main/teacher-research/course'
+        activeIndex = '/main/teach-research/course'
       } else if (routerModule.indexOf('prepare-lessons') === 0) {
         activeIndex = '/main/prepare-lessons'
       } else if (routerModule.indexOf('attend') === 0) {
         activeIndex = '/main/attend-class'
-      }  else if (routerModule.indexOf('system') === 0) {
+      } else if (routerModule.indexOf('system') === 0) {
         activeIndex = '/main/system/basisSetting/topicOrigin'
-      } 
-       else{
-         activeIndex = '/index'
-       } 
+      }
+      else {
+        activeIndex = '/index'
+      }
       // }
     } else {
       activeIndex = '/index'
     }
     return {
       activeIndex: activeIndex,
-      rememberMe: true,
-      disabled: false,
-      normalPhoneNo: false,
-      next: null,
-      needCaptcha: false,
-      subjectName: storage.getSubjectName() || '',
-      reportUrl:'',
-      loginForm: {
-        username: '',
-        password: '',
-        captcha: '',
-        captchaSrc: io.generatePictureCaptcha,
-      },
-      rules: {
-        username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' },
-        ],
-        captcha: [
-          { required: true, message: '请输入图片验证码', trigger: 'blur' },
-        ],
-        password: [
-          { validator: validatePass, trigger: 'blur' }
-        ],
-      }
+      loginInfo:storage.getCurrentUserInfo()
     }
   },
   created: function() {
-    this.$store.dispatch('hasLogin')
-    if (storage.getAccessToken()) {
-      this.$store.dispatch('config')
-    }
+    console.log(this.loginInfo)
   },
   computed: {
-    ...mapGetters(['loginInfo', 'loginSuccess', 'config', 'selectSubject', 'subjects']),
-    showLoginForm: ({
-      get() {
-        console.log('xddd',this.$store.state.global.showLoginForm)
-        return this.$store.state.global.showLoginForm;
-      },
-      set(value) {
-        this.$store.commit('SHOW_LOGIN_FORM', value)
-      }
-    }),
-    subjectId: ({
-      get() {
-        return this.$store.state.global.subjectId;
-      },
-      set(value) {
-        this.$store.commit('changeSubjectId', value)
-      }
-    }),
-  },
-  watch: {
-    loginSuccess(newVal) {
-      if (newVal) {
-        this.$store.dispatch('config');
-      }
-    }
+    // ...mapGetters([
+    //   'loginInfo'
+    // ])
   },
   methods: {
-    confirm() {
-      if (!this.subjectId) {
-        this.$message('请选择科目');
-        return;
-      } else {
-        this.subjects.map((item) => {
-          if (item.id === this.subjectId) {
-            storage.setSubjectId(item.id);
-            storage.setSubjectName(item.name);
-            this.subjectName = item.name;
-          }
-        })
-      };
-      this.$store.commit('changeSelectSubject');
-    },
-    logout() {
-      this.$confirm('确认退出?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        storage.removeCurrentUserInfo('currentUserInfo')
-        storage.removeAccessToken('accessToken')
-        this.$store.dispatch('hasLogin');
-        this.$message({
-          type: 'success',
-          message: '已退出!'
-        });
-        this.$router.push('/');
-      }).catch(() => {
-        this.$message({
-          type: 'info',
-          message: '已取消'
-        });
-      });
-    },
-    show() {
-      this.showLoginForm = true
-    },
-    refreshLoginImg() {
-      this.loginForm.captchaSrc = io.generatePictureCaptcha + "?" + Date.parse('' + (new Date()));
-    },
-    checkNeedCaptcha() {
-      io.post(io.checkNeedCaptcha, {
-        username: this.loginForm.username
-      }, (res) => {
-        console.log("dd",res)
-        if (res === true) {
-          this.needCaptcha = true;
-          console.log(this.loginForm.captcha)
-          if(this.loginForm.captcha){
-            this.login();
-          }
-        }else{
-          this.login();
-        }
-      })
-    },
-    login() {
-      var _this = this, password;
-      _this.disabled = true
-      if (PASSWORD_PLACEHOLDER == this.loginForm.password) {
-        password = this.localPassword
-      } else {
-        password = md5(this.loginForm.password)
-      }
-      this.$store.dispatch('login', {
-        username: this.loginForm.username,
-        password: password,
-        captchaCode: this.loginForm.captcha
-      });
-      setTimeout(() => {
-        if (!this.rememberMe) {
-          this.loginForm.password = ''
-        }
-      }, 200);
-    },
+    ...mapActions(['logout']),
+  vLogout(){
+    this.$confirm('确认退出？','提示').then(()=>{
+      this.logout()
+    this.$router.push({path:'/login',query:{backUrl:this.$route.fullPath}})
+    })
+  }
   }
 }
 </script>
@@ -240,14 +114,14 @@ export default {
 <style lang="less">
 .m-nav {
   background-color: #fff;
-  .m-head-nav{
-    box-shadow: 0px 1px 4px 0px  rgba(85, 85, 85, 0.3);
+  .m-head-nav {
+    box-shadow: 0px 1px 4px 0px rgba(85, 85, 85, 0.3);
   }
-  .tip{
-    color:red;
+  .tip {
+    color: red;
     margin: 0 0 20px 0;
   }
-  .radio{
+  .radio {
     margin: 30px 20px 20px 0;
   }
   .logo-div {
@@ -269,12 +143,13 @@ export default {
     color: #00A1D5;
     display: inline-block; // height: 80px;
     position: relative;
-    &:before{//渐变
-        content: attr(text);
-        position: absolute;
-        z-index: 10;
-        color:#01CEBF;
-        -webkit-mask:linear-gradient(to left, #01CEBF, transparent );
+    &:before {
+      //渐变
+      content: attr(text);
+      position: absolute;
+      z-index: 10;
+      color: #01CEBF;
+      -webkit-mask: linear-gradient(to left, #01CEBF, transparent);
     }
     em {
       color: #ff9000;
@@ -283,8 +158,8 @@ export default {
       top: -5px;
       vertical-align: top;
       margin-left: 7px;
-      font-weight:700;
-      font-style:normal;
+      font-weight: 700;
+      font-style: normal;
     }
   }
   .subject-name {
@@ -300,16 +175,16 @@ export default {
     float: right;
     height: 80px;
     line-height: 80px;
-    .has-name-img{
-      display:inline-block;
-      padding-right:22px;
-      height:80px;
-      img{
-        width:36px;
-        height:36px;
-        display:inline-block;
+    .has-name-img {
+      display: inline-block;
+      padding-right: 22px;
+      height: 80px;
+      img {
+        width: 36px;
+        height: 36px;
+        display: inline-block;
         border: solid 2px rgba(170, 170, 170, 0.3);
-        border-radius:50%;
+        border-radius: 50%;
       }
     }
     .login-name {
@@ -376,7 +251,7 @@ export default {
       vertical-align: -8px;
       margin-right: 3px;
     }
-    .pass{
+    .pass {
       font-size: 24px;
     }
 
@@ -409,8 +284,7 @@ export default {
   }
 
   .login-dialog {
-    width: 540px;
-    // height: 400px;
+    width: 540px; // height: 400px;
     padding: 30px 70px;
     background: white;
 
@@ -500,13 +374,11 @@ export default {
   }
   .el-menu--horizontal .el-menu-item {
     height: 60px;
-    line-height: 60px;
-    // padding: 0 35px;
-    width:120px;
-    text-align:center;
+    line-height: 60px; // padding: 0 35px;
+    width: 120px;
+    text-align: center;
     font-size: 18px;
-    color: white;
-    // font-weight: bold;
+    color: white; // font-weight: bold;
     &.is-active,
     &:hover {
       border-bottom: 4px solid #ffd800;

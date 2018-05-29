@@ -362,6 +362,17 @@ border-radius: 4px 4px 0 0;
 .el-range-editor .el-range-input{
   /*line-height: 1.2 !important;*/
 }
+.t-btn .icon{
+  font-size: 22px;
+  color: #999;
+  margin:0 10px
+}
+/*.t-btn a{
+  margin:0 10px
+}*/
+.t-btn .icon:hover{
+  color: #333;
+}
 /*editor*/
 .edui-default .edui-editor{
   border-color: #bfebf3 !important;

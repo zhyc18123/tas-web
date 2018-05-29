@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <v-nav ref="nav" :noTab='true' :noLogin='true'/>
+        <v-nav ref="nav" :noTab='true' :noLogin='true' />
         <el-carousel height="500px">
             <el-carousel-item>
                 <div class="item-bg">
@@ -16,24 +16,24 @@
                 <div class="login-btn">
                     欢迎登录教师工作模块
                 </div>
-                <el-form :model="form" :rules="rules" ref="loginForm">
+                <el-form :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item prop="phone">
-                        <el-input placeholder="请输入用户名/手机号" v-model="form.phone" autocomplete="off">
+                        <el-input placeholder="请输入用户名/手机号" v-model="loginForm.phone" autocomplete="off">
                             <svg slot="prefix" class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-wode"></use>
                             </svg>
                         </el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                        <el-input type="password" placeholder="请输入密码" v-model="form.password" autocomplete="off">
+                        <el-input type="password" placeholder="请输入密码" v-model="loginForm.password" autocomplete="off">
                             <svg slot="prefix" class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-Secret"></use>
                             </svg>
                         </el-input>
                     </el-form-item>
-                    <el-form-item prop="captcha" v-if="'showCaptcha'">
+                    <el-form-item prop="captcha" v-if="needCaptcha">
                         <el-col :span="16">
-                            <el-input placeholder="请输入验证码" v-model="form.captcha">
+                            <el-input placeholder="请输入验证码" v-model="loginForm.captcha">
                             </el-input>
                         </el-col>
                         <el-col :span="8">
@@ -55,30 +55,127 @@
 <script>
 import VNav from '../common/Nav.vue'
 import VFooter from '../common/Footer.vue'
-export default{
+import storage from 'lib/storage'
+import io from 'lib/io'
+import md5 from 'js-md5'
+import {mapGetters} from 'vuex'
+export default {
     components: {
         VNav,
         VFooter
     },
-    data () {
-        return {
-            form:{
-                phone:'',
-
-            },
-            remember:true,
-            rules:{},
-            showCaptcha:false,
-            captImg:''
+    computed: {...mapGetters(['loginSuccess','needCaptcha'])},
+    watch: {
+        loginSuccess(val){
+            if(val){
+                this.$router.push(this.backUrl||'/')
+            }
+        },
+        needCaptcha(val){
+            if(val){
+                this.getCaptcha()
+            }
         }
     },
-    methods: {
-        login(){
-            this.$router.push('/')
-        },
-        getCaptcha(){
-
+    data() {
+        return {
+            backUrl:this.$route.query.backUrl,
+            loginForm: {
+                phone: '',
+                password: '',
+                captcha: '',
+                token:''
+            },
+            remember: true,
+            rules: {
+                phone: [
+                    { required: true, message: '请输入账号', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '请输入密码', trigger: 'blur' }
+                ],
+                captcha: [
+                    { required: true, message: '请输入验证码', trigger: 'blur' }
+                ]
+            },
+            showCaptcha: false,
+            captImg: '',
+            rem: storage.getRemember()
         }
+    },
+    created () {
+      this.$store.commit('changeLoginSuccess')
+    },
+    methods: {
+
+        keydown(e) {
+            if (e.keyCode == '13') {
+                this.login()
+            }
+        },
+        async login() {
+            // if (!(/^1[34578]\d{9}$/.test(this.form.phone))) {
+            //     this.$message('手机号码有误')
+            //     return false
+            // };
+            this.$refs.loginForm.validate(async (valid) => {
+                if (valid) {
+                    let password = ''
+                    if (this.rem && this.rem.remember) {
+                        password = this.loginForm.password
+                    } else {
+                        password = md5(this.loginForm.password)
+                    }
+                    try {
+                    this.$store.dispatch('login', {
+                        ...this.loginForm,
+                        password: password,
+                    });
+                    } catch (error) {
+                        console.log('xd')
+                    }
+
+                    // if (data.data.success) {
+                    //     if (this.remember) {
+                    //         storage.setRemember(JSON.stringify({ ...this.form, remember: this.remember, password: password }))
+                    //     }
+                    //     this.afterLoginSuccess(data.data)
+                    // } else {
+                    //     await this.checkNeedCaptcha()
+                    //     this.$message(data.data.message)
+                    // }
+                }
+            });
+        },
+        // afterLoginSuccess(data) {
+        //     storage.setAccessToken(data.accessToken)
+        //     storage.setCurrentUserInfo(JSON.stringify(data));
+        //     this.$parent.$refs.head.setLogin();
+        //     let toUrl = '/perfectinfo'
+        //     if (data.isFirst === 0) {
+        //         toUrl = "/homepage"
+        //     }
+        //     this.$router.push({ path: toUrl, query: { userId: data.userId, type: data.type } })
+        // },
+        async getCaptcha() {
+            let { data } = await io.post6(io.generCaptcha)
+            if (data.success) {
+                this.captImg = data.data.img
+                this.loginForm.token = data.data.token
+            }
+        },
+        // async checkNeedCaptcha() {
+        //     let { data } = await checkNeedCaptcha({ ...this.form, account: this.form.phone })
+        //     if (data.success) {
+        //         if (data.data) {
+        //             this.getCaptcha()
+        //             this.showCaptcha = true
+        //         }
+        //         return data.data
+        //     } else {
+        //         return false
+        //     }
+        // }
     }
 }
 </script>

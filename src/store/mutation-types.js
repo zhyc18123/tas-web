@@ -1,7 +1,16 @@
 
 export const LOGIN='LOGIN'
 export const CONFIG='CONFIG'
-export const HAS_LOGIN='HAS_LOGIN'
+export const CHECK_CAPTCH='CHECK_CAPTCH'
+export const LOGOUT='LOGOUT'
+// 查询条件
+export const GET_GRADE="GET_GRADE"
+export const GET_SUBJECT='GET_SUBJECT'
+export const GET_TERM='GET_TERM'
+// 课程
+export const GET_COURSE='GET_COURSE'
+
+
 export const SHOW_LOGIN_FORM='SHOW_LOGIN_FORM'
 export const GET_INDEX='GET_INDEX'
 

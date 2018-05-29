@@ -1,6 +1,9 @@
 import store from 'store' ;
 
 const storage = {
+  getRemember:function(){
+    return store.get('remember')?JSON.parse(store.get('remember')) : {}
+  },
   setConfig:function(allConfig){
     store.set("config" , allConfig );
   },

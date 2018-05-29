@@ -74,20 +74,12 @@ const Login = resolve => require(['../components/login/Login'], resolve)
 
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({
   mode: process.env.NODE_ENV === 'production' ? 'hash' : 'hash',
   routes: [
     {
       path: '/main',
       component: Main,
-      beforeEnter(to, from, next) {
-        let loginInfo = storage.getCurrentUserInfo()
-        if (Object.keys(loginInfo).length === 0) {
-          next('/index')
-        } else {
-          next()
-        }
-      },
       children: [
         {
           path: "teach-research",
@@ -277,12 +269,23 @@ export default new Router({
     {
       path: '/',
       component: Index
+      // redirect:'/main/teach-research/course'
     }, {
       path: '/index',
       component: Index
+      // redirect:'/main/teach-research/course'
     }, {
       path: '/login',
       component: Login
     }
   ]
 })
+router.beforeEach((to,from,next)=>{
+  let token=storage.getAccessToken()
+  if(!token&&to.path.indexOf('/login')===-1){
+    next({path:'/login',query:{backUrl:from.fullPath}})
+  }else{
+    next()
+  }
+})
+export default router

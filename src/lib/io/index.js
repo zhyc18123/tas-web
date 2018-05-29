@@ -5,6 +5,23 @@ import storage from '../../lib/storage'
 
 const io = {
   configUrls: function () {
+// 登录
+    this.login = conf.baseApiPath + '/admin/api/login'
+    this.checkNeedCaptcha = conf.baseApiPath + '/admin/api/captcha/checkNeedCaptcha'
+    this.generCaptcha = conf.baseApiPath + '/admin/api/captcha/generCaptcha'
+    // 数据字典
+    this.findDataByCategory = conf.baseApiPath + '/admin/api/commDataConfig/findDataByCategory'
+// 教研
+    this.findLessonPage = conf.baseApiPath + '/lesson/api/lesson/findLessonPage'
+    // 查询数据
+    this.findBaseSectionPage = conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionPage'
+    this.findSubjectsData = conf.baseApiPath + '/lesson/api/baseDataController/findSubjectsData'
+    this.findBaseTermPage = conf.baseApiPath + '/lesson/api/BaseTerm/findBaseTermPage'
+    // 课程
+    this.publishLesson=conf.baseApiPath+'/lesson//api/lesson/publishLesson'
+
+
+
     this.questionList = conf.baseApiPath + '/api/question/questionList'
     this.editStatus = conf.baseApiPath + '/api/question/editStatus'
     this.questionTypeOfSubjectList = conf.baseApiPath + '/api/question/questionTypeOfSubjectList'
@@ -79,10 +96,7 @@ const io = {
     this.sendCode = conf.baseApiPath + '/api/sms/sendCode'
     this.validCode = conf.baseApiPath + '/api/sms/validCode'
     this.changeMyPassword = conf.baseApiPath + '/api/user/changeMyPassword'
-    this.checkNeedCaptcha = conf.baseApiPath + '/api/user/checkNeedCaptcha'
     this.config = conf.baseApiPath + '/api/user/config'
-    this.login = conf.baseApiPath + '/api/user/login'
-    this.generatePictureCaptcha = conf.baseApiPath + '/api/user/generatePictureCaptcha'
     //产品
     this.checkLectureQuestionUsed = conf.baseApiPath + '/api/product/checkLectureQuestionUsed'
     this.changeLevel = conf.baseApiPath + '/api/product/changeLevel'

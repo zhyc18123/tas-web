@@ -12,110 +12,136 @@ function formatConfig(array) {
 }
 
 const state = {
-  grades:[],
-  subjects: [],
-  allSubjects:[],
+  // grades:[],
+  // subjects: [],
+  // allSubjects:[],
   loginInfo: null,
   config: [],
-  showLoginForm: false,
+  // showLoginForm: false,
   loginSuccess: false,
-  selectSubject:false,
-  subjectId:''
+  needCaptcha: false,
+  // selectSubject:false,
+  // subjectId:''
 }
 
 // getters
 const getters = {
-  grades:state=>state.grades,
-  subjects:state=>state.subjects,
-  allSubjects:state=>state.allSubjects,
-  loginInfo:state=>state.loginInfo,
-  showLoginForm:state=>state.showLoginForm,
-  loginSuccess:state=>state.loginSuccess,
-  config:state=>state.config,
-  selectSubject:state=>state.selectSubject,
-  subjectId:state=>state.subjectId,
+  // grades:state=>state.grades,
+  // subjects:state=>state.subjects,
+  // allSubjects:state=>state.allSubjects,
+  loginInfo: state => state.loginInfo,
+  // showLoginForm:state=>state.showLoginForm,
+  loginSuccess: state => state.loginSuccess,
+  needCaptcha: state => state.needCaptcha,
+  // config:state=>state.config,
+  // selectSubject:state=>state.selectSubject,
+  // subjectId:state=>state.subjectId,
 }
 
 // mutations
 const mutations = {
-  changeSubjectId(state,id){
-    state.subjectId=id;
+  // changeSubjectId(state,id){
+  //   state.subjectId=id;
+  // },
+  // changeSelectSubject(state,type){
+  //   state.selectSubject=type;
+  // },
+  changeLoginSuccess(state, opt) {
+    state.loginSuccess = false;
   },
-  changeSelectSubject(state,type){
-    state.selectSubject=type;
+  needCaptcha(state) {
+    state.needCaptcha = true
   },
-  changeLoginSuccess(state,opt){
-    state.loginSuccess=false;
-  },
-  [types.GET_ORGANIZATION_BASE_CONFIG](state, data) {
-    state.grades = data.grades;
-    state.allSubjects = data.subjects;
+  // [types.GET_ORGANIZATION_BASE_CONFIG](state, data) {
+  //   state.grades = data.grades;
+  //   state.allSubjects = data.subjects;
+  // },
+  [types.LOGOUT](state) {
+    state.loginSuccess = false
+    state.needCaptcha = false
+    state.loginInfo = null
+    storage.removeCurrentUserInfo()
+    storage.removeAccessToken()
   },
   [types.LOGIN](state, data) {
     state.loginInfo = data;
-    storage.setCurrentUserInfo(data.user)
+    storage.setCurrentUserInfo(data)
     storage.setAccessToken(data.accessToken)
-    state.showLoginForm = false
+    // state.showLoginForm = false
     state.loginSuccess = true;
-    let subId=data.user.teachSubjectIds.split(',');
-    let subName=data.user.teachSubjectNames.split(',');
-      if(subId.length>1){
-        state.subjects=[];
-        subId.map((item,i)=>{
-          state.subjects.push({id:item,name:subName[i]});
-        });
-        state.selectSubject=true;
-      }else{
-        state.subjectId=data.user.teachSubjectIds;
-            storage.setSubjectId(data.user.teachSubjectIds);
-            storage.setSubjectName(data.user.teachSubjectNames);
-      }
+    // let subId=data.user.teachSubjectIds.split(',');
+    // let subName=data.user.teachSubjectNames.split(',');
+    //   if(subId.length>1){
+    //     state.subjects=[];
+    //     subId.map((item,i)=>{
+    //       state.subjects.push({id:item,name:subName[i]});
+    //     });
+    //     state.selectSubject=true;
+    //   }else{
+    //     state.subjectId=data.user.teachSubjectIds;
+    //         storage.setSubjectId(data.user.teachSubjectIds);
+    //         storage.setSubjectName(data.user.teachSubjectNames);
+    //   }
   },
   [types.SHOW_LOGIN_FORM](state, booleanData) {
     state.showLoginForm = booleanData;
   },
   [types.CONFIG](state, data) {
-    config={};
+    config = {};
     formatConfig(data.optResources);
     state.config = config;
     storage.setConfig(config)
   },
-  [types.HAS_LOGIN](state, data) {
-    let loginInfo =storage.getCurrentUserInfo();
-    console.log('login',loginInfo)
-    if (loginInfo&&Object.keys(loginInfo).length>0) {
-      state.loginInfo = loginInfo;
-    } else {
-      console.log('xxxxxxx')
-      state.loginInfo = null
-      state.showLoginForm = true
-      state.subjectId=''
-    }
-  },
+  // [types.HAS_LOGIN](state, data) {
+  //   let loginInfo =storage.getCurrentUserInfo();
+  //   console.log('login',loginInfo)
+  //   if (loginInfo&&Object.keys(loginInfo).length>0) {
+  //     state.loginInfo = loginInfo;
+  //   } else {
+  //     console.log('xxxxxxx')
+  //     state.loginInfo = null
+  //     state.showLoginForm = true
+  //     state.subjectId=''
+  //   }
+  // },
 }
 
 // actions
 const actions = {
-  getOrganizationBaseConfig({ commit },opt) {
-    io.post(io.organizationBaseConfig, opt, (data) => {
-      commit(types.GET_ORGANIZATION_BASE_CONFIG, data)
-    })
+  // getOrganizationBaseConfig({ commit },opt) {
+  //   io.post(io.organizationBaseConfig, opt, (data) => {
+  //     commit(types.GET_ORGANIZATION_BASE_CONFIG, data)
+  //   })
+  // },
+  logout({ dispatch, commit }) {
+    commit(types.LOGOUT)
   },
-  login({dispatch, commit },opt) {
-    io.post(io.login, opt, (data) => {
-      commit(types.LOGIN, data);
-      dispatch("config");
-      commit(types.HAS_LOGIN)
-    })
+  async login({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.login, opt)
+    if (data.success) {
+      console.log(data)
+      commit(types.LOGIN, data.data);
+      console.log('xx')
+      // dispatch("config");
+      // commit(types.HAS_LOGIN)
+    } else {
+      dispatch('checkNeedCaptcha', opt)
+    }
   },
-  config({ commit },opt) {
+  async checkNeedCaptcha({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.checkNeedCaptcha, { account: opt.phone })
+    if (data.success) {
+      commit('needCaptcha')
+    }
+  },
+  config({ commit }, opt) {
     io.post(io.config, opt, (data) => {
       commit(types.CONFIG, data)
     })
   },
-  hasLogin({ commit },opt) {
-    commit(types.HAS_LOGIN)
-  },
+  // hasLogin({ commit },opt) {
+  //   commit(types.HAS_LOGIN)
+  // },
 }
 
 export default {

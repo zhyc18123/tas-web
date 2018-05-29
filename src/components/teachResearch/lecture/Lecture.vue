@@ -121,3 +121,5 @@ export default {
 </style>
 
 
+
+      this.$router.push({ path: '/main/teach-research/course/add' })

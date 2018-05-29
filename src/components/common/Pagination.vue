@@ -4,7 +4,7 @@
       background
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
-      :current-page="form.pageNo"
+      :current-page="form.pageIndex"
       :page-sizes="[10, 20, 30, 40]"
       :page-size="form.pageSize"
       layout="total, prev, pager, next"
@@ -14,26 +14,27 @@
 </template>
 <script>
   export default {
+    name:'v-pagination',
     props: ['total','pageSize'],
     data() {
       return {
         form: {
-          pageNo: 1,
+          pageIndex: 1,
           pageSize:this.pageSize||10
         },
       }
     },
     methods: {
       changePage(no){
-        this.form.pageNo=no;
+        this.form.pageIndex=no;
       },
       handleSizeChange(val) {
         this.form.pageSize = val
         this.$emit('getListResult', Object.assign({},this.form,{pageSize: val}))
       },
       handleCurrentChange(val) {
-        this.form.pageNo = val
-        this.$emit('getListResult', Object.assign({},this.form,{pageNo: val}))
+        this.form.pageIndex = val
+        this.$emit('getListResult', Object.assign({},this.form,{pageIndex: val}))
       },
     },
   }
