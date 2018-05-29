@@ -15,7 +15,7 @@
             <div class="t-cont">
                 <div class="cont-left">
                     <ul>
-                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id ==1?'active':''" @click="$router.push('/main/teach-research/course/view-lecture/'+ sourceType +'/'+1+'/'+item.id)">
+                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id == styleTag?'active':''" @click="showList(item.id)">
                             <div class="left-order">{{item.order}}</div>
                             <div class="list-name">{{item.courseName}}</div>
                         </li>
@@ -44,6 +44,7 @@ export default {
             sourceType:this.$route.params.sourceType,
             courseId:this.$route.params.courseId,
             id:this.$route.params.id,
+            styleTag:this.$route.params.courseId,
             courseList:[
                     {
                         order:"第一讲",
@@ -68,7 +69,10 @@ export default {
 
     },
     methods:{
-
+        showList(id){
+            this.styleTag = id
+            this.$router.push('/main/teach-research/course/view-lecture/'+ this.sourceType +'/'+1+'/'+id)
+        }
     }
 }
 </script>
