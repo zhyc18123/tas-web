@@ -1,317 +1,334 @@
 <template>
-  <el-row class="course-detail">
-    <course-step :active="1"/>
-    <div class="add-type">
-        <el-button @click="addTypeFun">引用已有课程</el-button>
-    </div>
-    <el-form v-show="!addType" class="o-form" label-position="right" label-width="120px" :model="form">
-      <el-form-item label="课程名称:">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              年<span>级:</span>
-          </div>
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              科<span>目:</span>
-          </div>
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              层<span>级:</span>
-          </div>
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              讲<span>数:</span>
-          </div>
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              学<span>期:</span>
-          </div>
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item label="教材版本:">
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item>
-          <div slot="label" class="tow-four">
-              年<span>份:</span>
-          </div>
-        
-            <el-select v-model="form.region" placeholder="">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-      </el-form-item>
-      <el-form-item label="课程简介:">
-        <el-input type="textarea" :rows="6" v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="">
-          <upload btnText="上传介绍（视频）">
-          </upload>
-      </el-form-item>
-      <el-form-item class="opt-btn">
-          <el-button class="height-btn" @click="sure">确定</el-button>
-          <el-button class="light-btn">取消</el-button>
-      </el-form-item>
-    </el-form>
-<!-- <div v-show="addType" class="has-course">
-    <el-form :inline="true" :model="sForm" class="t-form">
-      <el-form-item label="">
-        <el-select v-model="form.region" placeholder="年级">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="">
-        <el-select v-model="form.region" placeholder="学期">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="">
-        <el-select v-model="form.region" placeholder="科目">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="">
-        <el-input v-model="form.user" placeholder="请输入课程名称"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
-    </el-form>
-    <el-table class="line-table" :data="tableData" header-align="center">
-      <el-table-column label="" align="center" width="60">
-          <template scope="scope">
-    <el-radio label="111" v-model="checkItem" class="table-radio"></el-radio>
-          </template>
-      </el-table-column>
-      <el-table-column prop="className" label="课程名称" align="center"></el-table-column>
-      <el-table-column prop="grade" label="课程层级" align="center"></el-table-column>
-      <el-table-column prop="term" label="科目" align="center"> </el-table-column>
-      <el-table-column prop="campus" label="讲数" align="center"> </el-table-column>
-      <el-table-column prop="curriculumTime" label="年级" align="center"> </el-table-column>
-      <el-table-column prop="curriculumTime" label="学期" align="center"> </el-table-column>
-    </el-table>
-    <v-pagination ref="pagin" class="pag" :total="result.total|toNumber" @getListResult="getListResult" :currentPage="sForm.pageNo"></v-pagination>
-  <div class="opt-btn has-course-btn">
-      <el-button class="height-btn">下一步</el-button>
-  </div>
-</div> -->
-    <div calss="add-has">
-      <el-dialog title="引用已有课程" :visible.sync="dialogTableVisible" class="add-has">
-      <div class="has-course">
-          <el-form :inline="true" :model="sForm" class="t-form">
-            <el-form-item label="">
-              <el-select v-model="form.region" placeholder="年级">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+    <el-row class="course-detail">
+        <course-step :active="1" v-if="form.id==='add'" />
+        <div class="add-type">
+            <el-button @click="addTypeFun" v-if="form.id==='add'">引用已有课程</el-button>
+        </div>
+        <el-form ref="form" v-show="!addType" class="o-form" label-position="right" label-width="120px" :model="form" :rules="rules">
+            <el-form-item label="课程名称:" prop="name">
+                <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="">
-              <el-select v-model="form.region" placeholder="学期">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二" value="beijing"></el-option>
-              </el-select>
+            <el-form-item prop="dataSubject">
+                <div slot="label" class="tow-four">
+                    科
+                    <span>目:</span>
+                </div>
+
+                <el-select v-model="form.dataSubject" placeholder="">
+                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                </el-select>
             </el-form-item>
-            <el-form-item label="">
-              <el-select v-model="form.region" placeholder="科目">
-                <el-option label="区域一" value="shanghai"></el-option>
-                <el-option label="区域二区域二" value="beijing"></el-option>
-              </el-select>
+            <el-form-item prop="baseSectionId">
+                <div slot="label" class="tow-four">
+                    年
+                    <span>级:</span>
+                </div>
+                <el-select v-model="form.baseSectionId" placeholder="">
+                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+                </el-select>
             </el-form-item>
-            <el-form-item label="">
-              <el-input v-model="form.user" placeholder="请输入课程名称"></el-input>
+            <el-form-item prop="baseLevelId">
+                <div slot="label" class="tow-four">
+                    班
+                    <span>型:</span>
+                </div>
+
+                <el-select v-model="form.baseLevelId" placeholder="">
+                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="chapterNum">
+                <div slot="label" class="tow-four">
+                    讲
+                    <span>数:</span>
+                </div>
+                <el-input v-model="form.chapterNum"></el-input>
+            </el-form-item>
+            <el-form-item prop="baseTrimesterId">
+                <div slot="label" class="tow-four">
+                    学
+                    <span>期:</span>
+                </div>
+
+                <el-select v-model="form.baseTrimesterId" placeholder="">
+                    <el-option v-for="(term,index) in condition.termObj.list" :label="term.name" :value="term.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="教材版本:">
+
+                <el-select v-model="form.baseTeachId" placeholder="">
+                    <el-option v-for="(mater,index) in condition.materList" :label="mater.name" :value="mater.id"></el-option>
+                </el-select>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
+                <div slot="label" class="tow-four">
+                    年
+                    <span>份:</span>
+                </div>
+                <el-select v-model="form.dataYear" placeholder="">
+                    <el-option v-for="(year,index) in condition.yearList" :label="year.name" :value="year.id"></el-option>
+                </el-select>
             </el-form-item>
-          </el-form>
-          <div class="search-table">
-            <el-table class="line-table" :data="tableData" header-align="center" >
-              <el-table-column label="" align="center" width="60">
-                <template scope="scope">
-                  <el-radio label="111" v-model="checkItem" class="table-radio"></el-radio>
-                </template>
-              </el-table-column>
-              <el-table-column prop="className" label="课程名称" align="center"></el-table-column>
-              <el-table-column prop="grade" label="课程层级" align="center"></el-table-column>
-              <el-table-column prop="term" label="科目" align="center"> </el-table-column>
-              <el-table-column prop="campus" label="讲数" align="center"> </el-table-column>
-              <el-table-column prop="curriculumTime" label="年级" align="center"> </el-table-column>
-              <el-table-column prop="curriculumTime" label="学期" align="center"> </el-table-column>
-            </el-table>
-            <v-pagination ref="pagin" class="pag" :total="result.total|toNumber" @getListResult="getListResult" :currentPage="sForm.pageNo"></v-pagination>
-            <div class="opt-btn has-course-btn">
-              <el-button class="height-btn" @click="saveExisting">确定</el-button>
-            </div>
-          </div>
-          
-      </div>
-      </el-dialog>
-    </div>
-    
-  </el-row>
+            <el-form-item label="课程简介:">
+                <el-input type="textarea" :rows="6" v-model="form.remark"></el-input>
+            </el-form-item>
+            <el-form-item label="">
+                <upload btnText="上传介绍（视频）" fileType="video" @success="uploadSuccess" :fileSize="form.videoSize" :fileUrl="form.videoUrl" :originalName="form.videoName" typeName="视频">
+                </upload>
+            </el-form-item>
+            <el-form-item class="opt-btn">
+                <el-button class="height-btn" @click="sure">确定</el-button>
+                <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
+            </el-form-item>
+        </el-form>
+        <!-- <div v-show="addType" class="has-course">
+                        <el-form :inline="true" :model="sForm" class="t-form">
+                          <el-form-item label="">
+                            <el-select v-model="form.region" placeholder="年级">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                          <el-form-item label="">
+                            <el-select v-model="form.region" placeholder="学期">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                          <el-form-item label="">
+                            <el-select v-model="form.region" placeholder="科目">
+                              <el-option label="区域一" value="shanghai"></el-option>
+                              <el-option label="区域二" value="beijing"></el-option>
+                            </el-select>
+                          </el-form-item>
+                          <el-form-item label="">
+                            <el-input v-model="form.user" placeholder="请输入课程名称"></el-input>
+                          </el-form-item>
+                          <el-form-item>
+                            <el-button type="primary" @click="onSubmit">查询</el-button>
+                          </el-form-item>
+                        </el-form>
+                        <el-table class="line-table" :data="tableData" header-align="center">
+                          <el-table-column label="" align="center" width="60">
+                              <template scope="scope">
+                        <el-radio label="111" v-model="checkItem" class="table-radio"></el-radio>
+                              </template>
+                          </el-table-column>
+                          <el-table-column prop="className" label="课程名称" align="center"></el-table-column>
+                          <el-table-column prop="grade" label="课程层级" align="center"></el-table-column>
+                          <el-table-column prop="term" label="科目" align="center"> </el-table-column>
+                          <el-table-column prop="campus" label="讲数" align="center"> </el-table-column>
+                          <el-table-column prop="curriculumTime" label="年级" align="center"> </el-table-column>
+                          <el-table-column prop="curriculumTime" label="学期" align="center"> </el-table-column>
+                        </el-table>
+                        <v-pagination ref="pagin" class="pag" :total="result.total|toNumber" @getListResult="getListResult" :currentPage="sForm.pageNo"></v-pagination>
+                      <div class="opt-btn has-course-btn">
+                          <el-button class="height-btn">下一步</el-button>
+                      </div>
+                    </div> -->
+        <div calss="add-has">
+            <el-dialog title="引用已有课程" :visible.sync="dialogTableVisible" class="add-has">
+                <div class="has-course">
+                    <el-form :inline="true" :model="sForm" class="t-form">
+                        <el-form-item label="">
+                            <el-select v-model="sForm.baseSectionId" placeholder="年级">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="">
+                            <el-select v-model="sForm.dataSubject" placeholder="科目">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="">
+                            <el-select v-model="sForm.baseTrimesterId" placeholder="学期">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(term,index) in condition.termObj.list" :label="term.name" :value="term.id"></el-option>
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="">
+                            <el-input v-model="sForm.name" placeholder="请输入课程名称"></el-input>
+                        </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary" @click="search">查询</el-button>
+                        </el-form-item>
+                    </el-form>
+                    <div class="search-table">
+                        <el-table class="line-table" :data="result.list" header-align="center">
+                            <el-table-column label="" align="center" width="60">
+                                <template scope="scope">
+                                    <el-radio :label="scope.row.id" v-model="checkItem" class="table-radio"></el-radio>
+                                </template>
+                            </el-table-column>
+                            <el-table-column prop="name" label="课程名称" align="center"></el-table-column>
+                            <el-table-column prop="baseLevelName" label="课程层级" align="center"></el-table-column>
+                            <el-table-column prop="dataSubjectName" label="科目" align="center"> </el-table-column>
+                            <el-table-column prop="chapterNum" label="讲数" align="center"> </el-table-column>
+                            <el-table-column prop="baseSectionName" label="年级" align="center"> </el-table-column>
+                            <el-table-column prop="baseTrimesterName" label="学期" align="center"> </el-table-column>
+                        </el-table>
+                        <v-pagination ref="pagin" class="pag" :total="result.total|toNumber" @getListResult="getCourseList" :currentPage="sForm.pageIndex"></v-pagination>
+                        <div class="opt-btn has-course-btn">
+                            <el-button class="height-btn" @click="saveExisting">确定</el-button>
+                        </div>
+                    </div>
+                </div>
+            </el-dialog>
+        </div>
+
+    </el-row>
 </template>
 <script>
 import CourseStep from '../../common/CourseStep'
 import Upload from '../../common/Upload'
 import VPagination from '../../common/Pagination'
+import { mapState, mapActions } from 'vuex'
+import io from 'lib/io'
 export default {
-  components: {
-      CourseStep,
-      Upload,
-      VPagination
-  },
-  data () {
-      return {
-          id:this.$route.params.id,
-          form:{
-              name:'',
-              operatStatus:'',
-              effictTime:'',
-              regin:''
-          },
-          sForm:{
-            pageIndex:1,
-            pageSize:10
-          },
-          addType:false,
-          dialogTableVisible:false,
-          checkItem:'',
-          checkList:[],
-      result: {
-        total: 99
-      },
-      tableData: [
-        {
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-          week: '周一'
+    components: {
+        CourseStep,
+        Upload,
+        VPagination
+    },
+    data() {
+        return {
+            form: {
+                id: this.$route.params.id,
+                name: '',
+                baseSectionId: '',
+                dataSubject: '',
+                baseTrimesterId: '',
+                baseLevelId: '',
+                baseTeachId: '',
+                dataYear: '',
+                chapterNum: null,
+                remark: '',
+                videoUrl: '',
+                videoName: '',
+                videoSize: ''
+            },
+            rules: {
+                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' }],
+                baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'blur' }],
+                dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
+                baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],
+                chapterNum: [
+                    { required: true, message: '讲数不能为空！', trigger: 'blur' }
+                ],
+                baseTrimesterId: [{ required: true, message: '请选择学期！', trigger: 'blur' }]
+            },
+            sForm: {
+                name: '',
+                baseTrimesterId: null,
+                dataSubject: null,
+                baseSectionId: null,
+                pageIndex: 1,
+                pageSize: 10
+            },
+            addType: false,
+            dialogTableVisible: false,
+            checkItem: {},
+        }
+    },
+    computed: {
+        ...mapState(['condition', 'course']),
+        ...mapState({ result: state => state.course.courseObj })
+    },
+    watch: {
+        'form.baseSectionId'(val) {
+            this.findMaterialData({ sectionId: this.form.baseSectionId, subjectId: this.form.dataSubject })
         },
-        {
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-          week: '周一'
-        },{
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-          week: '周一'
-        },{
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-          week: '周一'
-        },{
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-              week: '周一'}
-        // },{
-        //   className: "2018春季物理提高班",
-        //   grade: "初二",
-        //   term: "春季",
-        //   campus: "岗顶校区",
-        //   curriculumTime: "2017-02-12",
-        //   tier: "提高班",
-        //   schoolTime: "8:45 - 9:45",
-        //   week: '周一'
-        // },{
-        //   className: "2018春季物理提高班",
-        //   grade: "初二",
-        //   term: "春季",
-        //   campus: "岗顶校区",
-        //   curriculumTime: "2017-02-12",
-        //   tier: "提高班",
-        //   schoolTime: "8:45 - 9:45",
-        //   week: '周一'
-        // },{
-        //   className: "2018春季物理提高班",
-        //   grade: "初二",
-        //   term: "春季",
-        //   campus: "岗顶校区",
-        //   curriculumTime: "2017-02-12",
-        //   tier: "提高班",
-        //   schoolTime: "8:45 - 9:45",
-        //   week: '周一'
-        // }
-      ],
-      }
-  },
-  methods: {
-      getListResult(){
+        'form.dataSubject'(val) {
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.dataSubject })
+            this.findMaterialData({ sectionId: this.form.baseSectionId, subjectId: this.form.dataSubject })
+        },
+        'sForm.dataSubject'(val) {
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.sForm.dataSubject })
+        },
+        'course.courseDetail'(val) {
+            if (this.form.id === 'add') {
+                this.form = { ...val, id: 'add' }
+            } else {
+                this.form = { ...val }
+            }
+        }
+    },
+    created() {
+        if (this.form.id !== 'add') {
+            this.detailLesson({ id: this.form.id })
+        }
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.dataSubject })
+        this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findSubjectsData({ sectionId: this.form.baseSectionId })
+        this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findMaterialData({ sectionId: this.form.baseSectionId, subjectId: this.form.dataSubject })
+        this.findYearsData()
+    },
+    methods: {
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage', 'findBaseLevelPage', 'findYearsData', 'findMaterialData', 'findLessonPage', 'detailLesson']),
+        uploadSuccess(url, size, duration, originName) {
+            this.form.videoUrl = url
+            this.form.videoName = originName
+            this.form.videoSize = size
+        },
+        search() {
+            this.$refs.pagin.changePage(1)
+            this.getCourseList()
+        },
+        getCourseList(opt) {
+            this.findLessonPage({ ...this.sForm, ...opt })
+        },
+        onSubmit() {
 
-      },
-      onSubmit(){
+        },
+        addTypeFun() {
+            // this.addType = true
+            this.getCourseList(this.sForm)
+            setTimeout(() => {
+                this.dialogTableVisible = true
+            }, 300);
+        },
+        sure() {
+            this.$refs.form.validate((vali) => {
+                if (vali) {
+                    let reg = /^[1-9]\d*$/;
+                    console.log(this.form.chapterNum)
+                    if ((!reg.test(this.form.chapterNum) || this.form.chapterNum > 50 || this.form.chapterNum < 1)) {
+                        this.$message('讲数只能为1-50的整数')
+                        return
+                    }
+                    console.log('success')
+                    this.addOrUpLesson()
+                } else {
+                    this.$message('您还有必填项未填！')
+                    return
+                }
+            })
+        },
+        saveExisting() {
+            console.log(this.checkItem + "")
+            this.detailLesson({ id: this.checkItem })
+            // let sItem = JSON.parse(JSON.stringify(this.checkItem))
+            // sItem.id === 'add'
+            // this.form = sItem
+            // console.log(this.checkItem)
+            this.dialogTableVisible = false
+        },
 
-      },
-      addTypeFun(){
-        // this.addType = true
-        this.dialogTableVisible = true
-      },
-      sure(){
-          this.$router.push({path:'/main/teach-research/course/edit-lecture/11'})
-      },
-      saveExisting(){
-        this.dialogTableVisible = false
-      }
-  }
+        async addOrUpLesson() {
+            let { data } = await io.post6(io.addOrUpLesson, { ...this.form, id: this.form.id === 'add' ? '' : this.form.id })
+            if (data.success) {
+                this.$message('保存成功')
+                if (this.form.id === 'add') {
+                    this.$router.push({ path: '/main/teach-research/course/edit-lecture/' + data.data.id })
+                } else {
+                    this.$router.go(-1)
+                }
+            }
+        }
+    }
 }
 </script>
 <style lang="stylus" scoped>

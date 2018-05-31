@@ -7,8 +7,26 @@ export const LOGOUT='LOGOUT'
 export const GET_GRADE="GET_GRADE"
 export const GET_SUBJECT='GET_SUBJECT'
 export const GET_TERM='GET_TERM'
+export const GET_LEVEL='GET_LEVEL'
+export const GET_YEAR='GET_YEAR'
+export const GET_MATER='GET_MATER'
 // 课程
 export const GET_COURSE='GET_COURSE'
+export const GET_COURSE_DETAIL='GET_COURSE_DETAIL'
+export const GET_COURSE_CHAPTER='GET_COURSE_CHAPTER'
+// export const ADD_UPDATE_COURSE='ADD_UPDATE_COURSE'
+// 讲次
+export const GET_CHAPTER='GET_CHAPTER'
+export const GET_CHAPTER_DETAIL='GET_CHAPTER_DETAIL'
+// 素材
+export const GET_DATA='GET_DATA'
+export const GET_DATA_DETAIL='GET_DATA_DETAIL'
+// office online
+export const GET_TOKEN='GET_TOKEN'
+
+
+
+
 
 
 export const SHOW_LOGIN_FORM='SHOW_LOGIN_FORM'

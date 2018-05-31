@@ -5,7 +5,9 @@ import storage from '../../lib/storage'
 
 
 const state = {
-    courseObj:{}
+    courseObj:{},
+    courseDetail:{},
+    courseChapter:[]
 }
 
 // getters
@@ -18,6 +20,12 @@ const mutations = {
     [types.GET_COURSE](state,data){
         state.courseObj=data
     },
+    [types.GET_COURSE_DETAIL](state,data){
+        state.courseDetail=data
+    },
+    [types.GET_COURSE_CHAPTER](state,data){
+        state.courseChapter=data
+    },
 }
 
 // actions
@@ -29,6 +37,19 @@ const actions = {
       commit(types.GET_COURSE,data.data)
     }
   },
+  async detailLesson({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.detailLesson, opt)
+    if (data.success) {
+      commit(types.GET_COURSE_DETAIL,data.data)
+    }
+  },
+  async findLesChapterPage({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.findLesChapterPage, opt)
+    if (data.success) {
+      commit(types.GET_COURSE_CHAPTER,data.data)
+    }
+  },
+  
 }
 
 export default {

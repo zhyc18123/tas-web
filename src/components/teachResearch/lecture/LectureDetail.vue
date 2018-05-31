@@ -1,93 +1,172 @@
 <template>
-  <el-row class="lecture-detail">
-<line-head-form class="head" title="新建讲次"/>
-<el-form class="o-form" label-position="right" label-width="120px" :model="form">
-  <el-form-item label="讲次名称:">
-    <el-input v-model="form.name"></el-input>
-  </el-form-item>
-  <el-form-item label="科目:">
-      <el-radio label="英语" v-model="form.operatStatus"></el-radio>
-      <el-radio label="语文" v-model="form.operatStatus"></el-radio>
-      <el-radio label="数学" v-model="form.operatStatus"></el-radio>
-  </el-form-item>
-  <el-form-item label="年级:">
-    <el-form :model="form" class="t-form gray">
-      <el-form-item label="小学：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="一年级"></el-checkbox>
-    <el-checkbox label="二年级"></el-checkbox>
-    <el-checkbox label="三年级"></el-checkbox>
-    <el-checkbox label="四年级"></el-checkbox>
-    <el-checkbox label="五年级"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="初中：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="初一"></el-checkbox>
-    <el-checkbox label="初二"></el-checkbox>
-    <el-checkbox label="初三"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="高中：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="高一"></el-checkbox>
-    <el-checkbox label="高二"></el-checkbox>
-    <el-checkbox label="高三"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-    </el-form>
-  </el-form-item>
-  <el-form-item label="讲次类型:">
-      <el-radio label="课程讲次" v-model="form.operatStatus"></el-radio>
-      <el-radio label="期中期末讲次" v-model="form.operatStatus"></el-radio>
-  </el-form-item>
-  <el-form-item label="层级:">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="能力提高"></el-checkbox>
-    <el-checkbox label="层级一"></el-checkbox>
-    <el-checkbox label="层级二"></el-checkbox>
-    <el-checkbox label="层级三"></el-checkbox>
-    <el-checkbox label="层级四"></el-checkbox>
-  </el-checkbox-group>
-  </el-form-item>
-  <el-form-item label="">
-      <upload class="upload" btnText="上传课件（PPT）">
-      </upload>
-  </el-form-item>
-  <el-form-item label="">
-      <upload class="upload" btnText="上传讲义（Word）">
-      </upload>
-  </el-form-item>
-  <el-form-item class="opt-btn">
-      <el-button class="height-btn">确定</el-button>
-      <el-button class="light-btn">取消</el-button>
-  </el-form-item>
-</el-form>
-  </el-row>
+    <el-row class="lecture-detail">
+        <line-head-form class="head" :title="form.id==='new'?'新建讲次':'编辑讲次'" />
+        <el-form class="o-form" ref="form" label-position="right" label-width="120px" :model="form" :rules="rules">
+            <el-form-item label="讲次名称:" prop="name">
+                <el-input v-model="form.name"></el-input>
+            </el-form-item>
+            <el-form-item prop="dataSubject">
+                <div slot="label" class="tow-four">
+                    科
+                    <span>目:</span>
+                </div>
+
+                <el-select v-model="form.dataSubject" placeholder="">
+                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="baseSectionId">
+                <div slot="label" class="tow-four">
+                    年
+                    <span>级:</span>
+                </div>
+                <el-select v-model="form.baseSectionId" placeholder="">
+                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="baseLevelId">
+                <div slot="label" class="tow-four">
+                    班
+                    <span>型:</span>
+                </div>
+
+                <el-select v-model="form.baseLevelId" placeholder="">
+                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item label="">
+                <em class="must">*</em>
+                <upload class="upload" btnText="上传课件（PPT）" :isOfs="true" fileType="ppt" @success="pptSuccess" :sFileSize="form.courseSize" :sOriginalName="form.courseName" sTypeName="PPT" :fileUrl="form.courseUrl">
+                </upload>
+            </el-form-item>
+            <el-form-item label="" >
+                <em class="must">*</em>
+                <upload class="upload" btnText="上传讲义（Word）" :isOfs="true" fileType="word" @success="wordSuccess" :sFileSize="form.lectureSize" :sOriginalName="form.lectureName" sTypeName="WORD" :fileUrl="form.lectureUrl">
+                </upload>
+            </el-form-item>
+            <el-form-item class="opt-btn">
+                <el-button class="height-btn" @click="sure">确定</el-button>
+                <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
+            </el-form-item>
+        </el-form>
+    </el-row>
 </template>
 <script>
 import LineHeadForm from '../../common/LineHeadForm'
 import Upload from '../../common/Upload'
+import { mapState, mapActions } from 'vuex'
+import io from 'lib/io'
 export default {
-  components: {
-      LineHeadForm,
-      Upload
+    components: {
+        LineHeadForm,
+        Upload
+    },
+    data() {
+        return {
+            form: {
+                id:this.$route.params.id,
+                name: '',
+                baseSectionId: '',
+                dataSubject: '',
+                baseLevelId: '',
+                courseUrl:'',
+                courseName:'',
+                courseSize:'',
+                lectureUrl:'',
+                lectureName:'',
+                lectureSize:''
+            },
+            checkList: [],
+            rules: {
+                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' }],
+                baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'blur' }],
+                dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
+                baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],
+                courseUrl: [{ required: true, message: '请上传课件！', trigger: 'blur' }],
+                lectureUrl: [{ required: true, message: '请上传讲义！', trigger: 'blur' }],
+            },
+        }
+    },
+    computed: {
+        ...mapState(['condition','chapter']),
+    },
+  watch: {
+    'form.dataSubject'(val) {
+    this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
+},
+'chapter.chapterDetail'(val){
+    this.form={...val}
+}
   },
-  data () {
-      return {
-          form:{
-              name:'',
-              operatStatus:'',
-              effictTime:''
-          },
-          checkList:[]
-      }
-  }
+    created() {
+        if(this.form.id!=='new'){
+            this.getBaseChapter({id:this.form.id})
+        }
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findSubjectsData({ sectionId: this.form.baseSectionId })
+        this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
+    },
+    methods: {
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage','getBaseChapter']),
+
+        pptSuccess(url, size, duration, originName) {
+            this.form.courseUrl = url
+            this.form.courseName = originName
+            this.form.courseSize = size
+        },
+        wordSuccess(url, size, duration, originName) {
+            this.form.lectureUrl = url
+            this.form.lectureName = originName
+            this.form.lectureSize = size
+        },
+        sure() {
+            this.$refs.form.validate((vali) => {
+                if (vali) {
+            if(!this.form.courseUrl){
+                this.$message('请上传课件！')
+                return
+            }
+            if(!this.form.lectureUrl){
+                this.$message('请上传讲义！')
+                return
+            }
+                    if(this.form.id==='new'){
+                        this.addBaseChapter()
+                    }else{
+                        this.updateBaseChapter()
+                    }
+                } else {
+                    this.$message('您还有必填项未填！')
+                    return
+                }
+            })
+        },
+        async addBaseChapter() {
+            let { data } = await io.post6(io.addBaseChapter, this.form)
+            if (data.success) {
+                this.$message('保存成功')
+                    this.$router.go(-1)
+            }
+        },
+        async updateBaseChapter() {
+            let { data } = await io.post6(io.updateBaseChapter, this.form)
+            if (data.success) {
+                this.$message('保存成功')
+                    this.$router.go(-1)
+            }
+        }
+    }
 }
 </script>
 <style lang="stylus" scoped>
 @import '~assets/stylus/mixin.styl'
 .lecture-detail
+    .must
+        color red
+        position absolute
+        left -10px
+    .el-select
+        width 100%
     .gray
         table-form()
         padding-top 15px
