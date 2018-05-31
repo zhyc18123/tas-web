@@ -21,7 +21,7 @@
             <!-- <div class="has-name-img">
                 <img src="" alt="">
               </div> -->
-            <div class="login-name">
+            <div class="login-name" @click="$router.push('/personal/user-info')">
               <img v-if="true" :src="loginInfo.avatarUrl" />
               <span>欢 迎您！
                 <em>{{loginInfo?loginInfo.userName:''}}</em>
@@ -40,7 +40,7 @@
         <el-menu-item index="/main/teach-research/course">教研</el-menu-item>
         <el-menu-item index="/main/prepare-lessons">备课</el-menu-item>
         <el-menu-item index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item>
+        <el-menu-item index="/main/system/userList/list">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
           <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>

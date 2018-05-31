@@ -1,62 +1,103 @@
 <template>
   <div class="user-add">
-    <v-character-title icon="icon-yonghuguanli" name="用户管理">
-    </v-character-title>
-    <el-form :rules="rules" ref="form" :model="form" label-width="100px">
-      <el-form-item prop="username" required label="登陆账号：">
-        <el-input v-model="form.username"></el-input>
+    <line-head-form class="head" title="新增账号"/>
+    <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form">
+      <el-form-item prop="username" required >
+        <div slot="label" class="tow-four">
+            账<span>号：</span>
+        </div>
+        <el-input v-model="form.username" placeholder="请输入20字以内的用户姓名"></el-input>
       </el-form-item>
-      <el-form-item prop="name" required label="姓名：">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item  prop="phoneNo" required >
+        <div slot="label" class="tow-four">
+            手<span>机：</span>
+        </div>
+        <el-input v-model="form.phoneNo" placeholder="请输入登录手机号"></el-input>
       </el-form-item>
-      <el-form-item prop="password" class="orign-password" label="初始密码：">
-        <el-input v-model="password"></el-input>
+      <el-form-item prop="password" class="orign-password" >
+        <div slot="label" class="tow-four">
+            密<span>码：</span>
+        </div>
+        <el-input v-model="form.password" placeholder="请输入6-18位数字或字母为密码"></el-input>
       </el-form-item>
-      <el-form-item prop="level" required label="老师级别：">
+      <el-form-item prop="cpassword" class="orign-password" >
+        <div slot="label" class="tow-four">
+           确认密码：
+        </div>
+        <el-input v-model="form.cpassword"  placeholder="请重复确认密码"></el-input>
+      </el-form-item>
+       <el-form-item prop="jobStatuses" required >
+        <div slot="label" class="tow-four">
+           任职状态：
+        </div>
+        <el-radio-group v-model="form.jobStatus">
+          <el-radio v-for="(item,index) in jobStatuses" :key="index" :label="item.value" >{{item.label}}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item prop="level" required >
+        <div slot="label" class="tow-four">
+           人员类型：
+        </div>
         <el-radio-group v-model="form.level">
           <el-radio v-for="(item,index) in levels" :key="index" :label="item.value">{{item.label}}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="optRoleId" required label="角色：">
+      <div class="auth-role">
+        <div class="sex">
+          <div slot="label" class="label">
+            性别：
+          </div>
+          <el-radio-group v-model="form.sex" class="role-cont">
+            <el-radio :label="0" >男</el-radio>
+            <el-radio :label="1" >女</el-radio>
+          </el-radio-group>
+        </div>
+        <div class="subject">
+          <div slot="label" class="label">
+            科目：
+          </div>
+          <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange" class="role-cont">
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+          </el-checkbox-group>
+        </div>
+        <div class="subject">
+          <div slot="label" class="label">
+            学段：
+          </div>
+          <div class="role-cont">
+              <ul>
+                <li>
+                  <h4>数学</h4>
+                  <div class="grade">
+                      <el-checkbox label="" :key="0">全部</el-checkbox>
+                      <el-checkbox :label="0">语文</el-checkbox>
+                  </div>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+       <el-form-item prop="jobStatuses" >
+        <div slot="label" class="tow-four">
+           账号角色：
+        </div>
         <el-radio-group v-model="form.optRoleId">
-          <el-radio v-for="(item,index) in roleList" :key="index" :label="item.optRoleId">{{item.roleName}}</el-radio>
+          <el-radio v-for="(item,index) in levels" :key="index" :label="item.value" >{{item.label}}</el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item prop="phoneNo" required label="电话号码：">
-        <el-input v-model="form.phoneNo"></el-input>
-      </el-form-item>
-      <el-form-item prop="idNo" required label="身份证：">
-        <el-input v-model="form.idNo"></el-input>
-      </el-form-item>
-      <el-form-item prop="teachGradeIds" required label="任教年级：">
-        <el-select v-model="form.teachGradeIds" multiple placeholder="">
-          <el-option v-for="(item,i) in grades" class="small-form-item" :key="i" :label="item.gradeName" :value="item.gradeId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item prop="teachSubjectIds" required label="任教科目：">
-        <el-select v-model="form.teachSubjectIds" multiple placeholder="">
-          <el-option v-for="(item,i) in subjects" :key="i" :label="item.subjectName" :value="item.subjectId">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item class="small-form-item" prop="" required label="任职性质：">
-        <el-select v-model="form.jobNature" placeholder="">
-          <el-option v-for="item in jobNatures" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item class="small-form-item" prop="" required label="在职状态：">
-        <el-select v-model="form.jobStatus" placeholder="">
-          <el-option v-for="item in jobStatuses" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item class="small-form-item" prop="" required label="账号状态：">
-        <el-select v-model="form.status" placeholder="">
-          <el-option v-for="item in userStatuses" :key="item.value" :label="item.label" :value="item.value">
-          </el-option>
-        </el-select>
       </el-form-item>
       <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
       <el-button @click="$router.go(-1);resetForm" class="btn-cancel" type="basis">取消</el-button>
@@ -68,15 +109,17 @@
 import io from '../../../lib/io'
 import storage from '../../../lib/storage'
 import VCharacterTitle from '../../common/CharacterTitle.vue'
+import LineHeadForm from '../../common/LineHeadForm'
 import md5 from 'js-md5'
 
 export default {
   components: {
-    VCharacterTitle
+    VCharacterTitle,
+    LineHeadForm
   },
   created() {
-    this.getOrganizationBaseConfig()
-    this.getCharacterList()
+    // this.getOrganizationBaseConfig()
+    // this.getCharacterList()
     if (this.$route.query.userId) {
       this.userId = this.$route.query.userId
       this.getUserDetail()
@@ -92,6 +135,15 @@ export default {
         callback();
       }
     };
+    // const validatePassword = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback(new Error('请输入密码'));
+    //   } else if (!(/^1[34578]\d{9}$/.test(value))) {
+    //     callback(new Error('手机号码有误，请重填'));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     const validateIdNo = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入个人身份证'));
@@ -111,12 +163,14 @@ export default {
         userId: "",
         username: "",
         name: "",
+        sex:0,
         roleName: "",
-        optRoleId: "",
+        optRoleId: 1,
         password: "",
         oldPassword: "",
         phoneNo: "",
         idNo: "",
+        checkedSubject:[],
         teachGradeIds: [],
         teachSubjectIds: [],
         status: 1,
@@ -125,18 +179,15 @@ export default {
         level: 0,
       },
       levels: [{
-        label: '初级教研员',
+        label: '教师',
         value: 0
       }, {
-        label: '中级教研员',
+        label: '教研',
         value: 1
       }, {
-        label: '高级教研员',
+        label: '教务',
         value: 2
-      }, {
-        label: '资深教研员',
-        value: 3
-      },],
+      }],
       jobStatuses: [{
         label: '离职',
         value: 0,
@@ -178,6 +229,9 @@ export default {
         name: [
           { required: true, min: 2, max: 8, message: '长度在 2 到 8个字符', trigger: 'blur' },
         ],
+        password:[
+          {required: true,message: '请输入密码',trigger: 'blur'}
+        ]
       }
     }
   },
@@ -199,6 +253,9 @@ export default {
         jobNature: '0',
         level: '',
       }
+    },
+    handleCheckedSubjectChange(){
+
     },
     getCharacterList() {
       io.post(io.userRoleList, {pageSize:1000000, userId: this.$store.state.global.loginInfo.userId }, (data) => {
@@ -275,33 +332,61 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .user-add {
+  .head{
+    margin-top:10px;
+    margin-bottom: 30px;
+  }
   .el-form {
     padding: 5px 0px;
     text-align: center;
-
-    .el-form-item {
-      text-align: left;
-      padding-left: 310px;
-      min-height: 60px;
-      line-height: 60px;
-      border-bottom: 1px dashed #dcf0f3;
-      vertical-align: middle;
-      margin-bottom: 0;
-      .el-form-item__label {
-        color: #333333;
-        line-height: 62px;
-      }
-      .el-form-item__content {
-        line-height: 60px;
-        .el-form-item__error {
-          top: 20px;
-          left: 383px;
+    width:68%;
+    min-width:770px;
+    margin:0 auto;
+    .auth-role{
+      padding:40px 20px 20px 100px;
+      border: 1px solid #bfebf3;
+      border-radius:4px;
+      .sex,.subject{
+        display:flex;
+        margin-bottom:38px;
+        .label{
+          width:auto;
+          padding-right:20px;
+        }
+        .role-cont{
+          flex:1;
+          text-align:left;
+          .el-checkbox{
+            margin-right:30px;
+            margin-bottom: 10px;
+          }
         }
       }
-      .el-input {
-        width: 374px;
+    }
+    .el-form-item {
+      text-align: left;
+      min-height: 60px;
+      line-height: 60px;
+      vertical-align: middle;
+      margin-bottom: 0;
+      .tow-four{
+        display:inline-block;
+      }
+      
+      // .el-form-item__label {
+      //   color: #333333;
+      //   line-height: 62px;
+      // }
+      // .el-form-item__content {
+      //   line-height: 60px;
+      //   .el-form-item__error {
+      //     top: 20px;
+      //     left: 383px;
+      //   }
+      // }
+      .el-input { 
         color: #666;
         font-size: 12px;
         .el-input__inner {
@@ -315,7 +400,7 @@ export default {
         margin: 5px 40px 5px 0;
       }
       .el-checkbox+.el-checkbox {
-        margin-left: 40px;
+        margin-right: 40px;
       }
       .el-radio__label {
         color: #666;
@@ -333,6 +418,7 @@ export default {
     }
     .el-button {
       margin-top: 37px;
+      margin-bottom: 49px
     }
   }
   .f-db {
@@ -363,6 +449,13 @@ export default {
   content: "*";
     color: #ff4949;
     margin-right: 4px;
+  }
+}
+.user-add{
+  .auth-role{
+     .el-checkbox+.el-checkbox {
+        margin-left: 0px;
+      }
   }
 }
 </style>

@@ -18,7 +18,13 @@ const io = {
     this.findSubjectsData = conf.baseApiPath + '/lesson/api/baseDataController/findSubjectsData'
     this.findBaseTermPage = conf.baseApiPath + '/lesson/api/BaseTerm/findBaseTermPage'
     // 课程
-    this.publishLesson=conf.baseApiPath+'/lesson//api/lesson/publishLesson'
+    this.publishLesson=conf.baseApiPath+'/lesson/api/lesson/publishLesson'
+// 系统管理
+    this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
+    this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
+    this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
+// 个人中心
+    this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
 
 
 
@@ -56,6 +62,7 @@ const io = {
     this.deleteAbilityItem = conf.baseApiPath + '/api/question/deleteAbilityItem'
     this.findSimQuestion = conf.baseApiPath + '/api/question/findSimQuestion'
 // 系统
+
     this.delOptRole = conf.baseApiPath + '/api/platform/delOptRole'
     this.delUser = conf.baseApiPath + '/api/platform/delUser'
     this.optResourceList = conf.baseApiPath + '/api/platform/optResourceList'

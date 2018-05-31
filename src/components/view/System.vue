@@ -16,8 +16,6 @@
     </el-breadcrumb>
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="基础设定" name="基础设定">
-        </el-tab-pane>
         <el-tab-pane label="用户列表" name="用户列表">
         </el-tab-pane>
         <el-tab-pane label="操作角色列表" name="操作角色列表">
@@ -39,24 +37,20 @@
 <script>
 import VCharacterListContainer from '../system/CharacterListContainer.vue'
 import VUserListContainer from '../system/UserListContainer.vue'
-import VBasisSetContainer from '../system/BasisSetContainer.vue'
 export default {
   name: 'system',
   components: {
     VCharacterListContainer,
     VUserListContainer,
-    VBasisSetContainer
   },
   data() {
     return {
-      activeName: '基础设定'
+      activeName: '用户列表'
     }
   },
   created() {
     this.$store.dispatch('config')
-    if (this.$route.path.indexOf('basisSetting') > 0) {
-      this.activeName = '基础设定'
-    } else if (this.$route.path.indexOf('userList') > 0) {
+    if (this.$route.path.indexOf('userList') > 0) {
       this.activeName = '用户列表'
     } else if (this.$route.path.indexOf('characterList') > 0) {
       this.activeName = '操作角色列表'
@@ -72,9 +66,7 @@ export default {
   },
   methods: {
     handleClick(tab) {
-      if (this.activeName === '基础设定') {
-        this.$router.push('/main/system/basisSetting/topicOrigin')
-      } else if (this.activeName === '用户列表') {
+      if (this.activeName === '用户列表') {
         this.$router.push('/main/system/userList/list')
       } else if (this.activeName === '操作角色列表') {
         this.$router.push('/main/system/characterList/list')

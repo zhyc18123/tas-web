@@ -36,14 +36,14 @@ const PersonalOperateList = resolve => require(['../components/system/organizati
 const PersonalOperateDetail = resolve => require(['../components/system/organization/PersonalOperateDetail'], resolve)
 const OrganizationList = resolve => require(['../components/system/organization/OrganizationList'], resolve)
 const OrganizationDetail = resolve => require(['../components/system/organization/OrganizationDetail'], resolve)
-const TopicOrigin = resolve => require(['../components/system/basis/TopicOrigin'], resolve)
-const SetTag = resolve => require(['../components/system/basis/SetTag'], resolve)
-const ProvinceSetting = resolve => require(['../components/system/basis/ProvinceSetting'], resolve)
-const TopicCategory = resolve => require(['../components/system/basis/TopicCategory'], resolve)
-const FamousSchool = resolve => require(['../components/system/basis/FamousSchool'], resolve)
-const AbilityRadar = resolve => require(['../components/system/basis/AbilityRadar'], resolve)
-const ParadigmList = resolve => require(['../components/system/basis/ParadigmList'], resolve)
-const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
+// const TopicOrigin = resolve => require(['../components/system/basis/TopicOrigin'], resolve)
+// const SetTag = resolve => require(['../components/system/basis/SetTag'], resolve)
+// const ProvinceSetting = resolve => require(['../components/system/basis/ProvinceSetting'], resolve)
+// const TopicCategory = resolve => require(['../components/system/basis/TopicCategory'], resolve)
+// const FamousSchool = resolve => require(['../components/system/basis/FamousSchool'], resolve)
+// const AbilityRadar = resolve => require(['../components/system/basis/AbilityRadar'], resolve)
+// const ParadigmList = resolve => require(['../components/system/basis/ParadigmList'], resolve)
+// const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
 const UserListContainer = resolve => require(['../components/system/UserListContainer'], resolve)
 const UserList = resolve => require(['../components/system/user/UserList'], resolve)
 const UserAdd = resolve => require(['../components/system/user/UserAdd'], resolve)
@@ -75,6 +75,10 @@ const CourseWare = resolve => require(['../components/prepareLessons/CourseWare'
 const AttendContent = resolve => require(['../components/attend-class/AttendContent'], resolve)
 // 登陆
 const Login = resolve => require(['../components/login/Login'], resolve)
+//个人信息
+const Personal = resolve => require(['../components/personal/Personal'], resolve)
+const UserInfo = resolve => require(['../components/personal/UserInfo'], resolve)
+const ChangePassword = resolve => require(['../components/personal/ChangePassword'], resolve)
 
 Vue.use(Router)
 
@@ -147,32 +151,6 @@ const router= new Router({
           path: 'system',
           component: System,
           children: [{
-            path: 'basisSetting',
-            component: BasisSetContainer,
-            children: [{
-              path: 'topicOrigin',
-              component: TopicOrigin
-            }, {
-              path: 'set-tag',
-              component: SetTag
-            }, {
-              path: 'famousSchool',
-              component: FamousSchool
-            }, {
-              path: 'provinceSetting',
-              component: ProvinceSetting
-            }, {
-              path: 'topicCategory',
-              component: TopicCategory
-            }, {
-              path: 'abilityRadar',
-              component: AbilityRadar
-            }, {
-              path: 'paradigmList',
-              component: ParadigmList
-            }
-            ]
-          }, {
             path: 'userList',
             component: UserListContainer,
             children: [{
@@ -295,7 +273,21 @@ const router= new Router({
     }, {
       path: '/login',
       component: Login
-    }
+    },
+    {
+      path: '/personal',
+      component: Personal,
+      children:[
+        {
+          path: 'user-info',
+          component: UserInfo
+        },
+        {
+          path: 'change-password',
+          component: ChangePassword
+        }
+      ]
+    },
   ]
 })
 router.beforeEach((to,from,next)=>{
