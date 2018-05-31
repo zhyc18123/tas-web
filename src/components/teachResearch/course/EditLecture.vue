@@ -79,6 +79,7 @@ import CourseStep from '../../common/CourseStep'
 import Upload from '../../common/Upload'
 import VPagination from '../../common/Pagination'
 import draggable from 'vuedraggable'
+import {mapState,mapActions} from 'vuex'
 export default {
     components: {
         CourseStep,
@@ -88,6 +89,7 @@ export default {
     },
     data() {
         return {
+            id:this.$route.params.id,
             myArray: [{ id: 1, name: '长度与时间的测量' }, { id: 2, name: '机械运动' }],
             isAdd:false,
             form: {
@@ -131,7 +133,14 @@ export default {
             addCourseList:[],
         }
     },
+    computed: {
+        ...mapState(['courseChapter'])
+    },
+    created () {
+        this.findLesChapterPage({lessonId:this.id})
+    },
     methods: {
+        ...mapActions(['findLesChapterPage']),
         getListResult() {
 
         },

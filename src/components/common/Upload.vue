@@ -1,29 +1,29 @@
 
 <template>
-    <div class="upload" :style="{width:'100%'}">
+    <div class="upload">
         <el-upload v-loading="loading" class="avatar-uploader f-upload" :ref="ref" :http-request="httpRequest" :auto-upload="true" action="string" :show-file-list="false" :before-upload="beforeAvatarUpload" :data="{token:uptoken}">
 
-        <el-button size="small" type="primary" class="up-btn">
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-jiajianzujianjiahao"></use>
-                            </svg>
-            {{btnText}}</el-button>
+            <el-button size="small" type="primary" class="up-btn">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-jiajianzujianjiahao"></use>
+                </svg>
+                {{btnText}}</el-button>
         </el-upload>
-<el-form class="upload-form" :inline="true"  label-position="right" label-width="80px">
-  <el-form-item label="已上传:">
-      <label>自动获取课件名</label>
-  </el-form-item>
-  <el-form-item label="类型:">
-      <label>word</label>
-  </el-form-item>
-  <el-form-item label="大小:">
-      <label>10M</label>
-  </el-form-item>
-  <el-form-item label="" class="preview">
-      <el-button size="small" @click="preview">预览</el-button>
-  </el-form-item>
-</el-form>
-<slot></slot>
+        <el-form class="upload-form" :inline="true" label-position="right" label-width="80px">
+            <el-form-item label="已上传:">
+                <label>{{originalName||'--'}}</label>
+            </el-form-item>
+            <el-form-item label="类型:">
+                <label>{{typeName||'--'}}</label>
+            </el-form-item>
+            <el-form-item label="大小:">
+                <label>{{fileSize||'--'}}M</label>
+            </el-form-item>
+            <el-form-item label="" class="preview">
+                <el-button size="small" @click="preview">预览</el-button>
+            </el-form-item>
+        </el-form>
+        <slot></slot>
     </div>
 </template>
 
@@ -31,9 +31,10 @@
 import conf from 'lib/conf'
 import io from 'lib/io'
 import axios from 'axios'
+import { mapState, mapActions } from 'vuex'
 export default {
     name: 'v-header',
-    props: ['fileUrl','btnText'],
+    props: ['fileUrl', 'sOriginalName', 'sFileSize', 'btnText', 'fileType', 'sTypeName', 'isOfs'],
     components: {
     },
     data() {
@@ -45,12 +46,62 @@ export default {
             uptoken: '',
             ref: 'ref' + (new Date().getTime()),
             type: '',   //type,图片：00;视频：01；音频：02；文件：03,
-            inter: ''
+            inter: '',
+            res: '',
+            typeName: this.sTypeName,
+            originalName: this.sOriginalName,
+            fileSize: this.sFileSize
         }
     },
+    created() {
+        console.log(this.fileName)
+    },
+    watch: {
+        sFileSize(val) {
+            this.fileSize = val
+        },
+        sOriginalName(val) {
+            this.originalName = val
+        },
+        sTypeName(val) {
+            this.typeName = val
+        },
+        fileUrl(val) {
+            this.newFileUrl = val
+        }
+    },
+    computed: {
+        ...mapState(['office'])
+    },
     methods: {
-        preview(){
-
+        ...mapActions(['view']),
+        preview() {
+            if (!this.newFileUrl) {
+                this.$message('请先上传文件！')
+                return
+            }
+            if (this.isOfs) {
+                let resourceId = this.res.resourceId
+                if (!this.res.resourceId) {
+                    let urlArr = this.newFileUrl.split('/')
+                    resourceId = urlArr[urlArr.length - 1]
+                }
+                this.view({ resourceId: resourceId })
+                if (!this.office.token) {
+                    setTimeout(() => {
+                        window.open(this.newFileUrl + '?token=' + this.office.token)
+                    }, 1000)
+                } else {
+                    window.open(this.newFileUrl + '?token=' + this.office.token)
+                }
+                // console.log(this.office)
+                // this.nextTick(() => {
+                //     window.open(this.newFileUrl + '?token=' + this.office.token)
+                // })
+                // this.newFileUrl=this.newFileUrl+'?token'
+            } else {
+                window.open(this.newFileUrl)
+            }
         },
         async httpRequest(item) {
             try {
@@ -70,13 +121,13 @@ export default {
                     },
                     headers: { 'Content-Type': 'multipart/form-data' }
                 };
-                console.log('item',item)
-                let url=conf.qiniuUploadTokenApi
-                if(item.file.type.indexOf('video/')>-1){
-                    url=conf.qiniuVideoUrl
+                console.log('item', item)
+                let url = conf.qiniuUploadTokenApi
+                if (item.file.type.indexOf('video/') > -1) {
+                    url = conf.qiniuVideoUrl
                 }
                 let res = await io.get6(url)
-                console.log('res',res)
+                console.log('res', res)
                 this.uptoken = res.data.uptoken
                 param.append('token', this.uptoken);
                 this.uploading(param, config, item.file.name);//然后将参数上传七牛
@@ -86,6 +137,9 @@ export default {
             return;
         },
         uploading(param, config, pathName) {
+            if (this.isOfs) {
+                this.uploadUrl = conf.ofsUrl
+            }
             axios.post(this.uploadUrl, param, config)
                 .then(response => {
                     console.log(response.data);
@@ -93,22 +147,35 @@ export default {
                 })
         },
         handleSuccess(res, file) {
-            console.log('file',res, file)
+            console.log('file', res, file)
+            this.res = res
             this.loading = false
             let backUrl = 'http://static.yuyou100.com/' + res.url
+            if (this.isOfs) {
+                backUrl = 'http://ofs.yuyou100.com/office/view/' + res.resourceId
+            }
             let duration = 0
             this.newFileUrl = backUrl;
+            let resType = res.type || res.contentType
             console.log(res.type)
-            if (res.type.indexOf('image') > -1) {
+            if (resType.indexOf('image') > -1) {
                 this.type = '00'
-            } else if (res.type.indexOf('video') > -1) {
+            } else if (resType.indexOf('video') > -1) {
                 console.log("xxx")
                 this.type = '01'
                 duration = res.avinfo.video.duration
-            } else if (res.type.indexOf('application') > -1) {
+                this.typeName = '视频'
+            } else if (resType.indexOf('application') > -1) {
                 this.type = '03'
             }
-            this.$emit('success', backUrl, (res.size / 1024 / 1024), duration,res.original)
+            if (this.fileType === 'ppt') {
+                this.typeName = 'PPT'
+            } else if (this.fileType === 'word') {
+                this.typeName = 'WORD'
+            }
+            this.originalName = res.original || res.name
+            this.fileSize = Math.round((res.size / 1024 / 1024) * 100) / 100
+            this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name)
         },
         beforeAvatarUpload(file) {
             let fileSize = file / 1024 / 1024
@@ -135,6 +202,19 @@ export default {
                 }
                 if (fileSize > 500) {
                     this.$message('视频大小不能超过500M')
+                    this.loading = false
+                    return false
+                }
+            } else if (this.fileType === 'ppt') {
+                console.log('file', file)
+                if (!(file.name.indexOf('.ppt') > -1)) {
+                    this.$message('只能上传PPT')
+                    this.loading = false
+                    return false
+                }
+            } else if (this.fileType === 'word') {
+                if (!(file.name.indexOf('.doc') > -1)) {
+                    this.$message('只能上传WORD')
                     this.loading = false
                     return false
                 }

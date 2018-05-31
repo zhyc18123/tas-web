@@ -5,47 +5,35 @@
   <el-form-item label="素材名称:">
     <el-input v-model="form.name"></el-input>
   </el-form-item>
-  <el-form-item label="科目:">
-      <el-radio label="英语" v-model="form.operatStatus"></el-radio>
-      <el-radio label="语文" v-model="form.operatStatus"></el-radio>
-      <el-radio label="数学" v-model="form.operatStatus"></el-radio>
-  </el-form-item>
-  <el-form-item label="年级:">
-    <el-form :model="form" class="t-form gray">
-      <el-form-item label="小学：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="一年级"></el-checkbox>
-    <el-checkbox label="二年级"></el-checkbox>
-    <el-checkbox label="三年级"></el-checkbox>
-    <el-checkbox label="四年级"></el-checkbox>
-    <el-checkbox label="五年级"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="初中：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="初一"></el-checkbox>
-    <el-checkbox label="初二"></el-checkbox>
-    <el-checkbox label="初三"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="高中：">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="高一"></el-checkbox>
-    <el-checkbox label="高二"></el-checkbox>
-    <el-checkbox label="高三"></el-checkbox>
-  </el-checkbox-group>
-      </el-form-item>
-    </el-form>
-  </el-form-item>
-  <el-form-item label="层级:">
-  <el-checkbox-group v-model="checkList">
-    <el-checkbox label="能力提高"></el-checkbox>
-    <el-checkbox label="层级一"></el-checkbox>
-    <el-checkbox label="层级二"></el-checkbox>
-    <el-checkbox label="层级三"></el-checkbox>
-    <el-checkbox label="层级四"></el-checkbox>
-  </el-checkbox-group>
-  </el-form-item>
+            <el-form-item prop="dataSubject">
+                <div slot="label" class="tow-four">
+                    科
+                    <span>目:</span>
+                </div>
+
+                <el-select v-model="form.dataSubject" placeholder="">
+                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="baseSectionId">
+                <div slot="label" class="tow-four">
+                    年
+                    <span>级:</span>
+                </div>
+                <el-select v-model="form.baseSectionId" placeholder="">
+                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+                </el-select>
+            </el-form-item>
+            <el-form-item prop="baseLevelId">
+                <div slot="label" class="tow-four">
+                    班
+                    <span>型:</span>
+                </div>
+
+                <el-select v-model="form.baseLevelId" placeholder="">
+                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id"></el-option>
+                </el-select>
+            </el-form-item>
   <el-form-item label="资料说明:">
     <el-input type="textarea" :rows="6" v-model="form.name"></el-input>
   </el-form-item>
@@ -71,6 +59,7 @@
 <script>
 import LineHeadForm from '../../common/LineHeadForm'
 import Upload from '../../common/Upload'
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
       LineHeadForm,
@@ -79,18 +68,34 @@ export default {
   data () {
       return {
           form:{
-              name:'',
-              operatStatus:'',
-              effictTime:''
+                id:this.$route.params.id,
+                name: '',
+                baseSectionId: '',
+                dataSubject: '',
+                baseLevelId: '',
           },
           checkList:[]
       }
-  }
+  },
+    computed: {
+        ...mapState(['condition','data']),
+    },
+    created () {
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findSubjectsData({ sectionId: this.form.baseSectionId })
+        this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
+    },
+
+    methods: {
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage',]),
+    }
 }
 </script>
 <style lang="stylus" scoped>
 @import '~assets/stylus/mixin.styl'
 .data-detail
+    .el-select
+        width 100%
     .gray
         table-form()
         padding-top 15px

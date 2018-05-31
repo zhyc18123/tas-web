@@ -2,15 +2,15 @@
   <div class="course" @keydown="search">
     <el-form :inline="true" :model="form" class="t-form gray">
       <el-form-item label="">
-        <el-select v-model="form.baseSectionId" placeholder="年级">
+        <el-select v-model="form.dataSubject" placeholder="科目">
           <el-option label="全部" value=""></el-option>
-          <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+          <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="">
-        <el-select v-model="form.dataSubjectId" placeholder="科目">
+        <el-select v-model="form.baseSectionId" placeholder="年级">
           <el-option label="全部" value=""></el-option>
-          <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+          <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="">
@@ -82,7 +82,7 @@ export default {
       form: {
         name: '',
         baseTrimesterId: null,
-        dataSubjectId: null,
+        dataSubject: null,
         baseSectionId: null,
         pageIndex: 1,
         pageSize: 10
@@ -106,13 +106,13 @@ export default {
     ...mapState({result:state=>state.course.courseObj})
   },
   watch: {
-    'form.baseSectionId'(val) {
-      this.findSubjectsData({ sectionId: val })
+    'form.dataSubject'(val) {
+    this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
     }
   },
   created() {
     this.getCourseList()
-    this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000 })
+    this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
     this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
     this.findSubjectsData({ sectionId: this.baseSectionId })
 
