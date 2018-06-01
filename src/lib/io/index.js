@@ -22,6 +22,12 @@ const io = {
     this.findYearsData = conf.baseApiPath + '/lesson/api/baseDataController/findYearsData'
     // 课程
     this.publishLesson=conf.baseApiPath+'/lesson/api/lesson/publishLesson'
+    this.addLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/addLesChapters'
+    this.delLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/delLesChapters'
+    this.changeLesChapter=conf.baseApiPath+'/lesson/api/lessonChapter/changeLesChapter'
+    this.sortLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/sortLesChapters'
+    this.detailLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/detailLesChapters'
+    this.addLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/addLessonMaterial'
   // 系统管理
     this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
     this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'

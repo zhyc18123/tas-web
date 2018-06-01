@@ -43,12 +43,12 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="t-btn" width="200">
         <template scope="scope">
-          <router-link title="编辑" to="/main/system/organization/list/1">
+          <a :disabled="true" title="编辑讲次" href="javascript:;" @click="editLecture(scope)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bianji"></use>
             </svg>
-          </router-link>
-          <router-link title="修改课程信息" to="/main/system/organization/list/1">
+          </a>
+          <router-link title="修改课程信息" :to="{path:'/main/teach-research/course/'+scope.row.id}">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xiugai"></use>
             </svg>
@@ -119,6 +119,13 @@ export default {
   },
   methods: {
     ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage','findLessonPage']),
+    editLecture(scope){
+      if(scope.row.status===0){
+      this.$router.push({path:'/main/teach-research/course/edit-lecture/'+scope.row.id})
+      }else{
+        this.$message('已发布的课程，不可以编辑讲次！')
+      }
+    },
     search() {
       this.$refs.pagin.changePage(1)
       this.getCourseList()

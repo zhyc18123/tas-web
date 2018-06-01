@@ -4,29 +4,40 @@
         <div class="main">
             <div class="times-div">
                 <div class="t-title">
-                    <em>物理初二提高班（人教版）</em>
+                    <em>{{course.courseChapterObj.name}}</em>
                 </div>
                 <span class="b-line"></span>
                 <div class="c-tab">
-                    <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push('/main/teach-research/course/view-lecture/courseWare/1/1')">课件</div>
-                    <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push('/main/teach-research/course/view-lecture/lecture/1/2')">讲义</div>
+                    <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push('/main/teach-research/course/view-lecture/courseWare/'+courseId+'/'+chapterId)">课件</div>
+                    <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push('/main/teach-research/course/view-lecture/lecture/'+courseId+'/'+chapterId)">讲义</div>
                 </div>
             </div>
             <div class="t-cont">
                 <div class="cont-left">
-                    <ul>
-                        <li  v-for="item in courseList" :key="item.id" class="left-list" :class="item.id == styleTag?'active':''" @click="showList(item.id)">
-                            <div class="left-order">{{item.order}}</div>
-                            <div class="list-name">{{item.courseName}}</div>
+                    <ul v-show="isShow">
+                        <li  v-for="(item,i) in course.courseChapterObj.list" :key="item.id" class="left-list" :class="item.id == styleTag?'active':''" @click="showList(item)">
+                            <div class="left-order">第 {{i+1}} 讲</div>
+                            <div class="list-name">{{item.name}}</div>
                         </li>
                     </ul>
+                    <div class="l-btn" :class="{tran:!isShow}"  @click="isShow=!isShow">
+                        <svg class="icon" aria-hidden="true">
+                            <use xlink:href="#icon-jiantouarrowhead7"></use>
+                        </svg>
+                    </div>
                 </div>
                 <div class="cont-right">
-                    <router-view></router-view>
+
+        <div class="source-body" v-if="sourceType==='courseWare'">
+            <iframe class="office-ppt edit"  v-if="office.token" :src="chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+        </div>
+        <div class="source-body" v-else>
+            <iframe class="office-word" v-if="office.token" :src="chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
+        </div>
                 </div>
             </div>
             <div class="next-btn">
-                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+id)">下一步</el-button>
+                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)">下一步</el-button>
             </div>
         </div>
        
@@ -34,6 +45,8 @@
 </template>
 <script>
 import CourseStep from '../../common/CourseStep'
+import { mapState, mapActions } from 'vuex'
+import io from 'lib/io'
 export default {
     props: [],
     components: {
@@ -43,35 +56,50 @@ export default {
         return {
             sourceType:this.$route.params.sourceType,
             courseId:this.$route.params.courseId,
-            id:this.$route.params.id,
-            styleTag:this.$route.params.courseId,
-            courseList:[
-                    {
-                        order:"第一讲",
-                        courseName:"长度与时间的测量",
-                        id:"1"
-                    },
-                    {
-                        order:"第二讲",
-                        courseName:"长度与时间的测量长度与时间的测量",
-                        id:"2"
-                    }
-            ]
+            chapterId:this.$route.params.chapterId,
+            styleTag:this.$route.params.chapterId,
+            chapterDetail:{},
+            isShow:true
         }
+    },
+    computed: {
+        ...mapState(['course','office'])
     },
     beforeRouteUpdate(to, from, next) {
         console.log('to', to)
         this.sourceType = to.params.sourceType
+        this.styleTag=to.params.chapterId
         this.optType = to.params.optType
+        this.courseId=to.params.courseId
+        this.chapterId=to.params.chapterId
+        this.findLesChapterPage({ lessonId: this.courseId })
+        this.detailLesChapters()
         next()
     },
     created(){
-
+        this.findLesChapterPage({ lessonId: this.courseId })
+        this.detailLesChapters()
     },
     methods:{
-        showList(id){
-            this.styleTag = id
-            this.$router.push('/main/teach-research/course/view-lecture/'+ this.sourceType +'/'+1+'/'+id)
+        ...mapActions(['findLesChapterPage','view']),
+        showList(item){
+            // this.styleTag = id
+            this.$router.push('/main/teach-research/course/view-lecture/courseWare/'+ this.courseId +'/'+item.id)
+        },
+        async detailLesChapters(){
+            let {data}=await io.post6(io.detailLesChapters,{lessonId:this.courseId,id:this.chapterId})
+            if(data.success){
+                this.chapterDetail=data.data
+                let sourceId=''
+                if(this.sourceType==='courseWare'){
+                    let urlArr=data.data.courseUrl.split('/')
+                    sourceId=urlArr[urlArr.length-1]
+                }else{
+                    let urlArr=data.data.lectureUrl.split('/')
+                    sourceId=urlArr[urlArr.length-1]
+                }
+                this.view({resourceId:sourceId})
+            }
         }
     }
 }
@@ -131,9 +159,26 @@ export default {
         padding 20px 0
         display flex
         .cont-left
-            width 238px
-            padding-right 18px
+            padding-right 28px
+            position relative
+            .l-btn
+                position absolute
+                top 0
+                right 10px
+                width 16px
+                height 50px
+                background #f4f4f4
+                border-radius 4px
+                cursor pointer
+                display flex
+                justify-content center
+                align-items center
+                .icon
+                    color #84bdce
+                &.tran
+                    transform rotate(180deg)
             ul
+                width 238px
                 li
                     width 100%
                     height 50px

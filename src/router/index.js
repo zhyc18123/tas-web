@@ -102,13 +102,13 @@ const router= new Router({
             path: 'course/edit-lecture/:id',
             component: EditLecture
           },{
-            path: 'course/view-lecture/:sourceType',
+            path: 'course/view-lecture/:sourceType/:courseId/:chapterId',
             component: ViewLecture,
-            children:[{
-              path: ':courseId/:id',
-              component: PreCourseWare,
-            },
-          ]
+            // children:[{
+            //   path: ':courseId/:id',
+            //   component: PreCourseWare,
+            // },
+          // ]
           },
           {
             path: 'course/sheet/:id',

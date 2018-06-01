@@ -56,15 +56,6 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.source-body
-    widows 100%
-    height auto
-    // border 1px solid #bbb
-    min-height 300px
-    padding-bottom 30px
-    .office-ppt,.office-word
-        width 100%
-        height 760px
 .opt-div
     height auto
     min-height 30px
