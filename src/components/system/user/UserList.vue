@@ -48,8 +48,7 @@
         </el-table-column>
         <el-table-column align="center"  width="230" label="操作">
           <template scope="scope">
-            <span  class="btn-edit" @click="handleEdit(scope.row)">重置密码</span>
-            <span  class="btn-delete" @click="handleDelete(scope.row)">修改</span>
+            <span  class="btn-delete" @click="handleEdit(scope.row)">修改</span>
             <span  class="btn-delete" @click="handleDetails(scope.row)">详情</span>
           </template>
         </el-table-column>
@@ -111,7 +110,6 @@ export default {
     //   'getUserList',
     // ]),
     getUserList(pageInfo){
-     
       let pageIndex = (pageInfo?pageInfo.pageIndex:false) || this.pageNo || 1
       let param = {
         pageIndex:pageIndex,
@@ -138,20 +136,15 @@ export default {
     handleAdd() {
       this.$router.push('/main/system/userList/userAdd')
     },
-    handleEdit(row) {
-      this.$router.push('/main/system/userList/userAdd?userId=' + row.userId)
-    },
-    handleDelete(row) {
-      this.$confirm('确认删除?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        // this.$store.dispatch('userList/deleteUser', { userId: row.userId })
-      }).catch(() => {
-        this.$message('已取消删除');
-      });
+    handleReset(){
 
+    },
+    handleEdit(row) {
+      console.log(row)
+      this.$router.push('/main/system/userList/userAdd?userId=' + row.id)
+    },
+    handleModification(row) {
+      
     },
     handleSearch(){
       this.getUserList({pageIndex:1})

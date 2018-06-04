@@ -65,6 +65,7 @@ const actions = {
     
     // 年级
   async findBaseSectionPage({ dispatch, commit }, opt) {
+    console.log(opt)
     let { data } = await io.post6(io.findBaseSectionPage, opt)
     if (data.success) {
       commit(types.GET_GRADE,data.data)

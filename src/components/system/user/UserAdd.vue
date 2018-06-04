@@ -1,7 +1,7 @@
 <template>
   <div class="user-add">
     <line-head-form class="head" title="新增账号"/>
-    <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form">
+    <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form" v-if="!loginInfo.isSystem">
       <el-form-item prop="username" required >
         <div slot="label" class="tow-four">
             账<span>号：</span>
@@ -12,7 +12,7 @@
         <div slot="label" class="tow-four">
             手<span>机：</span>
         </div>
-        <el-input v-model="form.phoneNo" placeholder="请输入登录手机号"></el-input>
+        <el-input v-model="form.account" placeholder="请输入登录手机号"></el-input>
       </el-form-item>
       <el-form-item prop="password" class="orign-password" >
         <div slot="label" class="tow-four">
@@ -34,12 +34,14 @@
           <el-radio v-for="(item,index) in jobStatuses" :key="index" :label="item.value" >{{item.label}}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item prop="level" required >
+      <el-form-item prop="type" required >
         <div slot="label" class="tow-four">
            人员类型：
         </div>
-        <el-radio-group v-model="form.level">
-          <el-radio v-for="(item,index) in levels" :key="index" :label="item.value">{{item.label}}</el-radio>
+        <el-radio-group v-model="form.type">
+            <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="dark" :content="item.content" placement="bottom" :open-delay="500">
+                 <el-radio   :label="item.value">{{item.label}}</el-radio>
+            </el-tooltip>
         </el-radio-group>
       </el-form-item>
       <div class="auth-role">
@@ -57,21 +59,7 @@
             科目：
           </div>
           <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange" class="role-cont">
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
-            <el-checkbox :label="0" :key="0">语文</el-checkbox>
+            <el-checkbox :label="item.id"  v-for="item in condition.subjectList" :key="item.id">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </div>
         <div class="subject">
@@ -80,11 +68,11 @@
           </div>
           <div class="role-cont">
               <ul>
-                <li>
+                <li v-for="item in condition.gradeObj"  :key="item.id">
                   <h4>数学</h4>
                   <div class="grade">
                       <el-checkbox label="" :key="0">全部</el-checkbox>
-                      <el-checkbox :label="0">语文</el-checkbox>
+                      <el-checkbox :label="item.id" v-for="item in condition.gradeObj" :key="item.id"></el-checkbox>
                   </div>
                 </li>
               </ul>
@@ -95,35 +83,30 @@
         <div slot="label" class="tow-four">
            账号角色：
         </div>
-        <el-radio-group v-model="form.optRoleId">
-          <el-radio v-for="(item,index) in levels" :key="index" :label="item.value" >{{item.label}}</el-radio>
+        <el-radio-group v-model="form.authRoleIds">
+          <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
       <el-button @click="$router.go(-1);resetForm" class="btn-cancel" type="basis">取消</el-button>
     </el-form>
+    <!-- 系统管理员身份的新增 -->
+    <sys-user-add v-if="loginInfo.isSystem"></sys-user-add>
   </div>
 </template>
 
 <script>
 import io from '../../../lib/io'
 import storage from '../../../lib/storage'
-import VCharacterTitle from '../../common/CharacterTitle.vue'
+// import VCharacterTitle from '../../common/CharacterTitle.vue'
 import LineHeadForm from '../../common/LineHeadForm'
+import SysUserAdd from "./SysUserAdd"
 import md5 from 'js-md5'
-
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
-    VCharacterTitle,
-    LineHeadForm
-  },
-  created() {
-    // this.getOrganizationBaseConfig()
-    // this.getCharacterList()
-    if (this.$route.query.userId) {
-      this.userId = this.$route.query.userId
-      this.getUserDetail()
-    }
+    LineHeadForm,
+    SysUserAdd,
   },
   data() {
     const validatePhoneNo = (rule, value, callback) => {
@@ -135,15 +118,6 @@ export default {
         callback();
       }
     };
-    // const validatePassword = (rule, value, callback) => {
-    //   if (value === '') {
-    //     callback(new Error('请输入密码'));
-    //   } else if (!(/^1[34578]\d{9}$/.test(value))) {
-    //     callback(new Error('手机号码有误，请重填'));
-    //   } else {
-    //     callback();
-    //   }
-    // };
     const validateIdNo = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请输入个人身份证'));
@@ -154,59 +128,45 @@ export default {
       }
     };
     return {
+      loginInfo:storage.getCurrentUserInfo(),
       checkAll: true,
       roleList: [],
       password: '',
       grades: '',
-      subjects: '',
+      dataSubjects:'',
       form: {
         userId: "",
-        username: "",
+        username:'',
+        account: "",
         name: "",
         sex:0,
         roleName: "",
-        optRoleId: 1,
+        authRoleIds:[],
         password: "",
-        oldPassword: "",
-        phoneNo: "",
-        idNo: "",
+        cPassword: "",
         checkedSubject:[],
-        teachGradeIds: [],
-        teachSubjectIds: [],
         status: 1,
         jobStatus: 1,
-        jobNature: 0,
-        level: 0,
+        type: 0,
       },
-      levels: [{
+      types: [{
         label: '教师',
-        value: 0
+        value: 0,
+        content:"教师权限：登录备课、授课"
       }, {
         label: '教研',
-        value: 1
+        value: 1,
+        content:"教研权限：查看教研课程"
       }, {
         label: '教务',
-        value: 2
+        value: 2,
+        content:"教备权限：查看班级管理"
       }],
       jobStatuses: [{
         label: '离职',
         value: 0,
       }, {
         label: '在职',
-        value: 1,
-      },],
-      jobNatures: [{
-        label: '普通',
-        value: 0,
-      }, {
-        label: '指导',
-        value: 1,
-      },],
-      userStatuses: [{
-        label: '禁用',
-        value: 0,
-      }, {
-        label: '正常',
         value: 1,
       },],
       keyword: '',
@@ -235,7 +195,20 @@ export default {
       }
     }
   },
+  created() {
+    this.findSubjectsData({pageIndex: 1, pageSize: 1000000,})
+    this.findBaseSectionBySubject()
+    this.findAuthRoleList()
+    if (this.$route.query.userId) {
+      this.userId = this.$route.query.userId
+      this.getUserDetail()
+    }
+  },
+  computed:{
+    ...mapState(['condition']),
+  },
   methods: {
+    ...mapActions(['findSubjectsData']),
     resetForm() {
       this.form = {
         userId: "",
@@ -254,21 +227,25 @@ export default {
         level: '',
       }
     },
-    handleCheckedSubjectChange(){
-
+    handleCheckedSubjectChange(val){
+      this.dataSubjects = val.join(',')
+      this.findBaseSectionBySubject()
     },
-    getCharacterList() {
-      io.post(io.userRoleList, {pageSize:1000000, userId: this.$store.state.global.loginInfo.userId }, (data) => {
-        this.roleList = data.list;
-        if(!this.userId){
-        this.form.optRoleId=data.list[0].optRoleId;
-        }
+    findAuthRoleList() {
+      io.post(io.findAuthRoleList,{},(data) => {
+        console.log(data)
+        this.roleList = data;
+        // if(!this.userId){
+        // this.form.optRoleId=data.list[0].optRoleId;
+        // }
       })
     },
-    getOrganizationBaseConfig() {
-      io.post(io.organizationBaseConfig, {}, (data) => {
-        this.grades = data.grades;
-        this.subjects = data.subjects;
+    findBaseSectionBySubject(){
+      let param = {
+        subjectId:this.form.checkedSubject.join(',')
+      }
+      io.post(io.findBaseSectionBySubject,param,(ret)=>{
+        console.log(ret)
       })
     },
     getUserDetail() {
@@ -362,6 +339,26 @@ export default {
             margin-right:30px;
             margin-bottom: 10px;
           }
+          ul{
+            li{
+              margin-bottom:20px;
+              h4{
+                font-size:14px;
+                color:#333;
+                height:40px;
+                background:#cceff6;
+                font-weight: 500;
+                padding-left:24px;
+                line-height:40px;
+                margin:0;
+              }
+              .grade{
+                background:#f8f8f8;
+                padding:28px 24px;
+              }
+            }
+          }
+
         }
       }
     }

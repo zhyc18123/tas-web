@@ -21,6 +21,9 @@ export const GET_CHAPTER_DETAIL='GET_CHAPTER_DETAIL'
 // 素材
 export const GET_DATA='GET_DATA'
 export const GET_DATA_DETAIL='GET_DATA_DETAIL'
+//系统
+export const GET_ORGAN='GET_ORGAN'
+export const GET_ORGAN_PERSON='GET_ORGAN_PERSON'
 // office online
 export const GET_TOKEN='GET_TOKEN'
 

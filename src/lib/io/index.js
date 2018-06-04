@@ -22,12 +22,7 @@ const io = {
     this.findYearsData = conf.baseApiPath + '/lesson/api/baseDataController/findYearsData'
     // 课程
     this.publishLesson=conf.baseApiPath+'/lesson/api/lesson/publishLesson'
-  // 系统管理
-    this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
-    this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
-    this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
-// 个人中心
-    this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
+
     this.addOrUpLesson=conf.baseApiPath+'/lesson/api/lesson/addOrUpLesson'
     this.detailLesson=conf.baseApiPath+'/lesson/api/lesson/detailLesson'
     this.findLesChapterPage=conf.baseApiPath+'/lesson/api/lessonChapter/findLesChapterPage'
@@ -44,7 +39,21 @@ const io = {
     // office token
     this.view=conf.baseApiPath+'/admin/api/token/view'
 
-
+// 系统管理
+  this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
+  this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
+  this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
+  this.findAuthRoleList=conf.baseApiPath + '/admin/api/authRole/findAuthRoleList'
+  this.addSysAuthUser=conf.baseApiPath + '/admin/api/authUser/addSysAuthUser'
+  this.updateSysAuthUser=conf.baseApiPath + '/admin/api/authUser/updateSysAuthUser'
+  this.updateStatus=conf.baseApiPath + '/admin/api/authUser/updateStatus'
+  //机构
+  this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
+  this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
+  //科目查询班级
+  this.findBaseSectionBySubject=conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionBySubject'
+// 个人中心
+  this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
 
 
 
