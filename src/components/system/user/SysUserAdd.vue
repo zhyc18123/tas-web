@@ -46,8 +46,8 @@
             <div slot="label" class="tow-four">
             所属个人：
             </div>
-            <el-select v-model="form.organPerson" placeholder="所属个人">
-                <el-option v-for="(organ,index) in system.organPerson.list" :label="organ.perName" :value="organ.id" :key="index"></el-option>
+            <el-select v-model="form.organPersonId" placeholder="所属个人">
+                <el-option v-for="(organ,index) in system.organPerson.list" :label="organ.orgName" :value="organ.id" :key="index">{{organ.orgName}}</el-option>
             </el-select>
         </el-form-item>
        <div>
@@ -136,6 +136,7 @@ export default {
         this.findAuthOrganPerson({pageIndex:1,pageSize:1000000})
         if (this.$route.query.userId) {
             this.userId = this.$route.query.userId
+
             this.authUserDetail()
         }
     },
@@ -161,7 +162,8 @@ export default {
             console.log(this.form,valid)
             if (valid) {
                 let data = Object.assign({}, this.form)
-                if(_this.form.authRoleId ==2){
+                console.log(_this.form.authRoleId)
+                if(_this.form.authRoleId == 2){
                     data.authOrganizationId = _this.form.organPersonId
                 }
                 if(this.password ===""){
@@ -170,6 +172,10 @@ export default {
                 }
                 if(this.password.length<6 || this.password.length>18){
                   this.$message("密码必须为6-18位的字母数字组合")
+                  return false
+                }
+                else if(!(/^[a-zA-Z0-9]{6,}$/.test(this.password)) && !this.userId){
+                  this.$message("密码必须为字母数字组合")
                   return false
                 }
                 if(this.cPassword ===""){
@@ -183,6 +189,7 @@ export default {
                   this.$message("两次输入的密码不一致，请重新输入")
                   return false
                 }
+                console.log(data)
                 if(this.form.authRoleId !=0 && data.authOrganizationId ==''){
                   this.$message("请选择机构")
                   return false
@@ -191,8 +198,8 @@ export default {
                     data.password = md5(this.password)
                     data.cPassword = md5(this.cPassword)
                 }else{
-                    data.password = [...this.oldPassword]
-                    data.cPassword = [...this.oldPassword]
+                    data.password = this.oldPassword
+                    data.cPassword = this.oldPassword
                 }
 
                 console.log(data)
@@ -235,8 +242,8 @@ export default {
                     organPersonId:ret.authOrganizationId,
                     authOrganizationId:ret.authOrganizationId,
                 }
-                this.passwords = '******'
-                this.cPasswords = '******'
+                this.password = '******'
+                this.cPassword = '******'
                 this.oldPassword = ret.password.toString()
             })
         }
