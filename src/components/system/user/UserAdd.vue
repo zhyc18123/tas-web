@@ -1,6 +1,6 @@
 <template>
   <div class="user-add">
-    <line-head-form class="head" title="新增账号"/>
+    <line-head-form class="head" :title="title"/>
     <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form" v-if="!loginInfo.isSystem">
       <el-form-item prop="username" required >
         <div slot="label" class="tow-four">
@@ -8,25 +8,25 @@
         </div>
         <el-input v-model="form.username" placeholder="请输入20字以内的用户姓名"></el-input>
       </el-form-item>
-      <el-form-item  prop="phoneNo" required >
+      <el-form-item  prop="account" required >
         <div slot="label" class="tow-four">
             手<span>机：</span>
         </div>
         <el-input v-model="form.account" placeholder="请输入登录手机号"></el-input>
       </el-form-item>
-      <el-form-item prop="password" class="orign-password" >
+      <el-form-item class="orign-password" >
         <div slot="label" class="tow-four">
             密<span>码：</span>
         </div>
-        <el-input v-model="form.password" placeholder="请输入6-18位数字或字母为密码"></el-input>
+        <el-input v-model="password" type = "password" placeholder="请输入6-18位数字或字母为密码"></el-input>
       </el-form-item>
-      <el-form-item prop="cpassword" class="orign-password" >
+      <el-form-item  class="orign-password" >
         <div slot="label" class="tow-four">
            确认密码：
         </div>
-        <el-input v-model="form.cpassword"  placeholder="请重复确认密码"></el-input>
+        <el-input v-model="cPassword" type = "password"  placeholder="请重复确认密码"></el-input>
       </el-form-item>
-       <el-form-item prop="jobStatuses" required >
+       <el-form-item  >
         <div slot="label" class="tow-four">
            任职状态：
         </div>
@@ -62,17 +62,19 @@
             <el-checkbox :label="item.id"  v-for="item in condition.subjectList" :key="item.id">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </div>
-        <div class="subject">
+        <div class="subject" v-if="form.checkedSubject.length>=1">
           <div slot="label" class="label">
             学段：
           </div>
-          <div class="role-cont">
-              <ul>
-                <li v-for="item in condition.gradeObj"  :key="item.id">
-                  <h4>数学</h4>
+          <div class="role-cont" >
+              <ul >
+                <li v-for="(gradesList,index) in gradesBySubject"  :key="index">
+                  <h4>{{gradesList.subjectName}}</h4>
                   <div class="grade">
+                    <el-checkbox-group v-model="gradesList.baseSectionIds"> 
                       <el-checkbox label="" :key="0">全部</el-checkbox>
-                      <el-checkbox :label="item.id" v-for="item in condition.gradeObj" :key="item.id"></el-checkbox>
+                      <el-checkbox :label="item.id" v-for="item in gradesList.list" :key="item.id">{{item.name}}</el-checkbox>
+                    </el-checkbox-group>
                   </div>
                 </li>
               </ul>
@@ -81,11 +83,11 @@
       </div>
        <el-form-item prop="jobStatuses" >
         <div slot="label" class="tow-four">
-           账号角色：
+          账号角色：
         </div>
-        <el-radio-group v-model="form.authRoleIds">
-          <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
-        </el-radio-group>
+        <el-checkbox-group v-model="authRoleIds">
+          <el-checkbox v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-checkbox>
+        </el-checkbox-group>
       </el-form-item>
       <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
       <el-button @click="$router.go(-1);resetForm" class="btn-cancel" type="basis">取消</el-button>
@@ -128,10 +130,13 @@ export default {
       }
     };
     return {
+      title:'新增账号',
       loginInfo:storage.getCurrentUserInfo(),
       checkAll: true,
       roleList: [],
       password: '',
+      cPassword:'',
+      authRoleIds:[],
       grades: '',
       dataSubjects:'',
       form: {
@@ -149,6 +154,7 @@ export default {
         jobStatus: 1,
         type: 0,
       },
+      gradesBySubject:[],
       types: [{
         label: '教师',
         value: 0,
@@ -177,31 +183,26 @@ export default {
         teachSubjectIds: [
           { type: 'array', required: true, message: '请至少选择一个任教科目', trigger: 'change' }
         ],
-        phoneNo: [
+        account: [
           { validator: validatePhoneNo, trigger: 'blur' }
-        ],
-        idNo: [
-          { validator: validateIdNo, trigger: 'blur' }
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
+          { required: true,  max: 20, message: '请输入20字以内的用户姓名', trigger: 'blur' },
         ],
-        name: [
-          { required: true, min: 2, max: 8, message: '长度在 2 到 8个字符', trigger: 'blur' },
-        ],
-        password:[
-          {required: true,message: '请输入密码',trigger: 'blur'}
-        ]
       }
     }
   },
   created() {
     this.findSubjectsData({pageIndex: 1, pageSize: 1000000,})
-    this.findBaseSectionBySubject()
     this.findAuthRoleList()
     if (this.$route.query.userId) {
       this.userId = this.$route.query.userId
+      this.title = "编辑账号"
       this.getUserDetail()
+    }
+    if(this.form.checkedSubject.length!=0){
+      this.findBaseSectionBySubject()
     }
   },
   computed:{
@@ -212,24 +213,26 @@ export default {
     resetForm() {
       this.form = {
         userId: "",
-        username: "",
+        username:'',
+        account: "",
         name: "",
+        sex:0,
         roleName: "",
-        optRoleId: "",
+        authRoleIds:[],
         password: "",
-        phoneNo: "",
-        idNo: "",
-        teachGradeIds: [],
-        teachSubjectIds: [],
+        cPassword: "",
+        checkedSubject:[],
         status: 1,
         jobStatus: 1,
-        jobNature: '0',
-        level: '',
+        type: 0,
       }
     },
     handleCheckedSubjectChange(val){
       this.dataSubjects = val.join(',')
-      this.findBaseSectionBySubject()
+      if(this.form.checkedSubject.length!=0){
+        this.findBaseSectionBySubject()
+      }
+
     },
     findAuthRoleList() {
       io.post(io.findAuthRoleList,{},(data) => {
@@ -240,26 +243,49 @@ export default {
         // }
       })
     },
-    findBaseSectionBySubject(){
+    findBaseSectionBySubject(subjectSectionList){
       let param = {
         subjectId:this.form.checkedSubject.join(',')
       }
       io.post(io.findBaseSectionBySubject,param,(ret)=>{
+        ret.map(item=>{
+          let baseSectionIds = []
+          if(subjectSectionList){
+            subjectSectionList.map((it)=>{
+
+              // item.baseSectionIds.push(it.)
+            })
+          }
+          item.baseSectionIds = []
+        })
+        this.gradesBySubject = ret
         console.log(ret)
       })
     },
     getUserDetail() {
-      io.post(io.userDetail, { userId: this.userId }, (data) => {
-        data.teachGradeIds = data.teachGradeIds === null || !data.teachGradeIds ? [] : data.teachGradeIds.split(',')
-        data.teachSubjectIds = data.teachSubjectIds === null || !data.teachSubjectIds ? [] : data.teachSubjectIds.split(',')
-        data.status = parseInt(data.status)
-        data.jobStatus = parseInt(data.jobStatus)
-        data.jobNature = parseInt(data.jobNature)
-        data.level = parseInt(data.level)
-        data.optRoleId = data.optRoleId
+      io.post(io.authUserDetail, { id: this.userId }, (data) => {
+        let checkedSubject = []
+        data.subjectSectionList.map((item)=>{
+            checkedSubject.push(item.subjectId)
+        })
+        this.form = {
+          userId: data.id,
+          username:data.username,
+          account:data.account,
+          sex:data.sex,
+          authRoleIds:[],
+          password: data.password,
+          cPassword: data,
+          checkedSubject:checkedSubject,
+          status: data.status,
+          jobStatus: data.jobStatus,
+          type: data.type,
+        }
         this.password = '******'
-        this.oldPassword = data.password
-        this.form = data;
+        this.cPassword = '******'
+        // this.oldPassword =JSON.parse(JSON.stringify(data.password))
+        // console.log(oldPassword)
+        this.findBaseSectionBySubject(subjectSectionList)
       })
     },
     handleSave() {
@@ -267,45 +293,94 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           let data = Object.assign({}, this.form)
-          data.teachSubjectNames = []
-          data.teachSubjectIds.map((j) => {
-            this.subjects.map((val) => {
+          let authSubjectSectionList = []
+          console.log(data,this.gradesBySubject)
+          data.checkedSubject.map((j) => {
+            this.gradesBySubject.map((val) => {
               if (j === val.subjectId) {
-                data.teachSubjectNames.push(val.subjectName)
+                authSubjectSectionList.push({subjectId:val.subjectId,baseSectionIds:val.baseSectionIds.join(',')})
               }
             })
           })
-          data.teachGradeIds = data.teachGradeIds.join(',')
-          data.teachSubjectIds = data.teachSubjectIds.join(',')
-          data.teachSubjectNames = data.teachSubjectNames.join(',')
-          if(!_this.password){
-            this.$message('初始密码不可以为空！');
-            return;
+          data.authSubjectSectionList = authSubjectSectionList
+          if(this.password ===""){
+            this.$message("密码不能为空")
+            return false
+          }
+          if(this.password.length<6 || this.password.length>18){
+            this.$message("密码必须为6-18位的字母数字组合")
+            return false
+          }else if(!(/^[a-zA-Z0-9]{6,}$/.test(this.cPassword))){
+            this.$message("密码必须为字母数字组合")
+            return false
+          }
+          if(this.cPassword ===""){
+            this.$message("再次输入密码不能为空")
+            return false
+          }else if(this.cPassword.length<6 ||  this.cPassword.length>18){
+            this.$message("再次输入密码必须为6-18位的字母数字组合")
+            return false
+          }
+          if(this.cPassword !==this.password){
+            this.$message("两次输入的密码不一致，请重新输入")
+            return false
+          }
+          if(this.cPassword !==this.password){
+            this.$message("两次输入的密码不一致，请重新输入")
+            return false
           }
           if (_this.password !== '******') {
             data.password = md5(this.password)
           }
-          io.post(io.saveOrUpdateUser, data, (data) => {
-            this.$message('保存成功！')
-            console.log(data)
-            try{
-            if (data.userId === JSON.parse(sessionStorage.getItem('currentUserInfo'))&&data.userId === JSON.parse(sessionStorage.getItem('currentUserInfo')).userId) {
-              sessionStorage.setItem('currentUserInfo', JSON.stringify(data))
-            };
-}catch(e){
-  console.log(e)
-}
-            console.log("xx")
-            this.$store.dispatch('hasLogin')
-            this.$router.push('/main/system/userList/list')
-            this.resetForm()
-          })
+          if(_this.cPassword !== '******'){
+            data.cPassword = md5(this.cPassword)
+          }
+          if(this.form.checkedSubject.length<=0){
+            this.$message("请选择科目")
+          }
+          console.log(data)
+          // let isexist = false
+          // for(var i = 0;i < data.authSubjectSectionList.length;i++){
+          //   if(data.authSubjectSectionList[i].baseSectionIds == ''){
+          //     return isexist = true
+          //   }
+          // }
+          // if(isexist){
+          //   this.$message("你有科目未选年级,请选择")
+          //   return false
+          // }
+          if(this.authRoleIds.length<=0){
+            this.$message("请选择账号角色")
+            return false
+          }
+          data.authRoleIds = this.authRoleIds.join(",")
+          if(!this.userId){
+            io.post(io.addAuthUser,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
+              this.$message('保存成功！')
+                console.log(data)
+              this.$router.push('/main/system/userList/list')
+              this.resetForm()
+            })
+          }else{
+             io.post(io.updateStatus,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
+              this.$message('保存成功！')
+                console.log(data)
+              this.$router.push('/main/system/userList/list')
+              this.resetForm()
+            })
+          }
+         
         } else {
           return false;
         }
       });
     },
   },
+  watch:{
+    'form.checkedSubject':function(val){
+      console.log(val)
+    }
+  }
 }
 </script>
 

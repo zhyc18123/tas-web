@@ -7,7 +7,7 @@ import storage from '../../lib/storage'
 const state = {
     courseObj:{},
     courseDetail:{},
-    courseChapter:[]
+    courseChapterObj:{}
 }
 
 // getters
@@ -24,7 +24,7 @@ const mutations = {
         state.courseDetail=data
     },
     [types.GET_COURSE_CHAPTER](state,data){
-        state.courseChapter=data
+        state.courseChapterObj=data
     },
 }
 

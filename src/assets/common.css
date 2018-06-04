@@ -449,3 +449,15 @@ border-radius: 4px 4px 0 0;
 .el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner a, .el-breadcrumb__item:last-child .el-breadcrumb__inner a:hover, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover{
   color:#999 !important; 
 }
+
+
+.source-body{
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  padding-bottom: 30px
+}
+.source-body .office-ppt,.source-body .office-word{
+  width: 100%;
+  height: 760px
+}

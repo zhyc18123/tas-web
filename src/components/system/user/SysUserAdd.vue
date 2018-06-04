@@ -1,30 +1,30 @@
 <template>
   <div class="user-add">
     <!-- 系统管理员身份的新增 -->
-    <el-form  class="add-form" label-width="100px" :rules="rules" ref="form" :model="form">
+    <el-form  class="add-form" label-width="100px" status-icon :rules="rules" ref="form" :model="form">
       <el-form-item prop="username" required >
         <div slot="label" class="tow-four">
             姓<span>名：</span>
         </div>
         <el-input v-model="form.username" placeholder="请输入用户姓名"></el-input>
       </el-form-item>
-      <el-form-item  prop="account" required >
+      <el-form-item  prop="account"   required>
         <div slot="label" class="tow-four">
             手<span>机：</span>
         </div>
         <el-input v-model="form.account" placeholder="请输入手机号，该号用于登录系统 "></el-input>
       </el-form-item>
-      <el-form-item prop="password" class="orign-password" required>
+      <el-form-item prop="password" class="orign-password"  >
         <div slot="label" class="tow-four">
             密<span>码：</span>
         </div>
-        <el-input v-model="password" type = "password" placeholder="请输入6-18位数字或字母为密码"></el-input>
+        <el-input v-model="password" type = "password" placeholder="请输入6-18位数字或字母为密码" auto-complete="off"></el-input>
       </el-form-item>
-      <el-form-item prop="cPassword" class="orign-password" required>
+      <el-form-item prop="cPassword" class="orign-password" >
         <div slot="label" class="tow-four">
            确认密码：
         </div>
-        <el-input v-model="cPassword"  type = "password" placeholder="请再次输入密码"></el-input>
+        <el-input v-model="cPassword"  type = "password" placeholder="请再次输入密码" auto-complete="off"></el-input>
       </el-form-item>
        <el-form-item prop="authRoleId"  >
         <div slot="label" class="tow-four">
@@ -34,7 +34,7 @@
           <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
         </el-radio-group>
        </el-form-item>
-        <el-form-item prop="authRoleId" v-if="form.authRoleId == 1" >
+        <el-form-item  v-if="form.authRoleId == 1" >
             <div slot="label" class="tow-four">
             所属机构：
             </div>
@@ -42,7 +42,7 @@
                 <el-option v-for="(organ,index) in system.organList.list" :label="organ.orgName" :value="organ.id" :key="index"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item prop="authRoleId" v-if="form.authRoleId == 2" >
+        <el-form-item  v-if="form.authRoleId == 2" >
             <div slot="label" class="tow-four">
             所属个人：
             </div>
@@ -78,16 +78,28 @@ export default {
                 callback();
             }
         };
-        const validatePassword = (rule, value, callback) =>{
-            console.log(value)
-            if (value === '') {
-                callback(new Error('请输入密码'));
-            } else if (!(/^[a-zA-Z0-9]{6,}$/.test(value))) {
-                callback(new Error('密码必须为6-18位的字母数字组合'));
-            } else {
-                callback();
-            }
-        };
+        // const validatePassword = (rule, value, callback) =>{
+        //     console.log(value)
+        //     if (value === '') {
+        //         callback(new Error('请输入密码'));
+        //     } else if (!(/^[a-zA-Z0-9]{6,}$/.test(value))) {
+        //         callback(new Error('密码必须为6-18位的字母数字组合'));
+        //     } else {
+        //         callback();
+        //     }
+        // };
+        // const validateCpassword = (rule, value, callback) =>{
+        //     console.log(value,this.password)
+        //     if (value === '') {
+        //         callback(new Error('请再次输入密码'));
+        //     } else if (!(/^[a-zA-Z0-9]{6,}$/.test(value))) {
+        //         callback(new Error('密码必须为6-18位的字母数字组合'));
+        //     } else if(value !== this.password){
+        //         callback(new Error('两次输入密码不一致!'));
+        //     } else {
+        //         callback();
+        //     }
+        // };
 
     return {
         loginInfo:storage.getCurrentUserInfo(),
@@ -106,20 +118,11 @@ export default {
           authOrganizationId:'',
         },
       rules: {
-        // authRoleId:[
-        //     {required: true, message: '请选择角色', trigger: 'blur'}
-        // ],
         account: [
           { validator: validatePhoneNo, trigger: 'blur' }
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-        ],
-        password:[
-          {validator:validatePassword,trigger: 'blur'}
-        ],
-        cPassword:[
-           {validator:validatePhoneNo,trigger: 'blur'}
         ],
         authRoleId:[
           {required: true, message: "请选择角色", trigger: 'change' }
@@ -161,15 +164,39 @@ export default {
                 if(_this.form.authRoleId ==2){
                     data.authOrganizationId = _this.form.organPersonId
                 }
+                if(this.password ===""){
+                  this.$message("密码不能为空")
+                  return false
+                }
+                if(this.password.length<6 || this.password.length>18){
+                  this.$message("密码必须为6-18位的字母数字组合")
+                  return false
+                }
+                if(this.cPassword ===""){
+                  this.$message("再次输入密码不能为空")
+                  return false
+                }else if(this.cPassword.length<6 ||  this.cPassword.length>18){
+                  this.$message("再次输入密码必须为6-18位的字母数字组合")
+                  return false
+                }
+                if(this.cPassword !==this.password){
+                  this.$message("两次输入的密码不一致，请重新输入")
+                  return false
+                }
+                if(this.form.authRoleId !=0 && data.authOrganizationId ==''){
+                  this.$message("请选择机构")
+                  return false
+                }
                 if(this.password !== '******' && this.cPassword !== '******'){
                     data.password = md5(this.password)
                     data.cPassword = md5(this.cPassword)
                 }else{
-                    data.password = this.oldPassword
-                    data.cPassword = this.oldPassword
+                    data.password = [...this.oldPassword]
+                    data.cPassword = [...this.oldPassword]
                 }
+
+                console.log(data)
                 if(!this.userId){
-                   
                     io.post(io.addSysAuthUser, data, (data) => {
                         this.$message({
                             type:'success',
@@ -208,9 +235,9 @@ export default {
                     organPersonId:ret.authOrganizationId,
                     authOrganizationId:ret.authOrganizationId,
                 }
-                this.password = '******'
-                this.cPassword = '******'
-                this.oldPassword = ret.password
+                this.passwords = '******'
+                this.cPasswords = '******'
+                this.oldPassword = ret.password.toString()
             })
         }
     },

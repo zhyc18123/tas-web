@@ -9,119 +9,110 @@
         </div>
         <el-form :inline="true" :model="form" class="t-form gray t-class-list">
             <el-form-item label="">
-                <el-select v-model="form.grade" placeholder="年级">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.subjectId" placeholder="科目">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="">
-                <el-select v-model="form.semester" placeholder="科目">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.sectionId" placeholder="年级">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item>
-                <el-select v-model="form.classSize" placeholder="层级">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+            <el-form-item label="">
+                <el-select v-model="form.baseLevelId" placeholder="班型">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id"></el-option>
                 </el-select>
             </el-form-item>
-             <el-form-item>
-                <el-select v-model="form.compus" placeholder="学期">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
+            <el-form-item label="">
+                <el-input v-model="form.name" placeholder="请输入素材名称"></el-input>
             </el-form-item>
             <el-form-item>
-               <el-input v-model="form.gradeNameValue" placeholder="讲次名称"></el-input>
+                <el-button type="primary" @click="search">查询</el-button>
             </el-form-item>
-            <el-form-item>
-                <el-button type="primary" @click="handleSearch" class="search-btn">查询</el-button>
-            </el-form-item>
-        </el-form> 
+        </el-form>
         <div>
-            <el-table class="line-table" :data="tableData"  style="width: 100%" ref="multipleTable"  @selection-change="handleSelectionChange" tooltip-effect="dark">
-                <el-table-column  align="center"  type="selection"></el-table-column>
-                <el-table-column prop="sheetName" label="素材名称"  align="center"></el-table-column>
-                <el-table-column prop="sheetClass"  label="素材年级" align="center"> </el-table-column>
-                <el-table-column prop="semester"  label="学期" align="center"> </el-table-column>
-                <el-table-column prop="tier"  label="层级" align="center"> </el-table-column>
-                <el-table-column prop="remake"  label="备注" align="center"> </el-table-column>
+            <el-table class="line-table" :data="data.dataObj.list" style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange" tooltip-effect="dark">
+                <el-table-column align="center" type="selection"></el-table-column>
+                <el-table-column prop="name" label="素材名称" align="center"></el-table-column>
+                <el-table-column prop="subjectName" label="科目" align="center"></el-table-column>
+                <el-table-column prop="sectionNames" label="年级" align="center"> </el-table-column>
+                <el-table-column prop="leverName" label="班型" align="center"> </el-table-column>
+                <el-table-column prop="remark" label="备注" align="center"> </el-table-column>
             </el-table>
-            <v-pagination :total="total" :pageSize="pageSize" @getListResult="getListResult"></v-pagination>
-        </div>  
+    <v-pagination ref="pagin" class="pag" :total="data.dataObj.total|toNumber" @getListResult="getDataList" :currentPage="form.pageIndex"></v-pagination>
+        </div>
         <div class="add-sheet-btn">
-            <el-button class="height-btn">确定</el-button>
+            <el-button class="height-btn" @click="addLessonMaterial">确定</el-button>
             <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
-        </div>                                                     
+        </div>
     </el-row>
 </template>
 <script>
 import VPagination from "../../common/Pagination"
 import CourseStep from '../../common/CourseStep'
+import { mapActions, mapState } from 'vuex'
+import io from 'lib/io'
 export default {
     props: [],
     components: {
         VPagination,
         CourseStep
     },
-    data () {
+    data() {
         return {
-            total:80,
-            pageSize:10,
-
-            form:{
-                grade:"",
-                semester:"",
-                classSize:"",
-                semester:"",
-                compus:"",
-                gradeStatus:"",
-                gradeNameValue:'',
-
+            id:this.$route.params.id,
+            form: {
+                name: '',
+                subjectId: null,
+                sectionId: null,
+                baseLevelId: null,
+                pageIndex: 1,
+                pageSize: 10
             },
-            grade:[
-                {
-                    name:"高一",
-                    id:1,
-                },
-                {
-                    name:"高二",
-                    id:2,
-                }
-            ],
-            tableData:[
-                {
-                    ischeck:false,
-                    sheetName:"素材",
-                    sheetClass:"高一",
-                    semester:'春季',
-                    tier:"提高班",
-                    remake:'适用以提高班'
-                }
-            ]
+            tableSelect:[]
         }
     },
-    beforeRouteUpdate(to, from, next) {
-        console.log('to', to)
-        this.sourceType = to.params.sourceType
-        this.optType = to.params.optType
-        next()
+    computed: {
+        ...mapState(['data', 'condition']),
     },
-    created(){
-
+    created() {
+        this.getDataList()
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.subjectId })
+        this.findSubjectsData({ sectionId: this.form.sectionId })
+        this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
     },
-    methods:{
-        AddSheet(){
+    methods: {
+        handleSelectionChange(val) {
+            this.tableSelect=val
         },
-        handleSearch(){
-
-        },
-        handleSelectionChange(val){
-
-        },
-        getListResult(val){
-            console.log(val)
-        },
-        cancel(){
+        cancel() {
             console.log(this)
-            this.$parent.isAdd = false
+            this.$router.go(-1)
+        },
+        ...mapActions(['findBaseMaterial', 'findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage']),
+        addData() {
+            this.$router.push({ path: '/main/teach-research/data/new' })
+        },
+        search() {
+            this.$refs.pagin.changePage(1)
+            this.getDataList()
+        },
+        getDataList(opt) {
+            this.findBaseMaterial({ ...this.form, ...opt })
+        },
+        async addLessonMaterial(){
+            let ids=[]
+            this.tableSelect.map((item,i)=>{
+                ids.push(item.id)
+            })
+            let {data}=await io.post6(io.addLessonMaterial,{lessonId:this.id,baseMaterialIds:ids.join(',')})
+            if(data.success){
+                this.$message('保存成功！')
+                this.$router.go(-1)
+            }
         }
     }
 }

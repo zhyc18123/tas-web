@@ -218,6 +218,8 @@ export default {
                     this.loading = false
                     return false
                 }
+            }else if(this.fileType==='data'){
+            //    this.typeName= file.name.indexOf('.ppt')>-1?'PPT':file.name.indexOf('.doc')>-1?'WORD':file.name.indexOf('.xls')>-1?'EXCEL':file.name.indexOf('.pdf')>-1?'PDF':'压缩包'
             } else {
                 const isLt500M = file.size / 1024 / 1024 < 500;
                 if (!isLt500M) {

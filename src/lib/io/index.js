@@ -22,7 +22,12 @@ const io = {
     this.findYearsData = conf.baseApiPath + '/lesson/api/baseDataController/findYearsData'
     // 课程
     this.publishLesson=conf.baseApiPath+'/lesson/api/lesson/publishLesson'
-
+    this.addLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/addLesChapters'
+    this.delLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/delLesChapters'
+    this.changeLesChapter=conf.baseApiPath+'/lesson/api/lessonChapter/changeLesChapter'
+    this.sortLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/sortLesChapters'
+    this.detailLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/detailLesChapters'
+    this.addLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/addLessonMaterial'
     this.addOrUpLesson=conf.baseApiPath+'/lesson/api/lesson/addOrUpLesson'
     this.detailLesson=conf.baseApiPath+'/lesson/api/lesson/detailLesson'
     this.findLesChapterPage=conf.baseApiPath+'/lesson/api/lessonChapter/findLesChapterPage'
@@ -45,7 +50,9 @@ const io = {
   this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
   this.findAuthRoleList=conf.baseApiPath + '/admin/api/authRole/findAuthRoleList'
   this.addSysAuthUser=conf.baseApiPath + '/admin/api/authUser/addSysAuthUser'
+  this.addAuthUser=conf.baseApiPath + '/admin/api/authUser/addAuthUser'
   this.updateSysAuthUser=conf.baseApiPath + '/admin/api/authUser/updateSysAuthUser'
+  this.updateAuthUser=conf.baseApiPath + '/admin/api/authUser/updateAuthUser'
   this.updateStatus=conf.baseApiPath + '/admin/api/authUser/updateStatus'
   //机构
   this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
