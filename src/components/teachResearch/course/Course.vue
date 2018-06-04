@@ -48,11 +48,11 @@
               <use xlink:href="#icon-bianji"></use>
             </svg>
           </a>
-          <router-link title="修改课程信息" :to="{path:'/main/teach-research/course/'+scope.row.id}">
+          <a title="修改课程信息" href="javascript:;" @click="changeLecture(scope)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xiugai"></use>
             </svg>
-          </router-link>
+          </a>
           <a v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xuqiaofahu"></use>
@@ -119,6 +119,14 @@ export default {
   },
   methods: {
     ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage','findLessonPage']),
+    changeLecture(scope){
+      
+      if(scope.row.status===0){
+      this.$router.push({path:'/main/teach-research/course/'+scope.row.id})
+      }else{
+        this.$message('已发布的课程，不可以编辑！')
+      }
+    },
     editLecture(scope){
       if(scope.row.status===0){
       this.$router.push({path:'/main/teach-research/course/edit-lecture/'+scope.row.id})
