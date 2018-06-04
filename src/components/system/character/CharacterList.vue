@@ -40,14 +40,14 @@
 </template>
 
 <script>
-import VClassCategory from '../../common/ClassCategory.vue'
+// import VClassCategory from '../../common/ClassCategory.vue'
 import VPagination from '../../common/Pagination.vue'
 import io from '../../../lib/io'
 import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'character-list',
   components: {
-    VClassCategory,
+    // VClassCategory,
     VPagination
   },
   data() {

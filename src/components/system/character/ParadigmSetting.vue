@@ -21,14 +21,14 @@
 </template>
 
 <script>
-import VClassCategory from '../../common/ClassCategory.vue'
-import VCharacterTitle from '../../common/CharacterTitle.vue'
+// import VClassCategory from '../../common/ClassCategory.vue'
+// import VCharacterTitle from '../../common/CharacterTitle.vue'
 import io from '../../../lib/io'
 export default {
   name: 'paradigm-setting',
   components: {
-    VClassCategory,
-    VCharacterTitle
+    // VClassCategory,
+    // VCharacterTitle
   },
   data() {
     return {

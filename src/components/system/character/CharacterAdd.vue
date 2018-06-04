@@ -14,11 +14,11 @@
 
 <script>
   import io from '../../../lib/io'
-  import VCharacterTitle from '../../common/CharacterTitle.vue'
+  // import VCharacterTitle from '../../common/CharacterTitle.vue'
 
   export default {
     components: {
-      VCharacterTitle
+      // VCharacterTitle
     },
     created() {
       if(this.$route.query.optRoleId && this.$route.query.optRoleId) {

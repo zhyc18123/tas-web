@@ -63,13 +63,13 @@ import io from '../../../lib/io'
 import md5 from 'js-md5'
 import storage from '../../../lib/storage/index'
 
-import VClassCategory from '../../common/ClassCategory.vue'
+// import VClassCategory from '../../common/ClassCategory.vue'
 import VPagination from '../../common/Pagination.vue'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'user-list',
   components: {
-    VClassCategory,
+    // VClassCategory,
     VPagination
   },
 
