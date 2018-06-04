@@ -7,6 +7,7 @@ import office from './modules/office'
 import data from './modules/data'
 import global from './modules/global'
 import condition from './modules/condition'
+import system from './modules/system'
 import createLogger from '../lib/plugins/logger'
 
 Vue.use(Vuex)
@@ -20,7 +21,8 @@ export default new Vuex.Store({
     office,
     data,
     global,
-    condition
+    condition,
+    system,
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

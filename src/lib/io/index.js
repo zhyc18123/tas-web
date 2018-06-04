@@ -56,7 +56,23 @@ const io = {
     this.download=conf.baseApiPath+'/admin/api/token/download'
     this.del=conf.baseApiPath+'/admin/api/token/del'
 
-
+// 系统管理
+  this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
+  this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
+  this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
+  this.findAuthRoleList=conf.baseApiPath + '/admin/api/authRole/findAuthRoleList'
+  this.addSysAuthUser=conf.baseApiPath + '/admin/api/authUser/addSysAuthUser'
+  this.addAuthUser=conf.baseApiPath + '/admin/api/authUser/addAuthUser'
+  this.updateSysAuthUser=conf.baseApiPath + '/admin/api/authUser/updateSysAuthUser'
+  this.updateAuthUser=conf.baseApiPath + '/admin/api/authUser/updateAuthUser'
+  this.updateStatus=conf.baseApiPath + '/admin/api/authUser/updateStatus'
+  //机构
+  this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
+  this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
+  //科目查询班级
+  this.findBaseSectionBySubject=conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionBySubject'
+// 个人中心
+  this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
 
 
 
