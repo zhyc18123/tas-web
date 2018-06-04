@@ -29,6 +29,24 @@ const actions = {
       commit(types.GET_TOKEN,data.data.token)
     }
   },
+  async edit({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.edit, opt)
+    if (data.success) {
+      commit(types.GET_TOKEN,data.data.token)
+    }
+  },
+  async download({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.download, opt)
+    if (data.success) {
+      commit(types.GET_TOKEN,data.data.token)
+    }
+  },
+  async del({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.del, opt)
+    if (data.success) {
+      commit(types.GET_TOKEN,data.data.token)
+    }
+  },
   
 }
 

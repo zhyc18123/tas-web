@@ -1,37 +1,55 @@
 <template>
     <div class="course-ware container">
         <div class="course-title">
-            <img src="../../assets/img/to-right.png" alt=""> 2018春季物理尖子班
+            <img src="../../assets/img/to-right.png" alt=""> {{lessonName}}
         </div>
         <div class="times-div">
             <div class="t-title">
-                <em>第1讲</em>
-                <em>长度与时间</em>
+                <em>第 {{lectureNum}} 讲</em>
+                <em>{{chapterDetail.name}}</em>
             </div>
             <span class="b-line"></span>
             <div class="c-tab" v-if="optType==='read'">
-                <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push('/main/prepare-lessons/'+id+'/courseWare/read')">课件</div>
-                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push('/main/prepare-lessons/'+id+'/lecture/read')">讲义</div>
+                <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/courseWare/read',query:{lessonId,lessonName,lectureNum}})">课件</div>
+                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/lecture/read',query:{lessonId,lessonName,lectureNum}})">讲义</div>
             </div>
         </div>
         <div class="opt-div">
             <div class="o-body" v-if="optType==='read'">
-                <span>如需调整课件，可点击该按钮！</span>
+                <!--<template v-if="sourceType==='courseWare'">-->
+                <span>如需调整{{sourceType==='courseWare'?'课件':'讲义'}}，可点击该按钮！</span>
                 <img src="../../assets/img/finger.png" alt="">
-                <div class="write-btn" @click="$router.push('/main/prepare-lessons/'+id+'/'+sourceType+'/edit')">自定义编辑</div>
+                <div class="write-btn" @click="selfEdit">自定义编辑</div>
+                <!--<div v-show="sourceType!=='courseWare'" class="write-btn print" @click="selfEdit">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-dayin"></use>
+                    </svg>
+                    打印
+                </div>-->
+                <!--</template>-->
+                <!--<template v-else>
+                    <span>如需调整讲义，可点击该按钮！</span>
+                    <img src="../../assets/img/finger.png" alt="">
+                    <div class="write-btn" @click="selfEdit">自定义编辑</div>
+                    </template>-->
             </div>
         </div>
-        <div class="source-body" v-if="sourceType==='courseWare'">
-            <iframe class="office-ppt" v-show="optType==='edit'" src="http://192.168.16.130:8080/office/edit/498bf05a504247c59b659b499745b9b0?token=MDAwMTpzMVFFRHBDaFlIVXo0SjhtNlFRSGd3QTRvaWlrOW9VZm53MlE4V2F2MUMrOE1jMmlQdm1zL1JYQkNtQlFaVzFIV3pndnJXbFNQZGhpeHpaZEp3TERlVjh6bEIrYXNmZXhBcVl0aHVWUi9saDdTSTRBS09JellXL0xMSFpaMWJjTUY1czd5ZlkyMVRmUmdnOTlQck5wREE9PQ" frameborder="0"></iframe>
-            <iframe class="office-ppt edit" v-show="optType==='read'" src="http://192.168.16.130:8080/office/view/498bf05a504247c59b659b499745b9b0?token=MDAwMTpzMVFFRHBDaFlIVXo0SjhtNlFRSGd6VEYzR3JQVmtMUWpuZzhpWitUWkxkMUxWNVZpYlYyWVRlaHo2Y0kwSnQ5cXRLd2NCSm9KcElPZEdpNU93NlFHbWY1WGFmaVN1ZjBZRFVVUEcwdWFSUUZKRE83Z0NGN0N5MGl0NG11dUt5OStQZG5HTHlMS2hqY3Z4VHFlcTVrcWc9PQ" frameborder="0"></iframe>
-        </div>
-        <div class="source-body" v-else>
-            <iframe class="office-word" v-show="optType==='edit'" src="http://192.168.16.130:8080/office/edit/2e6040b0f6f3459e91cc8f038d86253a?token=MDAwMTpzMVFFRHBDaFlIVXo0SjhtNlFRSGcwVDBvamsxSUFuMTZham43OGdwOWN0a1FieW81ZHdxdXhjOWVrYXBjVEhzbXRYQngyanBVZ2tLbWIzK3llcmd1cVVkU3pJVWVsZVZtczRxdGRtM1dGVXZ5Y1pWWExkbHJGNlROak5vL2M1YS81ZFRtUGRnTXpvM1phS2gwblhDbFE9PQ" frameborder="0"></iframe>
-            <iframe class="office-word" v-show="optType==='read'" src="http://192.168.16.130:8080/office/view/2e6040b0f6f3459e91cc8f038d86253a?token=MDAwMTpzMVFFRHBDaFlIVXo0SjhtNlFRSGc4MjZ5VGdKdVQyVXVHTGVTSmV0SUFXY2VVbUhMY2hlbUh6clFQMnE5SkJPUHBYRWZxR0ZzMjk3aDlmM2JZS1dLbGhxZU92R2Q5UWN5NnVxV0d6M1c5ZnU5cGtDVVQrbW9FWGRpbUZUZ2RKL21KT0pNSlVnYmljRE1WWlJIOUFEWXc9PQ" frameborder="0"></iframe>
-        </div>
+        <template v-if="office.token">
+            <div class="source-body" v-if="sourceType==='courseWare'">
+                <iframe class="office-ppt" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+                <iframe class="office-ppt edit" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+            </div>
+            <div class="source-body" v-else>
+                <iframe class="office-word" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
+                <iframe class="office-word" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
+            </div>
+        </template>
     </div>
 </template>
 <script>
+import { mapState, mapActions } from 'vuex'
+import io from 'lib/io'
+import conf from 'lib/conf'
 export default {
     components: {
 
@@ -40,18 +58,59 @@ export default {
         return {
             id: this.$route.params.id,
             sourceType: this.$route.params.sourceType,
-            optType: this.$route.params.optType
+            optType: this.$route.params.optType,
+            lessonId: this.$route.query.lessonId,
+            lessonName: this.$route.query.lessonName,
+            lectureNum: this.$route.query.lectureNum,
+            chapterDetail: {},
+            conf: conf
         }
+    },
+    computed: {
+        ...mapState(['office'])
     },
     beforeRouteUpdate(to, from, next) {
         console.log('to', to)
         this.sourceType = to.params.sourceType
         this.optType = to.params.optType
+        this.detailLesChapters()
         next()
     },
     created() {
+        this.detailLesChapters()
     },
     methods: {
+        ...mapActions(['view', 'edit']),
+        selfEdit() {
+            this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, lessonName: this.lessonName, lectureNum: this.lectureNum } })
+        },
+        getToken(data) {
+            let sourceId = this.getId(data)
+            if (this.optType === 'edit') {
+                this.edit({ resourceId: sourceId })
+            } else {
+                this.view({ resourceId: sourceId })
+            }
+        },
+        getId(data) {
+            let sourceId = ''
+            if (this.sourceType === 'courseWare') {
+                let urlArr = data.data.courseUrl.split('/')
+                sourceId = urlArr[urlArr.length - 1]
+            } else {
+                let urlArr = data.data.lectureUrl.split('/')
+                sourceId = urlArr[urlArr.length - 1]
+            }
+            return sourceId
+        },
+        async detailLesChapters() {
+            let { data } = await io.post6(io.detailLesChapters, { lessonId: this.lessonId, id: this.id })
+            if (data.success) {
+                this.chapterDetail = data.data
+                this.getToken(data)
+            }
+        }
+        // ...mapActions(['getBaseChapter'])
     }
 }
 </script>
@@ -77,6 +136,13 @@ export default {
             justify-content center
             align-items center
             cursor pointer
+        .print
+            width 90px
+            background #00a0d7
+            margin-left 10px
+            .icon
+                color white
+                margin-right 4px
 .course-ware
     background white
     padding 0 60px

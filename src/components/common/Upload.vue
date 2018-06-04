@@ -138,7 +138,7 @@ export default {
         },
         uploading(param, config, pathName) {
             if (this.isOfs) {
-                this.uploadUrl = conf.ofsUrl
+                this.uploadUrl = conf.ofsUrl+'office/upload'
             }
             axios.post(this.uploadUrl, param, config)
                 .then(response => {
@@ -152,7 +152,7 @@ export default {
             this.loading = false
             let backUrl = 'http://static.yuyou100.com/' + res.url
             if (this.isOfs) {
-                backUrl = 'http://ofs.yuyou100.com/office/view/' + res.resourceId
+                backUrl =res.resourceId
             }
             let duration = 0
             this.newFileUrl = backUrl;

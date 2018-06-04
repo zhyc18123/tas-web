@@ -318,7 +318,7 @@ export default {
         },
 
         async addOrUpLesson() {
-            let { data } = await io.post6(io.addOrUpLesson, { ...this.form, id: this.form.id === 'add' ? '' : this.form.id })
+            let { data } = await io.post6(io.addOrUpLesson, { ...this.form, id: this.form.id === 'add' ? '' : this.form.id,pId:this.checkItem })
             if (data.success) {
                 this.$message('保存成功')
                 if (this.form.id === 'add') {

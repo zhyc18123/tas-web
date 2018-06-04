@@ -5,8 +5,8 @@
         </div>
         <div class="p-line"></div>
         <div class="condit">
-            <el-tabs type="border-card" class="t-card">
-                <el-tab-pane v-for="(item,i) in subjects" :label="item.subjectName">
+            <el-tabs v-model="activeName" type="border-card" class="t-card">
+                <el-tab-pane v-for="(item,i) in condition.subjectList" :label="item.name" :name="i+''">
                     <div class="g-search">
                         <ul>
                             <li>
@@ -15,7 +15,7 @@
                                 </div>
                                 <div class="search-list">
                                     <el-radio-group v-model="form.gradeId" size="mini">
-                                        <el-radio-button v-for="(item,index) in gradelist" :label="item.id">{{item.name}}</el-radio-button>
+                                        <el-radio-button v-for="(item,index) in condition.gradeObj.list" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
@@ -24,8 +24,8 @@
                                     <label>学期：</label>
                                 </div>
                                 <div class="search-list">
-                                    <el-radio-group v-model="form.semesterId" size="mini">
-                                        <el-radio-button v-for="(item,index) in semesterlist" :label="item.id">{{item.name}}</el-radio-button>
+                                    <el-radio-group v-model="form.termId" size="mini">
+                                        <el-radio-button v-for="(item,index) in condition.termObj.list" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="search-list">
                                     <el-radio-group v-model="form.versionId" size="mini">
-                                        <el-radio-button v-for="(item,index) in versionList" :label="item.id">{{item.name}}</el-radio-button>
+                                        <el-radio-button v-for="(item,index) in condition.materList" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="search-list">
                                     <el-radio-group v-model="form.courseId" size="mini">
-                                        <el-radio-button v-for="(item,index) in courseList" :label="item.id">{{item.name}}</el-radio-button>
+                                        <el-radio-button v-for="(item,index) in course.courseObj.list" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
@@ -54,31 +54,37 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <div class="t-card c-body">
+        <div class="t-card c-body"  v-show="form.courseId">
             <div class="c-left">
-                <line-head title="能力强化班级讲次" />
-                <ul class="times-ul">
-                    <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.id+'/courseWare/read'}" v-for="(item,i) in timesList">第 {{i+1}} 讲{{item.name}}</router-link>
+                <line-head :title="course.courseChapterObj.name+'课程讲次'" />
+                <ul class="times-ul" v-if="course.courseChapterObj.list&&course.courseChapterObj.list.length">
+                    <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.id+'/courseWare/read',query:{lessonId:form.courseId,lectureNum:i+1,lessonName:course.courseChapterObj.name}}" v-for="(item,i) in course.courseChapterObj.list">第 {{i+1}} 讲{{item.name}}</router-link>
                 </ul>
+                    <div class="empty" v-else>
+                        暂无课程讲次
+                    </div>
             </div>
             <div class="c-right">
                 <div class="c-introduce">
-                    <line-head title="能力强化课程说明" />
+                    <line-head :title="course.courseChapterObj.name+'课程说明'" />
                     <div class="i-video">
-                        <d-player v-if="url" :options="{video:{url:url,pic:url+'-thumbnail-2'}}"></d-player>
+                        <d-player v-if="course.courseDetail.videoUrl" :options="{video:{url:course.courseDetail.videoUrl,pic:course.courseDetail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
                     <div class="i-text">
-                        寒暑假，通过现象化教学预习；新课春秋，通过细化考点逐个突破同步提高。
+                        {{course.courseDetail.remark}}
                     </div>
                 </div>
                 <div class="c-data">
                     <line-head title="课程资料" />
-                    <ul class="data-ul">
-                        <li v-for="(item,i) in dataList">
+                    <ul class="data-ul" v-if="course.courseDataObj.list&&course.courseDataObj.list.length">
+                        <li v-for="(item,i) in course.courseDataObj.list" @click="downloadData(item)">
                             <img :src="item.url" alt="">
-                            <span>{{item.name}}</span>
+                            <span>{{item.attchName}}</span>
                         </li>
                     </ul>
+                    <div class="empty" v-else>
+                        暂无课程资料
+                    </div>
                 </div>
             </div>
         </div>
@@ -89,6 +95,7 @@ import LineHead from 'common/LineHead'
 import VueDPlayer from 'vue-dplayer'
 import '../../../node_modules/vue-dplayer/dist/vue-dplayer.css'
 import testUrl from '../../assets/img/prepare-banner.png'
+import { mapState, mapActions } from 'vuex'
 export default {
     name: "PrepareLessons",
     components: {
@@ -97,86 +104,87 @@ export default {
     },
     data() {
         return {
-            subjects: [{ id: 1, subjectName: '物理' }, { id: 2, subjectName: '数学' }],
-            gradelist: [
-                {
-                    id: 1,
-                    name: '初二',
-                },
-                {
-                    id: 2,
-                    name: '初三',
-                },
-                {
-                    id: 3,
-                    name: '高一',
-                }
-            ],
-            semesterlist: [
-                {
-                    id: 1,
-                    name: "春季"
-                },
-                {
-                    id: 2,
-                    name: "夏季"
-                },
-                {
-                    id: 3,
-                    name: "秋季"
-                },
-                {
-                    id: 4,
-                    name: "冬季"
-                }
-            ],
-            versionList: [{
-                id: 1,
-                name: '全国版'
-            }, {
-                id: 2,
-                name: '人教版'
-            }],
-            courseList: [{
-                id: 1,
-                name: '2018春季物理提高班'
-            }, {
-                id: 2,
-                name: '2018春季物理尖子班'
-            }],
-            timesList: [{
-                id: 1,
-                name: '长度与时间的测量'
-            }, {
-                id: 2,
-                name: '长度与时间的测量'
-            }, {
-                id: 3,
-                name: '长度与时间的测量'
-            }],
-            dataList: [{
-                url: testUrl,
-                name: '教学计划'
-            }, {
-                url: testUrl,
-                name: '教学计划'
-            }],
-            url: 'http://static.yuyou100.com/0010c02a020e4e0bbe9d8b8ec1fa9cd0',
+            activeName: '0',
             form: {
                 gradeId: '',
-                semesterId: '',
+                termId: '',
                 versionId: '',
                 courseId: ''
             }
         }
     },
+    computed: {
+        ...mapState(['condition', 'course','chapter']),
+    },
+    watch: {
+        'condition.subjectList'(val) {
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: val[0].id })
+            this.activeName = 0 + ''
+        },
+        'condition.gradeObj'(val) {
+            this.form.gradeId = val.list[0].id
+        },
+        'condition.termObj'(val) {
+            this.form.termId = val.list[0].id
+        },
+        'condition.materList'(val) {
+            this.form.versionId = val[0].id
+        },
+        'course.courseObj'(val){
+            console.log('xx',val)
+            this.form.courseId=val.list[0]&&val.list[0].id
+        },
+        activeName(val) {
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.condition.subjectList[val].id })
+            this.findMaterialData({ sectionId: this.form.gradeId, subjectId: this.condition.subjectList[val].id })
+            this.getLessons()
+        },
+        'form.gradeId'(val) {
+            this.findMaterialData({ sectionId: val, subjectId: this.condition.subjectList[Number(this.activeName)].id })
+            this.getLessons()
+        },
+        'form.termId'(val){
+            this.getLessons()
+        },
+        'form.versionId'(val){
+            this.getLessons()
+        },
+        'form.courseId'(val){
+            if(!val){
+                return
+            }
+        this.findLesChapterPage({ lessonId: val })
+        this.detailLesson({id:val})
+        this.findLessonMaterial({pageIndex:1,pageSize:1000000,lessonId:val})
+        }
+    },
     created() {
-
+        this.findSubjectsData()
+        this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
+    },
+    methods: {
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage', 'findLessonPage', 'findMaterialData','findLesChapterPage','detailLesson','findLessonMaterial']),
+        getLessons() {
+            this.findLessonPage(
+                {
+                    pageIndex: 1,
+                    pageSize: 10000000,
+                    dataSubject: this.form.subjectId,
+                    baseSectionId: this.form.gradeId,
+                    baseTrimesterId: this.form.termId
+                })
+        },
+        downloadData(item){
+            window.open(item.attchUrl+'?attname='+item.attchName)
+        }
     }
 
 }
 </script>
 <style lang="less" scoped>
+    .empty{
+        margin: 20px
+    }
 .times-ul {
     margin-top: 30px;
     li {
@@ -213,6 +221,9 @@ export default {
         font-size: 14px;
         line-height: 20px;
         color: #333;
+        .dplayer{
+            max-height: 300px;
+        }
     }
     .i-text {
         padding: 20px;
@@ -227,7 +238,7 @@ export default {
             padding: 0 20px;
             display: flex;
             align-items: center;
-            &:hover{
+            &:hover {
                 background: #f5f9fa;
                 cursor: pointer;
             }
@@ -340,8 +351,8 @@ export default {
     .el-radio-button:focus:not(.is-focus):not(:active) {
         box-shadow: unset;
     }
-    .el-radio-button__orig-radio:checked+.el-radio-button__inner{
-        box-shadow:0 0 0 0;
+    .el-radio-button__orig-radio:checked+.el-radio-button__inner {
+        box-shadow: 0 0 0 0;
     }
 }
 

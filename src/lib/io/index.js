@@ -28,6 +28,15 @@ const io = {
     this.sortLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/sortLesChapters'
     this.detailLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/detailLesChapters'
     this.addLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/addLessonMaterial'
+    this.findLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/findLessonMaterial'
+    this.delLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/delLessonMaterial'
+    this.detailLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/detailLesChapters'
+  // 系统管理
+    this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
+    this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
+    this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
+// 个人中心
+    this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
     this.addOrUpLesson=conf.baseApiPath+'/lesson/api/lesson/addOrUpLesson'
     this.detailLesson=conf.baseApiPath+'/lesson/api/lesson/detailLesson'
     this.findLesChapterPage=conf.baseApiPath+'/lesson/api/lessonChapter/findLesChapterPage'
@@ -43,6 +52,9 @@ const io = {
     this.updateBaseMaterial=conf.baseApiPath+'/lesson/api/baseMaterial/updateBaseMaterial'
     // office token
     this.view=conf.baseApiPath+'/admin/api/token/view'
+    this.edit=conf.baseApiPath+'/admin/api/token/edit'
+    this.download=conf.baseApiPath+'/admin/api/token/download'
+    this.del=conf.baseApiPath+'/admin/api/token/del'
 
 // 系统管理
   this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'

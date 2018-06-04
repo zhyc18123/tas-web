@@ -29,10 +29,10 @@
                 <div class="cont-right">
 
         <div class="source-body" v-if="sourceType==='courseWare'">
-            <iframe class="office-ppt edit"  v-if="office.token" :src="chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+            <iframe class="office-ppt edit"  v-if="office.token" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
         </div>
         <div class="source-body" v-else>
-            <iframe class="office-word" v-if="office.token" :src="chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
+            <iframe class="office-word" v-if="office.token" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
         </div>
                 </div>
             </div>
@@ -47,6 +47,7 @@
 import CourseStep from '../../common/CourseStep'
 import { mapState, mapActions } from 'vuex'
 import io from 'lib/io'
+import conf from 'lib/conf'
 export default {
     props: [],
     components: {
@@ -59,7 +60,8 @@ export default {
             chapterId:this.$route.params.chapterId,
             styleTag:this.$route.params.chapterId,
             chapterDetail:{},
-            isShow:true
+            isShow:true,
+            conf:conf
         }
     },
     computed: {
@@ -92,11 +94,9 @@ export default {
                 this.chapterDetail=data.data
                 let sourceId=''
                 if(this.sourceType==='courseWare'){
-                    let urlArr=data.data.courseUrl.split('/')
-                    sourceId=urlArr[urlArr.length-1]
+                    sourceId=data.data.courseUrl
                 }else{
-                    let urlArr=data.data.lectureUrl.split('/')
-                    sourceId=urlArr[urlArr.length-1]
+                    sourceId=data.data.lectureUrl
                 }
                 this.view({resourceId:sourceId})
             }

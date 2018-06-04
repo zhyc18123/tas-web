@@ -14,7 +14,7 @@ export default {
   qiniuVideoUrl: 'development' == process.env.NODE_ENV ?'http://test.yuyou100.com/yyfn-api/api/qiniu/upload/video/token' : 'http://b.yuyou100.com/yyfn-api/api/qiniu/upload/video/token',
   qiniuUploadTokenApi:'development' == process.env.NODE_ENV ?
   'http://test.yuyou100.com/yyfn-api/api/qiniu/upload/token':'http://b.yuyou100.com/yyfn-api/api/qiniu/upload/token',
-  ofsUrl:'http://ofs.yuyou100.com/office/upload',
+  ofsUrl:'http://ofs.yuyou100.com/',
 
   hostName: 'development' == process.env.NODE_ENV ? 'http://s.test.yuyou100.com/':'http://s.y.yuyou100.com/',
 }
