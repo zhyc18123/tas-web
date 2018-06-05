@@ -39,7 +39,7 @@
            人员类型：
         </div>
         <el-radio-group v-model="form.type">
-            <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="dark" :content="item.content" placement="bottom" :open-delay="500">
+            <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="light" :content="item.content" placement="bottom" :open-delay="500">
                  <el-radio   :label="item.value">{{item.label}}</el-radio>
             </el-tooltip>
         </el-radio-group>
@@ -346,7 +346,6 @@ export default {
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
-          console.log(data,this.gradesBySubject)
           data.checkedSubject.map((j) => {
             this.gradesBySubject.map((val) => {
               if (j === val.subjectId) {

@@ -47,6 +47,7 @@ const OrganizationDetail = resolve => require(['../components/system/organizatio
 const UserListContainer = resolve => require(['../components/system/UserListContainer'], resolve)
 const UserList = resolve => require(['../components/system/user/UserList'], resolve)
 const UserAdd = resolve => require(['../components/system/user/UserAdd'], resolve)
+const UserDetail = resolve => require(['../components/system/user/UserDetail'], resolve)
 const CharacterList = resolve => require(['../components/system/character/CharacterList'], resolve)
 const CharacterAdd = resolve => require(['../components/system/character/CharacterAdd'], resolve)
 const ParadigmSetting = resolve => require(['../components/system/character/ParadigmSetting'], resolve)
@@ -159,7 +160,11 @@ const router= new Router({
             }, {
               path: 'userAdd',
               component: UserAdd
-            }]
+            },{
+              path: 'userDetail',
+              component: UserDetail
+            }
+          ]
           }, {
             path: 'characterList',
             component: CharacterListContainer,
@@ -183,7 +188,7 @@ const router= new Router({
               path: 'list',
               component: OrganizationList
             }, {
-              path: 'list/:id',
+              path: 'list/:type',
               component: OrganizationDetail
             }]
           }, {

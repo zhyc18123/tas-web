@@ -2,9 +2,11 @@
   <div class="organization">
     <el-form :inline="true" :model="form" class="t-form gray">
       <el-form-item label="">
-        <el-select v-model="form.region" placeholder="合作状态">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
+        <el-select v-model="form.status" placeholder="合作状态">
+          <el-option label="请选择合作状态" value=""></el-option>
+          <el-option label="试用期" :value="0"></el-option>
+          <el-option label="合约期" :value="1"></el-option>
+          <el-option label="终止" :value="2"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="">
@@ -17,61 +19,70 @@
         <el-button type="primary" class="new-btn" @click="onSubmit">新建个人合作</el-button>
       </el-form-item>
     </el-form>
-            <el-table class="line-table" :data="tableData"  style="width: 100%" header-align="center">
-                <el-table-column prop="className" label="编号" align="center" ></el-table-column>
-                <el-table-column prop="grade" label="姓名"  align="center"></el-table-column>
-                <el-table-column prop="term"  label="手机号" align="center"> </el-table-column>
-                <el-table-column prop="campus"  label="合作状态" align="center"> </el-table-column>
-                <el-table-column prop="curriculumTime"  label="账号有效期" align="center"> </el-table-column>
-                <el-table-column label="操作" align="center"> 
-                  <template scope="scope">
-                    <router-link to="/main/system/personal/list/1">
-                            <svg class="icon" aria-hidden="true">
-                                <use xlink:href="#icon-xiugaiziliao"></use>
-                            </svg>
-                    </router-link>
-                  </template>
-                </el-table-column>
-            </el-table>
-    <v-pagination ref="pagin" class="pag" :total="result.total|toNumber" @getListResult="getListResult" :currentPage="form.pageNo"></v-pagination>
+    <el-table class="line-table" :data="tableData"  style="width: 100%" header-align="center">
+        <el-table-column prop="className" label="编号" align="center" ></el-table-column>
+        <el-table-column prop="grade" label="姓名"  align="center"></el-table-column>
+        <el-table-column prop="term"  label="手机号" align="center"> </el-table-column>
+        <el-table-column prop="campus"  label="合作状态" align="center"> </el-table-column>
+        <el-table-column prop="curriculumTime"  label="账号有效期" align="center"> </el-table-column>
+        <el-table-column label="操作" align="center"> 
+          <template slot-scope="scope">
+            <router-link to="/main/system/personal/list/1">
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-xiugaiziliao"></use>
+                    </svg>
+            </router-link>
+          </template>
+        </el-table-column>
+    </el-table>
+    <v-pagination ref="pagin" class="pag" :total="total" @getListResult="getListResult" :currentPage="pageNo" :pageSize="pageSize"></v-pagination>
   </div>
 </template>
 <script>
 import VPagination from '../../common/Pagination'
+import {mapState,mapActions,mapGetters} from 'vuex'
 export default {
   components: {
     VPagination
   },
   data () {
     return {
+      total:1,
+      pageSize:10,
+      pageNo:1,
       form:{
         user:'',
-        region:'',
-        pageNo:1,
-        pageSize:10
+        status:'',
       },
-      result:{
-        total:99
-      },
-            tableData:[
-                {
-                    className:"2018春季物理提高班",
-                    grade:"初二",
-                    term:"春季",
-                    campus:"岗顶校区",
-                    curriculumTime:"2017-02-12",
-                    tier:"提高班",
-                    schoolTime:"8:45 - 9:45",
-                    week:'周一'
-                }
-            ],
+      tableData:[
+          {
+              className:"2018春季物理提高班",
+              grade:"初二",
+              term:"春季",
+              campus:"岗顶校区",
+              curriculumTime:"2017-02-12",
+              tier:"提高班",
+              schoolTime:"8:45 - 9:45",
+              week:'周一'
+          }
+      ],
     }
   },
+  created(){
+    this.getListResult()
+  },
+  computed:{
+    ...mapState(['system'])
+  },
   methods: {
+    ...mapActions(["findAuthOrganPerson"]),
     onSubmit(){
 
     },
-    getListResult(){
+    getListResult(pageInfo){
+      let pageIndex = (pageInfo?pageInfo.pageIndex:false) || this.pageNo || 1
+      let param = Object.assign({pageIndex:pageIndex,pageSize:this.pageSize}, this.form)
+      this.findAuthOrganPerson(param)
 
     }
   }
