@@ -121,7 +121,7 @@ export default {
             this.findClassPage({...this.form,...opt})
         },
         search(){
-            this.$refs.pagin.changePage(1)
+      this.$refs.pagin.changePage(1)
             this.getClass()
         },
     }

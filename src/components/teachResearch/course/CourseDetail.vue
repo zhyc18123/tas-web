@@ -73,7 +73,7 @@
                 <el-input type="textarea" :rows="6" v-model="form.remark"></el-input>
             </el-form-item>
             <el-form-item label="">
-                <upload btnText="上传介绍（视频）" fileType="video" @success="uploadSuccess" :fileSize="form.videoSize" :fileUrl="form.videoUrl" :originalName="form.videoName" typeName="视频">
+                <upload btnText="上传介绍（视频）" fileType="video" @success="uploadSuccess" :sFileSize="form.videoSize" :fileUrl="form.videoUrl" :sOriginalName="form.videoName" sTypeName="视频">
                 </upload>
             </el-form-item>
             <el-form-item class="opt-btn">

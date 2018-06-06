@@ -1,13 +1,13 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="4" />
+        <course-step :active="4" v-if="dataObj.ext.status!==1"/>
         <div class="main">
             <div class="times-div">
                 <div class="t-title">
                     <em>{{dataObj.ext&&dataObj.ext.name}}</em>
                 </div>
                 <span class="b-line"></span>
-                <div class="c-add">
+                <div class="c-add"  v-if="dataObj.ext.status!==1">
                     <span>支持PPT、Word、Excel、PDF、压缩包</span>
                     <el-button @click="$router.push('/main/teach-research/course/add-sheet/'+id)">添加辅助材料</el-button>
                 </div>
