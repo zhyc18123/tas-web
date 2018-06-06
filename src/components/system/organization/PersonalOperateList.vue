@@ -10,24 +10,34 @@
         </el-select>
       </el-form-item>
       <el-form-item label="">
-        <el-input v-model="form.user" placeholder="请输入姓名/手机号"></el-input>
+        <el-input v-model="form.phoneOrName" placeholder="请输入姓名/手机号"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
+        <el-button type="primary" @click="search()">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="onSubmit">新建个人合作</el-button>
+        <el-button type="primary" class="new-btn" @click="$router.push('/main/system/personal/list/add')">新建个人合作</el-button>
       </el-form-item>
     </el-form>
-    <el-table class="line-table" :data="tableData"  style="width: 100%" header-align="center">
-        <el-table-column prop="className" label="编号" align="center" ></el-table-column>
-        <el-table-column prop="grade" label="姓名"  align="center"></el-table-column>
-        <el-table-column prop="term"  label="手机号" align="center"> </el-table-column>
-        <el-table-column prop="campus"  label="合作状态" align="center"> </el-table-column>
-        <el-table-column prop="curriculumTime"  label="账号有效期" align="center"> </el-table-column>
+    <el-table class="line-table" :data="system.organPerson.list"  style="width: 100%" header-align="center">
+        <el-table-column prop="perNum" label="编号" align="center" ></el-table-column>
+        <el-table-column prop="perName" label="姓名"  align="center"></el-table-column>
+        <el-table-column prop="perPhone"  label="手机号" align="center"> </el-table-column>
+        <el-table-column prop="status"  label="合作状态" align="center"> 
+          <template slot-scope="scope">
+              <span v-if="scope.row.status==0">试用期</span>
+              <span v-if="scope.row.status==1">合约期</span>
+              <span v-if="scope.row.status==2">终止</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="curriculumTime"  label="账号有效期" align="center">
+          <template slot-scope="scope">
+            <span>{{scope.row.userTimeStart | formatDate }}--{{scope.row.userTimeEnd | formatDate }}</span>
+          </template>
+        </el-table-column>
         <el-table-column label="操作" align="center"> 
           <template slot-scope="scope">
-            <router-link to="/main/system/personal/list/1">
+            <router-link :to="'/main/system/personal/list/edit?id='+scope.row.id">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-xiugaiziliao"></use>
                     </svg>
@@ -35,7 +45,7 @@
           </template>
         </el-table-column>
     </el-table>
-    <v-pagination ref="pagin" class="pag" :total="total" @getListResult="getListResult" :currentPage="pageNo" :pageSize="pageSize"></v-pagination>
+    <v-pagination ref="pagin" class="pag" :total="system.organPerson.total || total" @getListResult="getListResult" :pageSize="pageSize"></v-pagination>
   </div>
 </template>
 <script>
@@ -51,7 +61,7 @@ export default {
       pageSize:10,
       pageNo:1,
       form:{
-        user:'',
+        phoneOrName:'',
         status:'',
       },
       tableData:[
@@ -76,10 +86,13 @@ export default {
   },
   methods: {
     ...mapActions(["findAuthOrganPerson"]),
-    onSubmit(){
-
+    search(){
+      this.getListResult({pageIndex:1})
     },
     getListResult(pageInfo){
+      if(pageInfo){
+        this.pageNo = pageInfo.pageIndex
+      }
       let pageIndex = (pageInfo?pageInfo.pageIndex:false) || this.pageNo || 1
       let param = Object.assign({pageIndex:pageIndex,pageSize:this.pageSize}, this.form)
       this.findAuthOrganPerson(param)

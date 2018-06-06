@@ -65,6 +65,12 @@ const io = {
   this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
   this.addAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrgan'
   this.getAuthOrganDetail=conf.baseApiPath + '/admin/api/authOrgan/getAuthOrganDetail'
+  this.updateAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrgan'
+  this.delAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/delAuthOrgan'
+  //个人
+  this.addAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrganPerson'
+  this.updateAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrganPerson'
+  this.delAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/delAuthOrganPerson'
   //角色管理
   this.findAuthRolePag=conf.baseApiPath + '/admin/api/authRole/findAuthRolePage'
   this.addAuthRole=conf.baseApiPath + '/admin/api/authRole/addAuthRole'
