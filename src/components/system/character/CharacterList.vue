@@ -39,7 +39,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <v-pagination :total="total" @getListResult="getUserList" :pageSize="pageSize"></v-pagination>
+      <v-pagination :total="total" @getListResult="getUserList" :pageSize="pageSize" ref="page"></v-pagination>
     </div>
   </div>
 </template>

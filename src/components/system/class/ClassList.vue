@@ -62,7 +62,7 @@
              <el-table-column prop="school"  label="所属校区" align="center"> </el-table-column>
             <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
-                    <router-link to="/main/system/class/details">
+                    <router-link :to="'/main/system/class/details?id='+scope.row.id">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-2yulan"></use>
                         </svg>
@@ -121,7 +121,7 @@ export default {
             this.findClassPage({...this.form,...opt})
         },
         search(){
-      this.$refs.pagin.changePage(1)
+            this.$refs.pagin.changePage(1)
             this.getClass()
         },
     }

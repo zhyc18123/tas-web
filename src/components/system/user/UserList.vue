@@ -117,7 +117,7 @@ export default {
         status:this.form.status,
         keyword:this.form.keyword,
       }
-      console.log(this.loginInfo)
+      console.log('logininfo',this.loginInfo)
       if(this.loginInfo.isSystem){
           io.post(io.findSysAuthUserPage,param,(ret)=>{
             this.userListTotal = ret.total

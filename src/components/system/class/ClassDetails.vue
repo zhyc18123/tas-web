@@ -143,7 +143,7 @@
                                 label="操作">
                                 <template slot-scope="scope">
                                     <div>
-                                        <el-button class="noborder"  @click="dialogAddTeacher = true">添加带课老师</el-button>
+                                        <el-button class="noborder"  @click="dialogAddTeacher = true">添加代课老师</el-button>
                                     </div>
                                 </template>
                             </el-table-column>
@@ -158,7 +158,7 @@
         <el-dialog title="选择老师" :visible.sync="dialogAddTeacher" class="add-teacher" width="40%">
             <el-form>
                 <el-form-item >
-                    <el-input v-model="query.teacherName" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
+                    <el-input v-model="query.keyword" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
                     <el-button>搜索</el-button>
                 </el-form-item>
             </el-form>
@@ -180,12 +180,16 @@
 </template>
 <script>
 import LineHeadForm from '../../common/LineHeadForm'
+import {mapActions,mapState} from 'vuex'
+import util from 'lib/util'
+import io from 'lib/io'
 export default {
     components: {
          LineHeadForm,
     },
     data () {
         return {
+            id:this.$route.query.id,
             stepActive:4,
             teacherData:[
                 {
@@ -252,14 +256,28 @@ export default {
             dialogAddTeacher:false,
             addTeacher:[],
             query:{
-                teacherName:""
+                keyword:""
             }
         }
     },
     created(){
-
+        this.id = this.$route.query.id
+        this.classDetail({ id: this.form.id })
+        this.getTeacger()
+    },
+    computed:{
+        ...mapState(["classes"])
     },
     methods:{
+        ...mapActions(["classDetail"]),
+        //查询老师
+        getTeacger(){
+           let param = this.query
+            io.post6(io.teacherList,param,(ret)=>{
+                this.TeacherData = ret
+                console.log(ret)
+            })
+        },
         handleSelectionChange(val){
             this.addTeacher = val
             console.log(val)

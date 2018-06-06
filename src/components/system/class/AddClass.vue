@@ -201,7 +201,7 @@ export default {
         this.getCourse()
         this.teacherList()
         this.findBaseSchoolPage({ pageIndex: 1, pageSize: 10000000 })
-    this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
     },
     methods: {
         ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findLessonPage', 'findBaseTermPage', 'teacherList', 'findBaseSchoolPage', 'classDetail','findBaseTermPage']),
