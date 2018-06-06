@@ -65,7 +65,7 @@ export default {
     .attend-cont {
         width: 100%;
         height: 700px;
-        background: pink;
+        // background: pink;
     }
 }
 </style>
