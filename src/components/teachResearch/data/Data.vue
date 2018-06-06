@@ -1,5 +1,5 @@
 <template>
-  <div class="lecture">
+  <div class="data">
     <el-form :inline="true" :model="form" class="t-form gray">
       <el-form-item label="">
         <el-select v-model="form.subjectId" placeholder="科目">
@@ -102,6 +102,8 @@ export default {
   table-form()
   margin-top 20px
   margin-bottom 30px
+.data
+  padding-bottom 50px
 .line-table
   .icon
     cursor pointer

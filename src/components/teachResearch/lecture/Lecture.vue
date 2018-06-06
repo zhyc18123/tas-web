@@ -103,6 +103,8 @@ export default {
   table-form()
   margin-top 20px
   margin-bottom 30px
+.lecture
+  padding-bottom 50px
 .line-table
   .icon
     cursor pointer
