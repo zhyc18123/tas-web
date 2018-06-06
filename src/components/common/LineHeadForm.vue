@@ -36,6 +36,7 @@
         border-color #1ebd99
         position absolute
         right 10px
+        top 7px
         padding 7px 25px
         border-radius 30px
         color white

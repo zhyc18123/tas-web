@@ -10,7 +10,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="">
-        <el-input v-model="form.orgName" placeholder="请输入机构名称"></el-input>
+        <el-input v-model="form.orgName" placeholder="请输入机构名称/简称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
@@ -19,39 +19,39 @@
         <el-button type="primary" class="new-btn" @click="$router.push('/main/system/organization/list/add')">新建合作机构</el-button>
       </el-form-item>
     </el-form>
-            <el-table class="line-table" :data="system.organList.list"  style="width: 100%" header-align="center">
-                <el-table-column prop="orgName" label="机构名称" align="center" ></el-table-column>
-                <el-table-column prop="orgShortName" label="机构简称"  align="center"></el-table-column>
-                <el-table-column prop="status"  label="合作状态" align="center"> 
-                  <template slot-scope="scope">
-                      <span v-if="scope.row.status==0">试用期</span>
-                      <span v-if="scope.row.status==1">合约期</span>
-                      <span v-if="scope.row.status==2">终止</span>
-                  </template>
-                </el-table-column>
-                <el-table-column prop="type"  label="合作类型" align="center">
-                    <template slot-scope="scope">
-                      <span v-if="scope.row.type==0">个性化</span>
-                      <span v-if="scope.row.type==1">标准</span>
+    <el-table class="line-table" :data="system.organList.list"  style="width: 100%" header-align="center">
+        <el-table-column prop="orgName" label="机构名称" align="center" ></el-table-column>
+        <el-table-column prop="orgShortName" label="机构简称"  align="center"></el-table-column>
+        <el-table-column prop="status"  label="合作状态" align="center"> 
+          <template slot-scope="scope">
+              <span v-if="scope.row.status==0">试用期</span>
+              <span v-if="scope.row.status==1">合约期</span>
+              <span v-if="scope.row.status==2">终止</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="type"  label="合作类型" align="center">
+            <template slot-scope="scope">
+              <span v-if="scope.row.cooperType==0">个性化</span>
+              <span v-if="scope.row.cooperType==1">标准</span>
 
-                  </template>
-                </el-table-column>
-                <el-table-column prop="curriculumTime"  label="账号有效期" align="center"> 
-                  <template slot-scope="scope">
-                    <span>{{scope.row.userTimeStart | formatDate }}--{{scope.row.userTimeEnd | formatDate }}</span>
-                  </template>
-                </el-table-column>
-                <el-table-column label="操作" align="center"> 
-                  <template slot-scope="scope">
-                    <router-link :to="'/main/system/organization/list/edit?id='+scope.row.id">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-xiugaiziliao"></use>
-                        </svg>
-                    </router-link>
-                  </template>
-                </el-table-column>
-            </el-table>
-    <v-pagination ref="pagin" class="pag" :total="system.organList.total" @getListResult="findAuthOrgan"  :pageSize="pageSize"></v-pagination>
+          </template>
+        </el-table-column>
+        <el-table-column prop="curriculumTime"  label="账号有效期" align="center"> 
+          <template slot-scope="scope">
+            <span>{{scope.row.userTimeStart | formatDate }}--{{scope.row.userTimeEnd | formatDate }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" align="center"> 
+          <template slot-scope="scope">
+            <router-link :to="'/main/system/organization/list/edit?id='+scope.row.id">
+                <svg class="icon" aria-hidden="true">
+                    <use xlink:href="#icon-xiugaiziliao"></use>
+                </svg>
+            </router-link>
+          </template>
+        </el-table-column>
+    </el-table>
+    <v-pagination ref="page" class="pag" :total="system.organList.total || total" @getListResult="findAuthOrgan"  :pageSize="pageSize"></v-pagination>
   </div>
 </template>
 <script>
@@ -94,6 +94,7 @@ export default {
   methods: {
     ...mapActions(["findAuthOrgan"]),
     onSubmit(){
+      this.$refs.page.changePage(1)
       this.getListResult()
     },
     getListResult(pageInfo){
@@ -101,9 +102,6 @@ export default {
       let pageIndex = (pageInfo?pageInfo.pageIndex:false) || this.pageNo || 1
       let param = Object.assign({pageIndex:pageIndex,pageSize:this.pageSize}, this.form)
       this.findAuthOrgan(param)
-    //   io.post(io.findAuthOrgan,param,(ret)=>{
-    //     console.log(ret)
-    //   })
     }
   }
 }

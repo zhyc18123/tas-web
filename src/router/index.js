@@ -209,7 +209,7 @@ const router= new Router({
               path: 'list',
               component: PersonalOperateList
             }, {
-              path: 'list/:id',
+              path: 'list/:type',
               component: PersonalOperateDetail
             }]
           },{

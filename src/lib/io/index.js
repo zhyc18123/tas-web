@@ -30,12 +30,6 @@ const io = {
     this.addLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/addLessonMaterial'
     this.findLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/findLessonMaterial'
     this.delLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/delLessonMaterial'
-  // 系统管理
-    this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
-    this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
-    this.authUserDetail=conf.baseApiPath + '/admin/api/authUser/authUserDetail'
-// 个人中心
-    this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
     this.addOrUpLesson=conf.baseApiPath+'/lesson/api/lesson/addOrUpLesson'
     this.detailLesson=conf.baseApiPath+'/lesson/api/lesson/detailLesson'
     this.findLesChapterPage=conf.baseApiPath+'/lesson/api/lessonChapter/findLesChapterPage'
@@ -71,6 +65,12 @@ const io = {
   this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
   this.addAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrgan'
   this.getAuthOrganDetail=conf.baseApiPath + '/admin/api/authOrgan/getAuthOrganDetail'
+  this.updateAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrgan'
+  this.delAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/delAuthOrgan'
+  //个人
+  this.addAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrganPerson'
+  this.updateAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrganPerson'
+  this.delAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/delAuthOrganPerson'
   //角色管理
   this.findAuthRolePag=conf.baseApiPath + '/admin/api/authRole/findAuthRolePage'
   this.addAuthRole=conf.baseApiPath + '/admin/api/authRole/addAuthRole'

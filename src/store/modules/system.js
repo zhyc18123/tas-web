@@ -29,13 +29,13 @@ const actions = {
     // 讲次列表
   async findAuthOrgan({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.findAuthOrgan, opt)
-    console.log(data)
     if (data.success) {
       commit(types.GET_ORGAN,data.data)
     }
   },
   async findAuthOrganPerson({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.findAuthOrganPerson, opt)
+    console.log(data.data)
     if (data.success) {
       commit(types.GET_ORGAN_PERSON,data.data)
     }
