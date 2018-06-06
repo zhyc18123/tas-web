@@ -24,6 +24,10 @@
                     <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item prop="type" label="讲次类型:">
+                <el-radio :label="0" v-model="form.type">课程讲次</el-radio>
+                <el-radio :label="1" v-model="form.type">期中期末讲次</el-radio>
+            </el-form-item>
             <el-form-item prop="baseLevelId">
                 <div slot="label" class="tow-four">
                     班
@@ -39,7 +43,7 @@
                 <upload class="upload" btnText="上传课件（PPT）" :isOfs="true" fileType="ppt" @success="pptSuccess" :sFileSize="form.courseSize" :sOriginalName="form.courseName" sTypeName="PPT" :fileUrl="form.courseUrl">
                 </upload>
             </el-form-item>
-            <el-form-item label="" >
+            <el-form-item label="">
                 <em class="must">*</em>
                 <upload class="upload" btnText="上传讲义（Word）" :isOfs="true" fileType="word" @success="wordSuccess" :sFileSize="form.lectureSize" :sOriginalName="form.lectureName" sTypeName="WORD" :fileUrl="form.lectureUrl">
                 </upload>
@@ -64,17 +68,18 @@ export default {
     data() {
         return {
             form: {
-                id:this.$route.params.id,
+                id: this.$route.params.id,
                 name: '',
                 baseSectionId: '',
                 dataSubject: '',
                 baseLevelId: '',
-                courseUrl:'',
-                courseName:'',
-                courseSize:'',
-                lectureUrl:'',
-                lectureName:'',
-                lectureSize:''
+                courseUrl: '',
+                courseName: '',
+                courseSize: '',
+                lectureUrl: '',
+                lectureName: '',
+                lectureSize: '',
+                type:0
             },
             checkList: [],
             rules: {
@@ -83,31 +88,32 @@ export default {
                 dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
                 baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],
                 courseUrl: [{ required: true, message: '请上传课件！', trigger: 'blur' }],
+                type: [{ required: true, message: '请选择课程类型！', trigger: 'blur' }],
                 lectureUrl: [{ required: true, message: '请上传讲义！', trigger: 'blur' }],
             },
         }
     },
     computed: {
-        ...mapState(['condition','chapter']),
+        ...mapState(['condition', 'chapter']),
     },
-  watch: {
-    'form.dataSubject'(val) {
-    this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
-},
-'chapter.chapterDetail'(val){
-    this.form={...val}
-}
-  },
+    watch: {
+        'form.dataSubject'(val) {
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.dataSubject })
+        },
+        'chapter.chapterDetail'(val) {
+            this.form = { ...val }
+        }
+    },
     created() {
-        if(this.form.id!=='new'){
-            this.getBaseChapter({id:this.form.id})
+        if (this.form.id !== 'new') {
+            this.getBaseChapter({ id: this.form.id })
         }
         this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000 })
         this.findSubjectsData({ sectionId: this.form.baseSectionId })
         this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
     },
     methods: {
-        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage','getBaseChapter']),
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage', 'getBaseChapter']),
 
         pptSuccess(url, size, duration, originName) {
             this.form.courseUrl = url
@@ -122,17 +128,17 @@ export default {
         sure() {
             this.$refs.form.validate((vali) => {
                 if (vali) {
-            if(!this.form.courseUrl){
-                this.$message('请上传课件！')
-                return
-            }
-            if(!this.form.lectureUrl){
-                this.$message('请上传讲义！')
-                return
-            }
-                    if(this.form.id==='new'){
+                    if (!this.form.courseUrl) {
+                        this.$message('请上传课件！')
+                        return
+                    }
+                    if (!this.form.lectureUrl) {
+                        this.$message('请上传讲义！')
+                        return
+                    }
+                    if (this.form.id === 'new') {
                         this.addBaseChapter()
-                    }else{
+                    } else {
                         this.updateBaseChapter()
                     }
                 } else {
@@ -145,14 +151,14 @@ export default {
             let { data } = await io.post6(io.addBaseChapter, this.form)
             if (data.success) {
                 this.$message('保存成功')
-                    this.$router.go(-1)
+                this.$router.go(-1)
             }
         },
         async updateBaseChapter() {
             let { data } = await io.post6(io.updateBaseChapter, this.form)
             if (data.success) {
                 this.$message('保存成功')
-                    this.$router.go(-1)
+                this.$router.go(-1)
             }
         }
     }

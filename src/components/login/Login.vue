@@ -1,5 +1,5 @@
 <template>
-    <div class="login">
+    <div class="login" @keydown="keydown">
         <v-nav ref="nav" :noTab='true' :noLogin='true' />
         <el-carousel height="500px">
             <el-carousel-item>

@@ -1,6 +1,6 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="3" />
+        <course-step :active="3" v-if="course.courseChapterObj.status!==1"/>
         <div class="main">
             <div class="times-div">
                 <div class="t-title">
@@ -37,7 +37,9 @@
                 </div>
             </div>
             <div class="next-btn">
-                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)">下一步</el-button>
+                <el-button class="light-btn" @click="$router.push('/main/teach-research/course/edit-lecture/'+courseId)">上一步</el-button>
+                <el-button class="height-btn" @click="publishLesson" v-if="course.courseChapterObj.status!==1">确定发布</el-button>
+                <el-button class="light-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)">{{course.courseChapterObj.status===1?'下一步':'暂不发布'}}</el-button>
             </div>
         </div>
        
@@ -88,6 +90,17 @@ export default {
             // this.styleTag = id
             this.$router.push('/main/teach-research/course/view-lecture/courseWare/'+ this.courseId +'/'+item.id)
         },
+  async publishLesson(){
+    let tipText='发布课程后，无法修改，是否确定？'
+      this.$confirm(tipText).then(async ()=>{
+      let {data} =await io.post6(io.publishLesson,{id:this.courseId,status:1})
+      if(data.success){
+        this.$message('发布成功')
+        // this.$router.push('/main/teach-research/course/view-lecture/'+this.id)
+        this.$router.push('/main/teach-research/course/sheet/'+this.courseId)
+      }
+      })
+  },
         async detailLesChapters(){
             let {data}=await io.post6(io.detailLesChapters,{lessonId:this.courseId,id:this.chapterId})
             if(data.success){

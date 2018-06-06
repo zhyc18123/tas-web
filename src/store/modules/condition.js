@@ -10,7 +10,8 @@ const state = {
     termObj:{},
     levelObj:{},
     yearList:[],
-    materList:[]
+    materList:[],
+    teacherList:[]
 }
 
 // getters
@@ -36,6 +37,9 @@ const mutations = {
     },
     [types.GET_MATER](state,data){
         state.materList=data
+    },
+    [types.GET_TEACHERS](state,data){
+        state.teacherList=data
     }
 }
 
@@ -55,7 +59,7 @@ const actions = {
       commit(types.GET_YEAR,data.data)
     }
   },
-    // 层级
+    // 层级(班型)
   async findBaseLevelPage({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.findBaseLevelPage, opt)
     if (data.success) {
@@ -85,6 +89,14 @@ const actions = {
       commit(types.GET_TERM,data.data)
     }
   },
+  // 教师
+  async teacherList({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.teacherList, opt)
+    if (data.success) {
+      commit(types.GET_TEACHERS,data.data)
+    }
+  },
+  
 }
 
 export default {

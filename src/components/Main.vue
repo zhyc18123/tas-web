@@ -2,7 +2,11 @@
   <div class="main">
     <el-row class="main-container">
       <v-nav ref="nav" />
-      <router-view></router-view>
+
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
       <v-footer/>
     </el-row>
   </div>

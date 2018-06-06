@@ -30,7 +30,6 @@ const io = {
     this.addLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/addLessonMaterial'
     this.findLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/findLessonMaterial'
     this.delLessonMaterial=conf.baseApiPath+'/lesson/api/LessonMaterial/delLessonMaterial'
-    this.detailLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/detailLesChapters'
   // 系统管理
     this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
     this.findSysAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findSysAuthUserPage'
@@ -66,6 +65,7 @@ const io = {
   this.updateSysAuthUser=conf.baseApiPath + '/admin/api/authUser/updateSysAuthUser'
   this.updateAuthUser=conf.baseApiPath + '/admin/api/authUser/updateAuthUser'
   this.updateStatus=conf.baseApiPath + '/admin/api/authUser/updateStatus'
+  this.teacherList=conf.baseApiPath + '/admin/api/authUser/teacherList'
   //机构
   this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
   this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
@@ -74,7 +74,17 @@ const io = {
 // 个人中心
   this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
 
-
+// 校区
+  this.findBaseSchoolPage=conf.baseApiPath + '/lesson/api/BaseSchool/findBaseSchoolPage'
+  this.addSchool=conf.baseApiPath + '/lesson/api/BaseSchool/addSchool'
+  this.delSchool=conf.baseApiPath + '/lesson/api/BaseSchool/delSchool'
+  this.updateSchool=conf.baseApiPath + '/lesson/api/BaseSchool/updateSchool'
+  this.getBaseSchool=conf.baseApiPath + '/lesson/api/BaseSchool/getBaseSchool'
+  // 班级
+  this.findClassPage=conf.baseApiPath + '/lesson/api/lessonClass/findClassPage'
+  this.addOrUpdateClass=conf.baseApiPath + '/lesson/api/lessonClass/addOrUpdateClass'
+  this.classDetail=conf.baseApiPath + '/lesson/api/lessonClass/classDetail'
+  this.lessonClassPlanChapterList=conf.baseApiPath + '/lesson/api/lessonClass/lessonClassPlanChapterList'
 
 
 

@@ -26,7 +26,7 @@
         <el-button type="primary" @click="search">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="addCourse">新建课程</el-button>
+        <el-button type="primary" class="new-btn" @click="addCourse">{{userInfo.isSystem?'新建课程':'创建定制课程'}}</el-button>
       </el-form-item>
     </el-form>
     <el-table class="line-table" empty-text="暂无课程，请先添加课程" :data="result.list" header-align="center">
@@ -73,6 +73,7 @@
 import VPagination from '../../common/Pagination'
 import { mapState, mapActions } from 'vuex'
 import io from 'lib/io'
+import storage from 'lib/storage'
 export default {
   components: {
     VPagination
@@ -87,18 +88,7 @@ export default {
         pageIndex: 1,
         pageSize: 10
       },
-      tableData: [
-        {
-          className: "2018春季物理提高班",
-          grade: "初二",
-          term: "春季",
-          campus: "岗顶校区",
-          curriculumTime: "2017-02-12",
-          tier: "提高班",
-          schoolTime: "8:45 - 9:45",
-          week: '周一'
-        }
-      ],
+      userInfo:storage.getCurrentUserInfo()
     }
   },
   computed: {
@@ -128,11 +118,11 @@ export default {
       }
     },
     editLecture(scope){
-      if(scope.row.status===0){
+      // if(scope.row.status===0){
       this.$router.push({path:'/main/teach-research/course/edit-lecture/'+scope.row.id})
-      }else{
-        this.$message('已发布的课程，不可以编辑讲次！')
-      }
+      // }else{
+      //   this.$message('已发布的课程，不可以编辑讲次！')
+      // }
     },
     search() {
       this.$refs.pagin.changePage(1)

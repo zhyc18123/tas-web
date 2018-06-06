@@ -2,48 +2,64 @@
     <div class="organization ">
         <el-form :inline="true" :model="form" class="t-form gray t-class-list">
             <el-form-item label="">
-                <el-select v-model="form.grade" placeholder="年级">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.baseSectionId" placeholder="年级">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="item in condition.gradeObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="">
-                <el-select v-model="form.semester" placeholder="学期">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.baseTrimesterId" placeholder="学期">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="item in condition.termObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-select v-model="form.classSize" placeholder="班型">
-                    <el-option v-for="item in classSizes" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.lessonId" placeholder="班型">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="item in condition.levelObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
              <el-form-item>
-                <el-select v-model="form.compus" placeholder="校区">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.schoolId" placeholder="校区">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option v-for="item in school.schoolObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-select v-model="form.gradeStatus" placeholder="班级状态">
-                    <el-option v-for="item in grade" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                <el-select v-model="form.status" placeholder="班级状态">
+                    <el-option label="全部" value=""></el-option>
+                    <el-option label="未开课" :value="0"></el-option>
+                    <el-option label="开课中" :value="1"></el-option>
+                    <el-option label="已结课" :value="2"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-               <el-input v-model="form.gradeNameValue" placeholder="请输入班级名称"></el-input>
+               <el-input v-model="form.name" placeholder="请输入班级名称"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="handleSearch" class="search-btn">查询</el-button>
+                <el-button type="primary" @click="search" class="search-btn">查询</el-button>
             </el-form-item>
             <el-form-item class="new-item">
                 <el-button type="primary" class="new-btn" @click="$router.push('/main/system/class/add')">新增班级</el-button>
             </el-form-item>
         </el-form>
-        <el-table class="line-table" :data="tableData"  style="width: 100%" header-align="center" >
+        <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" >
             <el-table-column prop="className" label="班级名称" align="center" ></el-table-column>
-            <el-table-column prop="grade" label="班级"  align="center"></el-table-column>
-            <el-table-column prop="term"  label="开课状态" align="center"> </el-table-column>
-            <el-table-column prop="campus"  label="年级" align="center"> </el-table-column>
-            <el-table-column prop="curriculumTime"  label="授课时段" align="center"> </el-table-column>
-            <el-table-column prop="tier"  label="任课教师" align="center"> </el-table-column>
-             <el-table-column prop="campus"  label="所属校区" align="center"> </el-table-column>
+            <el-table-column prop="section" label="班型"  align="center"></el-table-column>
+            <el-table-column  label="开课状态" align="center">
+                <template scope="scope">
+                    {{scope.row.status===0?'未开课':scope.row.status===1?'已开课':'已结课'}}
+                </template>
+                 </el-table-column>
+            <el-table-column prop="section"  label="年级" align="center"> </el-table-column>
+            <el-table-column  label="任课教师" align="center">
+                <template scope="scope">
+                    <span v-for="item in scope.row.teacherList">
+                         {{item.username}} 
+                    </span>
+                </template>
+                 </el-table-column>
+             <el-table-column prop="school"  label="所属校区" align="center"> </el-table-column>
             <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
                     <router-link to="/main/system/class/details">
@@ -51,24 +67,25 @@
                             <use xlink:href="#icon-2yulan"></use>
                         </svg>
                     </router-link>
-                    <router-link to="/main/system/class/add">
+                    <router-link :to="'/main/system/class/'+scope.row.id" title="编辑">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-xiugaiziliao"></use>
                         </svg>
                     </router-link>
-                    <router-link to="/">
+                    <a href="javascript:;" title="删除">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-icon-cross-empty"></use>
                         </svg>
-                    </router-link>
+                    </a>
                 </template>
             </el-table-column>
         </el-table>
-        <v-pagination :total="total" :pageSize="pageSize" @getListResult="getListResult"></v-pagination>
+    <v-pagination ref="pagin" class="pag" :total="classes.classObj.total|toNumber" @getListResult="getClass" :currentPage="form.pageIndex"></v-pagination>
     </div>
 </template>
 <script>
 import VPagination from "../../common/Pagination"
+import { mapState, mapActions } from 'vuex'
 export default {
     name:'class-list',
     components:{
@@ -76,69 +93,37 @@ export default {
     },
     data(){
         return{
-            total:80,
-            pageSize:10,    
-            grade:[
-                {
-                    name:"高一",
-                    id:1,
-                },
-                {
-                    name:"高二",
-                    id:2,
-                }
-            ],
-            status:[{
-
-            }],
-            classSizes:[{}],
             form:{
-                grade:"",
-                semester:"",
-                classSize:"",
-                semester:"",
-                compus:"",
-                gradeStatus:"",
-                gradeNameValue:'',
-
+                baseSectionId:null,
+                baseTrimesterId:null,
+                lessonId:null,
+                schoolId:null,
+                status:null,
+                name:'',
+                pageIndex:1,
+                pageSize:10
             },
-            tableData:[
-                {
-                    className:"2018春季物理提高班",
-                    grade:"初二",
-                    term:"春季",
-                    campus:"岗顶校区",
-                    curriculumTime:"2017-02-12",
-                    tier:"提高班",
-                    schoolTime:"8:45 - 9:45",
-                    week:'周一'
-                },
-                {
-                    className:"2018春季物理提高班",
-                    grade:"初二",
-                    term:"春季",
-                    campus:"岗顶校区",
-                    curriculumTime:"2017-02-12",
-                    tier:"提高班",
-                    schoolTime:"8:45 - 9:45",
-                    week:'周一'
-                }
-            ],
         }
+    },
+    computed: {
+        ...mapState(['classes','condition','school'])
     },
     created(){
-
+        this.getClass()
+        this.findBaseSectionPage({pageIndex:1,pageSize:10000000})
+        this.findBaseTermPage({pageIndex:1,pageSize:10000000})
+        this.findBaseLevelPage({pageIndex:1,pageSize:10000000})
+        this.findBaseSchoolPage({pageIndex:1,pageSize:10000000})
     },
     methods:{
-        handleSearch(){
-
+        ...mapActions(['findClassPage','findBaseSectionPage','findBaseTermPage','findBaseLevelPage','findBaseSchoolPage']),
+        getClass(opt){
+            this.findClassPage({...this.form,...opt})
         },
-        addClass(){
-
+        search(){
+      this.$refs.pagin.changePage(1)
+            this.getClass()
         },
-        getListResult(val){
-            console.log(val)
-        }
     }
 
 }

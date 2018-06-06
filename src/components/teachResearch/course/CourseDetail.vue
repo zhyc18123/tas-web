@@ -217,13 +217,14 @@ export default {
                 chapterNum: [
                     { required: true, message: '讲数不能为空！', trigger: 'blur' }
                 ],
-                baseTrimesterId: [{ required: true, message: '请选择学期！', trigger: 'blur' }]
+                // baseTrimesterId: [{ required: true, message: '请选择学期！', trigger: 'blur' }]
             },
             sForm: {
                 name: '',
                 baseTrimesterId: null,
                 dataSubject: null,
                 baseSectionId: null,
+                status:1,
                 pageIndex: 1,
                 pageSize: 10
             },
