@@ -39,7 +39,7 @@
            人员类型：
         </div>
         <el-radio-group v-model="form.type">
-            <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="dark" :content="item.content" placement="bottom" :open-delay="500">
+            <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="light" :content="item.content" placement="bottom" :open-delay="500">
                  <el-radio   :label="item.value">{{item.label}}</el-radio>
             </el-tooltip>
         </el-radio-group>
@@ -154,6 +154,7 @@ export default {
         jobStatus: 1,
         type: 0,
       },
+      subjectSectionList:[],
       gradesBySubject:[],
       types: [{
         label: '教师',
@@ -212,7 +213,7 @@ export default {
     ...mapActions(['findSubjectsData']),
     resetForm() {
       this.form = {
-        userId: "",
+        id: "",
         username:'',
         account: "",
         name: "",
@@ -248,15 +249,60 @@ export default {
         subjectId:this.form.checkedSubject.join(',')
       }
       io.post(io.findBaseSectionBySubject,param,(ret)=>{
+        // if(this.subjectSectionList){
+        //   this.subjectSectionList.map((item)=>{
+        //     var nullData = 0
+        //     console.log(ret)
+        //     ret.map(ite=>{
+        //       let baseSectionIds = []
+        //       if(item.subjectId==ite.subjectId){
+        //         item.sectionList.map(i=>{
+        //           baseSectionIds.push(i.sectionId)
+        //         })
+        //       ite.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
+        //       }else{
+        //         nullData++
+        //         console.log(nullData)
+        //       }
+              
+        //       // if(ite.subjectId != item.subjectId){
+                
+        //       //   console.log("nullite",ite.subjectName)
+        //       //     nullData++
+        //       //     console.log(nullData,ret.length)
+        //       //   if(nullData===ret.length){
+        //       //     ite.baseSectionIds = []
+        //       //   }
+        //       // }
+        //     })
+        //   })
+        // }else{
+        //   ret.map(item=>{
+        //      item.baseSectionIds = []
+        //   })
+        // }
         ret.map(item=>{
           let baseSectionIds = []
-          if(subjectSectionList){
-            subjectSectionList.map((it)=>{
-
-              // item.baseSectionIds.push(it.)
+          let nullData = 0
+          if(this.subjectSectionList.length>=1){
+            this.subjectSectionList.map((ite)=>{
+              if(item.subjectId==ite.subjectId){
+                ite.sectionList.map(i=>{
+                  baseSectionIds.push(i.sectionId)
+                })
+                item.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
+              }
+              if(ite.subjectId != item.subjectId){
+                nullData++
+                console.log(nullData,item.subjectName)
+                if(nullData===this.subjectSectionList.length){
+                  item.baseSectionIds = []
+                }
+              }
             })
+          }else{
+            item.baseSectionIds = []
           }
-          item.baseSectionIds = []
         })
         this.gradesBySubject = ret
         console.log(ret)
@@ -269,13 +315,13 @@ export default {
             checkedSubject.push(item.subjectId)
         })
         this.form = {
-          userId: data.id,
+          id: data.id,
           username:data.username,
           account:data.account,
           sex:data.sex,
           authRoleIds:[],
           password: data.password,
-          cPassword: data,
+          cPassword: data.password,
           checkedSubject:checkedSubject,
           status: data.status,
           jobStatus: data.jobStatus,
@@ -283,9 +329,15 @@ export default {
         }
         this.password = '******'
         this.cPassword = '******'
+        let authRoleIds = []
+        data.authRoleList.map(j=>{
+          authRoleIds.push(j.id)
+        })
+        this.authRoleIds = authRoleIds
         // this.oldPassword =JSON.parse(JSON.stringify(data.password))
         // console.log(oldPassword)
-        this.findBaseSectionBySubject(subjectSectionList)
+        this.subjectSectionList = data.subjectSectionList
+        this.findBaseSectionBySubject()
       })
     },
     handleSave() {
@@ -294,7 +346,6 @@ export default {
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
-          console.log(data,this.gradesBySubject)
           data.checkedSubject.map((j) => {
             this.gradesBySubject.map((val) => {
               if (j === val.subjectId) {
@@ -310,7 +361,8 @@ export default {
           if(this.password.length<6 || this.password.length>18){
             this.$message("密码必须为6-18位的字母数字组合")
             return false
-          }else if(!(/^[a-zA-Z0-9]{6,}$/.test(this.cPassword))){
+          }
+          else if(!(/^[a-zA-Z0-9]{6,}$/.test(this.password)) && !this.userId){
             this.$message("密码必须为字母数字组合")
             return false
           }

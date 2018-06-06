@@ -23,7 +23,7 @@
         <el-table-column prop="account"  label="帐号" align="center" width="160">
         </el-table-column>
         <el-table-column label="帐号状态"  align="center" width="100">
-          <template scope="scope">
+          <template slot-scope="scope">
             <div v-if="scope.row.status === 0">正常</div>
             <div v-if="scope.row.status === 1">已过期</div>
             <div v-if="scope.row.status === 2">已终止</div>
@@ -32,22 +32,22 @@
         <el-table-column prop="orgName" label="账号所属" width="180" align="center">
         </el-table-column>
         <el-table-column prop="level" label="账号到期时间" width="180" align="center">
-          <template scope="scope">
+          <template slot-scope="scope">
            <div>{{scope.row.endTime | formatTime}}</div>
           </template>
         </el-table-column>
         <el-table-column min-width="180" label="创建时间" align="center">
-          <template scope="scope">
+          <template slot-scope="scope">
             <div>{{scope.row.createTime | formatTime}}</div>
           </template>
         </el-table-column>
         <el-table-column min-width="180" label="最后编辑时间" align="center">
-          <template scope="scope">
+          <template slot-scope="scope">
             <div>{{scope.row.updateTime | formatTime}}</div>
           </template>
         </el-table-column>
         <el-table-column align="center"  width="230" label="操作">
-          <template scope="scope">
+          <template slot-scope="scope">
             <span  class="btn-delete" @click="handleEdit(scope.row)">修改</span>
             <span  class="btn-delete" @click="handleDetails(scope.row)">详情</span>
           </template>
@@ -63,13 +63,13 @@ import io from '../../../lib/io'
 import md5 from 'js-md5'
 import storage from '../../../lib/storage/index'
 
-import VClassCategory from '../../common/ClassCategory.vue'
+// import VClassCategory from '../../common/ClassCategory.vue'
 import VPagination from '../../common/Pagination.vue'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'user-list',
   components: {
-    VClassCategory,
+    // VClassCategory,
     VPagination
   },
 
@@ -149,8 +149,8 @@ export default {
     handleSearch(){
       this.getUserList({pageIndex:1})
     },
-    handleDetails(){
-
+    handleDetails(row){
+      this.$router.push('/main/system/userList/userDetail?userId=' + row.id)
     },
   }
 }

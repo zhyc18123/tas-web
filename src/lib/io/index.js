@@ -69,6 +69,12 @@ const io = {
   //机构
   this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
   this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
+  this.addAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrgan'
+  this.getAuthOrganDetail=conf.baseApiPath + '/admin/api/authOrgan/getAuthOrganDetail'
+  //角色管理
+  this.findAuthRolePag=conf.baseApiPath + '/admin/api/authRole/findAuthRolePage'
+  this.addAuthRole=conf.baseApiPath + '/admin/api/authRole/addAuthRole'
+  this.updateAuthRole=conf.baseApiPath + '/admin/api/authRole/updateAuthRole'
   //科目查询班级
   this.findBaseSectionBySubject=conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionBySubject'
 // 个人中心
