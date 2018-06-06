@@ -109,10 +109,10 @@ export default {
     },
     watch: {
       'condition.gradeObj'(val){
-          this.form.gradeId=val.list[0].id
+          this.form.gradeId=val.list[0]&&val.list[0].id
       },
       'condition.termObj'(val){
-          this.form.termId=val.list[0].id
+          this.form.termId=val.list[0]&&val.list[0].id
       },
       'form.gradeId'(val){
           this.getClasses()

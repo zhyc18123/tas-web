@@ -122,13 +122,13 @@ export default {
             this.activeName = 0 + ''
         },
         'condition.gradeObj'(val) {
-            this.form.gradeId = val.list[0].id
+            this.form.gradeId = val.list[0]&&val.list[0].id
         },
         'condition.termObj'(val) {
-            this.form.termId = val.list[0].id
+            this.form.termId = val.list[0]&&val.list[0].id
         },
         'condition.materList'(val) {
-            this.form.versionId = val[0].id
+            this.form.versionId = val[0]&&val[0].id
         },
         'course.courseObj'(val){
             console.log('xx',val)
@@ -171,7 +171,8 @@ export default {
                     pageSize: 10000000,
                     dataSubject: this.form.subjectId,
                     baseSectionId: this.form.gradeId,
-                    baseTrimesterId: this.form.termId
+                    baseTrimesterId: this.form.termId,
+                    status:1
                 })
         },
         downloadData(item){
