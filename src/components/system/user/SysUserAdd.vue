@@ -30,11 +30,11 @@
         <div slot="label" class="tow-four">
            账号角色：
         </div>
-        <el-radio-group v-model="form.authRoleId">
+        <el-radio-group v-model="form.authRoleId" @change="changeAuthRole">
           <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
         </el-radio-group>
        </el-form-item>
-        <el-form-item  v-if="form.authRoleId == 1" >
+        <el-form-item  v-if="roleType == 2" >
             <div slot="label" class="tow-four">
             所属机构：
             </div>
@@ -42,7 +42,7 @@
                 <el-option v-for="(organ,index) in system.organList.list" :label="organ.orgName" :value="organ.id" :key="index"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item  v-if="form.authRoleId == 2" >
+        <el-form-item  v-if="roleType == 3" >
             <div slot="label" class="tow-four">
             所属个人：
             </div>
@@ -108,6 +108,7 @@ export default {
         password:"",
         cPassword:'',
         oldPassword:'',
+        roleType:'',
         form: {
           authRoleId:'',
           account:'',
@@ -146,13 +147,22 @@ export default {
     methods: {
         ...mapActions(['findAuthOrgan','findAuthOrganPerson']),
         findAuthRoleList() {
-        io.post(io.findAuthRoleList,{},(data) => {
-            console.log(data)
-            this.roleList = data;
-            if(!this.userId){
-                this.form.authRoleId = data[0].id;
+          io.post(io.findAuthRoleList,{},(data) => {
+              console.log(data)
+              this.roleList = data;
+              if(!this.userId){
+                  this.form.authRoleId = data[0].id;
+                  this.roleType = data[0].roleType;
+              }
+          })
+        },
+        changeAuthRole(val){
+          console.log(val,this.roleList)
+          this.roleList.map((item)=>{
+            if(val==item.id){
+              this.roleType = item.roleType
             }
-        })
+          })
         },
         // 新增
         handleSave() {
@@ -163,7 +173,7 @@ export default {
             if (valid) {
                 let data = Object.assign({}, this.form)
                 console.log(_this.form.authRoleId)
-                if(_this.form.authRoleId == 2){
+                if(_this.roleType == 3){
                     data.authOrganizationId = _this.form.organPersonId
                 }
                 if(this.password ===""){

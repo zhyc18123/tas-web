@@ -79,7 +79,8 @@ const io = {
   this.findBaseSectionBySubject=conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionBySubject'
 // 个人中心
   this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
-
+  //老师列表
+  this.teacherList=conf.baseApiPath + '/admin/api/authUser/teacherList'
 // 校区
   this.findBaseSchoolPage=conf.baseApiPath + '/lesson/api/BaseSchool/findBaseSchoolPage'
   this.addSchool=conf.baseApiPath + '/lesson/api/BaseSchool/addSchool'
