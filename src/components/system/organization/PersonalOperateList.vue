@@ -45,7 +45,7 @@
           </template>
         </el-table-column>
     </el-table>
-    <v-pagination ref="pagin" class="pag" :total="system.organPerson.total || total" @getListResult="getListResult" :pageSize="pageSize"></v-pagination>
+    <v-pagination ref="page" class="pag" :total="system.organPerson.total || total" @getListResult="getListResult" :pageSize="pageSize"></v-pagination>
   </div>
 </template>
 <script>
@@ -87,6 +87,7 @@ export default {
   methods: {
     ...mapActions(["findAuthOrganPerson"]),
     search(){
+      this.$refs.page.changePage(1)
       this.getListResult({pageIndex:1})
     },
     getListResult(pageInfo){

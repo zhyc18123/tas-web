@@ -65,6 +65,7 @@ const mutations = {
   },
   [types.LOGIN](state, data) {
     state.loginInfo = data;
+    console.log('login',data)
     storage.setCurrentUserInfo(data)
     storage.setAccessToken(data.accessToken)
     // state.showLoginForm = false

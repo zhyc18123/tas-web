@@ -9,6 +9,8 @@ import global from './modules/global'
 import condition from './modules/condition'
 import system from './modules/system'
 import createLogger from '../lib/plugins/logger'
+import school from './modules/school'
+import classes from './modules/classes'
 
 Vue.use(Vuex)
 
@@ -23,6 +25,8 @@ export default new Vuex.Store({
     global,
     condition,
     system,
+    school,
+    classes
   },
   strict: debug,
   plugins: debug ? [createLogger()] : []

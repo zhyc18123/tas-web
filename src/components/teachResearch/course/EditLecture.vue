@@ -1,17 +1,17 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="2" />
+        <course-step :active="2" v-if="course.courseChapterObj.status!==1"/>
         <div v-if="!isAdd">
             <div class="add-type">
                 <span class="c-title">{{course.courseChapterObj.name}}</span>
                 <span class="b-line"></span>
-                <el-button type="primary" class="new-btn" @click="addCourse">添加课程讲次</el-button>
+                <el-button type="primary" class="new-btn" @click="addCourse" v-if="course.courseChapterObj.status!==1">添加课程讲次</el-button>
             </div>
             <draggable v-model="myArray" @end="onEnd" class="drag-list">
                 <div class="d-item" v-for="(element,i) in myArray" :key="element.id">
                     <span class="l-num">第
                         <span>{{i+1}}</span>讲</span> {{element.name}}
-                    <div class="l-opt">
+                    <div class="l-opt" v-if="course.courseChapterObj.status!==1">
                         <svg class="icon" aria-hidden="true" @click="addCourse();isChange=true;changeItemId=element.id">
                             <use xlink:href="#icon-huanhuo"></use>
                         </svg>
@@ -22,9 +22,8 @@
                 </div>
             </draggable>
             <div class="opt-btn">
-                <el-button class="height-btn" @click="publishLesson">确定发布</el-button>
-                <el-button class="light-btn" @click="$router.push({ 
-            path: '/main/teach-research/course/view-lecture/courseWare/'+id+'/' + myArray[0].id  })">暂不发布</el-button>
+                <el-button class="height-btn" @click="$router.push({ 
+            path: '/main/teach-research/course/view-lecture/courseWare/'+id+'/' + myArray[0].id  })">预览</el-button>
             </div>
         </div>
         <div v-if="isAdd" class="add-course">
@@ -256,18 +255,6 @@ export default {
             }
             this.findLesChapterPage({ lessonId: this.id })
         },
-  async publishLesson(){
-    let tipText='发布课程后，无法修改，是否确定？'
-      this.$confirm(tipText).then(async ()=>{
-      let {data} =await io.post6(io.publishLesson,{id:this.id,status:1})
-      if(data.success){
-        this.$message('发布成功')
-        // this.$router.push('/main/teach-research/course/view-lecture/'+this.id)
-        this.$router.push({ 
-            path: '/main/teach-research/course/view-lecture/courseWare/'+this.id +'/'+ this.myArray[0].id  })
-      }
-      })
-  }
         // selectable(val, index) {
         //     if (this.addCourseList.length > 2) {
         //         return false

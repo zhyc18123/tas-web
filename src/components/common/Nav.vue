@@ -40,7 +40,7 @@
         <el-menu-item index="/main/teach-research/course">教研</el-menu-item>
         <el-menu-item index="/main/prepare-lessons">备课</el-menu-item>
         <el-menu-item index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item index="/main/system/userList/list">系统管理</el-menu-item>
+        <el-menu-item index="/main/system/basisSetting/schoolSetting">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
           <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
@@ -77,7 +77,7 @@ export default {
       } else if (routerModule.indexOf('attend') === 0) {
         activeIndex = '/main/attend-class'
       } else if (routerModule.indexOf('system') === 0) {
-        activeIndex = '/main/system/basisSetting/topicOrigin'
+        activeIndex = '/main/system/basisSetting/schoolSetting'
       }
       else {
         activeIndex = '/index'

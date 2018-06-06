@@ -30,6 +30,8 @@ const Data = resolve => require(['../components/teachResearch/data/Data'], resol
 const DataDetail = resolve => require(['../components/teachResearch/data/DataDetail'], resolve)
 //  系统管理
 const System = resolve => require(['../components/view/System'], resolve)
+const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
+const SchoolSetting = resolve => require(['../components/system/basis/SchoolSetting'], resolve)
 const OrganizationContainer = resolve => require(['../components/system/OrganizationContainer'], resolve)
 const PersonalOperateContainer = resolve => require(['../components/system/PersonalOperateContainer'], resolve)
 const PersonalOperateList = resolve => require(['../components/system/organization/PersonalOperateList'], resolve)
@@ -136,9 +138,10 @@ const router= new Router({
         {
           path: "attend-class",
           component: AttendClass,
+          meta:{keepAlive:true}
         },
         {
-          path: "attend-content",
+          path: "attend-content/:lessonId/:id",
           component: AttendContent,
         },
         {
@@ -152,6 +155,14 @@ const router= new Router({
           path: 'system',
           component: System,
           children: [{
+          path: 'basisSetting',
+          component: BasisSetContainer,
+          children: [{
+            path: 'schoolSetting',
+            component: SchoolSetting
+          }
+          ]
+        },{
             path: 'userList',
             component: UserListContainer,
             children: [{
@@ -210,12 +221,12 @@ const router= new Router({
               component:ClassList
             },
             {
-              path:"add",
-              component:AddClass,
-            },
-            {
               path:"details",
               component:ClassDetails,
+            },
+            {
+              path:":id",
+              component:AddClass,
             },
            ]
           }

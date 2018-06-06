@@ -83,6 +83,7 @@ export default {
             id:this.$route.query.id,
             userTime:[],
             form:{
+                cooperType:'',
                 perName:'',
                 perPhone:'',
                 status:'',
@@ -156,23 +157,23 @@ export default {
                         return false
                     }
                     if(!(this.type && this.id)){
-                        io.post(io.addAuthRole,param,(ret)=>{
+                        io.post(io.addAuthOrganPerson,param,(ret)=>{
                             this.$message({
                                 type:'success',
                                 message:'添加成功'
                             })
-                            this.$router.push('/main/system/organization/list')
+                            this.$router.push('/main/system/personal/list')
                             console.log(ret)
                         })
                     }else{
                         param.id = this.id
                         console.log(param)
-                        io.post(io.updateAuthRole,param,(ret)=>{
+                        io.post(io.updateAuthOrganPerson,param,(ret)=>{
                             this.$message({
                                 type:'success',
                                 message:'修改成功'
                             })
-                            this.$router.push('/main/system/organization/list')
+                            this.$router.push('/main/system/personal/list')
                             console.log(ret)
                         })
                     }

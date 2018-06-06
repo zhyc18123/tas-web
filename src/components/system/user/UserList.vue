@@ -53,7 +53,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <v-pagination :total="userListTotal" @getListResult="getUserList" :page-size="pageSize"></v-pagination>
+      <v-pagination :total="userListTotal" @getListResult="getUserList" :page-size="pageSize" ref="page"></v-pagination>
     </div>
   </div>
 </template>
@@ -147,6 +147,7 @@ export default {
       
     },
     handleSearch(){
+      this.$refs.page.changePage(1)
       this.getUserList({pageIndex:1})
     },
     handleDetails(row){

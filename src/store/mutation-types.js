@@ -10,6 +10,7 @@ export const GET_TERM='GET_TERM'
 export const GET_LEVEL='GET_LEVEL'
 export const GET_YEAR='GET_YEAR'
 export const GET_MATER='GET_MATER'
+export const GET_TEACHERS='GET_TEACHERS'
 // 课程
 export const GET_COURSE='GET_COURSE'
 export const GET_COURSE_DETAIL='GET_COURSE_DETAIL'
@@ -27,6 +28,12 @@ export const GET_ORGAN='GET_ORGAN'
 export const GET_ORGAN_PERSON='GET_ORGAN_PERSON'
 // office online
 export const GET_TOKEN='GET_TOKEN'
+// 校区
+export const GET_SCHOOL='GET_SCHOOL'
+// 班级
+export const GET_CLASS='GET_CLASS'
+export const GET_CLASS_DETAIL='GET_CLASS_DETAIL'
+export const GET_CLASS_CHAPTER='GET_CLASS_CHAPTER'
 
 
 
