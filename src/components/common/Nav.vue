@@ -22,7 +22,7 @@
                 <img src="" alt="">
               </div> -->
             <div class="login-name" @click="$router.push('/personal/user-info')">
-              <img v-if="true" :src="loginInfo.avatarUrl" />
+              <img v-if="true" src="../../assets/img/default-head.png" />
               <span>欢 迎您！
                 <em>{{loginInfo?loginInfo.userName:''}}</em>
               </span>
@@ -190,6 +190,10 @@ export default {
       display: inline-block;
       padding-right: 20px;
       height: 80px;
+      cursor: pointer;
+      img{
+        border: 1px solid #ccc;
+      }
       em {
         font-style: normal;
         display: inline-block;

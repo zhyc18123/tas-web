@@ -1,6 +1,6 @@
 <template>
     <el-row class="addclass-detail">
-        <line-head-form class="head" :title="form.id?'修改班级':'新增班级'" />
+        <line-head-form class="head" :title="form.id!=='add'?'修改班级':'新增班级'" />
         <el-form class="c-form" label-position="right" label-width="120px" ref="form" :rules="rules" :model="form">
             <el-form-item label="请选择课程:" prop="type">
                 <el-radio-group v-model="form.type">
@@ -101,7 +101,7 @@
                             </div>
                         </div> -->
             <el-form-item class="class-btn">
-                <el-button class="height-btn" @click="sure">确定</el-button>
+                <el-button type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
             </el-form-item>
         </el-form>
@@ -237,7 +237,7 @@ export default {
             this.$refs.form.validate(async (vali) => {
                 if (vali) {
                     let opt = { ...this.form, teacherIds: this.form.teacherIds.join(','), openTime: util.formatDate(this.form.openTime) + ' 00:00:00', closeTime: util.formatDate(this.form.closeTime) + ' 23:59:59' }
-                    if (this.form.id !== 'add') {
+                    if (this.form.id === 'add') {
                         opt = { ...opt, id: '' }
                     }
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
