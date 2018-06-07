@@ -6,7 +6,7 @@
              <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-banciguanli"></use>
             </svg>
-            <span>物理能力提高班</span>
+            <span>{{classes.classDetail.className}}</span>
             <em>开课中</em>
         </div>
         <div class="cont-main">
@@ -14,7 +14,7 @@
                 <el-step title="班级基础信息" >
                     <div slot="title"  class="title">
                         <span>班级基础信息</span>
-                        <el-button @click="$router.push('/main/system/class/add')">修改基本信息</el-button>
+                        <el-button @click="$router.push('/main/system/class/'+id)">修改基本信息</el-button>
                     </div>
                     <div slot="description" class="class-info">
                         <ul class="">
@@ -23,19 +23,19 @@
                                     <div slot="label" class="tow-four">
                                        班级编号：
                                     </div>
-                                    <span>12311313131</span>
+                                    <span>{{classes.classDetail.num}}</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                         学<span>科：</span>
                                     </div>
-                                    <span>初中物理</span>
+                                    <span>{{classes.classDetail.subject}}</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                        创建日期：
                                     </div>
-                                    <span>2018-01-01</span>
+                                    <span>{{classes.classDetail.createTime | formatDate}}</span>
                                 </div>
                                 <!-- <div class="info-item">
                                     <div slot="label" class="tow-four">
@@ -49,19 +49,19 @@
                                     <div slot="label" class="tow-four">
                                        学员总数：
                                     </div>
-                                    <span>50</span>
+                                    <span>-</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                         年<span>级：</span>
                                     </div>
-                                    <span>初二</span>
+                                    <span>{{classes.classDetail.section}}</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                        所在校区：
                                     </div>
-                                    <span>岗顶校区</span>
+                                    <span>{{classes.classDetail.school}}</span>
                                 </div>
                             </li>
                             <li>
@@ -69,19 +69,19 @@
                                     <div slot="label" class="tow-four">
                                        每讲总数：
                                     </div>
-                                    <span>15讲</span>
+                                    <span v-text="classes.classDetail.lessonClassPlanChapterList && classes.classDetail.lessonClassPlanChapterList.length">{{}}</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                         开课日期：
                                     </div>
-                                    <span>2018-01-01</span>
+                                    <span>{{classes.classDetail.openTime | formatDate}}</span>
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                       班<span>型：</span>
                                     </div>
-                                    <span>物理能力提高</span>
+                                    <span>{{classes.classDetail.lessonName}}</span>
                                 </div>
                             </li>
                         </ul>
@@ -90,16 +90,16 @@
                 <el-step title="主讲老师基础信息" >
                     <div slot="title" class="title">
                         <span>主讲老师基础信息</span>
-                        <el-button @click="dialogAddTeacher = true">添加主讲老师</el-button>
+                        <el-button @click="addTeacher()">添加主讲老师</el-button>
                     </div>
                     <div slot="description" class="teacher-info">
                         <ul>
-                            <li v-for="(item,index) in teacherData" :key="item.id">
+                            <li v-for="(item,index) in classes.classDetail.teacherList" :key="item.id">
                                 <span class="teacher-order">主讲老师{{index+1}}</span>
-                                <span>{{item.name}}</span>
+                                <span>{{item.username}}</span>
                                 <div class="teacher-btn">
-                                    <el-button  @click="dialogAddTeacher = true">更换</el-button>
-                                    <el-button>删除</el-button>
+                                    <el-button  @click="changeTeacher(item)">更换</el-button>
+                                    <el-button v-if="classes.classDetail.teacherList.length>1" @click="delTeacher(item)">删除</el-button>
                                 </div>
                             </li>
                         </ul>
@@ -112,41 +112,56 @@
                     </div>
                     <div slot="description">
                         <el-table 
-                            :data="tableData"
+                            :data="classes.classDetail.lessonClassPlanChapterList"
                             class="line-table"
                             header-align="center" 
-                            style="width: 100%">
+                            style="width:100%"
+                            >
                             <el-table-column
                                 prop="course"
                                 label="讲次"
                                 align = "center"
-                                width="180">
+                                width = "180"
+                                >
+                                <template slot-scope="scope">
+                                    <span>{{'第'+scope.row.sort+'讲'}}</span>
+                                </template>
                             </el-table-column>
                             <el-table-column
-                                prop="courseName"
+                                prop="chapterName"
                                 label="讲次名称"
+                                width = "200"
                                 align = "center"
-                                width="180">
+                                >
                             </el-table-column>
                             <el-table-column
                                 prop="dateTime"
                                 align = "center"
+                                width = "200"
                                 label="日期">
+                                <template slot-scope="scope">
+                                    <span>{{scope.row.planDate | formatDate}}</span>
+                                </template>
                             </el-table-column>
                             <el-table-column
                                 prop="substituteTeacher"
                                 align = "center"
+                                width = "200"
                                 label="带课老师">
-                            </el-table-column>
-                            <el-table-column
+                                <template slot-scope="scope">
+                                    <span>{{scope.row.teacherName?scope.row.teacherName:'无'}}</span>
+                                </template>
+                            </el-table-column> 
+                             <el-table-column
                                 align = "center"
+                                width = "200"
                                 label="操作">
                                 <template slot-scope="scope">
                                     <div>
                                         <el-button class="noborder"  @click="dialogAddTeacher = true">添加代课老师</el-button>
                                     </div>
                                 </template>
-                            </el-table-column>
+                            </el-table-column> 
                         </el-table>
                     </div>
                 </el-step>
@@ -159,14 +174,23 @@
             <el-form>
                 <el-form-item >
                     <el-input v-model="query.keyword" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
-                    <el-button>搜索</el-button>
+                    <el-button @click="getTeacger">搜索</el-button>
                 </el-form-item>
             </el-form>
             <div class="teacher-table">
-                <el-table :data="TeacherData" ref="multipleTable"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
-                    <el-table-column  type="selection" width="55" :selectable="selectable"></el-table-column>
-                    <el-table-column property="teacherName" label="姓名" width="200"></el-table-column>
-                    <el-table-column property="course" label="科目" align="right"></el-table-column>
+                <el-table :data="TeacherData" ref="table"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
+                    <el-table-column v-if="!isChange" type="selection" width="55" :reserve-selection="false"> </el-table-column>
+                    <el-table-column v-else label="" align="center" width="60">
+                        <template scope="scope">
+                            <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio"></el-radio>
+                        </template>
+                    </el-table-column>
+                    <el-table-column property="username" label="姓名" width="200"></el-table-column>
+                    <el-table-column property="course" label="科目" align="right" class="course">
+                        <template slot-scope="scope">
+                            <span v-for="item in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}}、</span>
+                        </template>
+                    </el-table-column>
                 </el-table>
             </div>
             <div class="add-btn">
@@ -191,16 +215,7 @@ export default {
         return {
             id:this.$route.query.id,
             stepActive:4,
-            teacherData:[
-                {
-                    name:"王小明",
-                    id:1,
-                },
-                {
-                    name:"王小明",
-                    id:2,
-                }
-            ],
+            isChange:false,
             tableData:[
                 {
                     substituteTeacher:'刘德华',
@@ -216,45 +231,14 @@ export default {
 
                 }
             ],
-            TeacherData:[
-                {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:1,
-                },
-                {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:2,
-                },
-                 {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:3,
-                },
-                 {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:4,
-                },
-                 {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:5,
-                },
-                 {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:6,
-                },
-                 {
-                    teacherName:"刘德华",
-                    course:"物理",
-                    id:7,
-                }
-            ],
+            TeacherData:[],
             dialogAddTeacher:false,
-            addTeacher:[],
+            addTeacherList:[],
+            addTeacherListNum:0,
+            teacherListNum:0,
+            teacherList:[],
+            replacTeacherId:'',
+            checkTeacherId:'',
             query:{
                 keyword:""
             }
@@ -262,8 +246,21 @@ export default {
     },
     created(){
         this.id = this.$route.query.id
-        this.classDetail({ id: this.form.id })
+        this.classDetail({ id: this.id })
         this.getTeacger()
+    },
+    watch:{
+       'classes.classDetail'(val) {
+            console.log('vla', val)
+            let ids=[]
+            val.teacherList.map((item,i)=>{
+                ids.push(item.id)
+            })
+            // val.teacherIds=ids
+            this.teacherListNum = ids.length
+            this.teacherList = [...val.teacherList]
+            // this.form = {...val}
+        }
     },
     computed:{
         ...mapState(["classes"])
@@ -273,28 +270,47 @@ export default {
         //查询老师
         getTeacger(){
            let param = this.query
-            io.post6(io.teacherList,param,(ret)=>{
+            io.post(io.teacherList,param,(ret)=>{
                 this.TeacherData = ret
-                console.log(ret)
+                console.log("list",ret)
             })
         },
         handleSelectionChange(val){
-            this.addTeacher = val
+            this.addTeacherList = val
+            this.addTeacherListNum = val.length
             console.log(val)
-        },
-        selectable(){
-            console.log(arguments)
-            if(this.addTeacher.length>=2){
-                this.TeacherData.map((item)=>{
-                    if(arguments[0].id == item.id){
-                        return true
-                    }else{
-                        return false
+            if(this.addTeacherListNum+this.teacherListNum>2){
+                this.$message('该班级已有'+ this.teacherListNum +'位主讲老师,'+'你现在最多还能添加'+ (2-this.teacherListNum)+ '位主讲老师')
+                this.$refs.table.toggleRowSelection(val[val.length - 1], false)
+                return
+            }
+            this.teacherList.map((item)=>{
+                val.map((ite)=>{
+                    if(item.id == ite.id){
+                        this.$message('老师'+item.username+'已在该班级中，请重新选择')
+                        this.$refs.table.toggleRowSelection(val[val.length - 1], false)
                     }
                 })
-            }else{
-                return true;
-            }
+                
+            })
+        },
+        addTeacher(row){
+            this.query.keyword=''
+            this.getTeacger()
+            this.dialogAddTeacher = true
+            this.isChange = false
+        },
+        changeTeacher(row){
+            this.query.keyword=''
+            this.getTeacger()
+            this.replacTeacherId = row.id
+            this.dialogAddTeacher = true
+            this.isChange = true
+            
+        },
+        selectable(){
+            
+
         },
   }
 }
@@ -420,6 +436,8 @@ export default {
                 padding 0 30px
                 .el-table
                     border 0 none !important
+                    .course
+                        padding-right 20px
             .add-btn
                 text-align center
                 margin-top 100px
@@ -466,13 +484,23 @@ export default {
                             font-size 14px
                             font-weight 700 
                         .el-step__description
-                            padding-right 0       
+                            padding-right 0  
+
+
         .add-teacher
             .el-input
                 height 38px
                 .el-input__inner
                     height 38px
                     line-height 38px
+            .teacher-table
+                .is-right
+                    padding-right 20px !important
+                .table-radio
+                    .el-radio__label
+                        display none
+
+
 
 
 </style>

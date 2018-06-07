@@ -39,6 +39,7 @@ const actions = {
   },
   async classDetail({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.classDetail, opt)
+    console.log(data)
     if (data.success) {
       commit(types.GET_CLASS_DETAIL,data.data)
     }
