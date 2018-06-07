@@ -194,7 +194,7 @@ export default {
                 ids.push(item.id)
             })
             val.teacherIds=ids
-            this.form = val
+            this.form = {...val}
         }
     },
     created() {
