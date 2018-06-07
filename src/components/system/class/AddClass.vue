@@ -173,13 +173,18 @@ export default {
     },
     watch: {
         'form.type'(val) {
-            this.getCourse()
+            this.form.baseSectionId = ''
+            this.form.lessonId = ''
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
+            this.getCourse() 
         },
         'form.dataSubject'(val) {
-            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject })
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
+            this.form.lessonId = ''
             this.getCourse()
         },
         'form.baseSectionId'(val) {
+            this.form.lessonId = ''
             this.getCourse()
         },
         'classes.classDetail'(val) {
@@ -197,7 +202,7 @@ export default {
             this.classDetail({ id: this.form.id })
         }
         this.findSubjectsData({ pageIndex: 1, pageSize: 10000000 })
-        this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject })
+         this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
         this.getCourse()
         this.teacherList()
         this.findBaseSchoolPage({ pageIndex: 1, pageSize: 10000000 })

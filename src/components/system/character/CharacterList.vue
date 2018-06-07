@@ -143,7 +143,6 @@ export default {
 .character-list {
   margin-top: 20px;
   // height: 200px;
-  padding-bottom :20px;
   background: white;
   .class-category {
     float: left;
@@ -151,6 +150,7 @@ export default {
   .content {
     position: relative;
     text-align: center;
+    padding-bottom 50px
     .el-table {
       .btn-handle{
         cursor: pointer;

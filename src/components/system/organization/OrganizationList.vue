@@ -107,6 +107,8 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
+.organization
+  padding-bottom 50px
 @import '~assets/stylus/mixin.styl'
 .t-form
   table-form()

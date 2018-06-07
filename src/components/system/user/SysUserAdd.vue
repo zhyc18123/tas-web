@@ -152,6 +152,7 @@ export default {
               this.roleList = data;
               if(!this.userId){
                   this.form.authRoleId = data[0].id;
+                  console.log(data)
                   this.roleType = data[0].roleType;
               }
           })
@@ -249,12 +250,18 @@ export default {
                     password:ret.password,
                     cPassword:ret.password,
                     username:ret.username,
-                    organPersonId:ret.authOrganizationId,
+                    organPersonId:ret.authRoleList[0].roleType===1?ret.authOrganizationId:'',
                     authOrganizationId:ret.authOrganizationId,
                 }
                 this.password = '******'
                 this.cPassword = '******'
                 this.oldPassword = ret.password.toString()
+                this.roleList.map((item)=>{
+                  if(ret.authRoleList[0].id==item.id){
+                    this.roleType = item.roleType
+                  }
+                })
+
             })
         }
     },

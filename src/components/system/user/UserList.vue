@@ -173,7 +173,7 @@ export default {
   background: white;
   .content {
     position: relative;
-    padding-bottom 20px
+    padding-bottom 50px
     // text-align: center;
     .el-table {
       .btn-edit,
