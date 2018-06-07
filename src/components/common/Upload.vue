@@ -89,10 +89,10 @@ export default {
                 this.view({ resourceId: resourceId })
                 if (!this.office.token) {
                     setTimeout(() => {
-                        window.open(this.newFileUrl + '?token=' + this.office.token)
+                        window.open(conf.ofsUrl+'office/view/'+this.newFileUrl + '?token=' + this.office.token)
                     }, 1000)
                 } else {
-                    window.open(this.newFileUrl + '?token=' + this.office.token)
+                    window.open(conf.ofsUrl+'office/view/'+this.newFileUrl + '?token=' + this.office.token)
                 }
                 // console.log(this.office)
                 // this.nextTick(() => {
