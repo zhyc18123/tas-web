@@ -221,8 +221,9 @@ const io = {
             if (res.data.code === '3001') {
                 storage.removeAccessToken()
                 storage.removeCurrentUserInfo()
-                console.log("xxd",Vue.prototype.$router)
-                Vue.prototype.$router.push('/login')
+                // console.log("xxd",Vue.prototype.$router)
+                // Vue.prototype.$router.push('/login')
+                document.location.reload()
             }
       if(!res.data.success){
           window.$notify.error({
