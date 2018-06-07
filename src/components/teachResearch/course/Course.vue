@@ -132,7 +132,7 @@ export default {
       this.$router.push({ path: '/main/teach-research/course/add' })
     },
     getCourseList(opt) {
-      this.findLessonPage({...this.form,...opt})
+      this.findLessonPage({...this.form,...opt,type:this.userInfo.isSystem?0:1})
     },
   async publishLesson(id,status){
     let tipText=''

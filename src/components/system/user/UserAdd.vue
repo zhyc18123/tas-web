@@ -71,8 +71,9 @@
                 <li v-for="(gradesList,index) in gradesBySubject"  :key="index">
                   <h4>{{gradesList.subjectName}}</h4>
                   <div class="grade">
-                    <el-checkbox-group v-model="gradesList.baseSectionIds"> 
-                      <el-checkbox label="" :key="0">全部</el-checkbox>
+                    <el-checkbox label="" :key="0" v-model="gradesList.checkAll" :indeterminate="gradesList.isIndeterminate" @change="handleCheckAllChange(gradesList)">全部</el-checkbox>
+                    <el-checkbox-group v-model="gradesList.baseSectionIds" @change="handleCheckedGraderChange(gradesList)"> 
+          
                       <el-checkbox :label="item.id" v-for="item in gradesList.list" :key="item.id">{{item.name}}</el-checkbox>
                     </el-checkbox-group>
                   </div>
@@ -156,6 +157,7 @@ export default {
       },
       subjectSectionList:[],
       gradesBySubject:[],
+      isIndeterminate:true,
       types: [{
         label: '教师',
         value: 0,
@@ -229,11 +231,27 @@ export default {
       }
     },
     handleCheckedSubjectChange(val){
-      this.dataSubjects = val.join(',')
+
       if(this.form.checkedSubject.length!=0){
         this.findBaseSectionBySubject()
       }
 
+    },
+    handleCheckAllChange(row){
+      let allList = []
+      row.list.map((item)=>{
+        allList.push(item.id)
+      })
+      row.baseSectionIds = row.checkAll ? allList : [];
+
+      row.isIndeterminate = row.checkAll?true:false;
+      console.log(row)
+    },
+    handleCheckedGraderChange(row){
+      console.log(row)
+        let checkedCount = row.baseSectionIds.length;
+        row.checkAll = checkedCount === row.list.length;
+        row.isIndeterminate = checkedCount > 0 && checkedCount < row.list.length;
     },
     findAuthRoleList() {
       io.post(io.findAuthRoleList,{},(data) => {
@@ -284,6 +302,8 @@ export default {
         ret.map(item=>{
           let baseSectionIds = []
           let nullData = 0
+          item.checkAll = false
+          item.isIndeterminate = true
           if(this.subjectSectionList.length>=1){
             this.subjectSectionList.map((ite)=>{
               if(item.subjectId==ite.subjectId){
@@ -291,6 +311,7 @@ export default {
                   baseSectionIds.push(i.sectionId)
                 })
                 item.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
+                
               }
               if(ite.subjectId != item.subjectId){
                 nullData++
@@ -330,8 +351,8 @@ export default {
         this.password = '******'
         this.cPassword = '******'
         let authRoleIds = []
-        data.authRoleList.map(j=>{
-          authRoleIds.push(j.id)
+        data.authRoleList.map(item=>{
+          authRoleIds.push(item.id)
         })
         this.authRoleIds = authRoleIds
         // this.oldPassword =JSON.parse(JSON.stringify(data.password))
@@ -346,6 +367,7 @@ export default {
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
+          console.log(this.gradesBySubject)
           data.checkedSubject.map((j) => {
             this.gradesBySubject.map((val) => {
               if (j === val.subjectId) {
@@ -408,14 +430,18 @@ export default {
           data.authRoleIds = this.authRoleIds.join(",")
           if(!this.userId){
             io.post(io.addAuthUser,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
-              this.$message('保存成功！')
+              this.$message({
+                type:"success",
+                message:'保存成功！'})
                 console.log(data)
               this.$router.push('/main/system/userList/list')
               this.resetForm()
             })
           }else{
-             io.post(io.updateStatus,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
-              this.$message('保存成功！')
+             io.post(io.updateAuthUser,{authUserUpdateJsonStr:JSON.stringify(data)}, (data) => {
+              this.$message({
+                type:"success",
+                message:'保存成功！'})
                 console.log(data)
               this.$router.push('/main/system/userList/list')
               this.resetForm()

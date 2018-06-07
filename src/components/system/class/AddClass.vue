@@ -211,7 +211,7 @@ export default {
     methods: {
         ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findLessonPage', 'findBaseTermPage', 'teacherList', 'findBaseSchoolPage', 'classDetail','findBaseTermPage']),
         getCourse() {
-            this.findLessonPage({ pageIndex: 1, pageSize: 10000000, type: this.form.type, dataSubject: this.form.dataSubject, baseSectionId: this.form.baseSectionId })
+            this.findLessonPage({ pageIndex: 1, pageSize: 10000000, type: this.form.type, dataSubject: this.form.dataSubject, baseSectionId: this.form.baseSectionId,status:1 })
         },
         // handleCheckedWeekChange(val) {
         //     if (val.constructor == Array) {
@@ -242,7 +242,7 @@ export default {
             this.$refs.form.validate(async (vali) => {
                 if (vali) {
                     let opt = { ...this.form, teacherIds: this.form.teacherIds.join(','), openTime: util.formatDate(this.form.openTime) + ' 00:00:00', closeTime: util.formatDate(this.form.closeTime) + ' 23:59:59' }
-                    if (this.form.id !== 'add') {
+                    if (this.form.id === 'add') {
                         opt = { ...opt, id: '' }
                     }
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
