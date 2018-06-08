@@ -237,16 +237,18 @@ export default {
       }
 
     },
+    // 全选
     handleCheckAllChange(row){
       let allList = []
       row.list.map((item)=>{
         allList.push(item.id)
       })
       row.baseSectionIds = row.checkAll ? allList : [];
-
-      row.isIndeterminate = row.checkAll?true:false;
+      row.isIndeterminate = false
+      // row.isIndeterminate = row.checkAll?true:false;
       console.log(row)
     },
+    // 全选
     handleCheckedGraderChange(row){
       console.log(row)
         let checkedCount = row.baseSectionIds.length;
@@ -267,38 +269,6 @@ export default {
         subjectId:this.form.checkedSubject.join(',')
       }
       io.post(io.findBaseSectionBySubject,param,(ret)=>{
-        // if(this.subjectSectionList){
-        //   this.subjectSectionList.map((item)=>{
-        //     var nullData = 0
-        //     console.log(ret)
-        //     ret.map(ite=>{
-        //       let baseSectionIds = []
-        //       if(item.subjectId==ite.subjectId){
-        //         item.sectionList.map(i=>{
-        //           baseSectionIds.push(i.sectionId)
-        //         })
-        //       ite.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
-        //       }else{
-        //         nullData++
-        //         console.log(nullData)
-        //       }
-              
-        //       // if(ite.subjectId != item.subjectId){
-                
-        //       //   console.log("nullite",ite.subjectName)
-        //       //     nullData++
-        //       //     console.log(nullData,ret.length)
-        //       //   if(nullData===ret.length){
-        //       //     ite.baseSectionIds = []
-        //       //   }
-        //       // }
-        //     })
-        //   })
-        // }else{
-        //   ret.map(item=>{
-        //      item.baseSectionIds = []
-        //   })
-        // }
         ret.map(item=>{
           let baseSectionIds = []
           let nullData = 0
@@ -355,8 +325,6 @@ export default {
           authRoleIds.push(item.id)
         })
         this.authRoleIds = authRoleIds
-        // this.oldPassword =JSON.parse(JSON.stringify(data.password))
-        // console.log(oldPassword)
         this.subjectSectionList = data.subjectSectionList
         this.findBaseSectionBySubject()
       })
@@ -449,6 +417,7 @@ export default {
           }
          
         } else {
+          this.$message('还有必填项未填，请先填写')
           return false;
         }
       });

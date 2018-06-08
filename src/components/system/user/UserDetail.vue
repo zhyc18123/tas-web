@@ -194,7 +194,7 @@ export default {
     watch:{
 
     }
-    }
+}
 </script>
 
 <style lang="stylus" scoped>

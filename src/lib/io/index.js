@@ -81,6 +81,7 @@ const io = {
   this.updatePass=conf.baseApiPath + '/admin/api/updatePass'
   //老师列表
   this.teacherList=conf.baseApiPath + '/admin/api/authUser/teacherList'
+  
 // 校区
   this.findBaseSchoolPage=conf.baseApiPath + '/lesson/api/BaseSchool/findBaseSchoolPage'
   this.addSchool=conf.baseApiPath + '/lesson/api/BaseSchool/addSchool'
@@ -92,6 +93,9 @@ const io = {
   this.addOrUpdateClass=conf.baseApiPath + '/lesson/api/lessonClass/addOrUpdateClass'
   this.classDetail=conf.baseApiPath + '/lesson/api/lessonClass/classDetail'
   this.lessonClassPlanChapterList=conf.baseApiPath + '/lesson/api/lessonClass/lessonClassPlanChapterList'
+  this.addTeacher=conf.baseApiPath + '/lesson/api/lessonClass/addTeacher'
+  this.changeTeacher=conf.baseApiPath + '/lesson/api/lessonClass/changeTeacher'
+  this.deleteTeacher=conf.baseApiPath + '/lesson/api/lessonClass/deleteTeacher'
 
 
 

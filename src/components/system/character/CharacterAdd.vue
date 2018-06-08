@@ -91,6 +91,7 @@ import LineHeadForm from '../../common/LineHeadForm'
               })
             }
           } else {
+            this.$message('还有必填项未填，请先填写')
             return false;
           }
         });

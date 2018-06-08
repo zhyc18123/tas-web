@@ -233,7 +233,8 @@ export default {
                     })
                 }
             } else {
-                return false;
+              this.$message('还有必填项未填，请先填写')
+              return false;
             }
         });
         },

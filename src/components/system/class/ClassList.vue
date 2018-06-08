@@ -14,7 +14,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-select v-model="form.lessonId" placeholder="班型">
+                <el-select v-model="form.baseLevelId" placeholder="班型">
                     <el-option label="全部" value=""></el-option>
                     <el-option v-for="item in condition.levelObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
                 </el-select>
@@ -43,9 +43,9 @@
                 <el-button type="primary" class="new-btn" @click="$router.push('/main/system/class/add')">新增班级</el-button>
             </el-form-item>
         </el-form>
-        <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" >
+        <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" empty-text="暂无班级，请先添加班级">
             <el-table-column prop="className" label="班级名称" align="center" ></el-table-column>
-            <el-table-column prop="section" label="班型"  align="center"></el-table-column>
+            <el-table-column prop="baseLevelName" label="班型"  align="center"></el-table-column>
             <el-table-column  label="开课状态" align="center">
                 <template scope="scope">
                     {{scope.row.status===0?'未开课':scope.row.status===1?'已开课':'已结课'}}
@@ -54,8 +54,8 @@
             <el-table-column prop="section"  label="年级" align="center"> </el-table-column>
             <el-table-column  label="任课教师" align="center">
                 <template scope="scope">
-                    <span v-for="item in scope.row.teacherList">
-                         {{item.username}} 
+                    <span v-for="(item,index) in scope.row.teacherList" :key="index">
+                         {{item.username}} <span v-if="index != (scope.row.teacherList.length-1)">、</span>
                     </span>
                 </template>
                  </el-table-column>
@@ -97,6 +97,7 @@ export default {
                 baseSectionId:null,
                 baseTrimesterId:null,
                 lessonId:null,
+                baseLevelId:null,
                 schoolId:null,
                 status:null,
                 name:'',

@@ -12,7 +12,7 @@
                 </div>
 
                 <el-select v-model="form.dataSubject" placeholder="">
-                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id" :key="index"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item prop="baseSectionId">
@@ -21,7 +21,7 @@
                     <span>级:</span>
                 </div>
                 <el-select v-model="form.baseSectionId" placeholder="">
-                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
+                    <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id" :key="index"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item prop="type" label="讲次类型:">
@@ -35,7 +35,7 @@
                 </div>
 
                 <el-select v-model="form.baseLevelId" placeholder="">
-                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id"></el-option>
+                    <el-option v-for="(level,index) in condition.levelObj.list" :label="level.name" :value="level.id" :key="index"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="">

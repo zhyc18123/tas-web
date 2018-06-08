@@ -3,19 +3,19 @@
         <line-head-form class="head" :title="form.id!=='add'?'修改班级':'新增班级'" />
         <el-form class="c-form" label-position="right" label-width="120px" ref="form" :rules="rules" :model="form">
             <el-form-item label="请选择课程:" prop="type">
-                <el-radio-group v-model="form.type">
+                <el-radio-group v-model="form.type" @change="typeChange">
                     <el-radio :label="0">标准课程</el-radio>
                     <el-radio :label="1">机构定制课程</el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-form-item label="请选择学科:" prop="dataSubject">
-                <el-select v-model="form.dataSubject" placeholder="请选择学科">
+                <el-select v-model="form.dataSubject" placeholder="请选择学科" @change="subjectChange">
                     <el-option v-for="item in condition.subjectList" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="请选择年级:" prop="baseSectionId">
-                <el-select v-model="form.baseSectionId" placeholder="请选择年级">
+                <el-select v-model="form.baseSectionId" placeholder="请选择年级" @change="gradeChange">
                     <el-option v-for="item in condition.gradeObj.list" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
@@ -33,7 +33,7 @@
                         </el-form-item>
             <el-form-item label="主讲老师:" prop="teacherIds">
                 <el-select v-model="form.teacherIds" multiple placeholder="请选择老师（最多添加2位老师）" @change="teacherChange">
-                    <el-option v-for="item in condition.teacherList" :key="item.id" :label="item.username" :value="item.id">
+                    <el-option v-for="(item,index) in condition.teacherList" :key="index" :label="item.username" :value="item.id">
                     </el-option>
                 </el-select>
             </el-form-item>
@@ -177,14 +177,15 @@ export default {
             this.form.lessonId = ''
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
             this.getCourse() 
+
         },
         'form.dataSubject'(val) {
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
-            this.form.lessonId = ''
+            this.teacherList({dataSubject:this.form.dataSubject})
             this.getCourse()
         },
         'form.baseSectionId'(val) {
-            this.form.lessonId = ''
+            // this.form.lessonId = ''
             this.getCourse()
         },
         'classes.classDetail'(val) {
@@ -204,7 +205,7 @@ export default {
         this.findSubjectsData({ pageIndex: 1, pageSize: 10000000 })
          this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
         this.getCourse()
-        this.teacherList()
+        // this.teacherList({dataSubject:this.form.dataSubject})
         this.findBaseSchoolPage({ pageIndex: 1, pageSize: 10000000 })
         this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
     },
@@ -238,6 +239,16 @@ export default {
                 return
             }
         },
+        typeChange(){
+            // this.form.baseSectionId = ''
+            // this.form.lessonId = ''
+        },
+        subjectChange(){
+            this.form.lessonId = ''
+        },
+        gradeChange(){
+            this.form.lessonId = ''
+        },
         sure() {
             this.$refs.form.validate(async (vali) => {
                 if (vali) {
@@ -248,7 +259,7 @@ export default {
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
                     console.log(this.form)
                     if (data.success) {
-                        this.$message('保存成功！')
+                        this.$message({type:"success",message:'保存成功！'})
                         this.$router.go(-1)
                     }
                 } else {

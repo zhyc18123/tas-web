@@ -7,7 +7,7 @@
                 <use xlink:href="#icon-banciguanli"></use>
             </svg>
             <span>{{classes.classDetail.className}}</span>
-            <em>开课中</em>
+            <em>{{classes.classDetail.status===0?'未开课':classes.classDetail.status===1?'已开课':'已结课'}}</em>
         </div>
         <div class="cont-main">
             <el-steps :active="stepActive" direction="vertical" name="">
@@ -90,7 +90,7 @@
                 <el-step title="主讲老师基础信息" >
                     <div slot="title" class="title">
                         <span>主讲老师基础信息</span>
-                        <el-button @click="addTeacher()">添加主讲老师</el-button>
+                        <el-button @click="addTeacher(classes.classDetail)">添加主讲老师</el-button>
                     </div>
                     <div slot="description" class="teacher-info">
                         <ul>
@@ -194,8 +194,8 @@
                 </el-table>
             </div>
             <div class="add-btn">
-                <el-button class="height-btn">确认</el-button>
-                <el-button class="light-btn">取消</el-button>
+                <el-button class="height-btn" @click="saveTeacher">确认</el-button>
+                <el-button class="light-btn" >取消</el-button>
             </div>
         </el-dialog>
     </div>
@@ -215,7 +215,7 @@ export default {
         return {
             id:this.$route.query.id,
             stepActive:4,
-            isChange:false,
+            lessonClassId:null,
             tableData:[
                 {
                     substituteTeacher:'刘德华',
@@ -237,17 +237,21 @@ export default {
             addTeacherListNum:0,
             teacherListNum:0,
             teacherList:[],
-            replacTeacherId:'',
-            checkTeacherId:'',
+            originTeacherId:'',//被更换的老师
+            checkTeacherId:'',//更换老师的id
             query:{
-                keyword:""
-            }
+                keyword:"",
+                dataSubject:"",
+            },
+            isChange:false,//是否是更新
+            // isLecturer:true,//是否是主讲老师
+            type:0,//类型 0:主讲老师，1：代课老师
         }
     },
     created(){
         this.id = this.$route.query.id
         this.classDetail({ id: this.id })
-        this.getTeacger()
+        // this.getTeacger()
     },
     watch:{
        'classes.classDetail'(val) {
@@ -259,6 +263,7 @@ export default {
             // val.teacherIds=ids
             this.teacherListNum = ids.length
             this.teacherList = [...val.teacherList]
+            this.query.dataSubject = val.dataSubject
             // this.form = {...val}
         }
     },
@@ -294,23 +299,102 @@ export default {
                 
             })
         },
-        addTeacher(row){
+        //添加时的基本信息（主讲老师）
+        addTeacher(classDetail){
+            console.log(classDetail)
+            this.type = 0
             this.query.keyword=''
             this.getTeacger()
             this.dialogAddTeacher = true
             this.isChange = false
         },
+        // 添加的请求（主讲老师）
+        addTeacherFun(){
+            let teacherId = []
+            this.addTeacherList.map(item=>{
+                teacherId.push(item.id)
+            })
+            let param = {
+                lessonClassId:this.id,
+                teacherId:teacherId.join(','),
+                type:this.type ,//类型 0:主讲老师，1：代课老师
+            }
+            console.log(param,teacherId.join(','))
+            io.post(io.addTeacher,param,(ret)=>{
+                this.$message({type:"success",message:"添加成功"})
+                this.classDetail({ id: this.id })
+                this.dialogAddTeacher = false
+                
+            })
+        },
+        //更新时的基本信息（主讲老师）
         changeTeacher(row){
+            this.type = 0
             this.query.keyword=''
             this.getTeacger()
-            this.replacTeacherId = row.id
+            this.originTeacherId = row.id
             this.dialogAddTeacher = true
-            this.isChange = true
-            
+            this.isChange = true 
         },
-        selectable(){
-            
+        //更新的请求（主讲老师）
+        changeTeacherFun(){
+            let param = {
+                lessonClassId:this.id,
+                originTeacherId:this.originTeacherId,
+                destTeacherId:this.checkTeacherId,
+                type:this.type,//类型 0:主讲老师，1：代课老师
+            }
+            io.post(io.changeTeacher,param,(ret)=>{
+                this.$message({type:"success",message:"更换成功"})
+                this.classDetail({ id: this.id })
+                this.dialogAddTeacher = false
+            })
+        },
+        //主讲老师删除
+        delTeacher(row){
+            console.log(row)
+            let param =  {
+                lessonClassId:this.id,
+                teacherId:row.id
+            }
+            this.$confirm('确定删除主讲老师 ' + row.username + ' 是否继续?', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    io.post(io.deleteTeacher,param,(ret)=>{
+                        this.classDetail({ id: this.id })
+                        this.$message({
+                            type: 'success',
+                            message: '删除成功!'
+                        });
+                    })
+               
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            });
+        },
 
+        saveTeacher(){
+            // 添加主讲老师
+            if(this.type===0 && !this.isChange){
+                this.addTeacherFun()
+            }
+            // 更新主讲老师
+            if(this.type===0 && this.isChange){
+                this.changeTeacherFun()
+            }
+            // 添加代课老师
+            if(this.type===1 && !this.isChange){
+                
+            }
+            //更新代课老师
+             if(this.type===1 && this.isChange){
+
+            }
         },
   }
 }
