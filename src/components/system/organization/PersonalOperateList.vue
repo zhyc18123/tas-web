@@ -20,7 +20,13 @@
       </el-form-item>
     </el-form>
     <el-table class="line-table" :data="system.organPerson.list"  style="width: 100%" header-align="center">
-        <el-table-column prop="perNum" label="编号" align="center" ></el-table-column>
+        <el-table-column prop="perNum" label="编号" align="center" >
+          <template slot-scope="scope">
+            <span v-if="scope.row.perNum">{{scope.row.perNum}}</span>
+            <span v-else>-</span>
+          </template>
+          
+        </el-table-column>
         <el-table-column prop="perName" label="姓名"  align="center"></el-table-column>
         <el-table-column prop="perPhone"  label="手机号" align="center"> </el-table-column>
         <el-table-column prop="status"  label="合作状态" align="center"> 

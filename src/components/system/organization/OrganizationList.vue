@@ -98,7 +98,6 @@ export default {
       this.getListResult()
     },
     getListResult(pageInfo){
-      console.log(666)
       let pageIndex = (pageInfo?pageInfo.pageIndex:false) || this.pageNo || 1
       let param = Object.assign({pageIndex:pageIndex,pageSize:this.pageSize}, this.form)
       this.findAuthOrgan(param)
