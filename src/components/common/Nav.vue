@@ -23,7 +23,7 @@
               </div> -->
             <div class="login-name" @click="$router.push('/personal/user-info')">
               <img v-if="true" src="../../assets/img/default-head.png" />
-              <span>欢 迎您！
+              <span>欢迎您！
                 <em>{{loginInfo?loginInfo.userName:''}}</em>
               </span>
               <!--<svg class="icon xiala" aria-hidden="true">

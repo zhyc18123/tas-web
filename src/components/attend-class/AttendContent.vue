@@ -15,7 +15,7 @@
 
             </el-breadcrumb-item>
         </el-breadcrumb>
-        <div class="attend-cont" v-if="office.token">
+        <div class="attend-cont" v-if="office.token&&chapterDetail.courseUrl">
             <iframe class="office-word" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
         </div>
     </div>

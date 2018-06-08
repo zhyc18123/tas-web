@@ -173,8 +173,8 @@ export default {
     },
     watch: {
         'form.type'(val) {
-            this.form.baseSectionId = ''
-            this.form.lessonId = ''
+            // this.form.baseSectionId = ''
+            // this.form.lessonId = ''
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
             this.getCourse() 
 
