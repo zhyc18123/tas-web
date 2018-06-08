@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container attend-class">
         <el-breadcrumb class="nav-little" separator=">">
             <el-breadcrumb-item :to="{ path: '/' }">
                 <svg class="icon shouye" aria-hidden="true">
@@ -260,7 +260,7 @@ export default {
         }
     }
 }
-
+.attend-class{
 .g-search {
     .el-radio-button__inner,
     .el-radio-button:first-child .el-radio-button__inner,
@@ -287,5 +287,6 @@ export default {
     .el-radio-button__orig-radio:checked+.el-radio-button__inner {
         box-shadow: 0 0 0 0;
     }
+}
 }
 </style>

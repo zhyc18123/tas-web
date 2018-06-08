@@ -19,7 +19,7 @@
                                     </el-radio-group>
                                 </div>
                             </li>
-                            <li>
+                            <!--<li>
                                 <div class="search-title">
                                     <label>学期：</label>
                                 </div>
@@ -28,7 +28,7 @@
                                         <el-radio-button v-for="(item,index) in condition.termObj.list" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
-                            </li>
+                            </li>-->
                             <li>
                                 <div class="search-title">
                                     <label>版本：</label>
@@ -171,7 +171,7 @@ export default {
                     pageSize: 10000000,
                     dataSubject: this.form.subjectId,
                     baseSectionId: this.form.gradeId,
-                    baseTrimesterId: this.form.termId,
+                    // baseTrimesterId: this.form.termId,
                     status:1
                 })
         },

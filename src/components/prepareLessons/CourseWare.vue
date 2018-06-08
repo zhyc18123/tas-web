@@ -36,8 +36,8 @@
         </div>
         <template v-if="office.token">
             <div class="source-body" v-if="sourceType==='courseWare'">
-                <iframe class="office-ppt" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
-                <iframe class="office-ppt edit" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+                <iframe class="office-ppt" v-if="chapterDetail.courseUrl" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+                <iframe class="office-ppt edit" v-if="chapterDetail.courseUrl" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
             </div>
             <div class="source-body" v-else>
                 <iframe class="office-word" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
