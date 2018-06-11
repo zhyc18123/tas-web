@@ -182,9 +182,17 @@
                 </el-form-item>
             </el-form>
             <div class="teacher-table">
-                <el-table :data="TeacherData" ref="table"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
-                    <el-table-column v-if="!isChange" type="selection" width="55" :reserve-selection="false"> </el-table-column>
-                    <el-table-column v-else label="" align="center" width="60">
+                <el-table v-if="!isChange" :data="TeacherData" ref="table" key="table"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
+                    <el-table-column type="selection" width="55" :reserve-selection="false"> </el-table-column>
+                    <el-table-column property="username" label="姓名" width="200"></el-table-column>
+                    <el-table-column property="course" label="科目" align="right" class="course">
+                        <template slot-scope="scope">
+                            <span v-for="item in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}}、</span>
+                        </template>
+                    </el-table-column>
+                </el-table>
+                <el-table v-else  :data="TeacherData" ref="table" key="table1"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
+                    <el-table-column label="" align="center" width="60">
                         <template scope="scope">
                             <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio"></el-radio>
                         </template>

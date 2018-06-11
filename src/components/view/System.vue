@@ -51,6 +51,15 @@ export default {
     }
   },
   created() {
+    this.init()
+  },
+  beforeUpdate () {
+    this.init()
+  },
+  computed: {
+  },
+  methods: {
+    init(){
     this.$store.dispatch('config')
     if (this.$route.path.indexOf('basisSetting') > 0) {
       this.activeName = '基础设定'
@@ -65,10 +74,7 @@ export default {
     } else if (this.$route.path.indexOf('class') > 0) {
       this.activeName = '班级管理'
     }
-  },
-  computed: {
-  },
-  methods: {
+    },
     handleClick(tab) {
       if (this.activeName === '基础设定') {
         this.$router.push('/main/system/basisSetting/schoolSetting')
