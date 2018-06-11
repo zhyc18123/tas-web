@@ -201,7 +201,7 @@ export default {
                   return false
                 }
                 console.log(data)
-                if(this.form.authRoleId !=0 && data.authOrganizationId ==''){
+                if(this.roleType !=1 && data.authOrganizationId ==''){
                   this.$message("请选择机构")
                   return false
                 }

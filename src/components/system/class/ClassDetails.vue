@@ -174,25 +174,30 @@
                 </el-step>
             </el-steps>
         </div>
-        <el-dialog title="选择老师" :visible.sync="dialogAddTeacher" class="add-teacher" width="40%">
+        <el-dialog title="选择老师" :visible.sync="dialogAddTeacher" class="add-teacher" width="40%" @close="dialogClose">
             <el-form>
                 <el-form-item >
                     <el-input v-model="query.keyword" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
-                    <el-button @click="getTeacger">搜索</el-button>
+                    <el-button @click="getTeacher">搜索</el-button>
                 </el-form-item>
             </el-form>
             <div class="teacher-table">
-                <el-table :data="TeacherData" ref="table"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
-                    <el-table-column v-if="!isChange" type="selection" width="55" :reserve-selection="false"> </el-table-column>
+                <el-table :data="TeacherData" ref="table"  tooltip-effect="dark" :show-header="false" max-height = '300' >
+                    <el-table-column v-if="!isChange"  width="55"> 
+                        <template scope="scope">
+                            <el-checkbox :label="scope.row.id" v-model="addTeacherList" @change="handleCheckAllChange"></el-checkbox>
+                            <!-- <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio" ></el-radio> -->
+                        </template>
+                    </el-table-column>
                     <el-table-column v-else label="" align="center" width="60">
                         <template scope="scope">
-                            <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio"></el-radio>
+                            <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio" ></el-radio>
                         </template>
                     </el-table-column>
                     <el-table-column property="username" label="姓名" width="200"></el-table-column>
                     <el-table-column property="course" label="科目" align="right" class="course">
                         <template slot-scope="scope">
-                            <span v-for="item in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}}、</span>
+                            <span v-for="(item,index) in scope.row.subjectSectionList" :key="index">{{item.subjectName}}、</span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -257,7 +262,7 @@ export default {
     created(){
         this.id = this.$route.query.id
         this.classDetail({ id: this.id })
-        // this.getTeacger()
+        // this.getTeacher()
     },
     watch:{
        'classes.classDetail'(val) {
@@ -278,8 +283,11 @@ export default {
     },
     methods:{
         ...mapActions(["classDetail"]),
+        dialogClose(){
+            this.TeacherData=[]
+        },
         //查询老师
-        getTeacger(){
+        getTeacher(){
            let param = this.query
             io.post(io.teacherList,param,(ret)=>{
                 this.TeacherData = ret
@@ -287,8 +295,8 @@ export default {
             })
         },
         handleSelectionChange(val){
-            this.addTeacherList = val
-            this.addTeacherListNum = val.length
+            // this.addTeacherList = val
+            // this.addTeacherListNum = val.length
             console.log(val)
             if(this.addTeacherListNum+this.teacherListNum>2){
                 this.$message('该班级已有'+ this.teacherListNum +'位主讲老师,'+'你现在最多还能添加'+ (2-this.teacherListNum)+ '位主讲老师')
@@ -308,11 +316,12 @@ export default {
         //添加时的基本信息（主讲老师）
         addTeacher(classDetail){
             console.log(classDetail)
-            this.isChange = false
+            // this.isChange = false
             console.log(this.isChange)
             this.type = 0
             this.query.keyword=''
-            this.getTeacger()
+             this.isChange = false
+             this.getTeacher()
             this.dialogAddTeacher = true
             
         },
@@ -347,11 +356,12 @@ export default {
         //更新时的基本信息（主讲老师）
         changeTeacher(row){
             this.type = 0
+            this.isChange = true 
             this.query.keyword=''
-            this.getTeacger()
+            this.getTeacher()
             this.originTeacherId = row.id
             this.dialogAddTeacher = true
-            this.isChange = true 
+            
         },
         //更新的请求（主讲老师）
         changeTeacherFun(){
@@ -414,7 +424,7 @@ export default {
             this.isChange = true//
             this.SupplyChange = false
             this.query.keyword=''
-            this.getTeacger()
+            this.getTeacher()
             this.dialogAddTeacher = true
         },
         addSupplyTeacherFun(){
@@ -444,13 +454,13 @@ export default {
             this.SupplyChange = true//更新
             this.originTeacherId = row.teacherId
             this.query.keyword=''
-            this.getTeacger()
+            this.getTeacher()
             this.dialogAddTeacher = true
         },
         changeSupplyTeacherFun(){
             let param = {
                 lessonClassId:this.id,
-                teacherId:this.checkTeacherId,
+                destTeacherId:this.checkTeacherId,
                 originTeacherId:this.originTeacherId,
                 type:this.type ,//类型 0:主讲老师，1：代课老师
                 lessonChapterId:this.lessonChapterId
