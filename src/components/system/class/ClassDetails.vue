@@ -182,14 +182,17 @@
                 </el-form-item>
             </el-form>
             <div class="teacher-table">
-                <el-table :data="TeacherData" ref="table"  tooltip-effect="dark" :show-header="false" max-height = '300' >
-                    <el-table-column v-if="!isChange"  width="55"> 
-                        <template scope="scope">
-                            <el-checkbox :label="scope.row.id" v-model="addTeacherList" @change="handleCheckAllChange"></el-checkbox>
-                            <!-- <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio" ></el-radio> -->
+                <el-table v-if="!isChange" :data="TeacherData" ref="table" key="table"  tooltip-effect="dark"  @selection-change="handleSelectionChange" :show-header="false" max-height = '300' >
+                    <el-table-column type="selection" width="55" :reserve-selection="false"> </el-table-column>
+                    <el-table-column property="username" label="姓名" width="200"></el-table-column>
+                    <el-table-column property="course" label="科目" align="right" class="course">
+                        <template slot-scope="scope">
+                            <span v-for="item in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}}、</span>
                         </template>
                     </el-table-column>
-                    <el-table-column v-else label="" align="center" width="60">
+                </el-table>
+                <el-table v-else  :data="TeacherData" ref="table" key="table1"  tooltip-effect="dark"  :show-header="false" max-height = '300' >
+                    <el-table-column label="" align="center" width="60">
                         <template scope="scope">
                             <el-radio :label="scope.row.id" v-model="checkTeacherId" class="table-radio" ></el-radio>
                         </template>
@@ -295,8 +298,8 @@ export default {
             })
         },
         handleSelectionChange(val){
-            // this.addTeacherList = val
-            // this.addTeacherListNum = val.length
+            this.addTeacherList = val
+            this.addTeacherListNum = val.length
             console.log(val)
             if(this.addTeacherListNum+this.teacherListNum>2){
                 this.$message('该班级已有'+ this.teacherListNum +'位主讲老师,'+'你现在最多还能添加'+ (2-this.teacherListNum)+ '位主讲老师')
@@ -340,12 +343,12 @@ export default {
                 this.$message("请选择老师")
                 return false
             }
-            console.log(param,teacherId.join(','))
             io.post(io.addTeacher,param,(ret)=>{
-                if(ret,success){
+                if(ret.success){
                     this.$message({type:"success",message:"添加成功"})
                     this.classDetail({ id: this.id })
                 }else{
+                    console.log(6666)
                     this.$message(ret.message)
                     return 
                 }
