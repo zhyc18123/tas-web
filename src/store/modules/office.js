@@ -47,6 +47,12 @@ const actions = {
       commit(types.GET_TOKEN,data.data.token)
     }
   },
+  async print({ dispatch, commit }, opt) {
+    let { data } = await io.post6(io.print, opt)
+    if (data.success) {
+      commit(types.GET_TOKEN,data.data.token)
+    }
+  },
   
 }
 

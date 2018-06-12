@@ -15,6 +15,7 @@
 <script>
 import VNav from './common/Nav.vue'
 import VFooter from './common/Footer.vue'
+import { mapState,mapActions } from 'vuex'
 
 export default {
   name: 'v-main',
@@ -22,11 +23,23 @@ export default {
     VNav,
     VFooter
   },
+  created () {
+    this.config()
+  },
+  beforeUpdate () {
+    this.config()
+  },
+  computed: {
+    // ...mapState({configObj:state=>state.global.config})
+  },
   data() {
     return {
       msg: ''
     }
   },
+  methods: {
+    ...mapActions(['config'])
+  }
 }
 </script>
 

@@ -203,9 +203,9 @@ export default {
             this.classDetail({ id: this.form.id })
         }
         this.findSubjectsData({ pageIndex: 1, pageSize: 10000000 })
-         this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
         this.getCourse()
-        // this.teacherList({dataSubject:this.form.dataSubject})
+        this.teacherList({dataSubject:this.form.dataSubject})
         this.findBaseSchoolPage({ pageIndex: 1, pageSize: 10000000 })
         this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
     },

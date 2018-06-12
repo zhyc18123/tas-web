@@ -26,7 +26,7 @@
         <el-button type="primary" @click="search">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="addCourse">{{userInfo.isSystem?'新建课程':'创建定制课程'}}</el-button>
+        <el-button v-if="config.lesson_add" type="primary" class="new-btn" @click="addCourse">{{userInfo.isSystem?'新建课程':'创建定制课程'}}</el-button>
       </el-form-item>
     </el-form>
     <el-table class="line-table" empty-text="暂无课程，请先添加课程" :data="result.list" header-align="center">
@@ -43,22 +43,22 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="t-btn" width="200">
         <template scope="scope">
-          <a :disabled="true" title="编辑讲次" href="javascript:;" @click="editLecture(scope)">
+          <a :disabled="true" v-if="config.chapter_edit" title="编辑讲次" href="javascript:;" @click="editLecture(scope)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-bianji"></use>
             </svg>
           </a>
-          <a title="修改课程信息" href="javascript:;" @click="changeLecture(scope)">
+          <a title="修改课程信息" v-if="config.lesson_edit" href="javascript:;" @click="changeLecture(scope)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xiugai"></use>
             </svg>
           </a>
-          <a v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
+          <a v-if="config.lesson_release" v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xuqiaofahu"></use>
             </svg>
           </a>
-          <a v-show="scope.row.status===0" title="发布" @click="publishLesson(scope.row.id,1)"   >
+          <a v-if="config.lesson_release" v-show="scope.row.status===0" title="发布" @click="publishLesson(scope.row.id,1)"   >
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-fabu1"></use>
             </svg>
@@ -71,7 +71,7 @@
 </template>
 <script>
 import VPagination from '../../common/Pagination'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions,mapGetters } from 'vuex'
 import io from 'lib/io'
 import storage from 'lib/storage'
 export default {
@@ -93,7 +93,8 @@ export default {
   },
   computed: {
     ...mapState(['condition','course']),
-    ...mapState({result:state=>state.course.courseObj})
+    ...mapState({result:state=>state.course.courseObj}),
+    ...mapGetters(['config'])
   },
   watch: {
     'form.dataSubject'(val) {

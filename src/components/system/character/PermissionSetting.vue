@@ -14,13 +14,13 @@
 
 <script>
 import VClassCategory from '../../common/ClassCategory.vue'
-// import VCharacterTitle from '../../common/CharacterTitle.vue'
+import VCharacterTitle from '../../common/CharacterTitle.vue'
 import io from '../../../lib/io'
 export default {
   name: 'permission-setting',
   components: {
     VClassCategory,
-    // VCharacterTitle
+    VCharacterTitle
   },
   data() {
     return {
@@ -47,9 +47,9 @@ export default {
       for (var i = 0; i < sNodes.length; i++) {
         ids.push(sNodes[i].id)
       }
-      io.post(io.saveOptRoleResource, {
-        optRoleId: this.optRoleId,
-        optResourceIds: ids.join(',')
+      io.post(io.saveAuthRoleResourceList, {
+        authRoleId: this.optRoleId,
+        authResourceIdsStr: ids.join(',')
       }, function() {
         _this.$store.dispatch('config')
         _this.$message('权限设定成功！')
@@ -59,16 +59,17 @@ export default {
     },
     getOptResourceList: function() {
       var _this = this
-      io.post(io.optResourceList, {},
+      io.post(io.authRoleResourceList, {authRoleId:this.optRoleId},
         function(data) {
           function toZNodes(resourceList, pId) {
             var nodes = [];
             for (var i = 0; i < resourceList.length; i++) {
               var resource = resourceList[i]
               var node = {
-                id: parseInt(resource.optResourceId),
+                id: parseInt(resource.id),
                 pId: pId,
-                name: resource.resourceName
+                name: resource.resourceName,
+                checked:resource.checked
               }
 
               if (resource.children && resource.children.length > 0) {
@@ -83,7 +84,7 @@ export default {
 
           var zNodes = toZNodes(data);
           _this.initZTree(zNodes)
-          _this.loadRoleResourceList()
+          // _this.loadRoleResourceList()
         })
     },
     initZTree: function(zNodes) {
@@ -99,19 +100,19 @@ export default {
         }
       }, zNodes);
     },
-    loadRoleResourceList: function() {
-      var _this = this
-      io.post(io.optRoleResourceList, {
-        optRoleId: this.optRoleId
-      }, function(data) {
-        var roleResourceList = data
-        for (var i = 0; i < roleResourceList.length; i++) {
-          var roleResource = roleResourceList[i]
-          var node = _this.$zTree.getNodeByParam('id', parseInt(roleResource.optResourceId))
-          _this.$zTree.checkNode(node, true, false)
-        }
-      })
-    }
+    // loadRoleResourceList: function() {
+    //   var _this = this
+    //   io.post(io.optRoleResourceList, {
+    //     optRoleId: this.optRoleId
+    //   }, function(data) {
+    //     var roleResourceList = data
+    //     for (var i = 0; i < roleResourceList.length; i++) {
+    //       var roleResource = roleResourceList[i]
+    //       var node = _this.$zTree.getNodeByParam('id', parseInt(roleResource.optResourceId))
+    //       _this.$zTree.checkNode(node, true, false)
+    //     }
+    //   })
+    // }
   }
 }
 </script>

@@ -16,11 +16,11 @@
     </el-breadcrumb>
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="课程" name="课程">
+        <el-tab-pane v-if="config.lesson" label="课程" name="课程">
         </el-tab-pane>
-        <el-tab-pane label="讲次" name="讲次">
+        <el-tab-pane v-if="config.chapter" label="讲次" name="讲次">
         </el-tab-pane>
-        <el-tab-pane label="素材" name="素材">
+        <el-tab-pane v-if="config.material" label="素材" name="素材">
         </el-tab-pane>
       </el-tabs>
     </el-row>
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
 export default {
   name: 't-research',
   components: {
@@ -51,6 +52,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['config'])
   },
   methods: {
     handleClick(tab) {

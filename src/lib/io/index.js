@@ -48,6 +48,7 @@ const io = {
     this.edit=conf.baseApiPath+'/admin/api/token/edit'
     this.download=conf.baseApiPath+'/admin/api/token/download'
     this.del=conf.baseApiPath+'/admin/api/token/del'
+    this.print=conf.baseApiPath+'/admin/api/token/print'
 
 // 系统管理
   this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
@@ -60,6 +61,7 @@ const io = {
   this.updateAuthUser=conf.baseApiPath + '/admin/api/authUser/updateAuthUser'
   this.updateStatus=conf.baseApiPath + '/admin/api/authUser/updateStatus'
   this.teacherList=conf.baseApiPath + '/admin/api/authUser/teacherList'
+  this.config=conf.baseApiPath + '/admin/api/authUser/config'
   //机构
   this.findAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrgan'
   this.findAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/findAuthOrganPerson'
@@ -75,6 +77,8 @@ const io = {
   this.findAuthRolePag=conf.baseApiPath + '/admin/api/authRole/findAuthRolePage'
   this.addAuthRole=conf.baseApiPath + '/admin/api/authRole/addAuthRole'
   this.updateAuthRole=conf.baseApiPath + '/admin/api/authRole/updateAuthRole'
+  this.authRoleResourceList=conf.baseApiPath + '/admin/api/authResource/authRoleResourceList'
+  this.saveAuthRoleResourceList=conf.baseApiPath + '/admin/api/authResource/saveAuthRoleResourceList'
   //科目查询班级
   this.findBaseSectionBySubject=conf.baseApiPath + '/lesson/api/BaseSection/findBaseSectionBySubject'
 // 个人中心

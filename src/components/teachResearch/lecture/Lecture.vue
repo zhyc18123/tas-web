@@ -27,7 +27,7 @@
         <el-button type="primary" @click="search">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="addLecture">新建讲次</el-button>
+        <el-button v-if="config.chapter_add" type="primary" class="new-btn" @click="addLecture">新建讲次</el-button>
       </el-form-item>
     </el-form>
             <el-table class="line-table" :data="chapter.chapterObj.list" header-align="center">
@@ -38,7 +38,7 @@
                 <el-table-column prop="leverName"  label="班型" align="center"> </el-table-column>
                 <el-table-column label="操作" align="center"> 
                   <template scope="scope">
-                    <router-link :to="{path:'/main/teach-research/lecture/'+scope.row.id}">
+                    <router-link v-if="config.chapter_edit" :to="{path:'/main/teach-research/lecture/'+scope.row.id}">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-bianji"></use>
                             </svg>
@@ -51,7 +51,7 @@
 </template>
 <script>
 import VPagination from '../../common/Pagination'
-import {mapActions,mapState} from 'vuex'
+import {mapActions,mapState,mapGetters} from 'vuex'
 export default {
   components: {
     VPagination
@@ -70,6 +70,7 @@ export default {
   },
   computed: {
     ...mapState(['chapter','condition']),
+    ...mapGetters(['config'])
   },
   watch: {
     'form.subjectId'(val) {

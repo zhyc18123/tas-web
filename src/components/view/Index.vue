@@ -9,7 +9,7 @@
 
 <script>
 import VNav from '../common/Nav.vue'
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 
 export default {
   name: 'index',
@@ -17,6 +17,15 @@ export default {
     VNav,
   },
     computed: {...mapGetters(['loginSuccess'])},
+  created () {
+    this.config()
+  },
+  beforeUpdate () {
+    this.config()
+  },
+  methods: {
+    ...mapActions(['config'])
+  }
 
 }
 </script>

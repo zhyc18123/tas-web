@@ -9,6 +9,7 @@ function formatConfig(array) {
     config[val.permission] = true
     val.children && formatConfig(val.children)
   });
+  console.log(config)
 }
 
 const state = {
@@ -16,7 +17,7 @@ const state = {
   // subjects: [],
   // allSubjects:[],
   loginInfo: null,
-  config: [],
+  config: {},
   // showLoginForm: false,
   loginSuccess: false,
   needCaptcha: false,
@@ -33,7 +34,7 @@ const getters = {
   // showLoginForm:state=>state.showLoginForm,
   loginSuccess: state => state.loginSuccess,
   needCaptcha: state => state.needCaptcha,
-  // config:state=>state.config,
+   config:state=>state.config,
   // selectSubject:state=>state.selectSubject,
   // subjectId:state=>state.subjectId,
 }
@@ -89,7 +90,7 @@ const mutations = {
   },
   [types.CONFIG](state, data) {
     config = {};
-    formatConfig(data.optResources);
+    formatConfig(data);
     state.config = config;
     storage.setConfig(config)
   },

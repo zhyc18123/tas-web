@@ -28,7 +28,8 @@
         </el-table-column>
         <el-table-column align="center" width="250" label="操作">
           <template scope="scope">
-            <span class="btn-handle">权限设定</span> |
+            <span v-show="!scope.row.add" class="btn-handle" @click="$router.push('/main/system/characterList/permissionSetting?roleName=' +
+                  scope.row.roleName + '&optRoleId=' + scope.row.id)">权限设定</span> |
             <span class="btn-handle" @click="handleEdit(scope.row)">修改名称</span>
             <!-- <span v-show="!scope.row.add" class="btn-edit" @click="$router.push('/main/system/characterList/permissionSetting?roleName=' +
                   scope.row.roleName + '&optRoleId=' + scope.row.optRoleId)">权限设定</span>

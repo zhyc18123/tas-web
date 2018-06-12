@@ -15,12 +15,12 @@
             </div>
         </div>
         <div class="opt-div">
-            <div class="o-body" v-if="optType==='read'">
+            <div class="o-body" v-if="optType==='read'&&((sourceType==='courseWare'&&config.courseware_edit)||(sourceType==='lecture'&&config.lecture_edit))">
                 <!--<template v-if="sourceType==='courseWare'">-->
                 <span>如需调整{{sourceType==='courseWare'?'课件':'讲义'}}，可点击该按钮！</span>
                 <img src="../../assets/img/finger.png" alt="">
                 <div class="write-btn" @click="selfEdit">自定义编辑</div>
-                <!--<div v-show="sourceType!=='courseWare'" class="write-btn print" @click="selfEdit">
+                <!--<div v-show="sourceType!=='courseWare'" class="write-btn print" @click="print">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-dayin"></use>
                     </svg>
@@ -28,10 +28,10 @@
                 </div>-->
                 <!--</template>-->
                 <!--<template v-else>
-                    <span>如需调整讲义，可点击该按钮！</span>
-                    <img src="../../assets/img/finger.png" alt="">
-                    <div class="write-btn" @click="selfEdit">自定义编辑</div>
-                    </template>-->
+                        <span>如需调整讲义，可点击该按钮！</span>
+                        <img src="../../assets/img/finger.png" alt="">
+                        <div class="write-btn" @click="selfEdit">自定义编辑</div>
+                        </template>-->
             </div>
         </div>
         <template v-if="office.token">
@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import io from 'lib/io'
 import conf from 'lib/conf'
 export default {
@@ -67,7 +67,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(['office'])
+        ...mapState(['office']),
+        ...mapGetters(['config'])
     },
     beforeRouteUpdate(to, from, next) {
         console.log('to', to)
@@ -80,14 +81,27 @@ export default {
         this.detailLesChapters()
     },
     methods: {
-        ...mapActions(['view', 'edit']),
+        ...mapActions(['view', 'edit', 'print', 'download']),
         selfEdit() {
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, lessonName: this.lessonName, lectureNum: this.lectureNum } })
+        },
+        print() {
+            // let sourceId = this.chapterDetail.courseUrl
+            // this.download({ resourceId: sourceId })
+            setTimeout(() => {
+                let url = 'http://static.yuyou100.com/Ft-P10bUvaPcUwkTget4p0UOWpaR?attname=导师模板.xlsx'
+                let wind = window.open(url, 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+                wind.print();
+            }, 3000)
         },
         getToken(data) {
             let sourceId = this.getId(data)
             if (this.optType === 'edit') {
+                 if(this.config.print){
+                 this.print({ resourceId: sourceId })
+                 }else{
                 this.edit({ resourceId: sourceId })
+                 }
             } else {
                 this.view({ resourceId: sourceId })
             }

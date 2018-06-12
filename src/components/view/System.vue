@@ -16,17 +16,17 @@
     </el-breadcrumb>
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="基础设定" name="基础设定">
+        <el-tab-pane v-if="config.base_manage" label="基础设定" name="基础设定">
         </el-tab-pane>
-        <el-tab-pane label="用户列表" name="用户列表">
+        <el-tab-pane v-if="config.user_manage" label="用户列表" name="用户列表">
         </el-tab-pane>
-        <el-tab-pane label="操作角色列表" name="操作角色列表">
+        <el-tab-pane v-if="config.opt_role_manage" label="操作角色列表" name="操作角色列表">
         </el-tab-pane>
-        <el-tab-pane label="教育机构管理" name="教育机构管理">
+        <el-tab-pane v-if="config.organization_manage" label="教育机构管理" name="教育机构管理">
         </el-tab-pane>
-        <el-tab-pane label="个人合作管理" name="个人合作管理">
+        <el-tab-pane v-if="config.personal_manage" label="个人合作管理" name="个人合作管理">
         </el-tab-pane>
-        <el-tab-pane label="班级管理" name="班级管理">
+        <el-tab-pane v-if="config.class_manage" label="班级管理" name="班级管理">
         </el-tab-pane>
       </el-tabs>
     </el-row>
@@ -39,6 +39,8 @@
 <script>
 import VCharacterListContainer from '../system/CharacterListContainer.vue'
 import VUserListContainer from '../system/UserListContainer.vue'
+import {mapGetters} from 'vuex'
+
 export default {
   name: 'system',
   components: {
@@ -57,10 +59,10 @@ export default {
     this.init()
   },
   computed: {
+    ...mapGetters(['config'])
   },
   methods: {
     init(){
-    this.$store.dispatch('config')
     if (this.$route.path.indexOf('basisSetting') > 0) {
       this.activeName = '基础设定'
     }else if (this.$route.path.indexOf('userList') > 0) {
