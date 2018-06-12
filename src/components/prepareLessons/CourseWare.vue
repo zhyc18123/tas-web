@@ -80,28 +80,31 @@ export default {
     created() {
         this.detailLesChapters()
     },
+    mounted () {  
+    },
     methods: {
-        ...mapActions(['view', 'edit', 'print', 'download']),
+        ...mapActions(['view', 'edit', 'prints', 'download','clearToken']),
         selfEdit() {
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, lessonName: this.lessonName, lectureNum: this.lectureNum } })
         },
         print() {
             // let sourceId = this.chapterDetail.courseUrl
             // this.download({ resourceId: sourceId })
-            setTimeout(() => {
-                let url = 'http://static.yuyou100.com/Ft-P10bUvaPcUwkTget4p0UOWpaR?attname=导师模板.xlsx'
-                let wind = window.open(url, 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
-                wind.print();
-            }, 3000)
+            // setTimeout(() => {
+            //     let url = 'http://static.yuyou100.com/Ft-P10bUvaPcUwkTget4p0UOWpaR?attname=导师模板.xlsx'
+            //     let wind = window.open(url, 'newwindow', 'height=300, width=700, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+            //     wind.print();
+            // }, 3000)
         },
         getToken(data) {
             let sourceId = this.getId(data)
             if (this.optType === 'edit') {
-                 if(this.config.print){
-                 this.print({ resourceId: sourceId })
-                 }else{
+                  if(this.config.print){
+                  this.prints({ resourceId: sourceId })
+             console.log('sourceId')
+                  }else{
                 this.edit({ resourceId: sourceId })
-                 }
+                  }
             } else {
                 this.view({ resourceId: sourceId })
             }
@@ -109,10 +112,10 @@ export default {
         getId(data) {
             let sourceId = ''
             if (this.sourceType === 'courseWare') {
-                let urlArr = data.data.courseUrl.split('/')
+                let urlArr = data.courseUrl.split('/')
                 sourceId = urlArr[urlArr.length - 1]
             } else {
-                let urlArr = data.data.lectureUrl.split('/')
+                let urlArr = data.lectureUrl.split('/')
                 sourceId = urlArr[urlArr.length - 1]
             }
             return sourceId
@@ -121,7 +124,7 @@ export default {
             let { data } = await io.post6(io.detailLesChapters, { lessonId: this.lessonId, id: this.id })
             if (data.success) {
                 this.chapterDetail = data.data
-                this.getToken(data)
+                this.getToken(data.data)
             }
         }
         // ...mapActions(['getBaseChapter'])

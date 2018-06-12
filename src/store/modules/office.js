@@ -22,7 +22,10 @@ const mutations = {
 
 // actions
 const actions = {
-    // 课程列表
+    // 获取token
+    clearToken({dispatch,commit}){
+      commit(types.GET_TOKEN,'')
+    },
   async view({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.view, opt)
     if (data.success) {
@@ -47,7 +50,8 @@ const actions = {
       commit(types.GET_TOKEN,data.data.token)
     }
   },
-  async print({ dispatch, commit }, opt) {
+  async prints({ dispatch, commit }, opt) {
+    console.log("xxxx")
     let { data } = await io.post6(io.print, opt)
     if (data.success) {
       commit(types.GET_TOKEN,data.data.token)
