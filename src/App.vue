@@ -8,7 +8,6 @@
 export default {
   name: 'app',
   created () {
-    
 // document.oncontextmenu = function(){
 //   return false;
 // }

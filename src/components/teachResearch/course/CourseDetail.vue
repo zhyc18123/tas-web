@@ -14,7 +14,7 @@
                     <span>目:</span>
                 </div>
 
-                <el-select v-model="form.dataSubject" placeholder="">
+                <el-select v-model="form.dataSubject" placeholder="" :disabled="form.id!=='add'">
                     <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
                 </el-select>
             </el-form-item>
@@ -42,7 +42,7 @@
                     讲
                     <span>数:</span>
                 </div>
-                <el-input v-model="form.chapterNum"></el-input>
+                <el-input v-model="form.chapterNum" :disabled="form.id!=='add'"></el-input>
             </el-form-item>
             <el-form-item prop="baseTrimesterId">
                 <div slot="label" class="tow-four">

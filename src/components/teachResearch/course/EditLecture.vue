@@ -214,6 +214,10 @@ export default {
             }
         },
         async addLesChapters() {
+            if(!this.tableSelectItem.length){
+                this.$message('请选择讲次')
+                return
+            }
             let chapterIds = []
             this.tableSelectItem.map((item, i) => {
                 chapterIds.push(item.id)
@@ -221,6 +225,8 @@ export default {
             let { data } = await io.post6(io.addLesChapters, { baseChapterIds: chapterIds.join(','), lessonId: this.id })
             if (data.success) {
                 this.$message('保存成功！')
+                this.tableSelectItem=[]
+                this.tableSelectNum=0
                 this.findLesChapterPage({ lessonId: this.id })
                 this.isAdd = false
             }

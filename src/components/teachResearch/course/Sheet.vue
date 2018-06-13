@@ -7,7 +7,7 @@
                     <em>{{dataObj.ext&&dataObj.ext.name}}</em>
                 </div>
                 <span class="b-line"></span>
-                <div class="c-add"  v-if="dataObj.ext.status!==1">
+                <div class="c-add">
                     <span>支持PPT、Word、Excel、PDF、压缩包</span>
                     <el-button @click="$router.push('/main/teach-research/course/add-sheet/'+id)">添加辅助材料</el-button>
                 </div>
