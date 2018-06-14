@@ -68,7 +68,7 @@ export default {
     watch: {
         loginSuccess(val){
             if(val){
-                this.$router.push(this.backUrl||'/')
+                this.$router.push('/')
             }
         },
         needCaptcha(val){

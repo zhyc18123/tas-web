@@ -99,14 +99,13 @@ export default {
         getToken(data) {
             let sourceId = this.getId(data)
             if (this.optType === 'edit') {
+                this.edit({ resourceId: sourceId })
+            } else {
                   if(this.config.print){
                   this.prints({ resourceId: sourceId })
-             console.log('sourceId')
                   }else{
-                this.edit({ resourceId: sourceId })
-                  }
-            } else {
                 this.view({ resourceId: sourceId })
+                  }
             }
         },
         getId(data) {
