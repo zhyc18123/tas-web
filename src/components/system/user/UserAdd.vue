@@ -395,7 +395,8 @@ export default {
             this.$message("请选择账号角色")
             return false
           }
-          data.authRoleIds = this.authRoleIds.join(",")
+          data.authRoleIds = this.authRoleIds
+          console.log(data)
           if(!this.userId){
             io.post(io.addAuthUser,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
               this.$message({
