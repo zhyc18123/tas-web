@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item class="opt-btn">
         <el-button class="height-btn" @click="saveForm">确定</el-button>
-        <el-button class="light-btn" >取消</el-button>
+        <el-button class="light-btn"@click="$router.go(-1)" >取消</el-button>
     </el-form-item>
     
 </el-form>
@@ -59,6 +59,15 @@ export default {
         FileUpload
     },
     data () {
+        const validatePerName = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入您的真实姓名'));
+            } else if (value.length>40) {
+                callback(new Error('所填内容超出最大字数范围限定'));
+            } else {
+                callback();
+            }
+        };
         const validatePhoneNo = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请输入个人电话'));
@@ -94,7 +103,7 @@ export default {
             },
             rules:{
                 perName:[
-                    {required:true,message:"请输入您的真实姓名",trigger:'blur'}
+                    {validator: validatePerName,trigger:'blur'}
                 ],
                 perPhone:[
                     {validator: validatePhoneNo, trigger: 'blur'}

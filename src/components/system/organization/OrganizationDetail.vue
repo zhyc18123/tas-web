@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item class="opt-btn">
             <el-button class="height-btn" @click="addAuthOrgan">确定</el-button>
-            <el-button class="light-btn">取消</el-button>
+            <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
         </el-form-item>
     </el-form>
   </el-row>

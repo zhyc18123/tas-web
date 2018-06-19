@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      total:1,
+      total:0,
       pageNo:1,
       pageSize:10,
       form:{
