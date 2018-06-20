@@ -22,12 +22,12 @@
         </el-table-column>
         <el-table-column prop="account"  label="帐号" align="center" width="160">
         </el-table-column>
-        <el-table-column label="帐号状态"  align="center" width="100">
-          <template slot-scope="scope">
+        <el-table-column label="帐号状态"  align="center" width="100" prop="statusStr">
+          <!-- <template slot-scope="scope">
             <div v-if="scope.row.status === 0">已终止</div>
             <div v-if="scope.row.status === 1">正常</div>
             <div v-if="scope.row.status === 2">已过期</div>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column prop="orgName" label="账号所属" width="180" align="center">
         </el-table-column>
