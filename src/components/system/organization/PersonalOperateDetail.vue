@@ -25,7 +25,7 @@
         end-placeholder="结束日期">
         </el-date-picker>
     </el-form-item>
-    <el-form-item label="可免费新增账号:">
+    <el-form-item label="可免费新增账号:" prop="freeAccount">
         <el-col :span="6">
         <el-input v-model="form.freeAccount" ></el-input>
         </el-col> <em class="free-num">个</em> 
@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item class="opt-btn">
         <el-button class="height-btn" @click="saveForm">确定</el-button>
-        <el-button class="light-btn" >取消</el-button>
+        <el-button class="light-btn"@click="$router.go(-1)" >取消</el-button>
     </el-form-item>
     
 </el-form>
@@ -59,6 +59,15 @@ export default {
         FileUpload
     },
     data () {
+        const validatePerName = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入您的真实姓名'));
+            } else if (value.length>40) {
+                callback(new Error('所填内容超出最大字数范围限定'));
+            } else {
+                callback();
+            }
+        };
         const validatePhoneNo = (rule, value, callback) => {
             if (value === '') {
                 callback(new Error('请输入个人电话'));
@@ -94,7 +103,7 @@ export default {
             },
             rules:{
                 perName:[
-                    {required:true,message:"请输入您的真实姓名",trigger:'blur'}
+                    {validator: validatePerName,trigger:'blur'}
                 ],
                 perPhone:[
                     {validator: validatePhoneNo, trigger: 'blur'}
@@ -117,11 +126,12 @@ export default {
             this.form={
                 perName:'',
                 perPhone:'',
-                operatStatus:'',
+                status:'',
                 effictTime:'',
                 freeAccount:'',
                 userTimeStart:'',
                 userTimeEnd:'',
+                cooperType:'',
             }
             this.userTime = []
         },
@@ -144,6 +154,7 @@ export default {
                     let param = this.form
                     param.userTimeStart = util.formatTime(this.userTime[0])
                     param.userTimeEnd = util.formatTime(this.userTime[1])
+                    console.log(param)
                     if(param.status===''){
                         this.$message("请选择合作状态")
                         return false
@@ -167,14 +178,11 @@ export default {
                         })
                     }else{
                         param.id = this.id
-                        console.log(param)
                         io.post(io.updateAuthOrganPerson,param,(ret)=>{
                             this.$message({
                                 type:'success',
                                 message:'修改成功'
                             })
-                            this.$router.push('/main/system/personal/list')
-                            console.log(ret)
                         })
                     }
                 }else{

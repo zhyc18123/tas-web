@@ -22,12 +22,12 @@
     <el-table class="line-table" :data="system.organList.list"  style="width: 100%" header-align="center">
         <el-table-column prop="orgName" label="机构名称" align="center" ></el-table-column>
         <el-table-column prop="orgShortName" label="机构简称"  align="center"></el-table-column>
-        <el-table-column prop="status"  label="合作状态" align="center"> 
-          <template slot-scope="scope">
+        <el-table-column prop="statusStr"  label="合作状态" align="center"> 
+          <!-- <template slot-scope="scope">
               <span v-if="scope.row.status==0">试用期</span>
               <span v-if="scope.row.status==1">合约期</span>
               <span v-if="scope.row.status==2">终止</span>
-          </template>
+          </template> -->
         </el-table-column>
         <el-table-column prop="type"  label="合作类型" align="center">
             <template slot-scope="scope">
@@ -64,7 +64,7 @@ export default {
   },
   data () {
     return {
-      total:1,
+      total:0,
       pageNo:1,
       pageSize:10,
       form:{

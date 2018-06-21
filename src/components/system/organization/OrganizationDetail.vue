@@ -28,7 +28,7 @@
             end-placeholder="结束日期">
             </el-date-picker>
         </el-form-item>
-            <el-form-item label="可免费新增账号:" prop="freeAccount">
+        <el-form-item label="可免费新增账号:" prop="freeAccount">
             <el-col :span="6">
                 <el-input v-model="form.freeAccount"></el-input>
             </el-col> <em class="free-num">个</em> 
@@ -45,7 +45,7 @@
         </el-form-item>
         <el-form-item class="opt-btn">
             <el-button class="height-btn" @click="addAuthOrgan">确定</el-button>
-            <el-button class="light-btn">取消</el-button>
+            <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
         </el-form-item>
     </el-form>
   </el-row>
@@ -94,7 +94,7 @@ export default {
                     { required: true, message: '请输入机构简称', trigger: 'blur' },
                 ],
                 freeAccount:[
-                    {validator: validateFreeAccount, trigger: 'blur',}
+                    {required: true, validator: validateFreeAccount, trigger: 'blur',}
                 ],
                 cooperType:[
                     {required: true, message: '请选择合作类型', trigger: 'blur',}
@@ -146,6 +146,10 @@ export default {
                     }
                     if(!param.userTimeStart || !param.userTimeStart) {
                         this.$message("请选择账号有效期")
+                        return false
+                    }
+                    if(!param.freeAccount===""){
+                        this.$message("请输入免费添加账号数")
                         return false
                     }
                     if(param.cooperType===''){

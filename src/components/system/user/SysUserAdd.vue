@@ -47,7 +47,7 @@
             所属个人：
             </div>
             <el-select v-model="form.organPersonId" placeholder="所属个人">
-                <el-option v-for="(organ,index) in system.organPerson.list" :label="organ.orgName" :value="organ.id" :key="index">{{organ.orgName}}</el-option>
+                <el-option v-for="(organ,index) in system.organPerson.list" :label="organ.perName" :value="organ.id" :key="index">{{organ.perName}}</el-option>
             </el-select>
         </el-form-item>
        <div>
