@@ -22,12 +22,11 @@
         </el-table-column>
         <el-table-column prop="account"  label="帐号" align="center" width="160">
         </el-table-column>
-        <el-table-column label="帐号状态"  align="center" width="100" prop="statusStr">
-          <!-- <template slot-scope="scope">
-            <div v-if="scope.row.status === 0">已终止</div>
+        <el-table-column label="帐号状态"  align="center" width="100" >
+          <template slot-scope="scope">
+            <div v-if="scope.row.status === 0">已失效</div>
             <div v-if="scope.row.status === 1">正常</div>
-            <div v-if="scope.row.status === 2">已过期</div>
-          </template> -->
+          </template>
         </el-table-column>
         <el-table-column prop="orgName" label="账号所属" width="180" align="center">
         </el-table-column>
@@ -77,9 +76,8 @@ export default {
     return {
       accountStatus:[
         {label:"请选择账号状态",value:''},
-        {label:"已终止",value:0},
+        {label:"已失效",value:0},
         {label:"正常",value:1},
-        {label:"已过期",value:2}
       ],
       userListTotal:1,
       pageNo:1,

@@ -28,6 +28,14 @@
       </el-form-item>
        <el-form-item  >
         <div slot="label" class="tow-four">
+           人员状态：
+        </div>
+        <el-radio-group v-model="form.workStatus">
+          <el-radio v-for="(item,index) in workStatuss" :key="index" :label="item.value" >{{item.label}}</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item  >
+        <div slot="label" class="tow-four">
            任职状态：
         </div>
         <el-radio-group v-model="form.jobStatus">
@@ -152,6 +160,7 @@ export default {
         cPassword: "",
         checkedSubject:[],
         status: 1,
+        workStatus:1,
         jobStatus: 1,
         type: 0,
       },
@@ -160,22 +169,29 @@ export default {
       isIndeterminate:true,
       types: [{
         label: '教师',
-        value: 0,
+        value: 1,
         content:"教师权限：登录备课、授课"
       }, {
         label: '教研',
-        value: 1,
+        value: 2,
         content:"教研权限：查看教研课程"
       }, {
         label: '教务',
-        value: 2,
+        value: 3,
         content:"教备权限：查看班级管理"
       }],
-      jobStatuses: [{
-        label: '离职',
+      workStatuss:[{
+        label: '在职',
         value: 0,
       }, {
-        label: '在职',
+        label: '离职',
+        value: 1,
+      }],
+      jobStatuses: [{
+        label: '全职',
+        value: 0,
+      }, {
+        label: '兼职',
         value: 1,
       },],
       keyword: '',
@@ -226,6 +242,7 @@ export default {
         cPassword: "",
         checkedSubject:[],
         status: 1,
+        workStatus:1,
         jobStatus: 1,
         type: 0,
       }
@@ -315,6 +332,7 @@ export default {
           cPassword: data.password,
           checkedSubject:checkedSubject,
           status: data.status,
+          workStatus:data.workStatus,
           jobStatus: data.jobStatus,
           type: data.type,
         }
@@ -379,20 +397,30 @@ export default {
           }
           if(this.form.checkedSubject.length<=0){
             this.$message("请选择科目")
+            return false
           }
+         
           console.log(data)
-          // let isexist = false
-          // for(var i = 0;i < data.authSubjectSectionList.length;i++){
-          //   if(data.authSubjectSectionList[i].baseSectionIds == ''){
-          //     return isexist = true
-          //   }
-          // }
-          // if(isexist){
-          //   this.$message("你有科目未选年级,请选择")
-          //   return false
-          // }
+          let isexist = false
+          for(var i = 0;i < data.authSubjectSectionList.length;i++){
+            console.log(99999)
+            if(data.authSubjectSectionList[i].baseSectionIds == ''){
+              isexist = true
+            }else{
+              isexist = false
+            }
+          }
+          if(isexist){
+            console.log(8888)
+            this.$message("你有科目未选年级,请选择")
+            return false
+          }
           if(this.authRoleIds.length<=0){
             this.$message("请选择账号角色")
+            return false
+          }
+          if(this.form.workStatus===''){
+            this.$message("请选择人员状态")
             return false
           }
           data.authRoleIds = this.authRoleIds

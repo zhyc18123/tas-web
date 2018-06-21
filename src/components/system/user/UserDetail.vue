@@ -36,7 +36,7 @@
                            人员状态：
                         </div>
                         <span class="info">
-                            {{userInfo.workStatus===0?'在职':'离职'}}
+                            {{userInfo.workStatus==0?'在职':'离职'}}
                         </span>
                     </div>
                 </li>
@@ -55,7 +55,7 @@
                            任职状态：
                         </div>
                         <span class="info">
-                             {{userInfo.jobStatus===0?'全职':'兼职'}}
+                             {{userInfo.jobStatus==0?'全职':'兼职'}}
                         </span>
                     </div>
                 </li>
@@ -68,7 +68,7 @@
                         角<span>色：</span>
                     </div>
                     <span v-for="(item,index) in userInfo.authRoleList" :key="index">
-                        <i>{{item.roleName}}</i>
+                        <i>{{item.roleName}}</i>、
                     </span>
                 </li>
                 <li class="info-item">
@@ -135,6 +135,14 @@
             </li>
             <li class="info-item">
                 <div slot="label" class="tow-four">
+                   账号所属：
+                </div>
+                <span >
+                    <i>{{userInfo.orgName}}</i>
+                </span>
+            </li>
+            <li class="info-item">
+                <div slot="label" class="tow-four">
                     账号截止：
                 </div>
                 <span>{{userInfo.endTime | formatDate}}</span>
@@ -143,7 +151,7 @@
                 <div slot="label" class="tow-four">
                     创建时间：
                 </div>
-                <span>{{userInfo.endTime | formatTime}}</span>
+                <span>{{userInfo.createTime | formatTime}}</span>
             </li>
             <li class="info-item">
                 <div slot="label" class="tow-four">
