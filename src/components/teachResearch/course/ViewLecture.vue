@@ -1,6 +1,6 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="3" v-if="course.courseChapterObj.status!==1"/>
+        <course-step :active="3" v-if="course.courseChapterObj.status!==1" />
         <div class="main">
             <div class="times-div">
                 <div class="t-title">
@@ -15,12 +15,14 @@
             <div class="t-cont">
                 <div class="cont-left">
                     <ul v-show="isShow">
-                        <li  v-for="(item,i) in course.courseChapterObj.list" :key="item.id" class="left-list" :class="item.id == styleTag?'active':''" @click="showList(item)">
+                        <li v-for="(item,i) in course.courseChapterObj.list" :key="item.id" class="left-list" :class="item.id == styleTag?'active':''" @click="showList(item)">
                             <div class="left-order">第 {{i+1}} 讲</div>
                             <div class="list-name">{{item.name}}</div>
+                            <div v-if="item.status===1" class="status has-publish">已发布</div>
+                            <div v-else class="status no-publish">未发布</div>
                         </li>
                     </ul>
-                    <div class="l-btn" :class="{tran:!isShow}"  @click="isShow=!isShow">
+                    <div class="l-btn" :class="{tran:!isShow}" @click="isShow=!isShow">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-jiantouarrowhead7"></use>
                         </svg>
@@ -28,21 +30,36 @@
                 </div>
                 <div class="cont-right">
 
-        <div class="source-body" v-if="sourceType==='courseWare'">
-            <iframe class="office-ppt edit"  v-if="office.token" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
-        </div>
-        <div class="source-body" v-else>
-            <iframe class="office-word" v-if="office.token" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
-        </div>
+                    <div class="source-body" v-if="sourceType==='courseWare'">
+                        <div v-if="office.token">
+                            <iframe class="office-ppt edit" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    <div class="source-body" v-else>
+                        <div v-if="office.token">
+                            <iframe class="office-word" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="next-btn">
                 <el-button class="light-btn" @click="$router.push('/main/teach-research/course/edit-lecture/'+courseId)">上一步</el-button>
-                <el-button class="height-btn" @click="publishLesson" v-if="course.courseChapterObj.status!==1">确定发布</el-button>
-                <el-button class="light-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)">{{course.courseChapterObj.status===1?'下一步':'暂不发布'}}</el-button>
+                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)" v-if="course.courseChapterObj.allPublic">下一步</el-button>
+                <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)" v-if="!course.courseChapterObj.allPublic">暂不发布讲次，下一步</el-button>
+                <el-button class="light-btn" @click="showLecture=true" v-if="!course.courseChapterObj.allPublic">发布讲次，下一步</el-button>
             </div>
+            <el-dialog title="2018春季物理提高班" :visible.sync="showLecture" width="40%" center>
+                <el-checkbox label="全选" v-model="allCheck"></el-checkbox>
+                <el-checkbox-group v-model="lectureList">
+                    <el-checkbox class="lec-list" :label="item.id" v-for="(item,i) in course.courseChapterObj.list" :disabled="item.status===1">{{item.name}}</el-checkbox>
+                </el-checkbox-group>
+                <div class="next-btn">
+                    <el-button class="height-btn" @click="publishLecture">确定</el-button>
+                    <el-button class="light-btn" @click="showLecture=false">取消</el-button>
+                </div>
+            </el-dialog>
         </div>
-       
+
     </el-row>
 </template>
 <script>
@@ -55,63 +72,82 @@ export default {
     components: {
         CourseStep
     },
-    data () {
+    data() {
         return {
-            sourceType:this.$route.params.sourceType,
-            courseId:this.$route.params.courseId,
-            chapterId:this.$route.params.chapterId,
-            styleTag:this.$route.params.chapterId,
-            chapterDetail:{},
-            isShow:true,
-            conf:conf
+            sourceType: this.$route.params.sourceType,
+            courseId: this.$route.params.courseId,
+            chapterId: this.$route.params.chapterId,
+            styleTag: this.$route.params.chapterId,
+            chapterDetail: {},
+            isShow: true,
+            conf: conf,
+            showLecture: false,
+            lectureList:[],
+            allCheck:false
         }
     },
     computed: {
-        ...mapState(['course','office'])
+        ...mapState(['course', 'office'])
+    },
+    watch: {
+        allCheck(val){
+            if(val){
+                this.course.courseChapterObj.list.map((item,i)=>{
+                    if(item.status===0&&(!this.lectureList.indexOf(item.id)>-1)){
+                        this.lectureList.push(item.id)
+                    }
+                })
+            }else{
+                this.lectureList=[]
+            }
+        }
     },
     beforeRouteUpdate(to, from, next) {
         console.log('to', to)
         this.sourceType = to.params.sourceType
-        this.styleTag=to.params.chapterId
+        this.styleTag = to.params.chapterId
         this.optType = to.params.optType
-        this.courseId=to.params.courseId
-        this.chapterId=to.params.chapterId
+        this.courseId = to.params.courseId
+        this.chapterId = to.params.chapterId
         this.findLesChapterPage({ lessonId: this.courseId })
         this.detailLesChapters()
         next()
     },
-    created(){
+    created() {
         this.findLesChapterPage({ lessonId: this.courseId })
         this.detailLesChapters()
     },
-    methods:{
-        ...mapActions(['findLesChapterPage','view']),
-        showList(item){
+    methods: {
+        ...mapActions(['findLesChapterPage', 'view']),
+        showList(item) {
             // this.styleTag = id
-            this.$router.push('/main/teach-research/course/view-lecture/courseWare/'+ this.courseId +'/'+item.id)
+            this.$router.push('/main/teach-research/course/view-lecture/courseWare/' + this.courseId + '/' + item.id)
         },
-  async publishLesson(){
-    let tipText='发布课程后，无法修改，是否确定？'
-      this.$confirm(tipText).then(async ()=>{
-      let {data} =await io.post6(io.publishLesson,{id:this.courseId,status:1})
-      if(data.success){
-        this.$message('发布成功')
-        // this.$router.push('/main/teach-research/course/view-lecture/'+this.id)
-        this.$router.push('/main/teach-research/course/sheet/'+this.courseId)
-      }
-      })
-  },
-        async detailLesChapters(){
-            let {data}=await io.post6(io.detailLesChapters,{lessonId:this.courseId,id:this.chapterId})
-            if(data.success){
-                this.chapterDetail=data.data
-                let sourceId=''
-                if(this.sourceType==='courseWare'){
-                    sourceId=data.data.courseUrl
-                }else{
-                    sourceId=data.data.lectureUrl
+        async publishLecture() {
+            if(!this.lectureList.length){
+                this.$message('请选择要发布的讲次')
+                return
+            }
+            let tipText = '发布讲次后，无法修改，是否确定？'
+            this.$confirm(tipText).then(async () => {
+                let { data } = await io.post6(io.publishLesChapter, { lessonId: this.courseId, ids: this.lectureList.join(',') })
+                if (data.success) {
+                    this.$message('发布成功')
+                    this.$router.push('/main/teach-research/course/sheet/' + this.courseId)
                 }
-                this.view({resourceId:sourceId})
+            })
+        },
+        async detailLesChapters() {
+            let { data } = await io.post6(io.detailLesChapters, { lessonId: this.courseId, id: this.chapterId })
+            if (data.success) {
+                this.chapterDetail = data.data
+                let sourceId = ''
+                if (this.sourceType === 'courseWare') {
+                    sourceId = data.data.courseUrl
+                } else {
+                    sourceId = data.data.lectureUrl
+                }
+                this.view({ resourceId: sourceId })
             }
         }
     }
@@ -174,6 +210,22 @@ export default {
         .cont-left
             padding-right 28px
             position relative
+            .left-list
+                position relative
+            .status
+                position absolute
+                right 0
+                top 15px
+                height 20px
+                line-height 20px
+                background #2bcfbb
+                color white
+                font-size 12px
+                padding 0 3px 0 5px
+                border-top-left-radius 10px
+                border-bottom-left-radius 10px
+            .no-publish
+                background #aeaeae
             .l-btn
                 position absolute
                 top 0
@@ -209,7 +261,7 @@ export default {
                     .list-name
                         float left
                         margin-left 10px
-                        max-width 160px
+                        max-width 120px
                         text-overflow ellipsis
                         overflow hidden
                         white-space nowrap
@@ -225,6 +277,8 @@ export default {
     .next-btn
         text-align center
         padding-top 20px
-            
+.lec-list
+    display block
+    margin-left 0
 
 </style>

@@ -1,6 +1,6 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="2" v-if="course.courseChapterObj.status!==1"/>
+        <course-step :active="2" v-if="course.courseChapterObj.status!==1" />
         <div v-if="!isAdd">
             <div class="add-type">
                 <span class="c-title">{{course.courseChapterObj.name}}</span>
@@ -21,9 +21,12 @@
                     </div>
                 </div>
             </draggable>
-            <div class="opt-btn">
-                <el-button class="height-btn" @click="$router.push({ 
-            path: '/main/teach-research/course/view-lecture/courseWare/'+id+'/' + myArray[0].id  })">预览</el-button>
+            <div class="opt-btn" v-if="course.courseChapterObj.status===0">
+                <el-button type="primary" class="height-btn" @click="preview(true)">发布教学计划，下一步</el-button>
+                <el-button type="primary" class="light-btn" @click="preview">暂不发布教学计划，下一步</el-button>
+            </div>
+            <div class="opt-btn" v-else>
+                <el-button type="primary" class="height-btn" @click="preview">下一步</el-button>
             </div>
         </div>
         <div v-if="isAdd" class="add-course">
@@ -36,12 +39,12 @@
                 <span class="b-line"></span>
             </div>
             <el-form :inline="true" :model="form" class="t-form">
-                <el-form-item label="">
-                    <el-select v-model="form.subjectId" placeholder="科目">
-                        <el-option label="全部" value=""></el-option>
-                        <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
-                    </el-select>
-                </el-form-item>
+                <!--<el-form-item label="">
+                            <el-select v-model="form.subjectId" placeholder="科目">
+                                <el-option label="全部" value=""></el-option>
+                                <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                            </el-select>
+                        </el-form-item>-->
                 <el-form-item label="">
                     <el-select v-model="form.sectionId" placeholder="年级">
                         <el-option label="全部" value=""></el-option>
@@ -79,6 +82,7 @@
             </div>
             <div class="next-btn">
                 <el-button class="height-btn" @click="sure">确定</el-button>
+                <el-button class="light-btn" @click="cancle">取消</el-button>
             </div>
         </div>
     </el-row>
@@ -140,6 +144,7 @@ export default {
             this.chapterTotal = Number(val.chapterNum)
             this.myArray = [...val.list]
             this.chapterNum = val.list.length
+            this.form.subjectId = val.dataSubject
         },
         'chapter.chapterObj'(val) {
             // [...val.list].map((item,i)=>{
@@ -153,6 +158,31 @@ export default {
     },
     methods: {
         ...mapActions(['findLesChapterPage', 'findBaseChapterPage', 'findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage']),
+        preview(isPublish) {
+            if (!this.myArray.length) {
+                this.$message('请先选择讲次')
+                return
+            }
+            if (isPublish===true) {
+                this.publishLesson()
+            } else {
+                this.$router.push({
+                    path: '/main/teach-research/course/view-lecture/courseWare/' + this.id + '/' + this.myArray[0].id
+                })
+            }
+        },
+        async publishLesson() {
+            let tipText = '是否发布？发布后不能新增、移动、修改讲次'
+            this.$confirm(tipText).then(async () => {
+                let { data } = await io.post6(io.publishLesson, { id: this.courseId, status: 1 })
+                if (data.success) {
+                    this.$message('发布成功')
+                    this.$router.push({
+                        path: '/main/teach-research/course/view-lecture/courseWare/' + this.id + '/' + this.myArray[0].id
+                    })
+                }
+            })
+        },
         search() {
             this.$refs.pagin.changePage(1)
             this.getChapterList()
@@ -213,8 +243,11 @@ export default {
                 this.addLesChapters()
             }
         },
+        cancle() {
+            this.isAdd = false
+        },
         async addLesChapters() {
-            if(!this.tableSelectItem.length){
+            if (!this.tableSelectItem.length) {
                 this.$message('请选择讲次')
                 return
             }
@@ -225,8 +258,8 @@ export default {
             let { data } = await io.post6(io.addLesChapters, { baseChapterIds: chapterIds.join(','), lessonId: this.id })
             if (data.success) {
                 this.$message('保存成功！')
-                this.tableSelectItem=[]
-                this.tableSelectNum=0
+                this.tableSelectItem = []
+                this.tableSelectNum = 0
                 this.findLesChapterPage({ lessonId: this.id })
                 this.isAdd = false
             }

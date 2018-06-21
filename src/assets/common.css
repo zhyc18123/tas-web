@@ -134,7 +134,7 @@ ol{
   border: 0;
 }
 .light-btn,.light-btn:hover{
-background: #01cabf
+background: #01cabf !important;
 }
 .height-btn,.height-btn:hover{
   background: #00b1d1;

@@ -53,12 +53,12 @@
               <use xlink:href="#icon-xiugai"></use>
             </svg>
           </a>
-          <a v-if="config.lesson_release" v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
+          <!--<a v-if="config.lesson_release" v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-xuqiaofahu"></use>
             </svg>
-          </a>
-          <a v-if="config.lesson_release" v-show="scope.row.status===0" title="发布" @click="publishLesson(scope.row.id,1)"   >
+          </a>-->
+          <a v-if="config.lesson_release" :class="{published:scope.row.status===1}" title="发布" @click="publishLesson(scope.row.id,scope.row.status)"   >
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-fabu1"></use>
             </svg>
@@ -136,18 +136,18 @@ export default {
       this.findLessonPage({...this.form,...opt,type:this.userInfo.isSystem?0:1})
     },
   async publishLesson(id,status){
-    let tipText=''
-    if(status===0){
-      tipText='取消发布课程，该课程将无法被引用，是否确定？'
-    }else{
-      tipText='发布课程后，无法修改，是否确定？'
+    if(status===1){
+      return
     }
+    let tipText='是否发布？发布后不能新增、移动、修改讲次'
       this.$confirm(tipText).then(async ()=>{
       let {data} =await io.post6(io.publishLesson,{id,status})
       if(data.success){
         this.$message('修改成功')
         this.getCourseList()
       }
+      }).catch((err)=>{
+        console.log('取消',err)
       })
   }
   }
@@ -168,6 +168,12 @@ export default {
     color #999
     &:hover
       color #333
+.published
+    .icon
+      color #999
+      cursor auto
+      &:hover
+        color #999
 </style>
 
 

@@ -87,7 +87,7 @@ export default {
             isViewDown: false,
             // checkList: [],
             rules: {
-                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' }],
+                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' },{ pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+$/, message: '不允许输入空格等特殊符号' }],
                 baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'blur' }],
                 dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
                 baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],

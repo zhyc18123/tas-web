@@ -1,6 +1,6 @@
 <template>
     <el-row class="data-detail">
-        <course-step :active="4" v-if="dataObj.ext.status!==1"/>
+        <course-step :active="4" v-if="dataObj.ext&&dataObj.ext.status!==1"/>
         <div class="main">
             <div class="times-div">
                 <div class="t-title">
@@ -31,6 +31,7 @@
                 </el-table>
             </div>
             <div class="next-btn">
+                <el-button class="light-btn" @click="$router.go(-1)">上一步</el-button>
                 <el-button class="height-btn" @click="$router.push('/main/teach-research/course')">确定</el-button>
             </div>
             <!-- <div>

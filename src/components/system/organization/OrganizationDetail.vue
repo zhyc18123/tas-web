@@ -3,7 +3,7 @@
 <line-head-form class="head" :title="title"/>
     <el-form class="o-form" label-position="right" label-width="130px" :model="form" :rules="rules" ref="form">
         <el-form-item label="机构图标:" class="required">
-            <file-upload @success="uploading" chooseType="00" :fileUrl="form.orgHeadUrl"/>
+            <file-upload @success="uploading" chooseType="00" :fileUrl="form.orgHeadUrl" fileType='img'/>
         </el-form-item>
         <el-form-item label="机构名称:" prop="orgName">
             <el-input v-model="form.orgName"></el-input>
@@ -33,7 +33,7 @@
                 <el-input v-model="form.freeAccount"></el-input>
             </el-col> <em class="free-num">个</em> 
             </el-form-item>
-            <el-form-item label="合作类型:" class="required">
+            <el-form-item label="合作类型:" class="required" prop="cooperType">
                 <el-tooltip class="item" effect="light" content="指机构本身拥有业务 课程" placement="bottom-start">
                     <el-button class="personal">
                         <el-radio :label="0" v-model="form.cooperType">
@@ -95,6 +95,9 @@ export default {
                 ],
                 freeAccount:[
                     {validator: validateFreeAccount, trigger: 'blur',}
+                ],
+                cooperType:[
+                    {required: true, message: '请选择合作类型', trigger: 'blur',}
                 ],
             }
             

@@ -136,10 +136,14 @@ const actions = {
       commit('needCaptcha')
     }
   },
-  config({ commit }, opt) {
-    io.post(io.config, opt, (data) => {
-      commit(types.CONFIG, data)
-    })
+  async config({ commit }, opt) {
+    let {data}=await io.post6(io.config,opt)
+    if(data.success){
+      commit(types.CONFIG, data.data)
+    }
+    // io.post(io.config, opt, (data) => {
+    //   commit(types.CONFIG, data)
+    // })
   },
   // hasLogin({ commit },opt) {
   //   commit(types.HAS_LOGIN)
