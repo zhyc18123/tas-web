@@ -20,7 +20,7 @@ const Course = resolve => require(['../components/teachResearch/course/Course'],
 const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
 const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve)
 // const PreLecture = resolve => require(['../components/teachResearch/course/preview/Lecture'], resolve)  
-const PreCourseWare = resolve => require(['../components/teachResearch/course/preview/Preview'], resolve)
+// const PreCourseWare = resolve => require(['../components/teachResearch/course/preview/Preview'], resolve)
 const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve) 
 const Sheet = resolve => require(['../components/teachResearch/course/Sheet'], resolve) 
 const AddSheet = resolve => require(['../components/teachResearch/course/AddSheet'], resolve)  

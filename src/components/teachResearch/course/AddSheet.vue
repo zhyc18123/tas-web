@@ -8,14 +8,14 @@
             <span class="b-line"></span>
         </div>
         <el-form :inline="true" :model="form" class="t-form gray t-class-list">
-            <el-form-item label="">
-                <el-select v-model="form.subjectId" placeholder="科目">
+            <!--<el-form-item label="">
+                <el-select v-model="form.dataSubject" placeholder="科目">
                     <el-option label="全部" value=""></el-option>
                     <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
                 </el-select>
-            </el-form-item>
+            </el-form-item>-->
             <el-form-item label="">
-                <el-select v-model="form.sectionId" placeholder="年级">
+                <el-select v-model="form.baseSectionId" placeholder="年级">
                     <el-option label="全部" value=""></el-option>
                     <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
                 </el-select>
@@ -66,8 +66,8 @@ export default {
             id:this.$route.params.id,
             form: {
                 name: '',
-                subjectId: null,
-                sectionId: null,
+                dataSubject: null,
+                baseSectionId: null,
                 baseLevelId: null,
                 pageIndex: 1,
                 pageSize: 10
@@ -80,8 +80,8 @@ export default {
     },
     created() {
         this.getDataList()
-        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.subjectId })
-        this.findSubjectsData({ sectionId: this.form.sectionId })
+        this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, dataSubject: this.form.dataSubject })
+        this.findSubjectsData({ baseSectionId: this.form.baseSectionId })
         this.findBaseLevelPage({ pageIndex: 1, pageSize: 1000000 })
     },
     methods: {

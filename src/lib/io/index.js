@@ -33,6 +33,7 @@ const io = {
     this.addOrUpLesson=conf.baseApiPath+'/lesson/api/lesson/addOrUpLesson'
     this.detailLesson=conf.baseApiPath+'/lesson/api/lesson/detailLesson'
     this.findLesChapterPage=conf.baseApiPath+'/lesson/api/lessonChapter/findLesChapterPage'
+    this.publishLesChapter=conf.baseApiPath+'/lesson/api/lessonChapter/publishLesChapter'
     // 讲次
     this.findBaseChapterPage=conf.baseApiPath+'/lesson/api/baseChapter/findBaseChapterPage'
     this.addBaseChapter=conf.baseApiPath+'/lesson/api/baseChapter/addBaseChapter'
@@ -225,7 +226,8 @@ const io = {
         dataType: 'json',
         timeout: timeout||30000
       });
-      console.log(res,res.data.code === '3001')
+      console.log("xxxx")
+      console.log('res',res.data.code === '3001')
             if (res.data.code === '3001') {
                 storage.removeAccessToken()
                 storage.removeCurrentUserInfo()
