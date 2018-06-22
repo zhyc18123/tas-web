@@ -11,7 +11,7 @@
         </el-upload>
         <el-form class="upload-form" :inline="true" label-position="right" label-width="80px">
             <el-form-item label="已上传:">
-                <label>{{originalName||'--'}}</label>
+                <label class="file-name" :title="originalName">{{originalName||'--'}}</label>
             </el-form-item>
             <el-form-item label="类型:">
                 <label>{{typeName||'--'}}</label>
@@ -146,7 +146,13 @@ export default {
                     this.handleSuccess(response.data)
                 })
         },
+        async callSuccess(res){
+            let {data}=await io.post(io.upload,{resourceId:res.resourceId})
+        },
         handleSuccess(res, file) {
+            if (this.isOfs) {
+                this.callSuccess(res)
+            }
             console.log('file', res, file)
             this.res = res
             this.loading = false
@@ -263,6 +269,12 @@ export default {
 .decoding{
     line-height 178px
 }
+.file-name
+    display inline-block
+    width 140px
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
 </style>
 
 <style lang="stylus">

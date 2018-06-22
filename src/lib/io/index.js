@@ -50,6 +50,7 @@ const io = {
     this.download=conf.baseApiPath+'/admin/api/token/download'
     this.del=conf.baseApiPath+'/admin/api/token/del'
     this.print=conf.baseApiPath+'/admin/api/token/print'
+    this.upload=conf.baseApiPath+'/admin/api/token/upload'
 
 // 系统管理
   this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
