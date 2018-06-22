@@ -122,6 +122,12 @@ const actions = {
     let { data } = await io.post6(io.login, opt)
     if (data.success) {
       console.log(data)
+      console.log(opt)
+      if(opt.remember){
+        storage.setRemember({phone:opt.phone,password:opt.password,remember: opt.remember})
+      }else {
+        storage.removeRemember()
+      }
       commit(types.LOGIN, data.data);
       console.log('xx')
       // dispatch("config");

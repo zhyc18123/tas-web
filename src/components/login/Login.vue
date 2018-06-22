@@ -68,6 +68,7 @@ export default {
     watch: {
         loginSuccess(val){
             if(val){
+               
                 this.$router.push('/')
             }
         },
@@ -80,6 +81,7 @@ export default {
     data() {
         return {
             backUrl:this.$route.query.backUrl,
+            rempassword:'',
             loginForm: {
                 phone: '',
                 password: '',
@@ -106,6 +108,15 @@ export default {
     created () {
       this.$store.commit('changeLoginSuccess')
     },
+    mounted(){
+        if(this.rem && this.rem.remember){
+            this.loginForm.phone = this.rem.phone
+            this.loginForm.password = "******"
+            this.loginForm.captcha = this.rem.captcha
+            this.remember = this.rem.remember
+            this.rempassword = this.rem.password
+        }
+    },
     methods: {
 
         keydown(e) {
@@ -122,7 +133,7 @@ export default {
                 if (valid) {
                     let password = ''
                     if (this.rem && this.rem.remember) {
-                        password = this.loginForm.password
+                        password = this.rempassword
                     } else {
                         password = md5(this.loginForm.password)
                     }
@@ -130,6 +141,7 @@ export default {
                     this.$store.dispatch('login', {
                         ...this.loginForm,
                         password: password,
+                        remember:this.remember,
                     });
                     } catch (error) {
                         console.log('xd')
