@@ -66,7 +66,7 @@ export default {
             id:this.$route.params.id,
             form: {
                 name: '',
-                dataSubject: null,
+                subjectId: this.$route.query.subject,
                 baseSectionId: null,
                 baseLevelId: null,
                 pageIndex: 1,
@@ -77,6 +77,12 @@ export default {
     },
     computed: {
         ...mapState(['data', 'condition']),
+    },
+    watch: {
+        'data.dataObj'(val){
+            console.log("xxxx",val)
+            this.form.dataSubject=val.ext.dataSubject
+        }
     },
     created() {
         this.getDataList()
