@@ -83,7 +83,7 @@ export default {
             },
             checkList: [],
             rules: {
-                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' },{ pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+$/, message: '不允许输入空格等特殊符号' }],
+                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' },{max:40,message:'课程名称不能超过40字',trigger:'blur'}],
                 baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'blur' }],
                 dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
                 baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],
@@ -128,6 +128,10 @@ export default {
         sure() {
             this.$refs.form.validate((vali) => {
                 if (vali) {
+                    if(!String.trim(this.form.name).length){
+                        this.$message('名称不允许只输入空格')
+                        return
+                    }
                     if (!this.form.courseUrl) {
                         this.$message('请上传课件！')
                         return
