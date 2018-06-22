@@ -187,6 +187,11 @@ export default {
             let fileSize = file / 1024 / 1024
             console.log(this.fileType)
             this.loading = true
+                if (fileSize ===0) {
+                    this.$message('文件大小不能为0')
+                    this.loading = false
+                    return false
+                }
             if (this.fileType === 'img') {
                 // let img
                 if (!(file.type.indexOf('image/') > -1)) {

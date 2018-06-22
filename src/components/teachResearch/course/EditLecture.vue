@@ -174,7 +174,7 @@ export default {
         async publishLesson() {
             let tipText = '是否发布？发布后不能新增、移动、修改讲次'
             this.$confirm(tipText).then(async () => {
-                let { data } = await io.post6(io.publishLesson, { id: this.courseId, status: 1 })
+                let { data } = await io.post6(io.publishLesson, { id: this.id, status: 1 })
                 if (data.success) {
                     this.$message('发布成功')
                     this.$router.push({
