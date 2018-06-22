@@ -263,18 +263,15 @@ export default {
       row.baseSectionIds = row.checkAll ? allList : [];
       row.isIndeterminate = false
       // row.isIndeterminate = row.checkAll?true:false;
-      console.log(row)
     },
     // 全选
     handleCheckedGraderChange(row){
-      console.log(row)
         let checkedCount = row.baseSectionIds.length;
         row.checkAll = checkedCount === row.list.length;
         row.isIndeterminate = checkedCount > 0 && checkedCount < row.list.length;
     },
     findAuthRoleList() {
       io.post(io.findAuthRoleList,{},(data) => {
-        console.log(data)
         this.roleList = data;
         // if(!this.userId){
         // this.form.optRoleId=data.list[0].optRoleId;
@@ -302,7 +299,6 @@ export default {
               }
               if(ite.subjectId != item.subjectId){
                 nullData++
-                console.log(nullData,item.subjectName)
                 if(nullData===this.subjectSectionList.length){
                   item.baseSectionIds = []
                 }
@@ -313,7 +309,6 @@ export default {
           }
         })
         this.gradesBySubject = ret
-        console.log(ret)
       })
     },
     getUserDetail() {
@@ -353,7 +348,6 @@ export default {
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
-          console.log(this.gradesBySubject)
           data.checkedSubject.map((j) => {
             this.gradesBySubject.map((val) => {
               if (j === val.subjectId) {
@@ -400,10 +394,8 @@ export default {
             return false
           }
          
-          console.log(data)
           let isexist = false
           for(var i = 0;i < data.authSubjectSectionList.length;i++){
-            console.log(99999)
             if(data.authSubjectSectionList[i].baseSectionIds == ''){
               isexist = true
             }else{
@@ -411,7 +403,6 @@ export default {
             }
           }
           if(isexist){
-            console.log(8888)
             this.$message("你有科目未选年级,请选择")
             return false
           }
@@ -424,13 +415,11 @@ export default {
             return false
           }
           data.authRoleIds = this.authRoleIds
-          console.log(data)
           if(!this.userId){
             io.post(io.addAuthUser,{authUserAddJsonStr:JSON.stringify(data)}, (data) => {
               this.$message({
                 type:"success",
                 message:'保存成功！'})
-                console.log(data)
               this.$router.push('/main/system/userList/list')
               this.resetForm()
             })
@@ -439,7 +428,6 @@ export default {
               this.$message({
                 type:"success",
                 message:'保存成功！'})
-                console.log(data)
               this.$router.push('/main/system/userList/list')
               this.resetForm()
             })

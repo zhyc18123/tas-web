@@ -1,6 +1,12 @@
 import store from 'store' ;
 
 const storage = {
+  removeRemember:function(){
+    store.remove('remember')
+  },
+  setRemember:function(userInfo){
+    store.set("remember" ,JSON.stringify(userInfo)  );
+  },
   getRemember:function(){
     return store.get('remember')?JSON.parse(store.get('remember')) : {}
   },
