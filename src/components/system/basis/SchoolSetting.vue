@@ -129,6 +129,10 @@ watch: {
         }
         url=io.addSchool
       }
+      if(datas.schoolName.length>40){
+        this.$msgbox.alert('名称长度不能超过40字')
+        return
+      }
       let {data} = await io.post6(url,datas)
       if(data.success){
         this.$message('保存成功！')

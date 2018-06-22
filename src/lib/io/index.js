@@ -50,6 +50,7 @@ const io = {
     this.download=conf.baseApiPath+'/admin/api/token/download'
     this.del=conf.baseApiPath+'/admin/api/token/del'
     this.print=conf.baseApiPath+'/admin/api/token/print'
+    this.upload=conf.baseApiPath+'/admin/api/token/upload'
 
 // 系统管理
   this.findAuthUserPage=conf.baseApiPath + '/admin/api/authUser/findAuthUserPage'
@@ -101,8 +102,7 @@ const io = {
   this.addTeacher=conf.baseApiPath + '/lesson/api/lessonClass/addTeacher'
   this.changeTeacher=conf.baseApiPath + '/lesson/api/lessonClass/changeTeacher'
   this.deleteTeacher=conf.baseApiPath + '/lesson/api/lessonClass/deleteTeacher'
-
-
+  this.detailLessonClassChapter=conf.baseApiPath + '/lesson/api/lessonClass/detailLessonClassChapter'
 
 
   },

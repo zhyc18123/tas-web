@@ -1,7 +1,7 @@
 <template>
     <div class="course-ware container">
         <div class="course-title">
-            <img src="../../assets/img/to-right.png" alt=""> {{lessonName}}
+            <img src="../../assets/img/to-right.png" alt=""> {{className}}
         </div>
         <div class="times-div">
             <div class="t-title">
@@ -10,8 +10,8 @@
             </div>
             <span class="b-line"></span>
             <div class="c-tab" v-if="optType==='read'">
-                <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/courseWare/read',query:{lessonId,lessonName,lectureNum}})">课件</div>
-                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/lecture/read',query:{lessonId,lessonName,lectureNum}})">讲义</div>
+                <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/courseWare/read',query:{lessonId,className,lectureNum}})">课件</div>
+                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/lecture/read',query:{lessonId,className,lectureNum}})">讲义</div>
             </div>
         </div>
         <div class="opt-div">
@@ -60,7 +60,8 @@ export default {
             sourceType: this.$route.params.sourceType,
             optType: this.$route.params.optType,
             lessonId: this.$route.query.lessonId,
-            lessonName: this.$route.query.lessonName,
+            className: this.$route.query.className,
+            classId: this.$route.query.classId,
             lectureNum: this.$route.query.lectureNum,
             chapterDetail: {},
             conf: conf
@@ -74,18 +75,18 @@ export default {
         console.log('to', to)
         this.sourceType = to.params.sourceType
         this.optType = to.params.optType
-        this.detailLesChapters()
+        this.detailLessonClassChapter()
         next()
     },
     created() {
-        this.detailLesChapters()
+        this.detailLessonClassChapter()
     },
     mounted () {  
     },
     methods: {
         ...mapActions(['view', 'edit', 'prints', 'download','clearToken']),
         selfEdit() {
-            this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, lessonName: this.lessonName, lectureNum: this.lectureNum } })
+            this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum } })
         },
         print() {
             // let sourceId = this.chapterDetail.courseUrl
@@ -119,8 +120,8 @@ export default {
             }
             return sourceId
         },
-        async detailLesChapters() {
-            let { data } = await io.post6(io.detailLesChapters, { lessonId: this.lessonId, id: this.id })
+        async detailLessonClassChapter() {
+            let { data } = await io.post6(io.detailLessonClassChapter, { lessonId: this.lessonId, lessonClassId: this.classId,lessonChapterId:this.id })
             if (data.success) {
                 this.chapterDetail = data.data
                 this.getToken(data.data)

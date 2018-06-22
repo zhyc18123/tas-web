@@ -19,7 +19,7 @@
                                     </el-radio-group>
                                 </div>
                             </li>
-                            <!--<li>
+                            <li>
                                 <div class="search-title">
                                     <label>学期：</label>
                                 </div>
@@ -28,24 +28,25 @@
                                         <el-radio-button v-for="(item,index) in condition.termObj.list" :label="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
-                            </li>-->
+                            </li>
                             <li>
                                 <div class="search-title">
-                                    <label>版本：</label>
+                                    <label>校区：</label>
                                 </div>
                                 <div class="search-list">
-                                    <el-radio-group v-model="form.versionId" size="mini">
-                                        <el-radio-button v-for="(item,index) in condition.materList" :label="item.id">{{item.name}}</el-radio-button>
+                                    <el-radio-group v-model="form.schoolId" size="mini">
+                                        <el-radio-button label="">全部</el-radio-button>
+                                        <el-radio-button v-for="item in school.schoolObj.list" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
                             <li class="g-course">
                                 <div class="search-title">
-                                    <label>课程：</label>
+                                    <label>班级：</label>
                                 </div>
                                 <div class="search-list">
-                                    <el-radio-group v-model="form.courseId" size="mini">
-                                        <el-radio-button v-for="(item,index) in course.courseObj.list" :label="item.id">{{item.name}}</el-radio-button>
+                                    <el-radio-group v-model="form.classId" size="mini">
+                                        <el-radio-button v-for="(item,index) in classes.classObj.list" :label="item.id">{{item.className}}</el-radio-button>
                                     </el-radio-group>
                                 </div>
                             </li>
@@ -54,24 +55,27 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <div class="t-card c-body"  v-show="form.courseId">
+        <div class="t-card c-body" v-show="form.classId">
             <div class="c-left">
-                <line-head :title="course.courseChapterObj.name+'课程讲次'" />
-                <ul class="times-ul" v-if="course.courseChapterObj.list&&course.courseChapterObj.list.length">
-                    <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.id+'/courseWare/read',query:{lessonId:form.courseId,lectureNum:i+1,lessonName:course.courseChapterObj.name}}" v-for="(item,i) in course.courseChapterObj.list">第 {{i+1}} 讲{{item.name}}</router-link>
+                <line-head :title="className+'课程讲次'" />
+                <ul class="times-ul" v-if="classes.classChapterList.length">
+                    <template v-for="(item,i) in classes.classChapterList">
+                        <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.chapterId+'/courseWare/read',query:{lessonId:lessonId,lectureNum:i+1,className:className,classId:form.classId}}" v-if="item.status===1">第 {{i+1}} 讲{{item.chapterName}}</router-link>
+                        <li v-else class="disable">第 {{i+1}} 讲{{item.chapterName}}</li>
+                    </template>
                 </ul>
-                    <div class="empty" v-else>
-                        暂无课程讲次
-                    </div>
+                <div class="empty" v-else>
+                    暂无课程讲次
+                </div>
             </div>
             <div class="c-right">
                 <div class="c-introduce">
-                    <line-head :title="course.courseChapterObj.name+'课程说明'" />
+                    <line-head :title="className+'课程说明'" />
                     <div class="i-video">
-                        <d-player v-if="course.courseDetail.videoUrl" :options="{video:{url:course.courseDetail.videoUrl,pic:course.courseDetail.videoUrl+'-thumbnail-2'}}"></d-player>
+                        <d-player v-if="classes.classDetail.videoUrl" :options="{video:{url:classes.classDetail.videoUrl,pic:classes.classDetail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
                     <div class="i-text">
-                        {{course.courseDetail.remark}}
+                        {{classes.classDetail.remark}}
                     </div>
                 </div>
                 <div class="c-data">
@@ -108,13 +112,15 @@ export default {
             form: {
                 gradeId: '',
                 termId: '',
-                versionId: '',
-                courseId: ''
-            }
+                classId: '',
+                schoolId: ''
+            },
+            className: '',
+            lessonId: ''
         }
     },
     computed: {
-        ...mapState(['condition', 'course','chapter']),
+        ...mapState(['condition', 'classes', 'chapter', 'school', 'course']),
     },
     watch: {
         'condition.subjectList'(val) {
@@ -122,70 +128,79 @@ export default {
             this.activeName = 0 + ''
         },
         'condition.gradeObj'(val) {
-            this.form.gradeId = val.list[0]&&val.list[0].id
+            this.form.gradeId = val.list[0] && val.list[0].id
         },
         'condition.termObj'(val) {
-            this.form.termId = val.list[0]&&val.list[0].id
+            this.form.termId = val.list[0] && val.list[0].id
         },
-        'condition.materList'(val) {
-            this.form.versionId = val[0]&&val[0].id
-        },
-        'course.courseObj'(val){
-            console.log('xx',val)
-            this.form.courseId=val.list[0]&&val.list[0].id
+        'classes.classObj'(val) {
+            console.log('xx', val)
+            this.form.classId = val.list[0] && val.list[0].id
+            // this.className=val.list[0]&&val.list[0].className
         },
         activeName(val) {
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.condition.subjectList[val].id })
-            this.findMaterialData({ sectionId: this.form.gradeId, subjectId: this.condition.subjectList[val].id })
-            this.getLessons()
+            // this.findMaterialData({ sectionId: this.form.gradeId, subjectId: this.condition.subjectList[val].id })
+            this.getClasses()
         },
         'form.gradeId'(val) {
-            this.findMaterialData({ sectionId: val, subjectId: this.condition.subjectList[Number(this.activeName)].id })
-            this.getLessons()
+            // this.findMaterialData({ sectionId: val, subjectId: this.condition.subjectList[Number(this.activeName)].id })
+            this.getClasses()
         },
-        'form.termId'(val){
-            this.getLessons()
+        'form.termId'(val) {
+            this.getClasses()
         },
-        'form.versionId'(val){
-            this.getLessons()
+        'form.schoolId'(val) {
+            this.getClasses()
         },
-        'form.courseId'(val){
-            if(!val){
+        'form.classId'(val) {
+            if (!val) {
                 return
             }
-        this.findLesChapterPage({ lessonId: val })
-        this.detailLesson({id:val})
-        this.findLessonMaterial({pageIndex:1,pageSize:1000000,lessonId:val})
+            this.lessonClassPlanChapterList({ id: val })
+            this.classes.classObj.list.map((item, i) => {
+                if (item.id === val) {
+                    this.className = item.className
+                    this.lessonId = item.lessonId
+                    this.detailLesson({ id: item.lessonId })
+                    this.findLessonMaterial({ pageIndex: 1, pageSize: 1000000, lessonId: item.lessonId })
+                }
+            })
         }
     },
     created() {
         this.findSubjectsData()
         this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
+        this.findBaseSchoolPage({ pageIndex: 1, pageSize: 1000000 })
     },
     methods: {
-        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage', 'findLessonPage', 'findMaterialData','findLesChapterPage','detailLesson','findLessonMaterial']),
-        getLessons() {
-            this.findLessonPage(
-                {
-                    pageIndex: 1,
-                    pageSize: 10000000,
-                    dataSubject: this.form.subjectId,
-                    baseSectionId: this.form.gradeId,
-                    // baseTrimesterId: this.form.termId,
-                    status:1
-                })
+        ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseTermPage', 'findClassPage', 'findBaseSchoolPage', 'lessonClassPlanChapterList', 'detailLesson', 'findLessonMaterial']),
+        // getLessons() {
+        //     this.findLessonPage(
+        //         {
+        //             pageIndex: 1,
+        //             pageSize: 10000000,
+        //             dataSubject: this.form.subjectId,
+        //             baseSectionId: this.form.gradeId,
+        //             // baseTrimesterId: this.form.termId,
+        //             status: 1
+        //         })
+        // },
+        getClasses() {
+            this.findClassPage({ pageIndex: 1, pageSize: 1000000, baseSectionId: this.form.gradeId, baseTrimesterId: this.form.termId, schoolId: this.form.schoolId })
         },
-        downloadData(item){
-            window.open(item.attchUrl+'?attname='+item.attchName)
+        downloadData(item) {
+            window.open(item.attchUrl + '?attname=' + item.attchName)
         }
     }
 
 }
 </script>
 <style lang="less" scoped>
-    .empty{
-        margin: 20px
-    }
+.empty {
+    margin: 20px
+}
+
 .times-ul {
     margin-top: 30px;
     li {
@@ -199,6 +214,14 @@ export default {
         cursor: pointer;
         &:hover {
             background: #c9efe6;
+        }
+        &.disable{
+            cursor: auto;
+            background: #ccc;
+            color: #666;
+            &:hover{
+                background: #ccc;
+            }
         }
     }
 }
@@ -222,7 +245,7 @@ export default {
         font-size: 14px;
         line-height: 20px;
         color: #333;
-        .dplayer{
+        .dplayer {
             max-height: 300px;
         }
     }
