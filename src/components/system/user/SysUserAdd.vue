@@ -2,17 +2,17 @@
   <div class="user-add">
     <!-- 系统管理员身份的新增 -->
     <el-form  class="add-form" label-width="100px" status-icon :rules="rules" ref="form" :model="form">
-      <el-form-item prop="username" required >
-        <div slot="label" class="tow-four">
+      <el-form-item prop="username"  class="orign-password">
+        <div slot="label" class="tow-four" >
             姓<span>名：</span>
         </div>
-        <el-input v-model="form.username" placeholder="请输入用户姓名"></el-input>
+        <el-input v-model="form.username" placeholder="请输入用户姓名" ></el-input>
       </el-form-item>
-      <el-form-item  prop="account"   required>
-        <div slot="label" class="tow-four">
+      <el-form-item  prop="account"  class="orign-password">
+        <div slot="label" class="tow-four" >
             手<span>机：</span>
         </div>
-        <el-input v-model="form.account" placeholder="请输入手机号，该号用于登录系统 "></el-input>
+        <el-input v-model="form.account" placeholder="请输入手机号，该号用于登录系统 " ></el-input>
       </el-form-item>
       <el-form-item prop="password" class="orign-password"  >
         <div slot="label" class="tow-four">
@@ -34,7 +34,7 @@
           <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
         </el-radio-group>
        </el-form-item>
-        <el-form-item  v-if="roleType == 2" >
+        <el-form-item  v-if="roleType == 2"  class="orign-password">
             <div slot="label" class="tow-four">
             所属机构：
             </div>
@@ -42,7 +42,7 @@
                 <el-option v-for="(organ,index) in system.organList.list" :label="organ.orgName" :value="organ.id" :key="index"></el-option>
             </el-select>
         </el-form-item>
-        <el-form-item  v-if="roleType == 3" >
+        <el-form-item  v-if="roleType == 3"  class="orign-password">
             <div slot="label" class="tow-four">
             所属个人：
             </div>
@@ -124,6 +124,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
+           { max:40, message: '请输入40字以内的用户姓名', trigger: 'blur' },
         ],
         authRoleId:[
           {required: true, message: "请选择角色", trigger: 'change' }
@@ -233,6 +234,22 @@ export default {
                     })
                 }
             } else {
+                if(this.form.username===""){
+                  this.$message("请输入账号")
+                  return false
+                }
+                if(this.form.username.length>40){
+                  this.$message("用户姓名超过字数限制")
+                  return false
+                }
+                if(this.form.account===""){
+                  this.$message("请输入个人手机号")
+                  return false
+                }
+                if(!(/^1[34578]\d{9}$/.test(this.form.account))){
+                  this.$message("手机号码有误，请重填")
+                  return false
+                }
               this.$message('还有必填项未填，请先填写')
               return false;
             }

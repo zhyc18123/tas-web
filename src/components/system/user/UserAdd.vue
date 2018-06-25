@@ -2,14 +2,14 @@
   <div class="user-add">
     <line-head-form class="head" :title="title"/>
     <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form" v-if="!loginInfo.isSystem">
-      <el-form-item prop="username" required >
-        <div slot="label" class="tow-four">
+      <el-form-item prop="username">
+        <div slot="label" class="tow-four"   >
             账<span>号：</span>
         </div>
-        <el-input v-model="form.username" placeholder="请输入20字以内的用户姓名"></el-input>
+        <el-input v-model="form.username" placeholder="请输入40字以内的用户姓名"></el-input>
       </el-form-item>
-      <el-form-item  prop="account" required >
-        <div slot="label" class="tow-four">
+      <el-form-item  prop="account" class="orign-password" >
+        <div slot="label" class="tow-four"  >
             手<span>机：</span>
         </div>
         <el-input v-model="form.account" placeholder="请输入登录手机号"></el-input>
@@ -122,22 +122,22 @@ export default {
   data() {
     const validatePhoneNo = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入个人电话'));
+        callback(new Error('请输入个人手机号'));
       } else if (!(/^1[34578]\d{9}$/.test(value))) {
         callback(new Error('手机号码有误，请重填'));
       } else {
         callback();
       }
     };
-    const validateIdNo = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入个人身份证'));
-      } else if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(value))) {
-        callback(new Error('身份证号码有误，请重填'));
-      } else {
-        callback();
-      }
-    };
+    // const validateIdNo = (rule, value, callback) => {
+    //   if (value === '') {
+    //     callback(new Error('请输入个人身份证'));
+    //   } else if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(value))) {
+    //     callback(new Error('身份证号码有误，请重填'));
+    //   } else {
+    //     callback();
+    //   }
+    // };
     return {
       title:'新增账号',
       loginInfo:storage.getCurrentUserInfo(),
@@ -162,7 +162,7 @@ export default {
         status: 1,
         workStatus:1,
         jobStatus: 1,
-        type: 0,
+        type: 1,
       },
       subjectSectionList:[],
       gradesBySubject:[],
@@ -207,7 +207,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-          { required: true,  max: 20, message: '请输入20字以内的用户姓名', trigger: 'blur' },
+          { max: 40, message: '请输入40字以内的用户姓名', trigger: 'blur' },
         ],
       }
     }
@@ -244,7 +244,7 @@ export default {
         status: 1,
         workStatus:1,
         jobStatus: 1,
-        type: 0,
+        type: 1,
       }
     },
     handleCheckedSubjectChange(val){
@@ -345,6 +345,7 @@ export default {
     handleSave() {
       let _this = this
       this.$refs.form.validate((valid) => {
+        console.log(valid)
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
@@ -383,17 +384,16 @@ export default {
             this.$message("两次输入的密码不一致，请重新输入")
             return false
           }
-          if (_this.password !== '******') {
+          if (this.password !== '******') {
             data.password = md5(this.password)
           }
-          if(_this.cPassword !== '******'){
+          if(this.cPassword !== '******'){
             data.cPassword = md5(this.cPassword)
           }
           if(this.form.checkedSubject.length<=0){
             this.$message("请选择科目")
             return false
           }
-         
           let isexist = false
           for(var i = 0;i < data.authSubjectSectionList.length;i++){
             if(data.authSubjectSectionList[i].baseSectionIds == ''){
@@ -434,6 +434,29 @@ export default {
           }
          
         } else {
+            // if (value === '') {
+            //   callback(new Error('请输入个人电话'));
+            // } else if (!(/^1[34578]\d{9}$/.test(value))) {
+            //   callback(new Error('手机号码有误，请重填'));
+            // } else {
+            //   callback();
+            // }
+          if(this.form.username===""){
+            this.$message("请输入账号")
+            return false
+          }
+          if(this.form.username.length>40){
+            this.$message("用户姓名超过字数限制")
+            return false
+          }
+          if(this.form.account===""){
+            this.$message("请输入个人手机号")
+            return false
+          }
+          if(!(/^1[34578]\d{9}$/.test(this.form.account))){
+            this.$message("手机号码有误，请重填")
+            return false
+          }
           this.$message('还有必填项未填，请先填写')
           return false;
         }

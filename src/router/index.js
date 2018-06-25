@@ -311,7 +311,6 @@ router.beforeEach((to,from,next)=>{
   if(!token&&to.path.indexOf('/login')===-1){
     next({path:'/login',query:{backUrl:from.fullPath}})
   }else{
-    console.log(to)
     next()
   }
 })

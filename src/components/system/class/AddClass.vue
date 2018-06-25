@@ -28,7 +28,7 @@
             </el-form-item>
                         <el-form-item label="学期:" prop="baseTrimesterId">
                             <el-select v-model="form.baseTrimesterId" placeholder="请选择学期">
-                                <el-option v-for="(term,index) in condition.termObj.list" :label="term.name" :value="term.id"></el-option>
+                                <el-option v-for="(term,index) in condition.termObj.list" :label="term.name" :value="term.id" :key="index"></el-option>
                             </el-select>
                         </el-form-item>
             <el-form-item label="主讲老师:" prop="teacherIds">

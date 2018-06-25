@@ -79,6 +79,15 @@ export default {
         }
     },
     data() {
+        const validatePhoneNo = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请输入手机号'));
+            } else if (!(/^1[34578]\d{9}$/.test(value))) {
+                callback(new Error('请输入正确的手机号'));
+            } else {
+                callback();
+            }
+        };
         return {
             backUrl:this.$route.query.backUrl,
             rempassword:'',
@@ -91,7 +100,7 @@ export default {
             remember: true,
             rules: {
                 phone: [
-                    { required: true, message: '请输入账号', trigger: 'blur' }
+                    { validator: validatePhoneNo, trigger: 'blur' }
                 ],
                 password: [
                     { required: true, message: '请输入密码', trigger: 'blur' }
@@ -132,7 +141,7 @@ export default {
             this.$refs.loginForm.validate(async (valid) => {
                 if (valid) {
                     let password = ''
-                    if (this.rem && this.rem.remember) {
+                    if (this.rem && this.rem.remember && this.loginForm.password==="******") {
                         password = this.rempassword
                     } else {
                         password = md5(this.loginForm.password)
@@ -145,6 +154,7 @@ export default {
                     });
                     } catch (error) {
                         console.log('xd')
+
                     }
 
                     // if (data.data.success) {
