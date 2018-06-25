@@ -42,7 +42,7 @@
     </el-form-item>
     <el-form-item class="opt-btn">
         <el-button class="height-btn" @click="saveForm">确定</el-button>
-        <el-button class="light-btn"@click="$router.go(-1)" >取消</el-button>
+        <el-button class="light-btn" @click="$router.go(-1)" >取消</el-button>
     </el-form-item>
     
 </el-form>
@@ -152,9 +152,13 @@ export default {
             this.$refs.form.validate((valid) => {
                 if(valid){
                     let param = this.form
-                    param.userTimeStart = util.formatTime(this.userTime[0])
-                    param.userTimeEnd = util.formatTime(this.userTime[1])
-                    console.log(param)
+                    if(this.userTime){
+                        param.userTimeStart = util.formatTime(this.userTime[0])
+                        param.userTimeEnd = util.formatTime(this.userTime[1])
+                    }else{
+                         param.userTimeStart = null
+                         param.userTimeEnd = null
+                    }
                     if(param.status===''){
                         this.$message("请选择合作状态")
                         return false
@@ -183,6 +187,7 @@ export default {
                                 type:'success',
                                 message:'修改成功'
                             })
+                            this.$router.push('/main/system/personal/list')
                         })
                     }
                 }else{

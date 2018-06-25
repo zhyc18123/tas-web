@@ -135,8 +135,13 @@ export default {
                 if(valid){
                     let param = this.form
                     console.log(param)
-                    param.userTimeStart = util.formatTime(this.userTime[0])
-                    param.userTimeEnd = util.formatTime(this.userTime[1])
+                    if(this.userTime){
+                        param.userTimeStart = util.formatTime(this.userTime[0])
+                        param.userTimeEnd = util.formatTime(this.userTime[1])
+                    }else{
+                        param.userTimeStart = null
+                         param.userTimeEnd = null
+                    }
                     if(!param.orgHeadUrl){
                         this.$message("请上传机构图标")
                         return false
@@ -157,7 +162,6 @@ export default {
                         this.$message("请选择合作类型")
                         return false
                     }
-                    
                     if(!(this.type && this.id)){
                         io.post(io.addAuthOrgan,param,(ret)=>{
                             this.$message({
