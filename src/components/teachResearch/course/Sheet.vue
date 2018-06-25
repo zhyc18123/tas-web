@@ -9,7 +9,7 @@
                 <span class="b-line"></span>
                 <div class="c-add">
                     <span>支持PPT、Word、Excel、PDF、压缩包</span>
-                    <el-button @click="$router.push({path:'/main/teach-research/course/add-sheet/'+id,query:{subject:dataObj.ext&&dataObj.ext.dataSubject}})">添加辅助材料</el-button>
+                    <el-button @click="$router.push({path:'/main/teach-research/course/add-sheet/'+id,query:{subject:dataObj.ext&&dataObj.ext.dataSubject,title:dataObj.ext&&dataObj.ext.name}})">添加辅助材料</el-button>
                 </div>
             </div>
             <div class="t-cont">

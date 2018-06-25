@@ -226,7 +226,7 @@ export default {
       em {
         font-style: normal;
         display: inline-block;
-        height: 47px;
+        height: 48px;
         max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;

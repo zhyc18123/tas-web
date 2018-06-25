@@ -235,7 +235,7 @@ const io = {
                 // Vue.prototype.$router.push('/login')
                 document.location.reload()
             }
-      if(!res.data.success){
+      if(!res.data.success&&res.data.desc){
           window.$notify.error({
             title: '错误',
             message: res.data.desc

@@ -40,11 +40,11 @@
             </div>
             <el-form :inline="true" :model="form" class="t-form">
                 <!--<el-form-item label="">
-                            <el-select v-model="form.subjectId" placeholder="科目">
-                                <el-option label="全部" value=""></el-option>
-                                <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
-                            </el-select>
-                        </el-form-item>-->
+                                <el-select v-model="form.subjectId" placeholder="科目">
+                                    <el-option label="全部" value=""></el-option>
+                                    <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
+                                </el-select>
+                            </el-form-item>-->
                 <el-form-item label="">
                     <el-select v-model="form.sectionId" placeholder="年级">
                         <el-option label="全部" value=""></el-option>
@@ -163,7 +163,7 @@ export default {
                 this.$message('请先选择讲次')
                 return
             }
-            if (isPublish===true) {
+            if (isPublish === true) {
                 this.publishLesson()
             } else {
                 this.$router.push({
@@ -218,15 +218,6 @@ export default {
         //     this.$router.push({ path: '/main/teach-research/course/view-lecture/courseWare/' + this.myArray[0].id + '/1' })
         // },
         handleSelectionChange(val) {
-            // let arr=[]
-            // val.map((item,i)=>{
-            //         console.log('arr',arr)
-            //         if(arr.indexOf(item.id)===-1){
-            //             arr.push(item.id)
-            //         }else{
-            //             val.splice(i,1)
-            //         }
-            // })
             console.log('val', val)
             this.tableSelectNum = val.length
             this.tableSelectItem = val
@@ -235,6 +226,16 @@ export default {
                 this.$refs.table.toggleRowSelection(val[val.length - 1], false)
                 return
             }
+            // val.map((item, i) => {
+            //     this.myArray.map((mItem, mI) => {
+            //         console.log(mItem)
+            //         if (item.id === mItem.id) {
+            //             console.log("xxxxxx")
+            //             this.$refs.table.toggleRowSelection(val[val.length - 1], false)
+            //             return
+            //         }
+            //     })
+            // })
         },
         sure() {
             if (this.changeItemId) {

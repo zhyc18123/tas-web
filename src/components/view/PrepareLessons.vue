@@ -82,7 +82,7 @@
                     <line-head title="课程资料" />
                     <ul class="data-ul" v-if="course.courseDataObj.list&&course.courseDataObj.list.length">
                         <li v-for="(item,i) in course.courseDataObj.list" @click="downloadData(item)">
-                            <img :src="item.url" alt="">
+                            <img :src="item.attchUrl" alt="">
                             <span>{{item.attchName}}</span>
                         </li>
                     </ul>
@@ -100,6 +100,7 @@ import VueDPlayer from 'vue-dplayer'
 import '../../../node_modules/vue-dplayer/dist/vue-dplayer.css'
 import testUrl from '../../assets/img/prepare-banner.png'
 import { mapState, mapActions } from 'vuex'
+import storage from 'lib/storage'
 export default {
     name: "PrepareLessons",
     components: {
@@ -132,6 +133,9 @@ export default {
         },
         'condition.termObj'(val) {
             this.form.termId = val.list[0] && val.list[0].id
+        },
+        'classes.classChapterList'(val){
+            storage.setChapter(val)
         },
         'classes.classObj'(val) {
             console.log('xx', val)

@@ -31,12 +31,12 @@
                 <div class="cont-right">
 
                     <div class="source-body" v-if="sourceType==='courseWare'">
-                        <div v-if="office.token">
+                        <div v-if="token">
                             <iframe class="office-ppt edit" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
                         </div>
                     </div>
                     <div class="source-body" v-else>
-                        <div v-if="office.token">
+                        <div v-if="token">
                             <iframe class="office-word" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                 <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)" v-if="!course.courseChapterObj.allPublic">暂不发布讲次，下一步</el-button>
                 <el-button class="light-btn" @click="showLecture=true" v-if="!course.courseChapterObj.allPublic">发布讲次，下一步</el-button>
             </div>
-            <el-dialog title="2018春季物理提高班" :visible.sync="showLecture" width="40%" center>
+            <el-dialog :title="course.courseChapterObj.name" :visible.sync="showLecture" width="40%" center>
                 <el-checkbox label="全选" v-model="allCheck"></el-checkbox>
                 <el-checkbox-group v-model="lectureList">
                     <el-checkbox class="lec-list" :label="item.id" v-for="(item,i) in course.courseChapterObj.list" :disabled="item.status===1">{{item.name}}</el-checkbox>
@@ -83,7 +83,8 @@ export default {
             conf: conf,
             showLecture: false,
             lectureList:[],
-            allCheck:false
+            allCheck:false,
+            token:''
         }
     },
     computed: {
@@ -100,6 +101,9 @@ export default {
             }else{
                 this.lectureList=[]
             }
+        },
+        'office.token'(val){
+            this.token=val
         }
     },
     beforeRouteUpdate(to, from, next) {

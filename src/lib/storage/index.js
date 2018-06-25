@@ -45,6 +45,15 @@ const storage = {
   },
   removeCurrentUserInfo:function(){
     store.remove('currentUserInfo')
-  }
+  },
+  setChapter:function(chapter){
+    store.set("chapter" , JSON.stringify(chapter) );
+  },
+  getChapter:function () {
+    return store.get("chapter")?JSON.parse(store.get("chapter")):{};
+  },
+  removeChapter:function(){
+    store.remove('chapter')
+  },
 }
 export default  storage  ;

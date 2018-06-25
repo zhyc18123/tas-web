@@ -18,7 +18,7 @@
                 </div>
                 <el-form :model="loginForm" :rules="rules" ref="loginForm">
                     <el-form-item prop="phone">
-                        <el-input placeholder="请输入用户名/手机号" v-model="loginForm.phone" autocomplete="off">
+                        <el-input placeholder="请输入手机号" v-model="loginForm.phone" autocomplete="off">
                             <svg slot="prefix" class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-wode"></use>
                             </svg>
