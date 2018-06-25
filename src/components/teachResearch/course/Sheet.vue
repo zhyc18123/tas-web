@@ -20,7 +20,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column prop="attchName" label="名称" align="center"> </el-table-column>
-                    <el-table-column prop="attchSize" label="大小(M)" align="center"></el-table-column>
+                    <!--<el-table-column prop="attchSize" label="大小(M)" align="center"></el-table-column>-->
                     <el-table-column label="操作" align="center" width="180">
                         <template slot-scope="scope">
                             <svg class="icon" aria-hidden="true" @click="delLessonMaterial(scope.row.id)">
