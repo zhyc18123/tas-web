@@ -185,9 +185,9 @@ export default {
         },
         beforeAvatarUpload(file) {
             let fileSize = file / 1024 / 1024
-            console.log(this.fileType)
+            console.log('dd',this.fileType,fileSize)
             this.loading = true
-                if (fileSize ===0) {
+                if (!fileSize) {
                     this.$message('文件大小不能为0')
                     this.loading = false
                     return false

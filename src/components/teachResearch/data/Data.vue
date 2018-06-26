@@ -74,7 +74,13 @@ export default {
   watch: {
     'form.dataSubject'(val) {
       this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, dataSubject: this.form.dataSubject })
+    },
+    'form.pageIndex'(val){
+      // this.$router.push({path:'/main/teach-research/data',query:{pageIndex:val}})
     }
+  },
+  activated () {
+    this.getDataList()
   },
   created() {
     this.getDataList()
@@ -93,6 +99,7 @@ export default {
     },
     getDataList(opt) {
       this.findBaseMaterial({ ...this.form, ...opt })
+      this.form.pageIndex=opt&&opt.pageIndex||this.form.pageIndex
     }
   }
 }

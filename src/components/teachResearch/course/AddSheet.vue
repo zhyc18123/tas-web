@@ -3,7 +3,7 @@
         <course-step :active="4" />
         <div class="times-div">
             <div class="t-title">
-                <em>物理初二提高班（人教版）</em>
+                <em>{{titleName}}</em>
             </div>
             <span class="b-line"></span>
         </div>
@@ -64,6 +64,7 @@ export default {
     data() {
         return {
             id:this.$route.params.id,
+            titleName:this.$route.query.title,
             form: {
                 name: '',
                 subjectId: this.$route.query.subject,

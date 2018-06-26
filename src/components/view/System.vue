@@ -54,14 +54,39 @@ export default {
   },
   created() {
     this.init()
+    this.redirectUrl()
   },
   beforeUpdate () {
     this.init()
+    console.log(this.$route)
+    if(this.$route.path==='/main/system'){
+    this.redirectUrl()
+    }
   },
   computed: {
     ...mapGetters(['config'])
   },
   methods: {
+    redirectUrl(){
+    let sysIndex=''
+    let config=this.config
+    if(config.base_manage){
+      sysIndex='/main/system/basisSetting/schoolSetting'
+    }else if(config.user_manage){
+      sysIndex='/main/system/userList/list'
+    }else if(config.opt_role_manage){
+      sysIndex='/main/system/characterList/list'
+    }else if(config.organization_manage){
+      sysIndex='/main/system/organization/list'
+    }else if(config.personal_manage){
+      sysIndex='/main/system/personal/list'
+    }else if(config.class_manage){
+      sysIndex='/main/system/class/list'
+    }else{
+      sysIndex='/'
+    }
+    this.$router.push(sysIndex)
+  },
     init(){
     if (this.$route.path.indexOf('basisSetting') > 0) {
       this.activeName = '基础设定'

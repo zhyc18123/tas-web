@@ -44,12 +44,17 @@
                 <iframe class="office-word" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.lectureUrl+'?token='+office.token" frameborder="0"></iframe>
             </div>
         </template>
+            <div class="next-btn">
+                <el-button class="height-btn" @click="$router.push('/main/prepare-lessons')">返回列表</el-button>
+                <el-button v-if="lectureNum<chapterList.length" class="light-btn" @click="next">下一讲</el-button>
+            </div>
     </div>
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
 import io from 'lib/io'
 import conf from 'lib/conf'
+import storage from 'lib/storage'
 export default {
     components: {
 
@@ -62,9 +67,10 @@ export default {
             lessonId: this.$route.query.lessonId,
             className: this.$route.query.className,
             classId: this.$route.query.classId,
-            lectureNum: this.$route.query.lectureNum,
+            lectureNum: Number(this.$route.query.lectureNum),
             chapterDetail: {},
-            conf: conf
+            conf: conf,
+            chapterList:storage.getChapter()
         }
     },
     computed: {
@@ -75,16 +81,25 @@ export default {
         console.log('to', to)
         this.sourceType = to.params.sourceType
         this.optType = to.params.optType
+        this.lectureNum=to.query.lectureNum
         this.detailLessonClassChapter()
         next()
     },
     created() {
         this.detailLessonClassChapter()
+        console.log(this.lectureNum,this.chapterList)
     },
     mounted () {  
     },
+    beforeDestroy () {
+    storage.removeChapter()
+    },
     methods: {
         ...mapActions(['view', 'edit', 'prints', 'download','clearToken']),
+        next(){
+            console.log(this.chapterList)
+            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum-1].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
+        },
         selfEdit() {
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum } })
         },
@@ -219,6 +234,9 @@ export default {
                     height 0
                     position absolute
                     bottom 0
+.next-btn
+    text-align center
+    padding-bottom 20px
 </style>
 <style lang="stylus">
 #application{

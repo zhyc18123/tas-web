@@ -15,6 +15,16 @@
             <ul>
                 <li>
                     <div class="search-title">
+                        <label>科目：</label>
+                    </div>
+                    <div class="search-list">
+                        <el-radio-group v-model="form.dataSubject" size="mini">
+                            <el-radio-button v-for="item in condition.subjectList" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
+                        </el-radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="search-title">
                         <label>年级：</label>
                     </div>
                     <div class="search-list">
@@ -72,7 +82,7 @@
             </el-table>
         </div>
         <div class="g-lessons">
-            <el-dialog title="2018春季物理提高班" :visible.sync="showClassLessons" width="39%" center>
+            <el-dialog :title="className" :visible.sync="showClassLessons" width="39%" center>
                 <ul class="g-lessons-list">
                     <li v-for="(item,i) in classes.classChapterList" @click="hideDialog(item)">
                         <div class="lessons-num">
@@ -100,14 +110,20 @@ export default {
                 termId: 1,
                 timeId: null,
                 schoolId: null,
+                dataSubject:null
             },
             showClassLessons: false,
+            className:''
         }
     },
     computed: {
         ...mapState(['condition','school','classes']),
     },
     watch: {
+        
+      'condition.subjectList'(val){
+          this.form.dataSubject=val[0]&&val[0].id
+      },
       'condition.gradeObj'(val){
           this.form.gradeId=val.list[0]&&val.list[0].id
       },
@@ -123,17 +139,21 @@ export default {
       'form.schoolId'(val){
           this.getClasses()
       },
+      'form.dataSubject'(val){
+          this.getClasses()
+      },
     },
     created() {
+        this.findSubjectsData()
         this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000 })
         this.findBaseTermPage({ pageIndex: 1, pageSize: 1000000 })
         this.findBaseSchoolPage({ pageIndex: 1, pageSize: 1000000 })
         this.getClasses()
     },
     methods: {
-        ...mapActions(['findBaseSectionPage', 'findBaseTermPage','findBaseSchoolPage','findClassPage','lessonClassPlanChapterList']),
+        ...mapActions(['findSubjectsData','findBaseSectionPage', 'findBaseTermPage','findBaseSchoolPage','findClassPage','lessonClassPlanChapterList']),
         getClasses(){
-        this.findClassPage({ pageIndex: 1, pageSize: 1000000,baseSectionId:this.form.gradeId,baseTrimesterId:this.form.termId,schoolId:this.form.schoolId })
+        this.findClassPage({ pageIndex: 1, pageSize: 1000000,baseSectionId:this.form.gradeId,baseTrimesterId:this.form.termId,schoolId:this.form.schoolId,dataSubject:this.form.dataSubject })
         },
         changeSearch(item, index, type) {
             // item:搜索项的内容
@@ -150,13 +170,14 @@ export default {
             }
         },
         handRowClick(row, event, cloumn) {
+            this.className=row.className
             this.lessonClassPlanChapterList({id:row.id})
             this.showClassLessons = true
             console.log(row, event, cloumn)
         },
         hideDialog(item){
             this.showClassLessons = false
-            this.$router.push({path:'/main/attend-content/'+item.lessonId+'/'+item.chapterId})
+            this.$router.push({path:'/main/attend-content/'+item.lessonId+'/'+item.chapterId,query:{lessonClassId:item.lessonClassId}})
         }
     }
 

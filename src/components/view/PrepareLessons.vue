@@ -72,17 +72,17 @@
                 <div class="c-introduce">
                     <line-head :title="className+'课程说明'" />
                     <div class="i-video">
-                        <d-player v-if="classes.classDetail.videoUrl" :options="{video:{url:classes.classDetail.videoUrl,pic:classes.classDetail.videoUrl+'-thumbnail-2'}}"></d-player>
+                        <d-player v-if="course.courseDetail.videoUrl" :options="{video:{url:course.courseDetail.videoUrl,pic:course.courseDetail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
                     <div class="i-text">
-                        {{classes.classDetail.remark}}
+                        {{course.courseDetail.remark}}
                     </div>
                 </div>
                 <div class="c-data">
                     <line-head title="课程资料" />
                     <ul class="data-ul" v-if="course.courseDataObj.list&&course.courseDataObj.list.length">
                         <li v-for="(item,i) in course.courseDataObj.list" @click="downloadData(item)">
-                            <img :src="item.url" alt="">
+                            <img :src="item.imgUrl" alt="">
                             <span>{{item.attchName}}</span>
                         </li>
                     </ul>
@@ -100,6 +100,12 @@ import VueDPlayer from 'vue-dplayer'
 import '../../../node_modules/vue-dplayer/dist/vue-dplayer.css'
 import testUrl from '../../assets/img/prepare-banner.png'
 import { mapState, mapActions } from 'vuex'
+import storage from 'lib/storage'
+import pdf from '../../assets/img/pdf.png'
+import ppt from '../../assets/img/ppt.png'
+import word from '../../assets/img/word.png'
+import excel from '../../assets/img/excel.png'
+import rar from '../../assets/img/rar.png'
 export default {
     name: "PrepareLessons",
     components: {
@@ -116,13 +122,37 @@ export default {
                 schoolId: ''
             },
             className: '',
-            lessonId: ''
+            lessonId: '',
+            fileType:{
+                pdf,ppt,word,excel,rar
+            }
         }
     },
     computed: {
         ...mapState(['condition', 'classes', 'chapter', 'school', 'course']),
     },
     watch: {
+        'course.courseDataObj'(val){
+            val&&val.list.map((item,i)=>{
+                console.log(item.attchType)
+                if(item.attchType==='0'){
+                    item.imgUrl=item.attchUrl
+                }else if(item.attchType==='1'){
+                    item.imgUrl=this.fileType.ppt
+                }else if(item.attchType==='2'){
+                    item.imgUrl=this.fileType.word
+                }else if(item.attchType==='3'){
+                    item.imgUrl=this.fileType.excel
+                }else if(item.attchType==='4'){
+                    item.imgUrl=this.fileType.pdf
+                }else if(item.attchType==='5'){
+                    item.imgUrl=this.fileType.rar
+                }else{
+                    item.imgUrl=item.attchUrl
+                }
+            })
+            console.log(val)
+        },
         'condition.subjectList'(val) {
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: val[0].id })
             this.activeName = 0 + ''
@@ -132,6 +162,9 @@ export default {
         },
         'condition.termObj'(val) {
             this.form.termId = val.list[0] && val.list[0].id
+        },
+        'classes.classChapterList'(val){
+            storage.setChapter(val)
         },
         'classes.classObj'(val) {
             console.log('xx', val)
@@ -151,6 +184,9 @@ export default {
             this.getClasses()
         },
         'form.schoolId'(val) {
+            this.getClasses()
+        },
+        activeName(val){
             this.getClasses()
         },
         'form.classId'(val) {
@@ -187,7 +223,7 @@ export default {
         //         })
         // },
         getClasses() {
-            this.findClassPage({ pageIndex: 1, pageSize: 1000000, baseSectionId: this.form.gradeId, baseTrimesterId: this.form.termId, schoolId: this.form.schoolId })
+            this.findClassPage({ pageIndex: 1, pageSize: 1000000, baseSectionId: this.form.gradeId, baseTrimesterId: this.form.termId, schoolId: this.form.schoolId,dataSubject:this.condition.subjectList[Number(this.activeName)].id })
         },
         downloadData(item) {
             window.open(item.attchUrl + '?attname=' + item.attchName)
