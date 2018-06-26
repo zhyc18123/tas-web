@@ -30,6 +30,7 @@ export default {
         return {
             lessonId: this.$route.params.lessonId,
             id: this.$route.params.id,
+            lessonClassId:this.$route.query.lessonClassId,
             conf,
             chapterDetail:{}
         }
@@ -45,7 +46,7 @@ export default {
     methods: {
         ...mapActions(['view']),
         async detailLesChapters() {
-            let { data } = await io.post6(io.detailLesChapters, { lessonId: this.lessonId, id: this.id })
+            let { data } = await io.post6(io.detailLessonClassChapter, { lessonId: this.lessonId, lessonClassId: this.lessonClassId,lessonChapterId:this.id })
             if (data.success) {
                 this.chapterDetail = data.data
                 this.view({ resourceId: data.data.courseUrl })

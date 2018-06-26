@@ -97,7 +97,8 @@ const router= new Router({
           component: TeachResearch,
           children: [{
             path: 'course',
-            component: Course
+            component: Course,
+            meta:{keepAlive:true}
           },{
             path: 'course/:id',
             component: CourseDetail
@@ -123,13 +124,15 @@ const router= new Router({
           },
            {
             path: 'lecture',
-            component: Lecture
+            component: Lecture,
+            meta:{keepAlive:true}
           }, {
             path: 'lecture/:id',
             component: LectureDetail
           }, {
             path: 'data',
-            component: Data
+            component: Data,
+            meta:{keepAlive:true}
           }, {
             path: 'data/:id',
             component: DataDetail

@@ -101,6 +101,9 @@ export default {
     this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
     }
   },
+  activated () {
+    this.getCourseList()
+  },
   created() {
     this.getCourseList()
     this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.dataSubject })
@@ -134,6 +137,7 @@ export default {
     },
     getCourseList(opt) {
       this.findLessonPage({...this.form,...opt,type:this.userInfo.isSystem?0:1})
+      this.form.pageIndex=opt&&opt.pageIndex||this.form.pageIndex
     },
   async publishLesson(id,status){
     if(status===1){

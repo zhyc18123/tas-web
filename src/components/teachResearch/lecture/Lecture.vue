@@ -77,6 +77,9 @@ export default {
     this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000,subjectId:this.form.subjectId })
     }
   },
+  activated () {
+    this.getChapterList()
+  },
   created () {
     this.getChapterList()
         this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.subjectId })
@@ -94,6 +97,7 @@ export default {
     },
     getChapterList(opt){
       this.findBaseChapterPage({...this.form,...opt})
+      this.form.pageIndex=opt&&opt.pageIndex||this.form.pageIndex
     }
   }
 }

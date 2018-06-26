@@ -37,10 +37,11 @@
     </el-row>
     <div class="nav-div" v-if="!noTab">
       <el-menu theme="light" :default-active="activeIndex" router class="el-menu-demo" mode="horizontal">
+        <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item v-if="config.teach_research" index="/main/teach-research/course">教研</el-menu-item>
         <el-menu-item v-if="config.prepare_lesson" index="/main/prepare-lessons">备课</el-menu-item>
         <el-menu-item v-if="config.start_class" index="/main/attend-class">上课</el-menu-item>
-        <el-menu-item v-if="config.sys_manage" :index="sysIndex" id="sys" @click="sysClick">系统管理</el-menu-item>
+        <el-menu-item v-if="config.sys_manage" index="/main/system" id="sys" @click="sysClick">系统管理</el-menu-item>
         <!-- <el-menu-item v-if="config.report_manage" index="/main/report">报表管理</el-menu-item>
           <el-menu-item v-if="config.sys_manage" index="/main/system/basisSetting/topicOrigin">系统管理</el-menu-item> -->
       </el-menu>
@@ -76,14 +77,14 @@ export default {
       } else if (routerModule.indexOf('attend') === 0) {
         activeIndex = '/main/attend-class'
       } else if (routerModule.indexOf('system') === 0) {
-        // activeIndex = sysIndex
+        activeIndex = '/main/system'
       }
       else {
-        activeIndex = '/index'
+        activeIndex = '/'
       }
       // }
     } else {
-      activeIndex = '/index'
+      activeIndex = '/'
     }
     return {
       activeIndex: activeIndex,
@@ -92,7 +93,6 @@ export default {
     }
   },
   created: function() {
-    this.init()
   },
   computed: {
      ...mapGetters([
@@ -103,31 +103,13 @@ export default {
   },
   methods: {
     ...mapActions(['logout']),
-    init(){
-    let sysIndex=''
-    let config=this.config
-    if(config.base_manage){
-      sysIndex='/main/system/basisSetting/schoolSetting'
-    }else if(config.user_manage){
-      sysIndex='/main/system/userList/list'
-    }else if(config.opt_role_manage){
-      sysIndex='/main/system/characterList/list'
-    }else if(config.organization_manage){
-      sysIndex='/main/system/organization/list'
-    }else if(config.personal_manage){
-      sysIndex='/main/system/personal/list'
-    }else if(config.class_manage){
-      sysIndex='/main/system/class/list'
-    }
-    this.sysIndex=sysIndex
-  },
   sysClick(){
-    if(this.sysIndex===''){
-    this.init()
-     this.$nextTick(()=>{
-       document.getElementById('sys').click()
-     })
-    }
+    // if(this.sysIndex===''){
+    // this.init()
+    //  this.$nextTick(()=>{
+    //    document.getElementById('sys').click()
+    //  })
+    // }
   },
   vLogout(){
     this.$confirm('确认退出？','提示').then(()=>{

@@ -197,6 +197,7 @@ export default {
 
         },
         addCourse() {
+            this.isChange=false
             this.getChapterList()
             this.findBaseSectionPage({ pageIndex: 1, pageSize: 1000000, subjectId: this.form.subjectId })
             this.findSubjectsData({ sectionId: this.form.sectionId })
