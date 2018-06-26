@@ -89,7 +89,7 @@ export default {
             rules: {
                 orgName: [
                     { required: true, message: '请输入机构名称', trigger: 'blur' },
-                    {   max:40,message: '机构名称超出最大字数范围限定', trigger: 'blur'}
+                    { max:40,message: '输入超过最大限度40字', trigger: 'blur'}
                 ],
                 orgIntroduce: [
                     { required: true, message: '请输入机构简称', trigger: 'blur' },

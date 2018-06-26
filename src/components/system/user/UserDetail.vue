@@ -216,9 +216,15 @@ export default {
         margin 0 auto
         background rgba(230, 236, 238, 0.4)
         margin-bottom 20px
-        ul
+        ul  
+            display:-webkit-box;
+            display:-moz-box;
+            display:-ms-flexbox;
+            display:-webkit-flex;
             display flex
-            li
+            li  
+                -ms-flex-negative: 1;
+                flex-shrink: 1;
                 flex 1
                 padding 32px 0 37px 63px
                 font-size 14px

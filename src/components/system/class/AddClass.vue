@@ -358,7 +358,7 @@ export default {
                 .el-input__prefix
                     height 34px
                     line-height 34px
-                    top 0 !important 
+                    top -7px !important 
                     .el-input__icon 
                        line-height 34px
                 .el-input__suffix

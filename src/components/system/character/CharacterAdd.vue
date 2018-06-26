@@ -52,7 +52,7 @@ import LineHeadForm from '../../common/LineHeadForm'
         rules: {
           roleName: [
             { required: true, message: '请输入角色名称', trigger: 'blur' },
-            {max:40,message:'角色名称不能超过40字',trigger:'blur'}
+            {max:40,message:'输入超过最大限度40字',trigger:'blur'}
           ],
         }
       }
