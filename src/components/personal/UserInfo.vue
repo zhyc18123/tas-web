@@ -126,7 +126,11 @@ export default {
             background #ffffff
             margin-top -156px
             border 1px solid #dadada
-            display flex 
+            display:-webkit-box;
+            display:-moz-box;
+            display:-ms-flexbox;
+            display:-webkit-flex;
+            display flex
             min-height 600px
             .tab-info
                 width 170px
@@ -164,6 +168,8 @@ export default {
                     border 1px solid #00b1d1        
 
             .info-cont
+                -ms-flex-negative: 1;
+                flex-shrink: 1;
                 flex 1
                 ul
                     margin-left 30%

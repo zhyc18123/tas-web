@@ -2,10 +2,10 @@
   <el-row class="organization-detail">
 <line-head-form class="head" :title="title"/>
 <el-form class="o-form" label-position="right" label-width="130px" :model="form" :rules="rules" ref="form"> 
-    <el-form-item label="真实姓名:" prop="perName" required>
+    <el-form-item label="真实姓名:" prop="perName" >
         <el-input v-model="form.perName"  placeholder="请输入真实姓名"></el-input>
     </el-form-item>
-    <el-form-item  prop="perPhone" required  label="手机:">
+    <el-form-item  prop="perPhone"  label="手机:">
         <!-- <div slot="label" class="tow-four">
             手<span>机：</span>
         </div> -->
@@ -63,14 +63,14 @@ export default {
             if (value === '') {
                 callback(new Error('请输入您的真实姓名'));
             } else if (value.length>40) {
-                callback(new Error('所填内容超出最大字数范围限定'));
+                callback(new Error('输入超过最大限度40字'));
             } else {
                 callback();
             }
         };
         const validatePhoneNo = (rule, value, callback) => {
             if (value === '') {
-                callback(new Error('请输入个人电话'));
+                callback(new Error('请输入个人手机号'));
             } else if (!(/^1[34578]\d{9}$/.test(value))) {
                 callback(new Error('手机号码有误，请重填'));
             } else {

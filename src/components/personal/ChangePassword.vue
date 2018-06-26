@@ -18,13 +18,13 @@
                 </ul>
                 <div class="info-cont">
                     <el-form :rules="rules" ref="form" :model="form" label-width="200px" >
-                        <el-form-item prop="oPassword" required label="原登录密码：">
+                        <el-form-item prop="oPassword"  label="原登录密码：">
                             <el-input type="password" v-model="form.oPassword"></el-input>
                         </el-form-item>
-                        <el-form-item prop="password" required label="新密码：" >
+                        <el-form-item prop="password"  label="新密码：" >
                             <el-input type="password" v-model="form.password" placeholder="请输入6-18位数字或字母为密码"></el-input>
                         </el-form-item>
-                         <el-form-item prop="cPassword" required label="再次输入新密码：">
+                         <el-form-item prop="cPassword"  label="再次输入新密码：">
                             <el-input type="password" v-model="form.cPassword"></el-input>
                         </el-form-item>
                         <div class="el-form-btn">
@@ -53,7 +53,7 @@ export default {
 
     },
     data() {
-        const cPassword = (rule, value, callback) => {
+        const oPasswordv = (rule, value, callback) => {
             console.log(rule,value,callback)
             // if (value === '') {
             //     callback(new Error('请输入个人电话'));
@@ -75,6 +75,7 @@ export default {
                     {  required: true, message: '请输入原密码', trigger: 'blur' }
                 ],
                 cPassword: [
+
                     { required: true, min: 6, max: 18, message: '请输入6-18位数字或字母为密码', trigger: 'blur' },
                 ],
                 password: [
@@ -92,9 +93,9 @@ export default {
             this.$refs.form.validate((valid) => {
                     if (valid) {
                         let param = this.form
-                        param.oPassword = md5(param.oPassword)
-                        param.password = md5(param.password)
-                        param.cPassword = md5(param.cPassword)
+                        param.oPassword = md5(...param.oPassword)
+                        param.password = md5(...param.password)
+                        param.cPassword = md5(...param.cPassword)
                         console.log(valid)
                         this.$confirm('确认修改密码?', '提示', {
                             confirmButtonText: '确定',
@@ -102,7 +103,7 @@ export default {
                             type: 'warning'
                         }).then(() => {
                             try {
-                                io.post(io.updatePass,param,(ret)=>{
+                                io.post6(io.updatePass,param,(ret)=>{
                                     console.log(ret)
                                     this.$message({
                                         type:"success",
@@ -124,9 +125,7 @@ export default {
                         return
                     }
                 });
-           
-            
-            
+
         }
     }
 }
@@ -150,6 +149,10 @@ export default {
             background #ffffff
             margin-top -156px
             border 1px solid #dadada
+            display:-webkit-box;
+            display:-moz-box;
+            display:-ms-flexbox;
+            display:-webkit-flex;
             display flex 
             min-height 600px
             .tab-info
@@ -183,6 +186,8 @@ export default {
                         
 
             .info-cont
+                -ms-flex-negative: 1;
+                flex-shrink: 1;
                 flex 1
                 padding-top 80px
                 .el-form

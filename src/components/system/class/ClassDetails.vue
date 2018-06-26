@@ -19,12 +19,12 @@
                     <div slot="description" class="class-info">
                         <ul class="">
                             <li>
-                                <div class="info-item">
+                                <!-- <div class="info-item">
                                     <div slot="label" class="tow-four">
                                        班级编号：
                                     </div>
                                     <span>{{classes.classDetail.num}}</span>
-                                </div>
+                                </div> -->
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                         学<span>科：</span>
@@ -33,9 +33,15 @@
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
-                                       创建日期：
+                                       所在校区：
                                     </div>
-                                    <span>{{classes.classDetail.createTime | formatDate}}</span>
+                                    <span>{{classes.classDetail.school}}</span>
+                                </div>
+                                <div class="info-item">
+                                    <div slot="label" class="tow-four">
+                                      班<span>型：</span>
+                                    </div>
+                                    <span>{{classes.classDetail.lessonName}}</span>
                                 </div>
                                 <!-- <div class="info-item">
                                     <div slot="label" class="tow-four">
@@ -45,12 +51,12 @@
                                 </div> -->
                             </li>
                             <li>
-                                <div class="info-item">
+                                <!-- <div class="info-item">
                                     <div slot="label" class="tow-four">
                                        学员总数：
                                     </div>
                                     <span>-</span>
-                                </div>
+                                </div> -->
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
                                         年<span>级：</span>
@@ -59,9 +65,9 @@
                                 </div>
                                 <div class="info-item">
                                     <div slot="label" class="tow-four">
-                                       所在校区：
+                                       创建日期：
                                     </div>
-                                    <span>{{classes.classDetail.school}}</span>
+                                    <span>{{classes.classDetail.createTime | formatDate}}</span>
                                 </div>
                             </li>
                             <li>
@@ -77,12 +83,7 @@
                                     </div>
                                     <span>{{classes.classDetail.openTime | formatDate}}</span>
                                 </div>
-                                <div class="info-item">
-                                    <div slot="label" class="tow-four">
-                                      班<span>型：</span>
-                                    </div>
-                                    <span>{{classes.classDetail.lessonName}}</span>
-                                </div>
+                                
                             </li>
                         </ul>
                     </div>
@@ -134,7 +135,7 @@
                                 align = "center"
                                 >
                             </el-table-column>
-                            <el-table-column
+                            <!-- <el-table-column
                                 prop="dateTime"
                                 align = "center"
                                 width = "200"
@@ -142,12 +143,12 @@
                                 <template slot-scope="scope">
                                     <span>{{scope.row.planDate | formatDate}}</span>
                                 </template>
-                            </el-table-column>
+                            </el-table-column> -->
                             <el-table-column
                                 prop="substituteTeacher"
                                 align = "center"
                                 width = "200"
-                                label="带课老师">
+                                label="代课老师">
                                 <template slot-scope="scope">
                                     <span>{{scope.row.teacherId?scope.row.teacherName:'无'}}</span>
                                 </template>
@@ -187,7 +188,7 @@
                     <el-table-column property="username" label="姓名" width="200"></el-table-column>
                     <el-table-column property="course" label="科目" align="right" class="course">
                         <template slot-scope="scope">
-                            <span v-for="item in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}}、</span>
+                            <span v-for="(item,index) in scope.row.subjectSectionList" :key="item.id">{{item.subjectName}} <i v-if="index<(scope.row.subjectSectionList.length-1)">、</i></span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -200,7 +201,7 @@
                     <el-table-column property="username" label="姓名" width="200"></el-table-column>
                     <el-table-column property="course" label="科目" align="right" class="course">
                         <template slot-scope="scope">
-                            <span v-for="(item,index) in scope.row.subjectSectionList" :key="index">{{item.subjectName}}、</span>
+                            <span v-for="(item,index) in scope.row.subjectSectionList" :key="index">{{item.subjectName}} <i v-if="index<(scope.row.subjectSectionList.length-1)">、</i> </span>
                         </template>
                     </el-table-column>
                 </el-table>
@@ -265,7 +266,13 @@ export default {
     created(){
         this.id = this.$route.query.id
         this.classDetail({ id: this.id })
-        // this.getTeacher()
+        
+    },
+    mounted(){
+        // if(this.query.dataSubject!==""){
+           
+        // }
+        
     },
     watch:{
        'classes.classDetail'(val) {
@@ -278,6 +285,7 @@ export default {
             this.teacherListNum = ids.length
             this.teacherList = [...val.teacherList]
             this.query.dataSubject = val.dataSubject
+            this.getTeacher()
             // this.form = {...val}
         }
     },
@@ -297,6 +305,7 @@ export default {
                 console.log("list",ret)
             })
         },
+        //判断老师数量
         handleSelectionChange(val){
             this.addTeacherList = val
             this.addTeacherListNum = val.length
@@ -353,7 +362,6 @@ export default {
                     return 
                 }
                 this.dialogAddTeacher = false
-                
             })
         },
         //更新时的基本信息（主讲老师）
@@ -590,11 +598,18 @@ export default {
                     // height 222px
                     background rgba(230, 236, 238, 0.4)
                     ul
+                        
+                        display:-webkit-box;
+                        display:-moz-box;
+                        display:-ms-flexbox;
+                        display:-webkit-flex;
                         display flex
                         height 100%
                         padding 47px 0
                         box-sizing border-box
-                        li
+                        li  
+                            -ms-flex-negative: 1;
+                            flex-shrink: 1;
                             flex 1
                             height 100%
                             padding-left 40px
@@ -676,6 +691,9 @@ export default {
                     left 16px
                     width 3px
                 .el-step
+                    -ms-flex-negative: 1;
+                    flex-shrink: 1;
+                    flex:1;
                     .el-step__head
                         width 36px
                         .el-step__line

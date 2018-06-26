@@ -124,7 +124,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-           { max:40, message: '请输入40字以内的用户姓名', trigger: 'blur' },
+           { max:40, message: '输入超过最大限度40字', trigger: 'blur' },
         ],
         authRoleId:[
           {required: true, message: "请选择角色", trigger: 'change' }
@@ -268,8 +268,8 @@ export default {
                     password:ret.password,
                     cPassword:ret.password,
                     username:ret.username,
-                    organPersonId:ret.authRoleList[0].roleType===1?ret.authOrganizationId:'',
-                    authOrganizationId:ret.authOrganizationId,
+                    organPersonId:ret.authRoleList[0].roleType===3?ret.authOrganizationId:'',
+                    authOrganizationId:ret.authRoleList[0].roleType===2?ret.authOrganizationId:'',
                 }
                 this.password = '******'
                 this.cPassword = '******'

@@ -207,7 +207,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-          { max: 40, message: '请输入40字以内的用户姓名', trigger: 'blur' },
+          { max: 40, message: '输入超过最大限度40字', trigger: 'blur' },
         ],
       }
     }
