@@ -2,7 +2,7 @@
 <div class="footer-div">
   <div class="footer">
     <p>誉优品学 | 咨询电话： 020-34401000</p>
-    <p>&copy; Copyright 卓越教育版权所有 1997-2017 All Rights reserved 粤ICP备12020224</p>
+    <p>&copy; Copyright 卓越教育版权所有 1997-2018 All Rights reserved 粤ICP备12020224</p>
   </div>
   </div>
 </template>

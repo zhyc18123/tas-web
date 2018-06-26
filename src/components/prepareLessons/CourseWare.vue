@@ -34,7 +34,7 @@
                         </template>-->
             </div>
         </div>
-        <template v-if="office.token">
+        <template v-if="token">
             <div class="source-body" v-if="sourceType==='courseWare'">
                 <iframe class="office-ppt" v-if="chapterDetail.courseUrl" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
                 <iframe class="office-ppt edit" v-if="chapterDetail.courseUrl" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
@@ -70,15 +70,20 @@ export default {
             lectureNum: Number(this.$route.query.lectureNum),
             chapterDetail: {},
             conf: conf,
-            chapterList:storage.getChapter()
+            chapterList:storage.getChapter(),
+            token:''
         }
     },
     computed: {
         ...mapState(['office']),
         ...mapGetters(['config'])
     },
+    watch: {
+        'office.token'(val){
+            this.token=val
+        }
+    },
     beforeRouteUpdate(to, from, next) {
-        console.log('to', to)
         this.sourceType = to.params.sourceType
         this.optType = to.params.optType
         this.lectureNum=to.query.lectureNum
@@ -92,13 +97,16 @@ export default {
     mounted () {  
     },
     beforeDestroy () {
-    storage.removeChapter()
+    // storage.removeChapter()
     },
     methods: {
         ...mapActions(['view', 'edit', 'prints', 'download','clearToken']),
         next(){
             console.log(this.chapterList)
-            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum-1].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
+            this.token=''
+            this.chapterDetail={}
+            console.log(this.chapterList[this.lectureNum].chapterId)
+            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum } })

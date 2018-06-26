@@ -150,6 +150,7 @@ const router= new Router({
         {
           path: "prepare-lessons",
           component: PrepareLessons,
+            meta:{keepAlive:true}
         },
         {
           path: "prepare-lessons/:id/:sourceType/:optType",
