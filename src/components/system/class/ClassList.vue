@@ -168,7 +168,7 @@ export default {
 .line-table
     .icon
         cursor pointer
-        font-size 22px
+        font-size 20px
         color #999
         margin-right 11px
         margin-left 11px

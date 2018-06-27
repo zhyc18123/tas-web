@@ -13,31 +13,31 @@
         </el-breadcrumb>
         <div class="g-search">
             <ul>
-                <li>
+                <li class="t-flexs">
                     <div class="search-title">
                         <label>科目：</label>
                     </div>
-                    <div class="search-list">
+                    <div class="search-list t-flex">
                         <el-radio-group v-model="form.dataSubject" size="mini">
                             <el-radio-button v-for="item in condition.subjectList" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
                         </el-radio-group>
                     </div>
                 </li>
-                <li>
+                <li class="t-flexs">
                     <div class="search-title">
                         <label>年级：</label>
                     </div>
-                    <div class="search-list">
+                    <div class="search-list t-flex">
                         <el-radio-group v-model="form.gradeId" size="mini">
                             <el-radio-button v-for="item in condition.gradeObj.list" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
                         </el-radio-group>
                     </div>
                 </li>
-                <li>
+                <li class="t-flexs">
                     <div class="search-title">
                         <label>学期：</label>
                     </div>
-                    <div class="search-list">
+                    <div class="search-list t-flex">
                         <el-radio-group v-model="form.termId" size="mini">
                             <el-radio-button v-for="item in condition.termObj.list" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
                         </el-radio-group>
@@ -54,11 +54,11 @@
                         </el-radio-group>
                     </div>
                 </li>-->
-                <li>
+                <li class="t-flexs">
                     <div class="search-title">
                         <label>校区：</label>
                     </div>
-                    <div class="search-list">
+                    <div class="search-list t-flex">
                         <el-radio-group v-model="form.schoolId" size="mini">
                             <el-radio-button :label="null">全部</el-radio-button>
                             <el-radio-button v-for="item in school.schoolObj.list" :label="item.id" :key="item.id">{{item.name}}</el-radio-button>
@@ -84,11 +84,11 @@
         <div class="g-lessons">
             <el-dialog :title="className" :visible.sync="showClassLessons" width="39%" center>
                 <ul class="g-lessons-list">
-                    <li v-for="(item,i) in classes.classChapterList" @click="hideDialog(item)">
+                    <li class="t-flexs" v-for="(item,i) in classes.classChapterList" @click="hideDialog(item)">
                         <div class="lessons-num">
                             第 {{i+1}} 讲
                         </div>
-                        <div class="lessons-title">
+                        <div class="lessons-title t-flex">
                             {{item.chapterName}}
                         </div>
                     </li>

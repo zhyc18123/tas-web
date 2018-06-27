@@ -173,16 +173,16 @@ export default {
 .line-table
   .icon
     cursor pointer
-    font-size 22px
+    font-size 20px
     color #999
     &:hover
       color #01d1bb
 .published
     .icon
-      color #fff
+      color transparent
       cursor auto
       &:hover
-        color #fff
+        color transparent
         cursor auto
 
 </style>

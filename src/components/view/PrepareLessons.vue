@@ -55,8 +55,8 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <div class="t-card c-body" v-show="form.classId">
-            <div class="c-left">
+        <div class="t-card c-body t-flexs" v-show="form.classId">
+            <div class="c-left t-flex">
                 <line-head :title="className+'课程讲次'" />
                 <ul class="times-ul" v-if="classes.classChapterList.length">
                     <template v-for="(item,i) in classes.classChapterList">
