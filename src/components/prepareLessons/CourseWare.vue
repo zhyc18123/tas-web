@@ -70,18 +70,24 @@ export default {
             lectureNum: Number(this.$route.query.lectureNum),
             chapterDetail: {},
             conf: conf,
-            chapterList:storage.getChapter()
+            chapterList:storage.getChapter(),
+            token:''
         }
     },
     computed: {
         ...mapState(['office']),
         ...mapGetters(['config'])
     },
+    watch: {
+        // 'office.token'(val){
+        //     this.token=val
+        // }
+    },
     beforeRouteUpdate(to, from, next) {
-        console.log('to', to)
         this.sourceType = to.params.sourceType
         this.optType = to.params.optType
         this.lectureNum=to.query.lectureNum
+        this.id=to.params.id
         this.detailLessonClassChapter()
         next()
     },
@@ -92,13 +98,15 @@ export default {
     mounted () {  
     },
     beforeDestroy () {
-    storage.removeChapter()
+    // storage.removeChapter()
     },
     methods: {
         ...mapActions(['view', 'edit', 'prints', 'download','clearToken']),
         next(){
             console.log(this.chapterList)
-            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum-1].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
+            // this.token=''
+            console.log(this.chapterList[this.lectureNum].chapterId)
+            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum } })

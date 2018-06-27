@@ -14,7 +14,7 @@
                 <label class="file-name" :title="originalName">{{originalName||'--'}}</label>
             </el-form-item>
             <el-form-item label="类型:">
-                <label>{{typeName||'--'}}</label>
+                <label>{{typeName==='0'?'未知':typeName==='1'?'PPT':typeName==='2'?'WORD':typeName==='3'?'EXCEL':typeName==='4'?'PDF':typeName==='5'?'RAR':'--'}}</label>
             </el-form-item>
             <el-form-item label="大小:">
                 <label>{{fileSize||'--'}}M</label>

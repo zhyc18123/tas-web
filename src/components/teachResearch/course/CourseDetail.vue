@@ -156,7 +156,7 @@
                         </el-form-item>
                     </el-form>
                     <div class="search-table">
-                        <el-table class="line-table" :data="result.list" header-align="center">
+                        <el-table class="line-table" :data="result.list" header-align="center" empty-text="暂无课程">
                             <el-table-column label="" align="center" width="60">
                                 <template scope="scope">
                                     <el-radio :label="scope.row.id" v-model="checkItem" class="table-radio"></el-radio>

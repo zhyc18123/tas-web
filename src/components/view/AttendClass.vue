@@ -68,7 +68,7 @@
             </ul>
         </div>
         <div class="g-table-attend">
-            <el-table class="line-table" :data="classes.classObj.list" style="width: 100%" header-align="center" @row-click="handRowClick">
+            <el-table class="line-table" :data="classes.classObj.list" style="width: 100%" header-align="center" @row-click="handRowClick" empty-text="暂无班级">
                 <el-table-column prop="className" label="班级名称" align="center"></el-table-column>
                 <el-table-column prop="section" label="年级" align="center"></el-table-column>
                 <el-table-column prop="trimester" label="学期" align="center"> </el-table-column>
