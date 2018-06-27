@@ -75,7 +75,8 @@ export default {
             this.$confirm('确认删除？', '提示').then(async() => {
                 let { data } = await io.post6(io.delLessonMaterial, { id })
                 if (data.success) {
-                    this.$message('删除成功！')
+                    
+                    this.$message({message:'删除成功！',type:'success'})
                     this.findLessonMaterial()
                 }
             })

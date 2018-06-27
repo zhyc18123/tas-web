@@ -147,7 +147,7 @@ export default {
       this.$confirm(tipText).then(async ()=>{
       let {data} =await io.post6(io.publishLesson,{id,status})
       if(data.success){
-        this.$message('修改成功')
+        this.$message({message:'修改成功',type:'success'})
         this.getCourseList()
       }
       }).catch((err)=>{

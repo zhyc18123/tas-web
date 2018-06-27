@@ -58,7 +58,7 @@ export default {
         optRoleId: this.optRoleId,
         subjectSpps: JSON.stringify(this.SppConfigItem) || '',
       }, () => {
-        this.$message('保存成功！')
+        this.$message({message:'保存成功！',type:'success'})
         this.getOptRoleSppList()
       })
     },

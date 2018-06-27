@@ -154,14 +154,14 @@ export default {
         async addBaseChapter() {
             let { data } = await io.post6(io.addBaseChapter, this.form)
             if (data.success) {
-                this.$message('保存成功')
+                this.$message({message:'保存成功！',type:'success'})
                 this.$router.go(-1)
             }
         },
         async updateBaseChapter() {
             let { data } = await io.post6(io.updateBaseChapter, this.form)
             if (data.success) {
-                this.$message('保存成功')
+                this.$message({message:'保存成功！',type:'success'})
                 this.$router.go(-1)
             }
         }

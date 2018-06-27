@@ -98,7 +98,9 @@ watch: {
       }).then(async() => {
         let {data}=await io.post6(io.delSchool,{id:row.id})
         if(data.success){
-          this.$message('删除成功！')
+          this.$message({
+            type:'success',
+            message:'删除成功！'})
           this.getSchools()
         }
       }).catch(() => {
@@ -135,7 +137,7 @@ watch: {
       }
       let {data} = await io.post6(url,datas)
       if(data.success){
-        this.$message('保存成功！')
+        this.$message({type:"success",message:'保存成功！'})
         this.handleCancel()
         this.getSchools()
         this.newName = '';

@@ -92,7 +92,7 @@ export default {
         changePassword(){
             this.$refs.form.validate((valid) => {
                     if (valid) {
-                        let param = this.form
+                        let param = {...this.form}
                         param.oPassword = md5(...param.oPassword)
                         param.password = md5(...param.password)
                         param.cPassword = md5(...param.cPassword)

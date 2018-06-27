@@ -461,3 +461,9 @@ border-radius: 4px 4px 0 0;
   width: 100%;
   height: 760px
 }
+.el-message--success .el-message__content{
+  color:#00c4c2;
+}
+.el-message .el-message__icon.el-icon-success{
+  color:#00c4c2 !important;
+}

@@ -72,11 +72,11 @@
                             <use xlink:href="#icon-xiugaiziliao"></use>
                         </svg>
                     </router-link>
-                    <a href="javascript:;" title="删除">
+                    <span title="删除" @click="deleteLessonClass(scope.row.id)">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-icon-cross-empty"></use>
                         </svg>
-                    </a>
+                    </span>
                 </template>
             </el-table-column>
         </el-table>
@@ -86,6 +86,7 @@
 <script>
 import VPagination from "../../common/Pagination"
 import { mapState, mapActions } from 'vuex'
+import io from 'lib/io'
 export default {
     name:'class-list',
     components:{
@@ -125,6 +126,30 @@ export default {
             this.$refs.pagin.changePage(1)
             this.getClass()
         },
+        //删除班级
+        deleteLessonClass(id){
+            let param = {
+                id:id
+            }
+            this.$confirm('确定删除该班级?', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                    io.post(io.deleteLessonClass,param,(data)=>{
+                         this.$message({
+                            type: 'success',
+                            message: '删除成功！'
+                        });   
+                        this.getClass()
+                    })
+                }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });          
+            })
+        }
     }
 
 }

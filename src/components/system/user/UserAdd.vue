@@ -46,7 +46,7 @@
         <div slot="label" class="tow-four">
            人员类型：
         </div>
-        <el-radio-group v-model="form.type">
+        <el-radio-group v-model="form.type" @change="changeTypes()">
             <el-tooltip v-for="(item,index) in types" :key="index" class="item" effect="light" :content="item.content" placement="bottom" :open-delay="500">
                  <el-radio   :label="item.value">{{item.label}}</el-radio>
             </el-tooltip>
@@ -62,15 +62,15 @@
             <el-radio :label="1" >女</el-radio>
           </el-radio-group>
         </div>
-        <div class="subject">
+        <div class="subject" v-if="form.type!==3">
           <div slot="label" class="label">
             科目：
           </div>
-          <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange" class="role-cont">
+          <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange()"  class="role-cont">
             <el-checkbox :label="item.id"  v-for="item in condition.subjectList" :key="item.id">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </div>
-        <div class="subject" v-if="form.checkedSubject.length>=1">
+        <div class="subject" v-if="form.checkedSubject.length>=1 && form.type!==3">
           <div slot="label" class="label">
             学段：
           </div>
@@ -149,6 +149,7 @@ export default {
       grades: '',
       dataSubjects:'',
       form: {
+        subcheckAll:false,
         userId: "",
         username:'',
         account: "",
@@ -164,6 +165,7 @@ export default {
         jobStatus: 1,
         type: 1,
       },
+      gradesAllBySubject:[],
       subjectSectionList:[],
       gradesBySubject:[],
       isIndeterminate:true,
@@ -231,6 +233,7 @@ export default {
     ...mapActions(['findSubjectsData']),
     resetForm() {
       this.form = {
+        subcheckAll:false,
         id: "",
         username:'',
         account: "",
@@ -247,12 +250,16 @@ export default {
         type: 1,
       }
     },
+    changeTypes(){
+      if(this.form.type==3){
+        let param = []
+        this.findBaseSectionBySubject(param)
+      }
+    },
     handleCheckedSubjectChange(val){
-
       if(this.form.checkedSubject.length!=0){
         this.findBaseSectionBySubject()
       }
-
     },
     // 全选
     handleCheckAllChange(row){
@@ -273,42 +280,51 @@ export default {
     findAuthRoleList() {
       io.post(io.findAuthRoleList,{},(data) => {
         this.roleList = data;
-        // if(!this.userId){
-        // this.form.optRoleId=data.list[0].optRoleId;
-        // }
       })
     },
+    // 通过科目查找年级
     findBaseSectionBySubject(subjectSectionList){
       let param = {
-        subjectId:this.form.checkedSubject.join(',')
+        subjectId:subjectSectionList||this.form.checkedSubject.join(',')
       }
       io.post(io.findBaseSectionBySubject,param,(ret)=>{
-        ret.map(item=>{
-          let baseSectionIds = []
-          let nullData = 0
-          item.checkAll = false
-          item.isIndeterminate = true
-          if(this.subjectSectionList.length>=1){
-            this.subjectSectionList.map((ite)=>{
-              if(item.subjectId==ite.subjectId){
-                ite.sectionList.map(i=>{
-                  baseSectionIds.push(i.sectionId)
+          if(!subjectSectionList){//只有在教务的时候才会传值(subjectSectionList=[])，以此来判断（教务显示全部，不传课程id时候返回的值为全部）
+            ret.map(item=>{
+              let baseSectionIds = []
+              let nullData = 0
+              item.checkAll = false
+              item.isIndeterminate = true
+              if(this.subjectSectionList.length>=1){
+                this.subjectSectionList.map((ite)=>{
+                  if(item.subjectId==ite.subjectId){
+                    ite.sectionList.map(i=>{
+                      baseSectionIds.push(i.sectionId)
+                    })
+                    item.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
+                  }
+                  if(ite.subjectId != item.subjectId){
+                    nullData++
+                    if(nullData===this.subjectSectionList.length){
+                      item.baseSectionIds = []
+                    }
+                  }
                 })
-                item.baseSectionIds =JSON.parse(JSON.stringify(baseSectionIds)) 
-                
-              }
-              if(ite.subjectId != item.subjectId){
-                nullData++
-                if(nullData===this.subjectSectionList.length){
-                  item.baseSectionIds = []
-                }
+              }else{
+                item.baseSectionIds = []
               }
             })
-          }else{
-            item.baseSectionIds = []
+            this.gradesBySubject = ret
+          }else{//教务的情况
+            ret.map(item=>{
+              let baseSectionIds = []
+              item.list.map(ite=>{
+                baseSectionIds.push(ite.id)
+              })
+              item.baseSectionIds = baseSectionIds
+            })
+            this.gradesAllBySubject = ret
           }
-        })
-        this.gradesBySubject = ret
+          console.log(this.gradesBySubject,this.gradesAllBySubject)
       })
     },
     getUserDetail() {
@@ -349,13 +365,19 @@ export default {
         if (valid) {
           let data = Object.assign({}, this.form)
           let authSubjectSectionList = []
-          data.checkedSubject.map((j) => {
-            this.gradesBySubject.map((val) => {
-              if (j === val.subjectId) {
+          if(data.type==3){//教务
+              this.gradesAllBySubject.map((val) => {
                 authSubjectSectionList.push({subjectId:val.subjectId,baseSectionIds:val.baseSectionIds.join(',')})
-              }
+              })
+          }else{//教师、教研
+              data.checkedSubject.map((j) => {
+              this.gradesBySubject.map((val) => {
+                if (j === val.subjectId) {
+                  authSubjectSectionList.push({subjectId:val.subjectId,baseSectionIds:val.baseSectionIds.join(',')})
+                }
+              })
             })
-          })
+          }
           data.authSubjectSectionList = authSubjectSectionList
           if(this.password ===""){
             this.$message("密码不能为空")
@@ -390,7 +412,7 @@ export default {
           if(this.cPassword !== '******'){
             data.cPassword = md5(this.cPassword)
           }
-          if(this.form.checkedSubject.length<=0){
+          if(this.form.checkedSubject.length<=0 && this.form.type!=3){
             this.$message("请选择科目")
             return false
           }
@@ -466,6 +488,9 @@ export default {
   watch:{
     'form.checkedSubject':function(val){
       console.log(val)
+    },
+    'condition.subjectList':function(val){
+      
     }
   }
 }

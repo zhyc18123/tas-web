@@ -176,7 +176,7 @@ export default {
             this.$confirm(tipText).then(async () => {
                 let { data } = await io.post6(io.publishLesson, { id: this.id, status: 1 })
                 if (data.success) {
-                    this.$message('发布成功')
+                    this.$message({message:'发布成功',type:'success'})
                     this.$router.push({
                         path: '/main/teach-research/course/view-lecture/courseWare/' + this.id + '/' + this.myArray[0].id
                     })
@@ -259,7 +259,7 @@ export default {
             })
             let { data } = await io.post6(io.addLesChapters, { baseChapterIds: chapterIds.join(','), lessonId: this.id })
             if (data.success) {
-                this.$message('保存成功！')
+                this.$message({message:'保存成功！',type:'success'})
                 this.tableSelectItem = []
                 this.tableSelectNum = 0
                 this.findLesChapterPage({ lessonId: this.id })
@@ -269,7 +269,7 @@ export default {
         async changeLesChapter() {
             let { data } = await io.post6(io.changeLesChapter, { lessonId: this.id, id: this.changeItemId, baseChapterId: this.checkItem })
             if (data.success) {
-                this.$message("更换成功！")
+                this.$message({message:'更换成功！',type:'success'})
                 this.findLesChapterPage({ lessonId: this.id })
                 this.changeItemId = ''
                 this.isChange = false
@@ -280,7 +280,7 @@ export default {
             this.$confirm('确认删除？', '提示').then(async () => {
                 let { data } = await io.post6(io.delLesChapters, { lessonId: this.id, id: id })
                 if (data.success) {
-                    this.$message('删除成功！')
+                    this.$message({message:'删除成功！',type:'success'})
                     this.findLesChapterPage({ lessonId: this.id })
                 }
             })
@@ -292,7 +292,7 @@ export default {
             })
             let { data } = await io.post6(io.sortLesChapters, { lessonId: this.id, ids: ids.join(',') })
             if (data.success) {
-                this.$message('修改成功！')
+                this.$message({message:'修改成功！',type:'success'})
             }
             this.findLesChapterPage({ lessonId: this.id })
         },
