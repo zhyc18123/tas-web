@@ -110,6 +110,7 @@ import ppt from '../../assets/img/ppt.png'
 import word from '../../assets/img/word.png'
 import excel from '../../assets/img/excel.png'
 import rar from '../../assets/img/rar.png'
+import videoImg from '../../assets/img/video.png'
 export default {
     name: "PrepareLessons",
     components: {
@@ -128,7 +129,7 @@ export default {
             className: '',
             lessonId: '',
             fileType:{
-                pdf,ppt,word,excel,rar
+                pdf,ppt,word,excel,rar,videoImg
             },
             detail:{},
             isFullscreen:false
@@ -156,7 +157,9 @@ export default {
                     item.imgUrl=this.fileType.pdf
                 }else if(item.attchType==='5'){
                     item.imgUrl=this.fileType.rar
-                }else{
+                }else if(item.attchType==='6'){
+                    item.imgUrl=this.fileType.videoImg
+                } else{
                     item.imgUrl=item.attchUrl
                 }
             })

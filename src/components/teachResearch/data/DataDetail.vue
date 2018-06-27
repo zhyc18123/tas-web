@@ -129,11 +129,14 @@ export default {
 
     methods: {
         ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findBaseLevelPage',]),
-        dataSuccess(url, size, duration, originName) {
+        dataSuccess(url, size, duration, originName,resType) {
             this.form.attchUrl = url
             this.form.attchName = originName
             this.form.attchSize = size
             this.form.attchType = originName.indexOf('.ppt') > -1 ? 'PPT' : originName.indexOf('.doc') > -1 ? 'WORD' : originName.indexOf('.xls') > -1 ? 'EXCEL' : originName.indexOf('.pdf') > -1 ? 'PDF' : '压缩包'
+            if (resType.indexOf('video') > -1){
+                this.form.attchType='视频'
+            }
         },
         sure() {
             this.$refs.form.validate((vali) => {
@@ -158,7 +161,7 @@ export default {
             })
         },
         async addBaseMaterial() {
-            let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 : 0
+            let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 :this.form.attchType === '视频' ? 6 : 0
             let { data } = await io.post6(io.addBaseMaterial, { ...this.form, isDowm: this.form.isDowm ? 1 : 0, isView: this.form.isView ? 1 : 0, attchType: aType })
             if (data.success) {
                 this.$message({message:'保存成功！',type:'success'})
@@ -166,7 +169,7 @@ export default {
             }
         },
         async updateBaseMaterial() {
-            let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 : 0
+            let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 :this.form.attchType === '视频' ? 6 : 0
             let { data } = await io.post6(io.updateBaseMaterial, { ...this.form, isDowm: this.form.isDowm ? 1 : 0, isView: this.form.isView ? 1 : 0, attchType: aType })
             if (data.success) {
                 this.$message({message:'保存成功！',type:'success'})

@@ -14,7 +14,7 @@
                 <label class="file-name" :title="originalName">{{originalName||'--'}}</label>
             </el-form-item>
             <el-form-item label="类型:">
-                <label>{{typeName==='0'?'未知':typeName==='1'?'PPT':typeName==='2'?'WORD':typeName==='3'?'EXCEL':typeName==='4'?'PDF':typeName==='5'?'RAR':'--'}}</label>
+                <label>{{typeName==='0'?'未知':typeName==='1'?'PPT':typeName==='2'?'WORD':typeName==='3'?'EXCEL':typeName==='4'?'PDF':typeName==='5'?'RAR':typeName||'--'}}</label>
             </el-form-item>
             <el-form-item label="大小:">
                 <label>{{fileSize||'--'}}M</label>
@@ -181,7 +181,7 @@ export default {
             }
             this.originalName = res.original || res.name
             this.fileSize = Math.round((res.size / 1024 / 1024) * 100) / 100
-            this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name)
+            this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name,resType)
         },
         beforeAvatarUpload(file) {
             

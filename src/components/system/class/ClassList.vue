@@ -72,7 +72,7 @@
                             <use xlink:href="#icon-xiugaiziliao"></use>
                         </svg>
                     </router-link>
-                    <span title="删除" @click="deleteLessonClass(scope.row.id)">
+                    <span v-if="config.class_del" title="删除" @click="deleteLessonClass(scope.row.id)">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-icon-cross-empty"></use>
                         </svg>
