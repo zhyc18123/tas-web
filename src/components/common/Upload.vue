@@ -184,7 +184,8 @@ export default {
             this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name)
         },
         beforeAvatarUpload(file) {
-            let fileSize = file / 1024 / 1024
+            
+            let fileSize = file.size / 1024 / 1024
             console.log('dd',this.fileType,fileSize)
             this.loading = true
                 if (!fileSize) {
@@ -219,13 +220,13 @@ export default {
             } else if (this.fileType === 'ppt') {
                 console.log('file', file)
                 if (!(file.name.indexOf('.ppt') > -1)) {
-                    this.$message('只能上传PPT')
+                    this.$message('请上传pptx格式文件')
                     this.loading = false
                     return false
                 }
             } else if (this.fileType === 'word') {
                 if (!(file.name.indexOf('.doc') > -1)) {
-                    this.$message('只能上传WORD')
+                    this.$message('请上传docx格式文件')
                     this.loading = false
                     return false
                 }

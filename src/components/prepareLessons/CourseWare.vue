@@ -46,7 +46,7 @@
         </template>
             <div class="next-btn">
                 <el-button class="height-btn" @click="$router.push('/main/prepare-lessons')">返回列表</el-button>
-                <el-button v-if="lectureNum<chapterList.length" class="light-btn" @click="next">下一讲</el-button>
+                <el-button v-if="lectureNum<chapterList.length" class="light-btn" :class="{disable:nextDisabled}" @click="next">下一讲</el-button>
             </div>
     </div>
 </template>
@@ -71,7 +71,8 @@ export default {
             chapterDetail: {},
             conf: conf,
             chapterList:storage.getChapter(),
-            token:''
+            token:'',
+            nextDisabled:false
         }
     },
     computed: {
@@ -96,6 +97,7 @@ export default {
         console.log(this.lectureNum,this.chapterList)
     },
     mounted () {  
+        this.nextDisabled=this.chapterList[this.lectureNum].status===0
     },
     beforeDestroy () {
     // storage.removeChapter()
@@ -106,6 +108,9 @@ export default {
             console.log(this.chapterList)
             // this.token=''
             console.log(this.chapterList[this.lectureNum].chapterId)
+            if(this.nextDisabled){
+                return
+            }
             this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
@@ -245,6 +250,9 @@ export default {
 .next-btn
     text-align center
     padding-bottom 20px
+    .disable
+        background #ddd !important
+        cursor auto
 </style>
 <style lang="stylus">
 #application{

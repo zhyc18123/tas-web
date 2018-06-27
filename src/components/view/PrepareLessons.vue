@@ -55,13 +55,17 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <div class="t-card c-body" v-show="form.classId">
+        <div class="t-card c-body empty" v-if="!(classes.classObj.list&&classes.classObj.list.length)">
+            <img src="../../assets/img/class-empty.png" alt="">
+            <div>没有班级哦，请重新筛选</div>
+        </div>
+        <div v-else class="t-card c-body" v-show="form.classId">
             <div class="c-left">
                 <line-head :title="className+'课程讲次'" />
                 <ul class="times-ul" v-if="classes.classChapterList.length">
                     <template v-for="(item,i) in classes.classChapterList">
-                        <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.chapterId+'/courseWare/read',query:{lessonId:lessonId,lectureNum:i+1,className:className,classId:form.classId}}" v-if="item.status===1">第 {{i+1}} 讲{{item.chapterName}}</router-link>
-                        <li v-else class="disable">第 {{i+1}} 讲{{item.chapterName}}</li>
+                        <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.chapterId+'/courseWare/read',query:{lessonId:lessonId,lectureNum:i+1,className:className,classId:form.classId}}" v-if="item.status===1">第 {{i+1}} 讲<span>{{item.chapterName}}</span> </router-link>
+                        <li v-else class="disable">第 {{i+1}} 讲<span>{{item.chapterName}}</span></li>
                     </template>
                 </ul>
                 <div class="empty" v-else>
@@ -72,10 +76,10 @@
                 <div class="c-introduce">
                     <line-head :title="className+'课程说明'" />
                     <div class="i-video">
-                        <d-player v-if="course.courseDetail.videoUrl" :options="{video:{url:course.courseDetail.videoUrl,pic:course.courseDetail.videoUrl+'-thumbnail-2'}}"></d-player>
+                        <d-player ref="dplay" @fullscreen="fullscreen" :class="{full:!isFullscreen}"  v-if="detail.videoUrl" :options="{video:{url:detail.videoUrl,pic:detail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
                     <div class="i-text">
-                        {{course.courseDetail.remark}}
+                        {{detail.remark}}
                     </div>
                 </div>
                 <div class="c-data">
@@ -125,13 +129,18 @@ export default {
             lessonId: '',
             fileType:{
                 pdf,ppt,word,excel,rar
-            }
+            },
+            detail:{},
+            isFullscreen:false
         }
     },
     computed: {
         ...mapState(['condition', 'classes', 'chapter', 'school', 'course']),
     },
     watch: {
+        'course.courseDetail'(val){
+            this.detail=val
+        },
         'course.courseDataObj'(val){
             val&&val.list.map((item,i)=>{
                 console.log(item.attchType)
@@ -193,6 +202,7 @@ export default {
             if (!val) {
                 return
             }
+            this.detail={}
             this.lessonClassPlanChapterList({ id: val })
             this.classes.classObj.list.map((item, i) => {
                 if (item.id === val) {
@@ -227,6 +237,9 @@ export default {
         },
         downloadData(item) {
             window.open(item.attchUrl + '?attname=' + item.attchName)
+        },
+        fullscreen(){
+            this.isFullscreen=true
         }
     }
 
@@ -248,6 +261,9 @@ export default {
         color: #333;
         padding: 0 10px;
         cursor: pointer;
+        span{
+            margin-left: 20px;
+        }
         &:hover {
             background: #c9efe6;
         }
@@ -268,6 +284,15 @@ export default {
     display: flex;
     padding: 40px 35px 20px;
 }
+    .empty{
+        padding: 60px 0 100px;
+        margin: 20px 0;
+        img{
+        margin: auto;
+        }
+        display: block;
+        text-align: center;
+    }
 
 .c-left {
     flex: 1;
@@ -281,7 +306,7 @@ export default {
         font-size: 14px;
         line-height: 20px;
         color: #333;
-        .dplayer {
+        .full{
             max-height: 300px;
         }
     }

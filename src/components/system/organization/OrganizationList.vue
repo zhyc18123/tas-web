@@ -16,7 +16,7 @@
         <el-button type="primary" @click="onSubmit">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="$router.push('/main/system/organization/list/add')">新建合作机构</el-button>
+        <el-button v-if="config.organization_add" type="primary" class="new-btn" @click="$router.push('/main/system/organization/list/add')">新建合作机构</el-button>
       </el-form-item>
     </el-form>
     <el-table class="line-table" :data="system.organList.list"  style="width: 100%" header-align="center">
@@ -43,7 +43,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center"> 
           <template slot-scope="scope">
-            <router-link :to="'/main/system/organization/list/edit?id='+scope.row.id">
+            <router-link v-if="config.organization_edit" :to="'/main/system/organization/list/edit?id='+scope.row.id">
                 <svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-xiugaiziliao"></use>
                 </svg>
@@ -89,7 +89,8 @@ export default {
     this.getListResult()
   },
   computed:{
-    ...mapState(['system'])
+    ...mapState(['system']),
+    ...mapGetters(['config'])
   },
   methods: {
     ...mapActions(["findAuthOrgan"]),

@@ -38,7 +38,7 @@
                 <el-table-column prop="leverName"  label="班型" align="center"> </el-table-column>
                 <el-table-column label="操作" align="center"> 
                   <template scope="scope">
-                    <router-link v-if="config.chapter_edit" :to="{path:'/main/teach-research/lecture/'+scope.row.id}">
+                    <router-link v-if="config.lecture_chapter_edit" :to="{path:'/main/teach-research/lecture/'+scope.row.id}">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-bianji"></use>
                             </svg>

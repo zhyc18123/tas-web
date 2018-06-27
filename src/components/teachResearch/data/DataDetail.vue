@@ -43,7 +43,7 @@
                             </upload>-->
                 <em class="must">*</em>
                 <upload class="upload" btnText="上传素材" fileType="data" @success="dataSuccess" :sFileSize="form.attchSize" :sOriginalName="form.attchName" :sTypeName="form.attchType" :fileUrl="form.attchUrl">
-                    <p class="surport">(支持PPT、Word、Excel、PDF、压缩包)</p>
+                    <p class="surport">(支持PPT、Word、Excel、PDF、压缩包)等文件格式</p>
                 </upload>
             </el-form-item>
             <el-form-item label="权限设置:">

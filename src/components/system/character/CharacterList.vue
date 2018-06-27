@@ -4,7 +4,7 @@
     <div class="content">
       <el-form :inline="true" :model="form" class="t-form gray t-class-list">
           <el-form-item class="new-item">
-              <el-button type="primary" class="new-btn" @click="handleAdd">新增角色</el-button>
+              <el-button v-if="config.opt_role_add" type="primary" class="new-btn" @click="handleAdd">新增角色</el-button>
           </el-form-item>
       </el-form>
       <el-table :data="characterList" style="width: 100%" class="line-table">
@@ -28,9 +28,9 @@
         </el-table-column>
         <el-table-column align="center" width="250" label="操作">
           <template scope="scope">
-            <span v-show="!scope.row.add" class="btn-handle" @click="$router.push('/main/system/characterList/permissionSetting?roleName=' +
-                  scope.row.roleName + '&optRoleId=' + scope.row.id)">权限设定</span> |
-            <span class="btn-handle" @click="handleEdit(scope.row)">修改名称</span>
+            <span v-if="config.auth_setting" v-show="!scope.row.add" class="btn-handle" @click="$router.push('/main/system/characterList/permissionSetting?roleName=' +
+                  scope.row.roleName + '&optRoleId=' + scope.row.id)">权限设定</span> 
+            <span v-if="config.opt_role_edit" class="btn-handle" @click="handleEdit(scope.row)">修改名称</span>
             <!-- <span v-show="!scope.row.add" class="btn-edit" @click="$router.push('/main/system/characterList/permissionSetting?roleName=' +
                   scope.row.roleName + '&optRoleId=' + scope.row.optRoleId)">权限设定</span>
             <span v-show="!scope.row.add" class="btn-edit" @click="$router.push('/main/system/characterList/paradigmSetting?roleName=' +
@@ -71,6 +71,7 @@ export default {
     this.getUserList()
   },
   computed: {
+    ...mapGetters(['config'])
     // ...mapGetters('characterList', [
     //   'characterList',
     //   'deleteCharacterSuccess',

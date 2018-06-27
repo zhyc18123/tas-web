@@ -14,7 +14,7 @@
               <el-button type="primary" @click="handleSearch" class="search-btn">查询</el-button>
           </el-form-item>
           <el-form-item class="new-item">
-              <el-button type="primary" class="new-btn" @click="handleAdd">新增账号</el-button>
+              <el-button v-if="config.user_add" type="primary" class="new-btn" @click="handleAdd">新增账号</el-button>
           </el-form-item>
       </el-form>
       <el-table :data="userList" style="width: 100%" class="line-table">
@@ -47,7 +47,7 @@
         </el-table-column>
         <el-table-column align="center"  width="230" label="操作">
           <template slot-scope="scope">
-            <span  class="btn-delete" @click="handleEdit(scope.row)">修改</span>
+            <span  class="btn-delete" v-if="config.user_edit" @click="handleEdit(scope.row)">修改</span>
             <span  class="btn-delete" @click="handleDetails(scope.row)">详情</span>
           </template>
         </el-table-column>
@@ -94,7 +94,7 @@ export default {
     this.getUserList()
   },
   computed: {
-
+    ...mapGetters(['config'])
   },
   watch: {
     deleteUserSuccess(newValue) {

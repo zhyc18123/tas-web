@@ -16,7 +16,7 @@
         <el-button type="primary" @click="search()">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
-        <el-button type="primary" class="new-btn" @click="$router.push('/main/system/personal/list/add')">新建个人合作</el-button>
+        <el-button v-if="config.personal_add" type="primary" class="new-btn" @click="$router.push('/main/system/personal/list/add')">新建个人合作</el-button>
       </el-form-item>
     </el-form>
     <el-table class="line-table" :data="system.organPerson.list"  style="width: 100%" header-align="center">
@@ -43,7 +43,7 @@
         </el-table-column>
         <el-table-column label="操作" align="center"> 
           <template slot-scope="scope">
-            <router-link :to="'/main/system/personal/list/edit?id='+scope.row.id">
+            <router-link v-if="config.personal_edit" :to="'/main/system/personal/list/edit?id='+scope.row.id">
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-xiugaiziliao"></use>
                     </svg>
@@ -88,7 +88,8 @@ export default {
     this.getListResult()
   },
   computed:{
-    ...mapState(['system'])
+    ...mapState(['system']),
+    ...mapGetters(['config'])
   },
   methods: {
     ...mapActions(["findAuthOrganPerson"]),
