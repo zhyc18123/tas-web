@@ -51,7 +51,7 @@
           </template>
         </el-table-column>
     </el-table>
-    <v-pagination ref="page" class="pag" :total="system.organList.total || total" @getListResult="findAuthOrgan"  :pageSize="pageSize"></v-pagination>
+    <v-pagination ref="page" class="pag" :total="system.organList.total || total" @getListResult="getListResult"  :pageSize="pageSize"></v-pagination>
   </div>
 </template>
 <script>

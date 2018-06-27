@@ -52,7 +52,7 @@ export default {
         authResourceIdsStr: ids.join(',')
       }, function() {
         _this.$store.dispatch('config')
-        _this.$message('权限设定成功！')
+        _this.$message({message:'权限设定成功！',type:'success'})
         _this.$router.push('/main/system/characterList/list')
       })
 

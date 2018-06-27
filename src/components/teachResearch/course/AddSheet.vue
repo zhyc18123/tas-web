@@ -117,7 +117,7 @@ export default {
             })
             let {data}=await io.post6(io.addLessonMaterial,{lessonId:this.id,baseMaterialIds:ids.join(',')})
             if(data.success){
-                this.$message('保存成功！')
+                this.$message({message:'保存成功！',type:'success'})
                 this.$router.go(-1)
             }
         }

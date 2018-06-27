@@ -231,6 +231,9 @@ export default {
       &:hover {
         color: #00a7eb;
       }
+      &:focus {
+        outline: 0 none;
+      }
     }
     img {
       width: 36px;

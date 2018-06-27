@@ -161,7 +161,7 @@ export default {
             let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 : 0
             let { data } = await io.post6(io.addBaseMaterial, { ...this.form, isDowm: this.form.isDowm ? 1 : 0, isView: this.form.isView ? 1 : 0, attchType: aType })
             if (data.success) {
-                this.$message('保存成功！')
+                this.$message({message:'保存成功！',type:'success'})
                 this.$router.go(-1)
             }
         },
@@ -169,7 +169,7 @@ export default {
             let aType = this.form.attchType === 'PPT' ? 1 : this.form.attchType === 'WORD' ? 2 : this.form.attchType === 'EXCEL' ? '3' : this.form.attchType === 'PDF' ? 4 : this.form.attchType === '压缩包' ? 5 : 0
             let { data } = await io.post6(io.updateBaseMaterial, { ...this.form, isDowm: this.form.isDowm ? 1 : 0, isView: this.form.isView ? 1 : 0, attchType: aType })
             if (data.success) {
-                this.$message('保存成功！')
+                this.$message({message:'保存成功！',type:'success'})
                 this.$router.go(-1)
             }
         },

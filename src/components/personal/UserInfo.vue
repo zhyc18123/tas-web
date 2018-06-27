@@ -126,12 +126,13 @@ export default {
             background #ffffff
             margin-top -156px
             border 1px solid #dadada
-            display:-webkit-box;
-            display:-moz-box;
-            display:-ms-flexbox;
-            display:-webkit-flex;
-            display flex
-            min-height 600px
+            display: box;               /* OLD - Android 4.4- */
+            display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;       /* TWEENER - IE 10 */
+            display: -webkit-flex;      /* NEW - Chrome */
+            display: flex;   
+            // min-height 600px
             .tab-info
                 width 170px
                 background #f9f9f9
@@ -159,6 +160,7 @@ export default {
                             color #2bcfbb
             .go-back
                 padding-top 100px
+                // padding-bottom 20px
                 text-align center
                 .el-button
                     height 38px
@@ -168,9 +170,14 @@ export default {
                     border 1px solid #00b1d1        
 
             .info-cont
-                -ms-flex-negative: 1;
-                flex-shrink: 1;
-                flex 1
+                min-height 600px
+                -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+                -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+                -webkit-flex: 1;                     /* Chrome */
+                -ms-flex: 1;                           /* IE 10 */
+                flex: 1; 
+                // -ms-flex-negative: 1;
+                // flex-shrink: 1;
                 ul
                     margin-left 30%
                     margin-top 80px

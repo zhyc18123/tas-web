@@ -136,7 +136,7 @@ export default {
             this.$confirm(tipText).then(async () => {
                 let { data } = await io.post6(io.publishLesChapter, { lessonId: this.courseId, ids: this.lectureList.join(',') })
                 if (data.success) {
-                    this.$message('发布成功')
+                    this.$message({message:'发布成功',type:'success'})
                     this.$router.push('/main/teach-research/course/sheet/' + this.courseId)
                 }
             })

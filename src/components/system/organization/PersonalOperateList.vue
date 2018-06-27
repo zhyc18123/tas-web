@@ -29,12 +29,7 @@
         </el-table-column> -->
         <el-table-column prop="perName" label="姓名"  align="center"></el-table-column>
         <el-table-column prop="perPhone"  label="手机号" align="center"> </el-table-column>
-        <el-table-column prop="status"  label="合作状态" align="center"> 
-          <template slot-scope="scope">
-              <span v-if="scope.row.status==0">试用期</span>
-              <span v-if="scope.row.status==1">合约期</span>
-              <span v-if="scope.row.status==2">终止</span>
-          </template>
+        <el-table-column prop="statusStr"  label="合作状态" align="center"> 
         </el-table-column>
         <el-table-column prop="curriculumTime"  label="账号有效期" align="center">
           <template slot-scope="scope">

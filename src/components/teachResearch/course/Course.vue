@@ -50,7 +50,7 @@
           </a>
           <a title="修改课程信息" v-if="config.lesson_edit" href="javascript:;" @click="changeLecture(scope)">
             <svg class="icon" aria-hidden="true">
-              <use xlink:href="#icon-xiugai"></use>
+              <use xlink:href="#icon-xiugaiziliao"></use>
             </svg>
           </a>
           <!--<a v-if="config.lesson_release" v-show="scope.row.status===1" title="取消发布" @click="publishLesson(scope.row.id,0)">
@@ -58,11 +58,16 @@
               <use xlink:href="#icon-xuqiaofahu"></use>
             </svg>
           </a>-->
-          <a v-if="config.lesson_release" :class="{published:scope.row.status===1}" title="发布" @click="publishLesson(scope.row.id,scope.row.status)"   >
+          <a v-if="config.lesson_release && scope.row.status===0"  title="发布" @click="publishLesson(scope.row.id,scope.row.status)"   >
             <svg class="icon" aria-hidden="true">
               <use xlink:href="#icon-fabu1"></use>
             </svg>
           </a>
+          <span v-if="scope.row.status===1" class="published">
+              <svg class="icon " aria-hidden="true">
+                <use xlink:href="#icon-fabu1"></use>
+              </svg>
+          </span>
         </template>
       </el-table-column>
     </el-table>
@@ -147,7 +152,7 @@ export default {
       this.$confirm(tipText).then(async ()=>{
       let {data} =await io.post6(io.publishLesson,{id,status})
       if(data.success){
-        this.$message('修改成功')
+        this.$message({message:'修改成功',type:'success'})
         this.getCourseList()
       }
       }).catch((err)=>{
@@ -171,13 +176,15 @@ export default {
     font-size 22px
     color #999
     &:hover
-      color #333
+      color #01d1bb
 .published
     .icon
-      color #999
+      color #fff
       cursor auto
       &:hover
-        color #999
+        color #fff
+        cursor auto
+
 </style>
 
 

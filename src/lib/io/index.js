@@ -103,6 +103,8 @@ const io = {
   this.changeTeacher=conf.baseApiPath + '/lesson/api/lessonClass/changeTeacher'
   this.deleteTeacher=conf.baseApiPath + '/lesson/api/lessonClass/deleteTeacher'
   this.detailLessonClassChapter=conf.baseApiPath + '/lesson/api/lessonClass/detailLessonClassChapter'
+  this.deleteLessonClass=conf.baseApiPath + '/lesson/api/lessonClass/deleteLessonClass'
+ 
 
 
   },
