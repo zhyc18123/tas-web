@@ -599,18 +599,20 @@ export default {
                     background rgba(230, 236, 238, 0.4)
                     ul
                         
-                        display:-webkit-box;
-                        display:-moz-box;
-                        display:-ms-flexbox;
-                        display:-webkit-flex;
-                        display flex
+                        display: box;               /* OLD - Android 4.4- */
+                        display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+                        display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+                        display: -ms-flexbox;       /* TWEENER - IE 10 */
+                        display: -webkit-flex;      /* NEW - Chrome */
+                        display: flex;
                         height 100%
                         padding 47px 0
                         box-sizing border-box
                         li  
-                            -ms-flex-negative: 1;
-                            flex-shrink: 1;
-                            flex 1
+                            -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+                            -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+                            -webkit-flex: 1;                     /* Chrome */
+                            -ms-flex: 1; 
                             height 100%
                             padding-left 40px
                             .info-item

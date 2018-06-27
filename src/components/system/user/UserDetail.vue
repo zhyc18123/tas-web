@@ -217,15 +217,18 @@ export default {
         background rgba(230, 236, 238, 0.4)
         margin-bottom 20px
         ul  
-            display:-webkit-box;
-            display:-moz-box;
-            display:-ms-flexbox;
-            display:-webkit-flex;
-            display flex
+            display: box;               /* OLD - Android 4.4- */
+            display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;       /* TWEENER - IE 10 */
+            display: -webkit-flex;      /* NEW - Chrome */
+            display: flex; 
             li  
-                -ms-flex-negative: 1;
-                flex-shrink: 1;
-                flex 1
+                -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+                -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+                -webkit-flex: 1;                     /* Chrome */
+                -ms-flex: 1;                           /* IE 10 */
+                flex: 1;
                 padding 32px 0 37px 63px
                 font-size 14px
                 color #333

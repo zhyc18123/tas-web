@@ -149,11 +149,12 @@ export default {
             background #ffffff
             margin-top -156px
             border 1px solid #dadada
-            display:-webkit-box;
-            display:-moz-box;
-            display:-ms-flexbox;
-            display:-webkit-flex;
-            display flex 
+            display: box;               /* OLD - Android 4.4- */
+            display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;       /* TWEENER - IE 10 */
+            display: -webkit-flex;      /* NEW - Chrome */
+            display: flex; 
             min-height 600px
             .tab-info
                 width 170px
@@ -183,13 +184,16 @@ export default {
                             color #2bcfbb
                     &:last-child.active
                         border-bottom 1px solid #dadada
-                        
-
+                    
             .info-cont
-                -ms-flex-negative: 1;
-                flex-shrink: 1;
-                flex 1
+                min-height:600px;
+                -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+                -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+                -webkit-flex: 1;                     /* Chrome */
+                -ms-flex: 1;                           /* IE 10 */
+                flex: 1; 
                 padding-top 80px
+                box-sizing:border-box;
                 .el-form
                     width 55%
                     margin-left 17%
