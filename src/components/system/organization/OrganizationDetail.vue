@@ -49,7 +49,7 @@
             <el-radio :label="1" v-model="form.cooperType">标准</el-radio>
         </el-form-item>
         <el-form-item class="opt-btn">
-            <el-button class="height-btn" @click="addAuthOrgan">确定</el-button>
+            <el-button :disabled="addDisabled" class="height-btn" @click="addAuthOrgan">确定</el-button>
             <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
         </el-form-item>
     </el-form>
@@ -76,6 +76,7 @@ export default {
             }
         };
         return {
+            addDisabled:false,
             title:'新建合作机构',
             type:this.$route.params.type,
             id:this.$route.query.id,
@@ -136,6 +137,10 @@ export default {
         },
         addAuthOrgan(){
             console.log(this.form,this.userTime)
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
             this.$refs.form.validate((valid) => {
                 if(valid){
                     let param = this.form
