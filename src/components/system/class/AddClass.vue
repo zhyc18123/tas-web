@@ -21,7 +21,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="课程:" prop="lessonId">
-                <el-select v-model="form.lessonId" placeholder="请选择课程">
+                <el-select v-model="form.lessonId" placeholder="请选择课程" @change="courseChange">
                     <el-option v-for="item in course.courseObj.list" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
@@ -120,6 +120,7 @@ export default {
     },
     data() {
         return {
+            courseInfo:[],
             form: {
                 id: this.$route.params.id,
                 type: 0,
@@ -175,18 +176,27 @@ export default {
         'form.type'(val) {
             // this.form.baseSectionId = ''
             // this.form.lessonId = ''
-            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type,lessonId:this.form.lessonId})
             this.getCourse() 
 
         },
         'form.dataSubject'(val) {
-            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type })
-            this.teacherList({dataSubject:this.form.dataSubject})
+            this.findBaseSectionPage({ pageIndex: 1, pageSize: 10000000, subjectId: this.form.dataSubject,type:this.form.type,lessonId:this.form.lessonId })
+            this.teacherList({dataSubject:this.form.dataSubject,baseSectionId:this.form.baseSectionId})
             this.getCourse()
         },
         'form.baseSectionId'(val) {
             // this.form.lessonId = ''
             this.getCourse()
+        },
+        'form.lessonId'(val){
+            console.log("course",val)
+            this.courseInfo.map(item=>{
+                if(item.id==val){
+                    this.form.dataSubject = item.dataSubject
+                    this.form.baseSectionId = item.baseSectionId
+                }
+            })
         },
         'classes.classDetail'(val) {
             console.log('vla', val)
@@ -196,6 +206,9 @@ export default {
             })
             val.teacherIds=ids
             this.form = {...val}
+        },
+        'course.courseObj'(val){
+            this.courseInfo =[...val.list] 
         }
     },
     created() {
@@ -212,7 +225,7 @@ export default {
     methods: {
         ...mapActions(['findBaseSectionPage', 'findSubjectsData', 'findLessonPage', 'findBaseTermPage', 'teacherList', 'findBaseSchoolPage', 'classDetail','findBaseTermPage']),
         getCourse() {
-            this.findLessonPage({ pageIndex: 1, pageSize: 10000000, type: this.form.type, dataSubject: this.form.dataSubject, baseSectionId: this.form.baseSectionId,status:1 })
+            this.findLessonPage({ pageIndex: 1, pageSize: 10000000, type: this.form.type, dataSubject: this.form.dataSubject, baseSectionId: this.form.baseSectionId,status:1})
         },
         // handleCheckedWeekChange(val) {
         //     if (val.constructor == Array) {
@@ -238,6 +251,9 @@ export default {
                 this.form.teacherIds = val.slice(0, 2)
                 return
             }
+        },
+        courseChange(){
+
         },
         typeChange(){
             // this.form.baseSectionId = ''
