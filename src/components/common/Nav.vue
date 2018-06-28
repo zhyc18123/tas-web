@@ -8,6 +8,7 @@
             <router-link to="/">
               <img class="logo" alt="logo" src="../../assets/img/logo.svg">
             </router-link>
+            <div class="line"></div>
           </div>
           <el-col :span='10' class="version" text="教学赋能平台">教学赋能平台
             <em>V1.0</em>
@@ -138,6 +139,15 @@ export default {
     display: inline-block;
     float: left;
     height: 80px;
+    position: relative;
+    .line{
+      position: absolute;
+      height: 26px;
+      width: 0;
+      border-right: 1px solid #eee;
+      top: 26px;
+      right: 0;
+    }
   }
   .head-version {
     height: 80px;
@@ -199,7 +209,7 @@ export default {
     }
     .login-name {
       display: inline-block;
-      padding-right: 20px;
+      padding-right: 8px;
       height: 80px;
       cursor: pointer;
       img{
@@ -214,7 +224,7 @@ export default {
         text-overflow: ellipsis;
         white-space: nowrap;
         position: relative;
-        top: 2px;
+        top: 4px;
       }
     }
     .xiala {
@@ -259,8 +269,8 @@ export default {
       line-height: 67px;
       margin: 20px 0;
       padding: 0 38px;
-      padding-left: 20px;
-      border-right: 1px solid #eee;
+      padding-left: 30px;
+      // border-right: 1px solid #eee;
     }
 
     .icon {

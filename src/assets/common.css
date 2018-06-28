@@ -111,6 +111,9 @@ ol{
 /*.el-table tr:last-child td{
   border-bottom: 0;
 }*/
+.el-table tr:hover{
+  background: #f5f9fa;
+}
 .el-table__fixed, .el-table__fixed-right{
   box-shadow: 1px 0 8px #bbdde7;
 }

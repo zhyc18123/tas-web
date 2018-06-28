@@ -4,15 +4,20 @@
     <el-form class="o-form" label-position="right" label-width="130px" :model="form" :rules="rules" ref="form">
         <el-form-item label="机构图标:" class="required">
             <file-upload @success="uploading" chooseType="00" :fileUrl="form.orgHeadUrl" fileType='img'/>
+            <div class="tip">
+                <p>尺寸建议500*500</p>
+                <p>文件小于2M</p>
+                <p>支持JPG/PNG/BMP等图片</p>
+            </div>
         </el-form-item>
         <el-form-item label="机构名称:" prop="orgName">
-            <el-input v-model="form.orgName"></el-input>
+            <el-input v-model="form.orgName" placeholder="请输入机构名称"></el-input>
         </el-form-item>
         <el-form-item label="机构简称:" >
-            <el-input v-model="form.orgShortName"></el-input>
+            <el-input v-model="form.orgShortName" placeholder="请输入机构简称"></el-input>
         </el-form-item>
         <el-form-item label="机构简介:" prop="orgIntroduce">
-            <el-input type="textarea" :rows="6" v-model="form.orgIntroduce"></el-input>
+            <el-input type="textarea" :rows="6" v-model="form.orgIntroduce" placeholder="请输入机构简介"></el-input>
         </el-form-item>
         <el-form-item label="合作状态:" class="required">
             <el-radio :label="0" v-model="form.status">试用期</el-radio>
@@ -226,6 +231,12 @@ export default {
             background transparent
     .opt-btn
         text-align center
+.required
+    position relative
+    .tip
+        position absolute
+        top 30px
+        left 200px
 </style>
 <style lang="stylus">
 .organization-detail{
