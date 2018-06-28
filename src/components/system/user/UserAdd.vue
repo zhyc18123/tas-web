@@ -53,20 +53,20 @@
         </el-radio-group>
       </el-form-item>
       <div class="auth-role">
-        <div class="sex">
+        <div class="sex t-flexs">
           <div slot="label" class="label">
             性别：
           </div>
-          <el-radio-group v-model="form.sex" class="role-cont">
+          <el-radio-group v-model="form.sex" class="role-cont t-flex">
             <el-radio :label="0" >男</el-radio>
             <el-radio :label="1" >女</el-radio>
           </el-radio-group>
         </div>
-        <div class="subject" v-if="form.type!==3">
+        <div class="subject t-flexs" v-if="form.type!==3">
           <div slot="label" class="label">
             科目：
           </div>
-          <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange()"  class="role-cont">
+          <el-checkbox-group v-model="form.checkedSubject" @change="handleCheckedSubjectChange()"  class="role-cont t-flex">
             <el-checkbox :label="item.id"  v-for="item in condition.subjectList" :key="item.id">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </div>
@@ -74,7 +74,7 @@
           <div slot="label" class="label">
             学段：
           </div>
-          <div class="role-cont" >
+          <div class="role-cont t-flex" >
               <ul >
                 <li v-for="(gradesList,index) in gradesBySubject"  :key="index">
                   <h4>{{gradesList.subjectName}}</h4>
@@ -416,18 +416,19 @@ export default {
             this.$message("请选择科目")
             return false
           }
-          let isexist = false
+          // let isexist = false
           for(var i = 0;i < data.authSubjectSectionList.length;i++){
-            if(data.authSubjectSectionList[i].baseSectionIds == ''){
-              isexist = true
-            }else{
-              isexist = false
+            if(data.authSubjectSectionList[i].baseSectionIds ===''){
+              this.$message("你有科目未选年级,请选择")
+              // isexist = true
+              return 
             }
           }
-          if(isexist){
-            this.$message("你有科目未选年级,请选择")
-            return false
-          }
+          // if(isexist){
+          //   this.$message("你有科目未选年级,请选择")
+          //   return false
+          // }
+          // console.log(isexist)
           if(this.authRoleIds.length<=0){
             this.$message("请选择账号角色")
             return false

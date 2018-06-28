@@ -9,7 +9,7 @@
             <span>{{classes.classDetail.className}}</span>
             <em>{{classes.classDetail.status===0?'未开课':classes.classDetail.status===1?'已开课':'已结课'}}</em>
         </div>
-        <div class="cont-main">
+        <div class="cont-main t-cloum">
             <el-steps :active="stepActive" direction="vertical" name="">
                 <el-step title="班级基础信息" >
                     <div slot="title"  class="title">
@@ -598,7 +598,6 @@ export default {
                     // height 222px
                     background rgba(230, 236, 238, 0.4)
                     ul
-                        
                         display: box;               /* OLD - Android 4.4- */
                         display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
                         display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */

@@ -55,12 +55,12 @@
                 </el-tab-pane>
             </el-tabs>
         </div>
-        <div class="t-card c-body empty" v-if="!(classes.classObj.list&&classes.classObj.list.length)">
+        <div class="t-card c-body empty t-flexs" v-if="!(classes.classObj.list&&classes.classObj.list.length)">
             <img src="../../assets/img/class-empty.png" alt="">
             <div>没有班级哦，请重新筛选</div>
         </div>
-        <div v-else class="t-card c-body" v-show="form.classId">
-            <div class="c-left">
+        <div v-else class="t-card c-body t-flexs" v-show="form.classId">
+            <div class="c-left t-flex">
                 <line-head :title="className+'课程讲次'" />
                 <ul class="times-ul" v-if="classes.classChapterList.length">
                     <template v-for="(item,i) in classes.classChapterList">

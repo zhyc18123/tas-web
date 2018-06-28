@@ -92,23 +92,27 @@ export default {
         changePassword(){
             this.$refs.form.validate((valid) => {
                     if (valid) {
-                        let param = {...this.form}
-                        param.oPassword = md5(...param.oPassword)
-                        param.password = md5(...param.password)
-                        param.cPassword = md5(...param.cPassword)
-                        console.log(valid)
+                        let param = {}
+                        param.oPassword = md5(this.form.oPassword)
+                        param.password = md5(this.form.password)
+                        param.cPassword = md5(this.form.cPassword)
+                        console.log(param,this.form)
                         this.$confirm('确认修改密码?', '提示', {
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
                             type: 'warning'
                         }).then(() => {
                             try {
-                                io.post6(io.updatePass,param,(ret)=>{
-                                    console.log(ret)
+                                io.post(io.updatePass,param,(ret)=>{
                                     this.$message({
                                         type:"success",
                                         message:'已修改成功'
                                     });
+                                    this.form = {
+                                        oPassword:"",
+                                        password:"",
+                                        cPassword:"",
+                                    }
                                 })
                             } catch (error) {
                                 this.$message({

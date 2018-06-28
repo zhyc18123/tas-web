@@ -9,9 +9,9 @@
                 <em>{{chapterDetail.name}}</em>
             </div>
             <span class="b-line"></span>
-            <div class="c-tab" v-if="optType==='read'">
-                <div class="t-ware" :class="{active:sourceType==='courseWare'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/courseWare/read',query:{lessonId,className,lectureNum}})">课件</div>
-                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/lecture/read',query:{lessonId,className,lectureNum}})">讲义</div>
+            <div class="c-tab t-flexs" v-if="optType==='read'">
+                <div class="t-ware t-flex" :class="{active:sourceType==='courseWare'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/courseWare/read',query:{lessonId,className,lectureNum,classId}})">课件</div>
+                <div class="t-lecture" :class="{active:sourceType==='lecture'}" @click="$router.push({path:'/main/prepare-lessons/'+id+'/lecture/read',query:{lessonId,className,lectureNum,classId}})">讲义</div>
             </div>
         </div>
         <div class="opt-div">
@@ -226,6 +226,7 @@ export default {
     .c-tab
         position absolute
         right 0
+        bottom 0px
         display flex
         width 172px
         div
@@ -250,6 +251,8 @@ export default {
                     height 0
                     position absolute
                     bottom 0
+                    left 50%
+                    transform translateX(-50%)
 .next-btn
     text-align center
     padding-bottom 20px

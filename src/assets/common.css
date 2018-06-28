@@ -96,7 +96,10 @@ ol{
 }
 .el-table.line-table .el-table__header-wrapper{
   border-bottom:3px solid ;
+  border-image: -webkit-linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
+  border-image: -moz-linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
   border-image: linear-gradient(45deg, #009fd7 0%, #01d1bb 100%) 45 45;
+  
 }
 .el-table.line-table th,.el-table.line-table td{
   font-size:14px;
@@ -466,4 +469,50 @@ border-radius: 4px 4px 0 0;
 }
 .el-message .el-message__icon.el-icon-success{
   color:#00c4c2 !important;
+}
+/* element ui 步骤条的弹性盒兼容 */
+.el-steps{
+  display:  box;               /* OLD - Android 4.4- */
+  display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;       /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+}
+/* 方向为Y轴方向时 */
+ .t-cloum .el-steps{
+  display:  box;               /* OLD - Android 4.4- */
+  display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;       /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+  display: block;
+ }
+.el-step{
+  -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+  -webkit-flex: 1;                     /* Chrome */
+  -ms-flex: 1;                           /* IE 10 */
+  flex: 1;
+  -ms-flex-preferred-size:auto;   /* 兼容ie无法读出flex大小问题 */
+  
+}
+/* 自定义的弹性盒兼容 */
+.t-flexs{
+  display:  box;               /* OLD - Android 4.4- */
+  display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+  display: -ms-flexbox;       /* TWEENER - IE 10 */
+  display: -webkit-flex;     /* NEW - Chrome */
+  display: flex;
+  /* display: block; */
+}
+.t-flex{
+  -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+  -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+  -webkit-flex: 1;                     /* Chrome */
+  -ms-flex: 1;                           /* IE 10 */
+  flex: 1;
+  -ms-flex-preferred-size:auto;   /* 兼容ie无法读出flex大小问题 */
 }

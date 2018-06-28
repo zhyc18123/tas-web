@@ -184,17 +184,30 @@ export default {
             position absolute
             right 0
             bottom -4px
-            display flex
+            display: box;               /* OLD - Android 4.4- */
+            display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+            display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+            display: -ms-flexbox;       /* TWEENER - IE 10 */
+            display: -webkit-flex;      /* NEW - Chrome */
+            display: flex; 
             width 172px
             div
-                flex 1
+                -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+                -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+                -webkit-flex: 1;                     /* Chrome */
+                -ms-flex: 1;                           /* IE 10 */
+                flex: 1; 
                 display flex
                 justify-content center
                 align-items center
-                height 40px
+                text-align center
+                box-sizing border-box
+                line-height 46px
+                height 46px
                 color #999
                 cursor pointer
                 position relative
+                border-bottom 6px solid transparent
                 &.active,&:hover
                     color #ff9000
                     font-weight bold
@@ -208,9 +221,16 @@ export default {
                         height 0
                         position absolute
                         bottom 0
+                        left:50%;
+                        transform :translateX(-50%)
     .t-cont
         padding 20px 0
-        display flex
+        display: box;               /* OLD - Android 4.4- */
+        display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+        display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+        display: -ms-flexbox;       /* TWEENER - IE 10 */
+        display: -webkit-flex;      /* NEW - Chrome */
+        display: flex; 
         .cont-left
             padding-right 28px
             position relative
@@ -236,10 +256,16 @@ export default {
                 right 10px
                 width 16px
                 height 50px
+                line-height 50px
                 background #f4f4f4
                 border-radius 4px
                 cursor pointer
-                display flex
+                // display: box;               /* OLD - Android 4.4- */
+                // display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */
+                // display: -moz-box;          /* OLD - Firefox 19- (buggy but mostly works) */
+                // display: -ms-flexbox;       /* TWEENER - IE 10 */
+                // display: -webkit-flex;      /* NEW - Chrome */
+                // display: flex; 
                 justify-content center
                 align-items center
                 .icon
@@ -275,7 +301,11 @@ export default {
                             color #333
 
         .cont-right
-            flex 1
+            -webkit-box-flex: 1;              /* OLD - iOS 6-, Safari 3.1-6 */
+            -moz-box-flex: 1;                 /* OLD - Firefox 19- */
+            -webkit-flex: 1;                     /* Chrome */
+            -ms-flex: 1;                           /* IE 10 */
+            flex: 1; 
             min-height 500px
             background #f8f8f8
             text-align center
