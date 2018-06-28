@@ -101,7 +101,7 @@
                             </div>
                         </div> -->
             <el-form-item class="class-btn">
-                <el-button type="primary" class="height-btn" @click="sure">确定</el-button>
+                <el-button :disabled="addDisabled" type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
             </el-form-item>
         </el-form>
@@ -120,6 +120,7 @@ export default {
     },
     data() {
         return {
+            addDisabled:false,
             courseInfo:[],
             form: {
                 id: this.$route.params.id,
@@ -266,6 +267,10 @@ export default {
             this.form.lessonId = ''
         },
         sure() {
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
             this.$refs.form.validate(async (vali) => {
                 if (vali) {
                     let opt = { ...this.form, teacherIds: this.form.teacherIds.join(','), openTime: util.formatDate(this.form.openTime) + ' 00:00:00', closeTime: util.formatDate(this.form.closeTime) + ' 23:59:59' }

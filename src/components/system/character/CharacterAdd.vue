@@ -15,7 +15,7 @@
           <el-radio v-for="(item,index) in systemTypes" :key="index" :label="item.value" >{{item.label}}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
+      <el-button :disabled="addDisabled" @click="handleSave" class="btn-save" type="basis">保存</el-button>
       <el-button @click="$router.go(-1);" class="btn-cancel" type="basis">取消</el-button>
     </el-form>
   </div>
@@ -32,6 +32,7 @@ import LineHeadForm from '../../common/LineHeadForm'
     },
     data() {
     	return {
+        addDisabled:false,
         title:'新增角色',
         form: {
           id:'',
@@ -68,6 +69,10 @@ import LineHeadForm from '../../common/LineHeadForm'
     },
     methods: {
       handleSave() {
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
         this.$refs.form.validate((valid) => {
           if (valid) {
             let param = this.form

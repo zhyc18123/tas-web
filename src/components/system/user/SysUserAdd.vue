@@ -51,7 +51,7 @@
             </el-select>
         </el-form-item>
        <div>
-            <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
+            <el-button :disabled="addDisabled" @click="handleSave" class="btn-save" type="basis">保存</el-button>
        </div>
     </el-form>
   </div>
@@ -102,6 +102,7 @@ export default {
         // };
 
     return {
+        addDisabled:false,
         loginInfo:storage.getCurrentUserInfo(),
         roleList:[],
         userId:'',
@@ -170,6 +171,10 @@ export default {
         handleSave() {
         let _this = this
         console.log(this.form)
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
         this.$refs.form.validate((valid) => {
             console.log(this.form,valid)
             if (valid) {

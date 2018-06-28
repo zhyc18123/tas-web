@@ -98,7 +98,7 @@
           <el-checkbox v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-button @click="handleSave" class="btn-save" type="basis">保存</el-button>
+      <el-button :disabled="addDisabled" @click="handleSave" class="btn-save" type="basis">保存</el-button>
       <el-button @click="$router.go(-1);resetForm" class="btn-cancel" type="basis">取消</el-button>
     </el-form>
     <!-- 系统管理员身份的新增 -->
@@ -139,6 +139,7 @@ export default {
     //   }
     // };
     return {
+      addDisabled:false,
       title:'新增账号',
       loginInfo:storage.getCurrentUserInfo(),
       checkAll: true,
@@ -360,6 +361,10 @@ export default {
     },
     handleSave() {
       let _this = this
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
       this.$refs.form.validate((valid) => {
         console.log(valid)
         if (valid) {
