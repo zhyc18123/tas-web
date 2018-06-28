@@ -1,7 +1,7 @@
 <template>
   <div class="user-detail">
     <line-head-form class="head" :title="title"/>
-    <div v-if="!loginInfo.isSystem">
+    <div v-if="!loginInfo.isSystem && loginInfo.isManager">
         <div class="base-info">
             <ul>
                 <li>

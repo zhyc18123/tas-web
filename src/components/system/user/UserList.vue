@@ -7,7 +7,7 @@
                     <el-option v-for="item in accountStatus" :label="item.label" :value="item.value" :key="item.value"></el-option>
                 </el-select>
             </el-form-item>
-           <el-form-item label="" v-if="loginInfo.isManager">
+           <el-form-item label="" v-if="!loginInfo.isSystem && loginInfo.isManager">
                 <el-select v-model="form.workStatus" placeholder="人员状态">
                     <el-option v-for="item in workStatusS" :label="item.label" :value="item.value" :key="item.value"></el-option>
                 </el-select>
@@ -33,7 +33,7 @@
             <div v-if="scope.row.status === 1">正常</div>
           </template>
         </el-table-column>
-        <el-table-column label="人员状态"  align="center" width="100" v-if="loginInfo.isManager">
+        <el-table-column label="人员状态"  align="center" width="100" v-if="!loginInfo.isSystem && loginInfo.isManager">
           <template slot-scope="scope">
             <div v-if="scope.row.workStatus === 0">在职</div>
             <div v-if="scope.row.workStatus === 1">离职</div>
@@ -91,7 +91,7 @@ export default {
         {label:"正常",value:1},
       ],
       workStatusS:[
-        {label:"请选择账号状态",value:''},
+        {label:"请选择人员状态",value:''},
         {label:"在职",value:0},
         {label:"离职",value:1},
       ],
