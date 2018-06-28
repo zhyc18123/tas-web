@@ -179,16 +179,16 @@ export default {
 
 </style>
 <style lang="stylus">
-.t-class-list
-    .el-form-item
-        height 32px
-        .el-form-item__content
-            line-height 32px
-            .el-select
-                height 32px
-        .el-input__inner
-            height 32px
-            line-height 32px
+// .t-class-list
+//     .el-form-item
+//         height 32px
+//         .el-form-item__content
+//             line-height 32px
+//             .el-select
+//                 height 32px
+        // .el-input__inner
+        //     height 32px
+        //     line-height 32px
 </style>
 
 
