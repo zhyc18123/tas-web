@@ -122,7 +122,7 @@
                                 prop="course"
                                 label="讲次"
                                 align = "center"
-                                width = "180"
+                                min-width = "180"
                                 >
                                 <template slot-scope="scope">
                                     <span>{{'第'+scope.row.sort+'讲'}}</span>
@@ -131,7 +131,7 @@
                             <el-table-column
                                 prop="chapterName"
                                 label="讲次名称"
-                                width = "200"
+                                min-width = "200"
                                 align = "center"
                                 >
                             </el-table-column>
@@ -147,7 +147,7 @@
                             <el-table-column
                                 prop="substituteTeacher"
                                 align = "center"
-                                width = "200"
+                                min-width = "200"
                                 label="代课老师">
                                 <template slot-scope="scope">
                                     <span>{{scope.row.teacherId?scope.row.teacherName:'无'}}</span>
@@ -155,7 +155,7 @@
                             </el-table-column> 
                              <el-table-column
                                 align = "center"
-                                width = "200"
+                               min-width = "200"
                                 label="操作">
                                 <template slot-scope="scope">
                                     <div>

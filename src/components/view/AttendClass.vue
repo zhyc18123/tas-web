@@ -84,11 +84,7 @@
         <div class="g-lessons">
             <el-dialog :title="className" :visible.sync="showClassLessons" width="39%" center>
                 <ul class="g-lessons-list">
-<<<<<<< HEAD
-                    <li class="t-flexs" v-for="(item,i) in classes.classChapterList" @click="hideDialog(item)">
-=======
-                    <li v-for="(item,i) in classes.classChapterList" :class="{no:item.status===0}" @click="hideDialog(item)">
->>>>>>> 3b74e1614df52a1a2d3d18cc9ec8903de5bf4ed8
+                    <li class="t-flexs" v-for="(item,i) in classes.classChapterList" :class="{no:item.status===0}" @click="hideDialog(item)">
                         <div class="lessons-num">
                             第 {{i+1}} 讲
                         </div>
