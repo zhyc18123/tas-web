@@ -266,10 +266,12 @@ export default {
         background: #f5f9fa;
         font-size: 16px;
         color: #333;
-        padding: 0 10px;
+        font-weight: bold;
+        padding: 0 18px;
         cursor: pointer;
         span {
             margin-left: 20px;
+            font-weight: normal;
         }
         &:hover {
             background: #c9efe6;
@@ -289,7 +291,8 @@ export default {
     background: white;
     margin-top: 20px;
     display: flex;
-    padding: 40px 35px 20px;
+    padding: 40px 40px 20px;
+    margin-bottom: 3px;
 }
 
 .empty {
@@ -459,13 +462,14 @@ export default {
         box-shadow: unset;
     }
     .el-radio-button__orig-radio+.el-radio-button__inner {
-        border: 1px solid #fff !important;
+        border: 2px solid #fff !important;
+        line-height:20px !important;
     }
     .el-radio-button__orig-radio:checked+.el-radio-button__inner,
     .el-radio-button__orig-radio+.el-radio-button__inner:hover {
         background: #fff;
         color: #ff9000;
-        border: 1px solid #ff9000 !important;
+        border: 2px solid #ff9000 !important;
     }
 }
 

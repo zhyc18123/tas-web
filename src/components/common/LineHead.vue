@@ -30,7 +30,7 @@
         height 18px
         background #52caaf
         display inline-block
-        margin-right 10px
+        margin-right 14px
     .title-name
         font-weight bold
         font-style italic

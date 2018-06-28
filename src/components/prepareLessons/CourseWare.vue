@@ -193,7 +193,7 @@ export default {
                 margin-right 4px
 .course-ware
     background white
-    padding 0 60px
+    padding 0 54px
 .course-title
     height 60px
     line-height 60px

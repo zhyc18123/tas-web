@@ -234,6 +234,7 @@ export default {
         margin-top: 20px;
         background: #fff;
         padding: 28px 54px;
+        min-height: 390px;
         .el-table {
             .el-table-column {
                 font-size: 14px;
