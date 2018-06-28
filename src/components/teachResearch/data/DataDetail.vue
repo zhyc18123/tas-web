@@ -10,7 +10,6 @@
                     科
                     <span>目:</span>
                 </div>
-
                 <el-select v-model="form.dataSubject" placeholder="">
                     <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
                 </el-select>
@@ -52,7 +51,7 @@
                 <el-checkbox label="可下载" v-model="form.isDowm"></el-checkbox>
             </el-form-item>
             <el-form-item class="opt-btn">
-                <el-button class="height-btn" @click="sure">确定</el-button>
+                <el-button :disabled="addDisabled"  type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
             </el-form-item>
         </el-form>
@@ -70,6 +69,7 @@ export default {
     },
     data() {
         return {
+            addDisabled:false,
             form: {
                 id: this.$route.params.id,
                 name: '',
@@ -139,6 +139,10 @@ export default {
             }
         },
         sure() {
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
             this.$refs.form.validate((vali) => {
                 if (vali) {
                     if(!String.trim(this.form.name).length){

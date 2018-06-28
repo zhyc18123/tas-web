@@ -43,6 +43,16 @@ export default {
   },
   created() {
     // this.$store.dispatch('config')
+    this.init()
+  },
+  beforeUpdate () {
+    this.init()
+  },
+  computed: {
+    ...mapGetters(['config'])
+  },
+  methods: {
+    init(){
     if (this.$route.path.indexOf('course') > 0) {
       this.activeName = '课程'
     } else if (this.$route.path.indexOf('lecture') > 0) {
@@ -50,11 +60,7 @@ export default {
     } else if (this.$route.path.indexOf('data') > 0) {
       this.activeName = '素材'
     }
-  },
-  computed: {
-    ...mapGetters(['config'])
-  },
-  methods: {
+    },
     handleClick(tab) {
       if (this.activeName === '课程') {
         this.$router.push('/main/teach-research/course')

@@ -64,8 +64,12 @@
                 <line-head :title="className+'课程讲次'" />
                 <ul class="times-ul" v-if="classes.classChapterList.length">
                     <template v-for="(item,i) in classes.classChapterList">
-                        <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.chapterId+'/courseWare/read',query:{lessonId:lessonId,lectureNum:i+1,className:className,classId:form.classId}}" v-if="item.status===1">第 {{i+1}} 讲<span>{{item.chapterName}}</span> </router-link>
-                        <li v-else class="disable">第 {{i+1}} 讲<span>{{item.chapterName}}</span></li>
+                        <router-link tag="li" :to="{path:'/main/prepare-lessons/'+item.chapterId+'/courseWare/read',query:{lessonId:lessonId,lectureNum:i+1,className:className,classId:form.classId}}" v-if="item.status===1">第 {{i+1}} 讲
+                            <span>{{item.chapterName}}</span>
+                        </router-link>
+                        <li v-else class="disable">第 {{i+1}} 讲
+                            <span>{{item.chapterName}}</span>
+                        </li>
                     </template>
                 </ul>
                 <div class="empty" v-else>
@@ -76,9 +80,9 @@
                 <div class="c-introduce">
                     <line-head :title="className+'课程说明'" />
                     <div class="i-video">
-                        <d-player ref="dplay" @fullscreen="fullscreen" :class="{full:!isFullscreen}"  v-if="detail.videoUrl" :options="{video:{url:detail.videoUrl,pic:detail.videoUrl+'-thumbnail-2'}}"></d-player>
+                        <d-player ref="dplay" @fullscreen="fullscreen" :class="{full:!isFullscreen}" v-if="detail.videoUrl" :options="{video:{url:detail.videoUrl,pic:detail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
-                    <div class="i-text">
+                    <div class="i-text" :title="detail.remark">
                         {{detail.remark}}
                     </div>
                 </div>
@@ -128,39 +132,39 @@ export default {
             },
             className: '',
             lessonId: '',
-            fileType:{
-                pdf,ppt,word,excel,rar,videoImg
+            fileType: {
+                pdf, ppt, word, excel, rar, videoImg
             },
-            detail:{},
-            isFullscreen:false
+            detail: {},
+            isFullscreen: false
         }
     },
     computed: {
         ...mapState(['condition', 'classes', 'chapter', 'school', 'course']),
     },
     watch: {
-        'course.courseDetail'(val){
-            this.detail=val
+        'course.courseDetail'(val) {
+            this.detail = val
         },
-        'course.courseDataObj'(val){
-            val&&val.list.map((item,i)=>{
+        'course.courseDataObj'(val) {
+            val && val.list.map((item, i) => {
                 console.log(item.attchType)
-                if(item.attchType==='0'){
-                    item.imgUrl=item.attchUrl
-                }else if(item.attchType==='1'){
-                    item.imgUrl=this.fileType.ppt
-                }else if(item.attchType==='2'){
-                    item.imgUrl=this.fileType.word
-                }else if(item.attchType==='3'){
-                    item.imgUrl=this.fileType.excel
-                }else if(item.attchType==='4'){
-                    item.imgUrl=this.fileType.pdf
-                }else if(item.attchType==='5'){
-                    item.imgUrl=this.fileType.rar
-                }else if(item.attchType==='6'){
-                    item.imgUrl=this.fileType.videoImg
-                } else{
-                    item.imgUrl=item.attchUrl
+                if (item.attchType === '0') {
+                    item.imgUrl = item.attchUrl
+                } else if (item.attchType === '1') {
+                    item.imgUrl = this.fileType.ppt
+                } else if (item.attchType === '2') {
+                    item.imgUrl = this.fileType.word
+                } else if (item.attchType === '3') {
+                    item.imgUrl = this.fileType.excel
+                } else if (item.attchType === '4') {
+                    item.imgUrl = this.fileType.pdf
+                } else if (item.attchType === '5') {
+                    item.imgUrl = this.fileType.rar
+                } else if (item.attchType === '6') {
+                    item.imgUrl = this.fileType.videoImg
+                } else {
+                    item.imgUrl = item.attchUrl
                 }
             })
             console.log(val)
@@ -175,7 +179,7 @@ export default {
         'condition.termObj'(val) {
             this.form.termId = val.list[0] && val.list[0].id
         },
-        'classes.classChapterList'(val){
+        'classes.classChapterList'(val) {
             storage.setChapter(val)
         },
         'classes.classObj'(val) {
@@ -198,14 +202,14 @@ export default {
         'form.schoolId'(val) {
             this.getClasses()
         },
-        activeName(val){
+        activeName(val) {
             this.getClasses()
         },
         'form.classId'(val) {
             if (!val) {
                 return
             }
-            this.detail={}
+            this.detail = {}
             this.lessonClassPlanChapterList({ id: val })
             this.classes.classObj.list.map((item, i) => {
                 if (item.id === val) {
@@ -236,13 +240,13 @@ export default {
         //         })
         // },
         getClasses() {
-            this.findClassPage({ pageIndex: 1, pageSize: 1000000, baseSectionId: this.form.gradeId, baseTrimesterId: this.form.termId, schoolId: this.form.schoolId,dataSubject:this.condition.subjectList[Number(this.activeName)].id })
+            this.findClassPage({ pageIndex: 1, pageSize: 1000000, baseSectionId: this.form.gradeId, baseTrimesterId: this.form.termId, schoolId: this.form.schoolId, dataSubject: this.condition.subjectList[Number(this.activeName)].id })
         },
         downloadData(item) {
             window.open(item.attchUrl + '?attname=' + item.attchName)
         },
-        fullscreen(){
-            this.isFullscreen=true
+        fullscreen() {
+            this.isFullscreen = true
         }
     }
 
@@ -264,17 +268,17 @@ export default {
         color: #333;
         padding: 0 10px;
         cursor: pointer;
-        span{
+        span {
             margin-left: 20px;
         }
         &:hover {
             background: #c9efe6;
         }
-        &.disable{
+        &.disable {
             cursor: auto;
             background: #ccc;
             color: #666;
-            &:hover{
+            &:hover {
                 background: #ccc;
             }
         }
@@ -287,15 +291,16 @@ export default {
     display: flex;
     padding: 40px 35px 20px;
 }
-    .empty{
-        padding: 60px 0 100px;
-        margin: 20px 0;
-        img{
+
+.empty {
+    padding: 60px 0 100px;
+    margin: 20px 0;
+    img {
         margin: auto;
-        }
-        display: block;
-        text-align: center;
     }
+    display: block;
+    text-align: center;
+}
 
 .c-left {
     flex: 1;
@@ -309,13 +314,18 @@ export default {
         font-size: 14px;
         line-height: 20px;
         color: #333;
-        .full{
+        .full {
             max-height: 300px;
         }
     }
     .i-text {
         padding: 20px;
         margin-bottom: 35px;
+        max-height: 60px;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 5;
+        overflow: hidden;
     }
     .data-ul {
         margin-top: 18px;

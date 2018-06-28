@@ -99,6 +99,9 @@ export default {
     mounted () {  
         this.nextDisabled=this.chapterList[this.lectureNum].status===0
     },
+    updated () {
+        this.nextDisabled=this.chapterList[this.lectureNum].status===0
+    },
     beforeDestroy () {
     // storage.removeChapter()
     },
