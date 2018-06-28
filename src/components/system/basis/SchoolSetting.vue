@@ -10,7 +10,7 @@
               <svg class="icon" aria-hidden="true">
                 <use xlink:href="#icon-tianjia"></use>
               </svg>
-              <span @click="handleAdd(scope.row)">添加</span>
+              <span v-if="config.school_add" @click="handleAdd(scope.row)">添加</span>
             </div>
             <div v-if="scope.row.addRow" class="btn-add">
               <el-input v-model="newName" placeholder="请输入来源名称"></el-input>
@@ -22,8 +22,8 @@
         </el-table-column>
         <el-table-column align="center" label="操作">
           <template scope="scope">
-            <span v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-edit" @click="handleEdit(scope)">编辑</span>
-            <span v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-delete" @click="handleDelete(scope.row)">删除</span>
+            <span v-if="config.school_edit" v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-edit" @click="handleEdit(scope)">编辑</span>
+            <span v-if="config.school_del" v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-delete" @click="handleDelete(scope.row)">删除</span>
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleSave()">保存</el-button>
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleCancel(scope.row)">取消</el-button>
             <el-button v-show="scope.row.isEdit" class="btn-delete" @click="handleSave(scope.row)">保存</el-button>
@@ -38,7 +38,7 @@
  <script>
 import VClassCategory from '../../common/ClassCategory.vue'
 import io from '../../../lib/io'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions,mapGetters } from 'vuex'
 export default {
   name: 'school-setting',
   components: {
@@ -54,7 +54,8 @@ export default {
     }
   },
   computed: {
-    ...mapState(['school'])
+    ...mapState(['school']),
+    ...mapGetters(['config'])
   },
 watch: {
   'school.schoolObj'(val){

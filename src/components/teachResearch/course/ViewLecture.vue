@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="cont-right">
-
+                    <div class="title">{{chapterDetail.name||'--'}}</div>
                     <div class="source-body" v-if="sourceType==='courseWare'">
                         <div v-if="token">
                             <iframe class="office-ppt edit" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
@@ -308,6 +308,9 @@ export default {
             flex: 1; 
             min-height 500px
             background #f8f8f8
+            text-align center
+            .title
+                padding 15px 0
     .next-btn
         text-align center
         padding-top 20px

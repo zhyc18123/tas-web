@@ -84,7 +84,11 @@
         <div class="g-lessons">
             <el-dialog :title="className" :visible.sync="showClassLessons" width="39%" center>
                 <ul class="g-lessons-list">
+<<<<<<< HEAD
                     <li class="t-flexs" v-for="(item,i) in classes.classChapterList" @click="hideDialog(item)">
+=======
+                    <li v-for="(item,i) in classes.classChapterList" :class="{no:item.status===0}" @click="hideDialog(item)">
+>>>>>>> 3b74e1614df52a1a2d3d18cc9ec8903de5bf4ed8
                         <div class="lessons-num">
                             第 {{i+1}} 讲
                         </div>
@@ -176,6 +180,9 @@ export default {
             console.log(row, event, cloumn)
         },
         hideDialog(item){
+            if(item.status!==1){
+                return
+            }
             this.showClassLessons = false
             this.$router.push({path:'/main/attend-content/'+item.lessonId+'/'+item.chapterId,query:{lessonClassId:item.lessonClassId}})
         }
@@ -250,6 +257,14 @@ export default {
             font-size: 16px;
             cursor: pointer;
             display: flex;
+            &.no{
+                cursor: auto;
+                background: #eee;
+                color: #999;
+                &:hover{
+                    background: #eee;
+                }
+            }
             .lessons-num {
                 width: auto;
                 height: 50px;

@@ -14,7 +14,7 @@
                 <label class="file-name" :title="originalName">{{originalName||'--'}}</label>
             </el-form-item>
             <el-form-item label="类型:">
-                <label>{{typeName==='0'?'未知':typeName==='1'?'PPT':typeName==='2'?'WORD':typeName==='3'?'EXCEL':typeName==='4'?'PDF':typeName==='5'?'RAR':'--'}}</label>
+                <label>{{typeName==='0'?'未知':typeName==='1'?'PPT':typeName==='2'?'WORD':typeName==='3'?'EXCEL':typeName==='4'?'PDF':typeName==='5'?'RAR':typeName||'--'}}</label>
             </el-form-item>
             <el-form-item label="大小:">
                 <label>{{fileSize||'--'}}M</label>
@@ -181,10 +181,11 @@ export default {
             }
             this.originalName = res.original || res.name
             this.fileSize = Math.round((res.size / 1024 / 1024) * 100) / 100
-            this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name)
+            this.$emit('success', backUrl, this.fileSize, duration, res.original || res.name,resType)
         },
         beforeAvatarUpload(file) {
-            let fileSize = file / 1024 / 1024
+            
+            let fileSize = file.size / 1024 / 1024
             console.log('dd',this.fileType,fileSize)
             this.loading = true
                 if (!fileSize) {
@@ -219,13 +220,13 @@ export default {
             } else if (this.fileType === 'ppt') {
                 console.log('file', file)
                 if (!(file.name.indexOf('.ppt') > -1)) {
-                    this.$message('只能上传PPT')
+                    this.$message('请上传pptx格式文件')
                     this.loading = false
                     return false
                 }
             } else if (this.fileType === 'word') {
                 if (!(file.name.indexOf('.doc') > -1)) {
-                    this.$message('只能上传WORD')
+                    this.$message('请上传docx格式文件')
                     this.loading = false
                     return false
                 }

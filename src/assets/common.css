@@ -479,6 +479,7 @@ border-radius: 4px 4px 0 0;
   display: -webkit-flex;     /* NEW - Chrome */
   display: flex;
 }
+/* 方向为Y轴方向时 */
  .t-cloum .el-steps{
   display:  box;               /* OLD - Android 4.4- */
   display: -webkit-box;       /* OLD - iOS 6-, Safari 3.1-6 */

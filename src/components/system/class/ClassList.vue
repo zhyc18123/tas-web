@@ -40,7 +40,7 @@
                 <el-button type="primary" @click="search" class="search-btn">查询</el-button>
             </el-form-item>
             <el-form-item class="new-item">
-                <el-button type="primary" class="new-btn" @click="$router.push('/main/system/class/add')">新增班级</el-button>
+                <el-button v-if="config.class_add" type="primary" class="new-btn" @click="$router.push('/main/system/class/add')">新增班级</el-button>
             </el-form-item>
         </el-form>
         <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" empty-text="暂无班级，请先添加班级">
@@ -67,12 +67,12 @@
                             <use xlink:href="#icon-2yulan"></use>
                         </svg>
                     </router-link>
-                    <router-link :to="'/main/system/class/'+scope.row.id" title="编辑">
+                    <router-link v-if="config.class_edit" :to="'/main/system/class/'+scope.row.id" title="编辑">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-xiugaiziliao"></use>
                         </svg>
                     </router-link>
-                    <span title="删除" @click="deleteLessonClass(scope.row.id)">
+                    <span v-if="config.class_del" title="删除" @click="deleteLessonClass(scope.row.id)">
                         <svg class="icon" aria-hidden="true">
                             <use xlink:href="#icon-icon-cross-empty"></use>
                         </svg>
@@ -85,7 +85,7 @@
 </template>
 <script>
 import VPagination from "../../common/Pagination"
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions ,mapGetters} from 'vuex'
 import io from 'lib/io'
 export default {
     name:'class-list',
@@ -108,7 +108,8 @@ export default {
         }
     },
     computed: {
-        ...mapState(['classes','condition','school'])
+        ...mapState(['classes','condition','school']),
+    ...mapGetters(['config'])
     },
     created(){
         this.getClass()
