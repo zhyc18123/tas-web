@@ -77,7 +77,7 @@
                 </upload>
             </el-form-item>
             <el-form-item class="opt-btn">
-                <el-button type="primary" class="height-btn" @click="sure">确定</el-button>
+                <el-button  :disabled="addDisabled" type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
             </el-form-item>
         </el-form>
@@ -194,6 +194,7 @@ export default {
     },
     data() {
         return {
+            addDisabled:false,
             form: {
                 id: this.$route.params.id,
                 name: '',
@@ -292,6 +293,10 @@ export default {
             }, 300);
         },
         sure() {
+            this.addDisabled=true
+            setTimeout(()=>{
+                this.addDisabled=false
+            },2000)
             this.$refs.form.validate((vali) => {
                 if (vali) {
                     if(!String.trim(this.form.name).length){

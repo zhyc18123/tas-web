@@ -95,7 +95,7 @@
                     <div slot="label" class="tow-four">
                         创建时间：
                     </div>
-                    <span>{{userInfo.endTime | formatTime}}</span>
+                    <span>{{userInfo.createTime | formatTime}}</span>
                 </li>
                 <li class="info-item">
                     <div slot="label" class="tow-four">
