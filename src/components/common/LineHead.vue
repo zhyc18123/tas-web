@@ -34,6 +34,13 @@
     .title-name
         font-weight bold
         font-style italic
+        display inline-block
+        position relative
+        max-width 500px
+        max-width 70%
+        overflow hidden
+        text-overflow ellipsis
+        white-space nowrap
     img 
         display inline-block
         height 4px

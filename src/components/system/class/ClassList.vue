@@ -112,15 +112,16 @@ export default {
     ...mapGetters(['config'])
     },
     created(){
-        this.getClass()
         this.findBaseSectionPage({pageIndex:1,pageSize:10000000})
         this.findBaseTermPage({pageIndex:1,pageSize:10000000})
         this.findBaseLevelPage({pageIndex:1,pageSize:10000000})
         this.findBaseSchoolPage({pageIndex:1,pageSize:10000000})
+        this.getClass()
     },
     methods:{
         ...mapActions(['findClassPage','findBaseSectionPage','findBaseTermPage','findBaseLevelPage','findBaseSchoolPage']),
         getClass(opt){
+            console.log('form',this.form)
             this.findClassPage({...this.form,...opt})
         },
         search(){
