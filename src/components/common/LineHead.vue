@@ -33,6 +33,8 @@
         margin-right 14px
     .title-name
         font-weight bold
+        display inline-block
+        max-width 70%
         font-style italic
         display inline-block
         position relative

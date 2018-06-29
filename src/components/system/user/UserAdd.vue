@@ -497,6 +497,10 @@ export default {
     },
     'condition.subjectList':function(val){
       
+    },
+    'form.type':function(val){
+      console.log()
+      this.changeTypes()
     }
   }
 }
