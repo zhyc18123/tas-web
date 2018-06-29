@@ -45,11 +45,11 @@
                     <p class="surport">(支持PPT、Word、Excel、PDF、压缩包)等文件格式</p>
                 </upload>
             </el-form-item>
-            <el-form-item label="权限设置:">
+            <!--<el-form-item label="权限设置:">
                 <el-checkbox label="全选" v-model="isViewDown"></el-checkbox>
                 <el-checkbox label="可预览" v-model="form.isView"></el-checkbox>
                 <el-checkbox label="可下载" v-model="form.isDowm"></el-checkbox>
-            </el-form-item>
+            </el-form-item>-->
             <el-form-item class="opt-btn">
                 <el-button :disabled="addDisabled"  type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>

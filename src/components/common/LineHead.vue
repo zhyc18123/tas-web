@@ -43,6 +43,7 @@
         overflow hidden
         text-overflow ellipsis
         white-space nowrap
+        padding-right 5px
     img 
         display inline-block
         height 4px

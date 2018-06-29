@@ -117,7 +117,7 @@ export default {
             this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
-            this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum } })
+            this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum ,classId:this.classId} })
         },
         print() {
             // let sourceId = this.chapterDetail.courseUrl
