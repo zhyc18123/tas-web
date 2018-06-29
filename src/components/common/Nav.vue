@@ -14,7 +14,7 @@
             <em>V1.0</em>
           </el-col>
         </el-col>
-        <el-col :span='8' v-if="!noLogin">
+        <el-col :span='8' v-if="!noLogin" class="head-login">
           <template v-if="!loginInfo">
             <el-button class="btn-login" v-show="false" type="text" @click="showLoginForm = true">登录</el-button>
           </template>
@@ -27,9 +27,9 @@
               <span>欢迎您！
                 <em>{{loginInfo?loginInfo.userName:''}}</em>
               </span>
-              <!--<svg class="icon xiala" aria-hidden="true">
-                      <use xlink:href="#icon-xiala"></use>
-                    </svg>-->
+              <svg class="icon xiala" aria-hidden="true">
+                <use xlink:href="#icon-xiala"></use>
+              </svg>
             </div>
             <a href="javascript:;" @click="vLogout">退出</a>
           </div>
@@ -156,6 +156,10 @@ export default {
       background: transparent;
     }
   }
+  .head-login{
+    padding-right:30px;
+    box-sizing:border-box;
+  }
   .version {
     font-size: 26px;
     margin-left: 28px;
@@ -212,6 +216,9 @@ export default {
       padding-right: 8px;
       height: 80px;
       cursor: pointer;
+      span{
+        margin-right:17px;
+      }
       img{
         border: 1px solid #ccc;
       }
@@ -228,15 +235,15 @@ export default {
       }
     }
     .xiala {
-      font-size: 20px !important;
+      font-size: 18px !important;
       color: #00b1d1;
       position: relative;
-      top: -2px;
+      top: -3px;
       margin-left: 3px;
       margin-right: 20px;
     }
     a {
-      padding-left: 10px;
+      padding-left: 17px;
       border-left: 1px solid #eee;
       &:hover {
         color: #00a7eb;
@@ -277,6 +284,7 @@ export default {
       font-size: 28px;
       vertical-align: -8px;
       margin-right: 3px;
+      color:#009085;
     }
     .pass {
       font-size: 24px;

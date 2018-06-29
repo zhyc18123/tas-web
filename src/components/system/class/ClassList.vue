@@ -62,21 +62,23 @@
              <el-table-column prop="school"  label="所属校区" align="center"> </el-table-column>
             <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
-                    <router-link :to="'/main/system/class/details?id='+scope.row.id" title="班级详情">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-2yulan"></use>
-                        </svg>
-                    </router-link>
-                    <router-link v-if="config.class_edit" :to="'/main/system/class/'+scope.row.id" title="编辑">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-xiugaiziliao"></use>
-                        </svg>
-                    </router-link>
-                    <span v-if="config.class_del" title="删除" @click="deleteLessonClass(scope.row.id)">
-                        <svg class="icon" aria-hidden="true">
-                            <use xlink:href="#icon-icon-cross-empty"></use>
-                        </svg>
-                    </span>
+                    <div v-if="scope.row.isSycn===1">
+                        <router-link :to="'/main/system/class/details?id='+scope.row.id" title="班级详情">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-2yulan"></use>
+                            </svg>
+                        </router-link>
+                        <router-link v-if="config.class_edit" :to="'/main/system/class/'+scope.row.id" title="编辑">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-xiugaiziliao"></use>
+                            </svg>
+                        </router-link>
+                        <span v-if="config.class_del" title="删除" @click="deleteLessonClass(scope.row.id)">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-icon-cross-empty"></use>
+                            </svg>
+                        </span>
+                    </div>
                 </template>
             </el-table-column>
         </el-table>
