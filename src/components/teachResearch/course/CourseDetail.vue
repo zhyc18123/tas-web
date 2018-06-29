@@ -211,12 +211,12 @@ export default {
                 videoSize: ''
             },
             rules: {
-                name: [{ required: true, message: '课程名称不能为空！', trigger: 'blur' },{max:40,message:'课程名称不能超过40字',trigger:'blur'}],
-                baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'blur' }],
-                dataSubject: [{ required: true, message: '请选择科目！', trigger: 'blur' }],
-                baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'blur' }],
+                name: [{ required: true, message: '课程名称不能为空！', trigger: 'change' },{max:40,message:'课程名称不能超过40字',trigger:'change'}],
+                baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'change' }],
+                dataSubject: [{ required: true, message: '请选择科目！', trigger: 'change' }],
+                baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'change' }],
                 chapterNum: [
-                    { required: true, message: '讲数不能为空！', trigger: 'blur' }
+                    { required: true, message: '讲数不能为空！', trigger: 'change' }
                 ],
                 // baseTrimesterId: [{ required: true, message: '请选择学期！', trigger: 'blur' }]
             },
@@ -255,6 +255,7 @@ export default {
             } else {
                 this.form = { ...val }
             }
+            this.$refs.form.clearValidate()
         }
     },
     created() {

@@ -6,7 +6,7 @@
         <div slot="label" class="tow-four"   >
             账<span>号：</span>
         </div>
-        <el-input v-model="form.username" placeholder="请输入40字以内的用户姓名"></el-input>
+        <el-input v-model="form.username" placeholder="请输入10字以内的用户姓名"></el-input>
       </el-form-item>
       <el-form-item  prop="account" class="orign-password" >
         <div slot="label" class="tow-four"  >
@@ -210,7 +210,7 @@ export default {
         ],
         username: [
           { required: true, message: '请输入账号', trigger: 'blur' },
-          { max: 40, message: '输入超过最大限度40字', trigger: 'blur' },
+          { max: 10, message: '输入超过最大限度10字', trigger: 'blur' },
         ],
       }
     }
