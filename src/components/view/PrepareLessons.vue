@@ -78,7 +78,7 @@
             </div>
             <div class="c-right">
                 <div class="c-introduce">
-                    <line-head :title="className+'课程说明'" />
+                    <line-head title="课程说明" />
                     <div class="i-video">
                         <d-player ref="dplay" @fullscreen="fullscreen" :class="{full:!isFullscreen}" v-if="detail.videoUrl" :options="{video:{url:detail.videoUrl,pic:detail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>

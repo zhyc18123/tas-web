@@ -307,10 +307,13 @@ export default {
             -ms-flex: 1;                           /* IE 10 */
             flex: 1; 
             min-height 500px
-            background #f8f8f8
             text-align center
             .title
                 padding 15px 0
+                background: #f8f8f8;
+                color: #0BBFA9;
+                font-weight: 700;
+                font-size: 16px;
     .next-btn
         text-align center
         padding-top 20px

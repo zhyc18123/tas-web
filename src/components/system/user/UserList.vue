@@ -131,8 +131,9 @@ export default {
         pageSize:this.pageSize,
         status:this.form.status,
         keyword:this.form.keyword,
-        workStatus:this.workStatus,
+        workStatus:this.form.workStatus,
       }
+      console.log(param)
       console.log('logininfo',this.loginInfo)
       if(this.loginInfo.isSystem){
           io.post(io.findSysAuthUserPage,param,(ret)=>{
@@ -140,7 +141,7 @@ export default {
             this.userList = ret.list
             console.log(ret)
           })
-      }else{
+      }else if(!this.loginInfo.isSystem && this.loginInfo.isManager){
           io.post(io.findAuthUserPage,param,(ret)=>{
             this.userListTotal = ret.total
             this.userList = ret.list
