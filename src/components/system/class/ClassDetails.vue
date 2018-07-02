@@ -228,7 +228,7 @@ export default {
         return {
             id:this.$route.query.id,
             stepActive:4,
-            lessonClassId:null,
+            // lessonClassId:null,
             tableData:[
                 {
                     substituteTeacher:'刘德华',
@@ -300,6 +300,8 @@ export default {
         //查询老师
         getTeacher(){
            let param = this.query
+           param.lessonClassId = this.id
+           param.type = this.type
             io.post(io.teacherList,param,(ret)=>{
                 this.TeacherData = ret
                 console.log("list",ret)
@@ -332,8 +334,8 @@ export default {
             console.log(this.isChange)
             this.type = 0
             this.query.keyword=''
-             this.isChange = false
-             this.getTeacher()
+            this.isChange = false
+            this.getTeacher()
             this.dialogAddTeacher = true
             
         },
