@@ -4,7 +4,7 @@
     <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form" v-if="!loginInfo.isSystem">
       <el-form-item prop="username">
         <div slot="label" class="tow-four"   >
-            账<span>号：</span>
+            姓<span>名：</span>
         </div>
         <el-input v-model="form.username" placeholder="请输入10字以内的用户姓名"></el-input>
       </el-form-item>
@@ -12,7 +12,7 @@
         <div slot="label" class="tow-four"  >
             手<span>机：</span>
         </div>
-        <el-input v-model="form.account" placeholder="请输入登录手机号"></el-input>
+        <el-input v-model="form.account" placeholder="请输入手机号，该号用于登录系统"></el-input>
       </el-form-item>
       <el-form-item class="orign-password" >
         <div slot="label" class="tow-four">
@@ -92,7 +92,7 @@
       </div>
        <el-form-item prop="jobStatuses" >
         <div slot="label" class="tow-four">
-          账号角色：
+          用户角色：
         </div>
         <el-checkbox-group v-model="authRoleIds">
           <el-checkbox v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-checkbox>
@@ -140,7 +140,7 @@ export default {
     // };
     return {
       addDisabled:false,
-      title:'新增账号',
+      title:'新增用户',
       loginInfo:storage.getCurrentUserInfo(),
       checkAll: true,
       roleList: [],
@@ -162,8 +162,8 @@ export default {
         cPassword: "",
         checkedSubject:[],
         status: 1,
-        workStatus:1,
-        jobStatus: 1,
+        workStatus:0,
+        jobStatus: 0,
         type: 1,
       },
       gradesAllBySubject:[],
@@ -220,7 +220,7 @@ export default {
     this.findAuthRoleList()
     if (this.$route.query.userId) {
       this.userId = this.$route.query.userId
-      this.title = "编辑账号"
+      this.title = "编辑用户"
       this.getUserDetail()
     }
     if(this.form.checkedSubject.length!=0){
@@ -246,8 +246,8 @@ export default {
         cPassword: "",
         checkedSubject:[],
         status: 1,
-        workStatus:1,
-        jobStatus: 1,
+        workStatus:0,
+        jobStatus: 0,
         type: 1,
       }
     },

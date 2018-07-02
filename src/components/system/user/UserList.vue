@@ -19,7 +19,7 @@
               <el-button type="primary" @click="handleSearch" class="search-btn">查询</el-button>
           </el-form-item>
           <el-form-item class="new-item">
-              <el-button v-if="config.user_add" type="primary" class="new-btn" @click="handleAdd">新增账号</el-button>
+              <el-button v-if="config.user_add" type="primary" class="new-btn" @click="handleAdd">新增用户</el-button>
           </el-form-item>
       </el-form>
       <el-table :data="userList" style="width: 100%" class="line-table">
@@ -46,11 +46,11 @@
            <div>{{scope.row.endTime | formatTime}}</div>
           </template>
         </el-table-column>
-        <el-table-column min-width="180" label="创建时间" align="center">
+        <!--<el-table-column min-width="180" label="创建时间" align="center">
           <template slot-scope="scope">
             <div>{{scope.row.createTime | formatTime}}</div>
           </template>
-        </el-table-column>
+        </el-table-column>-->
         <el-table-column min-width="180" label="最后编辑时间" align="center">
           <template slot-scope="scope">
             <div>{{scope.row.updateTime | formatTime}}</div>

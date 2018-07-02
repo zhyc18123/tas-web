@@ -224,14 +224,14 @@ export default {
       }
       em {
         font-style: normal;
-        display: inline-block;
-        height: 48px;
+        // display: inline-block;
+        // height: 48px;
         max-width: 150px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         position: relative;
-        top: 4px;
+        // top: 4px;
       }
     }
     .xiala {

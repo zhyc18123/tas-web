@@ -82,8 +82,8 @@
                     <div class="i-video">
                         <d-player ref="dplay" @fullscreen="fullscreen" :class="{full:!isFullscreen}" v-if="detail.videoUrl" :options="{video:{url:detail.videoUrl,pic:detail.videoUrl+'-thumbnail-2'}}"></d-player>
                     </div>
-                    <div class="i-text" :title="detail.remark">
-                        {{detail.remark}}
+                    <div class="i-text" :title="detail.remark" v-html="detail.remark">
+                    
                     </div>
                 </div>
                 <div class="c-data">

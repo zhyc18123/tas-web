@@ -28,7 +28,7 @@
       </el-form-item>
        <el-form-item prop="authRoleId"  >
         <div slot="label" class="tow-four">
-           账号角色：
+           用户角色：
         </div>
         <el-radio-group v-model="form.authRoleId" @change="changeAuthRole">
           <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
