@@ -40,6 +40,11 @@
         </el-tooltip>
         <el-radio :label="1" v-model="form.cooperType">标准</el-radio>
     </el-form-item>
+    <el-form-item label="角色权限:" prop="roles">
+        <el-checkbox-group v-model="form.roles">
+            <el-checkbox v-for="item in roleList" :label="item.id" :key="item.id">{{item.roleName}}</el-checkbox>
+        </el-checkbox-group>
+    </el-form-item>
     <el-form-item class="opt-btn">
         <el-button :disabled="addDisabled" class="height-btn" @click="saveForm">确定</el-button>
         <el-button class="light-btn" @click="$router.go(-1)" >取消</el-button>
@@ -92,6 +97,7 @@ export default {
             type:this.$route.params.type,
             id:this.$route.query.id,
             userTime:[],
+            roleList:[],
             form:{
                 cooperType:'',
                 perName:'',
@@ -101,6 +107,7 @@ export default {
                 freeAccount:'',
                 userTimeStart:'',
                 userTimeEnd:'',
+                roles:[],
             },
             rules:{
                 perName:[
@@ -111,12 +118,16 @@ export default {
                 ],
                 freeAccount:[
                     {validator: validateFreeAccount, trigger: 'blur'}
+                ],
+                roles:[
+                    {required: true, message: '请选择角色权限', trigger: 'change',}
                 ]
             }
         }
     },
     created(){
         this.resetForm()
+        this.authRoleListForOrgan()
         if(this.type && this.id){
             this.title="编辑个人合作"
             this.getAuthOrganDetail()
@@ -133,8 +144,17 @@ export default {
                 userTimeStart:'',
                 userTimeEnd:'',
                 cooperType:'',
+                roles:[],
             }
             this.userTime = []
+        },
+                // 角色接口
+        authRoleListForOrgan(){
+            let param = {}
+            io.post(io.authRoleListForOrgan,param,(ret)=>{
+                this.roleList = ret
+                console.log(ret)
+            })
         },
         getAuthOrganDetail(){
             let param = {
@@ -156,10 +176,11 @@ export default {
             },2000)
             this.$refs.form.validate((valid) => {
                 if(valid){
-                    let param = this.form
+                    let param = {...this.form}
+                    param.roles = param.roles.join(',')
                     if(this.userTime){
-                        param.userTimeStart = util.formatTime(this.userTime[0])
-                        param.userTimeEnd = util.formatTime(this.userTime[1])
+                        param.userTimeStart = util.formatDate(this.userTime[0])+' 00:00:00'
+                        param.userTimeEnd = util.formatDate(this.userTime[1])+' 23:59:59'
                     }else{
                          param.userTimeStart = null
                          param.userTimeEnd = null
