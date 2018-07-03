@@ -116,9 +116,9 @@ export default {
   .icon
     cursor pointer
     font-size 22px
-    color #999
+    color  #999
     &:hover
-      color #333
+      color #01d1bb
 </style>
 
 

@@ -71,6 +71,8 @@ const io = {
   this.getAuthOrganDetail=conf.baseApiPath + '/admin/api/authOrgan/getAuthOrganDetail'
   this.updateAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrgan'
   this.delAuthOrgan=conf.baseApiPath + '/admin/api/authOrgan/delAuthOrgan'
+  this.authRoleListForOrgan=conf.baseApiPath + '/admin/api/authRole/authRoleListForOrgan'
+  
   //个人
   this.addAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/addAuthOrganPerson'
   this.updateAuthOrganPerson=conf.baseApiPath + '/admin/api/authOrgan/updateAuthOrganPerson'

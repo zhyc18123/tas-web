@@ -156,6 +156,8 @@ export default {
     .el-table {
       .btn-handle{
         cursor: pointer;
+        color:#0084bb;
+        padding:0 5px;
       }
       // .btn-edit,
       // .btn-delete {

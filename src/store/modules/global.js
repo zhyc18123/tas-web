@@ -9,7 +9,7 @@ function formatConfig(array) {
     config[val.permission] = true
     val.children && formatConfig(val.children)
   });
-  console.log(config)
+  // console.log(config)
 }
 
 const state = {
@@ -121,8 +121,6 @@ const actions = {
   async login({ dispatch, commit }, opt) {
     let { data } = await io.post6(io.login, opt)
     if (data.success) {
-      console.log(data)
-      console.log(opt)
       if(opt.remember){
         storage.setRemember({phone:opt.phone,password:opt.password,remember: opt.remember})
       }else {
