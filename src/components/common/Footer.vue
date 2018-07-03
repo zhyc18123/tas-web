@@ -21,7 +21,7 @@
   .footer {
     text-align: center;
     height: 40px;
-    background-color: #f5f8f9;
+    // background-color: #f5f8f9;
     font-size: 12px;
     padding: 20px 0;
     clear: both;

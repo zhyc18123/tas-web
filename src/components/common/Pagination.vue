@@ -43,6 +43,6 @@
   .pagination {
     text-align: right;
     margin-top: 20px;
-    padding-top: 13px;
+    /*padding-top: 13px;*/
   }
 </style>

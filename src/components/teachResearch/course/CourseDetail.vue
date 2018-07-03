@@ -331,7 +331,7 @@ export default {
         async addOrUpLesson() {
             let { data } = await io.post6(io.addOrUpLesson, { ...this.form, id: this.form.id === 'add' ? '' : this.form.id,pId:this.checkItem })
             if (data.success) {
-                this.$message('保存成功')
+                this.$message({message:'保存成功',type: 'success'})
                 if (this.form.id === 'add') {
                     this.$router.push({ path: '/main/teach-research/course/edit-lecture/' + data.data.id })
                 } else {
@@ -346,7 +346,7 @@ export default {
 @import '~assets/stylus/mixin.styl'
 .course-detail
     .has-course-btn
-        margin-top 50px
+        margin-top 30px
     .add-type
         height 45px
         line-height 45px
@@ -386,6 +386,7 @@ export default {
             background transparent
     .opt-btn
         text-align center
+        margin-top 40px
     .surport
         color #ff7800
         padding-left 40px

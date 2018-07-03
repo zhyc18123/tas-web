@@ -1,19 +1,16 @@
 <template>
   <div class="t-research container">
-    <el-breadcrumb class="nav-little" separator=">">
+    <!--<el-breadcrumb class="nav-little" separator=">">
       <el-breadcrumb-item :to="{ path: '/' }">
         <svg class="icon shouye" aria-hidden="true">
           <use xlink:href="#icon-shouye1"></use>
         </svg>
         首页
       </el-breadcrumb-item>
-      <!--<el-breadcrumb-item :to="{ path: '/main/system' }">
-        系统管理
-      </el-breadcrumb-item>-->
       <el-breadcrumb-item>
         {{activeName}}
       </el-breadcrumb-item>
-    </el-breadcrumb>
+    </el-breadcrumb>-->
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane v-if="config.lesson" label="课程" name="课程">
@@ -76,6 +73,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
+.my-tabs{
+  padding-top: 20px;
+}
 .t-research {
   .nav-little {
     border-bottom: none;

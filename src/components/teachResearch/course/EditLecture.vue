@@ -38,7 +38,7 @@
                 </div>
                 <span class="b-line"></span>
             </div>
-            <el-form :inline="true" :model="form" class="t-form">
+            <el-form :inline="true" :model="form" class="t-form gray">
                 <!--<el-form-item label="">
                                 <el-select v-model="form.subjectId" placeholder="科目">
                                     <el-option label="全部" value=""></el-option>
@@ -313,7 +313,7 @@ export default {
     .drag-list
         margin-top 20px
         // padding 0 50px
-        margin-bottom 170px
+        margin-bottom 100px
         .d-item
             height 50px
             line-height 50px
@@ -410,7 +410,7 @@ export default {
             padding-top 70px
         .t-form
             margin 10px 0 28px 0
-            padding 22px 20px 0 20px
+            padding 22px 20px 22px 20px
             background #f7f7f7
             
 .has-course

@@ -69,13 +69,13 @@ export default {
         border-color #2bcfbb
         color #2bcfbb
     .el-step__line
-        background #ccc
+        background #e5e5e5
     .el-step__title.is-process,.el-step__title.is-wait
         color #000
         font-weight normal
     .el-step__head.is-process,.el-step__head.is-wait
-        color #cccccc
-        border-color #ccc
+        color #e5e5e5
+        border-color #e5e5e5
     // .el-step__icon.is-text
     //     border-color #ccc
 </style>

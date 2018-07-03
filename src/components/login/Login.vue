@@ -221,7 +221,7 @@ export default {
 </style>
 <style lang="stylus" scoped>
 .login
-    // height 500px
+    // min-height 100%
     // background url('../../assets/img/login-banner.png')
     position relative
     .item-bg

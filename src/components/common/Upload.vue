@@ -258,7 +258,13 @@ export default {
 .upload-form
     table-form()
     padding-right 20px
+    padding-bottom 20px
     width 100%
+    box-sizing border-box
+    .el-form-item 
+        margin-bottom 0
+        position relative
+        top 7px
 .preview
     float right 
     .el-button
