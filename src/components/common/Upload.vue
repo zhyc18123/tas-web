@@ -219,14 +219,20 @@ export default {
                 }
             } else if (this.fileType === 'ppt') {
                 console.log('file', file)
-                if (!(file.name.indexOf('.ppt') > -1)) {
+                if (!(file.name.indexOf('.pptx') > -1)) {
                     this.$message('请上传pptx格式文件')
                     this.loading = false
                     return false
                 }
             } else if (this.fileType === 'word') {
-                if (!(file.name.indexOf('.doc') > -1)) {
+                if (!(file.name.indexOf('.docx') > -1)) {
                     this.$message('请上传docx格式文件')
+                    this.loading = false
+                    return false
+                }
+            }else if (this.fileType === 'excel') {
+                if (!(file.name.indexOf('.xlsx') > -1)) {
+                    this.$message('请上传xlsx格式文件')
                     this.loading = false
                     return false
                 }
