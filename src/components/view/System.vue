@@ -39,7 +39,7 @@
 <script>
 import VCharacterListContainer from '../system/CharacterListContainer.vue'
 import VUserListContainer from '../system/UserListContainer.vue'
-import {mapGetters} from 'vuex'
+import {mapState, mapGetters, mapActions} from 'vuex'
 
 export default {
   name: 'system',
@@ -49,12 +49,12 @@ export default {
   },
   data() {
     return {
-      activeName: '基础设定'
+      activeName: '基础设定',
     }
   },
   created() {
     this.init()
-    this.redirectUrl()
+    // this.redirectUrl()
   },
   beforeUpdate () {
     this.init()
@@ -65,6 +65,9 @@ export default {
   },
   computed: {
     ...mapGetters(['config'])
+  },
+  mounted(){
+    // this.redirectUrl()
   },
   methods: {
     redirectUrl(){
@@ -128,6 +131,10 @@ export default {
   .nav-little {
     border-bottom: none;
     margin: 0;
+    .shouye{
+      font-size:14px;
+      color:#999;
+    }
   }
   .system-content {
     // min-height: 1000px;
@@ -148,6 +155,8 @@ export default {
     }
     .el-tabs__item {
       height: 38px;
+      width:130px;
+      text-align:center;
       line-height: 36px;
       margin-right: 1px;
       background: #fff;

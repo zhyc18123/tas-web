@@ -244,6 +244,9 @@ th div{
 .el-input{
   border: 0 !important;
 }
+.el-radio{
+  color:#666;
+}
 .el-radio__inner{
   color: #00a7eb;
   /*background: #00a7eb;*/
@@ -378,6 +381,9 @@ border-radius: 4px 4px 0 0;
 }
 .is-multiple .el-select-dropdown__item.selected{
   color: #409EFF !important;
+}
+.el-pagination{
+  padding:2px 0;
 }
 .el-pagination.is-background .el-pager li:not(.disabled).active{
   background: #23c9b3;

@@ -1,6 +1,6 @@
 <template>
   <div class="t-research container">
-    <!--<el-breadcrumb class="nav-little" separator=">">
+    <el-breadcrumb class="nav-little" separator=">">
       <el-breadcrumb-item :to="{ path: '/' }">
         <svg class="icon shouye" aria-hidden="true">
           <use xlink:href="#icon-shouye1"></use>
@@ -10,7 +10,7 @@
       <el-breadcrumb-item>
         {{activeName}}
       </el-breadcrumb-item>
-    </el-breadcrumb>-->
+    </el-breadcrumb>
     <el-row class="tabs my-tabs sys-tab">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane v-if="config.lesson" label="课程" name="课程">
@@ -74,12 +74,16 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 .my-tabs{
-  padding-top: 20px;
+  // padding-top: 20px;
 }
 .t-research {
   .nav-little {
     border-bottom: none;
     margin: 0;
+    .shouye{
+      font-size:14px;
+      color:#999;
+    }
   }
 }
 </style>

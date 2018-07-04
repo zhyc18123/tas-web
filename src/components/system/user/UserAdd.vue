@@ -522,12 +522,17 @@ export default {
       padding:40px 20px 20px 100px;
       border: 1px solid #bfebf3;
       border-radius:4px;
+      color:#333;
       .sex,.subject{
         display:flex;
         margin-bottom:38px;
         .label{
           width:auto;
           padding-right:20px;
+          color:#333;
+        }
+        .el-radio{
+          color:#333;
         }
         .role-cont{
           flex:1;
@@ -535,6 +540,7 @@ export default {
           .el-checkbox{
             margin-right:30px;
             margin-bottom: 10px;
+            color:#333;
           }
           ul{
             li{
@@ -569,17 +575,6 @@ export default {
         display:inline-block;
       }
       
-      // .el-form-item__label {
-      //   color: #333333;
-      //   line-height: 62px;
-      // }
-      // .el-form-item__content {
-      //   line-height: 60px;
-      //   .el-form-item__error {
-      //     top: 20px;
-      //     left: 383px;
-      //   }
-      // }
       .el-input { 
         color: #666;
         font-size: 12px;

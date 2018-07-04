@@ -48,7 +48,7 @@
                 <el-button class="height-btn" @click="$router.push('/main/teach-research/course/sheet/'+courseId)" v-if="!course.courseChapterObj.allPublic">暂不发布讲次，下一步</el-button>
                 <el-button class="light-btn" @click="showLecture=true" v-if="!course.courseChapterObj.allPublic">发布讲次，下一步</el-button>
             </div>
-            <el-dialog :title="course.courseChapterObj.name" :visible.sync="showLecture" width="40%" center>
+            <el-dialog :title="course.courseChapterObj.name" :visible.sync="showLecture" width="40%" center class="g-tell">
                 <el-checkbox label="全选" v-model="allCheck"></el-checkbox>
                 <el-checkbox-group v-model="lectureList">
                     <el-checkbox class="lec-list" :label="item.id" v-for="(item,i) in course.courseChapterObj.list" :disabled="item.status===1">{{item.name}}</el-checkbox>
@@ -321,4 +321,12 @@ export default {
     display block
     margin-left 0
 
+</style>
+<style  lang="stylus">
+.data-detail
+    .main
+        .g-tell
+            .el-dialog--center 
+                .el-dialog__body
+                    text-align left
 </style>

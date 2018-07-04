@@ -100,10 +100,10 @@
                                 </ul>
                             </div>
                         </div> -->
-            <el-form-item class="class-btn">
+            <div class="class-btn">
                 <el-button :disabled="addDisabled" type="primary" class="height-btn" @click="sure">确定</el-button>
                 <el-button class="light-btn" @click="$router.go(-1)">取消</el-button>
-            </el-form-item>
+            </div>
         </el-form>
     </el-row>
 </template>
@@ -356,6 +356,7 @@ export default {
     .class-btn
         text-align center
         padding-top 42px
+        padding-bottom 49px
 </style>
 <style lang="stylus">
 .addclass-detail

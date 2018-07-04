@@ -63,20 +63,25 @@
             <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
                     <div v-if="scope.row.isSycn===1">
-                        <router-link :to="'/main/system/class/details?id='+scope.row.id" title="班级详情">
-                            <svg class="icon" aria-hidden="true">
+                        <router-link :to="'/main/system/class/details?id='+scope.row.id" >
+                            <!-- <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-2yulan"></use>
-                            </svg>
+                            </svg> -->
+                            <span class="btn-edit">班级详情</span>    
+                           
                         </router-link>
-                        <router-link v-if="config.class_edit" :to="'/main/system/class/'+scope.row.id" title="编辑">
-                            <svg class="icon" aria-hidden="true">
+                        <router-link v-if="config.class_edit" :to="'/main/system/class/'+scope.row.id" >
+                            <!-- <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-xiugaiziliao"></use>
-                            </svg>
+                            </svg> -->
+                            <span class="btn-edit">编辑</span>
+                            
                         </router-link>
-                        <span v-if="config.class_del" title="删除" @click="deleteLessonClass(scope.row.id)">
-                            <svg class="icon" aria-hidden="true">
+                        <span class="btn-edit" v-if="config.class_del"  @click="deleteLessonClass(scope.row.id)">
+                            <!-- <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-icon-cross-empty"></use>
-                            </svg>
+                            </svg> -->
+                            删除
                         </span>
                     </div>
                 </template>
@@ -169,6 +174,10 @@ export default {
     .el-form-item
         .search-btn
             background-color #009ada
+            &:hover{
+                background-color #0DB9D8
+                border-color #0DB9D8
+            }
 .line-table
     .icon
         cursor pointer
@@ -178,7 +187,12 @@ export default {
         margin-left 11px
         &:hover
             color #01d1bb
-
+    .btn-edit{
+        cursor: pointer;
+        color: #0084bb;
+        padding: 0 5px;
+        display: inline-block;
+    }
 
 </style>
 <style lang="stylus">

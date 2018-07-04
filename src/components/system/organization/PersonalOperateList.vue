@@ -13,7 +13,7 @@
         <el-input v-model="form.phoneOrName" placeholder="请输入姓名/手机号"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search()">查询</el-button>
+        <el-button type="primary" class="search-btn"  @click="search()">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
         <el-button v-if="config.personal_add" type="primary" class="new-btn" @click="$router.push('/main/system/personal/list/add')">新建个人合作</el-button>
@@ -39,9 +39,10 @@
         <el-table-column label="操作" align="center"> 
           <template slot-scope="scope">
             <router-link v-if="config.personal_edit" :to="'/main/system/personal/list/edit?id='+scope.row.id">
-                    <svg class="icon" aria-hidden="true">
-                        <use xlink:href="#icon-xiugaiziliao"></use>
-                    </svg>
+              <!-- <svg class="icon" aria-hidden="true" >
+                  <use xlink:href="#icon-xiugaiziliao"></use>
+              </svg> -->
+              <span class="btn-edit">修改</span>
             </router-link>
           </template>
         </el-table-column>
@@ -112,13 +113,26 @@ export default {
   table-form()
   margin-top 20px
   margin-bottom 30px
+  .el-form-item
+    .search-btn
+      background-color #00b1d1
+      &:hover{
+        background-color #0DB9D8
+        border-color #0DB9D8
+      }
 .line-table
   .icon
     cursor pointer
     font-size 22px
     color #999
     &:hover
-      color #333
+       color #01d1bb
+  .btn-edit{
+    cursor: pointer;
+    color: #0084bb;
+    padding: 0 5px;
+    display: inline-block;
+  }
 </style>
 
 

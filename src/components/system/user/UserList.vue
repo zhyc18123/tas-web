@@ -58,8 +58,18 @@
         </el-table-column>
         <el-table-column align="center"  width="230" label="操作">
           <template slot-scope="scope">
-            <span  class="btn-delete" v-if="config.user_edit" @click="handleEdit(scope.row)">修改</span>
-            <span  class="btn-delete" @click="handleDetails(scope.row)">详情</span>
+             <span  class="btn-delete" v-if="config.user_edit" @click="handleEdit(scope.row)" title="修改">
+              <!-- <svg class="icon" aria-hidden="true" >
+                  <use xlink:href="#icon-xiugaiziliao"></use>
+              </svg> -->
+              修改
+            </span>
+            <span  class="btn-delete" @click="handleDetails(scope.row)">
+              <!-- <svg class="icon" aria-hidden="true" >
+                  <use xlink:href=" #icon-2yulan"></use>
+              </svg> -->
+              详情
+            </span>
           </template>
         </el-table-column>
       </el-table>
@@ -183,7 +193,11 @@ export default {
     margin-bottom 30px
     .el-form-item
       .search-btn
-        background-color #009ada
+        background-color #00b1d1
+        &:hover{
+          background-color #0DB9D8
+          border-color #0DB9D8
+        }
     
 .user-list {
   margin-top: 20px;
@@ -199,6 +213,13 @@ export default {
         color: #0084bb;
         padding: 0 5px;
         display: inline-block;
+        .icon{
+          color:#999;
+          font-size:20px;
+          &:hover{
+            color:#01d1bb;
+          }
+        }
       }
       .btn-add {
         text-align: left;

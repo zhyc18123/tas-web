@@ -48,7 +48,10 @@ import LineHeadForm from '../../common/LineHeadForm'
             value:'0',
             label:"系统"
           },
-          
+          {
+            value:'2',
+            label:"公共"
+          },
         ],
         rules: {
           roleName: [

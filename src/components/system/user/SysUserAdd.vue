@@ -31,9 +31,9 @@
            用户角色：
         </div>
         <el-radio-group v-model="form.authRoleId" @change="changeAuthRole">
-          <el-radio v-for="(item,index) in roleList" :key="index" :label="item.id" >{{item.roleName}}</el-radio>
+          <el-radio v-for="(item,index) in roleList" v-if='item.systemType===0' :key="index" :label="item.id" >{{item.roleName}}</el-radio>
         </el-radio-group>
-       </el-form-item>
+        </el-form-item>
         <el-form-item  v-if="roleType == 2"  class="orign-password">
             <div slot="label" class="tow-four">
             所属机构：
@@ -50,8 +50,14 @@
                 <el-option v-for="(organ,index) in system.organPerson.list" :label="organ.perName" :value="organ.id" :key="index">{{organ.perName}}</el-option>
             </el-select>
         </el-form-item>
+        <el-form-item label="角色权限叠加:" >
+          <el-checkbox-group v-model="form.addAuthRoleIds">
+              <el-checkbox v-if="item.systemType===2" v-for="item in roleList" :label="item.id" :key="item.id">{{item.roleName}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
        <div>
             <el-button :disabled="addDisabled" @click="handleSave" class="btn-save" type="basis">保存</el-button>
+            <el-button @click="$router.go(-1);" class="btn-cancel" type="basis">取消</el-button>
        </div>
     </el-form>
   </div>
@@ -110,6 +116,7 @@ export default {
         cPassword:'',
         oldPassword:'',
         roleType:'',
+        
         form: {
           authRoleId:'',
           account:'',
@@ -118,6 +125,7 @@ export default {
           username:'',
           organPersonId:'',
           authOrganizationId:'',
+          addAuthRoleIds:[],
         },
       rules: {
         account: [
@@ -178,7 +186,7 @@ export default {
         this.$refs.form.validate((valid) => {
             console.log(this.form,valid)
             if (valid) {
-                let data = Object.assign({}, this.form)
+                let data = Object.assign({}, {...this.form})
                 console.log(_this.form.authRoleId)
                 if(_this.roleType == 3){
                     data.authOrganizationId = _this.form.organPersonId
@@ -218,8 +226,7 @@ export default {
                     data.password = this.oldPassword
                     data.cPassword = this.oldPassword
                 }
-
-                console.log(data)
+                data.addAuthRoleIds = this.form.addAuthRoleIds.join(',')
                 if(!this.userId){
                     io.post(io.addSysAuthUser, data, (data) => {
                         this.$message({
@@ -267,20 +274,30 @@ export default {
             }
             io.post(io.authUserDetail,param,(ret)=>{
                 console.log(ret)
+                let authRoleId = []
+                let addAuthRoleIds = []
+                ret.authRoleList.map(item=>{
+                  if(item.systemType===0){
+                    authRoleId.push(item)
+                  }else if(item.systemType===2){
+                    addAuthRoleIds.push(item.id)
+                  }
+                })
                 this.form = {
-                    authRoleId:ret.authRoleList[0].id,
+                    authRoleId:authRoleId[0].id,
                     account:ret.account,
                     password:ret.password,
                     cPassword:ret.password,
                     username:ret.username,
-                    organPersonId:ret.authRoleList[0].roleType===3?ret.authOrganizationId:'',
-                    authOrganizationId:ret.authRoleList[0].roleType===2?ret.authOrganizationId:'',
+                    organPersonId:authRoleId[0].roleType===3?ret.authOrganizationId:'',
+                    authOrganizationId:authRoleId[0].roleType===2?ret.authOrganizationId:'',
+                    addAuthRoleIds:addAuthRoleIds
                 }
                 this.password = '******'
                 this.cPassword = '******'
                 this.oldPassword = ret.password.toString()
                 this.roleList.map((item)=>{
-                  if(ret.authRoleList[0].id==item.id){
+                  if(authRoleId[0].id==item.id){
                     this.roleType = item.roleType
                   }
                 })

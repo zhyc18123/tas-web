@@ -32,11 +32,11 @@
     </el-form-item>
     <el-form-item label="合作类型:" class="required">
         <el-tooltip class="item" effect="light" content="指机构本身拥有业务 课程" placement="bottom-start">
-            <el-button class="personal">
+            <!-- <el-button class="personal"> -->
                 <el-radio :label="0" v-model="form.cooperType">
                     个性化
                 </el-radio>
-            </el-button>
+            <!-- </el-button> -->
         </el-tooltip>
         <el-radio :label="1" v-model="form.cooperType">标准</el-radio>
     </el-form-item>
@@ -45,10 +45,10 @@
             <el-checkbox v-for="item in roleList" :label="item.id" :key="item.id">{{item.roleName}}</el-checkbox>
         </el-checkbox-group>
     </el-form-item>
-    <el-form-item class="opt-btn">
+    <div class="opt-btn">
         <el-button :disabled="addDisabled" class="height-btn" @click="saveForm">确定</el-button>
         <el-button class="light-btn" @click="$router.go(-1)" >取消</el-button>
-    </el-form-item>
+    </div>
     
 </el-form>
   </el-row>
@@ -238,12 +238,20 @@ export default {
         font-style normal
     .personal
         border 0
-        color #606266
+        // color #606266
         &:hover
             background transparent
+        .el-radio
+            color:#666
+            font-family: "Microsoft YaHei",Arial,Helvetica,sans-serif,"宋体";
     .opt-btn
         text-align center
-        margin-top 200px
+        margin-top 37px
+        padding-bottom 49px
+        .el-button+.el-button{
+            margin-left 26px
+        }
+        
 </style>
 <style lang="stylus">
    .organization-detail
