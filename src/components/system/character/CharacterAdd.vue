@@ -2,7 +2,7 @@
   <div class="character-add">
     <!-- <v-character-title icon="icon-wenjian2" name="角色管理"> -->
     <!-- </v-character-title> -->
-    <line-head-form class="head" :title="title"/>
+    <line-head-form class="head" :title="title" :type="type"/>
     <el-form :rules="rules" ref="form" :model="form" label-width="100px">
       <el-form-item prop="roleName" label="角色名称：">
         <el-input  v-model="form.roleName" placeholder="请输入角色名称"></el-input>
@@ -32,6 +32,7 @@ import LineHeadForm from '../../common/LineHeadForm'
     },
     data() {
     	return {
+        type:'add',
         addDisabled:false,
         title:'新增角色',
         form: {
@@ -68,6 +69,7 @@ import LineHeadForm from '../../common/LineHeadForm'
         this.form.roleName = this.$route.query.roleName
         this.form.systemType = this.$route.query.systemType
         this.title = "编辑角色"
+        this.type = 'edit'
       }
     },
     methods: {

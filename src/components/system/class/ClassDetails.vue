@@ -1,6 +1,6 @@
 <template>
 <el-row class="class-detail">
-    <line-head-form class="head" title="班级详情"/>
+    <line-head-form class="head" title="班级详情" type="detail"/>
     <div class="detail-cont">
         <div class="cont-head">
              <svg class="icon" aria-hidden="true">
@@ -25,23 +25,23 @@
                                     </div>
                                     <span>{{classes.classDetail.num}}</span>
                                 </div> -->
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                         学<span>科：</span>
                                     </div>
-                                    <span>{{classes.classDetail.subject}}</span>
+                                    <span class="c-info">{{classes.classDetail.subject}}</span>
                                 </div>
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                        所在校区：
                                     </div>
-                                    <span>{{classes.classDetail.school}}</span>
+                                    <span class="c-info">{{classes.classDetail.school}}</span>
                                 </div>
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                       班<span>型：</span>
                                     </div>
-                                    <span>{{classes.classDetail.lessonName}}</span>
+                                    <span class="c-info" :title="classes.classDetail.lessonName">{{classes.classDetail.lessonName}}</span>
                                 </div>
                                 <!-- <div class="info-item">
                                     <div slot="label" class="tow-four">
@@ -57,31 +57,31 @@
                                     </div>
                                     <span>-</span>
                                 </div> -->
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                         年<span>级：</span>
                                     </div>
-                                    <span>{{classes.classDetail.section}}</span>
+                                    <span class="c-info">{{classes.classDetail.section}}</span>
                                 </div>
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                        创建日期：
                                     </div>
-                                    <span>{{classes.classDetail.createTime | formatDate}}</span>
+                                    <span class="c-info">{{classes.classDetail.createTime | formatDate}}</span>
                                 </div>
                             </li>
                             <li>
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                        每讲总数：
                                     </div>
-                                    <span v-text="classes.classDetail.lessonClassPlanChapterList && classes.classDetail.lessonClassPlanChapterList.length">{{}}</span>
+                                    <span class="c-info" v-text="classes.classDetail.lessonClassPlanChapterList && classes.classDetail.lessonClassPlanChapterList.length" >{{}}</span>
                                 </div>
-                                <div class="info-item">
+                                <div class="info-item clearfix">
                                     <div slot="label" class="tow-four">
                                         开课日期：
                                     </div>
-                                    <span>{{classes.classDetail.openTime | formatDate}}</span>
+                                    <span class="c-info">{{classes.classDetail.openTime | formatDate}}</span>
                                 </div>
                                 
                             </li>
@@ -179,7 +179,7 @@
             <el-form>
                 <el-form-item >
                     <el-input v-model="query.keyword" auto-complete="off" placeholder="请输入关键字进行筛选"></el-input>
-                    <el-button @click="getTeacher">搜索</el-button>
+                    <el-button @click="getTeacher" class="search-btn">搜索</el-button>
                 </el-form-item>
             </el-form>
             <div class="teacher-table">
@@ -624,10 +624,14 @@ export default {
                                     margin-bottom 0px
                                 .tow-four
                                     display inline-block
+                                    float left
                                 &>span 
-                                    text-overflow ellipsis
-                                    overflow hidden
+                                    display block
+                                    float left
+                                    // text-overflow ellipsis
+                                    // overflow hidden
                                     white-space nowrap
+                                    max-width 70%
                 .teacher-info
                     width 100%
                     ul
@@ -661,17 +665,19 @@ export default {
         .add-teacher
             min-width 580px
             .el-form-item
-                padding 20px 30px 0 20px
+                padding 20px 20px 0 20px
                 .el-input
                     width 85%
                     height 38px
                 .el-button
-                    background #009ada
+                    // background #009ada
+                    border 0 none
                     color #fff
                     height 36px
+                    float right
                     margin-left 10px
             .teacher-table
-                padding 0 30px
+                padding 0 20px
                 .el-table
                     border 0 none !important
                     .course

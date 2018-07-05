@@ -1,6 +1,6 @@
 <template>
   <el-row class="organization-detail">
-<line-head-form class="head" :title="title"/>
+<line-head-form class="head" :title="title" :type="types"/>
     <el-form class="o-form" label-position="right" label-width="130px" :model="form" :rules="rules" ref="form">
         <el-form-item label="机构图标:" class="required">
             <file-upload @success="uploading" chooseType="00" :fileUrl="form.orgHeadUrl" fileType='img'/>
@@ -82,6 +82,7 @@ export default {
         };
         return {
             addDisabled:false,
+            types:'add',
             title:'新建合作机构',
             type:this.$route.params.type,
             id:this.$route.query.id,
@@ -125,6 +126,7 @@ export default {
         this.authRoleListForOrgan()
         if(this.type && this.id){
             this.title = "编辑合作机构"
+            this.types = 'edit'
             this.getAuthOrganDetail()
         }
     },

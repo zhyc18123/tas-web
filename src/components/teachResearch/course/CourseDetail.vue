@@ -10,8 +10,8 @@
             </el-form-item>
             <el-form-item prop="dataSubject">
                 <div slot="label" class="tow-four">
-                    科
-                    <span>目:</span>
+                    科<span>目:</span>
+                    
                 </div>
 
                 <el-select v-model="form.dataSubject" placeholder="" :disabled="form.id!=='add'">
@@ -20,8 +20,8 @@
             </el-form-item>
             <el-form-item prop="baseSectionId">
                 <div slot="label" class="tow-four">
-                    年
-                    <span>级:</span>
+                    年<span>级:</span>
+                   
                 </div>
                 <el-select v-model="form.baseSectionId" placeholder="">
                     <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
@@ -29,8 +29,8 @@
             </el-form-item>
             <el-form-item prop="baseLevelId">
                 <div slot="label" class="tow-four">
-                    班
-                    <span>型:</span>
+                    班<span>型:</span>
+                    
                 </div>
 
                 <el-select v-model="form.baseLevelId" placeholder="">
@@ -39,15 +39,15 @@
             </el-form-item>
             <el-form-item prop="chapterNum">
                 <div slot="label" class="tow-four">
-                    讲
-                    <span>数:</span>
+                    讲<span>数:</span>
+                    
                 </div>
                 <el-input v-model="form.chapterNum" :disabled="form.id!=='add'"></el-input>
             </el-form-item>
             <el-form-item prop="baseTrimesterId">
                 <div slot="label" class="tow-four">
-                    学
-                    <span>期:</span>
+                    学<span>期:</span>
+                   
                 </div>
 
                 <el-select v-model="form.baseTrimesterId" placeholder="">
@@ -62,8 +62,8 @@
             </el-form-item>
             <el-form-item>
                 <div slot="label" class="tow-four">
-                    年
-                    <span>份:</span>
+                    年<span>份:</span>
+                    
                 </div>
                 <el-select v-model="form.dataYear" placeholder="">
                     <el-option v-for="(year,index) in condition.yearList" :label="year.name" :value="year.id"></el-option>
@@ -152,7 +152,7 @@
                             <el-input v-model="sForm.name" placeholder="请输入课程名称"></el-input>
                         </el-form-item>
                         <el-form-item>
-                            <el-button type="primary" @click="search">查询</el-button>
+                            <el-button type="primary" @click="search" class="search-btn">查询</el-button>
                         </el-form-item>
                     </el-form>
                     <div class="search-table">

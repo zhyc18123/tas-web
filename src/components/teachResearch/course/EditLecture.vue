@@ -62,7 +62,7 @@
                     <el-input v-model="form.name" placeholder="请输入讲次名称"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="search">查询</el-button>
+                    <el-button type="primary" @click="search" class="search-btn">查询</el-button>
                 </el-form-item>
             </el-form>
             <div class="t-cont">
@@ -247,6 +247,7 @@ export default {
         },
         cancle() {
             this.isAdd = false
+            this.tableSelectNum = 0
         },
         async addLesChapters() {
             if (!this.tableSelectItem.length) {
@@ -383,6 +384,9 @@ export default {
         padding-bottom 10px
         .el-form-item
             margin-bottom 0
+            .search-btn
+                margin-top 2px
+
     .o-form
         // padding 0 200px
         margin auto

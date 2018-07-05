@@ -251,6 +251,9 @@ th div{
   color: #00a7eb;
   /*background: #00a7eb;*/
 }
+.el-radio__input.is-checked+.el-radio__label{
+  color:#666;
+}
 .el-select .el-input .el-input__icon{
   color: #bfebf3;
   top:0;
@@ -273,6 +276,9 @@ th div{
 }
 .el-checkbox__inner{
   border-color: #00a7eb;
+}
+.el-checkbox__input.is-checked+.el-checkbox__label{
+  color:#666;
 }
 .el-checkbox__input.is-checked .el-checkbox__inner{
   background: #41c8ff;
@@ -501,6 +507,16 @@ border-radius: 4px 4px 0 0;
 }
 .el-message .el-message__icon.el-icon-success{
   color:#00c4c2 !important;
+}
+
+/* 搜索按钮样式 */
+.search-btn.el-button{
+  background-color:#00b1d1;
+}
+
+.search-btn.el-button:hover{
+    background-color :#13c4e4;
+    border-color:#13c4e4;
 }
 /* element ui 步骤条的弹性盒兼容 */
 .el-steps{

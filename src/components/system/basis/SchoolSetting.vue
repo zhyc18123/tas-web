@@ -156,7 +156,7 @@ watch: {
  <style lang="less" scoped>
 .school-setting {
   margin-top: 15px;
-  height: 200px;
+  // height: 200px;
   background: white;
   .class-category {
     float: left;
