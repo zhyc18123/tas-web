@@ -171,7 +171,14 @@ watch: {
         color: #0084bb;
         width: 55px;
         display: inline-block;
-        padding: 10px 0;
+        padding: 9px 0;
+        border-color:#0084bb;
+      }
+      .el-button{
+        margin-right:10px;
+      }
+      .el-button+.el-button{
+        margin-left:0px;
       }
       .btn-add {
         text-align: left;

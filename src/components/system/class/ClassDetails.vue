@@ -111,7 +111,7 @@
                         <span>讲次排课信息</span>
                         <!-- <el-button>修改讲次课表</el-button> -->
                     </div>
-                    <div slot="description">
+                    <div slot="description" class="course-info">
                         <el-table 
                             :data="classes.classDetail.lessonClassPlanChapterList"
                             class="line-table"
@@ -662,6 +662,8 @@ export default {
                                     padding 0 
                                     border-bottom 1px solid #009ada
                                     border-radius 0 
+                .course-info
+                    width 100%
         .add-teacher
             min-width 580px
             .el-form-item
