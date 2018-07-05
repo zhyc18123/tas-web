@@ -1,6 +1,6 @@
 <template>
   <div class="user-detail">
-    <line-head-form class="head" :title="title"/>
+    <line-head-form class="head" :title="title" type="detail"/>
     <div v-if="!loginInfo.isSystem && loginInfo.isManager">
         <div class="base-info">
             <ul>

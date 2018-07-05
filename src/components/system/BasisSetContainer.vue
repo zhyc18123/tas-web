@@ -37,6 +37,8 @@ export default {
 
 <style lang="less" scoped>
 .m-basis-set-container {
+  // min-height:900px;
+  padding-bottom:50px;
   .basis-set-nav {
     height: 44px;
     padding-left: 30px;
@@ -56,8 +58,9 @@ export default {
     }
   }
   .basis-set-content {
-    height: 900px;
-    overflow-y: scroll;
+    min-height: 900px;
+    // overflow-y: scroll;
+
   }
 }
 </style>

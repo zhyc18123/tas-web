@@ -1,14 +1,14 @@
 <template>
     <el-row class="data-detail">
-        <line-head-form class="head" :title="form.id==='new'?'新增素材':'编辑素材'" />
+        <line-head-form class="head" :title="form.id==='new'?'新增素材':'编辑素材'" :type="form.id==='new'?'add':'edit'" />
         <el-form class="o-form" label-position="right" label-width="120px" :model="form" :rules="rules" ref="form">
             <el-form-item label="素材名称:" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item prop="dataSubject">
                 <div slot="label" class="tow-four">
-                    科
-                    <span>目:</span>
+                    科<span>目:</span>
+                    
                 </div>
                 <el-select v-model="form.dataSubject" placeholder="">
                     <el-option v-for="(subject,index) in condition.subjectList" :label="subject.name" :value="subject.id"></el-option>
@@ -16,8 +16,8 @@
             </el-form-item>
             <el-form-item prop="baseSectionId">
                 <div slot="label" class="tow-four">
-                    年
-                    <span>级:</span>
+                    年<span>级:</span>
+                  
                 </div>
                 <el-select v-model="form.baseSectionId" placeholder="">
                     <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id"></el-option>
@@ -25,8 +25,8 @@
             </el-form-item>
             <el-form-item prop="baseLevelId">
                 <div slot="label" class="tow-four">
-                    班
-                    <span>型:</span>
+                    班<span>型:</span>
+                   
                 </div>
 
                 <el-select v-model="form.baseLevelId" placeholder="">
@@ -198,6 +198,7 @@ export default {
         color red
         position absolute
         left -10px
+        font-style normal
     .el-select
         width 100%
     .gray

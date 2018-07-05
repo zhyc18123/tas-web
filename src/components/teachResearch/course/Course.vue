@@ -23,7 +23,7 @@
         <el-input v-model="form.name" placeholder="请输入课程名称"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="search">查询</el-button>
+        <el-button type="primary" @click="search" class="search-btn">查询</el-button>
       </el-form-item>
       <el-form-item class="new-item">
         <el-button v-if="config.lesson_add" type="primary" class="new-btn" @click="addCourse">{{userInfo.isSystem?'新建课程':'创建定制课程'}}</el-button>

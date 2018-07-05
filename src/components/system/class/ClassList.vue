@@ -1,30 +1,32 @@
 <template> 
     <div class="organization ">
         <el-form :inline="true" :model="form" class="t-form gray t-class-list">
-            <el-form-item label="">
-                <el-select v-model="form.baseSectionId" placeholder="年级">
-                    <el-option label="全部" value=""></el-option>
-                    <el-option v-for="item in condition.gradeObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item label="">
-                <el-select v-model="form.baseTrimesterId" placeholder="学期">
-                    <el-option label="全部" value=""></el-option>
-                    <el-option v-for="item in condition.termObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
-            </el-form-item>
-            <el-form-item>
-                <el-select v-model="form.baseLevelId" placeholder="班型">
-                    <el-option label="全部" value=""></el-option>
-                    <el-option v-for="item in condition.levelObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
-            </el-form-item>
-             <el-form-item>
-                <el-select v-model="form.schoolId" placeholder="校区">
-                    <el-option label="全部" value=""></el-option>
-                    <el-option v-for="item in school.schoolObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
-                </el-select>
-            </el-form-item>
+            <div>
+                <el-form-item label="">
+                    <el-select v-model="form.baseSectionId" placeholder="年级">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in condition.gradeObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="">
+                    <el-select v-model="form.baseTrimesterId" placeholder="学期">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in condition.termObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-select v-model="form.baseLevelId" placeholder="班型">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in condition.levelObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item>
+                    <el-select v-model="form.schoolId" placeholder="校区">
+                        <el-option label="全部" value=""></el-option>
+                        <el-option v-for="item in school.schoolObj.list" :label="item.name" :value="item.id" :key="item.id"></el-option>
+                    </el-select>
+                </el-form-item>
+            </div>
             <el-form-item>
                 <el-select v-model="form.status" placeholder="班级状态">
                     <el-option label="全部" value=""></el-option>
@@ -172,12 +174,7 @@ export default {
     margin-top 20px
     margin-bottom 30px
     .el-form-item
-        .search-btn
-            background-color #009ada
-            &:hover{
-                background-color #0DB9D8
-                border-color #0DB9D8
-            }
+        margin-bottom 10px
 .line-table
     .icon
         cursor pointer
@@ -193,6 +190,13 @@ export default {
         padding: 0 5px;
         display: inline-block;
     }
+.t-class-list
+    padding-bottom 10px
+    .el-form-item
+        margin-right 30px
+    .el-form-item.new-item
+         bottom 18px
+         margin-right 10px
 
 </style>
 <style lang="stylus">

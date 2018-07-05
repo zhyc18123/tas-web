@@ -1,14 +1,14 @@
 <template>
     <el-row class="lecture-detail">
-        <line-head-form class="head" :title="form.id==='new'?'新建讲次':'编辑讲次'" />
+        <line-head-form class="head" :title="form.id==='new'?'新建讲次':'编辑讲次'" :type="form.id==='new'?'add':'edit'"/>
         <el-form class="o-form" ref="form" label-position="right" label-width="120px" :model="form" :rules="rules">
             <el-form-item label="讲次名称:" prop="name">
                 <el-input v-model="form.name"></el-input>
             </el-form-item>
             <el-form-item prop="dataSubject">
                 <div slot="label" class="tow-four">
-                    科
-                    <span>目:</span>
+                    科<span>目:</span>
+                    
                 </div>
 
                 <el-select v-model="form.dataSubject" placeholder="">
@@ -17,8 +17,8 @@
             </el-form-item>
             <el-form-item prop="baseSectionId">
                 <div slot="label" class="tow-four">
-                    年
-                    <span>级:</span>
+                    年<span>级:</span>
+                    
                 </div>
                 <el-select v-model="form.baseSectionId" placeholder="">
                     <el-option v-for="(grade,index) in condition.gradeObj.list" :label="grade.name" :value="grade.id" :key="index"></el-option>
@@ -30,8 +30,7 @@
             </el-form-item>
             <el-form-item prop="baseLevelId">
                 <div slot="label" class="tow-four">
-                    班
-                    <span>型:</span>
+                    班<span>型:</span>
                 </div>
 
                 <el-select v-model="form.baseLevelId" placeholder="">
@@ -180,6 +179,7 @@ export default {
         color red
         position absolute
         left -10px
+        font-style normal
     .el-select
         width 100%
     .gray

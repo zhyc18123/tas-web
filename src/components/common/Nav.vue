@@ -235,7 +235,7 @@ export default {
       }
     }
     .xiala {
-      font-size: 18px !important;
+      font-size: 16px !important;
       color: #00b1d1;
       position: relative;
       top: -3px;
@@ -281,7 +281,7 @@ export default {
     }
 
     .icon {
-      font-size: 28px;
+      font-size: 26px;
       vertical-align: -8px;
       margin-right: 3px;
       color:#009085;

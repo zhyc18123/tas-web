@@ -1,6 +1,6 @@
 <template>
   <div class="user-add">
-    <line-head-form class="head" :title="title"/>
+    <line-head-form class="head" :title="title" :type="type"/>
     <el-form :rules="rules" ref="form" :model="form" label-width="100px" class="add-form" v-if="!loginInfo.isSystem">
       <el-form-item prop="username">
         <div slot="label" class="tow-four"   >
@@ -53,6 +53,7 @@
         </el-radio-group>
       </el-form-item>
       <div class="auth-role">
+        <span class="triangle" :class="form.type==3?'right':form.type==1?'left':'center'"></span>
         <div class="sex t-flexs">
           <div slot="label" class="label">
             性别：
@@ -90,7 +91,7 @@
           </div>
         </div>
       </div>
-       <el-form-item prop="jobStatuses" >
+       <el-form-item  class="r-role">
         <div slot="label" class="tow-four">
           用户角色：
         </div>
@@ -141,6 +142,7 @@ export default {
     return {
       addDisabled:false,
       title:'新增用户',
+      type:'add',
       loginInfo:storage.getCurrentUserInfo(),
       checkAll: true,
       roleList: [],
@@ -221,6 +223,7 @@ export default {
     if (this.$route.query.userId) {
       this.userId = this.$route.query.userId
       this.title = "编辑用户"
+      this.type = "edit"
       this.getUserDetail()
     }
     if(this.form.checkedSubject.length!=0){
@@ -521,8 +524,32 @@ export default {
     .auth-role{
       padding:40px 20px 20px 100px;
       border: 1px solid #bfebf3;
+      position:relative;
       border-radius:4px;
       color:#333;
+      .triangle{
+        position: absolute;
+        top: -11px;
+        z-index: 3;
+        // left: 125px;
+        width: 20px;
+        height: 20px;
+        background:#fff;
+        border-style: solid;
+        border-width: 1px 1px 1px 1px;
+        // border-color:#bfebf3;
+        border-color: transparent transparent #bfebf3 #bfebf3;
+        transform: rotate(135deg);
+        &.left{
+          left: 125px;
+        }
+        &.center{
+          left: 215px;
+        }
+        &.right{
+          left: 310px;
+        }
+      }
       .sex,.subject{
         display:flex;
         margin-bottom:38px;
@@ -565,6 +592,9 @@ export default {
         }
       }
     }
+    .r-role{
+        margin-top:20px;
+      }
     .el-form-item {
       text-align: left;
       min-height: 60px;
@@ -644,6 +674,9 @@ export default {
   .auth-role{
      .el-checkbox+.el-checkbox {
         margin-left: 0px;
+      }
+      .el-checkbox__input.is-checked+.el-checkbox__label{
+        color:#333;
       }
   }
 }

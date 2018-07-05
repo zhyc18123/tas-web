@@ -192,12 +192,12 @@ export default {
     margin-top 20px
     margin-bottom 30px
     .el-form-item
-      .search-btn
-        background-color #00b1d1
-        &:hover{
-          background-color #0DB9D8
-          border-color #0DB9D8
-        }
+      // .search-btn
+      //   background-color #00b1d1
+      //   &:hover{
+      //     background-color #0DB9D8
+      //     border-color #0DB9D8
+      //   }
     
 .user-list {
   margin-top: 20px;

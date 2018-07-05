@@ -1,6 +1,6 @@
 <template>
   <el-row class="organization-detail">
-<line-head-form class="head" :title="title"/>
+<line-head-form class="head" :title="title" :type="types"/>
 <el-form class="o-form" label-position="right" label-width="130px" :model="form" :rules="rules" ref="form"> 
     <el-form-item label="真实姓名:" prop="perName" >
         <el-input v-model="form.perName"  placeholder="请输入真实姓名"></el-input>
@@ -94,6 +94,7 @@ export default {
         return {
             addDisabled:false,
             title:"新建个人合作",
+            types:'add',
             type:this.$route.params.type,
             id:this.$route.query.id,
             userTime:[],
@@ -130,6 +131,7 @@ export default {
         this.authRoleListForOrgan()
         if(this.type && this.id){
             this.title="编辑个人合作"
+            this.types = 'edit'
             this.getAuthOrganDetail()
         }
     },
