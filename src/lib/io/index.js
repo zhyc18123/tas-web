@@ -96,6 +96,14 @@ const io = {
   this.delSchool=conf.baseApiPath + '/lesson/api/BaseSchool/delSchool'
   this.updateSchool=conf.baseApiPath + '/lesson/api/BaseSchool/updateSchool'
   this.getBaseSchool=conf.baseApiPath + '/lesson/api/BaseSchool/getBaseSchool'
+  // 班型
+  this.addLevel=conf.baseApiPath + '/lesson/api/BaseLevel/addLevel'
+  this.updateLevel=conf.baseApiPath + '/lesson/api/BaseLevel/updateLevel'
+  this.delLevel=conf.baseApiPath + '/lesson/api/BaseLevel/delLevel'
+  // 学期
+  this.addTerm=conf.baseApiPath + '/lesson/api/BaseTerm/addTerm'
+  this.updateTerm=conf.baseApiPath + '/lesson/api/BaseTerm/updateTerm'
+  this.delTerm=conf.baseApiPath + '/lesson/api/BaseTerm/delTerm'
   // 班级
   this.findClassPage=conf.baseApiPath + '/lesson/api/lessonClass/findClassPage'
   this.addOrUpdateClass=conf.baseApiPath + '/lesson/api/lessonClass/addOrUpdateClass'

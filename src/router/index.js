@@ -32,6 +32,8 @@ const DataDetail = resolve => require(['../components/teachResearch/data/DataDet
 const System = resolve => require(['../components/view/System'], resolve)
 const BasisSetContainer = resolve => require(['../components/system/BasisSetContainer'], resolve)
 const SchoolSetting = resolve => require(['../components/system/basis/SchoolSetting'], resolve)
+const TermSetting = resolve => require(['../components/system/basis/TermSetting'], resolve)
+const ClassSetting = resolve => require(['../components/system/basis/ClassSetting'], resolve)
 const OrganizationContainer = resolve => require(['../components/system/OrganizationContainer'], resolve)
 const PersonalOperateContainer = resolve => require(['../components/system/PersonalOperateContainer'], resolve)
 const PersonalOperateList = resolve => require(['../components/system/organization/PersonalOperateList'], resolve)
@@ -82,6 +84,7 @@ const Login = resolve => require(['../components/login/Login'], resolve)
 const Personal = resolve => require(['../components/personal/Personal'], resolve)
 const UserInfo = resolve => require(['../components/personal/UserInfo'], resolve)
 const ChangePassword = resolve => require(['../components/personal/ChangePassword'], resolve)
+ const Pdf = resolve => require(['../components/view/Pdf'], resolve)
 
 Vue.use(Router)
 
@@ -163,6 +166,12 @@ const router= new Router({
           children: [{
             path: 'schoolSetting',
             component: SchoolSetting
+          },{
+            path: 'termSetting',
+            component: TermSetting
+          },{
+            path: 'classSetting',
+            component: ClassSetting
           }
           ]
         },{
@@ -307,6 +316,10 @@ const router= new Router({
         }
       ]
     },
+     {
+       path:'/pdf',
+       component:Pdf
+     }
   ]
 })
 router.beforeEach((to,from,next)=>{
