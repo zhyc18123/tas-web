@@ -46,7 +46,7 @@
             </el-form-item>
         </el-form>
         <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" empty-text="暂无班级，请先添加班级">
-            <el-table-column prop="className" label="班级名称" align="center" ></el-table-column>
+            <el-table-column prop="className" label="班级名称" align="center" width="160"></el-table-column>
             <el-table-column prop="baseLevelName" label="班型"  align="center"></el-table-column>
             <el-table-column  label="开课状态" align="center">
                 <template scope="scope">
@@ -61,7 +61,7 @@
                     </span>
                 </template>
                  </el-table-column>
-             <el-table-column prop="school"  label="所属校区" align="center"> </el-table-column>
+             <el-table-column prop="school"  label="所属校区" align="center" width="160"> </el-table-column>
             <el-table-column  label="操作" align="center" min-width="160"> 
                 <template slot-scope="scope" >
                     <div v-if="scope.row.isSycn===1">
@@ -104,12 +104,12 @@ export default {
     data(){
         return{
             form:{
-                baseSectionId:null,
-                baseTrimesterId:null,
+                baseSectionId:this.$route.query.baseSectionId|| null,
+                baseTrimesterId:this.$route.query.baseTrimesterId||null,
                 lessonId:null,
-                baseLevelId:null,
+                baseLevelId:this.$route.query.baseLevelId||null,
                 schoolId:null,
-                status:null,
+                status:this.$route.query.status||null,
                 name:'',
                 pageIndex:1,
                 pageSize:10

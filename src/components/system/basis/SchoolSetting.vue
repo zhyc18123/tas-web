@@ -3,7 +3,7 @@
     <div class="content">
       <span class="direction-icon"></span>
       <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="来源名称" align="center">
+        <el-table-column label="校区名称" align="center">
           <template scope="scope">
             <div v-show="!scope.row.add && !scope.row.isEdit">{{scope.row.name}}</div>
             <div v-show="scope.row.add" class="btn-add">
@@ -13,7 +13,7 @@
               <span v-if="config.school_add" @click="handleAdd(scope.row)">添加</span>
             </div>
             <div v-if="scope.row.addRow" class="btn-add">
-              <el-input v-model="newName" placeholder="请输入来源名称"></el-input>
+              <el-input v-model="newName" placeholder="请输入校区名称"></el-input>
             </div>
             <div v-if="scope.row.isEdit" class="btn-add">
               <el-input v-model="scope.row.name"></el-input>

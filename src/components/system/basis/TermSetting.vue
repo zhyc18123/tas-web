@@ -2,8 +2,8 @@
   <div class="term-setting">
     <div class="content">
       <span class="direction-icon"></span>
-      <el-table :data="tableData" style="width: 100%">
-        <el-table-column label="来源名称" align="center">
+      <el-table :data="tableData.list" style="width: 100%">
+        <el-table-column label="学期名称" align="center">
           <template scope="scope">
             <div v-show="!scope.row.add && !scope.row.isEdit">{{scope.row.name}}</div>
             <div v-show="scope.row.add" class="btn-add">
@@ -13,7 +13,7 @@
               <span v-if="config.trimester_add" @click="handleAdd(scope.row)">添加</span>
             </div>
             <div v-if="scope.row.addRow" class="btn-add">
-              <el-input v-model="newName" placeholder="请输入来源名称"></el-input>
+              <el-input v-model="newName" placeholder="请输入学期名称"></el-input>
             </div>
             <div v-if="scope.row.isEdit" class="btn-add">
               <el-input v-model="scope.row.name"></el-input>
@@ -27,22 +27,25 @@
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleSave()">保存</el-button>
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleCancel(scope.row)">取消</el-button>
             <el-button v-show="scope.row.isEdit" class="btn-delete" @click="handleSave(scope.row)">保存</el-button>
-            <el-button v-show="scope.row.isEdit" class="btn-delete" @click="scope.row.isEdit = false;getQuestionList()">取消</el-button>
+            <el-button v-show="scope.row.isEdit" class="btn-delete" @click="scope.row.isEdit = false;getTerm()">取消</el-button>
           </template>
         </el-table-column>
       </el-table>
+    <v-pagination ref="pagin" class="pag" :total="tableData.total|toNumber" @getListResult="getTerm" :currentPage="form.pageIndex"></v-pagination>
     </div>
   </div>
 </template>
 
  <script>
 import VClassCategory from '../../common/ClassCategory.vue'
+import VPagination from "../../common/Pagination"
 import io from '../../../lib/io'
 import { mapState, mapActions,mapGetters } from 'vuex'
 export default {
   name: 'term-setting',
   components: {
-    VClassCategory
+    VClassCategory,
+    VPagination
   },
   data() {
     return {
@@ -51,6 +54,10 @@ export default {
       isAdd: false,
       newName: '',
       nexOrderNo: 0,
+      form:{
+          pageIndex:1,
+          pageSize:10
+      }
     }
   },
   computed: {
@@ -60,27 +67,27 @@ export default {
 watch: {
   'condition.termObj'(val){
     console.log("school")
-    let data=JSON.parse(JSON.stringify(val.list)) 
-        this.nexOrderNo = data.length + 1
-        data.map((val) => {
+    let data=JSON.parse(JSON.stringify(val)) 
+        this.nexOrderNo = data.list.length + 1
+        data.list&&data.list.map((val) => {
           val.isEdit = false
         })
-        data.push({
+        data.list&&data.list.push({
           add: true
         })
         this.tableData = data
   }
 },
   created() {
-    this.getSchools()
+    this.getTerm()
   },
   methods: {
     ...mapActions(['findBaseTermPage']),
-    getSchools(){
-    this.findBaseTermPage({pageIndex:1,pageSize:10000000})
+    getTerm(opt){
+    this.findBaseTermPage({...this.form,...opt})
     },
     handleAdd() {
-      this.tableData.splice(this.tableData.length - 1, 0, { addRow: true }, )
+      this.tableData.list&&this.tableData.list.splice(this.tableData.list.length - 1, 0, { addRow: true }, )
       this.isAdd = true
     },
     handleEdit(scope) {
@@ -89,7 +96,7 @@ watch: {
       }
       scope.row.isEdit = true
       this.isEdit = true
-      this.tableData=[...this.tableData]
+      this.tableData.list=[...this.tableData.list]
     },
     handleDelete(row) {
       this.$confirm('确认删除?', '提示', {
@@ -102,7 +109,7 @@ watch: {
           this.$message({
             type:'success',
             message:'删除成功！'})
-          this.getSchools()
+          this.getTerm()
         }
       }).catch(() => {
         this.$message('已取消删除');
@@ -140,12 +147,12 @@ watch: {
       if(data.success){
         this.$message({type:"success",message:'保存成功！'})
         this.handleCancel()
-        this.getSchools()
+        this.getTerm()
         this.newName = '';
       }
     },
     handleCancel(row) {
-      this.tableData.splice(this.tableData.length - 2, 1)
+      this.tableData.list&&this.tableData.list.splice(this.tableData.list.length - 2, 1)
       this.isAdd = false;
     }
   },
