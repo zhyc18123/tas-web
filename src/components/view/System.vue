@@ -28,7 +28,7 @@
         </el-tab-pane>
         <el-tab-pane v-if="config.class_manage" label="班级管理" name="班级管理">
         </el-tab-pane>
-        <el-tab-pane v-if="config.class_manage" label="班型管理" name="班型管理">
+        <el-tab-pane v-if="config.class_statistic" label="开班统计" name="开班统计">
         </el-tab-pane>
       </el-tabs>
     </el-row>
@@ -108,7 +108,7 @@ export default {
     } else if (this.$route.path.indexOf('class') > 0) {
       this.activeName = '班级管理'
     } else if (this.$route.path.indexOf('courseTable') > 0) {
-      this.activeName = '班型管理'
+      this.activeName = '开班统计'
     }
     },
     handleClick(tab) {
@@ -124,7 +124,7 @@ export default {
         this.$router.push('/main/system/personal/list')
       }else if (this.activeName === '班级管理') {
         this.$router.push('/main/system/class/list')
-      }else if (this.activeName === '班型管理') {
+      }else if (this.activeName === '开班统计') {
         this.$router.push('/main/system/table/courseTable')
       }
 
