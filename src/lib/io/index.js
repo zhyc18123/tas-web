@@ -21,6 +21,7 @@ const io = {
     this.findMaterialData = conf.baseApiPath + '/lesson/api/baseDataController/findMaterialData'
     this.findYearsData = conf.baseApiPath + '/lesson/api/baseDataController/findYearsData'
     // 课程
+    this.lessonStatistic=conf.baseApiPath+'/lesson/api/lesson/lessonStatistic'
     this.publishLesson=conf.baseApiPath+'/lesson/api/lesson/publishLesson'
     this.addLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/addLesChapters'
     this.delLesChapters=conf.baseApiPath+'/lesson/api/lessonChapter/delLesChapters'

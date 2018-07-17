@@ -28,6 +28,8 @@
         </el-tab-pane>
         <el-tab-pane v-if="config.class_manage" label="班级管理" name="班级管理">
         </el-tab-pane>
+        <el-tab-pane v-if="config.class_manage" label="班型管理" name="班型管理">
+        </el-tab-pane>
       </el-tabs>
     </el-row>
     <div class="system-content">
@@ -85,6 +87,8 @@ export default {
       sysIndex='/main/system/personal/list'
     }else if(config.class_manage){
       sysIndex='/main/system/class/list'
+    }else if(config.class_manage){
+      sysIndex='/main/system/table/courseTable'
     }else{
       sysIndex='/'
     }
@@ -103,6 +107,8 @@ export default {
       this.activeName = '个人合作管理'
     } else if (this.$route.path.indexOf('class') > 0) {
       this.activeName = '班级管理'
+    } else if (this.$route.path.indexOf('courseTable') > 0) {
+      this.activeName = '班型管理'
     }
     },
     handleClick(tab) {
@@ -118,6 +124,8 @@ export default {
         this.$router.push('/main/system/personal/list')
       }else if (this.activeName === '班级管理') {
         this.$router.push('/main/system/class/list')
+      }else if (this.activeName === '班型管理') {
+        this.$router.push('/main/system/table/courseTable')
       }
 
     }

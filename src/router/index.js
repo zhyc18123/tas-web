@@ -16,14 +16,14 @@ const Index = resolve => require(['../components/view/Index'], resolve)
 // const SelectQuestion = resolve => require(['../components/production/SelectQuestion'],resolve)
 
 // 教研
-const Course = resolve => require(['../components/teachResearch/course/Course'], resolve) 
-const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve) 
+const Course = resolve => require(['../components/teachResearch/course/Course'], resolve)
+const CourseDetail = resolve => require(['../components/teachResearch/course/CourseDetail'], resolve)
 const ViewLecture = resolve => require(['../components/teachResearch/course/ViewLecture'], resolve)
 // const PreLecture = resolve => require(['../components/teachResearch/course/preview/Lecture'], resolve)  
 // const PreCourseWare = resolve => require(['../components/teachResearch/course/preview/Preview'], resolve)
-const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve) 
-const Sheet = resolve => require(['../components/teachResearch/course/Sheet'], resolve) 
-const AddSheet = resolve => require(['../components/teachResearch/course/AddSheet'], resolve)  
+const EditLecture = resolve => require(['../components/teachResearch/course/EditLecture'], resolve)
+const Sheet = resolve => require(['../components/teachResearch/course/Sheet'], resolve)
+const AddSheet = resolve => require(['../components/teachResearch/course/AddSheet'], resolve)
 const Lecture = resolve => require(['../components/teachResearch/lecture/Lecture'], resolve)
 const LectureDetail = resolve => require(['../components/teachResearch/lecture/LectureDetail'], resolve)
 const Data = resolve => require(['../components/teachResearch/data/Data'], resolve)
@@ -57,6 +57,9 @@ const CharacterAdd = resolve => require(['../components/system/character/Charact
 const ParadigmSetting = resolve => require(['../components/system/character/ParadigmSetting'], resolve)
 const PermissionSetting = resolve => require(['../components/system/character/PermissionSetting'], resolve)
 const CharacterListContainer = resolve => require(['../components/system/CharacterListContainer'], resolve)
+// 报表管理
+const CourseTableContainer = resolve => require(['../components/system/CourseTableContainer'], resolve)
+const CourseTable = resolve => require(['../components/system/table/CourseTable'], resolve)
 //  班级管理
 const ClassListContainer = resolve => require(['../components/system/ClassListContainer'], resolve)
 const ClassList = resolve => require(['../components/system/class/ClassList'], resolve)
@@ -84,11 +87,11 @@ const Login = resolve => require(['../components/login/Login'], resolve)
 const Personal = resolve => require(['../components/personal/Personal'], resolve)
 const UserInfo = resolve => require(['../components/personal/UserInfo'], resolve)
 const ChangePassword = resolve => require(['../components/personal/ChangePassword'], resolve)
- const Pdf = resolve => require(['../components/view/Pdf'], resolve)
+const Pdf = resolve => require(['../components/view/Pdf'], resolve)
 
 Vue.use(Router)
 
-const router= new Router({
+const router = new Router({
   mode: process.env.NODE_ENV === 'production' ? 'hash' : 'hash',
   routes: [
     {
@@ -101,21 +104,21 @@ const router= new Router({
           children: [{
             path: 'course',
             component: Course,
-            meta:{keepAlive:true}
-          },{
+            meta: { keepAlive: true }
+          }, {
             path: 'course/:id',
             component: CourseDetail
-          },{
+          }, {
             path: 'course/edit-lecture/:id',
             component: EditLecture
-          },{
+          }, {
             path: 'course/view-lecture/:sourceType/:courseId/:chapterId',
             component: ViewLecture,
             // children:[{
             //   path: ':courseId/:id',
             //   component: PreCourseWare,
             // },
-          // ]
+            // ]
           },
           {
             path: 'course/sheet/:id',
@@ -125,17 +128,17 @@ const router= new Router({
             path: 'course/add-sheet/:id',
             component: AddSheet
           },
-           {
+          {
             path: 'lecture',
             component: Lecture,
-            meta:{keepAlive:true}
+            meta: { keepAlive: true }
           }, {
             path: 'lecture/:id',
             component: LectureDetail
           }, {
             path: 'data',
             component: Data,
-            meta:{keepAlive:true}
+            meta: { keepAlive: true }
           }, {
             path: 'data/:id',
             component: DataDetail
@@ -144,7 +147,7 @@ const router= new Router({
         {
           path: "attend-class",
           component: AttendClass,
-          meta:{keepAlive:true}
+          meta: { keepAlive: true }
         },
         {
           path: "attend-content/:lessonId/:id",
@@ -161,20 +164,27 @@ const router= new Router({
           path: 'system',
           component: System,
           children: [{
-          path: 'basisSetting',
-          component: BasisSetContainer,
-          children: [{
-            path: 'schoolSetting',
-            component: SchoolSetting
-          },{
-            path: 'termSetting',
-            component: TermSetting
-          },{
-            path: 'classSetting',
-            component: ClassSetting
-          }
-          ]
-        },{
+            path: 'basisSetting',
+            component: BasisSetContainer,
+            children: [{
+              path: 'schoolSetting',
+              component: SchoolSetting
+            }, {
+              path: 'termSetting',
+              component: TermSetting
+            }, {
+              path: 'classSetting',
+              component: ClassSetting
+            }
+            ]
+          }, {
+            path: 'table',
+            component: CourseTableContainer,
+            children: [{
+              path: 'courseTable',
+              component: CourseTable
+            }]
+          }, {
             path: 'userList',
             component: UserListContainer,
             children: [{
@@ -183,11 +193,11 @@ const router= new Router({
             }, {
               path: 'userAdd',
               component: UserAdd
-            },{
+            }, {
               path: 'userDetail',
               component: UserDetail
             }
-          ]
+            ]
           }, {
             path: 'characterList',
             component: CharacterListContainer,
@@ -224,23 +234,23 @@ const router= new Router({
               path: 'list/:type',
               component: PersonalOperateDetail
             }]
-          },{
-           path:'class',
-           component:ClassListContainer,
-           children:[
-            {
-              path:'list',
-              component:ClassList
-            },
-            {
-              path:"details",
-              component:ClassDetails,
-            },
-            {
-              path:":id",
-              component:AddClass,
-            },
-           ]
+          }, {
+            path: 'class',
+            component: ClassListContainer,
+            children: [
+              {
+                path: 'list',
+                component: ClassList
+              },
+              {
+                path: "details",
+                component: ClassDetails,
+              },
+              {
+                path: ":id",
+                component: AddClass,
+              },
+            ]
           }
           ]
         }
@@ -305,7 +315,7 @@ const router= new Router({
     {
       path: '/personal',
       component: Personal,
-      children:[
+      children: [
         {
           path: 'user-info',
           component: UserInfo
@@ -316,17 +326,17 @@ const router= new Router({
         }
       ]
     },
-     {
-       path:'/pdf',
-       component:Pdf
-     }
+    {
+      path: '/pdf',
+      component: Pdf
+    }
   ]
 })
-router.beforeEach((to,from,next)=>{
-  let token=storage.getAccessToken()
-  if(!token&&to.path.indexOf('/login')===-1){
-    next({path:'/login',query:{backUrl:from.fullPath}})
-  }else{
+router.beforeEach((to, from, next) => {
+  let token = storage.getAccessToken()
+  if (!token && to.path.indexOf('/login') === -1) {
+    next({ path: '/login', query: { backUrl: from.fullPath } })
+  } else {
     next()
   }
 })
