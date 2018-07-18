@@ -280,8 +280,21 @@ export default {
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
                     console.log(this.form)
                     if (data.success) {
+                        this.form = {
+                            id: this.$route.params.id,
+                            type: 0,
+                            dataSubject: "",
+                            baseSectionId: "",
+                            lessonId: "",
+                            baseTrimesterId:'',
+                            teacherIds: "",
+                            className: "",
+                            baseSchoolId: "",
+                            openTime: "",
+                            closeTime: ""
+                        },
                         this.$message({type:"success",message:'保存成功！'})
-                        this.$router.go(-1)
+                        this.$router.push('/main/system/class/list')
                     }
                 } else {
                     this.$message('还有必填项未填，请先填写')

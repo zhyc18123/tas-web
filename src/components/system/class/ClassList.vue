@@ -106,7 +106,7 @@ export default {
             form:{
                 baseSectionId:this.$route.query.baseSectionId|| null,
                 baseTrimesterId:this.$route.query.baseTrimesterId||null,
-                lessonId:null,
+                lessonId:this.$route.query.lessonId||null,
                 baseLevelId:this.$route.query.baseLevelId||null,
                 schoolId:null,
                 status:this.$route.query.status||null,
@@ -118,7 +118,7 @@ export default {
     },
     computed: {
         ...mapState(['classes','condition','school']),
-    ...mapGetters(['config'])
+        ...mapGetters(['config'])
     },
     created(){
         this.findBaseSectionPage({pageIndex:1,pageSize:10000000})

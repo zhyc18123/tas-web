@@ -37,13 +37,13 @@
             <el-table-column prop="currentClass" label="当前班级" align="center"> 
                 <template scope="scope">
                     <span v-if="!scope.row.currentClass">{{scope.row.currentClass}}</span>
-                    <router-link v-else :to="{path:'/main/system/class/list',query:{baseLevelId:scope.row.baseLevelId,baseSectionId:scope.row.baseSectionId,baseTrimesterId:scope.row.baseTrimesterId,status:1}}">{{scope.row.currentClass}}</router-link>
+                    <router-link class="link" v-else :to="{path:'/main/system/class/list',query:{baseLevelId:scope.row.baseLevelId,baseSectionId:scope.row.baseSectionId,baseTrimesterId:scope.row.baseTrimesterId,status:1,lessonId:scope.row.lessonId}}">{{scope.row.currentClass}}</router-link>
                 </template>
             </el-table-column>
             <el-table-column prop="historicClass" label="历史班级" align="center"> 
                 <template scope="scope">
                     <span v-if="!scope.row.historicClass">{{scope.row.historicClass}}</span>
-                    <router-link v-else :to="{path:'/main/system/class/list',query:{baseLevelId:scope.row.baseLevelId,baseSectionId:scope.row.baseSectionId,baseTrimesterId:scope.row.baseTrimesterId,status:2}}">{{scope.row.historicClass}}</router-link>
+                    <router-link class="link" v-else :to="{path:'/main/system/class/list',query:{baseLevelId:scope.row.baseLevelId,baseSectionId:scope.row.baseSectionId,baseTrimesterId:scope.row.baseTrimesterId,status:2,lessonId:scope.row.lessonId}}">{{scope.row.historicClass}}</router-link>
                 </template>
             </el-table-column>
         </el-table>
@@ -194,6 +194,8 @@ export default {
         padding: 0 5px;
         display: inline-block;
     }
+    .link
+        color:#0084bb;
 .t-class-list
     padding-bottom 10px
     .el-form-item
