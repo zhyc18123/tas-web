@@ -47,7 +47,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="开课日期:" prop="openTime">
-                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期">
+                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期" @change="onEndChange">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="结课日期:" prop="closeTime">
