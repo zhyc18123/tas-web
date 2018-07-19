@@ -141,6 +141,7 @@ export default {
       },
       'form.dataSubject'(val){
           this.getClasses()
+          this.findBaseSectionPage( {pageIndex: 1, pageSize: 1000000,subjectId:val })
       },
     },
     created() {
