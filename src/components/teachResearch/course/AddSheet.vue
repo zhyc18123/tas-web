@@ -112,7 +112,7 @@ export default {
         },
         async addLessonMaterial(){
             if (!this.tableSelect.length) {
-                this.$message('请选择素材')
+                this.$message('还未勾选任何内容，请先选择')
                 return
             }
             let ids=[]
