@@ -46,14 +46,34 @@
                     </el-option>
                 </el-select>
             </el-form-item>
-            <el-form-item label="开课日期:" prop="openTime">
-                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期" @change="onEndChange">
+            <template v-if="form.id!=='add'">
+                <el-form-item label="开课日期:" prop="openTime" v-if="form.openTime">
+                    <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期" @change="onEndChange"  format="yyyy-MM-dd "
+        value-format="timestamp"  :clearable='false' :editable='false'>
+                    </el-date-picker>
+                </el-form-item>
+            </template>
+
+            <el-form-item v-else label="开课日期:" prop="openTime">
+                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期" @change="onEndChange"  format="yyyy-MM-dd "
+      value-format="timestamp" >
                 </el-date-picker>
             </el-form-item>
-            <el-form-item label="结课日期:" prop="closeTime">
-                <el-date-picker v-model="form.closeTime" type="date" placeholder="选择日期" @change="onEndChange">
-                </el-date-picker>
-            </el-form-item>
+            <div>
+                <template v-if="form.id!=='add'">
+                    <el-form-item label="结课日期:" prop="closeTime" v-if="form.closeTime">
+                        <el-date-picker v-model="form.closeTime" type="date" placeholder="选择日期" @change="onEndChange"  format="yyyy-MM-dd "
+            value-format="timestamp" :clearable='false' :editable='false'>
+                        </el-date-picker>
+                    </el-form-item>
+                </template>
+                <el-form-item label="结课日期:" prop="closeTime" v-else>
+                    <el-date-picker v-model="form.closeTime" type="date" placeholder="选择日期" @change="onEndChange"  format="yyyy-MM-dd "
+        value-format="timestamp">
+                    </el-date-picker>
+                </el-form-item>
+            </div>
+           
             <!-- <el-form-item label="上课时段:" class="week">
                             <el-checkbox  label="每天" v-model="form.everyday" @change="handleCheckedWeekChange"></el-checkbox>
                             <el-checkbox-group v-model="form.checkweek" @change="handleCheckedWeekChange">
@@ -206,7 +226,11 @@ export default {
                 ids.push(item.id)
             })
             val.teacherIds=ids
+            
             this.form = {...val}
+
+            // this.form.openTime = util.formatDate(val.openTime)
+            // this.form.closeTime = util.formatDate(val.closeTime)
         },
         'course.courseObj'(val){
             this.courseInfo =[...val.list] 
@@ -241,7 +265,7 @@ export default {
             console.log(this.form.openTime, this.form.closeTime)
             if (new Date(this.form.openTime) > new Date(this.form.closeTime)) {
                 this.$message('结课日期不能小于开课日期')
-                this.form.closeTime = ''
+                // this.form.closeTime = ''
                 return
             }
         },
@@ -273,6 +297,11 @@ export default {
             },2000)
             this.$refs.form.validate(async (vali) => {
                 if (vali) {
+                    if (new Date(this.form.openTime) > new Date(this.form.closeTime)) {
+                        this.$message('结课日期不能小于开课日期')
+                        // this.form.closeTime = ''
+                        return
+                    }
                     let opt = { ...this.form, teacherIds: this.form.teacherIds.join(','), openTime: util.formatDate(this.form.openTime) + ' 00:00:00', closeTime: util.formatDate(this.form.closeTime) + ' 23:59:59' }
                     if (this.form.id === 'add') {
                         opt = { ...opt, id: '' }
@@ -280,19 +309,6 @@ export default {
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
                     console.log(this.form)
                     if (data.success) {
-                        this.form = {
-                            id: this.$route.params.id,
-                            type: 0,
-                            dataSubject: "",
-                            baseSectionId: "",
-                            lessonId: "",
-                            baseTrimesterId:'',
-                            teacherIds: "",
-                            className: "",
-                            baseSchoolId: "",
-                            openTime: "",
-                            closeTime: ""
-                        },
                         this.$message({type:"success",message:'保存成功！'})
                         this.$router.push('/main/system/class/list')
                     }
