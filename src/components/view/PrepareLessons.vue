@@ -123,7 +123,7 @@ export default {
     },
     data() {
         return {
-            activeName: '0',
+            activeName: null,
             form: {
                 gradeId: '',
                 termId: '',
@@ -200,9 +200,6 @@ export default {
             this.getClasses()
         },
         'form.schoolId'(val) {
-            this.getClasses()
-        },
-        activeName(val) {
             this.getClasses()
         },
         'form.classId'(val) {

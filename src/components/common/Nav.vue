@@ -217,7 +217,7 @@ export default {
       height: 80px;
       cursor: pointer;
       span{
-        margin-right:17px;
+        margin-right:-2px;
       }
       img{
         border: 1px solid #ccc;
