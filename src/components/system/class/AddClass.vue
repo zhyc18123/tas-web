@@ -47,7 +47,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="开课日期:" prop="openTime">
-                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期">
+                <el-date-picker v-model="form.openTime" type="date" placeholder="选择日期" @change="onEndChange">
                 </el-date-picker>
             </el-form-item>
             <el-form-item label="结课日期:" prop="closeTime">
@@ -280,8 +280,21 @@ export default {
                     let { data } = await io.post6(io.addOrUpdateClass, opt)
                     console.log(this.form)
                     if (data.success) {
+                        this.form = {
+                            id: this.$route.params.id,
+                            type: 0,
+                            dataSubject: "",
+                            baseSectionId: "",
+                            lessonId: "",
+                            baseTrimesterId:'',
+                            teacherIds: "",
+                            className: "",
+                            baseSchoolId: "",
+                            openTime: "",
+                            closeTime: ""
+                        },
                         this.$message({type:"success",message:'保存成功！'})
-                        this.$router.go(-1)
+                        this.$router.push('/main/system/class/list')
                     }
                 } else {
                     this.$message('还有必填项未填，请先填写')

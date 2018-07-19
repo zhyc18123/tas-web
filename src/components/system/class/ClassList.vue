@@ -50,7 +50,7 @@
             <el-table-column prop="baseLevelName" label="班型"  align="center"></el-table-column>
             <el-table-column  label="开课状态" align="center">
                 <template scope="scope">
-                    {{scope.row.status===0?'未开课':scope.row.status===1?'已开课':'已结课'}}
+                    {{scope.row.status===0?'未开课':scope.row.status===1?'开课中':'已结课'}}
                 </template>
                  </el-table-column>
             <el-table-column prop="section"  label="年级" align="center"> </el-table-column>
@@ -106,7 +106,7 @@ export default {
             form:{
                 baseSectionId:this.$route.query.baseSectionId|| null,
                 baseTrimesterId:this.$route.query.baseTrimesterId||null,
-                lessonId:null,
+                lessonId:this.$route.query.lessonId||null,
                 baseLevelId:this.$route.query.baseLevelId||null,
                 schoolId:null,
                 status:this.$route.query.status||null,
@@ -118,7 +118,7 @@ export default {
     },
     computed: {
         ...mapState(['classes','condition','school']),
-    ...mapGetters(['config'])
+        ...mapGetters(['config'])
     },
     created(){
         this.findBaseSectionPage({pageIndex:1,pageSize:10000000})

@@ -7,7 +7,7 @@
                 <use xlink:href="#icon-banciguanli"></use>
             </svg>
             <span>{{classes.classDetail.className}}</span>
-            <em>{{classes.classDetail.status===0?'未开课':classes.classDetail.status===1?'已开课':'已结课'}}</em>
+            <em>{{classes.classDetail.status===0?'未开课':classes.classDetail.status===1?'开课中':'已结课'}}</em>
         </div>
         <div class="cont-main t-cloum">
             <el-steps :active="stepActive" direction="vertical" name="">
