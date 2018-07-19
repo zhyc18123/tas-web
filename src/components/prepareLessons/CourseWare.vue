@@ -34,7 +34,7 @@
                         </template>-->
             </div>
         </div>
-        <template v-if="office.token">
+        <template v-if="token">
             <div class="source-body" v-if="sourceType==='courseWare'">
                 <iframe class="office-ppt" v-if="chapterDetail.courseUrl" v-show="optType==='edit'" :src="conf.ofsUrl+'office/edit/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
                 <iframe class="office-ppt edit" v-if="chapterDetail.courseUrl" v-show="optType==='read'" :src="conf.ofsUrl+'office/view/'+chapterDetail.courseUrl+'?token='+office.token" frameborder="0"></iframe>
@@ -80,9 +80,9 @@ export default {
         ...mapGetters(['config'])
     },
     watch: {
-        // 'office.token'(val){
-        //     this.token=val
-        // }
+        'office.token'(val){
+            this.token=val
+        }
     },
     beforeRouteUpdate(to, from, next) {
         this.sourceType = to.params.sourceType
@@ -117,6 +117,7 @@ export default {
             this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
+            this.token=''
             this.$router.push({ path: '/main/prepare-lessons/' + this.id + '/' + this.sourceType + '/edit', query: { lessonId: this.lessonId, className: this.className, lectureNum: this.lectureNum ,classId:this.classId} })
         },
         print() {

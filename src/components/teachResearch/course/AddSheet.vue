@@ -111,6 +111,10 @@ export default {
             this.findBaseMaterial({ ...this.form, ...opt })
         },
         async addLessonMaterial(){
+            if (!this.tableSelect.length) {
+                this.$message('请选择素材')
+                return
+            }
             let ids=[]
             this.tableSelect.map((item,i)=>{
                 ids.push(item.id)
