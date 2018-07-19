@@ -21,7 +21,7 @@
         </el-select>
       </el-form-item>
       <el-form-item label="">
-        <el-input v-model="form.name" placeholder="请输入机构名称"></el-input>
+        <el-input v-model="form.name" placeholder="请输入讲次名称"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="search" class="search-btn">查询</el-button>
