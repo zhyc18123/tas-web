@@ -145,6 +145,8 @@ export default {
             this.myArray = [...val.list]
             this.chapterNum = val.list.length
             this.form.subjectId = val.dataSubject
+            this.form.sectionId=val.baseSectionId
+            this.form.baseLevelId=val.baseLevelId
         },
         'chapter.chapterObj'(val) {
             // [...val.list].map((item,i)=>{

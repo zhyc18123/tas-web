@@ -48,6 +48,7 @@
         <el-table class="line-table" :data="classes.classObj.list"  style="width: 100%" header-align="center" empty-text="暂无班级，请先添加班级">
             <el-table-column prop="className" label="班级名称" align="center" width="160"></el-table-column>
             <el-table-column prop="baseLevelName" label="班型"  align="center"></el-table-column>
+            <el-table-column prop="trimester" label="学期"  align="center"></el-table-column>
             <el-table-column  label="开课状态" align="center">
                 <template scope="scope">
                     {{scope.row.status===0?'未开课':scope.row.status===1?'开课中':'已结课'}}

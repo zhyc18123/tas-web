@@ -23,7 +23,7 @@
         <el-table-column align="center" label="操作">
           <template scope="scope">
             <span v-if="config.level_edit" v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-edit" @click="handleEdit(scope)">编辑</span>
-            <span v-if="config.level_del" v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-delete" @click="handleDelete(scope.row)">删除</span>
+            <span v-if="config.level_del&&scope.row.isStandard!==1" v-show="!scope.row.add && !scope.row.addRow && !scope.row.isEdit" class="btn-delete" @click="handleDelete(scope.row)">删除</span>
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleSave()">保存</el-button>
             <el-button v-show="scope.row.addRow" class="btn-delete" @click="handleCancel(scope.row)">取消</el-button>
             <el-button v-show="scope.row.isEdit" class="btn-delete" @click="handleSave(scope.row)">保存</el-button>

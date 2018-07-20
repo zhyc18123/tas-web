@@ -83,7 +83,7 @@ export default {
             },
             checkList: [],
             rules: {
-                name: [{ required: true, message: '讲次名称不能为空！', trigger: 'change' },{max:40,message:'讲次名称不能超过40字',trigger:'change'}],
+                name: [{ required: true, message: '讲次名称不能为空！', trigger: 'change' },{max:80,message:'讲次名称不能超过80字',trigger:'change'}],
                 baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'change' }],
                 dataSubject: [{ required: true, message: '请选择科目！', trigger: 'change' }],
                 baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'change' }],

@@ -1,5 +1,5 @@
 <template>
-  <div class="course" @keydown="search">
+  <div class="course">
     <el-form :inline="true" :model="form" class="t-form gray">
       <el-form-item label="">
         <el-select v-model="form.dataSubject" placeholder="科目">
