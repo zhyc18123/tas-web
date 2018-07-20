@@ -83,12 +83,12 @@ export default {
             },
             checkList: [],
             rules: {
-                name: [{ required: true, message: '课程名称不能为空！', trigger: 'change' },{max:40,message:'课程名称不能超过40字',trigger:'change'}],
+                name: [{ required: true, message: '讲次名称不能为空！', trigger: 'change' },{max:40,message:'讲次名称不能超过40字',trigger:'change'}],
                 baseSectionId: [{ required: true, message: '请选择年级！', trigger: 'change' }],
                 dataSubject: [{ required: true, message: '请选择科目！', trigger: 'change' }],
                 baseLevelId: [{ required: true, message: '请选择班型！', trigger: 'change' }],
                 courseUrl: [{ required: true, message: '请上传课件！', trigger: 'change' }],
-                type: [{ required: true, message: '请选择课程类型！', trigger: 'change' }],
+                type: [{ required: true, message: '请选择讲次类型！', trigger: 'change' }],
                 lectureUrl: [{ required: true, message: '请上传讲义！', trigger: 'change' }],
             },
         }

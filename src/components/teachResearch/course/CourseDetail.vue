@@ -42,7 +42,7 @@
                     讲<span>数:</span>
                     
                 </div>
-                <el-input v-model="form.chapterNum" :disabled="form.id!=='add'"></el-input>
+                <el-input v-model="form.chapterNum"></el-input>
             </el-form-item>
             <el-form-item prop="baseTrimesterId">
                 <div slot="label" class="tow-four">
