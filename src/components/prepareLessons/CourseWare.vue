@@ -114,7 +114,7 @@ export default {
             if(this.nextDisabled){
                 return
             }
-            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/courseWare/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
+            this.$router.push({path:'/main/prepare-lessons/'+this.chapterList[this.lectureNum].chapterId+'/'+this.sourceType+'/read',query:{lessonId:this.lessonId,lectureNum:Number(this.lectureNum)+1,className:this.className,classId:this.classId}})
         },
         selfEdit() {
             this.token=''
